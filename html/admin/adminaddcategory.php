@@ -1,1 +1,0 @@
-<h2>Kategorie hinzufügen</h2>
