@@ -1,0 +1,1747 @@
+<?php
+
+/*
+Datei enthält folgende Funktionen:
+
+function OptionFields()								verwendet
+function getMonthName($month_number)						verwendet
+function createPreview($pic_id)							verwendet			Z. 423
+function rotatePreviewPictures($Orientation, $FileNameV)			verwendet (Stapel-Erfassung)	Z. 472
+function rotateOriginalPictures($Orientation, $FileName)			verwendet (Stapel-Erfassung)	Z. 500
+function createQuickPreview($Orientation, $FileNameOri)				verwendet (Bearbeitung - Quick-Preview)
+function getPictureDetails($pic_id)						verwendet in edit_beschreibung	Z. 558
+function createPreviewPicture($file_name, $path_copy, $dest_path, $max_len)	verwendet
+function resizeOriginalPicture($FileName, $path_copy, $dest_path, $max_len)	verwendet 			Z. 698
+function createFullScreenView($pic_id, $quality)				(nicht) verwendet
+function getDeltaLong($lat, $radius1);						verwendet
+function getNumberOfPictures($kat_id)						verwendet in kat_treeview.php	Z. 721
+function getAllChildIds($kat_id)						verwendet
+function fileExists($FileName, $c_username)					verwendet
+function createNavi(X)								verwendet in diversen		Z. 810
+function createContentFile()							verwendet in get_preveiw.php
+function showStars								verwendet in get_preview  	Z. 1345
+function showBewertung								verwendet in Kopfzeile der Such-Formulare
+function createStatement							verwendet in recherche2
+function savePicture							^	verwendet in erfassung_action	Z. 1481
+function getRecDays								verwendet in recherche2 (Zeit)	Z. 1737
+function generateHistogram()							verwendet in details, stapel1	Z. 1880
+function formatValues()								verwendet in generate_exifdata0, 
+function restoreOriFilename							verwendet in details, generate_exifdata0, 
+function extractExifData							verwendet 			Z 2060
+
+*/
+
+function OptionFields()
+{
+	include '../../share/db_connect1.php';
+	//Welche Felder beinhaltet die Tabelle meta_data?
+	$result2 = mysql($db,"SHOW FIELDS FROM $table14");
+	$num2 = mysql_num_rows($result2);
+	$result3 = mysql($db,"SELECT * FROM $table14");
+	$num3 = mysql_num_rows($result3);
+	$CN = array();
+	echo "<option selected value=''>  ~ Bitte Datenfeld ausw&auml;hlen ~</option>";
+	FOR ($i2=0; $i2<$num2; $i2++)
+	{
+		$CN[] = mysql_field_name($result3,$i2);
+	}
+	//nach dem Leerfeld werden standardmäßig einige recherchierbare Felder der Pictures-Tabelle angeboten:
+	echo "
+	<optgroup label='Nicht-Meta-Daten'>
+	<option VALUE = 'pic_id'>interne Bild-Nr.</option>
+	<option VALUE = 'FileNameOri'>Original-Dateiname</option>
+	<option VALUE = 'Owner'>Bild-Eigent&uuml;mer</option>
+	<option VALUE = 'note'>Bild-Qualit&auml;t</option>
+	<option VALUE = 'ranking'>Anzahl der Downloads</option>
+	</optgroup>
+	<optgroup label='Meta-Daten'>";
+	asort($CN);
+	FOREACH($CN AS $cn)
+	{
+		echo "<option VALUE = '$cn'>$cn</option>";
+	}
+	echo "</optgroup>";
+}
+
+function getMonthName($month_number)
+{
+	SWITCH ($month_number)
+	{
+		CASE '01':
+		$month_name = 'Januar';
+		break;
+		
+		CASE '02':
+		$month_name = 'Februar';
+		break;
+		
+		CASE '03':
+		$month_name = 'M&auml;rz';
+		break;
+		
+		CASE '04':
+		$month_name = 'April';
+		break;
+		
+		CASE '05':
+		$month_name = 'Mai';
+		break;
+		
+		CASE '06':
+		$month_name = 'Juni';
+		break;
+		
+		CASE '07':
+		$month_name = 'Juli';
+		break;
+		
+		CASE '08':
+		$month_name = 'August';
+		break;
+		
+		CASE '09':
+		$month_name = 'September';
+		break;
+		
+		CASE '10':
+		$month_name = 'Oktober';
+		break;
+		
+		CASE '11':
+		$month_name = 'November';
+		break;
+		
+		CASE '12':
+		$month_name = 'Dezember';
+		break;
+	}
+	RETURN $month_name;
+}
+
+function createPreview($pic_id)
+{
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$res0 = mysql($db, "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
+	$FileName = mysql_result($res0, $i1, 'FileName');
+	$FileNameHQ = mysql_result($res0, $i1, 'FileNameHQ');
+	$FileNameV = mysql_result($res0, $i1, 'FileNameV');
+	$Width = mysql_result($res0, $i1, 'Width');
+	$Height = mysql_result($res0, $i1, 'Height');
+	$Orientation = mysql_result($res0, $i1, 'Orientation');	// 1: normal; 8: 90 nach rechts gedreht
+	//echo "Bildbreite: ".$Width.", Bildhöhe: ".$Height."<BR>";
+	
+	//abgeleitete Größen:
+	IF ($FileNameV == '')
+	{
+		$FileNameV = 'no_preview.jpg';
+	}
+	
+	@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
+	$Breite = $parameter_v[0] * 5;
+	$Hoehe = $parameter_v[1] * 5;
+	//echo "Breite: ".$Breite.", Hï¿½e: ".$Hoehe."<BR>";
+	IF ($breite == 0 AND $hoehe == 0)
+	{
+		$breite = 800;
+		$hoehe = 600;
+	}
+	//echo "Breite: ".$breite.", Hï¿½e: ".$hoehe."<BR>";
+      	$width_height=$parameter_v[3];
+      	//Für die Darstellung des Vollbildes wird eine mittlete Größe unter Beachtung des Seitenverhältnisses errechnet:
+      	//max. Ausdehnung: 1000px
+      	$max = '1000';
+      	IF ($Breite >= $Hoehe)
+      	{
+      		$breite = $max;
+      		$hoehe = $breite * $Hoehe / $Breite;
+      	}
+      	ELSE
+      	{
+      		$hoehe = $max;
+      		$breite = $hoehe * $Breite / $Hoehe;
+      	}
+      	//echo "Breite: ".$breite.", Hï¿½e: ".$hoehe."<BR>";
+      	$bild = $inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ;
+	echo "<a href=\"$bild\" target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '', 'HQ');return false\"  title='Vergr&ouml;&szlig;erte Ansicht'><img src=$inst_path/pic2base/images/vorschau/thumbs/$FileNameV alt='Vorschaubild'></a>";
+}
+
+function rotatePreviewPictures($Orientation, $FileNameV)
+{
+	include '../../share/global_config.php';
+	//@$parameter_v=getimagesize($pic_thumbs."/".$FileNameV);
+	SWITCH($Orientation)
+	{
+		case '3':
+		//Das Vorschaubild muss 180 gedreht werden:
+		$command = $im_path."/convert ".$pic_thumbs."/".$FileNameV." -rotate 180 ".$pic_thumbs."/".$FileNameV."";
+ 		$output = shell_exec($command);
+		break;
+		
+		case '6':
+		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
+		$command = $im_path."/convert ".$pic_thumbs."/".$FileNameV." -rotate 90 ".$pic_thumbs."/".$FileNameV."";
+ 		$output = shell_exec($command);
+		break;
+		
+		case '8':
+		//echo "drehe Thumb-Bild ".$pic_thumbs."/".$FileNameV."<BR>";
+		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
+		$command = $im_path."/convert ".$pic_thumbs."/".$FileNameV." -rotate 270 ".$pic_thumbs."/".$FileNameV."";
+ 		$output = shell_exec($command);
+		break;
+	}
+	return $FileNameV;
+}
+
+function rotateOriginalPictures($Orientation, $FileNameHQ)
+{
+	include '../../share/global_config.php';
+	//@$parameter_o=getimagesize($pic_hq_preview."/".$FileNameHQ);
+	SWITCH($Orientation)
+	{
+		case '3':
+		//Das Vorschaubild muss 180 gedreht werden:
+		$command = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 180 ".$pic_hq_preview."/".$FileNameHQ."";
+		$output = shell_exec($command);
+		break;
+		
+		case '6':
+		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
+		$command = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 90 ".$pic_hq_preview."/".$FileNameHQ."";
+		$output = shell_exec($command);
+		break;
+		
+		case '8':
+		//echo "drehe HQ-Bild ".$pic_hq_preview."/".$FileNameHQ."<BR>";
+		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
+		$command = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 270 ".$pic_hq_preview."/".$FileNameHQ."";
+		$output = shell_exec($command);
+		break;
+		
+	}
+	return $FileNameHQ;
+}
+
+function createQuickPreview($Orientation,$FileName)
+{
+	include '../../share/global_config.php';
+	@$parameter_o=getimagesize($pic_path."/".$FileName);
+	SWITCH($Orientation)
+	{
+		case '3':
+		echo "Das Vorschaubild muss 180 gedreht werden<BR>";
+		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
+ 		$output = shell_exec($command);
+		break;
+		
+		case '6':
+		echo "Das Vorschaubild muss 90 CW gedreht werden<BR>";
+		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
+ 		$output = shell_exec($command);
+		break;
+		
+		case '8':
+		//echo "Erzeuge Quick-Preview-Bild von ".$pic_path."/".$FileName."<BR> nach ".$pic_rot_path."/".$FileName."<BR>";
+		echo "Das Vorschaubild muss 270 CW gedreht werden<BR>";
+		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
+ 		$output = shell_exec($command);
+		break;
+	}
+	return $FileName;
+}
+
+function getPictureDetails($pic_id,$edit_mod)
+{
+	include '../../share/db_connect1.php';
+	//Darstellung der Detailangaben zum gewählten Bild:
+	//echo "Bild-ID: ".$pic_id."<BR>";
+	IF ($pic_id !=='0')
+	{
+	echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Details zum ausgew&auml;hlten Bild:<BR>";
+	$result8 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+	$DateTime = mysql_result($result8, $i8, 'DateTime');
+	$FileName = mysql_result($result8, $i8, 'FileName');
+	$user_id = mysql_result($result8, $i8, 'Owner');
+	$result10 = mysql($db, "SELECT username FROM $table1 WHERE id = '$user_id'");
+	$Owner = mysql_result($result10, $i10, 'username');
+	$FileSize = mysql_result($result8, $i8, 'FileSize');
+	$Width = mysql_result($result8, $i8, 'Width');
+	$Height = mysql_result($result8, $i8, 'Height');
+	$Orientation = mysql_result($result8, $i8, 'Orientation');
+	$Description = mysql_result($result8, $i8, 'Description');
+	$note = mysql_result($result8, $i8, 'note');
+	SWITCH ($Orientation)
+	{
+		CASE '1':
+		$ausrichtung='Querformat';
+		break;
+		
+		CASE '3':
+		$ausrichtung='Kopfüber';
+		break;
+		
+		CASE '6':
+		CASE '8':
+		$ausrichtung='Hochformat';
+		break;
+		
+		default:
+		$ausrichtung = 'nicht vermerkt';
+		break;
+	}
+		//Welche Kategorien wurden dem Bild zugewiesen?
+	$result9 = mysql($db, "SELECT DISTINCT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie, $table4.level FROM $table10 INNER JOIN $table4 ON ($table10.kat_id = $table4.kat_id AND $table10.pic_id = '$pic_id') ORDER BY $table4.level");
+	$num9 = mysql_num_rows($result9);
+	
+	$kat_info='';
+	FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewï¿½lt, da die Wurzel uninteressant ist!
+	{
+		//echo $num5."<BR>";
+		$kategorie = mysql_result($result9, $i9, 'kategorie');
+		IF ($i9 < $num9 - 1)
+		{
+			$kat_info .=$kategorie." - ";
+		}
+		ELSE
+		{
+			$kat_info .=$kategorie;
+		}
+	}
+	//echo "Kategorien: ".$kat_info."<BR>";
+	echo mysql_error();
+	$size = round($FileSize / 1024);
+	
+	echo "<TABLE id='detail1'>
+		<TR id='detail1'>
+		<TD id='detail1'>Bild-ID::</TD>
+		<TD id='detail2'>$pic_id</TD>
+		<TD id='detail3' rowspan='7'>";
+		createPreview($pic_id);
+		echo "</TD>
+		</TR>
+		
+		<TR id='detail1'>
+		<TD id='detail1'>Datei-Name::</TD>
+		<TD id='detail2'>$FileName</TD>
+		</TR>
+		
+		<TR id='detail1'>
+		<TD id='detail1'>Aufn.-Datum:</TD>
+		<TD id='detail2'>";
+		IF ($DateTime == '0000-00-00 00:00:00')
+		{
+			echo "nicht vermerkt";
+		}
+		ELSE
+		{
+			echo date('d.m.Y', strtotime($DateTime));
+		}
+		echo "</TD>
+		</TR>
+		
+		<TR id='detail1'>
+		<TD id='detail1'>Autor:</TD>
+		<TD id='detail2'>$Owner</TD>
+		</TR>
+		
+		<TR id='detail1'>
+		<TD id='detail1'>Bild-Gr&ouml;sse:</TD>
+		<TD id='detail2'>$Width x $Height</TD>
+		</TR>
+		
+		<TR id='detail1'>
+		<TD id='detail1'>Datei-Gr&ouml;sse:</TD>
+		<TD id='detail2'>".$size." Byte</TD>
+		</TR>
+		
+		<TR id='detail1'>
+			<TD id='detail1'>Ausrichtung:</TD>
+		<TD id='detail2'>".$ausrichtung."</TD>
+		</TR>
+		
+		<TR id='detail2'>
+		<TD id='detail4' colspan='3' bgcolor='#bdbec6'><BR></TD>
+		</TR>";
+		
+		SWITCH($edit_mod)
+		{
+			CASE 'desc':
+			echo "
+			<TR id='detail2'>
+			<TD id='detail4' colspan='3'><b>Bildbeschreibung:</b><BR><textarea name='description' wordwrap style='width:380px; height:140px; background-color:#DFEFFf;'>$Description</textarea></TD>
+			</TR>";
+			break;
+		}
+		echo "
+		</TABLE>
+		<input type='hidden' name='PIC_id' value='$pic_id'>";
+	}	
+}
+
+function createPreviewPicture($FILE, $dest_path, $max_len)
+{
+	include '../../share/global_config.php';
+	//Wenn das Originalbild kein EXIF-Vorschaubild mitbringt, generiert diese Funktion aus der Quelle ein Vorschaubild, dessen max. Ausdehnung max_len Pixel beträgt und speichert dieses unter dem Destination-Pfad ab. -wird bei der Erfassung von Bildern angewendet.
+	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
+	//$file_nameV = str_replace('.jpg','_v.jpg',basename($FILE));	//Variante, bei der Vorschau aus Original erzeugt wird
+	$file_nameV = str_replace('_hq.jpg','_v.jpg',basename($FILE));	//Variante, bei der Vorschau aus HQ erzeugt wird
+      	$command = $im_path."/convert -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameV."";
+      	$output = shell_exec($command);
+	return $file_nameV;
+}
+
+function resizeOriginalPicture($FILE, $dest_path, $max_len)
+{
+	include '../../share/global_config.php';
+	//Die Funktion generiert aus der Quelle ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel beträgt und speichert dieses unter dem Destination-Pfad ab.
+	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
+	$file_nameT = str_replace('.jpg','_hq.jpg',basename($FILE));
+      	$command = $im_path."/convert -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
+ 	$output = shell_exec($command);
+	return $file_nameT;
+}
+
+function getNumberOfPictures($kat_id, $modus, $bewertung)
+{
+	unset($username);
+	IF ($_COOKIE['login'])
+	{
+	list($c_username) = split(',',$_COOKIE['login']);
+	//echo $c_username;
+	}
+	//echo "Modus: ".$modus."User: ".$c_username."<BR>";
+	
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$kat_arr[] = $kat_id;		//Kategorie-Nummern-Container
+	$result0 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username'");
+	$id = mysql_result($result0, $i0, 'id');
+	
+	$result1 = mysql($db, "SELECT * FROM $table4 WHERE parent = '$kat_id'");
+	$num1 = mysql_num_rows($result1);
+	IF ($num1 > '0')
+	{
+		FOR($i1=0; $i1<$num1; $i1++)
+		{
+			$kat_id = mysql_result($result1, $i1, 'kat_id');
+			//$kat_arr[] = $kat_id;
+			getAllChildIds($kat_id);
+		}
+	}
+	$anz = count($kat_arr);
+	$nop = '0';		//number of pictures :-)
+	FOREACH($kat_arr AS $kat_nr)
+	{
+		IF($modus == 'edit')
+		{
+			$result2 = mysql($db, "SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id FROM $table10 INNER JOIN $table2 ON ($table10.kat_id = '$kat_nr' AND $table10.pic_id = $table2.pic_id AND $table2.Owner = '$id')");
+			echo mysql_error();
+			$nop = mysql_num_rows($result2);
+		}
+		ELSE
+		{
+			$stat = createStatement($bewertung);
+			//echo $stat;
+			IF($bewertung !== '6')
+			{
+				$result2 = mysql($db, "SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id FROM $table10 INNER JOIN $table2 ON ($table10.kat_id = '$kat_nr' AND $table10.pic_id = $table2.pic_id AND $stat)");
+				echo mysql_error();
+				$nop = mysql_num_rows($result2);
+			}
+			ELSE
+			{
+				$result2 = mysql($db, "SELECT * FROM $table10 WHERE kat_id = '$kat_nr'");
+				$num2 = mysql_num_rows($result2);
+				$nop = $nop + $num2;
+			}
+		}
+		
+	}
+	return $nop;	
+}
+
+function getAllChildIds($kat_id)
+{
+	$result1 = mysql($db, "SELECT * FROM $table4 WHERE parent = '$kat_id'");
+	@$num1 = mysql_num_rows($result1);
+	IF ($num1 > '0')
+	{
+		FOR($i1=0; $i1<$num1; $i1++)
+		{
+			$kat_id = mysql_result($result1, $i1, 'kat_id');
+			$kat_arr[] = $kat_id;
+		}
+	}
+}
+
+function fileExists($FileName, $c_username)
+{
+	//Ermittlung, ob sich die Bilddatei sich im Download-Ordner befindet:
+	include 'global_config.php';
+	$n = 0;
+	$verz=opendir($ftp_path."/".$c_username."/downloads/");
+	while($datei=readdir($verz))
+	{
+		if($datei == $FileName)
+		{
+			$n++;
+		}
+	}
+	return $n;
+}
+
+function createNavi0($c_username)
+{
+	//Navigationsstruktur der Startseite
+	include '../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		//echo $perm_id."<BR>";
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			
+			//Prüfung, ob Rechte auf log, images und userdata korrekt gesetzt sind:
+
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/log/" ) );
+			//echo $mod."<BR>";
+			//echo substr($mod,-3)."<BR>";
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /log falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/userdata/" ) );
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /userdata falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/" ) );
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /images falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/" ) );
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /originale falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/rotated" ) );
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /rotated falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/" ) );
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /vorschau falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/hq-preview/" ) );
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /hq-preview falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/thumbs" ) );
+			IF(substr($mod,-3) !== '700')
+			{
+				echo "FEHLER! Recht auf /thumbs falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+			}
+			clearstatcache();
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
+			break;
+			
+			CASE '26':
+			$navigation .= "<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php'>Einstellungen</a>";
+			break;
+		}
+		$perm_id_arr[] = $perm_id;
+	}
+	
+	$navigation .= "<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=0'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	
+	echo $navigation;
+}
+
+function createNavi1($c_username)
+{
+	//Navigationsstruktur der Erfassungs-Startseite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi_blind'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=1'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi2($c_username)
+{
+	//Navigationsstruktur der Recherche-Startseite (recherche0.php)
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi_blind'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/bin/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi2_1($c_username)
+{
+	//Navigationsstruktur der Recherche-Unter-Seite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi_blind'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi' href='recherche0.php'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi2_2($c_username, $mod)
+{
+	//Navigationsstruktur der Seite 'bearbeitung1.php' (Suche über EXIF-Daten)
+	include '../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi_blind'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche2.php?mod=$mod'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi3($c_username)
+{
+	//Navigationsstruktur der Edit-Startseite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi_blind'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=3'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi3_1($c_username)
+{
+	//Navigationsstruktur der Edit-Unter-Seite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi_blind'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi' href='edit_start.php'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=4'>Hilfe</a>
+ 			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi4_1($c_username)
+{
+	//Navigationsstruktur der Hilfe-Seite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi_blind'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi5($c_username)
+{
+	//Navigationsstruktur der Einstellungs-Seite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+	$user_id = mysql_result($result1, $i1, 'id');
+	$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$num2 = mysql_num_rows($result2);
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$perm_id = mysql_result($result2, $i2, 'permission_id');
+		SWITCH($perm_id)
+		{
+			CASE '1':
+			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Administration</a>";
+			break;
+			
+			CASE '2':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+			break;
+			
+			CASE '19':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+			break;
+			
+			CASE '20':
+			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
+			break;
+		}
+	}
+	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
+			<a class='navi_blind'>Einstellungen</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=6'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	echo $navigation;
+}
+
+function createContentFile($mod, $statement, $c_username, $bild)
+{
+	//Erzeugung der pdf-Galerie
+	//echo $statement;
+	//$statement für exif, desc, zeit, kat(außer Wurzel) übergeben
+	include '../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	SWITCH($mod)
+	{
+		CASE 'geo':
+		$num100 = count($statement);
+		break;
+		
+		default:
+		$result100 = mysql($db, "$statement");
+		@$num100 = mysql_num_rows($result100);
+		break;
+	}
+	
+	IF($statement !=='')
+	{
+		//echo $statement;
+		//echo "gefundene Bilder: ".$num100."<BR>";
+		$seiten = floor($num100 / 20) + 1;
+		define('FPDF_FONTPATH','../share/fpdf/font/');
+		require $sr.'/bin/share/fpdf/fpdf.php';
+		$pdf=new FPDF('P','mm','A4');
+		$pdf->SetLeftMargin(20);
+		$pdf->SetFont('Arial','',10);
+		$aktdatum = date('d.m.Y');
+		FOR($seite='0'; $seite<$seiten; $seite++)
+		{
+			$pdf->AddPage();
+			$pdf->Cell(0,5,'pic2base-Galerie',0,1,C);
+			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergrößerte Ansicht des betreffenden Bildes.',0,1,C);
+			FOR($zeile='0'; $zeile<'5'; $zeile++)
+			{
+				$y_mitte = 50 + $zeile * 48;
+				FOR($spalte='0'; $spalte<'4'; $spalte++)
+				{
+					$x_mitte = 45 + $spalte * 45;
+					//Ermittlung des QH-/Ori-Dateinamens und der Bild-Maße
+					$zaehler = $spalte + ($zeile * 4) + ($seite * 20);
+					IF($zaehler < $num100)
+					{
+						//echo $zaehler;
+						SWITCH($mod)
+						{
+							CASE 'geo':
+							SWITCH($bild)
+							{
+								CASE '0':
+								$result102 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$statement[$zaehler]'");
+								$FileNameV = mysql_result($result102, 0, 'FileNameV');
+								//$FileNameHQ = mysql_result($result102, $zaehler, 'FileNameHQ');
+								@$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
+								break;
+								
+								CASE '1':
+								$result102 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$statement[$zaehler]'");
+								$FileNameHQ = mysql_result($result102, 0, 'FileNameHQ');
+								@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
+								break;
+							}
+							$FileName = mysql_result($result102, 0, 'FileName');
+							break;
+							
+							default:
+							SWITCH($bild)
+							{
+								CASE '0':
+								$FileNameV = mysql_result($result100, $zaehler, 'FileNameV');
+								$FileNameHQ = mysql_result($result100, $zaehler, 'FileNameHQ');
+								@$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
+								break;
+								
+								CASE '1':
+								$FileNameHQ = mysql_result($result100, $zaehler, 'FileNameHQ');
+								@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
+								break;
+							}
+							$FileName = mysql_result($result100, $zaehler, 'FileName');
+							break;
+						}
+						
+						$breite = $parameter_v[0];
+						$hoehe = $parameter_v[1];
+						$ratio = $breite / $hoehe;
+						IF($ratio > '1')
+						{
+							//Breitformat
+							$Breite = 40;
+							$Hoehe = number_format($Breite / $ratio,0,'.',',');
+						}
+						ELSE
+						{
+							//Hochformat
+							$Hoehe = 40;
+							$Breite = number_format($Hoehe * $ratio,0,'.',',');
+						}
+						$x0 = $x_mitte - $Breite / 2;
+						$y0 = $y_mitte - $Hoehe / 2;
+						SWITCH($bild)
+						{
+							CASE '0':
+							$pdf->Image($sr.'/images/vorschau/thumbs/'.$FileNameV,$x0, $y0, $Breite, $Hoehe, jpg);
+							break;
+							
+							CASE '1':
+							$pdf->Image($sr.'/images/vorschau/hq-preview/'.$FileNameHQ,$x0, $y0, $Breite, $Hoehe, jpg);
+							break;
+						}
+						//Ausgabe des Dateinamens:
+						$x1 = $x_mitte - 15;
+						$y1 = $y_mitte + 21;
+						$pdf->SetXY($x1,$y1);
+						$pdf->SetFont('Arial','',8);
+						$pdf->Cell(30,5,$FileName,0,0,C,0,'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ);
+						//$pdf->Cell(30,5,$FileName,0,0,C,0,'http://www.pic2base.de');
+					}
+				}
+			}
+			$seiten_nr = $seite + 1;
+			$pdf->SetXY(25,270);
+			$pdf->Cell(0,6,'Druckdatum: '.$aktdatum.', Seite '.$seiten_nr.' von '.$seiten,0,1,C);
+			$pdf->SetFont('Arial','',10);
+		}
+		$pdf->Output($p2b_path.'pic2base/userdata/'.$c_username.'/kml_files/thumb-gallery.pdf');
+	}
+}
+
+function showStars($pic_id)
+{
+	include '../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql($db, "SELECT note FROM $table2 WHERE pic_id = '$pic_id'");
+	$note = mysql_result($result1, 0, 'note');
+	//echo $note;
+	
+	SWITCH($note)
+	{
+		CASE '1':
+		//Note 1: beste Bewertung, d.h. 5 Sterne gelb!
+		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
+		break;
+		
+		CASE '2':
+		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" 	height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 					OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
+		break;
+		
+		CASE '3':
+		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
+		break;
+		
+		CASE '4':
+		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
+		break;
+		
+		CASE '5':
+		//Note 5: schlechteste Bewertung: 1 Stern gelb!
+		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
+		break;
+	}
+	
+	echo $stars;
+}
+
+function showBewertung($bewertung)
+{
+	include '../../share/global_config.php';
+	$g_s = "<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"15\" height=\"15\">";
+	$y_s = "<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"15\" height=\"15\">";
+	
+	SWITCH($bewertung)
+	{
+		CASE '=1':
+		//Größer-Zeichen bedeutet: Der Notenwert ist höher, d.h die Note ist schlechter!
+		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$g_s$y_s</SPAN>";
+		break;
+		
+		CASE '>=2':
+		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$y_s$y_s</SPAN>";
+		break;
+		
+		CASE '=2':
+		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$y_s$g_s</SPAN>";
+		break;
+		
+		CASE '<=2':
+		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$y_s$g_s</SPAN>";
+		break;
+		
+		CASE '>=3':
+		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$y_s$y_s$y_s</SPAN>";
+		break;
+		
+		CASE '=3':
+		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$y_s$g_s$g_s</SPAN>";
+		break;
+		
+		CASE '<=3':
+		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$g_s$g_s</SPAN>";
+		break;
+		
+		CASE '>=4':
+		$bew = "<span style='position:relative; top:3px';>$g_s$y_s$y_s$y_s$y_s</SPAN>";
+		break;
+		
+		CASE '=4':
+		$bew = "<span style='position:relative; top:3px';>$g_s$y_s$g_s$g_s$g_s</SPAN>";
+		break;
+		
+		CASE '<=4':
+		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$g_s$g_s$g_s</SPAN>";
+		break;
+		
+		CASE '=5':
+		$bew = "<span style='position:relative; top:3px';>$y_s$g_s$g_s$g_s$g_s</SPAN>";
+		break;
+		
+		CASE '6':
+		CASE '':
+		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$y_s$y_s</SPAN>";
+		//$bewertung = '6';
+		break;
+	}
+	return $bew;
+}
+
+function createStatement($bewertung)
+{
+	SWITCH($bewertung)
+	{
+		CASE '=1':
+		$stat = "note = '1'";
+		break;
+		
+		CASE ">=2":
+		$stat = "note <= '2'";
+		break;
+		
+		CASE "=2":
+		$stat = "note = '2'";
+		break;
+		
+		CASE "<=2":
+		$stat = "note >= '2'";
+		break;
+		
+		CASE ">=3":
+		$stat = "note <= '3'";
+		break;
+		
+		CASE "=3":
+		$stat = "note = '3'";
+		break;
+		
+		CASE "<=3":
+		$stat = "note >= '3'";
+		break;
+		
+		CASE ">=4":
+		$stat = "note <= '4'";
+		break;
+		
+		CASE "=4":
+		$stat = "note = '4'";
+		break;
+		
+		CASE "<=4":
+		$stat = "note >= '4'";
+		break;
+		
+		CASE "=5":
+		$stat = "note = '5'";
+		break;
+		
+		CASE "6":
+		CASE "":
+		$stat = "note >= '0'";
+		//$bewertung = '6';
+		break;
+	}
+	return $stat;
+}
+
+function savePicture($pic_id,$anzahl,$user_id,$Orientation)
+{
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
+	{
+		$FILE = $pic_rot_path."/".$pic_id.".jpg";
+	}
+	ELSE
+	{
+		$FILE = $pic_path."/".$pic_id.".jpg";
+	}
+	//vom Original-JPG-Bild wird die Prüfsumme gebildet:
+	$command = $md5sum_path."/md5sum $FILE";
+	$sum = explode(' ',shell_exec($command));
+	//echo "Pr&uuml;fsumme: ".$sum[0]."<BR>";
+	
+	IF($anzahl == '1')
+	{
+		//echo "...bearbeite Bild ".$bild."<BR>";
+		// 1) anlegen des hq-Bildes: (resamplen, ggf. drehen, speichern unter /vorschau/hq-preview)
+		$max_len = '800';				//HQ aus Original erzeugen
+		$FileNameHQ = resizeOriginalPicture($FILE, $HQ_verzeichnis, $max_len);
+		//echo "temporärer Datei-Name: ".$FileNameHQ." Ausrichtung: ".$Orientation."<BR>";
+		$FILE = $pic_hq_preview."/".$FileNameHQ;	//Thumb aus HQ erzeugen
+		// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
+		$max_len = '160';
+		$FileNameV = createPreviewPicture($FILE, $vorschau_verzeichnis, $max_len);
+		
+		$result1 = mysql($db, "UPDATE $table2 SET FileNameHQ = '$FileNameHQ', FileNameV = '$FileNameV', md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
+	}
+	ELSE
+	{
+	
+	}
+	
+	//die Datei-Attribute werden für alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
+	//HQ-Datei:
+	$fileHQ = $HQ_verzeichnis."/".$FileNameHQ;
+	clearstatcache();  
+	chmod ($fileHQ, 0700);
+	clearstatcache();
+	//Vorschaubild:
+	$fileV = $vorschau_verzeichnis."/".$FileNameV;
+	clearstatcache();  
+	chmod ($fileV, 0700);
+	clearstatcache();
+}
+
+
+function getRecDays($y,$m,$stat)
+{
+	include 'global_config.php';
+	include 'db_connect1.php';
+	//Bestimmung der Tage in dem Jahr $y und Monat $m, an welchem Aufnahmen angefertigt wurden: (abhängig von der Bewertung!
+	$dat_arr = array();
+	
+	$result11 = mysql($db, "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '%".$y."-".$m."%' AND $table2.$stat) ORDER BY $table14.DateTimeOriginal");
+	
+	echo mysql_error();
+	$num11 = mysql_num_rows($result11);
+	FOR($i11='0'; $i11<$num11; $i11++)
+	{
+		$datum = substr(mysql_result($result11, $i11, 'DateTimeOriginal'),0,10);
+		IF(!in_array($datum,$dat_arr))
+		{
+			$dat_arr[] = $datum;
+		}
+	}
+	return $dat_arr;
+}
+
+function generateHistogram($pic_id,$FileName,$sr)
+{
+	include $sr.'/bin/share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	//Wenn mind. ein Bild nicht vorhanden ist, werden die Histogramme neu erstellt:
+	$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
+	$hist = $hist_path."/".$pic_id."_hist.gif";
+	$hist_r = $hist_path."/".$pic_id."_hist_0.gif";
+	$hist_g = $hist_path."/".$pic_id."_hist_1.gif";
+	$hist_b = $hist_path."/".$pic_id."_hist_2.gif";
+	IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r') OR @!fopen($file_mono, 'r'))
+	{
+		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
+		$file = $pic_hq_preview."/".$FileName; //<- aus Performance-Gründen wird Histogr. aus HQ-Bild erstellt!
+		shell_exec($im_path."/convert ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
+		//shell_exec($im_path."/convert ".$file." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif");
+		shell_exec($im_path."/convert ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
+		$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
+		shell_exec($im_path."/convert ".$file_mono." histogram:".$hist_path."/".$pic_id."_hist.gif");
+		
+		$hist_file_r = $pic_id.'_hist_0.gif';
+		shell_exec($im_path."/convert ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
+		
+		$hist_file_g = $pic_id.'_hist_1.gif';
+		shell_exec($im_path."/convert ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
+		
+		$hist_file_b = $pic_id.'_hist_2.gif';
+		shell_exec($im_path."/convert ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
+		
+		$hist_file = $pic_id.'_hist.gif';
+		$mono_file = $pic_id."_mono.jpg";
+		$result2 = mysql($db, "UPDATE $table2 SET FileNameMono = '$mono_file', FileNameHist = '$hist_file', FileNameHist_r = '$hist_file_r', FileNameHist_g = '$hist_file_g', FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
+		echo mysql_error();
+		
+		clearstatcache();
+		chmod ($hist, 0700);
+		chmod ($hist_r, 0700);
+		chmod ($hist_g, 0700);
+		chmod ($hist_b, 0700);
+		clearstatcache();
+	}
+}
+
+function getImageInfo($FileName)
+{
+	include 'global_config.php';
+	//echo $pic_path."/".$FileName;
+	$code = shell_exec($et_path."/exiftool -h -g -x 'Directory' ".$pic_path."/".$FileName);
+	$code = str_replace("<table>", "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = 'center'>", $code);
+	$code = str_replace("<tr>", "<TR class='normal'>", $code);
+	$code = str_replace("<td>", "<TD class='liste2' style='width:225px;'>", $code);
+	$code = str_replace("<td colspan=2 bgcolor='#dddddd'>", "<TD class='normal' colspan = '2' align='left' bgcolor='lightgreen'>", $code);
+	echo $code;
+}
+
+function formatValues($fieldname,$FN,$et_path)
+{
+	include 'global_config.php';
+	SWITCH($fieldname)
+	{
+		CASE 'DateTimeOriginal':
+		$value = shell_exec($et_path."/exiftool -d '%Y-%m-%d %H:%M:%S' -DateTimeOriginal ".$FN);
+		break;
+		
+		CASE 'GPSLatitude':
+		$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLatitude -n ".$FN);
+		break;
+		
+		CASE 'GPSLongitude':
+		$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLongitude -n ".$FN);
+		break;
+		
+		CASE 'GPSAltitude':
+		$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSAltitude -n ".$FN);
+		break;
+		
+		CASE 'XResolution':
+		$value = shell_exec($et_path."/exiftool -c '%.11f' -XResolution -n ".$FN);
+		break;
+		
+		CASE 'YResolution':
+		$value = shell_exec($et_path."/exiftool -c '%.11f' -YResolution -n ".$FN);
+		break;
+		
+		CASE 'FNumber':
+		$value = shell_exec($et_path."/exiftool -c '%.11f' -FNumber -n ".$FN);
+		break;
+		
+		CASE 'ExposureTime':
+		$value = shell_exec($et_path."/exiftool -c '%.5f' -ExposureTime -n ".$FN);
+		break;
+		
+		CASE 'SensorPixelSize':
+		$value = shell_exec($et_path."/exiftool -c '%.5f' -SensorPixelSize -n ".$FN);
+		break;
+		
+		CASE 'SerialNumber':
+		$value = shell_exec($et_path."/exiftool -c '%.5f' -SerialNumber -n ".$FN);
+		break;
+		
+		CASE 'Lens':
+		$value = shell_exec($et_path."/exiftool -c '%.11f' -Lens ".$FN);
+		break;
+		
+		CASE 'UserComment':
+		$value = shell_exec($et_path."/exiftool -UserComment ".$FN);
+		break;
+		
+		CASE 'Orientation':
+		$value = shell_exec($et_path."/exiftool -Orientation -n ".$FN);
+		break;
+		
+		CASE 'FileSize':
+		$value = shell_exec($et_path."/exiftool -FileSize -n ".$FN);
+		break;
+		
+		default:
+		$value = shell_exec($et_path."/exiftool -".$fieldname." ".$FN);
+		break;
+	}
+	$info_arr = explode(' : ', $value);
+	$value = trim($info_arr[1]);
+	return $value;
+}
+
+function restoreOriFilename($pic_id, $sr)
+{
+	//erzeugt den eindeutigen Namen des Bildes in Original-Dateiformat
+	include $sr.'/bin/share/db_connect1.php'; // FÜR NACHTRÄGLICHE exif-Daten-Erzeugung
+	$RES = mysql($db, "SELECT FileName, FileNameOri FROM $table2 WHERE pic_id = '$pic_id'");
+	$FileName = mysql_result($RES, $i0, 'FileName');
+	$FileName_base= explode('.', $FileName);
+	$FileNameOri = mysql_result($RES, $i0, 'FileNameOri');
+	$FileNameOri_ext = explode('.', $FileNameOri);
+	$FN = strtolower($FileName_base[0].".".$FileNameOri_ext[1]);
+	return $FN;
+}
+
+function extractExifData($pic_id, $sr)
+{
+	include $sr.'/bin/share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result6 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+	IF(mysql_num_rows($result6) == 0)
+	{
+		//nur wenn es noch keinen Eintrag in der exif-data-Tabelle für dieses Bild gibt, wird die Erfassung ausgeführt:
+		$result7 = mysql($db, "INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
+		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
+		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
+		//echo "Original-Datei-Name: ".$FN."<BR>";
+		
+		$result8 = mysql($db, "SHOW COLUMNS FROM $table14");
+		$i = 0;
+		if($result8 != false)
+		{
+			while($liste = mysql_fetch_row($result8))
+			{
+				//$tab_fieldname[$i] = $liste[0];	//vorh. Tabellen-Feldname
+				$tab_fieldname[$i] = str_replace('_','-',$liste[0]);	//vorh. Tabellen-Feldname
+				$i++;
+			}
+		}
+		else die('Fehler bei der Datenbankabfrage');
+		//Für jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
+		
+		$text = shell_exec($et_path."/exiftool ".$FN);
+		$inf_arr = explode(chr(10), $text);	//Zerlegung des Textes am Zeilenumbruch
+		//echo count($inf_arr)." Meta-Angaben im Bild ".$FN."<BR><BR>";;
+		
+		FOREACH($inf_arr AS $IA)
+		{
+			$F_W = explode(' : ', $IA);	//Zerlegung der Zeilen in Feld und Wert
+			$fieldname = $F_W[0];
+			//'Bereinigung des Feldnamen:
+			$fieldname = str_replace(" ","",$fieldname);
+			$fieldname = str_replace("/","",$fieldname);
+			$fieldname = str_replace("-","_",$fieldname);
+			$value = trim($F_W[1]);
+			//echo "FN: ".$fieldname.", Wert: ".$value."<BR>";
+			
+			IF(in_array($fieldname,$tab_fieldname))
+			{
+				//$value = formatValues($fieldname,$bild,$et_path);
+				
+				IF($fieldname == 'GPSLatitude')
+				{
+					$value = shell_exec($et_path."/exiftool -c '%.11f' -s -s -s -GPSLatitude -n ".$FN);
+					$result4 = mysql($db, "UPDATE $table14 SET GPSLatitude = '$value' WHERE pic_id = '$pic_id'");
+				}
+				
+				IF($fieldname == 'GPSLongitude')
+				{
+					$value = shell_exec($et_path."/exiftool -c '%.11f' -s -s -s -GPSLongitude -n ".$FN);
+					$result4 = mysql($db, "UPDATE $table14 SET GPSLongitude = '$value' WHERE pic_id = '$pic_id'");
+				}
+				
+				IF($fieldname == 'GPSAltitude')
+				{
+					$value = shell_exec($et_path."/exiftool -c '%.11f' -s -s -s -GPSAltitude -n ".$FN);
+					$result4 = mysql($db, "UPDATE $table14 SET GPSAltitude = '$value' WHERE pic_id = '$pic_id'");
+				}
+				
+				IF($fieldname == 'DateTimeOriginal')
+				{
+					$tmp_value = explode(" ",$value);
+					$value = str_replace(':','-',$tmp_value[0])." ".$tmp_value[1];
+				}
+				IF($fieldname == 'FileSize')
+				{
+					$value = shell_exec($et_path."/exiftool -FileSize -n ".$FN);
+					$fs_arr = explode(' : ', $value);
+					$value = trim($fs_arr[1]);
+				}
+				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";	
+				//Bildbreite- und Höhe werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
+				IF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight') AND ($value !== '0' AND $value !== ''))
+				{
+					$result4 = mysql($db, "UPDATE $table14 SET ExifImageHeight = '$value', ImageHeight = '$value' WHERE pic_id = '$pic_id'");
+				}
+				ELSEIF(($fieldname == 'ExifImageWidth' OR $fieldname == 'ImageWidth') AND ($value !== '0' AND $value !== ''))
+				{
+					$result4 = mysql($db, "UPDATE $table14 SET ExifImageWidth = '$value', ImageWidth = '$value' WHERE pic_id = '$pic_id'");
+				}
+				ELSEIF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight' OR $fieldname == 'ExifImageWidth' OR $fieldname == 'ImageWidth') AND ($value == '0' OR $value == ''))
+				{
+					//keine Aktualisierung!
+				}
+				ELSE
+				{
+					$result4 = mysql($db, "UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
+				}
+				IF(mysql_error() !== '')
+				{
+					echo "Fehler beim speichern der Meta-Daten: ".mysql_error()."<BR>~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR>";
+				}
+				//echo "FN: ".$fieldname.", Wert: ".$value."<BR>";
+			}
+		}
+		//Wenn Breite, Höhe, Dateigröße oder Ausrichtung nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
+		$result9 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+		$ImageWidth = mysql_result($result9, $i9, 'ImageWidth');
+		$ImageHeight = mysql_result($result9, $i9, 'ImageHeight');
+		$FileSize = mysql_result($result9, $i9, 'FileSize');
+		$Orientation = mysql_result($result9, $i9, 'Orientation');
+		$GPSLat = number_format(mysql_result($result9, $i9, 'GPSLatitude'),6,'.','.');
+		$GPSLon = number_format(mysql_result($result9, $i9, 'GPSLongitude'),6,'.','.');
+		$GPSAlt = mysql_result($result9, $i9, 'GPSAltitude');
+		
+		@$params=getimagesize($FN);
+		$breite = $params[0];
+		$hoehe = $params[1];
+		clearstatcache();
+		$FileSize = filesize($FN);	//Datiegröße in Byte
+		
+		IF($ImageWidth == '0' OR $ImageWidth == '')
+		{
+			$result10 = mysql($db, "UPDATE $table14 SET ImageWidth = '$breite' WHERE pic_id = '$pic_id'");
+		}
+		
+		IF($ImageHeight == '0' OR $ImageHeight == '')
+		{
+			$result11 = mysql($db, "UPDATE $table14 SET ImageHeight = '$hoehe' WHERE pic_id = '$pic_id'");
+		}
+		
+		IF($FileSize == '0' OR $FileSize == '')
+		{
+			$result12 = mysql($db, "UPDATE $table14 SET FileSize = '$FileSize' WHERE pic_id = '$pic_id'");
+		}
+		//Ausrichtung wird intern immer als '1' angesehen!
+		$result13 = mysql($db, "UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$pic_id'");
+			
+		//verbuchung der Geo-Koordinaten:
+		IF($GPSLat !== '' OR $GPSLon !== '' OR $GPSAlt !== '')
+		{
+			$result14 = mysql($db, "INSERT INTO $table12 (longitude, latitude, altitude, location) VALUES ('$GPSLon', '$GPSLat', '$GPSAlt', 'BITTE ORT BENENNEN')");
+			$lid = mysql_insert_id();
+			//echo "Last insert id: ".$lid."<BR>";
+			$result15 = mysql($db, "UPDATE $table2 SET loc_id = '$lid' WHERE pic_id = '$pic_id'");
+			echo mysql_error();
+		}
+	}
+}
+
+function convertISO_ASCII($text)
+{
+	$array_1 = array('Ä', 'ä', 'Ö', 'ö', 'Ü', 'ü', 'ß');
+	$array_2 = array('Ae', 'ae', 'Oe', 'oe', 'Ue', 'ue', 'ss');
+	$anzahl = count($array_1);
+	for($x = 0; $x < $anzahl; $x++)
+	{
+		$text = str_replace($array_1[$x], $array_2[$x], $text);
+	}
+	return $text;
+}
+
+function convertOrientationTextToNumber($value)
+{
+	SWITCH($value)
+	{
+		CASE 'Horizontal (normal)':
+		$value = '1';
+		break;
+		
+		CASE 'Mirror horizontal':
+		$value = '2';
+		break;
+		
+		CASE 'Rotate 180':
+		$value = '3';
+		break;
+		
+		CASE 'Mirror vertical':
+		$value = '4';
+		break;
+		
+		CASE 'Mirror horizontal and rotate 270 CW':
+		$value = '5';
+		break;
+		
+		CASE 'Rotate 90 CW':
+		$value = '6';
+		break;
+		
+		CASE 'Mirror horizontal and rotate 90 CW':
+		$value = '7';
+		break;
+		
+		CASE 'Rotate 270 CW':
+		$value = '8';
+		break;
+	}
+	return $value;
+}
+
+function checkSoftware()
+{
+	//Kontrolle, ob erforderliche Software-Komponenten installiert sind:
+	
+	$et = shell_exec("rpm -q exiftool");
+	$im = shell_exec("rpm -q ImageMagick");
+	$dc = shell_exec("rpm -q dcraw");
+	$gb = shell_exec("rpm -q gpsbabel");
+	$loc = shell_exec("rpm -q kio-locate");
+	shell_exec("updatedb");
+	
+	echo "	<TABLE class='tablenormal' border='0'>
+		<TR>
+		<TD colspan='2'>Ergebnis der Software-Kontrolle:</TD>
+		</TR>
+		
+		<TR class='trflach'>
+		<TD colspan='2'></TD>
+		</TR>";
+	
+	IF(stristr($loc, 'package'))
+	{
+		echo "<TR>
+		<TD class='tdleft'>locate</TD>
+		<TD class='tdright'><FONT COLOR='red'>nicht installiert</FONT></TD>
+		</TR>";
+	}
+	ELSE
+	{
+		$loc_db = shell_exec("locate locatedb");
+		IF($loc_db == '')
+		{
+			shell_exec("updatedb");
+		}
+		echo "<TR>
+		<TD class='tdleft'>locate</TD>
+		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		</TR>";
+	}
+	
+	IF(stristr($et, 'package'))
+	{
+		$et_test = shell_exec("locate *exiftool");
+		IF($et_test == '')
+		{
+			echo "<TR>
+			<TD class='tdleft'>ExifTool</TD>
+			<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>nicht installiert</a></TD>
+			</TR>";
+		}
+		ELSE
+		{
+			echo "<TR>
+			<TD class='tdleft'>ExifTool</TD>
+			<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+			</TR>";
+		}
+	}
+	ELSE
+	{
+	echo "<TR>
+		<TD class='tdleft'>ExifTool</TD>
+		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		</TR>";
+	}
+	
+	IF(stristr($im, 'package'))
+	{
+		echo "<TR>
+		<TD class='tdleft'>ImageMagick</TD>
+		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>nicht installiert</a></TD>
+		</TR>";
+	}
+	ELSE
+	{
+		echo "<TR>
+		<TD class='tdleft'>ImageMagick</TD>
+		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		</TR>";
+	}
+	
+	IF(stristr($dc, 'package'))
+	{
+		echo "<TR>
+		<TD class='tdleft'>dcraw</TD>
+		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>nicht installiert</a></TD>
+		</TR>";
+	}
+	ELSE
+	{
+		echo "<TR>
+		<TD class='tdleft'>dcraw</TD>
+		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		</TR>";
+	}
+	
+	IF(stristr($gb, 'package') OR stristr($gb, 'gpsbabel'))
+	{
+		$gb_test = shell_exec("locate *gpsbabel");
+		IF($gb_test == '')
+		{
+			echo "<TR>
+			<TD class='tdleft'>GPSBabel</TD>
+			<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>nicht installiert</a></TD>
+			</TR>";
+		}
+		ELSE
+		{
+			echo "<TR>
+			<TD class='tdleft'>GPSBabel</TD>
+			<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+			</TR>";
+		}
+	}
+	
+	echo "	<TR class='trflach'>
+		<TD colspan='2'></TD>
+		</TR>
+		</TABLE>
+		
+		<CENTER>
+		<TABLE style='width:500px; text-align:center;'>
+		<TR>
+		<TD><BR><u>WICHTIGER HINWEIS:</u><BR>Sollte eine der gelisteten Software-Komponenten nicht installiert sein, holen Sie dies bitte <b>VOR</b> der ersten Benutzung von pic2base nach.<BR>Anderenfalls werden einige Funktionen fehlen oder fehlerhaft sein!
+		</TD>
+		</TR>
+		</TABLE>
+		</CENTER>";
+}
+
+?>
