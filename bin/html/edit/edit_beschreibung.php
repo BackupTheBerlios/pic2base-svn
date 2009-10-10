@@ -80,7 +80,7 @@ echo "
 		IF ($art == 'single_desc_edit')
 		{
 			$edit_mod = 'desc';
-			getPictureDetails($pic_id,$edit_mod);
+			getPictureDetails($pic_id,$edit_mod,$sr);
 			echo "<p align='right'><a href='edit_beschreibung.php?kat_id=$kat_id&ID=$ID&mod=kat&pic_id=0' title='Einzel-Beschreibungsmodus verlassen'><img src='../../share/images/back.gif' width='15' height='15' border='0' alt='zurück' style='margin-right:5px';></a></p>";
 		}
 		ELSE

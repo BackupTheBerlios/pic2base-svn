@@ -58,14 +58,28 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>
-	</TR>
+	</TR>";
 	
+	IF($view == 'kompact')
+	{
+	echo "
 	<TR class='normal'>
 		<TD class='normal' colspan = '2'>
-		Alle Details zum Bild ".$pic_id."
+		Ausgew&auml;hlte Details zum Bild ".$pic_id." >>> <a href=\"details.php?pic_id=$pic_id&view=all\">alle</a> Details
 		</TD>
-	</TR>
+	</TR>";
+	}
+	ELSEIF($view == 'all')
+	{
+	echo "
+	<TR class='normal'>
+		<TD class='normal' colspan = '2'>
+		Alle Details zum Bild ".$pic_id." >>> zur <a href=\"details.php?pic_id=$pic_id&view=kompact\">Kompakt-Ansicht</a>
+		</TD>
+	</TR>";
+	}
 	
+	echo "
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>
@@ -133,7 +147,10 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 
 //es werden all diejenigen Tags dargestellt, die das Bild mitgebracht hat und deren Daten in der Tabelle meta_data hinterlegt sind und zusätzlich die editierbaren Felder:
 //zuerst werden alle editierbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
+
 $result4 = mysql($db, "SELECT field_name FROM $table5 WHERE writable = '1'");
+
+echo mysql_error();
 $num4 = mysql_num_rows($result4);
 IF($num4 > '0')
 {
@@ -145,6 +162,23 @@ IF($num4 > '0')
 	}
 }
 //print_r($writable_fields);
+
+//dann werden alle in der Kompact-Ansicht lesbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
+
+$result5 = mysql($db, "SELECT field_name FROM $table5 WHERE viewable = '1'");
+
+echo mysql_error();
+$num5 = mysql_num_rows($result5);
+IF($num5 > '0')
+{
+	$viewable_fields = array();
+	FOR($i5='0'; $i5<$num5; $i5++)
+	{
+		$field_name = mysql_result($result5, $i5, 'field_name');
+		$viewable_fields[$field_name] = $field_name;
+	}
+}
+//print_r($viewable_fields);
 
 //$file = $pic_path."/".$FileName;
 $file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
@@ -207,6 +241,7 @@ FOREACH($info_arr AS $IA)
 		IF($num3 == '1')
 		{
 			$writable = mysql_result($result3, $i3, 'writable');
+			$viewable = mysql_result($result3, $i3, 'viewable');
 			IF($writable == '1')
 			{
 				$color = 'red';
@@ -220,10 +255,25 @@ FOREACH($info_arr AS $IA)
 			}
 		}
 		
-		echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
-		echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
-		<TD class='liste2' style='width:225px;'>".$value."</TD>
-		</TR>";
+		SWITCH($view)
+		{
+			case 'kompact':
+			IF(in_array($tag,$viewable_fields))
+			{
+				echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
+				echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
+				<TD class='liste2' style='width:225px;'>".$value."</TD>
+				</TR>";
+			}
+			break;
+			
+			case 'all':
+			echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
+			echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
+			<TD class='liste2' style='width:225px;'>".$value."</TD>
+			</TR>";
+			break;
+		}
 	}
 	$n++;
 }

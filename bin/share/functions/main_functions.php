@@ -5,11 +5,9 @@ Datei enthält folgende Funktionen:
 
 function OptionFields()								verwendet
 function getMonthName($month_number)						verwendet
-function createPreview($pic_id)							verwendet			Z. 423
 function rotatePreviewPictures($Orientation, $FileNameV)			verwendet (Stapel-Erfassung)	Z. 472
 function rotateOriginalPictures($Orientation, $FileName)			verwendet (Stapel-Erfassung)	Z. 500
 function createQuickPreview($Orientation, $FileNameOri)				verwendet (Bearbeitung - Quick-Preview)
-function getPictureDetails($pic_id)						verwendet in edit_beschreibung	Z. 558
 function createPreviewPicture($file_name, $path_copy, $dest_path, $max_len)	verwendet
 function resizeOriginalPicture($FileName, $path_copy, $dest_path, $max_len)	verwendet 			Z. 698
 function createFullScreenView($pic_id, $quality)				(nicht) verwendet
@@ -118,54 +116,6 @@ function getMonthName($month_number)
 	RETURN $month_name;
 }
 
-function createPreview($pic_id)
-{
-	include '../../share/global_config.php';
-	include $sr.'/bin/share/db_connect1.php';
-	$res0 = mysql($db, "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
-	$FileName = mysql_result($res0, $i1, 'FileName');
-	$FileNameHQ = mysql_result($res0, $i1, 'FileNameHQ');
-	$FileNameV = mysql_result($res0, $i1, 'FileNameV');
-	$Width = mysql_result($res0, $i1, 'Width');
-	$Height = mysql_result($res0, $i1, 'Height');
-	$Orientation = mysql_result($res0, $i1, 'Orientation');	// 1: normal; 8: 90 nach rechts gedreht
-	//echo "Bildbreite: ".$Width.", Bildhöhe: ".$Height."<BR>";
-	
-	//abgeleitete Größen:
-	IF ($FileNameV == '')
-	{
-		$FileNameV = 'no_preview.jpg';
-	}
-	
-	@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
-	$Breite = $parameter_v[0] * 5;
-	$Hoehe = $parameter_v[1] * 5;
-	//echo "Breite: ".$Breite.", Hï¿½e: ".$Hoehe."<BR>";
-	IF ($breite == 0 AND $hoehe == 0)
-	{
-		$breite = 800;
-		$hoehe = 600;
-	}
-	//echo "Breite: ".$breite.", Hï¿½e: ".$hoehe."<BR>";
-      	$width_height=$parameter_v[3];
-      	//Für die Darstellung des Vollbildes wird eine mittlete Größe unter Beachtung des Seitenverhältnisses errechnet:
-      	//max. Ausdehnung: 1000px
-      	$max = '1000';
-      	IF ($Breite >= $Hoehe)
-      	{
-      		$breite = $max;
-      		$hoehe = $breite * $Hoehe / $Breite;
-      	}
-      	ELSE
-      	{
-      		$hoehe = $max;
-      		$breite = $hoehe * $Breite / $Hoehe;
-      	}
-      	//echo "Breite: ".$breite.", Hï¿½e: ".$hoehe."<BR>";
-      	$bild = $inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ;
-	echo "<a href=\"$bild\" target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '', 'HQ');return false\"  title='Vergr&ouml;&szlig;erte Ansicht'><img src=$inst_path/pic2base/images/vorschau/thumbs/$FileNameV alt='Vorschaubild'></a>";
-}
-
 function rotatePreviewPictures($Orientation, $FileNameV)
 {
 	include '../../share/global_config.php';
@@ -249,134 +199,6 @@ function createQuickPreview($Orientation,$FileName)
 		break;
 	}
 	return $FileName;
-}
-
-function getPictureDetails($pic_id,$edit_mod)
-{
-	include '../../share/db_connect1.php';
-	//Darstellung der Detailangaben zum gewählten Bild:
-	//echo "Bild-ID: ".$pic_id."<BR>";
-	IF ($pic_id !=='0')
-	{
-	echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Details zum ausgew&auml;hlten Bild:<BR>";
-	$result8 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-	$DateTime = mysql_result($result8, $i8, 'DateTime');
-	$FileName = mysql_result($result8, $i8, 'FileName');
-	$user_id = mysql_result($result8, $i8, 'Owner');
-	$result10 = mysql($db, "SELECT username FROM $table1 WHERE id = '$user_id'");
-	$Owner = mysql_result($result10, $i10, 'username');
-	$FileSize = mysql_result($result8, $i8, 'FileSize');
-	$Width = mysql_result($result8, $i8, 'Width');
-	$Height = mysql_result($result8, $i8, 'Height');
-	$Orientation = mysql_result($result8, $i8, 'Orientation');
-	$Description = mysql_result($result8, $i8, 'Description');
-	$note = mysql_result($result8, $i8, 'note');
-	SWITCH ($Orientation)
-	{
-		CASE '1':
-		$ausrichtung='Querformat';
-		break;
-		
-		CASE '3':
-		$ausrichtung='Kopfüber';
-		break;
-		
-		CASE '6':
-		CASE '8':
-		$ausrichtung='Hochformat';
-		break;
-		
-		default:
-		$ausrichtung = 'nicht vermerkt';
-		break;
-	}
-		//Welche Kategorien wurden dem Bild zugewiesen?
-	$result9 = mysql($db, "SELECT DISTINCT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie, $table4.level FROM $table10 INNER JOIN $table4 ON ($table10.kat_id = $table4.kat_id AND $table10.pic_id = '$pic_id') ORDER BY $table4.level");
-	$num9 = mysql_num_rows($result9);
-	
-	$kat_info='';
-	FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewï¿½lt, da die Wurzel uninteressant ist!
-	{
-		//echo $num5."<BR>";
-		$kategorie = mysql_result($result9, $i9, 'kategorie');
-		IF ($i9 < $num9 - 1)
-		{
-			$kat_info .=$kategorie." - ";
-		}
-		ELSE
-		{
-			$kat_info .=$kategorie;
-		}
-	}
-	//echo "Kategorien: ".$kat_info."<BR>";
-	echo mysql_error();
-	$size = round($FileSize / 1024);
-	
-	echo "<TABLE id='detail1'>
-		<TR id='detail1'>
-		<TD id='detail1'>Bild-ID::</TD>
-		<TD id='detail2'>$pic_id</TD>
-		<TD id='detail3' rowspan='7'>";
-		createPreview($pic_id);
-		echo "</TD>
-		</TR>
-		
-		<TR id='detail1'>
-		<TD id='detail1'>Datei-Name::</TD>
-		<TD id='detail2'>$FileName</TD>
-		</TR>
-		
-		<TR id='detail1'>
-		<TD id='detail1'>Aufn.-Datum:</TD>
-		<TD id='detail2'>";
-		IF ($DateTime == '0000-00-00 00:00:00')
-		{
-			echo "nicht vermerkt";
-		}
-		ELSE
-		{
-			echo date('d.m.Y', strtotime($DateTime));
-		}
-		echo "</TD>
-		</TR>
-		
-		<TR id='detail1'>
-		<TD id='detail1'>Autor:</TD>
-		<TD id='detail2'>$Owner</TD>
-		</TR>
-		
-		<TR id='detail1'>
-		<TD id='detail1'>Bild-Gr&ouml;sse:</TD>
-		<TD id='detail2'>$Width x $Height</TD>
-		</TR>
-		
-		<TR id='detail1'>
-		<TD id='detail1'>Datei-Gr&ouml;sse:</TD>
-		<TD id='detail2'>".$size." Byte</TD>
-		</TR>
-		
-		<TR id='detail1'>
-			<TD id='detail1'>Ausrichtung:</TD>
-		<TD id='detail2'>".$ausrichtung."</TD>
-		</TR>
-		
-		<TR id='detail2'>
-		<TD id='detail4' colspan='3' bgcolor='#bdbec6'><BR></TD>
-		</TR>";
-		
-		SWITCH($edit_mod)
-		{
-			CASE 'desc':
-			echo "
-			<TR id='detail2'>
-			<TD id='detail4' colspan='3'><b>Bildbeschreibung:</b><BR><textarea name='description' wordwrap style='width:380px; height:140px; background-color:#DFEFFf;'>$Description</textarea></TD>
-			</TR>";
-			break;
-		}
-		echo "
-		</TABLE>
-		<input type='hidden' name='PIC_id' value='$pic_id'>";
-	}	
 }
 
 function createPreviewPicture($FILE, $dest_path, $max_len)
@@ -1467,19 +1289,28 @@ function extractExifData($pic_id, $sr)
 				IF($fieldname == 'GPSLatitude')
 				{
 					$value = shell_exec($et_path."/exiftool -c '%.11f' -s -s -s -GPSLatitude -n ".$FN);
-					$result4 = mysql($db, "UPDATE $table14 SET GPSLatitude = '$value' WHERE pic_id = '$pic_id'");
+					IF($value !== '' AND $value !== NULL AND $value !== '0.000000')
+					{
+						$result4 = mysql($db, "UPDATE $table14 SET GPSLatitude = '$value' WHERE pic_id = '$pic_id'");
+					}
 				}
 				
 				IF($fieldname == 'GPSLongitude')
 				{
 					$value = shell_exec($et_path."/exiftool -c '%.11f' -s -s -s -GPSLongitude -n ".$FN);
-					$result4 = mysql($db, "UPDATE $table14 SET GPSLongitude = '$value' WHERE pic_id = '$pic_id'");
+					IF($value !== '' AND $value !== NULL AND $value !== '0.000000')
+					{
+						$result4 = mysql($db, "UPDATE $table14 SET GPSLongitude = '$value' WHERE pic_id = '$pic_id'");
+					}
 				}
 				
 				IF($fieldname == 'GPSAltitude')
 				{
 					$value = shell_exec($et_path."/exiftool -c '%.11f' -s -s -s -GPSAltitude -n ".$FN);
-					$result4 = mysql($db, "UPDATE $table14 SET GPSAltitude = '$value' WHERE pic_id = '$pic_id'");
+					IF($value !== '' AND $value !== NULL AND $value !== '0.0')
+					{
+						$result4 = mysql($db, "UPDATE $table14 SET GPSAltitude = '$value' WHERE pic_id = '$pic_id'");
+					}
 				}
 				
 				IF($fieldname == 'DateTimeOriginal')
@@ -1527,6 +1358,7 @@ function extractExifData($pic_id, $sr)
 		$GPSLat = number_format(mysql_result($result9, $i9, 'GPSLatitude'),6,'.','.');
 		$GPSLon = number_format(mysql_result($result9, $i9, 'GPSLongitude'),6,'.','.');
 		$GPSAlt = mysql_result($result9, $i9, 'GPSAltitude');
+		//echo $GPSLon.", ".$GPSLat.", ".$GPSAlt."<BR>";
 		
 		@$params=getimagesize($FN);
 		$breite = $params[0];
@@ -1552,7 +1384,7 @@ function extractExifData($pic_id, $sr)
 		$result13 = mysql($db, "UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$pic_id'");
 			
 		//verbuchung der Geo-Koordinaten:
-		IF($GPSLat !== '' OR $GPSLon !== '' OR $GPSAlt !== '')
+		IF($GPSLat !== '0.000000' AND $GPSLon !== '0.000000')
 		{
 			$result14 = mysql($db, "INSERT INTO $table12 (longitude, latitude, altitude, location) VALUES ('$GPSLon', '$GPSLat', '$GPSAlt', 'BITTE ORT BENENNEN')");
 			$lid = mysql_insert_id();

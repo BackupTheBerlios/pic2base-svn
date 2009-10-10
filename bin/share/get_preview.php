@@ -1681,7 +1681,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		{
 			$description = 'keine';
 		}
-		echo "<div id='tooltip1'><a href=edit_beschreibung.php?kat_id=$kat_id&pic_id=$pic_id&art=single_desc_edit&ID=$ID title='Nur Beschreibung dieses einen Bildes &auml;ndern'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
+		echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
 		break;
 		
 		CASE 'edit_bewertung':

@@ -121,7 +121,7 @@ $content = "<TABLE class = 'tablenormal' border='0'>
 		</TR>
 		
 		<TR>
-		<TD colspan = '6'><FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT>&#160;&#160;Hier legen Sie fest, welche Meta-Daten manuell ver&auml;ndert werden d&uuml;rfen:&#160;&#160;<FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT></TD>
+		<TD colspan = '6' style='text-align:center;'><FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT>&#160;&#160;Hier legen Sie fest, welche Meta-Daten manuell ver&auml;ndert werden d&uuml;rfen:&#160;&#160;<FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT></TD>
 		</TR>
 		
 		<TR class='trflach'>
@@ -145,7 +145,7 @@ FOR($r='0'; $r<$rows; $r++)
 		{
 			$checked = '';
 		}
-		IF($field_name !== '')
+		IF($field_name != NULL)
 		{
 			$content = $content."<TD class='tdbreit'>".$field_name."</TD>
 			<TD class='tdschmal'>

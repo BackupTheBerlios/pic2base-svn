@@ -57,7 +57,7 @@ ELSE
 
 function showAllDetails(mod, pic_id)
 {
-Fenster1 = window.open('../../share/details.php?pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
+Fenster1 = window.open('../../share/details.php?view=kompact&pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
 Fenster1.focus();
 }
 

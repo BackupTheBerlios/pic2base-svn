@@ -232,15 +232,16 @@ FOR($note='1'; $note<'6'; $note++)
 			}
 	
 		}
+		/*
 		ELSE
 		{
-			//Wenn es schon einnen Eintrag in der exef_data gibt, werden bestimmte Daten mit der Tabelle pictures abgeglichen:
+			//Wenn es schon einen Eintrag in der exef_data gibt, werden bestimmte Daten mit der Tabelle pictures abgeglichen:
 			//Abgleich des Aufnahme-Datums:
 			$result9 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 			//$result10 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 			$DateTimeOriginal_pt = mysql_result($result9, $i9, 'DateTimeOriginal');	//Wert in der pictures-Tabelle
 			$DateTimeOriginal_edt = mysql_result($result6, $i6, 'DateTimeOriginal');//Wert in der exif_data-Tabelle
-			//Erzeugung einde Log-Datei für alle Bilder ohne Original-Dateidatum:
+			//Erzeugung einer Log-Datei für alle Bilder ohne Original-Dateidatum:
 			IF($DateTimeOriginal_pt == '0000-00-00 00:00:00')
 			{
 				$fh = fopen($kml_dir."/exif.log","a");
@@ -254,7 +255,7 @@ FOR($note='1'; $note<'6'; $note++)
 				echo mysql_error();
 			}
 		}
-			
+		*/	
 		$laenge = (round((($i5 + 1) / $num5) * 500));
 		$anteil = number_format(($laenge / 5),2,',','.');
 		flush();

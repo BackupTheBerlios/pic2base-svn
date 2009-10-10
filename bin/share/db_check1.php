@@ -173,7 +173,7 @@ ELSE
 			`ExposureTime` varchar(13) default NULL,
 			`FNumber` varchar(13) default NULL,
 			`ExposureProgram` int(11) NOT NULL,
-			`DateTimeOriginal` datetime default NULL,
+			`DateTimeOriginal` datetime default '0000-00-00 00:00:00',
 			`MaxApertureValue` varchar(13) default NULL,
 			`MeteringMode` varchar(25) NOT NULL,
 			`LightSource` varchar(17) default NULL,
@@ -235,6 +235,7 @@ ELSE
 			`lfdnr` int(11) NOT NULL auto_increment,
 			`field_name` varchar(50) NOT NULL default '0',
 			`writable` BOOL NOT NULL DEFAULT '0',
+			`viewable` BOOL NOT NULL DEFAULT '0',
 			PRIMARY KEY  (`lfdnr`)
 			) ENGINE=MyISAM COMMENT='Sperr-Tabelle fuer META-Daten' AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			

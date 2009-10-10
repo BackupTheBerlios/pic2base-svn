@@ -3,7 +3,8 @@ INCLUDE 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
-//Ermittlung des Anfangs (min.) und Enddatums (max):
+
+//Ermittlung des Anfangs (min.) und Enddatums (max): **************************************************************
 
 //echo $bewertung;
 $stat = createStatement($bewertung);
@@ -16,6 +17,7 @@ $result2 = mysql($db, "SELECT MAX(YEAR(DateTimeOriginal)) AS MAX_DTO, MIN(YEAR(D
 $Min_DT = mysql_result($result2, $i2, 'MIN_DTO');
 $Max_DT = mysql_result($result2, $i2, 'MAX_DTO');
 //echo "Fr&uuml;hestes Jahr: ".$Min_DT.", sp&auml;testes Jahr: ".$Max_DT."<BR>";
+//******************************************************************************************************************
 
 echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach Aufnahmedatum<BR>
 	<TABLE id='kat'>
