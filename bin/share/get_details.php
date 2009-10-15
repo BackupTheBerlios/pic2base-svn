@@ -12,7 +12,7 @@ $result15 = mysql($db, "SELECT id FROM $table1 WHERE username = '$c_username' AN
 $user_id = mysql_result($result15, $i15, 'id');
 include $sr.'/bin/share/functions/permissions.php';
 
-//Darstellung der Detailangaben zum gewählten Bild:
+//Darstellung der Detailangaben zum gewï¿½hlten Bild:
 //echo "Bild-ID: ".$pic_id."<BR>";
 IF ($pic_id !=='0')
 {
@@ -50,7 +50,7 @@ IF ($pic_id !=='0')
 		$num9 = mysql_num_rows($result9);
 			
 		$kat_info='';
-		FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewählt, da die Wurzel uninteressant ist!
+		FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewaehlt, da die Wurzel uninteressant ist!
 		{
 			//echo $num5."<BR>";
 			$kategorie = htmlentities(mysql_result($result9, $i9, 'kategorie'));
@@ -86,7 +86,7 @@ IF ($pic_id !=='0')
 		//echo "Kategorien: ".$kat_info."<BR>";
 		echo mysql_error();
 		//$size = round($FileSize / 1024);
-		$max_size = 90;			//max. Seitenlänge des Vorschau-Bildes
+		$max_size = 90;			//max. Seitenlï¿½nge des Vorschau-Bildes
 		$quality = '3';
 		echo "<FORM name = beschr method=post action=save_desc.php?pic_id=$pic_id&base_file=$base_file>";
 		echo "<TABLE id='detail1'>
@@ -161,7 +161,7 @@ IF ($pic_id !=='0')
 
 			IF($Owner == $c_username)
 			{
-				//Eigentümer darf Aufnahme-Datum manuell ergänzen
+				//Eigentuemer darf Aufnahme-Datum manuell ergaenzen
 				echo "<input type='text' id='aufn_dat' name='aufn_dat' value = '$DateTimeOriginal' style='width:70px; height:16px;font-size:10px;text-align:center;'>&#160;<span style='cursor:pointer'><img src=\"$inst_path/pic2base/bin/share/images/calendar.png\" style=\"width:14px; height:14px; vertical-align:middle;\" title='Hier klicken, um Datum auszuw&auml;hlen' onClick='JavaScript:Kalender.anzeige(null,null,\"aufn_dat\",-3650,3651,\"%d.%m.%y\")'></span>";
 				//echo "Kalender";
 			}
@@ -174,7 +174,7 @@ IF ($pic_id !=='0')
 		ELSE
 		{
 			echo date('d.m.Y', strtotime($DateTimeOriginal));
-			//dies ist ein Dummy, damit bei bereits vorhandenem Datum der Wert für $aufn_dat ordentlich als "leer" übergeben wird:
+			//dies ist ein Dummy, damit bei bereits vorhandenem Datum der Wert fuer $aufn_dat ordentlich als "leer" uebergeben wird:
 			echo "<input type='hidden' name = 'aufn_dat'>";
 		}
 		echo "</TD>
@@ -288,7 +288,7 @@ IF ($pic_id !=='0')
 			$symb4 = "<BR>";
 		}
 		
-		//Bild kann nachträglich mit neuen Parametern eingelesen werden, wenn es sich um ein RAW-Format handelt:
+		//Bild kann nachtraeglich mit neuen Parametern eingelesen werden, wenn es sich um ein RAW-Format handelt:
 		$ext = strtolower(substr($FileNameOri,-3,3));
 		IF($Owner == $c_username AND ((hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic'))) AND $ext == 'nef')
 		{
@@ -299,7 +299,7 @@ IF ($pic_id !=='0')
 			$symb3 = "<BR>";
 		}
 		
-		//Wenn der angemeldete User Admin-Rechte hat, werden die Icons zum löschen bzw. aufheben der Geo-Referenzierung angezeigt. Anderenfalls nur das Icon für den Download.
+		//Wenn der angemeldete User Admin-Rechte hat, werden die Icons zum lï¿½schen bzw. aufheben der Geo-Referenzierung angezeigt. Anderenfalls nur das Icon fï¿½r den Download.
 		IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'deletepic')))
 		{
 			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
