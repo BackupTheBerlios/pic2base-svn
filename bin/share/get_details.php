@@ -12,7 +12,7 @@ $result15 = mysql($db, "SELECT id FROM $table1 WHERE username = '$c_username' AN
 $user_id = mysql_result($result15, $i15, 'id');
 include $sr.'/bin/share/functions/permissions.php';
 
-//Darstellung der Detailangaben zum gew�hlten Bild:
+//Darstellung der Detailangaben zum gewaehlten Bild:
 //echo "Bild-ID: ".$pic_id."<BR>";
 IF ($pic_id !=='0')
 {
