@@ -44,7 +44,7 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
 */
-
+ 
 unset($username);
 IF ($_COOKIE['login'])
 {
