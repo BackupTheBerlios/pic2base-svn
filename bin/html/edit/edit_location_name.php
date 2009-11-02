@@ -23,7 +23,7 @@
   	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE">
 
 <CENTER>
 
