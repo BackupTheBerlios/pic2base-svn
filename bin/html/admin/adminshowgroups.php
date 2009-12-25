@@ -1,6 +1,6 @@
 <?
   mysql_connect ($db_server, $user, $PWD);
-  $result = mysql ($db,"select * from $table9 ORDER BY description");
+  $result = mysql_query("select * from $table9 ORDER BY description");
   $num = mysql_num_rows($result);
   echo "<center><table class='normal' border='0'>
 	<tr>

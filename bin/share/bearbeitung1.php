@@ -40,7 +40,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 {
 	//echo "Vorschau...";
 	include 'db_connect1.php';
-	$res0 = mysql($db, "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
+	$res0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
 	$FileName = mysql_result($res0, $i1, 'FileName');
 	$FileNameHQ = mysql_result($res0, $i1, 'FileNameHQ');
 	$FileNameV = mysql_result($res0, $i1, 'FileNameV');
@@ -186,7 +186,7 @@ $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
-$result000 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result000 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result000, $i000, 'berechtigung');
 
 //Festlegung der Datenanzeige:
@@ -244,13 +244,13 @@ SWITCH($bew)
 
 IF($bew < '6')
 {
-	$result0 = mysql($db, "SELECT * FROM $table2 WHERE ($kriterium) AND note = '$bew'");
+	$result0 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium) AND note = '$bew'");
 }
 ELSE
 {
-	$result0 = mysql($db, "SELECT * FROM $table2 WHERE ($kriterium)");
+	$result0 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium)");
 }
-//$result0 = mysql($db, "SELECT * FROM $table2 WHERE ($kriterium) AND note = '$bew'");
+//$result0 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium) AND note = '$bew'");
 @$num0 = mysql_num_rows($result0);
 $N = 5;			//Anzahl der anzuzeigenden Datensätze
 
@@ -272,13 +272,13 @@ IF ($num0 > $N)
 
 IF($bew < '6')
 {
-	$result1 = mysql($db, "SELECT * FROM $table2 WHERE ($kriterium) AND note = '$bew' ORDER BY 'DateTime' LIMIT $div, $N ");
+	$result1 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium) AND note = '$bew' ORDER BY 'DateTime' LIMIT $div, $N ");
 }
 ELSE
 {
-	$result1 = mysql($db, "SELECT * FROM $table2 WHERE ($kriterium) ORDER BY 'DateTime' LIMIT $div, $N");
+	$result1 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium) ORDER BY 'DateTime' LIMIT $div, $N");
 }
-//$result1 = mysql($db, "SELECT * FROM $table2 WHERE ($kriterium) LIMIT $div, $N");
+//$result1 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium) LIMIT $div, $N");
 @$num1 = mysql_num_rows($result1);
 echo "
 <div class='page'>";

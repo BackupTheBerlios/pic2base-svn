@@ -51,11 +51,20 @@ $sup_ft_arr = explode(chr(10),shell_exec($im_path."/identify -list format"));
 //$sup_ft_arr = explode(chr(10),$sup_ft);
 //print_r($sup_ft_arr);
 
+$page = $_GET['page']; // für register_globals = off
+
 FOREACH($sup_ft_arr AS $SFT)
 {
 	$SFT = str_replace("  ","",$SFT);
 	$zeil_arr = explode(chr(32),$SFT);
-	$mod = $zeil_arr[2];
+	if(isset($zeil_arr[2]))
+	{
+		$mod = $zeil_arr[2];
+	}
+	else
+	{
+		$mod = ' ';
+	}
 	IF($mod !== ' ')
 	{
 		$file_format = strtolower(str_replace('*','',$zeil_arr[0]));
@@ -193,7 +202,7 @@ echo "
 		Hinweis:<BR>F&uuml;r diese Funktion m&uuml;ssen Cookies zugelassen sein!<BR><BR>
 		
 		<u>Auflistung nach Jahrg&auml;ngen sortiert</u><BR>
-		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den EXIF-Daten ausgelesen. Handelt es sich um Bilddateien ohne EXIF-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefasst.<BR><BR>
+		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den EXIF-Daten ausgelesen. Handelt es sich um Bilddateien ohne EXIF-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefa&#223;.<BR><BR>
 		<u>Suche nach Kategorien</u><BR>
 		In dieser Ansicht besteht die M&ouml;glichkeit, Bilder anhand der zugewiesenen Kategorie zu recherchieren.<BR>
 		Die oberste Ebene (Neuzug&auml;nge) beinhaltet alle Bilder, welchen noch keine Kategorie zugewiesen wurden.<BR>
@@ -311,7 +320,6 @@ echo "
 		<a href='#hist'>Histogramme</a><BR>
 		<a href='#md'>Meta-Daten</a><BR>
 		<a href='#mp'>Meta-Protect</a><BR>
-		<a href='#ma'>Meta-Ansicht</a><BR>
 		<a href='#sw'>Software-Check</a><BR><BR>
 		
 		<a name = 'kat'>Kategorien</a><BR>
@@ -377,7 +385,7 @@ echo "
 		Wichtiger Hinweis: Hier treffen die selben Einschr&auml;nkungen wie beim Punkt 'Histogramme' zu.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='mp'>Meta-Protect</a></a><BR><BR>
+		<a ame='mp'>Meta-Protect</a></a><BR><BR>
 		
 		Im Arbeitsbereich Meta-Protect kann eingestellt werden, welche Meta-Daten von berechtigten Usern nachtr&auml;glich manuell modifiziert werden d&uuml;rfen.
 		Diese Einstellungen sollten mit gr&ouml;&#223;ter Sorgfalt erfolgen.
@@ -392,12 +400,6 @@ echo "
 		</ul>
 		<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		Hilfreich kann die Editier-Freigabe jedoch sein, wenn z.B. die interne Kamera-Uhr falsch gestellt war und das Aufnahme-Datum korrigiert werden soll. Aber auch die nachtr&auml;gliche Vergabe von Copyright-Vermerken l&auml;&#223;t sich &uuml;ber gezielte Freigabe-Einstellungen erm&ouml;glichen.<BR>
-		<a href='#top'>Zum Seitenanfang</a><BR><BR>
-		
-		<a name='ma'>Meta-Ansicht</a></a><BR><BR>
-		
-		Im Arbeitsbereich Meta-Ansicht kann eingestellt werden, welche Meta-Daten in der Kompakt-Ansicht der Bild-Details dargestellt werden.
-		Damit hat man eine Auswahl der wichtigsten Meta-Daten schnell im Blick, kann aber auf Wunsch &uuml;ber den Link in der Kopfzeile des Fensters in die Darstellung der vollst&auml;ndigen Meta-Daten-Liste umschalten.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name='sw'>Software-Check</a></a><BR><BR>

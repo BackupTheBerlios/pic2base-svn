@@ -33,7 +33,14 @@
 include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
 
-$res = mysql($db, "UPDATE $table4 SET kategorie='$kategorie' WHERE kat_id='$ID'");
+//var_dump($_POST);
+$ID = $_GET['ID']; // für register_globals = off
+$kat_id = $_GET['kat_id']; // für register_globals = off
+$kategorie = $_POST['kategorie']; // für register_globals = off
+
+// *#*  echo "kategorie: ".$kategorie."<br>";
+
+$res = mysql_query( "UPDATE $table4 SET kategorie='$kategorie' WHERE kat_id='$ID'");
 echo mysql_error();
 echo "<meta http-equiv='Refresh' content='0, URL=kat_edit.php?kat_id=$kat_id&ID=$ID'>";
 

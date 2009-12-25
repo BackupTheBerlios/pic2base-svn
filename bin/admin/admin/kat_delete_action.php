@@ -46,8 +46,8 @@ list($c_username) = split(',',$_COOKIE['login']);
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 SWITCH ($berechtigung)
 {
 	//Admin
@@ -58,20 +58,27 @@ SWITCH ($berechtigung)
 
 //Ausgehend von der gewählten Kategorie müssen alle Unterkategorien bestimmt werden. Dann müssen aus der Tabelle 10 (pic_kat) alle Einträge gelöscht werden, welche auf die gewählte Kategorie bzw. deren Unterkategorie verweisen.
 
-$res1 = mysql($db, "SELECT max(level) FROM $table4");
-$max_level = mysql_result($res1, $i1, 'max(level)');
+// für register_globals = off
+$ID = $_GET['ID']; 
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id']; 
+}
+
+$res1 = mysql_query( "SELECT max(level) FROM $table4");
+$max_level = mysql_result($res1, isset($i1), 'max(level)');
 //echo "max. Level: ".$max_level."<BR>";
-$result2 = mysql($db, "SELECT * FROM $table4 WHERE parent = '$ID'");
+$result2 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$ID'");
 $num2 = mysql_num_rows($result2);
 $child_arr[] = $ID;
 IF($num2 > '0')
 {
-	$curr_level = mysql_result($result2, $i2, 'level');
+	$curr_level = mysql_result($result2, isset($i2), 'level');
 	WHILE($curr_level <= $max_level)
 	{
 		FOREACH($child_arr AS $child)
 		{
-			$result3 = mysql($db, "SELECT * FROM $table4 WHERE parent = '$child' AND level = '$curr_level'");
+			$result3 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$child' AND level = '$curr_level'");
 			$num3 = mysql_num_rows($result3);
 			IF($num3 > '0')
 			{
@@ -88,15 +95,19 @@ IF($num2 > '0')
 $pic_arr = array();
 FOREACH($child_arr AS $child)
 {
-	$res3 = mysql($db, "SELECT * FROM $table4 WHERE kat_id = '$child'");
-	$u_kategorie .= mysql_result($res3, $i, 'kategorie')."<BR>";
+	$res3 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$child'");
+	if(!isset($u_kategorie))
+	{
+		$u_kategorie = '';
+	}
+	$u_kategorie .= mysql_result($res3, isset($i), 'kategorie')."<BR>";
 	//echo $child."<BR>";			//$child - Nummer der zu löschenden Kategorie
 	//Löschvorgang der Kategorie in der Kategorie-Tabelle ($table4):
-	$result4 = mysql($db, "DELETE FROM $table4 WHERE kat_id = '$child'");
+	$result4 = mysql_query( "DELETE FROM $table4 WHERE kat_id = '$child'");
 	//Eintrag aus der kat_lex löschen:
-	$result6 = mysql($db, "DELETE FROM $table11 WHERE kat_id = '$child'");
+	$result6 = mysql_query( "DELETE FROM $table11 WHERE kat_id = '$child'");
 	
-	$res4 = mysql($db, "SELECT * FROM $table10 WHERE kat_id = '$child'");
+	$res4 = mysql_query( "SELECT * FROM $table10 WHERE kat_id = '$child'");
 	$num4 = mysql_num_rows($res4); 
 	FOR($i4='0'; $i4<$num4; $i4++)
 	{
@@ -113,7 +124,7 @@ FOREACH($pic_arr AS $pic)
 {
 	FOREACH($child_arr AS $child)
 	{
-		$result5 = mysql($db, "DELETE FROM $table10 WHERE pic_id = '$pic' AND kat_id = '$child'"); 
+		$result5 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic' AND kat_id = '$child'"); 
 	}
 }
 

@@ -74,7 +74,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 //####################################################################################################
-$result1 = mysql($db, "SHOW COLUMNS FROM $table14");
+$result1 = mysql_query( "SHOW COLUMNS FROM $table14");
 //$struktur = array();
 $i1 = 0;
 if($result1 != false)
@@ -89,14 +89,14 @@ if($result1 != false)
 	FOREACH($ed_fieldname AS $EDFN)
 	{
 		//echo $EDFN."<BR>";
-		$result2 = mysql($db, "SELECT * FROM $table5 WHERE field_name = '$EDFN' AND field_name <> 'ed_id' AND field_name <> 'pic_id'");
+		$result2 = mysql_query( "SELECT * FROM $table5 WHERE field_name = '$EDFN' AND field_name <> 'ed_id' AND field_name <> 'pic_id'");
 		@$treffer = mysql_num_rows($result2);
 		SWITCH($treffer)
 		{
 			CASE 0:
 			//echo "<FONT COLOR='red'>Das Feld ".$EDFN." ist nicht in der exif_protect-Tabelle.</FONT><BR>";
 			//exif_protect-Tabelle wird aktualisiert:
-			$result3 = mysql($db, "INSERT INTO $table5 (field_name, writable) VALUES ('$EDFN', '0')");
+			$result3 = mysql_query( "INSERT INTO $table5 (field_name, writable) VALUES ('$EDFN', '0')");
 			break;
 			
 			CASE 1:
@@ -121,13 +121,13 @@ $content = "<TABLE class = 'tablenormal' border='0'>
 		</TR>
 		
 		<TR>
-		<TD colspan = '6' style='text-align:center;'><FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT>&#160;&#160;Hier legen Sie fest, welche Meta-Daten manuell ver&auml;ndert werden d&uuml;rfen:&#160;&#160;<FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT></TD>
+		<TD colspan = '6'><FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT>&#160;&#160;Hier legen Sie fest, welche Meta-Daten manuell ver&auml;ndert werden d&uuml;rfen:&#160;&#160;<FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT></TD>
 		</TR>
 		
 		<TR class='trflach'>
 		<TD colspan = '6'></TD>
 		</TR>";
-$result2 = mysql($db, "SELECT * FROM $table5 WHERE field_name <> 'ed_id' AND field_name <> 'pic_id'");
+$result2 = mysql_query( "SELECT * FROM $table5 WHERE field_name <> 'ed_id' AND field_name <> 'pic_id'");
 FOR($r='0'; $r<$rows; $r++)
 {
 	$content = $content."<TR>";
@@ -145,7 +145,7 @@ FOR($r='0'; $r<$rows; $r++)
 		{
 			$checked = '';
 		}
-		IF($field_name != NULL)
+		IF($field_name !== '')
 		{
 			$content = $content."<TD class='tdbreit'>".$field_name."</TD>
 			<TD class='tdschmal'>

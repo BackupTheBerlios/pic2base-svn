@@ -45,8 +45,18 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
+
+//var_dump($_POST);
+if (array_key_exists('ordner',$_POST))
+{
+	$ordner = $_POST['ordner']; // für register_globals = off
+}
+if (array_key_exists('ordner',$_GET))
+{
+	$ordner = $_GET['ordner']; // für register_globals = off
+}
 
 $x = 0;
 $n = 0;				//Z&auml;hlvariable f&uuml;r die zu bearbeitenden Bilder (Bilder im Upload-Ordner)
@@ -142,7 +152,7 @@ Formatvorgaben der Popup-Vorschaufenster werden aus den tatsächlichen Bild-Abmes
 
 Erfassung eines Bildes abgeschlossen    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
-$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
+//$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
 flush();
 FOR ($x='0';$x<$n;$x++)
 {
@@ -152,7 +162,15 @@ FOR ($x='0';$x<$n;$x++)
 	$bild = $ordner."/".$datei_name;
 	
 	$Ori_arr = split(' : ',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //num. Wert der Ausrichtung des Ori.-bildes
-	$Orientation = $Ori_arr[1];
+	
+	if (count($Ori_arr) > 1 )
+	{
+		$Orientation = $Ori_arr[1];
+	}
+	else
+	{
+		$Orientation = '';	
+	}
 	//echo "...bearbeite Bild ".$bild."<BR>Ausrichtung: ".$Orientation."<BR>";
 	IF($Orientation == '')
 	{
@@ -161,10 +179,10 @@ FOR ($x='0';$x<$n;$x++)
 	
 //  +++  Vergabe eines eindeutigen Dateinamens  +++++
 	/*Zur eindeutigen Identifizierung der Bilddateien wird seit dem 12.06.2008 die Datensatz-Nr. des jeweiligen Bildes verwendet. Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:*/
-	$result1 = mysql($db, "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");echo mysql_error();
-	$user_id = mysql_result($result1, $i, 'id');
+	$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");echo mysql_error();
+	$user_id = mysql_result($result1, isset($i), 'id');
 	$DateInsert = date('Y-m-d H:i:s');
-	$result2 = mysql($db, "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$datei_name', '$DateInsert')");
+	$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$datei_name', '$DateInsert')");
 	echo mysql_error();
 	$pic_id = mysql_insert_id();			//echo "User-ID: ".$user_id."; Rec-ID: ".$pic_id."<BR>";
 	$info2 = pathinfo($datei_name);
@@ -211,7 +229,7 @@ FOR ($x='0';$x<$n;$x++)
 					$rot_filename = createQuickPreview($Orientation,$new_filename);
 				}
 			}
-			$result4 = mysql($db, "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
+			$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 			$z = '1';
 		}
 		//alle anderen Dateien, die weder RAW noch jpg sind werden hier behandelt:
@@ -227,7 +245,7 @@ FOR ($x='0';$x<$n;$x++)
 				{
 					$rot_filename = createQuickPreview($Orientation,$new_filename);
 				}
-				$result4 = mysql($db, "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
+				$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 				$z = '1';//echo "Die Datei enth&auml;lt nur EIN Bild.!";
 			}
 			ELSE
@@ -244,7 +262,7 @@ FOR ($x='0';$x<$n;$x++)
 						{
 							$rot_filename = createQuickPreview($Orientation,$new_filename);
 						}
-						$result4 = mysql($db, "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
+						$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 						$z++;
 					}
 					ELSE
@@ -268,7 +286,7 @@ FOR ($x='0';$x<$n;$x++)
 	{
 		$z = '1';
 		$new_filename = $tmp_filename;	//jpg-Dateien behalten ihren eindeutigen Dateinamen
-		$result4 = mysql($db, "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
+		$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 	}
 	
 	//die Datei-Attribute werden f&uuml;r die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
@@ -292,8 +310,8 @@ $runtime2 = ($end2sec + $end2msec) - ($start1sec + $start1msec);
 echo "Zeit bis Bilddatenspeicherung: ".$runtime2."<BR>";	
 */
 	//Aus Preformance-Gr&uuml;nden werden die Histogramme aus den HQ-Bildern gewonnen:
-	$result3 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-	$FNHQ = mysql_result($result3, $i3, 'FileNameHQ');
+	$result3 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+	$FNHQ = mysql_result($result3, isset($i3), 'FileNameHQ');
 	$FileName = $FNHQ;
 	//Parameter: Bild-ID, Name der HQ-Datei (z.B. 21456_hq.jpg), Server-Root
 	generateHistogram($pic_id,$FileName,$sr);
@@ -342,13 +360,7 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 	<?
 	IF($n == $del)
 	{
-		$end5 = microtime();
-		list($end5msec, $end5sec) = explode(" ",$end5);
-		list($start1msec, $start1sec) = explode(" ",$start1);
-		$runtime5 = ($end5sec + $end5msec) - ($start1sec + $start1msec);
-		$tpp = number_format(($runtime5 / $n),2,',','.');	//$tpp - time per picture
-		
-		$meldung = "Erfassung abgeschlossen. Pro Bild wurden etwa ".$tpp." Sekunden ben&ouml;tigt<BR><BR>";
+		$meldung = "Erfassung abgeschlossen: ". date('d.m.Y, H:i:s')."<BR>";
 		$meldung .= "<input type=\"button\" VALUE = \"Fertig - zur&uuml;ck zur Startseite\" onClick=\"location.href=\'../start.php\'\">";
 		//echo $meldung;
 		?>

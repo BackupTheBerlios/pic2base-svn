@@ -59,7 +59,7 @@ echo "
 	<div class='content'>";
 	echo "Lösche Bild ".$pic_id."<BR>";
 	//Ermittlung aller zugehörigen Bild-Dateien (Vorschau, HQ-Preview, rotiertes Bild, Original-Bild):
-	$result1 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+	$result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 	$num1 = mysql_num_rows($result1);
 	IF($num1 == '1')
 	{
@@ -105,10 +105,10 @@ echo "
 		}
 		
 		//löschen des Bild-Datensatzes
-		$result2 = mysql($db, "DELETE FROM $table2 WHERE pic_id = '$pic_id'");
+		$result2 = mysql_query( "DELETE FROM $table2 WHERE pic_id = '$pic_id'");
 		
 		//löschen der Kategorie-Zuordnung
-		$result3 = mysql($db, "DELETE FROM $table10 WHERE pic_id = '$pic_id'");
+		$result3 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic_id'");
 		
 		echo "<meta http-equiv='Refresh' Content='1; URL=double_check0.php'>";
 	}

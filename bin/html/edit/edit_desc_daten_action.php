@@ -44,8 +44,32 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+//var_dump($_POST);
+//var_dump($_GET);
+
+if ( array_key_exists('kat_id',$_GET) )
+{
+	$kat_id = $_GET['kat_id'];
+}
+if ( array_key_exists('ID',$_GET) )
+{
+	$ID = $_GET['ID'];
+}
+if ( array_key_exists('art',$_GET) )
+{
+	$art = $_GET['art'];
+}
+if ( array_key_exists('description',$_POST) )
+{
+	$description = $_POST['description'];
+}
+if ( array_key_exists('pic_sel2',$_POST) )
+{
+	$pic_sel2 = $_POST['pic_sel2'];
+}
+
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 //Variablen-Umbenennung für die Rücksprung-Adresse:
 $kat_back = $kat_id;
@@ -74,21 +98,23 @@ flush();
 	FOREACH ($_POST AS $key => $post)
 	{
 		//echo $key." / ".$post."<BR>";
-		IF (substr($key,0,3) == 'pic')
+		IF (substr($key,0,3) == 'pic' OR substr($key,0,3) == 'PIC' )
 		{
-			//echo substr($key,7,strlen($key)-7)."<BR>";
+			//echo substr($key,7,strlen($key)-7)." <-pic_ID<BR>";
 			$pic_ID[] = substr($key,7,strlen($key)-7);
 		}
 	}
 
 	
-	IF (count($pic_ID) > 0)
+	IF ( isset($pic_ID) AND count($pic_ID) > 0 )
 	{
 		FOREACH ($pic_ID AS $bild_id)
 		{
-			//echo $bild_id."<BR>";
-			$res1 = mysql($db, "SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$bild_id'");
-			$desc = mysql_result($res1, $i1, 'Caption_Abstract');
+		//echo $bild_id." <-Bild_id<BR>";
+			$res1 = mysql_query( "SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$bild_id'");
+			$row = mysql_fetch_array($res1);
+			$desc = $row['Caption_Abstract'];
+			//$desc = mysql_result($res1, isset($i1), 'Caption_Abstract');
 			echo mysql_error();
 			IF ($desc == '')
 			{
@@ -98,7 +124,7 @@ flush();
 			{
 				$Description =$desc."\n".$description;
 			}
-			$res3 = mysql($db, "UPDATE $table14 SET Caption_Abstract = '$Description' WHERE pic_id = '$bild_id'");
+			$res3 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$Description' WHERE pic_id = '$bild_id'");
 			$FN = $pic_path."/".restoreOriFilename($bild_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
@@ -107,7 +133,7 @@ flush();
 		IF (mysql_errno() == '0')
 		{
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Datenübernahme...</p>
-			<meta http-equiv='refresh' content='0; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
+			<meta http-equiv='refresh' content='2; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 			
 		}
 		ELSE
@@ -120,14 +146,14 @@ flush();
 		IF ($art == 'single_desc_edit')
 		{
 			$description = strip_tags($description);
-			$res3 = mysql($db, "UPDATE $table14 SET Caption_Abstract = '$description' WHERE pic_id = '$PIC_id'");
+			$res3 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description' WHERE pic_id = '$PIC_id'");
 			$FN = $pic_path."/".restoreOriFilename($PIC_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
 			shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
 			
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Datenübernahme...</p>
-			<meta http-equiv='refresh' content='0; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
+			<meta http-equiv='refresh' content='2; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 		}
 		ELSE
 		{

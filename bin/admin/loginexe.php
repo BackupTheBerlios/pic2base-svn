@@ -1,6 +1,6 @@
 <?
   mysql_connect ($db_host, $db_username, $db_password);
-  $result = mysql ($db_name,"select * from users WHERE name='".$username."' AND password='".$pass."'");
+  $result = mysql_query("select * from users WHERE name='".$username."' AND password='".$pass."'");
   echo mysql_error();
   if (mysql_num_rows($result) == 1)
   {

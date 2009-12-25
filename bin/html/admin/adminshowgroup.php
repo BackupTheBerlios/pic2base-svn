@@ -1,7 +1,11 @@
 <?
   echo "<CENTER>";
+//var_dump($_GET);
+  $id = $_GET['id']; // für register_globals = off
+  
   mysql_connect ($db_server, $user, $PWD);
-  $result = mysql ($db,"select * from usergroups WHERE id=".$id);
+  mysql_select_db($db);
+  $result = mysql_query("select * from $table9 WHERE id=".$id); //usergroups
   if (mysql_num_rows($result) == 1)
   {
     $desc = mysql_result ($result, 0, "description");
@@ -34,13 +38,13 @@
   	}
   	echo "</tr>";
 
-	$result = mysql ($db,"select * from permissions ORDER BY description");
+	$result = mysql_query("select * from permissions ORDER BY description");
 	$num = mysql_num_rows($result);
 	for ($i = 0; $i < $num; $i++)
 	{
 		echo "<tr>
 		<td align=left>".mysql_result($result, $i, "description")."</td>";
-		$result2 = mysql ($db,"select * from grouppermissions WHERE group_id=".$id." AND permission_id=".mysql_result($result, $i, "id"));
+		$result2 = mysql_query("select * from grouppermissions WHERE group_id=".$id." AND permission_id=".mysql_result($result, $i, "id"));
 		if (mysql_num_rows($result2) == 1)
 		{
 			if (mysql_result($result2, 0, "enabled") == "1")
@@ -71,7 +75,7 @@
   if (hasPermission($c_username, 'showusers'))
   {
 	echo "<TR><TD colspan='3'>Benutzer in dieser Gruppe:</TD></TR>";
-	$result = mysql ($db,"select * from users WHERE group_id='".$id."' ORDER BY id");
+	$result = mysql_query("select * from users WHERE group_id='".$id."' ORDER BY id");
 	$num = mysql_num_rows($result);
 	echo "<TR><TD colspan='3'>";
 	for ($i = 0; $i < $num; $i++)

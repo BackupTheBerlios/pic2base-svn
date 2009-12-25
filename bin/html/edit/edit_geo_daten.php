@@ -67,6 +67,8 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+//var_dump($_GET);
+
 echo "
 <div class='page'>
 	<FORM name='geo_zuweisung', method='post', action='edit_geo_daten_action.php', ENCTYPE='multipart/form-data' onSubmit='return chkLogger()'>

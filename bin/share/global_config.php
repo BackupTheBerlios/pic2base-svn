@@ -1,5 +1,8 @@
 <?php
 
+// alle Meldungen ausgeben:
+error_reporting(E_ALL);
+
 //[Pfade]
 //Globale Konfigurationseinstellungen
 $doc_root = $_SERVER['DOCUMENT_ROOT'];				//DocumentRoot des Web-Servers
@@ -12,6 +15,11 @@ $vorschau_verzeichnis = '../../../images/vorschau/thumbs';
 $HQ_verzeichnis = '../../../images/vorschau/hq-preview';
 $geo_path_copy = $sr."/tracks";
 $ftp_path = $sr."/userdata";
+
+// für register_globals = off
+if(!isset($benutzername)){
+	$benutzername = '';
+}
 
 $user_dir = $ftp_path.'/'.$benutzername;
 $up_dir = $ftp_path.'/'.$benutzername.'/uploads';

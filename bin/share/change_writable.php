@@ -1,9 +1,21 @@
 <!--<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>-->
 <?php
 
+$sr = $_GET['sr'];
+
 include $sr.'/bin/share/db_connect1.php';
 //include $sr.'/bin/share/functions/ajax_functions.php';
 //include $sr.'/bin/share/functions/main_functions.php';
+
+//var_dump($_GET);
+if ( array_key_exists('lfdnr',$_GET) )
+{
+	$lfdnr = $_GET['lfdnr'];
+}
+if ( array_key_exists('checked',$_GET) )
+{
+	$checked = $_GET['checked'];
+}
 
 IF($checked == '')
 {
@@ -16,7 +28,7 @@ ELSEIF($checked == 'checked')
 	$checked = '';
 }
 
-$result1 = mysql($db, "UPDATE $table5 SET writable = '$new_status' WHERE lfdnr = '$lfdnr'");
+$result1 = mysql_query( "UPDATE $table5 SET writable = '$new_status' WHERE lfdnr = '$lfdnr'");
 echo mysql_error();
 mysql_close($conn);
 

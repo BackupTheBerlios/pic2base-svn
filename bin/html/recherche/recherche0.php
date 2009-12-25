@@ -1,9 +1,18 @@
 <?
-IF(!empty($_POST['bewertung']))
+//var_dump($_COOKIE);
+IF( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )
 {
-setcookie('bewertung',$_POST['bewertung']);
-//echo $_POST['bewertung']."<BR>";
+	setcookie('bewertung',$_POST['bewertung']);
 }
+else if ( array_key_exists('bewertung',$_COOKIE) )
+	{
+		$bewertung = $_COOKIE['bewertung'];
+	}
+	else
+	{
+		$bewertung = '';
+		setcookie('bewertung',$bewertung);
+	}
 ?>
 
 <script language="JavaScript">
@@ -31,12 +40,12 @@ function switchBewertung(bewertung)
 <DIV Class="klein">
 
 <?
-// php 5.3
+
 /*
  * Project: pic2base
  * File: start.php
  *
- * Copyright (c) 2003 - 2009 Klaus Henneberg
+ * Copyright (c) 2003 - 2005 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -44,7 +53,14 @@ function switchBewertung(bewertung)
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * @copyright 2003-2005 Klaus Henneberg
+ * @author Klaus Henneberg
+ * @package pic2base
+ * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
+
+//var_dump($_REQUEST);
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -60,19 +76,19 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
 $result2 = mysql_query("SELECT * FROM $table2");
 $num2 = mysql_num_rows($result2);
 //echo "Anz. der Bild-Datensätze: ".$num2."<BR>";
 
-?>
+//var_dump($_COOKIE);
 
+?>
 <div class="page">
 
 	<p id="kopf">pic2base :: Recherche-Übersicht <span class='klein'>(User: <?echo $c_username;?>)</span></p>
-	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
 		<?
@@ -81,18 +97,23 @@ $num2 = mysql_num_rows($result2);
 		?>
 		</div>
 	</div>
-	
 	<div id="spalte1">
+	
 	<?
+	IF( array_key_exists('bewertung',$_COOKIE) )
+	{
+		$bewertung = $_COOKIE['bewertung'];
+	}
+	if ( empty($bewertung) OR !isset($bewertung) )
+	{
+		$bewertung = '';
+	}
 	IF ($num2 > 0)
 	{
 		$action = $_SERVER['PHP_SELF'];
 		$sel1 = $sel2 = $sel3 = $sel4 = $sel5 = $sel6 = '';
-		$bew = $_POST['bewertung'];
-		IF($bew == '')
-		{
-			$bew = $_COOKIE['bewertung'];
-		}
+		$sel21 = $sel22 =$sel31 = $sel32 = $sel41 = $sel42 = '';
+		$bew = $bewertung;
 		SWITCH($bew)
 		{
 			CASE '=1':
@@ -204,8 +225,7 @@ $num2 = mysql_num_rows($result2);
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=exif'>Suche nach Meta-Daten</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=desc'>Suche nach Beschreibungstext</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=geo'>Suche nach Geo-Daten</a>
-		<!--<a class='subnavi' href='recherche2.php?pic_id=0&mod=kette'>Experten-Suche: Verkettete Recherche</a><BR>-->
-		</center>";
+		<a class='subnavi' href='recherche2.php?pic_id=0&mod=kette'>Experten-Suche: Verkettete Recherche</a><BR></center>";
 	}
 	ELSE
 	{

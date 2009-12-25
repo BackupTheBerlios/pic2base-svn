@@ -46,7 +46,7 @@ list($c_username) = split(',',$_COOKIE['login']);
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, $i1, 'berechtigung');
 
 //Variablen-Umbenennung für die Rücksprung-Adresse:
@@ -85,7 +85,7 @@ echo "
 		{
 			//echo $bild_id."<BR>";
 			/*
-			$res1 = mysql($db, "SELECT Description FROM $table2 WHERE pic_id = '$bild_id'");
+			$res1 = mysql_query( "SELECT Description FROM $table2 WHERE pic_id = '$bild_id'");
 			$desc = mysql_result($res1, $i1, 'Description');
 			echo mysql_error();
 			IF ($desc == '')
@@ -98,7 +98,7 @@ echo "
 				$Description =$desc."\n". $description;
 			}
 			*/
-			$res2 = mysql($db, "UPDATE $table2 SET note = '$note' WHERE pic_id = '$bild_id'");
+			$res2 = mysql_query( "UPDATE $table2 SET note = '$note' WHERE pic_id = '$bild_id'");
 		}
 		//echo mysql_errno();
 		IF (mysql_errno() == '0')
@@ -117,7 +117,7 @@ echo "
 		IF ($art == 'single_bewertung_edit')
 		{
 			//$description = strip_tags($description);
-			$res2 = mysql($db, "UPDATE $table2 SET note = '$note' WHERE pic_id = '$PIC_id'");
+			$res2 = mysql_query( "UPDATE $table2 SET note = '$note' WHERE pic_id = '$PIC_id'");
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Datenübernahme...</p>
 			<meta http-equiv='refresh' content='0; url=edit_bewertung.php?kat_id=$kat_back&ID=$ID_back'>";
 		}

@@ -46,7 +46,7 @@ list($c_username) = split(',',$_COOKIE['login']);
 include '../share/db_connect1.php';
 INCLUDE '../share/global_config.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, $i1, 'berechtigung');
 SWITCH ($berechtigung)
 {
@@ -69,12 +69,12 @@ SWITCH ($berechtigung)
 //Erzeugung der Baumstruktur:
 //Beim Aufruf der Seite werden nur alle Elemente der höchsten Ebene angezeigt.
 //Zunächst wird die höchste Ebene ermittelt, diese sollte '0' sein:
-$result2 = mysql($db, "SELECT MIN(level) FROM $table4");
+$result2 = mysql_query( "SELECT MIN(level) FROM $table4");
 $num2 = mysql_num_rows($result2);
 $min_level = mysql_result($result2, $i2, 'MIN(level)');
 //echo "Höchste Ebene: ".$min_level."<BR>";
 //$i2='1';
-$result3 = mysql($db, "SELECT * FROM $table4 WHERE level='$min_level'");
+$result3 = mysql_query( "SELECT * FROM $table4 WHERE level='$min_level'");
 $num3 = mysql_num_rows($result3);					//Anzahl Kategorien höchsten Ebene
 echo "<TABLE>";
 FOR ($i3=0; $i3<$num3; $i3++)
@@ -102,13 +102,13 @@ FOR ($i3=0; $i3<$num3; $i3++)
 		FOR ($Z=$levl; $Z>0; $Z--)
 		{
 			$level = $Z - 1;
-			$result4 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$parent'");
+			$result4 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$parent'");
 			$parent = mysql_result($result4, $i4, 'parent');
 			$par_arr[]=$parent;
 			$sql_string .= " OR (parent='$parent' AND level='$level')";
 		}
 		echo $sql_string;
-		$result5 = mysql($db, $sql_string);
+		$result5 = mysql_query( $sql_string);
 		$num5 = mysql_num_rows($result5);
 		
 		FOR ($i5=0; $i5<$num5; $i5++)

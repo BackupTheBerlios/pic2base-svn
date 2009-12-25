@@ -48,10 +48,32 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/geo_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
-$user_id = mysql_result($result1, $i1, 'id');
-//echo $geo_file."<BR>";
+//var_dump($_POST);
+
+if ( array_key_exists('timezone',$_POST) )
+{
+	$timezone = $_POST['timezone'];
+}
+if ( array_key_exists('data_logger',$_POST) )
+{
+	$data_logger = $_POST['data_logger'];
+}
+if ( array_key_exists('ge',$_POST) )
+{
+	$ge = $_POST['ge'];
+}
+
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$row = mysql_fetch_array($result1);
+$berechtigung = $row['berechtigung'];
+$user_id = $row['id'];
+//$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+//$user_id = mysql_result($result1, $i1, 'id');
+//var_dump($_FILES);
+$geo_file = $_FILES['geo_file']['name'];
+$geo_file_name = $geo_path_copy."/".$geo_file;
+//echo $geo_file_name."<BR>";
+//echo $geo_path_copy."<BR>";
 
 IF($geo_file == '')
 {
@@ -62,38 +84,28 @@ IF($geo_file == '')
 
 IF ($geo_file_name != "" && $geo_file_name !='.' && $geo_file_name != '..')
 {
-	@copy("$geo_file","$geo_path_copy/$geo_file_name")
+	move_uploaded_file($_FILES['geo_file']['tmp_name'],$geo_file_name)
+//	@copy("$geo_file","$geo_path_copy/$geo_file_name")
 	or die("Upload fehlgeschlagen!");
-	$error = getFileError($FILES['geo_file']['error']);
+	$error = getFileError($_FILES['geo_file']['error']);
+	//echo $error."<br>";
 }
 
 
-$fh = fopen($geo_path_copy."/".$geo_file_name, 'r');
-$txt_file = join('',file($geo_file));
+//$fh = fopen($geo_path_copy."/".$geo_file_name, 'r');
+$fh = fopen($geo_file_name, 'r');
+//join() -> Alais zu implode()
+//$txt_file = join('',file($geo_file));
+$txt_file = implode('',file($geo_path_copy."/".$geo_file));
 $line_number = 0;	//Initialisierung des Zeilen-Zählers
 
 //Ermittlung des Datei-Formates:
 $info = pathinfo($geo_file_name);
 //echo "Datei-Extension: ".strtolower($info['extension'])."<BR>";
-// #######################  Testbereich  ######################################################
-/*
-SWITCH($ge)
-{
-	CASE "Los!":
-	//die ausgewählte Trackdatei wird überprüft, bei Erfolg in eine kml-Datei konvertiert und der Inhalt (Geo-Koordinaten und Zeitstempel in die geo_tmp (table13) geschrieben
-	convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_id,$timezone);
-	//Bestimmung der verwertbaren Datensätze:
-	$result2 = mysql($db, "SELECT * FROM $table13 WHERE user_id = '$user_id'");
-	$line_number = mysql_num_rows($result2);
-	
-	break;
-}
-*/
-//#############################################################################################
 //die ausgewählte Trackdatei wird überprüft, bei Erfolg in eine kml-Datei konvertiert und der Inhalt (Geo-Koordinaten und Zeitstempel in die geo_tmp (table13) geschrieben
 convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_id,$timezone);
 //Bestimmung der verwertbaren Datensätze:
-$result2 = mysql($db, "SELECT * FROM $table13 WHERE user_id = '$user_id'");
+$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id'");
 $line_number = mysql_num_rows($result2);
 
 SWITCH($ge)
@@ -110,7 +122,7 @@ SWITCH($ge)
 		DEFAULT:
 		$hinweis1 = "Die Track-Datei enth&auml;lt ".$line_number." verwertbare Trackpunkte.<BR><BR>";
 		//aus der temp. Tabelle wird für jeden Tag die Zeitspanne (der früheste und späteste Zeitpunkt) ermittelt:
-		$result4 = mysql($db, "SELECT DISTINCT date FROM $table13 WHERE user_id = '$user_id'");
+		$result4 = mysql_query( "SELECT DISTINCT date FROM $table13 WHERE user_id = '$user_id'");
 		$num4 = mysql_num_rows($result4);
 		$hinweis2 = '';
 		FOR ($i4=0; $i4<$num4; $i4++)
@@ -118,16 +130,20 @@ SWITCH($ge)
 			$datum = mysql_result($result4, $i4, 'date');
 			//echo "vorh. Datum: ".$datum."<BR>";
 			//Zu jedem vorh. Datum wird die Zeitspanne vorh. Trackdaten bestimmt:
-			$result5 = mysql($db, "SELECT MIN(time), MAX(time) FROM $table13 WHERE date = '$datum' AND user_id = '$user_id'");
-			$min_time = mysql_result($result5, $i5, 'MIN(time)');
-			$max_time = mysql_result($result5, $i5, 'MAX(time)');
+			$result5 = mysql_query( "SELECT MIN(time), MAX(time) FROM $table13 WHERE date = '$datum' AND user_id = '$user_id'");
+			$row = mysql_fetch_array($result5);
+			$min_time = $row['MIN(time)'];
+			$max_time = $row['MAX(time)'];
+			
+			//$min_time = mysql_result($result5, $i5, 'MIN(time)');
+			//$max_time = mysql_result($result5, $i5, 'MAX(time)');
 			//echo "Zeitspanne: ".$min_time." - ".$max_time."<BR>";
 			//alle Bilder des Users werden ermittelt, welche an dem besagten Tag in der ermittelten Zeitspanne aufgenommen wurden und denen noch keine Koordinaten zugewiesen wurden:
 			$start_time = $datum." ".$min_time;
 			$end_time = $datum." ".$max_time;
 			//echo "Startzeit: ".$start_time.", Endzeit: ".$end_time."<BR>";
-			//$result6 = mysql($db, "SELECT * FROM $table2 WHERE DateTime >= '$start_time' AND DateTime <= '$end_time' AND loc_id ='0' AND Owner = '$user_id'");
-			$result6 = mysql($db, "SELECT $table2.pic_id, $table2.FileName, $table2.loc_id, $table2.Owner, $table14.pic_id, $table14.DateTimeOriginal FROM $table2, $table14 WHERE $table14.DateTimeOriginal >= '$start_time' AND $table14.DateTimeOriginal <= '$end_time' AND $table2.loc_id ='0' AND $table2.Owner = '$user_id' AND $table2.pic_id = $table14.pic_id");
+			//$result6 = mysql_query( "SELECT * FROM $table2 WHERE DateTime >= '$start_time' AND DateTime <= '$end_time' AND loc_id ='0' AND Owner = '$user_id'");
+			$result6 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.loc_id, $table2.Owner, $table14.pic_id, $table14.DateTimeOriginal FROM $table2, $table14 WHERE $table14.DateTimeOriginal >= '$start_time' AND $table14.DateTimeOriginal <= '$end_time' AND $table2.loc_id ='0' AND $table2.Owner = '$user_id' AND $table2.pic_id = $table14.pic_id");
 			$num6 = mysql_num_rows($result6);
 			//echo "<p style='color:white';>Treffer für User ".$user_id.": ".$num6."</p><BR>";
 			IF($num6 > '0')
@@ -199,7 +215,7 @@ SWITCH($ge)
 			echo $hinweis2;
 			
 			//Wenn alle Bilder referenziert wurden, werden die benutzereignen Datens&auml;tze aus der temp. Tabelle 'geo_tmp' gel&ouml;scht und nochmals alle Bilder dargestellt, damit den Koordinaten eine Ortsbezeichnung hinzugefgt werden kann:
-			$result8 = mysql($db, "DELETE FROM $table13 WHERE user_id = '$user_id'");
+			$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$user_id'");
 			echo "<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p>
 		</div>
 		
@@ -217,10 +233,10 @@ SWITCH($ge)
 	CASE 'Track ansehen':
 	//Wenn der Track nur in GE angezeigt werden soll:
 	//Da die gpx-Datei schrittweise vom Anfang an abgearbeitet wird, erfolgt der Eintrag in die Tabelle in zeitlicher Reihenfolge. Somit genügt eine Sortierung beim auslesen nach loc_id.
-	//$result2 = mysql($db, "SELECT * FROM $table13 WHERE user_id = '$user_id' ORDER BY date, time");
-	$result2 = mysql($db, "SELECT * FROM $table13 WHERE user_id = '$user_id' AND longitude <> '' AND latitude <> '' ORDER BY loc_id");
+	//$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' ORDER BY date, time");
+	$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' AND longitude <> '' AND latitude <> '' ORDER BY loc_id");
 	$num2 = mysql_num_rows($result2);
-	$date = mysql_result($result2, $i2, 'date');
+	$date = mysql_result($result2, 'date');
 	IF ($date !== '0000-00-00')
 	{
 		$datum = date('d.m.Y', strtotime($date));
@@ -273,7 +289,7 @@ SWITCH($ge)
 	fclose($fh);
 	
 	//Wenn kml-Track-Datei erzeugt wurde, werden die benutzereignen Datensï¿½ze aus der temp. Tabelle 'geo_tmp' gelï¿½cht:
-	$result9 = mysql($db, "DELETE FROM $table13 WHERE user_id = '$user_id'");
+	$result9 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$user_id'");
 	
 	echo "
 	<div class='page'>

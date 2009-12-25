@@ -119,7 +119,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	</td>
 	<td>
 	<select name='group' class='Auswahl150'>";
-	$result1 = mysql($db, "SELECT * FROM $table9 ORDER BY description");
+	$result1 = mysql_query("SELECT * FROM $table9 ORDER BY description");
 	$num1 = mysql_num_rows($result1);
 	FOR($i1='0'; $i1<$num1; $i1++)
 	{

@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: text/xml'); 
-// php 5.3
+
+//mysql-Zugriff:
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 $return_value = "<?xml version='1.0' encoding='ISO8859-1'?><entries>";

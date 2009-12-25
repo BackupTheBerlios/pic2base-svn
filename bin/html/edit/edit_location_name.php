@@ -23,7 +23,7 @@
   	</script>
 </HEAD>
 
-<BODY LANG="de-DE">
+<BODY LANG="de-DE" scroll = "auto">
 
 <CENTER>
 
@@ -44,7 +44,7 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
 */
- 
+
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -58,12 +58,23 @@ include $sr.'/bin/share/functions/geo_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 //echo $geo_path_copy;
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
-$user_id = mysql_result($result1, $i1, 'id');
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$row = mysql_fetch_array($result1);
+$berechtigung = $row['berechtigung'];
+$user_id = $row['id'];
+//$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+//$user_id = mysql_result($result1, $i1, 'id');
 //echo "User-ID: ".$user_id."<BR>";
 $num2 = '0';
 $loc_id = '';
+IF(!isset($stat))
+{
+	$stat = '';
+}
+IF(!isset($i2))
+{
+	$i2 = 0;
+}
 
 echo "
 <div class='page'>
@@ -76,17 +87,13 @@ echo "
 	</div>
 	
 	<div id='spalte1F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>
-		Ortsbezeichnung<BR>
-		</p>";
-		$result2 = mysql($db, "SELECT $table2.Owner, $table2.loc_id, $table2.FileNameV, $table12.loc_id, $table12.location 
-		FROM $table12 LEFT JOIN $table2 
-		ON ($table2.loc_id = $table12.loc_id) WHERE ($table2.Owner = '$user_id' AND $table12.location = 'Ortsbezeichnung')");
+		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ortsbezeichnung<BR></p>";
+		$result2 = mysql_query( "SELECT $table2.Owner, $table2.loc_id, $table2.FileNameV, $table12.loc_id, $table12.location FROM $table12 LEFT JOIN $table2 ON ($table2.loc_id = $table12.loc_id) WHERE ($table2.Owner = '$user_id' AND $table12.location = 'Ortsbezeichnung')");
 		echo mysql_error();
 		$num2 = mysql_num_rows($result2);
 		//echo "Trefferzahl: ".$num2."<BR>";
 		
-		//echo "Dateiname: ".$FileNameV.", Location-ID: ".$loc_id.", Owner: ".$c_username.", Ort: ".$ort;
+		//echo "Dateiname: ".$FileNameV.", Location-ID: ".$loc_id.", Owner: ".$c_username.", Ort: ".$ort."<br>";
 		echo "
 		<FORM name = 'ortsbezeichnung' method='post' action='edit_location_name_action.php' onSubmit='return chkOrt()'> 
 		<TABLE id='kat'>
@@ -94,7 +101,7 @@ echo "
 				<TD id='kat1'>";
 				SWITCH($num2)
 				{
-					//Erzeugung des Hinweistextes ï¿½ber dem Vorschaubild:
+					//Erzeugung des Hinweistextes über dem Vorschaubild:
 					CASE '0':
 					echo "Es gibt kein Bild mehr ohne GPS-Ortszuweisung.<BR>
 					<meta http-equiv='refresh', content='0; URL=edit_start.php'>";
@@ -130,27 +137,26 @@ echo "
 					}
 					
 					//Bestimmung der Geo-Koordinaten am Aufnahmeort:
-					$result3 = mysql($db, "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
+					$result3 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
 					@$long = mysql_result($result3, $i3, 'longitude');
 					@$lat = mysql_result($result3, $i3, 'latitude');
 					//echo "Long: ".$long.", Lat: ".$lat."<BR>";
 					//Radius: 5 km, um welchen die vorhandenen Orte ermittelt werden:
 					$radius = 5000;
-					$diff_lat = 0.000008999280058; //(Winkelï¿½nderung je Meter)
+					$diff_lat = 0.000008999280058; //(Winkeländerung je Meter)
 					$delta_lat = $radius * $diff_lat;
 					$lat_min = $lat - $delta_lat;
 					$lat_max = $lat + $delta_lat;
 					//echo "Breite: ".$lat.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
 					
-					//geogr. Lï¿½nge: hier ist dei Winkelï¿½nderung / Entfernung von der geogr. Breite abhï¿½ngig:
+					//geogr. Länge: hier ist dei Winkeländerung / Entfernung von der geogr. Breite abhängig:
 					$delta_long = getDeltaLong($lat, $radius);
 					$long_min = $long - $delta_long;
 					$long_max = $long + $delta_long;
 					//echo "L&auml;nge: ".$long.", min. L&auml;nge: ".$long_min.", max. L&auml;nge: ".$long_max."<BR>";
 					
 					//qudratischer Auswahlbereich:
-					$result5 = mysql($db, "SELECT * FROM $table12 
-					WHERE (longitude > $long_min AND longitude < $long_max) AND (latitude > $lat_min AND latitude < $lat_max)");
+					$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > $long_min AND longitude < $long_max) AND (latitude > $lat_min AND latitude < $lat_max)");
 					echo mysql_error();
 					$num5 = mysql_num_rows($result5);
 					//echo $num5." Orte in der Umgebung wurden gefunden.<BR>";
@@ -187,7 +193,7 @@ echo "
 							{
 								$locid[$position] = $location_id;
 								$abstand[$position] = $delta;
-								//echo "neuer Abstand wurde ï¿½bernommen<BR>";
+								//echo "neuer Abstand wurde übernommen<BR>";
 							}
 						}
 					}
@@ -271,19 +277,14 @@ echo "
 	</div>
 	
 	<div id='spalte2F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>
-		Hilfe zur Ortsbezeichnung<BR>
-		</p>";
+		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hilfe zur Ortsbezeichnung<BR></p>";
 		IF($loc_id !== '0' AND $loc_id !== '')
 		{
-		$result12 = mysql($db, "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
+		$result12 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
 		@$longitude = mysql_result($result12, $i12, 'longitude');
 		@$latitude = mysql_result($result12, $i12, 'latitude');
 		
-		echo "<iframe src='../recherche/show_map.php?lat=$latitude&long=$longitude&width=399&height=404' 
-		frameborder='0' style='width:405px; height:410px;'>
-		Ihr Browser unterst&uuml;tzt leider keine eingebetteten Frames.
-		</iframe>";
+		echo "<iframe src='../recherche/show_map.php?lat=$latitude&long=$longitude&width=399&height=404' frameborder='0' style='width:405px; height:410px;'>Ihr Browser unterst&uuml;tzt leider keine eingebetteten Frames.</iframe>";
 		}
 	echo "	
 	</div>

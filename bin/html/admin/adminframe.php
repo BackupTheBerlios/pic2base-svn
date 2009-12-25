@@ -32,7 +32,7 @@ include $sr.'/bin/share/db_connect1.php';
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
 ?>

@@ -8,6 +8,6 @@ $note = strip_tags($note);
 //echo "Bild-Nr: ".$pic_id."<BR>neue Note: ".$note;
 
 //echo "<p style='background-color:red';>Speicherung l&auml;uft...</p>";
-$result1 = mysql($db, "UPDATE $table2 SET note = '$note' WHERE pic_id = '$pic_id'");
+$result1 = mysql_query( "UPDATE $table2 SET note = '$note' WHERE pic_id = '$pic_id'");
 mysql_close($conn);
 ?>

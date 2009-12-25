@@ -4,7 +4,7 @@ include 'global_config.php';
 include 'db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 //echo "Ausrichtung: ".$orientation.", Bild-ID: ".$pic_id."<BR>";
-$result1 = mysql($db, "SELECT FileName, FileNameV, FileNameHQ FROM $table2 WHERE pic_id = '$pic_id'");
+$result1 = mysql_query( "SELECT FileName, FileNameV, FileNameHQ FROM $table2 WHERE pic_id = '$pic_id'");
 //echo mysql_error();
 $FileName = mysql_result($result1, $i1, 'FileName');
 $FileNameV = mysql_result($result1, $i1, 'FileNameV');
@@ -41,10 +41,10 @@ SWITCH($orientation)
 }
 
 //in der Tabelle vermerkte Werte für Breite und Höhe werden getauscht:
-$result2 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+$result2 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 $Width  = mysql_result($result2, $i2, 'ImageWidth');
 $Height  = mysql_result($result2, $i2, 'ImageHeight');
-$result3 = mysql($db, "UPDATE $table14 SET ImageWidth = '$Height', ExifImageWidth = '$Height', ImageHeight = '$Width', ExifImageHeight = '$Width'  WHERE pic_id = '$pic_id'");
+$result3 = mysql_query( "UPDATE $table14 SET ImageWidth = '$Height', ExifImageWidth = '$Height', ImageHeight = '$Width', ExifImageHeight = '$Width'  WHERE pic_id = '$pic_id'");
 	
 IF (mysql_error() == '')
 {

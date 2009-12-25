@@ -2,6 +2,12 @@
 //wird im Suchformular 'Suche nach EXIF-Daten' verwendet
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+//var_dump($_GET);
+if(array_key_exists('field',$_GET))
+{
+	$field = $_GET['field'];
+}
+
 IF($field !== '')
 {
 	echo "<SELECT class='Auswahl200' NAME='zusatzwert1'>";
@@ -10,12 +16,12 @@ IF($field !== '')
 		//Behandlung der recherchierbaren Felder der pictures-Tabelle
 		// der Stern vor dem val identifiziert die Nicht-Mata-Daten
 		CASE 'Owner':
-		$result3 = mysql($db, "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
+		$result3 = mysql_query( "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
 		$num3 = mysql_num_rows($result3);
 		FOR($i3='0'; $i3<$num3; $i3++)
 		{
 			$value = mysql_result($result3, $i3, 'Owner');
-			$result2 = mysql($db, "SELECT * FROM $table1 WHERE id = '$value'");
+			$result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$value'");
 			$wert = htmlentities(mysql_result($result2, $i2, 'vorname')." ".mysql_result($result2, $i2, 'name'));
 			$val = '*'.$value;
 			echo "<option value='$val'>".$wert."</option>";
@@ -25,7 +31,7 @@ IF($field !== '')
 		CASE 'FileNameOri':
 		CASE 'note':
 		CASE 'ranking':
-		$result4 = mysql($db, "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
+		$result4 = mysql_query( "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
 		$num4 = mysql_num_rows($result4);
 		FOR($i4='0'; $i4<$num4; $i4++)
 		{
@@ -37,7 +43,7 @@ IF($field !== '')
 
 		//Behandlung der recherchierbaren Felder der meta-data-Tabelle
 		default:
-		$result1 = mysql($db,"SELECT DISTINCT $field FROM $table14 ORDER BY $field");
+		$result1 = mysql_query("SELECT DISTINCT $field FROM $table14 ORDER BY $field");
 		//echo mysql_error();
 		$num1 = mysql_num_rows($result1);
 		

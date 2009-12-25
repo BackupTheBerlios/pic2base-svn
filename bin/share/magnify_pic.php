@@ -2,8 +2,14 @@
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Vorschau des gew&auml;hlten Bildes</p>";
+
+if( array_key_exists('pic_id',$_GET))
+{
+	$pic_id = $_GET['pic_id'];
+}
+
 //echo $pic_id."<BR>";
-$result1 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+$result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 echo mysql_error();
 $FileNameHQ = mysql_result($result1, 0, 'FileNameHQ');
 //echo $FileNameHQ;

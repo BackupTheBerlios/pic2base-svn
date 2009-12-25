@@ -46,8 +46,8 @@ list($c_username) = split(',',$_COOKIE['login']);
 include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 SWITCH ($berechtigung)
 {
 	//Admin
@@ -87,6 +87,17 @@ SWITCH ($berechtigung)
 	//Erzeugung der Baumstruktur:
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+	// für register_globals = off
+	if(array_key_exists('kat_id',$_GET))
+	{
+		$kat_id = $_GET['kat_id']; 
+	}
+	else
+	{
+		$kat_id = 0;
+	}
+
 	$KAT_ID = $kat_id;
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
@@ -96,9 +107,9 @@ SWITCH ($berechtigung)
 	{
 		//include '../../share/db_connect1.php';
 		//INCLUDE '../../share/global_config.php';
-		$res0 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
+		$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 		echo mysql_error();
-		$kat_id = mysql_result($res0, $i0, 'parent');
+		$kat_id = mysql_result($res0, isset($i0), 'parent');
 		//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
 		$knoten_arr[]=$kat_id;
 	}
@@ -110,7 +121,7 @@ SWITCH ($berechtigung)
 	{
 		include '../../share/db_connect1.php';
 		INCLUDE '../../share/global_config.php';
-		$result10 = mysql($db, "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
+		$result10 = mysql_query( "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
@@ -125,7 +136,10 @@ SWITCH ($berechtigung)
 			}
 			
 			$kat_id_pos = array_search($kat_id, $knoten_arr);
-			$kat_id_back = $knoten_arr[$kat_id_pos - 1];
+			if( $kat_id_pos > 0)
+			{
+				$kat_id_back = $knoten_arr[$kat_id_pos - 1];
+			}
 			IF (in_array($kat_id, $knoten_arr))
 			{
 				
@@ -186,7 +200,7 @@ SWITCH ($berechtigung)
 		}
 	}
 	
-	$result10 = mysql($db, "SELECT * FROM $table4 WHERE kat_id='1'");
+	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{

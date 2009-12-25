@@ -13,7 +13,6 @@
 
 <body style='background-color:#999999'>
 <?php
-// php 5.3
 // verwendet als Popup-Fenster zur Festlegung Bild-Eigentümers
 
 include '../../share/global_config.php';
@@ -21,22 +20,40 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
+//var_dump($_REQUEST);
+if ( array_key_exists('c_username',$_GET) )
+{
+	$c_username = $_GET['c_username'];
+}
+if ( array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+}
 //Daten des derzeitugen Owners ermitteln:
-$result1 = mysql_query("SELECT $table2.FileNameV, $table2.Owner, $table1.id, $table1.username, $table1.name, $table1.vorname, $table1.ort FROM $table2 INNER JOIN $table1 ON $table1.id = $table2.Owner AND $table2.pic_id = '$pic_id'");
+$result1 = mysql_query( "SELECT $table2.FileNameV, $table2.Owner, $table1.id, $table1.username, $table1.name, $table1.vorname, $table1.ort FROM $table2 INNER JOIN $table1 ON $table1.id = $table2.Owner AND $table2.pic_id = '$pic_id'");
 echo mysql_error();
 $num1 = mysql_num_rows($result1);
+$row = mysql_fetch_array($result1);
+$FileNameV = $row['FileNameV'];
+$owner = $row['Owner'];
+$name = $row['name'];
+$vorname = $row['vorname'];
+$ort = $row['ort'];
+$username = $row['username'];
+/*
 $FileNameV = mysql_result($result1, $i1, 'FileNameV');
 $owner = mysql_result($result1, $i1, 'Owner');
 $name = mysql_result($result1, $i1, 'name');
 $vorname = mysql_result($result1, $i1, 'vorname');
 $ort = mysql_result($result1, $i1, 'ort');
 $username = mysql_result($result1, $i1, 'username');
+*/
 //echo "derz. User: ".$c_username.", Eigentümer: ".$name."<BR>";
 //echo $FileNameV.", ".$pic_thumbs;
 IF($c_username === $username)
 {
 	//welche User gibt es noch im System mit mind. Fotografen-Status?
-	$result2 = mysql_query("SELECT * FROM $table1 WHERE (group_id = '3' OR group_id = '1') AND username <> 'pb'");
+	$result2 = mysql_query( "SELECT * FROM $table1 WHERE (group_id = '3' OR group_id = '1') AND username <> 'pb'");
 	$num2 = mysql_num_rows($result2);
 	//echo "gefundene User: ".$num2;
 	echo "<FORM name='n_owner' method='post' action='change_owner_action.php'>

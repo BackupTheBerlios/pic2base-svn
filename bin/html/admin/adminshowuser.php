@@ -1,9 +1,12 @@
 <?
+  $id = $_GET['id']; // für register_globals = off
+  $del = $_GET['del']; // für register_globals = off
+    
   if (hasPermission($c_username, 'adminlogin'))
   {
    
     mysql_connect ($db_server, $user, $PWD);
-    $result = mysql ($db,"select * from $table1 WHERE id=".$id);
+    $result = mysql_query("select * from $table1 WHERE id=".$id);
     $vorname = mysql_result ($result, 0, "vorname");
     $name = mysql_result ($result, 0, "name");
     IF($del == '1')
@@ -37,7 +40,7 @@
 	<td align=left>Gruppe:</td>
 	<td align=left>";
 	
-	$result2 = mysql ($db,"select * from usergroups WHERE id=".$groupid);
+	$result2 = mysql_query("select * from usergroups WHERE id=".$groupid);
 	if (mysql_num_rows($result2) == 1)
 	{
 		echo mysql_result ($result2, 0, "description");
@@ -104,7 +107,7 @@
 	<td width=250 align=left><b>Erlaubnis</b></td>
 	</tr>";
 	//include "../share/functions/permissions.php";
-	$result = mysql ($db,"select * from permissions ORDER BY description");
+	$result = mysql_query("select * from permissions ORDER BY description");
 	$num = mysql_num_rows($result);
 	for ($i = 0; $i < $num; $i++)
 	{
@@ -147,7 +150,7 @@
   	<TD>Neuer Eigent&uuml;mer:</TD>
   	<TD><SELECT name='users' style='width:200px;'>
   	<OPTION Value = '' selected>--- neuen User ausw&auml;hlen ---</OPTION>";
-  	$result3 = mysql($db, "SELECT * FROM $table1 WHERE id <> '$id'");
+  	$result3 = mysql_query( "SELECT * FROM $table1 WHERE id <> '$id'");
   	$num3 = mysql_num_rows($result3);
   	FOR($i3='0'; $i3<$num3; $i3++)
   	{

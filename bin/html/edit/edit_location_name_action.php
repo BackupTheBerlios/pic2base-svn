@@ -56,25 +56,25 @@ echo "
 	
 	<div id='spalte1F'>
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Speicherung l&auml;uft...<BR></p>";
-		$result2 = mysql($db, "UPDATE $table12 SET location='$ort' WHERE loc_id = '$loc_id'");
+		$result2 = mysql_query( "UPDATE $table12 SET location='$ort' WHERE loc_id = '$loc_id'");
 		
 		//Eintragung des Ortsnamens an den Anfang des Beschreibungstextes des zugehörigen Bildes:
-		$result3 = mysql($db, "SELECT * FROM $table2 WHERE (loc_id = '$loc_id' AND loc_id <> '')");
+		$result3 = mysql_query( "SELECT * FROM $table2 WHERE (loc_id = '$loc_id' AND loc_id <> '')");
 		$num3 = mysql_num_rows($result3);
 		FOR ($i3=0; $i3<$num3; $i3++)
 		{
 			//zur vorhandenen Beschreibung wird die Ortsbezeichnung vorangestellt:
 			$pic_id = mysql_result($result3, $i3, 'pic_id');
-			$result6 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-			$description_alt = mysql_result($result6, $i6, 'Caption_Abstract');
+			$result6 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+			$description_alt = mysql_result($result6, 0, 'Caption_Abstract');
 			$description_neu = "Kamerastandort: ".$ort."; ".$description_alt;
-			$result4 = mysql($db, "UPDATE $table14 SET Caption_Abstract = '$description_neu' WHERE pic_id = '$pic_id'");
+			$result4 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description_neu' WHERE pic_id = '$pic_id'");
 			//Bestimmung der Geo-Koordinaten
-			$result5 = mysql($db, "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-			$long = mysql_result($result5, $i5, 'longitude');
-			$lat = mysql_result($result5, $i5, 'latitude');
-			$alt = mysql_result($result5, $i5, 'altitude');
-			$location = mysql_result($result5, $i5, 'location');
+			$result5 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
+			$long = mysql_result($result5, 0, 'longitude');
+			$lat = mysql_result($result5, 0, 'latitude');
+			$alt = mysql_result($result5, 0, 'altitude');
+			$location = mysql_result($result5, 0, 'location');
 			$ort_iptc = utf8_decode($location);
 			$desc_neu = htmlentities($description_neu);
 			//Bestimmung des Dateinamens der Original-Datei:

@@ -40,16 +40,21 @@ unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = split(',',$_COOKIE['login']);
-//echo $c_username;
+//$c_username;
 }
  
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result1, $i1, 'id');
-$result2 = mysql($db, "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' AND permission_id = '1'");
+$mod = $_GET['mod']; // für register_globals = off
+$id = $_GET['id']; // für register_globals = off
+$gruppe = $_POST['gruppe']; // für register_globals = off
+
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$user_id = mysql_result($result1, isset($i1), 'id');
+$result2 = mysql_query( "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' AND permission_id = '1'");
 $num2 = mysql_num_rows($result2);
+
 IF($num2 == '1')
 {
 	SWITCH($mod)
@@ -57,17 +62,17 @@ IF($num2 == '1')
 		CASE 'user':
 		//echo $gruppe."<BR>";
 		//Dem benutzer wird die neue Gruppe zugewiesen:
-		$result3 = mysql($db, "UPDATE $table1 SET group_id = '$gruppe' WHERE id='$id'");
+		$result3 = mysql_query( "UPDATE $table1 SET group_id = '$gruppe' WHERE id='$id'");
 		//die alten Benutzer-Rechte werden gelöscht:
-		$result4 = mysql($db, "DELETE FROM $table7 WHERE user_id = '$id'");
+		$result4 = mysql_query( "DELETE FROM $table7 WHERE user_id = '$id'");
 		//Die neuen Benutzer-Rechte werden entsprechend der neuen Gruppe zugewiesen:
-		$result5 = mysql($db, "SELECT * FROM $table6 WHERE group_id = '$gruppe' AND enabled = '1'");
+		$result5 = mysql_query( "SELECT * FROM $table6 WHERE group_id = '$gruppe' AND enabled = '1'");
 		$num5 = mysql_num_rows($result5);
 		//echo $num5."<BR>";
 		FOR($i5=0; $i5<$num5; $i5++)
 		{
 			$perm_id = mysql_result($result5, $i5, 'permission_id');
-			$result6 = mysql($db, "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$id', '$perm_id', '1')");
+			$result6 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$id', '$perm_id', '1')");
 		}
 		echo mysql_error();
 		echo "

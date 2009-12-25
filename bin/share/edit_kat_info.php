@@ -13,16 +13,27 @@
 <?php
 // verwendet als Popup-Fenster mit den Kategorie-Infos
 
+//var_dump($_REQUEST);
+
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id'];
+}
+
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 include_once("fckeditor/fckeditor.php");
 
-$result0 = mysql($db, "SELECT $table4.kat_id, $table4.kategorie, $table11.info, $table11.kat_id  FROM $table4 INNER JOIN $table11 ON $table4.kat_id = '$kat_id' AND $table4.kat_id = $table11.kat_id");
+$result0 = mysql_query( "SELECT $table4.kat_id, $table4.kategorie, $table11.info, $table11.kat_id  FROM $table4 INNER JOIN $table11 ON $table4.kat_id = '$kat_id' AND $table4.kat_id = $table11.kat_id");
 echo mysql_error();
 $num0 = mysql_num_rows($result0);
-$kategorie = htmlentities(mysql_result($result0, $i0, 'kategorie'));
-$info = mysql_result($result0, $i0, 'info');
+$row = mysql_fetch_array($result0);
+//var_dump($row);
+$kategorie = htmlentities($row['kategorie']);
+//$kategorie = htmlentities(mysql_result($result0, isset($i0), 'kategorie'));
+//$info = mysql_result($result0, isset($i0), 'info');
+$info = $row['info'];
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -31,8 +42,10 @@ list($c_username) = split(',',$_COOKIE['login']);
 //echo $c_username;
 }
 
-$result2 = mysql($db, "SELECT group_id FROM $table1 WHERE username = '$c_username'");
-$group_id = mysql_result($result2, $i2, 'group_id');
+$result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
+$row = mysql_fetch_array($result2);
+//$group_id = mysql_result($result2, isset($i2), 'group_id');
+$group_id = $row['group_id'];
 IF($group_id == '1' OR $group_id == '3')	//Admin oder Fotograf
 {
 	$editable = '1';
@@ -75,7 +88,7 @@ echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post' targ
 		</TD>
 	</TR>";
 	
-	IF($editable == '1')
+	IF( isset($editable) and $editable == '1' ) 
 	{
 		echo "
 		<TR class='normal'>

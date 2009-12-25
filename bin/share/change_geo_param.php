@@ -2,6 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 <?php
 include 'global_config.php';
+if ( array_key_exists('pic_id',$_REQUEST) )
+{
+	$pic_id = $_REQUEST['pic_id'];
+}
+IF(array_key_exists('lat',$_REQUEST))
+{
+	$lat = $_REQUEST['lat'];
+}
+IF(array_key_exists('long',$_REQUEST))
+{
+	$long = $_REQUEST['long'];
+}
+IF(array_key_exists('ort',$_REQUEST))
+{
+	$ort = $_REQUEST['ort'];
+}
+IF(array_key_exists('width',$_REQUEST))
+{
+	$width = $_REQUEST['width'];
+}
+IF(array_key_exists('height',$_REQUEST))
+{
+	$height = $_REQUEST['height'];
+}
 ?>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
@@ -15,35 +39,36 @@ A:hover{color:red;text-decoration:underline}
 
 <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $gm_key; ?>" type="text/javascript"></script>
 
-
 <script language="JavaScript">
 function saveNewParam(newlocation, ort, loc_id, pic_id)
 {
 Fenster2 = window.open('../html/recherche/save_new_param.php?location='+newlocation+'&ort='+ort+'&loc_id='+loc_id+'&pic_id='+pic_id, 'Speicherung2', "width=300,height=100,scrollbars,resizable=no,");
 }
 </script>
-
 </head>
 
 <body>
-
 <?php
-
+//var_dump($_REQUEST);
+//echo "PicID: ".$pic_id."<BR>";
 include 'db_connect1.php';
-$result1 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-$loc_id = mysql_result($result1, $i1, 'loc_id');
+$result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+echo mysql_error();
+$loc_id = mysql_result($result1,0,'loc_id');
+//echo "LocID: ".$loc_id."<BR>";
 IF($loc_id !== '0' AND $loc_id !== '')
 {
-	$result12 = mysql($db, "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-	$long = mysql_result($result12, $i12, 'longitude');
-	$lat = mysql_result($result12, $i12, 'latitude');
-	$alt = mysql_result($result12, $i12, 'altitude');
+	$result12 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
+	$long = mysql_result($result12,0, 'longitude');
+	$lat = mysql_result($result12,0, 'latitude');
+	$alt = mysql_result($result12,0, 'altitude');
 	$loc = round($lat,6).",".round($long,6);
-	$ort = htmlentities(mysql_result($result12, $i12, 'location'));
-	echo $ort;
+	$ort = htmlentities(mysql_result($result12,0, 'location'));
+	//echo "Ort: ".$ort;
 }
 ELSE
 {
+	//echo "Pos. vorhanden<BR>";
 	unset($parameter);
 	$parameter = $_COOKIE['parameter'];
 	$param = split(',', $parameter);

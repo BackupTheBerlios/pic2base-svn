@@ -3,14 +3,24 @@
 include 'db_connect1.php';
 INCLUDE 'global_config.php';
 
+// für register_globals = off
+if(array_key_exists('kat_id_s',$_GET))
+{
+	$kat_id_s = $_GET['kat_id_s']; 
+}
+else
+{
+	$kat_id_s = 0;
+}
+
 //Es muß sichergestellt werden, daß als Zielkategorie keine Kategorie unterhalb der Quellkategorie gewählt werden kann, denn diese wird ja gelöscht! $child_arr enthält alle 'verbotenen' Kategorien
 
 //Bestimmung aller Unterkategorien der gewählten Quell-Kategorie:
 
-$res1 = mysql($db, "SELECT max(level) FROM $table4");
-$max_level = mysql_result($res1, $i1, 'max(level)');
+$res1 = mysql_query("SELECT max(level) FROM $table4");
+$max_level = mysql_result($res1, isset($i1), 'max(level)');
 //echo "max. Level: ".$max_level."<BR>";
-$result2 = mysql($db, "SELECT * FROM $table4 WHERE parent = '$kat_id_s'");
+$result2 = mysql_query("SELECT * FROM $table4 WHERE parent = '$kat_id_s'");
 $num2 = mysql_num_rows($result2);
 unset($child_arr);
 $child_arr[] = $kat_id_s;
@@ -21,7 +31,7 @@ IF($num2 > '0')
 	{
 		FOREACH($child_arr AS $child)
 		{
-			$result3 = mysql($db, "SELECT * FROM $table4 WHERE parent = '$child' AND level = '$curr_level'");
+			$result3 = mysql_query("SELECT * FROM $table4 WHERE parent = '$child' AND level = '$curr_level'");
 			$num3 = mysql_num_rows($result3);
 			IF($num3 > '0')
 			{
@@ -44,6 +54,16 @@ FOREACH($child_arr AS $child)
 //Erzeugung der Baumstruktur für Destination-Kategorie:
 //Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// für register_globals = off
+if(array_key_exists('kat_id_d',$_GET))
+{
+	$kat_id_d = $_GET['kat_id_d']; 
+}
+else
+{
+	$kat_id_d = 0;
+}
+
 $KAT_ID_D = $kat_id_d;		//kat_id_d - Kategorie-ID der Destination
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
@@ -51,7 +71,7 @@ $knoten_arr_d[]=$kat_id_d;
 
 WHILE ($kat_id_d > '1')
 {
-	$res0 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$kat_id_d'");
+	$res0 = mysql_query("SELECT parent FROM $table4 WHERE kat_id='$kat_id_d'");
 	echo mysql_error();
 	$kat_id_d = mysql_result($res0, $i0, 'parent');
 	//echo "Kat-ID in der Funktion: ".$kat_id_d."<BR>";
@@ -68,7 +88,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 	{
 		include 'db_connect1.php';
 		INCLUDE 'global_config.php';
-		$result10 = mysql($db, "SELECT * FROM $table4 WHERE parent='$kat_id_d' ORDER BY kategorie");
+		$result10 = mysql_query("SELECT * FROM $table4 WHERE parent='$kat_id_d' ORDER BY kategorie");
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
@@ -91,7 +111,11 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 			}
 			
 			$kat_id_d_pos = array_search($kat_id_d, $knoten_arr_d);
-			$kat_id_d_back = $knoten_arr_d[$kat_id_d_pos - 1];
+			if($kat_id_d_pos > 0 )
+			{
+				$kat_id_d_back = $knoten_arr_s[$kat_id_d_pos - 1];
+			}
+	
 			IF (in_array($kat_id_d, $knoten_arr_d))
 			{
 				
@@ -140,7 +164,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 		}
 	}
 	
-	$result10 = mysql($db, "SELECT * FROM $table4 WHERE kat_id='1'");
+	$result10 = mysql_query("SELECT * FROM $table4 WHERE kat_id='1'");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{

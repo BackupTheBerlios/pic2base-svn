@@ -66,6 +66,12 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 $base_file = 'recherche2';
 
+//var_dump($_GET);
+if(array_key_exists('mod',$_GET))
+{
+	$mod = $_GET['mod']; // für register_globals = off
+}
+
 echo "
 <div class='page'>
 

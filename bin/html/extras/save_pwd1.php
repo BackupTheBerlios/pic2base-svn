@@ -61,7 +61,7 @@ echo "
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	
-	$result1 = mysql($db,"SELECT * FROM $table1 WHERE username = '$c_username' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
+	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
 	echo mysql_error();
 	$num1 = mysql_num_rows($result1);
 	IF ($num1 > '0' AND $new_pwd_1 !== ''  AND $new_pwd_2 !== '' AND strlen($new_pwd_1) > '4' AND $new_pwd_1 === $new_pwd_2)
@@ -73,7 +73,7 @@ echo "
 		$ftp_passwd = crypt($new_pwd_1);
 		//echo $ftp_passwd;
 		//Benutzerdaten erfassen:
-		$result2 = mysql($db, "UPDATE $table1 SET pwd = ENCRYPT('$new_pwd_1','$key'), ftp_passwd = '$ftp_passwd' WHERE id = '$user_id'");
+		$result2 = mysql_query( "UPDATE $table1 SET pwd = ENCRYPT('$new_pwd_1','$key'), ftp_passwd = '$ftp_passwd' WHERE id = '$user_id'");
 		IF(mysql_error() == '')
 		{
 			shell_exec('/opt/lampp/lampp reloadftp');

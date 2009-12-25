@@ -1,5 +1,5 @@
 <?
-// php 5.3
+
 /*
  * Project: pic2base
  * File: abfrage.php
@@ -12,13 +12,18 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * @copyright 2003-2005 Klaus Henneberg
+ * @author Klaus Henneberg
+ * @package INTRAPLAN
+ * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 //echo "Abfrage-Kriterium: ".$feld."\n";
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$result1 = mysql_query("SELECT DISTINCT $feld FROM $table2 ORDER BY $feld");
+$result1 = mysql_query( "SELECT DISTINCT $feld FROM $table2 ORDER BY $feld");
 $num1 = mysql_num_rows($result1);
 FOR ($i1=0; $i1<$num1; $i1++)
 {

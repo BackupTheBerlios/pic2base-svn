@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
@@ -17,25 +17,42 @@ include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 //$pic_id = '10';
-$result0 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+
+//var_dump($_GET);
+//var_dump($_POST);
+if( array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+	//echo "Bild-ID: ".$pic_id;
+}
+
+if( array_key_exists('view',$_REQUEST) )
+{
+	$view = $_REQUEST['view'];
+}
+
+$result0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 $num0 = mysql_num_rows($result0);
-$FileNameHQ = mysql_result($result0,$i0,'FileNameHQ');
-$FileName = mysql_result($result0,$i0,'FileName');
-$FileNameOri = mysql_result($result0,$i0,'FileNameOri');
-$Owner = mysql_result($result0,$i0,'Owner');
-$ranking = mysql_result($result0,$i0,'ranking');
-$note = mysql_result($result0,$i0,'note');
-$md5sum = mysql_result($result0,$i0,'md5sum');
-$loc_id = mysql_result($result0, 0, 'loc_id');
+$row = mysql_fetch_array($result0);
+$FileNameHQ = $row['FileNameHQ'];
+$FileName = $row['FileName'];
+$FileNameOri = $row['FileNameOri'];
+$Owner = $row['Owner'];
+$ranking = $row['ranking'];
+$note = $row['note'];
+$md5sum = $row['md5sum'];
+$loc_id = $row['loc_id'];
+
 IF($loc_id !== '0' AND $loc_id !== '')
 {
-	$result1 = mysql($db, "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-	$location = mysql_result($result1, 0, 'location');
+	$result1 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
+	$location = mysql_result($result1, 'location');
 }
-$result2 = mysql($db, "SELECT * FROM $table1 WHERE id = '$Owner'");
-$vorname = mysql_result($result2, $i2, 'vorname');
-$name = mysql_result($result2, $i2, 'name');
-$u_name = mysql_result($result2, $i2, 'username');
+$result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
+$row = mysql_fetch_array($result2);
+$vorname = $row['vorname'];
+$name = $row['name'];
+$u_name = $row['username'];
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -147,10 +164,7 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 
 //es werden all diejenigen Tags dargestellt, die das Bild mitgebracht hat und deren Daten in der Tabelle meta_data hinterlegt sind und zusätzlich die editierbaren Felder:
 //zuerst werden alle editierbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
-
-$result4 = mysql($db, "SELECT field_name FROM $table5 WHERE writable = '1'");
-
-echo mysql_error();
+$result4 = mysql_query( "SELECT field_name FROM $table5 WHERE writable = '1'");
 $num4 = mysql_num_rows($result4);
 IF($num4 > '0')
 {
@@ -165,7 +179,7 @@ IF($num4 > '0')
 
 //dann werden alle in der Kompact-Ansicht lesbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
 
-$result5 = mysql($db, "SELECT field_name FROM $table5 WHERE viewable = '1'");
+$result5 = mysql_query("SELECT field_name FROM $table5 WHERE viewable = '1'");
 
 echo mysql_error();
 $num5 = mysql_num_rows($result5);
@@ -189,6 +203,11 @@ $info_arr = explode(chr(10), $exif_daten);
 //print_r($info_arr)."<BR>";
 
 $n = 0;
+//var_dump($info_arr);
+if (!isset($editable))
+{
+	$editable = '0';
+}
 FOREACH($info_arr AS $IA)
 {
 	IF(bcmod($n,2) == 0)
@@ -235,13 +254,12 @@ FOREACH($info_arr AS $IA)
 	ELSEIF($tag !== '')
 	{
 		$TAG = str_replace('-','_',$tag);
-		$result3 = mysql($db, "SELECT * FROM $table5 WHERE field_name = '$TAG'");
+		$result3 = mysql_query( "SELECT * FROM $table5 WHERE field_name = '$TAG'");
 		$num3 = mysql_num_rows($result3);
 		$color = 'black';
 		IF($num3 == '1')
 		{
-			$writable = mysql_result($result3, $i3, 'writable');
-			$viewable = mysql_result($result3, $i3, 'viewable');
+			$writable = mysql_result($result3, isset($i3), 'writable');
 			IF($writable == '1')
 			{
 				$color = 'red';
@@ -277,6 +295,7 @@ FOREACH($info_arr AS $IA)
 	}
 	$n++;
 }
+
 echo "
 	<TR style='background-color:lightgreen;'>
 		<TD class='liste2' style='width:450px;' colspan='2' >---- Link zum HQ-Bild ----</TD>
@@ -305,7 +324,7 @@ echo "
 		</TD>
 	</TR>";
 	//echo count($writable_fields);
-	IF(($editable == '1' OR count($writable_fields) > 0) AND $u_name === $c_username)
+	IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username)
 	{
 		echo "
 		<TR class='normal'>

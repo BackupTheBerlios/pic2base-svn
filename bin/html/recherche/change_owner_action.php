@@ -14,17 +14,35 @@
 <body style='background-color:#DDDDDD'>
 
 <?php
-// php 5.3
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-//echo "neuer Owner: ".$new_owner;
-IF($new_owner !== '' AND $new_owner !== NULL)
+
+//var_dump($_POST);
+if ( array_key_exists('pic_id',$_POST) )
 {
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$new_owner'");
+	$pic_id = $_POST['pic_id'];
+}
+
+if ( array_key_exists('new_owner',$_POST) )
+{
+	$new_owner = $_POST['new_owner'];
+}
+else
+{
+	$new_owner = '';
+}
+//echo "neuer Owner: ".$new_owner;
+
+IF( $new_owner !== '' AND $new_owner !== NULL)
+{
+	$result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$new_owner'");
 	$num1 = mysql_num_rows($result1);
-	$vorname = mysql_result($result1, $i1, 'vorname');
-	$name = mysql_result($result1, $i1, 'name');
-	$result2 = mysql_query("UPDATE $table2 SET Owner = '$new_owner' WHERE pic_id = '$pic_id'");
+	$row = mysql_fetch_array($result1);
+	$vorname = $row['vorname'];
+	$name = $row['name'];
+//	$vorname = mysql_result($result1, $i1, 'vorname');
+//	$name = mysql_result($result1, $i1, 'name');
+	$result2 = mysql_query( "UPDATE $table2 SET Owner = '$new_owner' WHERE pic_id = '$pic_id'");
 	IF(mysql_error() == '')
 	{
 		echo "<div id='content' style='width:740px; height:300px; margin-top:200px;'>Bild ".$pic_id." wurde der neue Eigent&uuml;mer ".$vorname." ".$name." zugewiesen.<BR>

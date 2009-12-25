@@ -51,6 +51,50 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+//var_dump($_REQUEST);
+if(array_key_exists('pic_id',$_GET))
+{
+	$pic_id = $_GET['pic_id'];
+}
+
+if(array_key_exists('mod',$_GET))
+{
+	$mod = $_GET['mod'];
+}
+if(array_key_exists('art',$_GET))
+{
+	$art = $_GET['art'];
+}
+else
+{
+	if(!isset($art))
+	{
+		$art = '';
+	}
+}
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id'];
+}
+else
+{
+	if(!isset($kat_id))
+	{
+		$kat_id = '';
+	}
+}
+if(array_key_exists('ID',$_REQUEST))
+{
+	$ID = $_REQUEST['ID'];
+}
+else
+{
+	if(!isset($ID))
+	{
+		$ID = '';
+	}
+}
+
 echo "
 <div class='page'>
 	<FORM name='desc-zuweisung', method='post' action='edit_desc_daten_action.php?kat_id=$kat_id&ID=$ID&art=$art'>
@@ -80,7 +124,7 @@ echo "
 		IF ($art == 'single_desc_edit')
 		{
 			$edit_mod = 'desc';
-			getPictureDetails($pic_id,$edit_mod,$sr);
+			getPictureDetails($pic_id,$edit_mod);
 			echo "<p align='right'><a href='edit_beschreibung.php?kat_id=$kat_id&ID=$ID&mod=kat&pic_id=0' title='Einzel-Beschreibungsmodus verlassen'><img src='../../share/images/back.gif' width='15' height='15' border='0' alt='zurück' style='margin-right:5px';></a></p>";
 		}
 		ELSE

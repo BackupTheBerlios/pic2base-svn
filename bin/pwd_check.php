@@ -25,12 +25,16 @@
  *
  * All files of this project are licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * @copyright 2005-2006 Klaus Henneberg
+ * @author Klaus Henneberg
+ * @package pic2base
+ * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
  -->
 <DIV Class="klein">
  
 <?
-// php 5.3
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 foreach($_SERVER as $schluessel => $wert)
@@ -42,7 +46,7 @@ foreach($_SERVER as $schluessel => $wert)
 
 <div class="page">
 
-	<p id="kopf">pic2base - Zugangskontrolle</p>
+	<p id="kopf">pic2base :: Zugangskontrolle</p>
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
@@ -58,6 +62,7 @@ foreach($_SERVER as $schluessel => $wert)
 	include $sr.'/bin/share/db_connect1.php';
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//var_dump($_POST);
 //register_globels =  off - Variante:
 	if( isset($_POST['username']) )
 	{
@@ -71,7 +76,6 @@ foreach($_SERVER as $schluessel => $wert)
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$username' AND pwd = ENCRYPT('$passwd','$key') AND aktiv = '1'");
 	//echo mysql_error();
 	@$num1 = mysql_num_rows($result1);
-	//echo $num1;
 	IF ($num1 > '0')
 	{
 		echo "<CENTER>

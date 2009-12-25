@@ -14,7 +14,7 @@
 <DIV Class="klein">
 
 <?
-// php 5.3
+
 /*
  * Project: pic2base
  * File: start.php
@@ -27,6 +27,11 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * @copyright 2003-2005 Klaus Henneberg
+ * @author Klaus Henneberg
+ * @package pic2base
+ * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -42,7 +47,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
 ?>
@@ -75,7 +80,7 @@ fclose($fh);
 	</div>
 	
 	<div id='spalte2'><p id="elf" style="background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;"><b>Hinweise zu den Bearbeitungsm&ouml;glichkeiten:</b><BR><BR>
-	Ausf&uuml;hrliche Hilfe zu den Bearbeitungsm&ouml;glichkeiten finden Sie &uuml;ber die Navigationsleiste in der <a href='../help/help1.php?page=3'>Online-Hilfe</a>.
+	Ausf&uuml;hrliche Hilfe zu den Bearbeitungsm&ouml;glichkeiten finden Sie &uuml;ber die Navigationsleiste in der <a href='../help/help1.php?page=3'>Online-Hilfes</a>.
 	</p>
 	</div>
 

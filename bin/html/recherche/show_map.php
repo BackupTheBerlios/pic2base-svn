@@ -2,6 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 <?php
 include '../../share/global_config.php';
+//var_dump($_REQUEST);
+IF(array_key_exists('lat',$_REQUEST))
+{
+	$lat = $_REQUEST['lat'];
+}
+IF(array_key_exists('long',$_REQUEST))
+{
+	$long = $_REQUEST['long'];
+}
+IF(array_key_exists('width',$_REQUEST))
+{
+	$width = $_REQUEST['width'];
+}
+IF(array_key_exists('height',$_REQUEST))
+{
+	$height = $_REQUEST['height'];
+}
 ?>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>

@@ -1,5 +1,6 @@
 <?php
 //setlocale(LC_CTYPE, 'de_DE');
+//var_dump($_GET);
 function createPreviewAjax($pic_id, $max_size, $quality)
 {
 	unset($username);
@@ -13,23 +14,33 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	//Qualitäten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$res0 = mysql($db, "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
-	$FileNameV = mysql_result($res0, $i1, 'FileNameV');
-	$FileNameHQ = mysql_result($res0, $i1, 'FileNameHQ');
-	$FileName = mysql_result($res0, $i1, 'FileName');
-	$FileNameOri = mysql_result($res0, $i1, 'FileNameOri');
-	$FileNameOri_ext = explode('.', $FileNameOri);
-	$ext = strtolower($FileNameOri_ext[1]);//Extension des Original-Bildes
+	$res0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
+	$row = mysql_fetch_array($res0);
+	$FileNameV = $row['FileNameV'];
+	$FileNameHQ = $row['FileNameHQ'];
+	$FileName = $row['FileName'];
+	$FileNameOri = $row['FileNameOri'];
 	
-	$result1 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-	$Width = mysql_result($result1, $i1, 'ExifImageWidth');
-	$Height = mysql_result($result1, $i1, 'ExifImageHeight');
+	$FileNameOri_ext = explode('.', $FileNameOri);
+	$ext = strtolower(isset($FileNameOri_ext[1]));//Extension des Original-Bildes
+	
+	$result1 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+	$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
+	$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
 
 	$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
 	$Ori_arr = split(' : ',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
-	$Orientation = $Ori_arr[1];
+//	echo $bild."<br>";
+	if ( $Ori_arr[0] != '')
+	{
+		$Orientation = $Ori_arr[1];
+	}
+	else
+	{
+		$Orientation = '';
+	}
 	//echo $Orientation;
-	$FileQuality = mysql_result($result1, $i1, 'Quality');
+	$FileQuality = mysql_result($result1, isset($i1), 'Quality');
 	//abgeleitete Größen:
 	$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
 	$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
@@ -138,8 +149,8 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 		CASE '0':
 		CASE '1':
 		CASE '3':
-		$Height = mysql_result($result1, $i1, 'ExifImageHeight');
-		$Width = mysql_result($result1, $i1, 'ExifImageWidth');
+		$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
+		$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
 		break;
 		
 		CASE '6':
@@ -485,16 +496,6 @@ function blende_ein()
 function changeWritable(lfdnr, checked, sr)
 {
 	var url = '../../share/change_writable.php';
-	var params = 'lfdnr=' + lfdnr + '&checked=' + checked + '&sr=' + sr;
-	//alert("Parameter: "+params);
-	var target = lfdnr;
-	//alert(target);
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
-}
-
-function changeViewable(lfdnr, checked, sr)
-{
-	var url = '../../share/change_viewable.php';
 	var params = 'lfdnr=' + lfdnr + '&checked=' + checked + '&sr=' + sr;
 	//alert("Parameter: "+params);
 	var target = lfdnr;

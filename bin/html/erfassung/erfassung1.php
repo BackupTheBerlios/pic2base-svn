@@ -45,10 +45,10 @@ list($c_username) = split(',',$_COOKIE['login']);
 
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
-foreach($_SERVER as $schluessel => $wert)
-{
+//foreach($_SERVER as $schluessel => $wert)
+//{
 //echo $schluessel." - ".$wert."<BR>";
-};
+//};
 //phpinfo();
 ?>
 

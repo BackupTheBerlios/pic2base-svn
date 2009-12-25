@@ -33,7 +33,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 //$pic_id = '10';
-$result0 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+$result0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 $num0 = mysql_num_rows($result0);
 $FileNameOri = mysql_result($result0, $i0, 'FileNameOri');
 $FileName = mysql_result($result0, $i0, 'FileName');

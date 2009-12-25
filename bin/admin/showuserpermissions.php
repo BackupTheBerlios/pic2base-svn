@@ -3,7 +3,7 @@
 Gruppe: 
 <?
   mysql_connect ($db_host, $db_username, $db_password);
-  $result = mysql ($db_name,"select * from usergroups WHERE id=".$id);
+  $result = mysql_query("select * from usergroups WHERE id=".$id);
   if (mysql_num_rows($result) == 1)
   {
     echo mysql_result ($result, 0, "description");
@@ -14,7 +14,7 @@ Gruppe:
 ?>
 <table><tr><td width=150>Parameter</td><td width=100 align=right>Erlaubnis</td></tr>
 <?
-  $result = mysql ($db_name,"select * from permissions ORDER BY id");
+  $result = mysql_query("select * from permissions ORDER BY id");
   $num = mysql_num_rows($result);
   for ($i = 0; $i < $num; $i++)
   {

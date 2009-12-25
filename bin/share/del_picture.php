@@ -5,9 +5,23 @@
 include 'global_config.php';
 include 'db_connect1.php';
 
+//var_dump($_GET);
+if ( array_key_exists('FileName',$_GET) )
+{
+	$FileName = $_GET['FileName'];
+}
+if ( array_key_exists('c_username',$_GET) )
+{
+	$c_username = $_GET['c_username'];
+}
+if ( array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+}
+
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
 //echo "Datei l&ouml;schen??"
@@ -16,7 +30,7 @@ $datei = $ftp_path."/".$c_username."/downloads/".$FileName;
 
 if(@unlink($datei))
 {
-	$result1 = mysql($db, "UPDATE $table2 SET ranking = ranking - 1 WHERE pic_id = '$pic_id'");
+	$result1 = mysql_query( "UPDATE $table2 SET ranking = ranking - 1 WHERE pic_id = '$pic_id'");
 	echo "	<TD align='center'>
 	<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' /></SPAN>	
 	</TD>";
@@ -33,7 +47,7 @@ else
 $file_info = pathinfo($datei);
 $base_name = substr($file_info['basename'],0,-4);
 //echo $base_name;
-$result2 = mysql($db, "SELECT * FROM $table2 WHERE FileName LIKE '$base_name%'");
+$result2 = mysql_query( "SELECT * FROM $table2 WHERE FileName LIKE '$base_name%'");
 $num2 = mysql_num_rows($result2);	//es gibt in der DB insges. $num2 Dateien mit dem Stammnamen.
 //echo $num2." Dateien mit Stammnamen in DB<BR>";
 $k = '0';

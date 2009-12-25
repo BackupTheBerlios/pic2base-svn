@@ -11,7 +11,7 @@ ELSE
 }
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, $i1, 'berechtigung');
 IF ($berechtigung > '8')
 {

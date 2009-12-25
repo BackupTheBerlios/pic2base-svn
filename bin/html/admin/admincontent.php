@@ -1,4 +1,16 @@
 <?
+	// für register_globals = off
+	if(array_key_exists('item',$_GET))
+	{
+		if(array_key_exists('item',$_GET))
+		{
+			$item = $_GET['item']; 
+		}
+	}
+	else
+	{
+		$item = '';
+	}
 	switch ($item)
 	{
 		case "": include "adminhome.php"; break;

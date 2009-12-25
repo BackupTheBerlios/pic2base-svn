@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: login1.php
  *
- * Copyright (c) 2005 - 2009 Klaus Henneberg
+ * Copyright (c) 2005 - 2006 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -30,12 +30,16 @@
  *
  * All files of this project are licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * @copyright 2005-2006 Klaus Henneberg
+ * @author Klaus Henneberg
+ * @package pic2base
+ * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
  -->
 <DIV Class="klein">
  
 <?
-// php 5.3
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 include '../share/global_config.php';
@@ -48,7 +52,7 @@ include $sr.'/bin/share/db_connect1.php';
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		
+		<BR>
 		</div>
 	</div>
 	

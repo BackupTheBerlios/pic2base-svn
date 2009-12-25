@@ -8,17 +8,19 @@
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
+	
+	$user_id = $_GET['user_id']; // für register_globals = off
 	if (hasPermission($c_username, 'adminlogin'))
 	{
 		mysql_connect ($db_server, $user, $PWD);
-		$result = mysql ($db,"SELECT * FROM users WHERE id='$user_id'");
+		$result = mysql_query("SELECT * FROM users WHERE id='$user_id'");
 		IF (mysql_result($result, 0, 'aktiv') == 0)
 		{
-		 	$result = mysql ($db,"UPDATE users SET aktiv = '1' WHERE id = $user_id"); 
+		 	$result = mysql_query("UPDATE users SET aktiv = '1' WHERE id = $user_id"); 
 		}
 		ELSE
 		{
-		  $result = mysql ($db,"UPDATE users SET aktiv = '0' WHERE id = $user_id");
+		  $result = mysql_query("UPDATE users SET aktiv = '0' WHERE id = $user_id");
 		}
 		//echo mysql_error();
 		echo "<meta http-equiv='Refresh' content='0; URL=adminframe.php?item=adminshowusers'>";

@@ -52,19 +52,22 @@ include $sr.'/bin/share/db_connect1.php';
 		}
 		//include '../../share/db_connect1.php';
 		//include '../../share/functions/permissions.php';
+		
+		$groupname = $_POST['groupname']; // für register_globals = off
+		
 		$groupname = strip_tags($groupname);
 		if ((hasPermission($c_username, 'adminlogin')) AND ($groupname !== ''))
 		{
 			mysql_connect ($db_server, $user, $PWD);
-			$result1 = mysql ($db,"INSERT INTO $table9 (description) VALUES ('".$groupname."')");
-			$result2 = mysql($db, "SELECT id FROM $table9 WHERE description = '$groupname'");
+			$result1 = mysql_query("INSERT INTO $table9 (description) VALUES ('".$groupname."')");
+			$result2 = mysql_query( "SELECT id FROM $table9 WHERE description = '$groupname'");
 			$groupid = mysql_result($result2, $i2, 'id');
-			$result3 = mysql($db, "SELECT id FROM $table8");
+			$result3 = mysql_query( "SELECT id FROM $table8");
 			$num3 = mysql_num_rows($result3);
 			FOR($i3 = '0'; $i3<$num3; $i3++)
 			{
 				$perm_id = mysql_result($result3, $i3, 'id');
-				$result4 = mysql($db, "INSERT INTO $table6 (group_id, permission_id, enabled) VALUES ('$groupid', '$perm_id', '0')");
+				$result4 = mysql_query( "INSERT INTO $table6 (group_id, permission_id, enabled) VALUES ('$groupid', '$perm_id', '0')");
 			}
 			
 			echo "<meta http-equiv='Refresh' content='0; URL=adminframe.php?item=adminshowgroups'>";

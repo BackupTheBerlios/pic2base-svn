@@ -13,6 +13,10 @@
 
 <?php
 //skript speichert die geänderten Meta-Daten in die exif_data-Tabelle und in das betreffende Bild
+IF(array_key_exists('pic_id', $_POST))
+{
+	$pic_id = $_POST['pic_id'];
+}
 echo "&Auml;nderungen zum Bild-ID: ".$pic_id." werden gespeichert...<BR>";
 include_once 'global_config.php';
 include_once 'db_connect1.php';
@@ -48,7 +52,7 @@ FOREACH($_POST AS $key => $value)
 		//echo $KEY." / ".$VALUE."<BR>";
 	}
 	
-	$result1 = mysql($db, "UPDATE $table14 SET $KEY = '$VALUE' WHERE pic_id = '$pic_id'");
+	$result1 = mysql_query( "UPDATE $table14 SET $KEY = '$VALUE' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Aktualisierung der Meta-Daten des Bildes:
 	shell_exec($et_path."/exiftool -".$key."='$value' ".$FN." -overwrite_original");

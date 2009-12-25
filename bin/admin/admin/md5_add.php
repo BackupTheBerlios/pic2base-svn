@@ -46,8 +46,8 @@ list($c_username) = split(',',$_COOKIE['login']);
 include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 SWITCH ($berechtigung)
 {
 	//Admin
@@ -80,7 +80,7 @@ echo "
 	<p  style='margin:200px 5px;'>";
 	//Kontrolle, ob Feld 'md5sum' vorhanden ist:
 	$z = 0;
-	$res10_1 = mysql($db, "SHOW FIELDS FROM `pictures`");
+	$res10_1 = mysql_query( "SHOW FIELDS FROM `pictures`");
 	if (!$res10_1) 
 	{
 		echo 'Abfrage konnte nicht ausgeführt werden: ' . mysql_error();
@@ -100,11 +100,11 @@ echo "
 	}
 	IF($z == 0)
 	{
-		$res10_2 = mysql($db, "ALTER TABLE `pictures` ADD `md5sum` varchar(50) NOT NULL default ''");
+		$res10_2 = mysql_query( "ALTER TABLE `pictures` ADD `md5sum` varchar(50) NOT NULL default ''");
 		IF(!mysql_error())
 		{
 			echo "Feld md5sum wurde der Tabelle &lt;pictures&gt; zugef&uuml;gt.<BR>";
-			$res10_3 = mysql($db, "INSERT INTO `pb_column_info` (table_name, column_name, comment, suchfeld) VALUES ('pictures', 'md5sum', 'MD5-Prüfsumme', '0')");
+			$res10_3 = mysql_query( "INSERT INTO `pb_column_info` (table_name, column_name, comment, suchfeld) VALUES ('pictures', 'md5sum', 'MD5-Prüfsumme', '0')");
 			IF(!mysql_error())
 			{
 				echo "Tabelle pb_column_info wurde aktualisiert.<BR>";
@@ -125,7 +125,7 @@ echo "
 		echo "Das Feld \"md5sum\" existiert in der Tabelle &lt;pictures&gt;."; 
 	}
 	$Y = '0';
-	$result2 = mysql($db, "SELECT * FROM $table2");
+	$result2 = mysql_query( "SELECT * FROM $table2");
 	$num2 = mysql_num_rows($result2);
 	FOR($i2 = '0'; $i2<$num2; $i2++)
 	{
@@ -139,7 +139,7 @@ echo "
 			//echo $command;
 			$sum = explode(' ',shell_exec($command));
 			//echo $file_short.", ".$sum[0]."<BR>";
-			$result3 = mysql($db, "UPDATE $table2 SET md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
+			$result3 = mysql_query( "UPDATE $table2 SET md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
 			echo mysql_error();
 			$Y++;
 		}

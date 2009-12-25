@@ -55,42 +55,107 @@ include $sr.'/bin/share/functions/main_functions.php';
 $datei_name		Name der hochzuladenden Datei
 $datei			Name der Datei im Cache
 */
+
+//var_dump($_FILES);
+$datei_name = $_FILES['datei']['name']; // für register_globals = off
+$tmp_name = $_FILES['datei']['tmp_name'];
 //echo "Name der hochzuladenden Datei: ".$datei_name."<BR>";
 //echo " Name der Datei im Cache: ".$datei."<BR>";
 
 IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 {
+// alt:
+//	$target = $ftp_path."/".$c_username."/uploads/".$datei_name;
+//	@copy($datei,$target) OR die("Upload fehlgeschlagen");
+//	$tmp_file = $up_dir."/".$datei_name;
+
+// neu für register_globals = off : 
 	$target = $ftp_path."/".$c_username."/uploads/".$datei_name;
-	@copy($datei,$target) OR die("Upload fehlgeschlagen");
-	$tmp_file = $up_dir."/".$datei_name;
-	clearstacache();
-	chmod($tmp_file, 0777);
-	clearstacache();
 	
-	echo "
-	<div class='page'>
-		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
-		
-		<div class='navi' style='clear:right;'>
-			<div class='menucontainer'>
-			<!--<a class='navi' href='erfassung1.php'>Erfassung</a>
-			<a class='navi' href='recherche1.php'>Recherche</a>
-			<a class='navi' href='vorschau.php'>Bearbeitung</a>
-			<a class='navi' href='hilfe1.php'>Hilfe</a>
-			<a class='navi' href='index.php'>Logout</a>-->
-			</div>
-		</div>
-		
-		<div class='content'>
-		<p style='margin:70px 0px; text-align:center'>".$meldung."<BR></p>
-		<p style='margin:70px 0px; text-align:center; color:green;'>".$hinweis."<BR></p>";
-		
+	if ( !move_uploaded_file($tmp_name,$target) )
+	{
+		switch ($_FILES['datei']['error']) 
+		{
+			case UPLOAD_ERR_INI_SIZE:
+				$fehler = "Die Dateigröße des Bildes: ".$datei_name." ist zu groß!";
+				break;
+			case UPLOAD_ERR_FORM_SIZE:
+				$fehler = "Die Dateigröße des Bildes: ".$datei_name." ist zu groß!";
+				break;
+			case UPLOAD_ERR_PARTIAL:
+				$fehler = "Das Bild: ".$datei_name." konnte nicht vollständig hochgeladen werden!";
+				break;
+			case UPLOAD_ERR_NO_FILE:
+				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden!";
+				break;
+			case UPLOAD_ERR_NO_TMP_DIR:
+				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: Es fehlt das temporäre Verzeichnis!";
+				break;
+			case UPLOAD_ERR_CANT_WRITE:
+				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: Schreibfehler auf dem Server!";
+				break;
+			case UPLOAD_ERR_EXTENSION:
+				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: File upload stopped by extension.";
+				break;
+			default:
+				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: Unknown upload error.";
+				break;
+		} 		
 		echo "
+		<div class='page'>
+		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
+			<div class='navi' style='clear:right;'>
+				<div class='menucontainer'>
+				<!--<a class='navi' href='erfassung1.php'>Erfassung</a>
+				<a class='navi' href='recherche1.php'>Recherche</a>
+				<a class='navi' href='vorschau.php'>Bearbeitung</a>
+				<a class='navi' href='hilfe1.php'>Hilfe</a>
+				<a class='navi' href='index.php'>Logout</a>-->
+				</div>
+			</div>
+		
+			<div class='content'>
+			<p style='margin:80px 0px; text-align:center; color:red;'>".$fehler."<p style='text-align:center; color:black;'>
+			Bitte w&auml;hlen Sie eine andere Bilddatei aus!<BR><BR>
+			<INPUT TYPE='button' value='Zurück' onclick=\"location.href='javascript:history.back()'\"></P>
+			</p>
+			</div>
+			<br style='clear:both;' />
+			<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+		</div>";
+	}
+	else
+	{
+		clearstatcache();
+		// alt:	chmod($tmp_file, 0777);
+		chmod($target, 0777);
+		clearstatcache();
+	
+		echo "
+		<div class='page'>
+			<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
+		
+			<div class='navi' style='clear:right;'>
+				<div class='menucontainer'>
+				<!--<a class='navi' href='erfassung1.php'>Erfassung</a>
+				<a class='navi' href='recherche1.php'>Recherche</a>
+				<a class='navi' href='vorschau.php'>Bearbeitung</a>
+				<a class='navi' href='hilfe1.php'>Hilfe</a>
+				<a class='navi' href='index.php'>Logout</a>-->
+				</div>
+			</div>
+		
+			<div class='content'>
+			<p style='margin:70px 0px; text-align:center'>".isset($meldung)."<BR></p>
+			<p style='margin:70px 0px; text-align:center; color:green;'>".$datei_name.isset($hinweis)." wurde erfolgreich hochgeladen.<BR></p>";
+		
+			echo "
+			</div>
+			<br style='clear:both;' />
+			<p id='fuss'>".$cr."</p>
 		</div>
-		<br style='clear:both;' />
-		<p id='fuss'>".$cr."</p>
-	</div>
-	<meta http-eqiv='Refresh' Content='1; URL=stapel1.php?ordner=$ftp_path/$c_username/uploads'>";
+		<meta http-equiv='Refresh' Content='2; URL=stapel1.php?ordner=$ftp_path/$c_username/uploads'>";
+	}
 }
 ELSE
 {

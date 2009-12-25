@@ -4,7 +4,7 @@
 <tr><td width=100>Benutzer:</td><td>
 <?
   mysql_connect ($db_host, $db_username, $db_password);
-  $result = mysql ($db_name,"select * from users WHERE id=".$id);
+  $result = mysql_query("select * from users WHERE id=".$id);
   if (mysql_num_rows($result) == 1)
   {
     echo mysql_result ($result, 0, "name");

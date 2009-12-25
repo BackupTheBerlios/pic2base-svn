@@ -2,7 +2,7 @@
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	mysql_connect ($db_server, $user, $PWD);
-	$result = mysql ($db,"select * from users ORDER BY username");
+	$result = mysql_query("select * from users ORDER BY username");
 	$num = mysql_num_rows($result);
 	echo "<center>
 	
@@ -38,14 +38,14 @@
 		<FORM name='$user_id' method='post' action = 'make_changes.php?mod=user&id=$user_id'>
 		<tr bgcolor=$bgcolor>
 		<td><a href=adminframe.php?item=adminshowuser&id=".$user_id."&del=0 title='Details des Users anzeigen'>".$user_name."</a></td>";
-		$result2 = mysql ($db,"select * from usergroups where id= '$group_id'");
+		$result2 = mysql_query("select * from usergroups where id= '$group_id'");
 		if (mysql_num_rows($result2) == 1)
 		{
 			$gr_id = mysql_result ($result2, 0, "id");
 			$desc = mysql_result ($result2, 0, "description");
 			echo "<td><a href=adminframe.php?item=adminshowgroup&id=".$gr_id." title='Details der Gruppe anzeigen'>".$desc."</a></td>";
 		}
-		$result3 = mysql($db, "SELECT * FROM $table9 ORDER BY 'id'");
+		$result3 = mysql_query( "SELECT * FROM $table9 ORDER BY 'id'");
 		$num3 = mysql_num_rows($result3);
 		IF($aktiv == '1')
 		{

@@ -47,14 +47,42 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+//var_dump($_REQUEST);
+if(array_key_exists('num',$_GET))
+{
+	$num = $_GET['num'];
+}
+if(array_key_exists('t_rest',$_REQUEST))
+{
+	$t_rest = $_REQUEST['t_rest'];
+}
+if(array_key_exists('t_0',$_REQUEST))
+{
+	$t_0 = $_REQUEST['t_0'];
+}
+if(array_key_exists('i4',$_REQUEST))
+{
+	$i4 = $_REQUEST['i4'];
+}
+if(array_key_exists('z_0',$_REQUEST))
+{
+	$z_0 = $_REQUEST['z_0'];
+}
+
+
+
 //für alle notwendigen Drehungen wird geprüft, ob bereits ein Vorschau-Bild existiert. Wenn nicht, wird dieses angelegt:
 
-$result0 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username'");
-$user_id = mysql_result($result0, $i0, 'id');
+$result0 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username'");
+$user_id = mysql_result($result0, isset($i0), 'id');
 
-$result4 = mysql($db, "SELECT $table2.pic_id, $table2.Owner, $table2.FileName, $table14.pic_id, $table14.Orientation FROM $table2, $table14 WHERE $table2.pic_id = $table14.pic_id AND $table2.Owner = '$user_id' AND ($table14.Orientation = '6' OR $table14.Orientation = '3' OR $table14.Orientation = '8')");
+$result4 = mysql_query( "SELECT $table2.pic_id, $table2.Owner, $table2.FileName, $table14.pic_id, $table14.Orientation FROM $table2, $table14 WHERE $table2.pic_id = $table14.pic_id AND $table2.Owner = '$user_id' AND ($table14.Orientation = '6' OR $table14.Orientation = '3' OR $table14.Orientation = '8')");
 $num4 = mysql_num_rows($result4);
 //echo $num4." Bilder, welche nicht im Querformat aufgenommen wurden.<BR>";
+
+global $z_0; // ?????
+global $t_0; // ?????
+global $t_rest; // ?????
 
 //Restzeit-Berechnung:
 IF ($z_0 == '')
@@ -100,7 +128,7 @@ $t_akt = mktime();
 		{
 			CASE 'X':
 			//das X dient der Initialisierung bei Aufruf der Seite
-			echo "Bitte haben Sie einen Moment Geduld.<BR>";
+			echo "Bitte haben Sie einen Moment Geduld.<BR><BR>";
 			break;
 			
 			CASE ($num > '1'):
@@ -129,7 +157,7 @@ $t_akt = mktime();
 	ELSE
 	{
 		echo "Es sind keine Bilder mehr zu bearbeiten.<BR>";
-		echo "<meta http-equiv='Refresh', content='0; url=edit_start.php'>";
+		echo "<meta http-equiv='Refresh', content='2; url=edit_start.php'>";
 		return;
 	}
 	
@@ -178,6 +206,14 @@ $t_akt = mktime();
 		}
 	}
 mysql_close($conn);
+
+	IF ($num4 == 0)
+	{
+		echo "Es sind keine Bilder zu bearbeiten.<BR>";
+		echo "<meta http-equiv='Refresh', content='2; url=edit_start.php'>";
+		return;
+	}
+	
 
 	?>
 	

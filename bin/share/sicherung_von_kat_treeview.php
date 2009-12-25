@@ -15,7 +15,7 @@
 	
 	WHILE ($kat_id > '1')
 	{
-		$res0 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
+		$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 		echo mysql_error();
 		$kat_id = mysql_result($res0, $i0, 'parent');
 		//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
@@ -30,7 +30,7 @@
 		include 'db_connect1.php';
 		INCLUDE 'global_config.php';
 		//include 'functions/ajax_functions.php';
-		$result10 = mysql($db, "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
+		$result10 = mysql_query( "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
@@ -77,7 +77,7 @@
 		}
 	}
 	
-	$result10 = mysql($db, "SELECT * FROM $table4 WHERE kat_id='1'");
+	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{

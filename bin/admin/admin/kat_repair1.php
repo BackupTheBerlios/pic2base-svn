@@ -46,8 +46,8 @@ list($c_username) = split(',',$_COOKIE['login']);
 include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 SWITCH ($berechtigung)
 {
 	//Admin
@@ -82,18 +82,18 @@ SWITCH ($berechtigung)
 	<?php
 	//Wartungs-Routine zur Bereinigung der pic-kat-Tabelle, wenn Bilder existieren, welchen nur die kat_id = 1 zugewiesen wurde. Dies ist gleichbedeutend, daß den Bildern noch KEINE Kategorie zugewiesen wurden.
 	$Z = '0';
-	$result10 = mysql($db, "SELECT DISTINCT pic_id FROM $table10");
+	$result10 = mysql_query( "SELECT DISTINCT pic_id FROM $table10");
 	$num10 = mysql_num_rows($result10);
 	echo "Gefundene Einträge in der Bild-Kategorie-Tabelle: ".$num10."<BR><BR>";
 	FOR($i10='0'; $i10<$num10; $i10++)
 	{
-		$pic_id = mysql_result($result10, $i10, 'pic_id');
+		$pic_id = mysql_result($result10, isset($i10), 'pic_id');
 		//echo $pic_id."<BR>";
-		$result11 = mysql($db, "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
+		$result11 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
 		$num11 = mysql_num_rows($result11);
 		IF($num11 == '1')
 		{
-			$result12 = mysql($db, "SELECT * FROM $table10 WHERE pic_id = '$pic_id' AND kat_id = '1'");
+			$result12 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id' AND kat_id = '1'");
 			$num12 = mysql_num_rows($result12);
 			IF($num12 == '1')
 			{

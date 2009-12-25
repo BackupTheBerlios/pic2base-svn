@@ -49,8 +49,8 @@ INCLUDE '../../share/global_config.php';
 include_once $sr.'/bin/share/functions/ajax_functions.php';
 
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 SWITCH ($berechtigung)
 {
 	//Admin
@@ -86,10 +86,10 @@ echo "
 		<TD>Quell-Kategorie</TD>
 		</TR>";
 	
-	$result10 = mysql($db, "SELECT * FROM $table4 WHERE kat_id='1'");
+	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
 
-	$kategorie = mysql_result($result10, $i10, 'kategorie');
-	$kat_id_s = mysql_result($result10, $i10, 'kat_id');
+	$kategorie = mysql_result($result10, isset($i10), 'kategorie');
+	$kat_id_s = mysql_result($result10, isset($i10), 'kat_id');
 		
 	$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 	echo "<TR id='kat'>

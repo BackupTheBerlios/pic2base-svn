@@ -8,9 +8,23 @@ include 'db_connect1.php';
 include 'functions/ajax_functions.php';
 include 'functions/permissions.php';
 
+//var_dump($_GET);
+if ( array_key_exists('c_username',$_GET) )
+{
+	$c_username = $_GET['c_username'];
+}
+if ( array_key_exists('FileName',$_GET) )
+{
+	$FileName = $_GET['FileName'];
+}
+if ( array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+}
+
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
 if (hasPermission($c_username, 'deletepic'))
@@ -27,13 +41,16 @@ if (hasPermission($c_username, 'deletepic'))
 	//echo $datei_thumbs."<BR>";
 	
 	//Die Bild-ID wird ermittelt:
-	$result1 = mysql($db, "SELECT * FROM $table2 WHERE FileName = '$FileName'");
+	$result1 = mysql_query( "SELECT * FROM $table2 WHERE FileName = '$FileName'");
 	@$num1 = mysql_num_rows($result1);
 	//echo $num1."<BR>";
 	IF($num1 == '1')
 	{
-		$pic_id = mysql_result($result1, $i1, 'pic_id');
-		$FileNameOri = mysql_result($result1, $i1, 'FileNameOri');
+		$row = mysql_fetch_array($result1);
+		$pic_id = $row['pic_id'];
+		$FileNameOri = $row['FileNameOri'];
+		//$pic_id = mysql_result($result1, $i1, 'pic_id');
+		//$FileNameOri = mysql_result($result1, $i1, 'FileNameOri');
 	}
 	ELSE
 	{
@@ -44,15 +61,15 @@ if (hasPermission($c_username, 'deletepic'))
 	echo "... l&ouml;sche Bild ".$pic_id.":<BR><BR>";
 
 	//Tabelle pic_kat wird um alle Einträge bereinigt für die Bild-ID:
-	$result2 = mysql($db, "DELETE FROM $table10 WHERE pic_id = '$pic_id'");
+	$result2 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic_id'");
 	echo mysql_affected_rows(). " Eintr&auml;ge wurden aus der Kategorie-Zuordnungstabelle gel&ouml;scht<BR>";
 	
 	//Das Bild wird aus der Tabelle pictures gelöscht:
-	$result4 = mysql($db, "DELETE FROM $table2 WHERE pic_id = '$pic_id' AND FileName = '$FileName'");
+	$result4 = mysql_query( "DELETE FROM $table2 WHERE pic_id = '$pic_id' AND FileName = '$FileName'");
 	echo mysql_affected_rows(). " Eintrag wurden aus der Bild-Tabelle gel&ouml;scht<BR>";
 	
 	//EXIF-Data-Taballe wird bereinigt;
-	$result6 = mysql($db, "DELETE FROM $table14 WHERE pic_id = '$pic_id'");
+	$result6 = mysql_query( "DELETE FROM $table14 WHERE pic_id = '$pic_id'");
 	echo mysql_affected_rows(). " Eintrag wurden aus der Meta-Daten-Tabelle gel&ouml;scht<BR>";
 	
 	//alle Bilder werden aus der Verzeichnis-Struktur gelöscht:
@@ -88,7 +105,7 @@ if (hasPermission($c_username, 'deletepic'))
 	$base_name1 = $base_name.".";
 	$base_name2 = $base_name."_";
 	//Damit werden alle Dateien mit beliebiger Endung erfaßt (12345.jpg; 12345.nef usw.) aber auch alle Scene-Bilder (12345_1.jpg, 12345_2.jpg usw)
-	$result5 = mysql($db, "SELECT * FROM $table2 WHERE (FileName LIKE '$base_name1%' OR FileName LIKE '$base_name2%')");
+	$result5 = mysql_query( "SELECT * FROM $table2 WHERE (FileName LIKE '$base_name1%' OR FileName LIKE '$base_name2%')");
 	$num5 = mysql_num_rows($result5);	//es gibt in der DB insges. $num5 Dateien mit dem Stammnamen.
 	//echo $num5." Dateien mit Stammnamen in DB<BR>";
 	$k = '0';

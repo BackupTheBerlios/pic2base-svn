@@ -42,6 +42,26 @@ list($c_username) = split(',',$_COOKIE['login']);
 //echo $c_username;
 }
  
+//var_dump($_GET);
+$pic_id = $_GET['pic_id'];
+$mod = $_GET['mod'];
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id'];
+}
+else
+{
+	$kat_id = 0;
+}
+if(!isset($art))
+{
+	$art = '';
+}
+if(!isset($ID))
+{
+	$ID = '';
+}
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';

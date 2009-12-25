@@ -1,5 +1,6 @@
 function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 {
+	//alert("Name: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus)
 	anotherWindow = window.open("", "bildfenster", "");
 	// Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
 	if (anotherWindow != null)
@@ -17,9 +18,11 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 		}
 		
 		//alert("Breite: "+breite+", Höhe: "+hoehe+", Modus: "+modus+", Format: "+size);
-		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe;
+		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe,woerter,location;
 
-		dateiname=bildname.substring(bildname.length-17,bildname.length);
+		//dateiname=bildname.substring(bildname.length-17,bildname.length);
+		woerter = bildname.split("/");
+		dateiname = woerter[woerter.length - 1];
 		htmlcode="<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";
 		htmlcode+="<html style=\"height: 100%\">\n<head>\n<title>"+dateiname+"<\/title>\n";
 		htmlcode+="<\/head>\n<body style=\"margin: 0; padding: 0; height: 100%\"><center>\n";
@@ -29,7 +32,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 		htmlcode+="<\/div>\n";		
 
 		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
-		htmlcode+="<img src=\"../../share/images/no_pic.gif\" height="+h+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
+		htmlcode+="<img src=\"../../share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
 		htmlcode+="<\/div>\n";
 		
 		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 0;\">\n";
@@ -54,9 +57,11 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 			hoehe = Math.floor(breite / ratio_pic);
 		}
 		//alert("Breite: "+breite+", Höhe: "+hoehe+", Modus: "+modus);
-		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe;
+		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe,woerter;
+		
+		woerter = bildname.split("/");
+		dateiname = woerter[woerter.length - 1];
 
-		dateiname=bildname.substring(bildname.length-14,bildname.length);
 		htmlcode="<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";
 		htmlcode+="<html style=\"height: 100%\">\n<head>\n<title>"+dateiname+"<\/title>\n";
 		htmlcode+="<\/head><center>\n<body style=\"margin: 0; padding: 0; height: 100%\">\n";
@@ -66,7 +71,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 		htmlcode+="<\/div>\n";	
 		
 		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
-		htmlcode+="<img src=\"../../share/images/no_pic.gif\" height="+h+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
+		htmlcode+="<img src=\"../../share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
 		htmlcode+="<\/div>\n";
 		
 		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 0;\">\n";

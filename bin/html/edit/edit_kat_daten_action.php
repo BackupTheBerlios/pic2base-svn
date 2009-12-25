@@ -41,12 +41,31 @@ list($c_username) = split(',',$_COOKIE['login']);
 //echo $c_username;
 }
  
+//var_dump($_GET);
+
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id']; // für register_globals = off
+}
+else
+{
+	$kat_id = 0; // für register_globals = off
+}
+if(array_key_exists('ID',$_POST))
+{
+	$ID = $_POST['ID']; // für register_globals = off
+}
+else
+{
+	$ID = 0;
+}
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 //Variablen-Umbenennung für die Rücksprung-Adresse:
 $kat_back = $kat_id;
@@ -95,18 +114,18 @@ flush();
 			$kat_ID[] = substr($key,3,strlen($key)-3);
 		}
 	}
-	
+
 	//Für alle Elemente in dem Kategorie-Array werden die Eltern-Elemente bestimmt und ebenfalls in das Array geschrieben:
 	
-	IF (count($kat_ID) > 0)
+	IF (isset($kat_ID) AND count($kat_ID) > 0)
 	{
 		FOREACH($kat_ID AS $kat_id)
 		{
 			WHILE ($kat_id > '1')
 			{
-				$res0 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
+				$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 				echo mysql_error();
-				$kat_id = mysql_result($res0, $i0, 'parent');
+				$kat_id = mysql_result($res0, isset($i0), 'parent');
 				//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
 				$KAT_ID[]=$kat_id; //$KAT_ID: Array mit den Eltern-Elementen
 			}
@@ -116,23 +135,23 @@ flush();
 	@$kat_ID = array_merge($kat_ID, $KAT_ID);
 	//echo "Kategorie-Anzahl: ".count($kat_ID)."<BR>";//$kat_ID ist das Array mit allen Kategorie-IDs und deren Eltern-Kategorie-IDs
 	
-	IF (count($pic_ID) > 0 AND count($kat_ID) > 0)
+	IF ( isset($pic_ID) AND count($pic_ID) > 0 AND count($kat_ID) > 0)
 	{
 		FOREACH ($pic_ID AS $bild_id)
 		{
 			$kategorie = '';
 			FOREACH ($kat_ID AS $kat_id)
 			{
-				$res0 = mysql($db, "SELECT * FROM $table10 WHERE pic_id = '$bild_id' AND kat_id = '$kat_id'");
+				$res0 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$bild_id' AND kat_id = '$kat_id'");
 				IF (mysql_num_rows($res0) == '0')
 				{
-					$res1 = mysql($db, "INSERT INTO $table10 (pic_id, kat_id) VALUES ('$bild_id', '$kat_id')");
+					$res1 = mysql_query( "INSERT INTO $table10 (pic_id, kat_id) VALUES ('$bild_id', '$kat_id')");
 					IF($kat_id !== '1')
 					{
 						//Ermittlung aller Kategorien:
-						$result2 = mysql($db, "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
+						$result2 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 						//echo mysql_error()."<BR>";
-						$kategorie = htmlentities(mysql_result($result2, $i2, 'kategorie'))." ".$kategorie;
+						$kategorie = htmlentities(mysql_result($result2, 'kategorie'))." ".$kategorie;
 					}
 				}
 			}
@@ -144,8 +163,8 @@ flush();
 			shell_exec($et_path."/exiftool -IPTC:Keywords+='$kategorie' -overwrite_original ".$FN);
 			
 			//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
-			$result3 = mysql($db, "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$bild_id'");
-			$result4 = mysql($db, "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$bild_id'");
+			$result3 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$bild_id'");
+			$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$bild_id'");
 		}
 		//echo mysql_errno();
 		IF (mysql_errno() == '0')

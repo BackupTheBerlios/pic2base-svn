@@ -1,8 +1,6 @@
 <?php
 	INCLUDE 'global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	
-
 /*
 ----------------------------------------------------------------------------------------	
 |											|
@@ -10,6 +8,9 @@
 |											|
 ---------------------------------------------------------------------------------------	
 */
+
+$bg_color = 0;
+
 
 	SWITCH ($modus)
 	{
@@ -24,8 +25,8 @@
 			
 			WHILE ($kat_id > '1')
 			{
-				$res0 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
-				echo mysql_error();
+				$res0 = mysql_query("SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
+				//echo mysql_error();
 				$kat_id = mysql_result($res0, $i0, 'parent');
 				//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
 				$knoten_arr[]=$kat_id;
@@ -35,7 +36,7 @@
 		
 		CASE 'complete_view':
 			//zunächst werden alle Knotenelemente des Baumes ermittelt:
-			$res1 = mysql($db, "SELECT * FROM $table4");
+			$res1 = mysql_query("SELECT * FROM $table4");
 			$num1 = mysql_num_rows($res1);
 			FOR ($i1=0; $i1<$num1; $i1++)
 			{
@@ -63,12 +64,12 @@
 	}
 	echo "<TABLE id='kat'>";
 	
-	function getAllElements($kat_id, $knoten_arr, $KAT_ID)
+	function getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color)
 	{
 		INCLUDE 'global_config.php';
 		include $sr.'/bin/share/db_connect1.php';
 		
-		$result10 = mysql($db, "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
+		$result10 = mysql_query("SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
@@ -105,7 +106,10 @@
 			}
 			
 			$kat_id_pos = array_search($kat_id, $knoten_arr);
-			$kat_id_back = $knoten_arr[$kat_id_pos - 1];
+			if($kat_id_pos > 0)
+			{
+				$kat_id_back = $knoten_arr[$kat_id_pos - 1];
+			}
 			IF (in_array($kat_id, $knoten_arr))
 			{
 				
@@ -119,7 +123,7 @@
 					<INPUT type='checkbox' name='kat$kat_id'>
 					</TD>
 					</TR>";
-				getAllElements($kat_id, $knoten_arr, $KAT_ID);
+				getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color);
 			}
 			ELSE
 			{
@@ -136,7 +140,7 @@
 		}
 	}
 	
-	$result10 = mysql($db, "SELECT * FROM $table4 WHERE kat_id='1'");
+	$result10 = mysql_query("SELECT * FROM $table4 WHERE kat_id='1'");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
@@ -189,7 +193,7 @@
 				
 				</TD>
 				</TR>";
-			getAllElements($kat_id, $knoten_arr, $KAT_ID);
+			getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color);
 		}
 		ELSE
 		{

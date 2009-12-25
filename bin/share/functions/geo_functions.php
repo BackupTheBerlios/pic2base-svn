@@ -35,7 +35,7 @@ function getTrackPoints($delta,$pic_time,$datum)
 	$start_time = date('H:i:s', strtotime("$pic_time - $delta seconds"));
 	$end_time = date('H:i:s', strtotime("$pic_time + $delta seconds"));
 	//echo "Zeitfenster für Trackdaten: ".$start_time." - ".$end_time."<BR>";
-	$result7 = mysql($db, "SELECT * FROM $table13 WHERE date = '$datum' AND time > '$start_time' AND time < '$end_time'");
+	$result7 = mysql_query( "SELECT * FROM $table13 WHERE date = '$datum' AND time > '$start_time' AND time < '$end_time'");
 	$num7 = mysql_num_rows($result7);
 	//echo "Anz. Trackpunkte: ".$num7."<BR>";
 	return $num7;
@@ -46,23 +46,27 @@ function findTrackData($delta,$pic_time,$datum,$pic_id)
 	//Bestimmung des Trackpunktes mit der kleinsten zeitlichen Abweichung vom Aufnahme-Zeitpunkt:
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	IF(!isset($i10))
+	{
+		$i10 = 0;
+	}
 	$delta = $delta - 1;
 	$start_time = date('H:i:s', strtotime("$pic_time - $delta seconds"));
 	$end_time = date('H:i:s', strtotime("$pic_time + $delta seconds"));
 	//echo "Zeitgrenzen für Trackdaten: ".$start_time." - ".$end_time."<BR>";
-	$result8 = mysql($db, "SELECT * FROM $table13 WHERE date = '$datum' AND (time = '$start_time' OR time = '$end_time')");
+	$result8 = mysql_query( "SELECT * FROM $table13 WHERE date = '$datum' AND (time = '$start_time' OR time = '$end_time')");
 	$num8 = mysql_num_rows($result8);
 	//Wenn mehrere Trackpunkte gefunden werden, werden willkürlich die Daten des ersten verwendet:
 	$longitude = mysql_result($result8,0,'longitude'); 
 	$latitude = mysql_result($result8,0,'latitude'); 
 	$altitude = mysql_result($result8,0,'altitude'); 
 	//in der 'locations' gespeichert und mit dem Bild 'pic_id' verknüpft:
-	$result9 = mysql($db, "INSERT INTO $table12 (longitude, latitude, altitude) VALUES ('$longitude', '$latitude', '$altitude')");
+	$result9 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude) VALUES ('$longitude', '$latitude', '$altitude')");
 	echo mysql_error();
-	$result10 = mysql($db, "SELECT max(loc_id) FROM $table12");
+	$result10 = mysql_query( "SELECT max(loc_id) FROM $table12");
 	$loc_id = mysql_result($result10, $i10, 'max(loc_id)');
 	//echo "<".$loc_id." >";
-	$result11 = mysql($db, "UPDATE $table2 SET loc_id = '$loc_id' WHERE pic_id = '$pic_id'");
+	$result11 = mysql_query( "UPDATE $table2 SET loc_id = '$loc_id' WHERE pic_id = '$pic_id'");
 }
 
 function gmtToLocalTime($date,$time,$timezone)
@@ -118,6 +122,8 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	$error = 0;
+	//var_dump($info);
 	//Sony-CS1-log-Dateien werden von GPSBabel als nmea verarbeitet!
 	SWITCH($data_logger)
 	{
@@ -147,7 +153,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		{
 
 			$file_format = 'gpx';
-			//echo $file_format;
+			//echo $file_format."<br>";
 		}
 		break;
 		
@@ -194,7 +200,8 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		// ######################
 		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet, aus der die Geo-Daten in die Datenbank überführt werden!
 		// ######################
-		$kml_file = shell_exec("gpsbabel -t -i ".$file_format." -f ".$geo_path_copy."/".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
+		//$kml_file = shell_exec("gpsbabel -t -i ".$file_format." -f ".$geo_path_copy."/".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
+		$kml_file = shell_exec($gpsb_path."/gpsbabel -t -i ".$file_format." -f ".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
 		@$fh1 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
 		@$fh0 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
 		IF(!$fh1)
@@ -213,44 +220,6 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 			$data_arr = array('0.00', '0.00', '0.00', '0000-00-00T00:00:00Z');
 			$z = 0; //Indexzähler des Geoarrays (0 - Anz. Datensätz in der Log-Datei)
 			
-			/*
-			//es wird ermittelt, welche Datenfelder die p2b-trackfile.kml mitbringt. Fehlende Felder werden mit Dummy-Werten vorbelegt.
-			//Es wird auf das Vorhandensein der Werte Longitude, Latitude, Altitude, Speed, Heading und Time geprüft:
-			WHILE(!feof($fh0))
-			{
-				$line0 = strip_tags(fgets($fh0, 4096));
-				IF(stristr($line0, 'Longitude:'))
-				{
-					$long = '1';
-				}
-				
-				IF(stristr($line0, 'Latitude:'))
-				{
-					$lat = '1';
-				}
-				
-				IF(stristr($line0, 'Altitude:'))
-				{
-					$alt = '1';
-				}
-				
-				IF(stristr($line0, 'Speed:'))
-				{
-					$speed = '1';
-				}
-				
-				IF(stristr($line0, 'Heading:'))
-				{
-					$heading = '1';
-				}
-				
-				IF(stristr($line0, 'Time:'))
-				{
-					$tm = '1';
-				}
-			}
-			echo "Die folgenden Datenfelder sind vorhanden: Long: ".$long.", Lat: ".$lat.", Alt: ".$alt.", Speed: ".$speed.", Steuerkurs: ".$heading.", Zeit: ".$time."<BR>";
-			*/
 			WHILE(!feof($fh1))
 			{
 				//Zeilenweise wird der Datei-Inhalt in ein Array überführt:
@@ -300,7 +269,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 			//Was steht in dem Array?
 			//##################################################################
 			//während der Testphase:
-			//$result0 = mysql($db, "DELETE FROM $table13");
+			//$result0 = mysql_query( "DELETE FROM $table13");
 			//##################################################################
 			/*
 			$anz1 = count($data_arr);
@@ -327,7 +296,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 				$date_new = substr(gmtToLocalTime($date,$time,$timezone),0,10);	//zeitzonenkorrigiertes Datum
 				//echo $altitude." / ".$date." / ".$date_new." / ".$time_new."<BR>";
 
-				$result1 = mysql($db, "INSERT INTO $table13 (longitude, latitude, altitude, date, time, user_id) VALUES ('$data_arr[0]', '$data_arr[1]', '$altitude', '$date_new', '$time_new', '$user_id')");
+				$result1 = mysql_query( "INSERT INTO $table13 (longitude, latitude, altitude, date, time, user_id) VALUES ('$data_arr[0]', '$data_arr[1]', '$altitude', '$date_new', '$time_new', '$user_id')");
 				echo mysql_error();
 				
 			}

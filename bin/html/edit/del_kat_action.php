@@ -19,6 +19,20 @@
  * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  ***********************************************************************************/
 
+//var_dump($_GET);
+if( array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+}
+if( array_key_exists('kat_id',$_GET) )
+{
+	$kat_id = $_GET['kat_id'];
+}
+if( array_key_exists('parent',$_GET) )
+{
+	$parent = $_GET['parent'];
+}
+ 
 delChildKat($kat_id, $pic_id);
 
 function delChildKat($kat_id, $pic_id)
@@ -35,7 +49,7 @@ function delChildKat($kat_id, $pic_id)
 		global $kat_ids;
 		include '../../share/global_config.php';
 		include $sr.'/bin/share/db_connect1.php';
-		$result2 = mysql($db, "SELECT * FROM $table4 WHERE parent = '$kat_id'");
+		$result2 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$kat_id'");
 		$num2 = mysql_num_rows($result2);
 		
 		IF ($num2 > '0')
@@ -62,14 +76,14 @@ function delChildKat($kat_id, $pic_id)
 	FOREACH(getChildIDs($kat_id, $kat_ids) as $kat_id)
 	{
 		//echo $kat_id."&#160;&#160;";
-		$result4 = mysql($db, "DELETE FROM $table10 WHERE (pic_id = '$pic_id' AND kat_id = '$kat_id') OR (pic_id = '$pic_id' AND kat_id = '$kat_id1')");
+		$result4 = mysql_query( "DELETE FROM $table10 WHERE (pic_id = '$pic_id' AND kat_id = '$kat_id') OR (pic_id = '$pic_id' AND kat_id = '$kat_id1')");
 		//Wenn die letzten Kategorie-Zuweisungen aufgehoben wurden, wird auch die Verknüpfung zur Ersten Ebene (Wurzel) aufgehoben sowie der Vermerk has_kat in der pictures-Tabelle auf 0 gesetzt:
-		$result5 = mysql($db, "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
+		$result5 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
 		$num5 = mysql_num_rows($result5);
 		IF ($num5 == '1')
 		{
-			$result6 = mysql($db, "DELETE FROM $table10 WHERE pic_id = '$pic_id' AND kat_id = '1'");
-			$result10 = mysql($db, "UPDATE $table2 SET has_kat = '0' WHERE pic_id = '$pic_id'");
+			$result6 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic_id' AND kat_id = '1'");
+			$result10 = mysql_query( "UPDATE $table2 SET has_kat = '0' WHERE pic_id = '$pic_id'");
 		}
 	}	
 }
@@ -79,10 +93,14 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+if ( !isset($kw) )
+{
+	$kw = '';
+}
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 shell_exec($et_path."/exiftool -IPTC:Keywords='' -overwrite_original ".$FN);
-$result7 = mysql($db, "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
-//$result7 = mysql($db, "SELECT $table10.kat_id, $table10.pic_id, $table4.kategorie, $table4.kat_id FROM $table10 LEFT JOIN $table4 ON $table10.pic_id = '$pic_id' AND $table10.kat_id = $table4.kat_id");
+$result7 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
+//$result7 = mysql_query( "SELECT $table10.kat_id, $table10.pic_id, $table4.kategorie, $table4.kat_id FROM $table10 LEFT JOIN $table4 ON $table10.pic_id = '$pic_id' AND $table10.kat_id = $table4.kat_id");
 echo mysql_error();
 $num7 = mysql_num_rows($result7);
 FOR($i7='0'; $i7<$num7; $i7++)
@@ -90,14 +108,14 @@ FOR($i7='0'; $i7<$num7; $i7++)
 	$kat_id = mysql_result($result7, $i7, 'kat_id');
 	IF($kat_id !== '1')
 	{
-		$result8 = mysql($db, "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
-		$keywords = mysql_result($result8, $i8, 'kategorie');
+		$result8 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
+		$keywords = mysql_result($result8, isset($i8), 'kategorie');
 		$kw .= $keywords.", ";
 		shell_exec($et_path."/exiftool -IPTC:Keywords+='$keywords' ".$FN);
 	}
 }
 //echo $kw;
-$result9 = mysql($db, "UPDATE $table14 SET Keywords = '$kw' WHERE pic_id = '$pic_id'");
+$result9 = mysql_query( "UPDATE $table14 SET Keywords = '$kw' WHERE pic_id = '$pic_id'");
 //echo mysql_error();
 header("location: edit_remove_kat.php?pic_id=0&mod=kat&kat_id=$parent");
 exit();

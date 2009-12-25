@@ -51,6 +51,36 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+//var_dump($_GET);
+if(array_key_exists('mod',$_GET))
+{
+	$mod = $_GET['mod']; // für register_globals = off
+}
+
+if(array_key_exists('pic_id',$_GET))
+{
+	$pic_id = $_GET['pic_id']; // für register_globals = off
+}
+
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id']; // für register_globals = off
+}
+else
+{
+	$kat_id = 0; // für register_globals = off
+}
+if(array_key_exists('ID',$_REQUEST))
+{
+	$ID = $_GET['ID']; // für register_globals = off
+}
+//echo"<br>kat_id: ".$kat_id."<br>";
+
+if(!isset($ID))
+{
+	$ID = '';
+}
+
 echo "
 <div class='page'>
 	<FORM name='kat-zuweisung', method='post' action='edit_kat_daten_action.php?kat_id=$kat_id&ID=$ID'>
@@ -61,17 +91,16 @@ echo "
 			createNavi3_1($c_username);
 			echo "<INPUT type='submit' class='button3' value = 'Speichern' style='margin-top:375px;'><BR><INPUT type='button' class='button3' style='margin-top:5px;' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
 		</div>
-	</div>";
-	
-	echo "
+	</div>
+
 	<div id='spalte1F'>
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildauswahl nach Kategorien<BR></p>";
 		$ziel = '../../html/edit/edit_kat_daten.php';
 		$modus='edit';
 		$mod='kat';
 		$base_file = 'edit_kat_daten';
-		//$modus='complete_view';
-		//echo $ID;
+		// $modus='complete_view';
+		// echo $ID;
 		include $sr.'/bin/share/kat_treeview.php';
 	echo "
 	</div>

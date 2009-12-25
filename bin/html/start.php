@@ -16,7 +16,7 @@
 <DIV Class="klein">
 
 <?
-// php 5.3
+
 /*
  * Project: pic2base
  * File: start.php
@@ -29,6 +29,11 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * @copyright 2006-2008 Klaus Henneberg
+ * @author Klaus Henneberg
+ * @package pic2base
+ * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -42,6 +47,21 @@ include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
+
+IF(array_key_exists('check',$_GET))
+{
+	$check = $_GET['check'];
+}
+if(!isset($check))
+{
+	$check = 0;
+}
+if(!isset($hinweis))
+{
+	$hinweis = '';
+}
+//var_dump($_GET);
+
 
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Prüfung, ob eine neuere Version verfügbar ist:
 IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
@@ -60,6 +80,7 @@ IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 		$var2 = substr($var1,21,4);
 		$install_ver = substr($version,0,4);
 		//echo "verwendete Version: ".$install_ver."; aktuelle Version: ".$var2."<BR>";
+		$ol_text = "Online-Updates:";
 		IF($var2 > $install_ver)
 		{
 			$online_hinweis = "Es ist ein Online-Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
@@ -73,6 +94,7 @@ IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 }
 ELSE
 {
+	$ol_text = "<BR>";
 	$online_hinweis = "";
 }
 
@@ -94,7 +116,11 @@ IF($c_username !== 'pb')
 }
 
 $result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result1, $i1, 'id');
+$user_id = mysql_result($result1, isset($i1), 'id');
+
+//Ermittlung wieviel User in der DB registriert sind:
+$result2 = mysql_query("SELECT * FROM $table1");
+$num_user = mysql_num_rows($result2);
 
 //Ermittlung, wieviel Bilder insgesamt in der Datenbank sind:
 $result10 = mysql_query("SELECT * FROM $table2");
@@ -109,14 +135,17 @@ ELSE
 }
 
 //Prüfung, ob Bilder ohne Kategorie-Zuweisung für den Benutzer vorliegen:
+$num_pic = '0';
 $result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id'");
 @$num2 = mysql_num_rows($result2);
 IF($num2 > '0')
 {
 	$hinweis0 = "Sie haben bisher ".$num2." Bilder in die Datenbank gestellt.";
 	
+	//$result3 = mysql_query("SELECT $table2.pic_id, $table2.Owner FROM $table2 LEFT JOIN $table10 ON $table2.pic_id = $table10.pic_id WHERE ($table10.kat_id IS NULL AND $table2.Owner = '$user_id')");
 	$result3 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id' AND has_kat = '0'");
 	$num_pic = mysql_num_rows($result3);
+	//echo "Num_Pic: ".$num_pic."<BR>";
 	IF($num_pic == '0')
 	{
 		$hinweis = "<span style='color:green;'>Jedes Ihrer Bilder wurde mindestens einer Kategorie zugeordnet.</span>";
@@ -126,6 +155,10 @@ IF($num2 > '0')
 		$hinweis = $num_pic." Ihrer Bilder sind noch ohne Kategorie-Zuweisung!<BR>
 		Tipps f&uuml;r eine effektive Archivierung finden Sie <A HREF='help/help1.php?page=0'>hier</A>";
 	}
+}
+ELSE
+{
+	$hinweis0 = "Sie haben noch keine Bilder in die Datenbank gestellt.";
 }
 //Prüfung, ob Dateien im FTP-Upload-Ordner vorliegen:
 $n = 0;
@@ -190,8 +223,13 @@ echo "<div class='page'>
 	
 	<div class='content'>
 	<span style='font-size:14px;'>";
+	//$num2		Summe der Bilder des Users
+	//$m		Dateien im Download-Ordner
+	//$n		Dateien im Upload-Ordner
+	//$num_pic	Bilder ohne Kat-Zuweisung
+	//echo $m.", ".$n.", ".$num2.", ".$num_pic.", ".$num_user."<BR>";
 	
-	IF(count($num_pic) > '0' OR $n > '0' OR $m > '0' OR $num2 > '0')
+	IF($num_pic > '0' OR $n > '0' OR $m > '0' OR $num2 > '0' OR $num_user > '2')
 	{
 		$p_info = pathinfo($_SERVER['PHP_SELF']);
 		//$file_name = $p_info['basename'];
@@ -227,11 +265,7 @@ echo "<div class='page'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 			</TR>
 			
-			<Form name='folder' method='post' action='erfassung/stapel1.php'>";
-			
-		IF ($num2 > '0')
-		{
-			echo "
+			<Form name='folder' method='post' action='erfassung/stapel1.php'>
 			
 			<tr class='normal'>
  			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Ihr Datenbestand:</TD>
@@ -241,15 +275,26 @@ echo "<div class='page'>
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 			</TR>";
-		}
+
 		
-		IF (count($num_pic) > '0')
+		IF ($num_pic > '0')
 		{
 			echo "
-			
 			<tr class='normal'>
  			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Bearbeitungsstatus:</TD>
 			<TD class='normal' align='left' valign='top' colspan='7'>".$hinweis."</TD>
+			</TR>
+			
+			<tr class='normal'>
+			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
+			</TR>";
+		}
+		ELSE
+		{
+			echo "
+			<tr class='normal'>
+ 			<TD class='normal' align='left' valign='top' width='243' colspan='3'><BR></TD>
+			<TD class='normal' align='left' valign='top' colspan='7'><BR></TD>
 			</TR>
 			
 			<tr class='normal'>
@@ -331,7 +376,7 @@ echo "<div class='page'>
 		}
 		
 		echo "	<TR class='normal' style='height:35px;'>
-			<TD class='normal' align='left' valign='top' colspan='3'>Online-Updates:</TD>
+			<TD class='normal' align='left' valign='top' colspan='3'>".$ol_text."</TD>
 			<TD class='normal' align='left' valign='top' colspan='7'>".$online_hinweis."</TD>
 			</TR>
 			
@@ -412,7 +457,7 @@ echo "<div class='page'>
 	
 	//log-file schreiben:
 	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-	fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+	fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 	fclose($fh);
 	mysql_close($conn);
 	

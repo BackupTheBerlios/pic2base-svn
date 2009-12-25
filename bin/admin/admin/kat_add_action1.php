@@ -33,7 +33,14 @@
 include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
 
-$res0 = mysql($db, "SELECT * FROM $table4 WHERE kategorie='$kategorie' AND parent='$parent' AND level='$level'");
+$kategorie = $_POST['kategorie']; // für register_globals = off
+$parent = $_POST['parent']; // für register_globals = off
+$level = $_REQUEST['level']; // für register_globals = off
+$kat_id = $_REQUEST['kat_id']; // für register_globals = off
+$ID = $_REQUEST['ID']; // für register_globals = off
+
+
+$res0 = mysql_query( "SELECT * FROM $table4 WHERE kategorie='$kategorie' AND parent='$parent' AND level='$level'");
 IF (mysql_num_rows($res0) > 0)
 {
 	echo "<p class='zwoelfred' style='margin-top: 150px'>Die Unterkategorie ist bereits vorhanden<BR>und wird daher nicht noch einmal angelegt!<BR><BR>
@@ -42,10 +49,10 @@ IF (mysql_num_rows($res0) > 0)
 	return;
 }
 
-$res1 = mysql($db, "INSERT INTO $table4 (kategorie, parent, level) VALUES ('$kategorie', '$parent', '$level')");
+$res1 = mysql_query( "INSERT INTO $table4 (kategorie, parent, level) VALUES ('$kategorie', '$parent', '$level')");
 echo mysql_error();
 $kat_id = mysql_insert_id();	
-$res2 = mysql($db, "INSERT INTO $table11 (kat_id, info) VALUES ('$kat_id', '')");
+$res2 = mysql_query( "INSERT INTO $table11 (kat_id, info) VALUES ('$kat_id', '')");
 echo "<meta http-equiv='Refresh' content='0, URL=kategorie0.php?kat_id=$kat_id&ID=$ID'>";
 
 mysql_close($conn);

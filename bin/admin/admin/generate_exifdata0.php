@@ -33,7 +33,7 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- *Datei leist EXIF-Daten aus den Bild-Dateien aus und schreibt sie in die Tabelle exif_data
+ *Datei leist EXIF-Daten aus den Bild-Dateien aus und schreibt sie in die Tabelle meta_data
  */
 
 unset($username);
@@ -46,6 +46,7 @@ $benutzername = $c_username;
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
 
 echo "
 <div class='page'>
@@ -72,23 +73,23 @@ Status der EXIF-Daten-Extraktion
 
 FOR($note='1'; $note<'6'; $note++)
 {
-	$result5 = mysql($db, "SELECT * FROM $table2 WHERE note = '$note' ORDER BY pic_id");
+	$result5 = mysql_query( "SELECT * FROM $table2 WHERE note = '$note' ORDER BY pic_id");
 	$num5 = mysql_num_rows($result5);
 	FOR($i5='0'; $i5<$num5; $i5++)
 	{
 		$pic_id = mysql_result($result5, $i5, 'pic_id');
 		//echo "Datensatz: ".$pic_id;
-		$result6 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+		$result6 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 		IF(mysql_num_rows($result6) == 0)
 		{
 			//nur wenn es noch keinen Eintrag in der exif-data-Tabelle gibt, wird die Erfassung ausgeführt:
 //			echo "Durchlauf ".$i5."; Datensatz ".$pic_id."<BR>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR>";
-			$result7 = mysql($db, "INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
+			$result7 = mysql_query( "INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
 			//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung:
 			$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 			//echo "Datei-Name: ".$FN;
 			
-			$result8 = mysql($db, "SHOW COLUMNS FROM $table14");
+			$result8 = mysql_query( "SHOW COLUMNS FROM $table14");
 			$struktur = array();
 			$i = 0;
 			if($result8 != false)
@@ -164,7 +165,7 @@ FOR($note='1'; $note<'6'; $note++)
 								$fieldtype = 'VARCHAR('.$fieldlength.')';
 								break;
 							}
-							$result2 = mysql($db, "ALTER TABLE `$table14` ADD `$fieldname` $fieldtype NOT NULL");
+							$result2 = mysql_query( "ALTER TABLE `$table14` ADD `$fieldname` $fieldtype NOT NULL");
 							//echo "Fehler beim Ergänzen des Feldes: ".mysql_error(),"<BR>";
 						}
 						ELSE
@@ -216,14 +217,14 @@ FOR($note='1'; $note<'6'; $note++)
 								}
 								//echo "Feldtyp muss für ".$fieldname." von ".$ist_feldtyp." auf ".$fieldtype." geändert werden oder<BR>";
 								//echo "Feldl&auml;nge muss von ".$ist_feldlaenge." auf ".$soll_feldlaenge." angepasst werden.<BR>";
-								$result3 = mysql($db, "ALTER TABLE `$table14` CHANGE `$fieldname` `$fieldname` $fieldtype");
+								$result3 = mysql_query( "ALTER TABLE `$table14` CHANGE `$fieldname` `$fieldname` $fieldtype");
 								//echo "Fehler beim ändern der Feldlänge: ".mysql_error(),"<BR><BR>";
 							}
 						}
 					}
 					$X = 1;
 					//Speicherung der Daten in der EXIF-Tabelle:
-					$result4 = mysql($db, "UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
+					$result4 = mysql_query( "UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
 					IF(mysql_error() !== '')
 					{
 						//echo "Fehler beim speichern: ".mysql_error()."<BR>~~~~~~~~~~~~~~~~~~~~~~<BR>";
@@ -233,15 +234,16 @@ FOR($note='1'; $note<'6'; $note++)
 	
 		}
 		/*
+		// auskommentiert, da keine doppelte Datenhaltung mehr sein soll!
 		ELSE
 		{
-			//Wenn es schon einen Eintrag in der exef_data gibt, werden bestimmte Daten mit der Tabelle pictures abgeglichen:
+			//Wenn es schon einnen Eintrag in der exef_data gibt, werden bestimmte Daten mit der Tabelle pictures abgeglichen:
 			//Abgleich des Aufnahme-Datums:
-			$result9 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-			//$result10 = mysql($db, "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-			$DateTimeOriginal_pt = mysql_result($result9, $i9, 'DateTimeOriginal');	//Wert in der pictures-Tabelle
-			$DateTimeOriginal_edt = mysql_result($result6, $i6, 'DateTimeOriginal');//Wert in der exif_data-Tabelle
-			//Erzeugung einer Log-Datei für alle Bilder ohne Original-Dateidatum:
+			$result9 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+			//$result10 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+//			$DateTimeOriginal_pt = mysql_result($result9, isset($i9), 'DateTimeOriginal');	//Wert in der pictures-Tabelle
+//			$DateTimeOriginal_edt = mysql_result($result6, isset($i6), 'DateTimeOriginal');//Wert in der exif_data-Tabelle
+			//Erzeugung einde Log-Datei für alle Bilder ohne Original-Dateidatum:
 			IF($DateTimeOriginal_pt == '0000-00-00 00:00:00')
 			{
 				$fh = fopen($kml_dir."/exif.log","a");
@@ -251,16 +253,17 @@ FOR($note='1'; $note<'6'; $note++)
 			//Wenn in der exif_data-Tabelle ein Datum hinterlegt ist, wird die pictures-Tabelle aktualisiert:
 			IF(($DateTimeOriginal_edt !== '0000-00-00 00:00:00') AND ($DateTimeOriginal_edt !== ''))
 			{
-				$result11 = mysql($db, "UPDATE $table2 SET DateTimeOriginal = '$DateTimeOriginal_edt' WHERE pic_id = '$pic_id'");
+				$result11 = mysql_query( "UPDATE $table2 SET DateTimeOriginal = '$DateTimeOriginal_edt' WHERE pic_id = '$pic_id'");
 				echo mysql_error();
 			}
 		}
-		*/	
+		*/
+			
 		$laenge = (round((($i5 + 1) / $num5) * 500));
 		$anteil = number_format(($laenge / 5),2,',','.');
 		flush();
 		//sleep(0.1);
-		$text = "Bearbeite Bilder mit der Note ".$note."<BR>Bild ".$pic_id."<BR>Datensatz ".($i5 + 1)." von ".$num5."<BR>".$anteil."%<BR>".$status;
+		$text = "Bearbeite Bilder mit der Note ".$note."<BR>Bild ".$pic_id."<BR>Datensatz ".($i5 + 1)." von ".$num5."<BR>".$anteil."%<BR>".isset($status);
 		?>
 		<SCRIPT language="JavaScript">
 		document.bar.src='../../share/images/green.gif';

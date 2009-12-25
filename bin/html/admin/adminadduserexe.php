@@ -24,6 +24,21 @@ list($c_username) = split(',',$_COOKIE['login']);
 //echo $c_username;
 }
 
+// für register_globals = off
+$benutzername = $_POST['benutzername'];
+$vorname = $_POST['vorname'];
+$name = $_POST['name'];
+$pwd = $_POST['pwd'];
+$titel = $_POST['titel'];
+$strasse = $_POST['strasse'];
+$plz = $_POST['plz'];
+$ort = $_POST['ort'];
+$group = $_POST['group'];
+$berechtigung = $_POST['berechtigung'];
+$telefon = $_POST['telefon'];
+$email = $_POST['email'];
+$internet = $_POST['internet'];
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
@@ -65,7 +80,7 @@ include $sr.'/bin/share/db_connect1.php';
 			{
 				//echo "G Ü L T I G E R Name (".$ben_name.")<BR>";
 				/*
-				$result1 = mysql($db, "SELECT max(uid) FROM $table1");
+				$result1 = mysql_query( "SELECT max(uid) FROM $table1");
 				$max_uid = mysql_result($result1, $i1, 'max(uid)');
 				$uid = $max_uid + 1;
 				//echo $uid."<BR>";
@@ -76,19 +91,19 @@ include $sr.'/bin/share/db_connect1.php';
 				$ftp_passwd = crypt($pwd);
 				//echo $ftp_passwd;
 				//Benutzerdaten erfassen:
-				$result1 = mysql($db, "INSERT INTO $table1 (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, berechtigung, group_id) VALUES ('$benutzername', '$titel', '$name', '$vorname', '$strasse', '$plz', '$ort', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', '$email', '$internet', '65534', '65534', '1', '$user_dir', '$up_dir', '$down_dir','$berechtigung', '$group')");
+				$result1 = mysql_query( "INSERT INTO $table1 (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, berechtigung, group_id) VALUES ('$benutzername', '$titel', '$name', '$vorname', '$strasse', '$plz', '$ort', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', '$email', '$internet', '65534', '65534', '1', '$user_dir', '$up_dir', '$down_dir','$berechtigung', '$group')");
 				echo mysql_error();
-				$result4 = mysql($db, "SELECT * FROM $table1 WHERE username = '$benutzername' AND name = '$name' AND vorname = '$vorname'");
-				$user_id = mysql_result($result4, $i4, 'id');
+				$result4 = mysql_query( "SELECT * FROM $table1 WHERE username = '$benutzername' AND name = '$name' AND vorname = '$vorname'");
+				$user_id = mysql_result($result4, isset($i4), 'id');
 				//Benutzerrechte eintragen:
-				$result2 = mysql($db, "SELECT * FROM $table6 WHERE group_id = '$group' AND enabled = '1'");
+				$result2 = mysql_query( "SELECT * FROM $table6 WHERE group_id = '$group' AND enabled = '1'");
 				
 				$num2 = mysql_num_rows($result2);
-				//echo $num2."<BR>";
+				echo $num2."<BR>";
 				FOR($i2=0; $i2<$num2; $i2++)
 				{
 					$perm_id = mysql_result($result2, $i2, 'permission_id');
-					$result3 = mysql($db, "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$user_id', '$perm_id', '1')");
+					$result3 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$user_id', '$perm_id', '1')");
 				}
 				echo mysql_error()."<BR>";
 				

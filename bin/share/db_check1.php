@@ -2,8 +2,10 @@
 
 //Beim normalen Start wird versucht mit den Standard-Parametern eine Verbindung zur Datenbank herzustellen:
 //echo "User: ".$user."<BR>PWD: ".$PWD."<BR>";
-
+//var_dump($_REQUEST);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//var_dump($_REQUEST);
 //register_globels =  off - Variante:
 if( isset($_POST['user']) )
 {
@@ -13,6 +15,11 @@ if( isset($_POST['user']) )
 	    $user=$_POST['user'];
 	    $PWD=$_POST['PWD'];
 	}
+}
+else
+{
+	$user = '';
+	$PWD = '';
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -24,14 +31,14 @@ IF($user == "")
 	$db = 'pic2base';
 	//mit den Parametern wird versucht eine Datenbank-Verbindung aufzubauen:
 	@$conn = mysql_connect($db_server,$user,$PWD);
-	//echo mysql_error();
+
 	@$database = mysql_connect($db_server,$user,$PWD);
 	//echo mysql_error();
 	if (mysql_error() !=='') 
 	{
 		//die erforderliche Datenbank gibt es anscheinend noch nicht!
-		$text = "<center><font color='green'><b>Willkommen bei pic2base!</b><BR> Noch konnte keine Verbindung zum Datenbank-Server ".$db_server." hergestellt werden.<BR>Das kann daran liegen, daï¿½ Sie pic2base zum ersten Mal starten.<BR><BR>
-		Fï¿½r die Erst-Eintichtung der pic2base-Datenbank<BR>tragen Sie hier bitte den Benutzernamen und das Passwort<BR>eines <b>vorhandenen</b> MySQL-Benutzers mit <b>Administrator-Rechten</b> ein:
+		$text = "<center><font color='green'><b>Willkommen bei pic2base!</b><BR> Noch konnte keine Verbindung zum Datenbank-Server ".$db_server." hergestellt werden.<BR>Das kann daran liegen, daß Sie pic2base zum ersten Mal starten.<BR><BR>
+		Für die Erst-Eintichtung der pic2base-Datenbank<BR>tragen Sie hier bitte den Benutzernamen und das Passwort<BR>eines <b>vorhandenen</b> MySQL-Benutzers mit <b>Administrator-Rechten</b> ein:
 		<FORM name = 'db_access' method='post' action='index.php'><BR>
 		User-Name (Admin): <INPUT type='text' name='user'>&#160;&#160;&#160;Passwort: <input type='password' name='PWD'>&#160;&#160;<INPUT type='submit' value='OK'></font></center>
 		</FORM>";
@@ -49,7 +56,8 @@ IF($user == "")
 		}
 		ELSE
 		{
-			//echo "Datenbank ".$db." ausgewï¿½hlt<BR>";
+			//echo "Datenbank ".$db." ausgewählt<BR>";
+			$text = '';
 		}
 		
 	}
@@ -58,9 +66,11 @@ ELSE
 {
 	$db_server='localhost';
 	$db = 'pic2base';
+echo "<br>++++ #### ++++<br>";
 	//mit den neuen Parametern wird versucht eine Datenbank-Verbindung aufzubauen:
 	@$conn = mysql_connect($db_server,$user,$PWD);
 	@$database = mysql_pconnect($db_server,$user,$PWD);
+//	mysql_error();
 	if (!$database) 
 	{
 		//die erforderliche Datenbank gibt es anscheinend noch nicht!
@@ -79,8 +89,8 @@ ELSE
 			$text =  "pic2base-Datenbank wurde angelegt.<BR>Lege nun die Tabellen an...<BR>";
 			mysql_close($conn);
 			$conn_neu = mysql_connect('localhost', $user, $PWD);
-			
-			$res15 = mysql($db, "CREATE TABLE IF NOT EXISTS `ftp_transfer` (
+			mysql_select_db($db);
+			$res15 = mysql_query( "CREATE TABLE IF NOT EXISTS `ftp_transfer` (
 			`username` tinytext collate latin1_german1_ci,
 			`filename` text collate latin1_german1_ci,
 			`size` bigint(20) default NULL,
@@ -89,14 +99,13 @@ ELSE
 			`aktion` tinytext collate latin1_german1_ci,
 			`dauer` tinytext collate latin1_german1_ci,
 			`lokale_zeit` datetime default NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;");			
 			
-			
-			$res3 = mysql($db, "CREATE TABLE IF NOT EXISTS `geo_tmp` (
+			$res3 = mysql_query( "CREATE TABLE IF NOT EXISTS `geo_tmp` (
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
-			`longitude` varchar(25) NOT NULL COMMENT 'geo-Lï¿½nge',
+			`longitude` varchar(25) NOT NULL COMMENT 'geo-Länge',
 			`latitude` varchar(25) NOT NULL COMMENT 'geo-Breite',
-			`altitude` decimal(6,1) NOT NULL COMMENT 'Hï¿½he',
+			`altitude` decimal(6,1) NOT NULL COMMENT 'Höhe',
 			`date` date NOT NULL default '0000-00-00',
 			`time` time NOT NULL default '00:00:00',
 			`user_id` int(11) NOT NULL,
@@ -104,14 +113,14 @@ ELSE
 			) ENGINE=MyISAM AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
 			
-			$res4 = mysql($db, "CREATE TABLE IF NOT EXISTS `grouppermissions` (
+			$res4 = mysql_query( "CREATE TABLE IF NOT EXISTS `grouppermissions` (
 			`id` int(11) NOT NULL auto_increment,
 			`group_id` int(11) NOT NULL default '0',
 			`permission_id` int(11) NOT NULL default '0',
 			`enabled` smallint(1) NOT NULL default '0',
 			PRIMARY KEY  (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=42 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
-			$res4_1 = mysql($db, "INSERT INTO `grouppermissions` (`id`, `group_id`, `permission_id`, `enabled`) VALUES 
+			$res4_1 = mysql_query( "INSERT INTO `grouppermissions` (`id`, `group_id`, `permission_id`, `enabled`) VALUES 
 			(1, 1, 1, 1),
 			(2, 0, 0, 0),
 			(3, 1, 2, 1),
@@ -128,7 +137,7 @@ ELSE
 			(14, 3, 20, 1);");
 			
 			
-			$res5 = mysql($db, "CREATE TABLE IF NOT EXISTS `kategorien` (
+			$res5 = mysql_query( "CREATE TABLE IF NOT EXISTS `kategorien` (
 			`kat_id` int(11) NOT NULL auto_increment,
 			`kategorie` varchar(50) NOT NULL default '',
 			`parent` int(11) NOT NULL default '0',
@@ -139,10 +148,10 @@ ELSE
 			KEY `level` (`level`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
-			$res5_1 = mysql($db, "INSERT INTO `kategorien` (`kategorie`, `parent`, `level`) VALUES ('Neuzugï¿½nge','0','0');");
+			$res5_1 = mysql_query( "INSERT INTO `kategorien` (`kategorie`, `parent`, `level`) VALUES ('Neuzugänge','0','0');");
 			
 			
-			$res7 = mysql($db, "CREATE TABLE IF NOT EXISTS `kat_lex` (
+			$res7 = mysql_query( "CREATE TABLE IF NOT EXISTS `kat_lex` (
 			`lfdnr` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 			`kat_id` INT NOT NULL ,
 			`info` TEXT NOT NULL ,
@@ -150,18 +159,18 @@ ELSE
 			) ENGINE = MYISAM ;");
 			
 			
-			$res6 = mysql($db, "CREATE TABLE IF NOT EXISTS `locations` (
+			$res6 = mysql_query( "CREATE TABLE IF NOT EXISTS `locations` (
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
-			`longitude` varchar(25) NOT NULL COMMENT 'geo-Lï¿½nge',
+			`longitude` varchar(25) NOT NULL COMMENT 'geo-Länge',
 			`latitude` varchar(25) NOT NULL COMMENT 'geo-Breite',
-			`altitude` decimal(6,1) NOT NULL COMMENT 'Hï¿½he',
+			`altitude` decimal(6,1) NOT NULL COMMENT 'Höhe',
 			`location` varchar(50) NOT NULL default 'Ortsbezeichnung' COMMENT 'Ortname',
 			PRIMARY KEY  (`loc_id`),
 			KEY `location` (`location`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
 			
-			$res16 = mysql($db, "CREATE TABLE IF NOT EXISTS `meta_data` (
+			$res16 = mysql_query( "CREATE TABLE IF NOT EXISTS `meta_data` (
 			`ed_id` int(11) NOT NULL auto_increment,
 			`pic_id` int(11) NOT NULL,
 			`Make` varchar(37) default NULL,
@@ -231,33 +240,32 @@ ELSE
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0;");
 			
 			
-			$res2 = mysql($db, "CREATE TABLE IF NOT EXISTS `meta_protect` (
+			$res2 = mysql_query( "CREATE TABLE IF NOT EXISTS `meta_protect` (
 			`lfdnr` int(11) NOT NULL auto_increment,
 			`field_name` varchar(50) NOT NULL default '0',
 			`writable` BOOL NOT NULL DEFAULT '0',
-			`viewable` BOOL NOT NULL DEFAULT '0',
 			PRIMARY KEY  (`lfdnr`)
-			) ENGINE=MyISAM COMMENT='Sperr-Tabelle fuer META-Daten' AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			) ENGINE=MyISAM COMMENT='Sperr-Tabelle fuer EXIF-Daten' AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
 			
-			$res8 = mysql($db, "CREATE TABLE IF NOT EXISTS `permissions` (
+			$res8 = mysql_query( "CREATE TABLE IF NOT EXISTS `permissions` (
 			`id` int(11) NOT NULL auto_increment,
 			`description` text NOT NULL,
 			`shortdescription` varchar(100) NOT NULL default '',
 			PRIMARY KEY  (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=19 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
-			$res8_1 = mysql($db, "INSERT INTO `permissions` (`id`, `description`, `shortdescription`) VALUES 
+			$res8_1 = mysql_query( "INSERT INTO `permissions` (`id`, `description`, `shortdescription`) VALUES 
 			(1, 'Admin-Login', 'adminlogin'),
 			(2, 'Bilder erfassen', 'addpic'),
-			(3, 'Bilder lï¿½schen', 'deletepic'),
+			(3, 'Bilder löschen', 'deletepic'),
 			(21, 'Bilder downloaden', 'downloadpic'),
 			(20, 'Bilder suchen', 'searchpic'),
 			(19, 'Bilder bearbeiten', 'editpic');");
 			
 			
-			$res10 = mysql($db, "CREATE TABLE IF NOT EXISTS `pictures` (
+			$res10 = mysql_query( "CREATE TABLE IF NOT EXISTS `pictures` (
 			`pic_id` int(11) NOT NULL auto_increment,
-			`FileNameOri` varchar(50) NOT NULL COMMENT 'Original-Dateiname',
+			`FileNameOri` varchar(100) NOT NULL COMMENT 'Original-Dateiname',
 			`FileName` varchar(25) NOT NULL COMMENT 'interner Dateiname',
 			`FileNameHQ` varchar(25) NOT NULL COMMENT 'Name des HQ-Vorschau-Bildes',
 			`FileNameV` varchar(25) NOT NULL default '',
@@ -268,7 +276,7 @@ ELSE
 			`FileNameMono` varchar(20) NOT NULL COMMENT 'Dateiname des Monochrom-Bildes',
 			`Owner` int(11) NOT NULL COMMENT 'user_id',
 			`DateInsert` datetime NOT NULL default '0000-00-00 00:00:00',
-			`loc_id` int(11) NOT NULL default '0' COMMENT 'location_id fï¿½?r geo-Referenzierung',
+			`loc_id` int(11) NOT NULL default '0' COMMENT 'location_id fÃ?r geo-Referenzierung',
 			`ranking` int(11) NOT NULL default '0',
 			`note` tinyint(4) NOT NULL default '5' COMMENT 'Bewertung (Note 1 - 5)',
 			`md5sum` varchar(50) NOT NULL,
@@ -284,7 +292,7 @@ ELSE
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Bilddaten' AUTO_INCREMENT=1;");
 			
 			
-			$res9 = mysql($db, "CREATE TABLE IF NOT EXISTS `pic_kat` (
+			$res9 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic_kat` (
 			`lfdnr` int(11) NOT NULL auto_increment,
 			`pic_id` int(11) NOT NULL,
 			`kat_id` int(11) NOT NULL,
@@ -292,13 +300,13 @@ ELSE
 			) ENGINE=MyISAM AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
 			
-			$res11 = mysql($db, "CREATE TABLE IF NOT EXISTS `rights` (
+			$res11 = mysql_query( "CREATE TABLE IF NOT EXISTS `rights` (
 			`right_id` int(11) NOT NULL auto_increment,
 			`user_group` varchar(25) NOT NULL,
 			`description` text NOT NULL,
 			KEY `right_id` (`right_id`)
 			) ENGINE=MyISAM COMMENT='Definition der Gruppen-Rechte' AUTO_INCREMENT=10 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
-			$res11_1 = mysql($db, "INSERT INTO `rights` (`right_id`, `user_group`, `description`) VALUES 
+			$res11_1 = mysql_query( "INSERT INTO `rights` (`right_id`, `user_group`, `description`) VALUES 
 			(1, 'Administrator', 'Hat alle Schreib-, Lese- und Loeschrechte'),
 			(2, 'NN', 'Platzhalter'),
 			(3, 'NN', 'Platzhalter'),
@@ -310,7 +318,7 @@ ELSE
 			(9, 'Web-User', 'kann nur ueber das Web-Frontend freigegebene Dateien recherchieren, Leserecht fuer freigegebene Dateien, keine Bearbeitungs- oder Loeschrechte');");
 			
 			
-			$res9 = mysql($db, "CREATE TABLE IF NOT EXISTS `tmp_tree` (
+			$res9 = mysql_query( "CREATE TABLE IF NOT EXISTS `tmp_tree` (
 			`lfdnr` int(11) NOT NULL auto_increment,
 			`kat_id` int(11) NOT NULL,
 			`old_level` int(11) NOT NULL,
@@ -322,26 +330,26 @@ ELSE
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=306;");
 			
 			
-			$res12 = mysql($db, "CREATE TABLE IF NOT EXISTS `usergroups` (
+			$res12 = mysql_query( "CREATE TABLE IF NOT EXISTS `usergroups` (
 			`id` int(11) NOT NULL auto_increment,
 			`description` varchar(200) NOT NULL default '',
 			PRIMARY KEY  (`id`,`description`)
 			) ENGINE=MyISAM AUTO_INCREMENT=4 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
-			$res12_1 = mysql($db, "INSERT INTO `usergroups` (`id`, `description`) VALUES 
+			$res12_1 = mysql_query( "INSERT INTO `usergroups` (`id`, `description`) VALUES 
 			(1, 'Admin'),
 			(2, 'WebUsers'),
 			(3, 'Fotograf'),
 			(4, 'Gast');");
 			
 			
-			$res13 = mysql($db, "CREATE TABLE IF NOT EXISTS `userpermissions` (
+			$res13 = mysql_query( "CREATE TABLE IF NOT EXISTS `userpermissions` (
 			`id` int(11) NOT NULL auto_increment,
 			`user_id` int(11) NOT NULL default '0',
 			`permission_id` int(11) NOT NULL default '0',
 			`enabled` smallint(1) NOT NULL default '0',
 			PRIMARY KEY  (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=2 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
-			$res13_1 = mysql($db, "INSERT INTO `userpermissions` (`id`, `user_id`, `permission_id`, `enabled`) VALUES 
+			$res13_1 = mysql_query( "INSERT INTO `userpermissions` (`id`, `user_id`, `permission_id`, `enabled`) VALUES 
 			(1, 1, 1, 1),
 			(2, 1, 2, 1),
 			(3, 1, 3, 1),
@@ -349,7 +357,7 @@ ELSE
 			(5, 1, 20, 1),
 			(6, 1, 21, 1);");
 			
-			$res14 = mysql($db, "CREATE TABLE IF NOT EXISTS `users` (
+			$res14 = mysql_query( "CREATE TABLE IF NOT EXISTS `users` (
 			`id` int(11) NOT NULL auto_increment,
 			`username` varbinary(15) NOT NULL,
 			`pwd` varchar(25) NOT NULL,
@@ -384,20 +392,50 @@ ELSE
 			KEY `username` (`username`)
 			) ENGINE=MyISAM COMMENT='Benutzeraccounts' AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
+			$res20 = mysql_query( "CREATE TABLE `diary` (
+			`diary_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			`user_id` INT NOT NULL ,
+			`datum` DATE NOT NULL ,
+			`info` TEXT NOT NULL
+			) ENGINE = MYISAM COMMENT = 'p2b-Tagebuch' CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
+			if(!isset($titel))
+			{
+				$titel = '';
+			}
+			if(!isset($name))
+			{
+				$name = '';
+			}
+			if(!isset($vorname))
+			{
+				$vorname = '';
+			}
+			if(!isset($strasse))
+			{
+				$strasse = '';
+			}
+			if(!isset($telefon))
+			{
+				$telefon = '';
+			}
+			if(!isset($berechtigung))
+			{
+				$berechtigung = '';
+			}
 			//ersten User anlegen:
-			$res115 = mysql($db, "CREATE USER 'pb'@'localhost' IDENTIFIED BY 'pic_base';");
+			$res115 = mysql_query( "CREATE USER 'pb'@'localhost' IDENTIFIED BY 'pic_base';");
 			//diesem User Rechte erteilen:
-			$res116 = mysql($db, "GRANT USAGE ON * . * TO 'pb'@'localhost' IDENTIFIED BY 'pic_base' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;");
+			$res116 = mysql_query( "GRANT USAGE ON * . * TO 'pb'@'localhost' IDENTIFIED BY 'pic_base' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;");
 			
-			$res117 = mysql($db, "GRANT SELECT , INSERT , UPDATE , DELETE , ALTER ON `pic2base` . * TO 'pb'@'localhost';");
-			//fÃ¼r die Uebergangszeit, solange md5sum in pictures eingefuehrt wird:
-			$res118 = mysql($db, "GRANT ALTER ON `pic2base`.`pictures` TO 'pb'@'localhost';");
+			$res117 = mysql_query( "GRANT SELECT , INSERT , UPDATE , DELETE , ALTER ON `pic2base` . * TO 'pb'@'localhost';");
+			//für die Übergangszeit, solange md5sum in pictures eingeführt wird:
+			$res118 = mysql_query( "GRANT ALTER ON `pic2base`.`pictures` TO 'pb'@'localhost';");
 			//User pb in der user-Tabelle erzeugen:
 			$key = '0815';
 			$pwd = 'pic_base';
 			$ftp_passwd = crypt('pic_base');
-			$res119 = mysql($db, "INSERT INTO `users` (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, berechtigung, group_id) VALUES ('pb', '$titel', '$name', '$vorname', '$strasse', '38889', 'Blankenburg (Harz)', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', 'info@pic2base.de', 'http://www.pic2base.de', '65534', '65534', '1', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/uploads', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/downloads','$berechtigung', '1')");
+			$res119 = mysql_query( "INSERT INTO `users` (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, berechtigung, group_id) VALUES ('pb', '$titel', '$name', '$vorname', '$strasse', '38889', 'Blankenburg (Harz)', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', 'info@pic2base.de', 'http://www.pic2base.de', '65534', '65534', '1', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/uploads', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/downloads','$berechtigung', '1')");
 			
 			//setzen der Rechte auf die Ordner: images, tracks und userdaten:
 			include_once 'global_config.php';

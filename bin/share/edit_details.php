@@ -17,15 +17,27 @@ include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 
-$result0 = mysql($db, "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+//var_dump($_GET);
+if (array_key_exists('pic_id',$_GET))
+{
+	$pic_id = $_GET['pic_id'];
+}
+$result0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 $num0 = mysql_num_rows($result0);
-$FileNameOri = mysql_result($result0,$i0,'FileNameOri');
-$Owner = mysql_result($result0,$i0,'Owner');
+$row = mysql_fetch_array($result0);
+$FileNameOri = $row['FileNameOri'];
+$Owner = $row['Owner'];
+//$FileNameOri = mysql_result($result0,isset($i0),'FileNameOri');
+//$Owner = mysql_result($result0,isset($i0),'Owner');
 
-$result2 = mysql($db, "SELECT * FROM $table1 WHERE id = '$Owner'");
-$vorname = mysql_result($result2, $i2, 'vorname');
-$name = mysql_result($result2, $i2, 'name');
-$u_name = mysql_result($result2, $i2, 'username');
+$result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
+$row = mysql_fetch_array($result2);
+$vorname = $row['vorname'];
+$name = $row['name'];
+$u_name = $row['username'];
+//$vorname = mysql_result($result2, $i2, 'vorname');
+//$name = mysql_result($result2, $i2, 'name');
+//$u_name = mysql_result($result2, $i2, 'username');
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -35,8 +47,9 @@ list($c_username) = split(',',$_COOKIE['login']);
 }
 
 //Ermittlung aller writable gesetzten Tags in der exif_protect-Tabelle (Obermenge):
-$result1 = mysql($db, "SELECT * FROM $table5 WHERE writable = '1'");
+$result1 = mysql_query( "SELECT * FROM $table5 WHERE writable = '1'");
 $num1 = mysql_num_rows($result1);
+//echo $num1."<br>";
 FOR($i1='0'; $i1<$num1; $i1++)
 {
 	$field_name = mysql_result($result1, $i1, 'field_name');
@@ -93,6 +106,7 @@ $exif_daten = shell_exec($et_path."/exiftool -g -s -x 'Directory' ".$FN);
 $info_arr = explode(chr(10), $exif_daten);
 //Umschreibung des Info-Arrays in die Form Schlüssel=$tag / Wert=$value
 $INFO_ARR = array();
+
 FOREACH($info_arr AS $IA)
 {
 	//echo $IA."<BR>";
@@ -104,102 +118,106 @@ FOREACH($info_arr AS $IA)
 }
 //print_r($INFO_ARR)."<BR>";
 $n=0;
-FOREACH($writable_tags AS $WT)	//über alle in der Tabelle freigegebenen Tags wird geprüft, welche davon im Bild enthalten sind:
+if ( isset($writable_tags) )
 {
-	//Steuerung der Zeilen-Hintergrundfarbe
-	IF(bcmod($n,2) == 0)
+	FOREACH($writable_tags AS $WT)	//über alle in der Tabelle freigegebenen Tags wird geprüft, welche davon im Bild enthalten sind:
 	{
-		$bgcolor = 'lightgrey';
-	}
-	ELSE
-	{
-		$bgcolor = 'white';
-	}
+		//Steuerung der Zeilen-Hintergrundfarbe
+		IF(bcmod($n,2) == 0)
+		{
+			$bgcolor = 'lightgrey';
+		}
+		ELSE
+		{
+			$bgcolor = 'white';
+		}
 	
-	$wt = str_replace('_','-',$WT);		//$WT Tag-Darstellungsform in der Tabelle (Unterstrich); $wt Tag-Darstellungsform im 					Bild (Bindestrich)
-	IF($INFO_ARR[$wt] !== NULL)		//Wenn im Bild-Array das freigegebene Array vorkommt, wird der Wert ermittelt, ggf. 					dieser zuvor formatiert
-	{
-		//echo "Tag in Tabelle: ".$WT.", Tag im Bild: ".$WT."<BR>";
-		$value = $INFO_ARR[$wt];
-		SWITCH($wt)
+		$wt = str_replace('_','-',$WT);		//$WT Tag-Darstellungsform in der Tabelle (Unterstrich); $wt 							Tag-Darstellungsform im Bild (Bindestrich)
+		IF(@$INFO_ARR[$wt] !== NULL)		//Wenn im Bild-Array das freigegebene Array vorkommt, wird der Wert 	
+							//ermittelt, ggf. dieser zuvor formatiert
 		{
-			CASE 'GPSAltitude':
-			$val_arr = explode(' ',$value);
-			$value = $val_arr[0];
-			break;
+			//echo "Tag in Tabelle: ".$WT.", Tag im Bild: ".$WT."<BR>";
+			$value = $INFO_ARR[$wt];
+			SWITCH($wt)
+			{
+				CASE 'GPSAltitude':
+				$val_arr = explode(' ',$value);
+				$value = $val_arr[0];
+				break;
 			
-			CASE 'GPSLongitude':
-			$val_arr = explode(' ',$value);
-			$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
-			break;
+				CASE 'GPSLongitude':
+				$val_arr = explode(' ',$value);
+				$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
+				break;
 			
-			CASE 'GPSLatitude':
-			$val_arr = explode(' ',$value);
-			$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
-			break;
+				CASE 'GPSLatitude':
+				$val_arr = explode(' ',$value);
+				$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
+				break;
 			
-			CASE 'GPSPosition':
-			$value = $location;
-			break;
+				CASE 'GPSPosition':
+				$value = $location;
+				break;
+			}
+			//echo $wt." / ".$INFO_ARR[$wt]."<BR>";
+			//Fallunterscheidungen:
+			SWITCH($wt)
+			{
+				//Es handelt sich um ein Datumsfeld:
+				CASE (stristr($wt,'date') == true):
+				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
+				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
+				</TR>";
+				break;
+			
+				//Es handelt sich um Textfelder:
+				CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
+				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+				<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'>".$value."</textarea></TD>
+				</TR>";
+				break;
+			
+				default:
+				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
+				</TR>";
+				break;
+			}
 		}
-		//echo $wt." / ".$INFO_ARR[$wt]."<BR>";
-		//Fallunterscheidungen:
-		SWITCH($wt)
+		ELSE
 		{
-			//Es handelt sich um ein Datumsfeld:
-			CASE (stristr($wt,'date') == true):
-			echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-			<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
-			<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
-			</TR>";
-			break;
+			//echo "Tag ".$wt." ist NICHT im Bild-Array enthalten.<BR>";
+			SWITCH($wt)
+			{
+				//Es handelt sich um ein Datumsfeld:
+				CASE (stristr($wt,'date') == true):
+				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
+				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
+				</TR>";
+				break;
 			
-			//Es handelt sich um Textfelder:
-			CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
-			echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-			<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
-			<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'>".$value."</textarea></TD>
-			</TR>";
-			break;
+				//Es handelt sich um Textfelder:
+				CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
+				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+				<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'></textarea></TD>
+				</TR>";
+				break;
 			
-			default:
-			echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-			<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
-			<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
-			</TR>";
-			break;
-		}
+				default:
+				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
+				</TR>";
+				break;
+			}
+		}		
+		$n++;
 	}
-	ELSE
-	{
-		//echo "Tag ".$wt." ist NICHT im Bild-Array enthalten.<BR>";
-		SWITCH($wt)
-		{
-			//Es handelt sich um ein Datumsfeld:
-			CASE (stristr($wt,'date') == true):
-			echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-			<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
-			<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
-			</TR>";
-			break;
-			
-			//Es handelt sich um Textfelder:
-			CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
-			echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-			<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
-			<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'></textarea></TD>
-			</TR>";
-			break;
-			
-			default:
-			echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-			<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
-			<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
-			</TR>";
-			break;
-		}
-	}
-	$n++;
 }
 
 echo "	

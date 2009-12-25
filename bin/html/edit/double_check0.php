@@ -91,19 +91,19 @@ echo "
 		</TD>
 		</TR>";
 	
-	$result2 = mysql($db, "SELECT DISTINCT Height FROM $table2");
+	$result2 = mysql_query( "SELECT DISTINCT Height FROM $table2");
 	$num2 = mysql_num_rows($result2);
 	//echo $num2."<BR>";
 	FOR($i2='0'; $i2<$num2; $i2++)
 	{
 		$height = mysql_result($result2, $i2, 'Height');
-		$result3 = mysql($db, "SELECT DISTINCT Width FROM $table2 WHERE Height = '$height'");
+		$result3 = mysql_query( "SELECT DISTINCT Width FROM $table2 WHERE Height = '$height'");
 		$num3 = mysql_num_rows($result3);
 		FOR($i3='0'; $i3<$num3; $i3++)
 		{
 			$width = mysql_result($result3, $i3, 'Width');
 			//echo "Breite: ".$width.", Höhe: ".$height."<BR>";
-			$result4 = mysql($db, "SELECT * FROM $table2 WHERE Width = '$width' AND Height = '$height'");
+			$result4 = mysql_query( "SELECT * FROM $table2 WHERE Width = '$width' AND Height = '$height'");
 			$num4 = mysql_num_rows($result4);
 			
 			IF($num4 > '1')
@@ -111,7 +111,7 @@ echo "
 				//echo "Es gibt ".$num4." Bilder mit den Maßen ".$width." x ".$height.", <BR>";
 				$summe = $summe + $num4;
 				//Wenn es mehr als ein Bild mit den Maßen gibt, wird auf Übereinstimmung des Original-Dateinamens geprüft:
-				$result5 = mysql($db, "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height' GROUP BY FileNameOri");
+				$result5 = mysql_query( "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height' GROUP BY FileNameOri");
 				$num5 = mysql_num_rows($result5);
 				IF($num4 > $num5)
 				{
@@ -123,7 +123,7 @@ echo "
 					//Prüfung auf Übereinstimmung der Dateigröße bei den Bildern mit übereinstimmenden Datei-Namen:
 					$filenameori = mysql_result($result5, $i5, 'FileNameOri');
 					//echo $filenameori."<BR>";
-					$result6 = mysql($db, "SELECT FileSize FROM $table2 WHERE Width = '$width' AND Height = '$height' AND FileNameOri = '$filenameori' ORDER BY FileSize");
+					$result6 = mysql_query( "SELECT FileSize FROM $table2 WHERE Width = '$width' AND Height = '$height' AND FileNameOri = '$filenameori' ORDER BY FileSize");
 					$num6 = mysql_num_rows($result6);
 					IF($num6 > '1')
 					{
@@ -132,7 +132,7 @@ echo "
 						
 						$filesize = mysql_result($result6, $i6, 'FileSize');
 						//$filenameori = mysql_result($result6, $i6, 'FileNameOri');
-						$result7 = mysql($db, "SELECT * FROM $table2 WHERE Width = '$width' AND Height = '$height' AND FileNameOri = '$filenameori' AND FileSize = '$filesize'");
+						$result7 = mysql_query( "SELECT * FROM $table2 WHERE Width = '$width' AND Height = '$height' AND FileNameOri = '$filenameori' AND FileSize = '$filesize'");
 						$num7 = mysql_num_rows($result7);
 						//echo "Anzahl identischer Bilder: ".$num7."<BR>";
 						IF($num7 > '1')
@@ -145,7 +145,7 @@ echo "
 								$filenameori = mysql_result($result7, $i7, 'FileNameOri');
 								$description = mysql_result($result7, $i7, 'Description');
 								$loc_id = mysql_result($result7, $i7, 'loc_id');
-								$result8 = mysql($db, "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
+								$result8 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
 								$num8 = mysql_num_rows($result8);
 								IF($description == '' OR $loc_id == '0' OR $num8 > '0')
 								{
@@ -183,19 +183,19 @@ echo "
 		}
 	}
 	/*
-	$result2 = mysql($db, "SELECT DISTINCT Height FROM $table2");
+	$result2 = mysql_query( "SELECT DISTINCT Height FROM $table2");
 	$num2 = mysql_num_rows($result2);
 	//echo $num2."<BR>";
 	FOR($i2='0'; $i2<$num2; $i2++)
 	{
 		$height = mysql_result($result2, $i2, 'Height');
-		$result3 = mysql($db, "SELECT DISTINCT Width FROM $table2 WHERE Height = '$height'");
+		$result3 = mysql_query( "SELECT DISTINCT Width FROM $table2 WHERE Height = '$height'");
 		$num3 = mysql_num_rows($result3);
 		FOR($i3='0'; $i3<$num3; $i3++)
 		{
 			$width = mysql_result($result3, $i3, 'Width');
 			//echo "Breite: ".$width.", Höhe: ".$height."<BR>";
-			$result4 = mysql($db, "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height'");
+			$result4 = mysql_query( "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height'");
 			echo mysql_error();
 			unset($filename_arr);
 			unset($duplikat_arr);
@@ -223,7 +223,7 @@ echo "
 				/*
 				FOR($i4='0'; $i4<$num4; $i4++)
 				{
-					$result5 = mysql($db, "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height'");
+					$result5 = mysql_query( "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height'");
 					$num5 = mysql_num_rows($result5);
 					FOR($i5='0'; $i5<$num5; $i5++)
 					{

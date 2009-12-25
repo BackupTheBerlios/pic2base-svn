@@ -3,6 +3,20 @@ include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+//var_dump($_GET);
+if (array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+}
+if (array_key_exists('description',$_GET) )
+{
+	$description = $_GET['description'];
+}
+if (array_key_exists('aufn_dat',$_GET) )
+{
+	$aufn_dat = $_GET['aufn_dat'];
+}
+
 $FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 //echo $FN."<BR>";
 //$description = str_replace('?','',$description);
@@ -11,7 +25,7 @@ $description = substr(utf8_decode(strip_tags($description)),'0','1990');
 
 IF($aufn_dat == '')
 {
-	$result2 = mysql($db, "UPDATE $table14 SET Caption_Abstract = '$description' WHERE pic_id = '$pic_id'");
+	$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description' WHERE pic_id = '$pic_id'");
 	$desc = htmlentities($description);
 	shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
 }
@@ -26,7 +40,7 @@ ELSE
 	{
 		$aufndat = $year."-".$month."-".$day." 00:00:00";
 		//echo $aufndat."<BR>";
-		$result2 = mysql($db, "UPDATE $table14 SET Caption_Abstract = '$description', DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
+		$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description', DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
 		$desc = htmlentities($description);
 		shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
 		shell_exec($et_path."/exiftool -EXIF:DateTimeOriginal='$aufndat' ".$FN." -overwrite_original");

@@ -15,7 +15,6 @@ ELSE
 	$ort = 'Blankenburg';
 }
 //echo "Parameter: ".$parameter.", Breite: ".$lat.", Länge: ".$long.", Ort: ".$ort."<BR>";
-// php 5.3
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,7 +37,7 @@ ELSE
  * Project: pic2base
  * File: recherche2.php
  *
- * Copyright (c) 2006 - 2009 Klaus Henneberg
+ * Copyright (c) 2006 - 2007 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -46,6 +45,11 @@ ELSE
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * @copyright 2005-2006 Klaus Henneberg
+ * @author Klaus Henneberg
+ * @package pic2base
+ * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  ***********************************************************************************/
  -->
 
@@ -57,6 +61,7 @@ ELSE
 
 function showAllDetails(mod, pic_id)
 {
+//alert("Bild-ID: "+pic_id);
 Fenster1 = window.open('../../share/details.php?view=kompact&pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
 Fenster1.focus();
 }
@@ -124,6 +129,12 @@ Fenster1 = window.open('../../share/edit_kat_info.php?kat_id='+kat_id, 'Kategori
 Fenster1.focus();
 }
 
+function showDiary(aufn_dat)
+{
+Fenster1 = window.open('../../share/edit_diary.php?aufn_dat='+aufn_dat, 'Tagebuch-Eintrag', "width=675,height=768,scrollbars,resizable=no,");
+Fenster1.focus();
+}
+
 -->
 </script>
 
@@ -134,12 +145,14 @@ Fenster1.focus();
 <DIV Class="klein">
 
 <?
+//var_dump($_REQUEST);
+
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
-//echo $c_username;
-$benutzername = $c_username;
+	list($c_username) = split(',',$_COOKIE['login']);
+	//echo $c_username;
+	$benutzername = $c_username;
 }
 list($bewertung) = split(',',$_COOKIE['bewertung']);
 //echo "Kontrolle: Bewertung: ".$bewertung."<BR>";
@@ -152,11 +165,31 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+//var_dump($_GET);
+//var_dump($_POST);
+
+if ( array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+}
+if ( array_key_exists('kat_id',$_GET) )
+{
+	$kat_id = $_GET['kat_id'];
+}
+if ( array_key_exists('mod',$_GET) )
+{
+	$mod = $_GET['mod'];
+}
+if ( array_key_exists('s_m',$_GET) )
+{
+	$s_m = $_GET['s_m'];
+}
+
 $stat = createStatement($bewertung);
 //echo $stat;
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".$REMOTE_ADDR." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
 $base_file = 'recherche2';
@@ -321,7 +354,7 @@ SWITCH ($mod)
 		
 		<TR id='geo'>
 			<TD id='geo1'>Ort liegt h&ouml;her als (m .NN)</TD>";
-			IF($alt == '')
+			IF( !(isset($alt)) OR $alt == '')
 			{
 				$alt = '0';
 			}
@@ -372,13 +405,13 @@ SWITCH ($mod)
 			<TD id='geo1' style='width:60px;'>Ortsname</TD>
 			<TD id='geo2'>
 				<SELECT name=\"ort\" class='Auswahl270'>";
-				$result9 = mysql_query("SELECT DISTINCT location FROM $table12 WHERE location <>'Ortsbezeichnung' order by location");
+				$result9 = mysql_query( "SELECT DISTINCT location FROM $table12 WHERE location <>'Ortsbezeichnung' order by location");
 				echo mysql_error();
 				$num9 = mysql_num_rows($result9);
 				FOR ($i9=0; $i9<$num9; $i9++)
 				{
 					$location = mysql_result($result9, $i9, 'location');
-					$result11 = mysql_query("SELECT * FROM $table12 WHERE location='$location'");
+					$result11 = mysql_query( "SELECT * FROM $table12 WHERE location='$location'");
 					$loc_id = mysql_result($result11, $i11, 'loc_id');
 					echo "<option value='$location'>$location</option>";
 				}
@@ -502,7 +535,7 @@ SWITCH ($mod)
 		$modus='recherche';
 		$fh = fopen($kml_dir."/query1.txt","a+");
 		ftruncate($fh, "0");
-		$res1 = mysql_query("SELECT * FROM $table2 WHERE loc_id <> '0'");
+		$res1 = mysql_query( "SELECT * FROM $table2 WHERE loc_id <> '0'");
 		echo mysql_error();
 		IF(mysql_error() == '')
 		{
@@ -604,7 +637,7 @@ SWITCH ($mod)
 		break;
 	}
 //###############################################################################################################
-	echo "	
+	echo "
 	<div id='spalte2F'>
 		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'><b>Hinweis zur Anzeige der Bilder:</b><BR><BR>Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, indem Sie auf das gr&uuml;ne H&auml;kchen neben dem entsprechenden Suchkriterium klicken.<BR>Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie hier in der rechten Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf dieses Bild in dem Filmstreifen, erhalten Sie eine Vorschau in mittlerer Qualit&auml;t.<BR>Klicken Sie hingegen auf das Bild in der Detail-Ansicht, erhalten Sie eine Darstellung in Original-Qualit&auml;t.</p>
 		

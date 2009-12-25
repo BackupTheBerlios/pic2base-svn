@@ -18,8 +18,18 @@ include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 
+//var_dump($_REQUEST);
+if ( array_key_exists('kat_id',$_REQUEST) )
+{
+	$kat_id = $_REQUEST['kat_id'];
+}
+if ( array_key_exists('FCKeditor1',$_POST) )
+{
+	$FCKeditor1 = $_POST['FCKeditor1'];
+}
+
 //echo $FCKeditor1;
-$result1 = mysql($db, "UPDATE $table11 SET info = '$FCKeditor1' WHERE kat_id = '$kat_id'");
+$result1 = mysql_query( "UPDATE $table11 SET info = '$FCKeditor1' WHERE kat_id = '$kat_id'");
 echo mysql_error();
 
 flush();

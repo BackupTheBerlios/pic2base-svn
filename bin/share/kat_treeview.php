@@ -13,16 +13,37 @@
 	//Erzeugung der Baumstruktur:
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//var_dump($_REQUEST);
+	if(array_key_exists('mod',$_GET))
+	{
+		$mod = $_GET['mod']; // für register_globals = off
+	}
+	if(array_key_exists('kat_id',$_GET))
+	{
+		$kat_id = $_GET['kat_id']; // für register_globals = off
+	}
+	else
+	{
+		if(!isset($kat_id))
+		{
+			$kat_id = '';
+		}
+	}
 	$KAT_ID = $kat_id;		//$KAT_ID: übergeordnete Kat., $kat_id: Unterkategorien
+	
+	if(!isset($ID))
+	{
+		$ID = '';
+	}
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
 	$knoten_arr[]=$kat_id;
 	
 	WHILE ($kat_id > '1')
 	{
-		$res0 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
+		$res0 = mysql_query("SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 		echo mysql_error();
-		$kat_id = mysql_result($res0, $i0, 'parent');
+		$kat_id = mysql_result($res0, isset($i0), 'parent');
 		//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
 		$knoten_arr[]=$kat_id;
 	}
@@ -32,6 +53,7 @@
 	//echo $bewertung;
 	function getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung)
 	{
+		global $ziel;
 		include 'global_config.php';
 		include $sr.'/bin/share/db_connect1.php';
 		INCLUDE $sr.'/bin/share/global_config.php';
@@ -39,7 +61,7 @@
 		$sel_one = "<IMG src='$inst_path/pic2base/bin/share/images/one.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='einzelne Bilder dieser Kategorie ausw&auml;hlen'>";
 		$sel_all = "<IMG src='$inst_path/pic2base/bin/share/images/all.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='alle Bilder dieser Kategorie ausw&auml;hlen'>";
 		
-		$result10 = mysql($db, "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
+		$result10 = mysql_query("SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
@@ -53,7 +75,7 @@
 				$space .="&#160;&#160;";
 			}
 			
-			$result13 = mysql($db, "SELECT * FROM $table11 WHERE kat_id = '$kat_id' AND info <> ''");
+			$result13 = mysql_query("SELECT * FROM $table11 WHERE kat_id = '$kat_id' AND info <> ''");
 			$num13 = mysql_num_rows($result13);
 			
 			IF($num13 !== 0)
@@ -66,7 +88,10 @@
 			}
 			
 			$kat_id_pos = array_search($kat_id, $knoten_arr);
-			$kat_id_back = $knoten_arr[$kat_id_pos - 1];
+			if($kat_id_pos > 0)
+			{
+				$kat_id_back = $knoten_arr[$kat_id_pos - 1];
+			}
 			
 			IF (in_array($kat_id, $knoten_arr))
 			{
@@ -121,7 +146,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 	$KAT_ID = '1';
 	//echo $KAT_ID.", ".$modus;
 }
-	$result10 = mysql($db, "SELECT * FROM $table4 WHERE kat_id='$KAT_ID'");
+	$result10 = mysql_query("SELECT * FROM $table4 WHERE kat_id='$KAT_ID'");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
@@ -139,7 +164,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			$space .=":";
 		}
 		
-		$result13 = mysql($db, "SELECT * FROM $table11 WHERE kat_id = '$kat_id' AND info <> ''");
+		$result13 = mysql_query("SELECT * FROM $table11 WHERE kat_id = '$kat_id' AND info <> ''");
 			$num13 = mysql_num_rows($result13);
 			
 			IF($num13 !== 0)
@@ -159,13 +184,20 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR id='kat'>
 				<TD id='kat1'>";
-			
+			IF(!isset($space))
+			{
+				$space = '';
+			}
 			echo	$space."<a href='$ziel?kat_id=$parent&mod=$mod&pic_id=0'>".$img."</a>&#160;";
 				echo "<span style='cursor:pointer; color:$font_color' onClick=\"showKatInfo('$kat_id')\" title='Imformationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
 				IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
 				{
 					$sel_one = "<img src='$inst_path/pic2base/bin/share/images/ok.gif' width='15' height='15' />";
 					$sel_all = '&#160;';
+				}
+				if(!isset($bewertung))
+				{
+					$bewertung = '';
 				}
 				echo "
 				<TD>
@@ -182,12 +214,19 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR id='kat'>
 				<TD id='kat1'>";
-			
+			IF(!isset($space))
+			{
+				$space = '';
+			}
 			echo	$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;"."<span style='cursor:pointer; color:$font_color' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
 				IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
 				{
 					$sel_one = "<img src='$inst_path/pic2base/bin/share/images/ok.gif' width='15' height='15' />";
 					$sel_all = '&#160;';
+				}
+				if(!isset($bewertung))
+				{
+					$bewertung = '';
 				}
 				echo "
 				<TD>

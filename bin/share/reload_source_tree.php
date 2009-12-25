@@ -17,6 +17,15 @@ setlocale(LC_CTYPE, 'de_DE');
 include 'db_connect1.php';
 INCLUDE 'global_config.php';
 
+// für register_globals = off
+if(array_key_exists('kat_id_s',$_GET))
+{
+	$kat_id_s = $_GET['kat_id_s']; 
+}
+else
+{
+	$kat_id_s = 0;
+}
 //Erzeugung der Baumstruktur für Source-Kategorie:
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 $KAT_ID_S = $kat_id_s;		//kat_id_s - Kategorie-ID der Source
@@ -26,9 +35,9 @@ $knoten_arr_s[]=$kat_id_s;
 $kat_id_s_d = $kat_id_s;	//Die Source-Kat-ID muß unverändert bis in den Destination-Bereich des Skripts durchgereicht 					werden, deshalb hier Umbenennung!
 WHILE ($kat_id_s > '1')
 {
-	$res0 = mysql($db, "SELECT parent FROM $table4 WHERE kat_id='$kat_id_s'");
+	$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id_s'");
 	echo mysql_error();
-	$kat_id_s = mysql_result($res0, $i0, 'parent');
+	$kat_id_s = mysql_result($res0, isset($i0), 'parent');
 	$knoten_arr_s[]=$kat_id_s;
 }
 $knoten_arr_s = array_reverse($knoten_arr_s);
@@ -44,7 +53,7 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 	INCLUDE 'global_config.php';
 	include_once $sr.'/bin/share/functions/ajax_functions.php';
 	//include $sr.'/bin/share/functions/ajax_functions.php';
-	$result10 = mysql($db, "SELECT * FROM $table4 WHERE parent='$kat_id_s' ORDER BY kategorie");
+	$result10 = mysql_query( "SELECT * FROM $table4 WHERE parent='$kat_id_s' ORDER BY kategorie");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
@@ -59,10 +68,12 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 		}
 		
 		$kat_id_s_pos = array_search($kat_id_s, $knoten_arr_s);
-		$kat_id_s_back = $knoten_arr_s[$kat_id_s_pos - 1];
+		if($kat_id_s_pos > 0 )
+		{
+			$kat_id_s_back = $knoten_arr_s[$kat_id_s_pos - 1];
+		}
 		IF (in_array($kat_id_s, $knoten_arr_s))
 		{
-			
 			//echo $kat_id_s_back;
 			$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR id='kat'>
@@ -108,7 +119,7 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 	}
 }
 
-$result10 = mysql($db, "SELECT * FROM $table4 WHERE kat_id='1'");
+$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
 $num10 = mysql_num_rows($result10);
 FOR ($i10=0; $i10<$num10; $i10++)
 {
