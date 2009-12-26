@@ -2,11 +2,19 @@
 //wird im Suchformular 'Suche nach EXIF-Daten' verwendet
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
 //var_dump($_GET);
 if(array_key_exists('field',$_GET))
 {
 	$field = $_GET['field'];
 }
+
+if(array_key_exists('bewertung',$_GET))
+{
+	$bewertung = $_GET['bewertung'];
+}
+
+$stat = createStatement($bewertung);
 
 IF($field !== '')
 {
@@ -16,7 +24,7 @@ IF($field !== '')
 		//Behandlung der recherchierbaren Felder der pictures-Tabelle
 		// der Stern vor dem val identifiziert die Nicht-Mata-Daten
 		CASE 'Owner':
-		$result3 = mysql_query( "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
+		$result3 = mysql_query( "SELECT DISTINCT $field FROM $table2 WHERE $stat ORDER BY $field");
 		$num3 = mysql_num_rows($result3);
 		FOR($i3='0'; $i3<$num3; $i3++)
 		{
@@ -29,9 +37,9 @@ IF($field !== '')
 		break;
 		
 		CASE 'FileNameOri':
-		CASE 'note':
 		CASE 'ranking':
-		$result4 = mysql_query( "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
+		CASE 'pic_id':
+		$result4 = mysql_query( "SELECT DISTINCT $field FROM $table2 WHERE $stat ORDER BY $field");
 		$num4 = mysql_num_rows($result4);
 		FOR($i4='0'; $i4<$num4; $i4++)
 		{
@@ -39,6 +47,17 @@ IF($field !== '')
 			$val = '*'.$value;
 			echo "<option value='$val'>".$value."</option>";
 		}
+		break;
+		
+		CASE 'note':
+		$result4 = mysql_query( "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
+		$num4 = mysql_num_rows($result4);
+		FOR($i4='0'; $i4<$num4; $i4++)
+		{
+			$value = mysql_result($result4, $i4, $field);
+			$val = '*'.$value;
+			echo "<option value='$val'>".$value."</option>";
+		}	
 		break;
 
 		//Behandlung der recherchierbaren Felder der meta-data-Tabelle
@@ -298,7 +317,7 @@ IF($field !== '')
 				$val = $value;
 				break;
 			}
-			//Prüfung, ob es schon einen Eintrak mit diesen Daten gab (bes. bei Datum interessant)
+			//Prï¿½fung, ob es schon einen Eintrak mit diesen Daten gab (bes. bei Datum interessant)
 			IF($wert !== $wert_alt)
 			{
 				echo "<option value='$val'>".$wert."</option>";
