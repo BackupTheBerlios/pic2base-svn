@@ -3,7 +3,7 @@
 include 'db_connect1.php';
 INCLUDE 'global_config.php';
 
-// für register_globals = off
+// fï¿½r register_globals = off
 if(array_key_exists('kat_id_s',$_GET))
 {
 	$kat_id_s = $_GET['kat_id_s']; 
@@ -13,9 +13,9 @@ else
 	$kat_id_s = 0;
 }
 
-//Es muß sichergestellt werden, daß als Zielkategorie keine Kategorie unterhalb der Quellkategorie gewählt werden kann, denn diese wird ja gelöscht! $child_arr enthält alle 'verbotenen' Kategorien
+//Es muï¿½ sichergestellt werden, daï¿½ als Zielkategorie keine Kategorie unterhalb der Quellkategorie gewï¿½hlt werden kann, denn diese wird ja gelï¿½scht! $child_arr enthï¿½lt alle 'verbotenen' Kategorien
 
-//Bestimmung aller Unterkategorien der gewählten Quell-Kategorie:
+//Bestimmung aller Unterkategorien der gewï¿½hlten Quell-Kategorie:
 
 $res1 = mysql_query("SELECT max(level) FROM $table4");
 $max_level = mysql_result($res1, isset($i1), 'max(level)');
@@ -51,10 +51,10 @@ FOREACH($child_arr AS $child)
 	echo $child."<BR>";
 }
 */
-//Erzeugung der Baumstruktur für Destination-Kategorie:
+//Erzeugung der Baumstruktur fï¿½r Destination-Kategorie:
 //Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// für register_globals = off
+// fï¿½r register_globals = off
 if(array_key_exists('kat_id_d',$_GET))
 {
 	$kat_id_d = $_GET['kat_id_d']; 
@@ -113,7 +113,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 			$kat_id_d_pos = array_search($kat_id_d, $knoten_arr_d);
 			if($kat_id_d_pos > 0 )
 			{
-				$kat_id_d_back = $knoten_arr_s[$kat_id_d_pos - 1];
+				$kat_id_d_back = $knoten_arr_d[$kat_id_d_pos - 1];
 			}
 	
 			IF (in_array($kat_id_d, $knoten_arr_d))
@@ -188,7 +188,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_d_back = array_search($kat_id_d, $knoten_arr_d);
 		IF (in_array($kat_id_d, $knoten_arr_d))
 		{
