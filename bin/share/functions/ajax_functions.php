@@ -11,7 +11,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	}
 	
 	//Erzeugung einer Bildvorschau unter optimaler Nutzung des Bildschirmes;
-	//Qualitäten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
+	//Qualitï¿½ten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	$res0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
@@ -41,7 +41,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	}
 	//echo $Orientation;
 	$FileQuality = mysql_result($result1, isset($i1), 'Quality');
-	//abgeleitete Größen:
+	//abgeleitete Grï¿½ï¿½en:
 	$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
 	$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 	$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
@@ -72,7 +72,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 			break;
 			
 			default:
-			//wenn das bild nicht landscape ist wird geprüft, ob es dieses Bild schon in gedrehter Form gibt:
+			//wenn das bild nicht landscape ist wird geprï¿½ft, ob es dieses Bild schon in gedrehter Form gibt:
 			$verz=opendir($sr.'/images/originale/rotated');
 			$n = 0;
 			while($bilddatei=readdir($verz))
@@ -221,7 +221,7 @@ function getPreview(kat_id, ID, mod, pic_id, modus, base_file, bewertung, auswah
 function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, position, jump)
 {
 	//position: Welcher Ausschnitt des Filmstreifens dargestellt wird
-	//jump: in welche Richtung navigiert wird: 1: 6 Bilder weiter; 2: zum Ende; -1: 6 Bilder zurück; -2: zum Anfang
+	//jump: in welche Richtung navigiert wird: 1: 6 Bilder weiter; 2: zum Ende; -1: 6 Bilder zurï¿½ck; -2: zum Anfang
 	//confirm("Jahr: " + j + ", Monat: "+ m +", Tag: "+ t +", mod: " + mod + ", pic_id: " + pic_id+", modus: "+modus+", base_file: "+base_file +", bewertung: "+bewertung +", Position: "+position +", Sprung-Richtung: "+jump);
 	
 	var url = '../../share/get_preview.php';
@@ -251,7 +251,7 @@ function magnifyPic(pic_id)
 
 function getDetails(pic_id, base_file, mod, form_name)
 {
-	//alert("Übergebener Parameter: " + pic_id);
+	//alert("ï¿½bergebener Parameter: " + pic_id);
 	var url = '../../share/get_details.php';
 	var params = 'pic_id=' + pic_id + '&base_file=' + base_file + '&mod=' + mod + '&form_name=' + form_name;
 	//alert("Parameter: "+params);
@@ -306,7 +306,7 @@ function getExifPreview(zusatz1, bedingung1, zw1, mod, modus, base_file, bewertu
 
 function delPicture(FileName, c_username, pic_id)
 {
-	//löscht Bild-Datei aus dem DOWNLOAD-Ordner
+	//lï¿½scht Bild-Datei aus dem DOWNLOAD-Ordner
 	var url = '../../share/del_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id;
 	//alert("Parameter: "+params);
@@ -346,7 +346,7 @@ function changeGeoRef(FileName, c_username, pic_id)
 */
 function deletePictureGeo1(FileName, c_username, pic_id, long, lat, alt, radius1, einheit1, mod, modus, base_file, form_name, bewertung, position, jump, aktion)
 {
-	//LÖSCHT BILD AUS DEM ARCHIV!!!!!!
+	//Lï¿½SCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&long=' + long + '&lat=' + lat + '&alt=' + alt + '&radius1=' + radius1 + '&einheit1=' + einheit1 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&form_name=' + form_name + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -356,7 +356,7 @@ function deletePictureGeo1(FileName, c_username, pic_id, long, lat, alt, radius1
 
 function deletePictureGeo2(FileName, c_username, pic_id, ort, radius2, einheit2, mod, modus, base_file, form_name, bewertung, position, jump, aktion)
 {
-	//LÖSCHT BILD AUS DEM ARCHIV!!!!!!
+	//Lï¿½SCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&ort=' + ort + '&radius2=' + radius2 + '&einheit2=' + einheit2 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&form_name=' + form_name + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter in DeletePictureGeo2: "+params);
@@ -366,7 +366,7 @@ function deletePictureGeo2(FileName, c_username, pic_id, ort, radius2, einheit2,
 
 function deletePictureZeit(FileName, c_username, pic_id, j, m, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//LÖSCHT BILD AUS DEM ARCHIV!!!!!!
+	//Lï¿½SCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&j=' + j + '&m=' + m + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -376,7 +376,7 @@ function deletePictureZeit(FileName, c_username, pic_id, j, m, mod, modus, base_
 
 function deletePictureKat(FileName, c_username, pic_id, KAT_ID, kat_id, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//LÖSCHT BILD AUS DEM ARCHIV!!!!!!
+	//Lï¿½SCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&KAT_ID=' + KAT_ID + '&kat_id=' + kat_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -386,7 +386,7 @@ function deletePictureKat(FileName, c_username, pic_id, KAT_ID, kat_id, mod, mod
 
 function deletePictureDesc(FileName, c_username, pic_id, desc1, bed1, desc2, bed2, desc3, bed3, desc4, bed4, desc5, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//LÖSCHT BILD AUS DEM ARCHIV!!!!!!
+	//Lï¿½SCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&desc1=' + desc1 + '&bed1=' + bed1 + '&desc2=' + desc2 + '&bed2=' + bed2 +'&desc3=' + desc3 + '&bed3=' + bed3 +'&desc4=' + desc4 + '&bed4=' + bed4 +'&desc5=' + desc5 +'&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -396,7 +396,7 @@ function deletePictureDesc(FileName, c_username, pic_id, desc1, bed1, desc2, bed
 
 function deletePictureExif(FileName, c_username, pic_id, zusatz1, bed1, zusatzwert1, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//LÖSCHT BILD AUS DEM ARCHIV!!!!!!
+	//Lï¿½SCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&zusatz1=' + zusatz1 + '&bed1=' + bed1 + '&zw1=' + zusatzwert1 +'&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -404,11 +404,11 @@ function deletePictureExif(FileName, c_username, pic_id, zusatz1, bed1, zusatzwe
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
-function getZusatzwert(zusatz1)
+function getZusatzwert(zusatz1, bewertung)
 {
 	var url = '../../share/get_zusatzwert1.php';
-	var params = 'field=' + zusatz1;
-	//alert("Parameter: "+params);
+	var params = 'field=' + zusatz1 + '&bewertung=' + bewertung;
+	alert("Parameter: "+params);
 	var target = 'zw1';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
