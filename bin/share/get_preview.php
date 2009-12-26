@@ -138,14 +138,14 @@ else
 //echo $mod;
 //Auslesen der Vorschau-Bilder aus den EXIF-Daten
 //verwendet in edit_kat_daten.php, recherche2.php, edit_beschreibung.php
-//Festlegung der Höhe der Bilder auf dem Filmstreifen:
+//Festlegung der Hï¿½he der Bilder auf dem Filmstreifen:
 $fs_hoehe = '80';
 //echo "&Uuml;bergebene Parameter: kat_id: ".$kat_id.", ID: ".$ID.", mod: ".$mod.", pic_id: ".$pic_id.", modus: ".$modus;
 //echo $base_file;
 //echo $bewertung;
 //echo "Server-URL: ".$server_url;
 //########################################################################################################################
-//Darstellung der zu einer Kategorie zugehörigen Bilder:
+//Darstellung der zu einer Kategorie zugehï¿½rigen Bilder:
 include 'db_connect1.php';
 include 'functions/permissions.php';
 
@@ -178,12 +178,12 @@ SWITCH ($modus)
 	SWITCH ($ID)
 	{
 		CASE '':
-		//Wenn noch keine Kategorie gewählt wurde:
+		//Wenn noch keine Kategorie gewaehlt wurde:
 		echo "<p class='gross' style='color:yellow; text-align:center;'>Bitte w&auml;hlen Sie zun&auml;chst in der linken Spalte Bilder einer Kategorie aus!</p>";
 		break;
 //################################################################################################################
 		CASE '1':
-		//Wenn die Wurzel-Kategorie gewählt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
+		//Wenn die Wurzel-Kategorie gewaehlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
 		$result2 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.Owner = '$user_id' AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal");
 		$num2 = mysql_num_rows($result2);
 		$N = $num2;
@@ -220,7 +220,7 @@ SWITCH ($modus)
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
 				$Orientation = mysql_result($result2, 'Orientation');	// 1: normal; 8: 90 CW
 				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
-				//abgeleitete Größen:
+				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
 					//@$parameter_v=getimagesize('../../images/originale/'.$FileName);
@@ -237,7 +237,7 @@ SWITCH ($modus)
 				$hoehe_v = $hoehe * 5;
 				IF ($breite == 0 OR $hoehe == 0)
 				{
-					//echo "Keine Größenangaben!";
+					//echo "Keine Groessenangaben!";
 					$breite_v = 800;
 					$hoehe_v = 600;
 				}
@@ -257,7 +257,7 @@ SWITCH ($modus)
 			echo "	
 			</TR>
 			<TR>";
-			//nicht in alle Fällen werden die Checkboxen dargestellt:
+			//nicht in alle Faellen werden die Checkboxen dargestellt:
 			
 			SWITCH($base_file)
 			{
@@ -302,7 +302,7 @@ SWITCH ($modus)
 		break;
 //################################################################################################################
 		default:
-		//gültig für alle Kategorien außer Wurzel:
+		//gueltig fuer alle Kategorien ausser Wurzel:
 		$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND $table2.Owner = '$user_id' $krit2) ORDER BY $table14.DateTimeOriginal");
 		//echo mysql_error();
 		$num2 = mysql_num_rows($result2);
@@ -316,8 +316,8 @@ SWITCH ($modus)
 			$result4 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id='$ID'");
 			$kategorie = htmlentities(mysql_result($result4, isset($i4), 'kategorie'));
 			echo "Es gibt ".$num2." Bilder in der Kategorie \"".$kategorie."\"";
-			//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, in der unteren die jeweils dazugehörigen Auswahlboxen:
-			//der Normalfall - Es werden alle Bilder angezeigt, welche der gewählten Kategorie angehören
+			//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, in der unteren die jeweils dazugehï¿½rigen Auswahlboxen:
+			//der Normalfall - Es werden alle Bilder angezeigt, welche der gewï¿½hlten Kategorie angehï¿½ren
 			echo "	<TABLE border='0' align='center'>
 			<TR>";
 			FOR ($i2=0; $i2<$num2; $i2++)
@@ -330,7 +330,7 @@ SWITCH ($modus)
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
 				$Orientation = mysql_result($result2, 'Orientation');	// 1: normal; 8: 90 CW
 				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
-				//abgeleitete Größen:
+				//abgeleitete Grï¿½ï¿½en:
 				IF ($FileNameV == '')
 				{
 					//@$parameter_v=getimagesize('../../images/originale/'.$FileName);
@@ -347,7 +347,7 @@ SWITCH ($modus)
 				$hoehe_v = $hoehe * 5;
 				IF ($breite == 0 OR $hoehe == 0)
 				{
-					//echo "Keine Größenangaben!";
+					//echo "Keine Grï¿½ï¿½enangaben!";
 					$breite_v = 800;
 					$hoehe_v = 600;
 				}
@@ -366,7 +366,7 @@ SWITCH ($modus)
 			
 			echo "	</TR>";
 			
-			//nicht in alle Fällen werden die Checkboxen dargestellt:
+			//nicht in alle Fï¿½llen werden die Checkboxen dargestellt:
 			SWITCH($base_file)
 			{
 				CASE 'edit_remove_kat':
@@ -420,7 +420,7 @@ SWITCH ($modus)
 		IF($bewertung !== '6')
 		{
 			//Bewertungskriterium wird in Vergleichsoperator und Wert zerlegt:
-			//Größer-Zeichen bedeutet: Der Notenwert ist höher, d.h die Note ist schlechter!
+			//Grï¿½ï¿½er-Zeichen bedeutet: Der Notenwert ist hï¿½her, d.h die Note ist schlechter!
 	
 			$op = substr($bewertung,0,strlen($bewertung) - 1);
 			IF($op == '<=')
@@ -446,7 +446,7 @@ SWITCH ($modus)
 		SWITCH ($m)
 		{
 			CASE '0':
-			//Anzeige der Jahrgänge
+			//Anzeige der Jahrgï¿½nge
 			$krit1 = "WHERE $table14.DateTimeOriginal LIKE '$j%'";
 			break;
 			
@@ -467,7 +467,7 @@ SWITCH ($modus)
 		}
 		//echo $krit1;
 		$statement = "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.pic_id, $table2.note, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal";
-		//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie benötigt	
+		//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie benï¿½tigt	
 		
 		$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.pic_id, $table2.note FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal");
 		echo mysql_error();
@@ -499,12 +499,12 @@ SWITCH ($modus)
 		SWITCH ($ID)
 		{
 			CASE '':
-			//Wenn noch keine Kategorie gewählt wurde:
+			//Wenn noch keine Kategorie gewï¿½hlt wurde:
 			echo "<p class='gross' style='color:yellow; text-align:center;'>Bitte w&auml;hlen Sie zun&auml;chst in der linken Spalte Bilder einer Kategorie aus!</p>";
 			break;
 
 			CASE '1':
-			//Wenn die Wurzel-Kategorie gewählt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
+			//Wenn die Wurzel-Kategorie gewï¿½hlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
 			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal");
 			$num6_1 = mysql_num_rows($result6_1);
 			$N = $num6_1;
@@ -530,7 +530,7 @@ SWITCH ($modus)
 			break;
 			
 			default:
-			//bei allen Kategorien außer der Wurzel:
+			//bei allen Kategorien auï¿½er der Wurzel:
 			$statement = "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' $krit2) ORDER BY $table14.DateTimeOriginal";
 			
 			//Ermittlung aller Bilder der Kategorie:
@@ -661,12 +661,12 @@ SWITCH ($modus)
 				$lat = $lat + mysql_result($result10, $i10, 'latitude');
 				$long = $long + mysql_result($result10, $i10, 'longitude');
 			}
-			//echo "Summe Breite: ".$lat.", Summe Länge: ".$long."<BR>";
+			//echo "Summe Breite: ".$lat.", Summe Lï¿½nge: ".$long."<BR>";
 			$lat_mittel = $lat / $num10;
 			$long_mittel = $long / $num10;
-			//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere Länge: ".$long_mittel)."<BR>";
+			//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere Lï¿½nge: ".$long_mittel)."<BR>";
 			
-			//Plausibilitätsprüfung:
+			//Plausibilitï¿½tsprï¿½fung:
 			$radius = round(($einheit2 * str_replace(',','.',$radius2)),0);
 			IF(!ereg('^([0-9]{1,5})$',$radius2) OR ($radius >50000))
 			{
@@ -681,7 +681,7 @@ SWITCH ($modus)
 			$lat_max = $lat_mittel + $delta_lat;
 			//echo "Breite: ".$lat_mittel.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
 			
-			//geogr. Länge: hier ist dei Winkeländerung / Entfernun von der geogr. Breite abhï¿½ngig:
+			//geogr. Lï¿½nge: hier ist dei Winkelï¿½nderung / Entfernun von der geogr. Breite abhï¿½ngig:
 			//include 'functions/main_functions.php';
 			$delta_long = getDeltaLong($lat_mittel, $radius);
 			$long_min = $long_mittel - $delta_long;
@@ -694,7 +694,7 @@ SWITCH ($modus)
 			break;
 		}
 		
-		//Erzeugung des 'Mittlpunkt-Icons' für die Darstellung in GoogleEarth:
+		//Erzeugung des 'Mittlpunkt-Icons' fï¿½r die Darstellung in GoogleEarth:
 		$mp = '
 		<Placemark>
 		<name>Mittelpunkt</name>
@@ -921,7 +921,7 @@ SWITCH ($modus)
 			IF($bewertung !== '6')
 			{
 				//Bewertungskriterium wird in Vergleichsoperator und Wert zerlegt:
-				//Größer-Zeichen bedeutet: Der Notenwert ist höher, d.h die Note ist schlechter!
+				//Grï¿½ï¿½er-Zeichen bedeutet: Der Notenwert ist hï¿½her, d.h die Note ist schlechter!
 				
 				$op = substr($bewertung,0,strlen($bewertung) - 1);
 				IF($op == '<=')
@@ -975,11 +975,11 @@ SWITCH ($modus)
 		break;
 //###################################################################################	
 		CASE 'exif':
-		//Unterscheidung, ob in pictures oder meta_data gesucht werden soll:
+		//Unterscheidung, in welcher Tabelle gesucht werden soll:
 		IF(substr($zw1,'0','1') == '*')
 		{
 			//Recherche nach Nicht-Meta-Daten (in pictures)
-			//Statement: finde in pictures alles, bei dem in dem gewählten Feld der gewünschte Wert vorkommt, die Qualität der gewählten Qualität entspricht , sortiert nach dem Aufnahmedatum. 
+			//Statement: finde in pictures alles, bei dem in dem gewï¿½hlten Feld der gewï¿½nschte Wert vorkommt, die Qualitï¿½t der gewï¿½hlten Qualitï¿½t entspricht , sortiert nach dem Aufnahmedatum. 
 			$zw1 = str_replace('*', '', $zw1);
 			IF($bedingung1 == 'LIKE')
 			{
@@ -999,9 +999,10 @@ SWITCH ($modus)
 		
 			$result8 = mysql_query( "SELECT * FROM $table2 $krit1 AND $table2.loc_id <>'0'");
 		}
+		
 		ELSE
 		{
-			//Recherche nach Meta-Daten (in meta_data)
+			//Recherche nach Meta-Daten, NICHT Geo-Daten! (in meta_data)
 			IF($bedingung1 == 'LIKE')
 			{
 				$krit1 = "WHERE ".$table14.".".$zusatz1." LIKE '%".$zw1."%'";
@@ -1040,7 +1041,7 @@ SWITCH ($modus)
 		break;
 	}
 			
-//###########    Erzeugung der thumb-druck.pdf-Datei für Thumb-Galerie-Druck:  ###############
+//###########    Erzeugung der thumb-druck.pdf-Datei fuer Thumb-Galerie-Druck:  ###############
 	
 	IF($num6_1 < '101')
 	{
@@ -1064,7 +1065,7 @@ SWITCH ($modus)
 	$steps = ceil($num6_1 / $step);
 	SWITCH($jump)
 	{
-		//$step: Laänge des Filmstreifens (6 Bilder)
+		//$step: Laenge des Filmstreifens (6 Bilder)
 		//$steps Anz. 'ganzer' Filmstreifen
 		//$num6_1 Anzahl der darzustellenden Bilder
 		//$position: alter Startpunkt
@@ -1306,7 +1307,7 @@ SWITCH ($modus)
 			}
 			$content .= '</Document>
 			</kml>';
-			//kml-Datei erzeugen und mit Inhalt ($content) füllen
+			//kml-Datei erzeugen und mit Inhalt ($content) fï¿½llen
 			$file = time().'.kml';
 			$file_name = $kml_dir.'/'.$file;
 			//echo $file_name;
@@ -1435,7 +1436,7 @@ SWITCH ($modus)
 	}
 	//echo $text1.$zusatz;
 
-//#############   Aufbau des Statements für die limiterte Abfrage:   ###########################################################
+//#############   Aufbau des Statements fuer die limiterte Abfrage:   ###########################################################
 		
 	IF($num6_1 > $step)
 	{
@@ -1506,7 +1507,7 @@ SWITCH ($modus)
 		}
 		echo "	<TABLE border='0' align='center'>
 		<TR>";	
-		$j = '0';	//Zählvariable für den Array-Index der Download-Icons
+		$j = '0';	//Zï¿½hlvariable fï¿½r den Array-Index der Download-Icons
 		
 		FOR($i6_1='0'; $i6_1<$num6_1; $i6_1++)
 		{
@@ -1519,7 +1520,7 @@ SWITCH ($modus)
 			$result23 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 			$Orientation = mysql_result($result23, isset($i23), 'Orientation');	// 1: normal; 8: 90ï¿½ nach rechts gedreht
 			$FileSize = mysql_result($result23, isset($i23), 'FileSize');
-			//abgeleitete Größen:
+			//abgeleitete Grï¿½ï¿½en:
 			IF ($FileNameV == '')
 			{
 				$FileNameV = 'no_preview.jpg';
@@ -1553,7 +1554,7 @@ SWITCH ($modus)
 			$check = fileExists($FileName, $c_username);
 			IF($check > '0')
 			{
-				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon gelöscht:
+				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon gelï¿½scht:
 				$icon[$j] = "<TD align='center'><div id='box$pic_id'>
 				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/></SPAN>	
 				</div></TD>";
@@ -1598,7 +1599,7 @@ SWITCH ($modus)
 		echo $text1.$zusatz."	
 		<TABLE border='0' align='center' width='780px'>
 		<TR style='background-color:#000055;' >";
-		$rest = $step - $num6; //wenn weniger als $step Bilder gefunden wurden: Anzahl der aufzufüllenden Zellen
+		$rest = $step - $num6; //wenn weniger als $step Bilder gefunden wurden: Anzahl der aufzufï¿½llenden Zellen
 		//echo $rest;
 		FOR ($i6=0; $i6<$num6; $i6++)
 		{
@@ -1609,7 +1610,7 @@ SWITCH ($modus)
 			$result22 = mysql_query( "SELECT 'ImageDataSize' FROM $table14 WHERE pic_id = '$pic_id'");
 			$FileSize = mysql_result($result22, isset($i22), 'ImageDataSize');
 			
-			//abgeleitete Größen:
+			//abgeleitete Grï¿½ï¿½en:
 			IF ($FileNameV == '')
 			{
 				$FileNameV = 'no_preview.jpg';
@@ -1637,7 +1638,7 @@ SWITCH ($modus)
 			
 			IF($breite_neu < $hoehe_neu)
 			{
-				//falls die Ausrichtung falsch in den EXIF-Daten gespeichert wurde, kann das Vorschau-Bild nachträglich gedreht werden:
+				//falls die Ausrichtung falsch in den EXIF-Daten gespeichert wurde, kann das Vorschau-Bild nachtrï¿½glich gedreht werden:
 				echo "
 				<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
 				<img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='0' />
@@ -1665,7 +1666,7 @@ SWITCH ($modus)
 			$check = fileExists($FileName, $c_username);
 			IF($check > '0')
 			{
-				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon gelïöscht:
+				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon gelï¿½ï¿½scht:
 				$icon[$i6] = "
 				<TD align='center' width='43'>
 				<div id='box$pic_id'>
@@ -1694,7 +1695,7 @@ SWITCH ($modus)
 				}
 			}
 		}
-		//Leer-Raum mit Leer-Zellen auffüllen (Zelle mit Dummy-Bild zur Streckung gefüllt), wenn Bilder gefunden wurden:
+		//Leer-Raum mit Leer-Zellen auffï¿½llen (Zelle mit Dummy-Bild zur Streckung gefï¿½llt), wenn Bilder gefunden wurden:
 		IF($num6_1 > '0')
 		{
 			FOR($i_r = '0'; $i_r<$rest; $i_r++)
@@ -1728,7 +1729,7 @@ SWITCH ($modus)
 			//Anzahl der Steps ist Anzahl der Bilder / 6:
 			$steps = $num6_1/6;
 			//echo $steps;
-			//es werden $steps Elemente zur Slider-bar zusammengefügt, deren Gesamtbreite rund 500 Pixel beträgt:
+			//es werden $steps Elemente zur Slider-bar zusammengefï¿½gt, deren Gesamtbreite rund 500 Pixel betrï¿½gt:
 			//Breite eines Slider-Elements:
 			$sl_width = 500 / $steps;
 			//$action3 = "getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,\"$ziel\",-2)";
@@ -1820,7 +1821,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		$Height = mysql_result($res0, isset($i1), 'ImageHeight');
 	}
 	
-	//Wenn Breite und Hoehe nicht ausgelesen werden konnten, werden die Werte zu Fuß ermittelt und in die Meta-Daten-Tabelle geschrieben:
+	//Wenn Breite und Hoehe nicht ausgelesen werden konnten, werden die Werte zu Fuï¿½ ermittelt und in die Meta-Daten-Tabelle geschrieben:
 	IF($Width == '0' OR $Height == '0')
 	{
 		$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
@@ -1845,9 +1846,9 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		$breite = 800;
 		$hoehe = 600;
 	}
-	//echo "Breite: ".$breite.", Höhe: ".$hoehe."<BR>";
+	//echo "Breite: ".$breite.", Hï¿½he: ".$hoehe."<BR>";
       	$width_height=$parameter_v[3];
-      	//Für die Darstellung des Vollbildes wird eine mittlete Größe unter Beachtung des Seitenverhältnisses errechnet:
+      	//Fï¿½r die Darstellung des Vollbildes wird eine mittlete Grï¿½ï¿½e unter Beachtung des Seitenverhï¿½ltnisses errechnet:
       	//max. Ausdehnung: 800px
       	$max = '1000';
       	$bild = $inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ;

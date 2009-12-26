@@ -3,10 +3,10 @@
 //[Programm-Version]
 $version = "0.41 (15.05.2009)";
 
-//[copyright-Vermerk in der Fußzeile]
+//[copyright-Vermerk in der Fusszeile]
 $cr = "2006 - 2009 Logiqu";
 
-//Zugangsdaten für den Datenbankzugriff (normaler User mit teilwesen Zugriffsbeschränkungen auf DB pic2base)
+//Zugangsdaten fuer den Datenbankzugriff (normaler User mit teilwesen Zugriffsbeschraenkungen auf DB pic2base)
 $db_server='localhost';
 $user='pb';
 $PWD='pic_base';
@@ -29,7 +29,7 @@ $table13 = 'geo_tmp';		//wird bei der automat. Georeferenzierung verwendet
 $table14 = 'meta_data';		//Metadaten der Bilder
 $table15 = 'tmp_tree';		//wird bei der Kategoriebaum-Umstrukturierung verwendet
 
-//Für Ajax-Funktionalität (aus Beispielprojekt kopiert):
+//Fuer Ajax-Funktionalitaet (aus Beispielprojekt kopiert):
 //   ******************************************************************************************************
 $myhost=$db_server;
 $myuser=$user;
@@ -53,6 +53,6 @@ if (!mysql_select_db($mydb))
 }
 mysql_query("SET CHARACTER SET latin1");
 //   ******************************************************************************************************
-//Encryption-Key für PWD-Ver-/Entschlüsselung
+//Encryption-Key fï¿½r PWD-Ver-/Entschlï¿½sselung
 $key = '0815';
 ?>
