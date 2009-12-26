@@ -14,7 +14,7 @@ ELSE
 	$long = 10.952811;
 	$ort = 'Blankenburg';
 }
-//echo "Parameter: ".$parameter.", Breite: ".$lat.", Länge: ".$long.", Ort: ".$ort."<BR>";
+//echo "Parameter: ".$parameter.", Breite: ".$lat.", Lï¿½nge: ".$long.", Ort: ".$ort."<BR>";
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -100,7 +100,7 @@ Fenster1 = window.open('save_new_param.php?location='+newlocation+'&ort='+ort+'&
 
 function showDelWarning(FileName, c_username, pic_id)
 {
-	var check = confirm("Wollen SIe das Bild wirklich löschen?");
+	var check = confirm("Wollen SIe das Bild wirklich lï¿½schen?");
 	if(check == true)
 	{
 		window.open('../../share/delete_picture.php?FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=350px');
@@ -116,7 +116,7 @@ Fenster1 = window.open('../../share/rotate_picture_set.php?orientation=' + orien
 function CloseWindow()
 {
    anotherWindow = window.open("", "bildfenster", "");
-   // Wird bereits ein Bild in der "Großansicht" angezeigt? - dann wird es geschlossen:
+   // Wird bereits ein Bild in der "Groï¿½ansicht" angezeigt? - dann wird es geschlossen:
    if (anotherWindow != null)
    {
    	anotherWindow.close();
@@ -472,7 +472,7 @@ SWITCH ($mod)
 				Meta-Daten-Feld:
 				</TD>
 				<TD align = 'right'>
-				<SELECT name='zusatz1' class='Auswahl200' OnChange='getZusatzwert(document.exif_param.zusatz1.value)'>";
+				<SELECT name='zusatz1' class='Auswahl200' OnChange='getZusatzwert(document.exif_param.zusatz1.value, \"$bewertung\")'>";
 				OptionFields();
 				echo "</SELECT>
 				</TD>
@@ -652,23 +652,23 @@ SWITCH ($mod)
 	SWITCH($mod)
 	{
 		CASE 'zeit':
-		$modus='recherche';	//bedeutet, daß keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaßt wird
+		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
 		$mod='zeit';
 		break;
 		
 		CASE 'kat':
-		$modus='recherche';	//bedeutet, daß keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaßt wird
+		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
 		$base_file = 'recherche2';
 		$mod='kat';
 		break;
 		
 		CASE 'desc':
-		$modus='recherche';	//bedeutet, daß keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaßt wird
+		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
 		$mod='desc';		
 		break;
 		
 		CASE 'geo':
-		$modus='recherche';	//bedeutet, daß keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaßt wird
+		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
 		$mod='geo';		
 		break;
 	}
