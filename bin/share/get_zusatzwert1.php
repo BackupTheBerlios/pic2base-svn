@@ -59,29 +59,7 @@ IF($field !== '')
 			echo "<option value='$val'>".$value."</option>";
 		}	
 		break;
-		/*
-		CASE 'longitude':
-		CASE 'latitude':
-		CASE 'altitude':
-		CASE 'location':
-		$result4 = mysql_query( "SELECT DISTINCT $field FROM $table12 ORDER BY $field");
-		$num4 = mysql_num_rows($result4);
-		FOR($i4='0'; $i4<$num4; $i4++)
-		{
-			$value = mysql_result($result4, $i4, $field);
-			IF($field == 'location')
-			{
-				$value = htmlentities($value);
-			}
-			ELSE
-			{
-				//$value = number_format($value,6,'.','.');
-			}
-			$val = '#'.$value;
-			echo "<option value='$val'>".$value."</option>";
-		}	
-		break;
-		*/
+		
 		//Behandlung der recherchierbaren Felder der meta-data-Tabelle
 		default:
 		$result1 = mysql_query("SELECT DISTINCT $field FROM $table14 ORDER BY $field");
