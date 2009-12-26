@@ -1,7 +1,7 @@
 <?php
 
 /*
-Datei enthält folgende Funktionen:
+Datei enthï¿½lt folgende Funktionen:
 
 function OptionFields()								verwendet
 function getMonthName($month_number)						verwendet
@@ -45,7 +45,7 @@ function OptionFields()
 	{
 		$CN[] = mysql_field_name($result3,$i2);
 	}
-	//nach dem Leerfeld werden standardmäßig einige recherchierbare Felder der Pictures-Tabelle angeboten:
+	//nach dem Leerfeld werden standardmaessig einige recherchierbare Felder der Pictures-Tabelle angeboten:
 	echo "
 	<optgroup label='Nicht-Meta-Daten'>
 	<option VALUE = 'pic_id'>interne Bild-Nr.</option>
@@ -55,12 +55,15 @@ function OptionFields()
 	<option VALUE = 'ranking'>Anzahl der Downloads</option>
 	</optgroup>
 	<optgroup label='Meta-Daten'>";
+	//dann folgen Felder der Meta-Daten-Tabelle (alle ausser der locations-Felder):
 	asort($CN);
 	FOREACH($CN AS $cn)
 	{
-		echo "<option VALUE = '$cn'>$cn</option>";
+		IF(!stristr($cn,'GPS') AND !stristr($cn, 'City'))
+		{
+			echo "<option VALUE = '$cn'>$cn</option>";
+		}
 	}
-	echo "</optgroup>";
 }
 
 function getMonthName($month_number)
@@ -208,7 +211,7 @@ function createQuickPreview($Orientation,$FileName)
 function createPreviewPicture($FILE, $dest_path, $max_len)
 {
 	include '../../share/global_config.php';
-	//Wenn das Originalbild kein EXIF-Vorschaubild mitbringt, generiert diese Funktion aus der Quelle ein Vorschaubild, dessen max. Ausdehnung max_len Pixel beträgt und speichert dieses unter dem Destination-Pfad ab. -wird bei der Erfassung von Bildern angewendet.
+	//Wenn das Originalbild kein EXIF-Vorschaubild mitbringt, generiert diese Funktion aus der Quelle ein Vorschaubild, dessen max. Ausdehnung max_len Pixel betrï¿½gt und speichert dieses unter dem Destination-Pfad ab. -wird bei der Erfassung von Bildern angewendet.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	//$file_nameV = str_replace('.jpg','_v.jpg',basename($FILE));	//Variante, bei der Vorschau aus Original erzeugt wird
 	$file_nameV = str_replace('_hq.jpg','_v.jpg',basename($FILE));	//Variante, bei der Vorschau aus HQ erzeugt wird
@@ -220,7 +223,7 @@ function createPreviewPicture($FILE, $dest_path, $max_len)
 function resizeOriginalPicture($FILE, $dest_path, $max_len)
 {
 	include '../../share/global_config.php';
-	//Die Funktion generiert aus der Quelle ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel beträgt und speichert dieses unter dem Destination-Pfad ab.
+	//Die Funktion generiert aus der Quelle ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel betrï¿½gt und speichert dieses unter dem Destination-Pfad ab.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	$file_nameT = str_replace('.jpg','_hq.jpg',basename($FILE));
       	$command = $im_path."/convert -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
@@ -341,7 +344,7 @@ function createNavi0($c_username)
 			CASE '1':
 			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 			
-			//Prüfung, ob Rechte auf log, images und userdata korrekt gesetzt sind:
+			//Prï¿½fung, ob Rechte auf log, images und userdata korrekt gesetzt sind:
 
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/log/" ) );
 			//echo $mod."<BR>";
@@ -553,7 +556,7 @@ function createNavi2_1($c_username)
 
 function createNavi2_2($c_username, $mod)
 {
-	//Navigationsstruktur der Seite 'bearbeitung1.php' (Suche über EXIF-Daten)
+	//Navigationsstruktur der Seite 'bearbeitung1.php' (Suche ï¿½ber EXIF-Daten)
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
@@ -774,7 +777,7 @@ function createContentFile($mod, $statement, $c_username, $bild)
 {
 	//Erzeugung der pdf-Galerie
 	//echo $statement;
-	//$statement für exif, desc, zeit, kat(außer Wurzel) übergeben
+	//$statement fï¿½r exif, desc, zeit, kat(auï¿½er Wurzel) ï¿½bergeben
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	SWITCH($mod)
@@ -804,14 +807,14 @@ function createContentFile($mod, $statement, $c_username, $bild)
 		{
 			$pdf->AddPage();
 			$pdf->Cell(0,5,'pic2base-Galerie',0,1,'C');
-			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergrößerte Ansicht des betreffenden Bildes.',0,1,'C');
+			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergrï¿½ï¿½erte Ansicht des betreffenden Bildes.',0,1,'C');
 			FOR($zeile='0'; $zeile<'5'; $zeile++)
 			{
 				$y_mitte = 50 + $zeile * 48;
 				FOR($spalte='0'; $spalte<'4'; $spalte++)
 				{
 					$x_mitte = 45 + $spalte * 45;
-					//Ermittlung des QH-/Ori-Dateinamens und der Bild-Maße
+					//Ermittlung des QH-/Ori-Dateinamens und der Bild-Maï¿½e
 					$zaehler = $spalte + ($zeile * 4) + ($seite * 20);
 					IF($zaehler < $num100)
 					{
@@ -966,7 +969,7 @@ function showBewertung($bewertung)
 	SWITCH($bewertung)
 	{
 		CASE '=1':
-		//Größer-Zeichen bedeutet: Der Notenwert ist höher, d.h die Note ist schlechter!
+		//Grï¿½ï¿½er-Zeichen bedeutet: Der Notenwert ist hï¿½her, d.h die Note ist schlechter!
 		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$g_s$y_s</SPAN>";
 		break;
 		
@@ -1092,7 +1095,7 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation)
 	{
 		$FILE = $pic_path."/".$pic_id.".jpg";
 	}
-	//vom Original-JPG-Bild wird die Prüfsumme gebildet:
+	//vom Original-JPG-Bild wird die Prï¿½fsumme gebildet:
 	$command = $md5sum_path."/md5sum $FILE";
 	$sum = explode(' ',shell_exec($command));
 	//echo "Pr&uuml;fsumme: ".$sum[0]."<BR>";
@@ -1103,7 +1106,7 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation)
 		// 1) anlegen des hq-Bildes: (resamplen, ggf. drehen, speichern unter /vorschau/hq-preview)
 		$max_len = '800';				//HQ aus Original erzeugen
 		$FileNameHQ = resizeOriginalPicture($FILE, $HQ_verzeichnis, $max_len);
-		//echo "temporärer Datei-Name: ".$FileNameHQ." Ausrichtung: ".$Orientation."<BR>";
+		//echo "temporï¿½rer Datei-Name: ".$FileNameHQ." Ausrichtung: ".$Orientation."<BR>";
 		$FILE = $pic_hq_preview."/".$FileNameHQ;	//Thumb aus HQ erzeugen
 		// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
 		$max_len = '160';
@@ -1116,7 +1119,7 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation)
 	
 	}
 	
-	//die Datei-Attribute werden für alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
+	//die Datei-Attribute werden fï¿½r alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
 	//HQ-Datei:
 	$fileHQ = $HQ_verzeichnis."/".$FileNameHQ;
 	clearstatcache();  
@@ -1134,7 +1137,7 @@ function getRecDays($y,$m,$stat)
 {
 	include 'global_config.php';
 	include 'db_connect1.php';
-	//Bestimmung der Tage in dem Jahr $y und Monat $m, an welchem Aufnahmen angefertigt wurden: (abhängig von der Bewertung!
+	//Bestimmung der Tage in dem Jahr $y und Monat $m, an welchem Aufnahmen angefertigt wurden: (abhï¿½ngig von der Bewertung!
 	$dat_arr = array();
 	
 	$result11 = mysql_query("SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '%".$y."-".$m."%' AND $table2.$stat) ORDER BY $table14.DateTimeOriginal");
@@ -1165,7 +1168,7 @@ function generateHistogram($pic_id,$FileName,$sr)
 	IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r') OR @!fopen($file_mono, 'r'))
 	{
 		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
-		$file = $pic_hq_preview."/".$FileName; //<- aus Performance-Gründen wird Histogr. aus HQ-Bild erstellt!
+		$file = $pic_hq_preview."/".$FileName; //<- aus Performance-Grï¿½nden wird Histogr. aus HQ-Bild erstellt!
 		shell_exec($im_path."/convert ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
 		//shell_exec($im_path."/convert ".$file." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif");
 		shell_exec($im_path."/convert ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
@@ -1280,7 +1283,7 @@ function formatValues($fieldname,$FN,$et_path)
 function restoreOriFilename($pic_id, $sr)
 {
 	//erzeugt den eindeutigen Namen des Bildes in Original-Dateiformat
-	include $sr.'/bin/share/db_connect1.php'; // FÜR NACHTRÄGLICHE exif-Daten-Erzeugung
+	include $sr.'/bin/share/db_connect1.php'; // Fï¿½R NACHTRï¿½GLICHE exif-Daten-Erzeugung
 	$RES = mysql_query("SELECT FileName, FileNameOri FROM $table2 WHERE pic_id = '$pic_id'");
 	mysql_error();
 	$row = mysql_fetch_array($RES);
@@ -1299,7 +1302,7 @@ function extractExifData($pic_id, $sr)
 	$result6 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 	IF(mysql_num_rows($result6) == 0)
 	{
-		//nur wenn es noch keinen Eintrag in der exif-data-Tabelle für dieses Bild gibt, wird die Erfassung ausgeführt:
+		//nur wenn es noch keinen Eintrag in der exif-data-Tabelle fï¿½r dieses Bild gibt, wird die Erfassung ausgefï¿½hrt:
 		$result7 = mysql_query("INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
 		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
 		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
@@ -1317,7 +1320,7 @@ function extractExifData($pic_id, $sr)
 			}
 		}
 		else die('Fehler bei der Datenbankabfrage');
-		//Für jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
+		//Fï¿½r jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
 		
 		$text = shell_exec($et_path."/exiftool ".$FN);
 		$inf_arr = explode(chr(10), $text);	//Zerlegung des Textes am Zeilenumbruch
@@ -1355,7 +1358,7 @@ function extractExifData($pic_id, $sr)
 					$value = trim($fs_arr[1]);
 				}
 				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";	
-				//Bildbreite- und Höhe werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
+				//Bildbreite- und Hï¿½he werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
 				IF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight') AND ($value !== '0' AND $value !== ''))
 				{
 					$result4 = mysql_query("UPDATE $table14 SET ExifImageHeight = '$value', ImageHeight = '$value' WHERE pic_id = '$pic_id'");
@@ -1378,7 +1381,7 @@ function extractExifData($pic_id, $sr)
 				}
 			}
 		}
-		//Wenn Breite, Höhe, Dateigröße oder Ausrichtung nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
+		//Wenn Breite, Hï¿½he, Dateigrï¿½ï¿½e oder Ausrichtung nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
 		$result9 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 		$row = mysql_fetch_array($result9);
 		$ImageWidth = $row['ImageWidth'];
@@ -1395,7 +1398,7 @@ function extractExifData($pic_id, $sr)
 		$breite = $params[0];
 		$hoehe = $params[1];
 		clearstatcache();
-		$FileSize = filesize($FN);	//Dateigröße in Byte
+		$FileSize = filesize($FN);	//Dateigrï¿½ï¿½e in Byte
 		
 		IF($ImageWidth == '0' OR $ImageWidth == '')
 		{
@@ -1418,7 +1421,7 @@ function extractExifData($pic_id, $sr)
 
 function convertISO_ASCII($text)
 {
-	$array_1 = array('Ä', 'ä', 'Ö', 'ö', 'Ü', 'ü', 'ß');
+	$array_1 = array('ï¿½', 'ï¿½', 'ï¿½', 'ï¿½', 'ï¿½', 'ï¿½', 'ï¿½');
 	$array_2 = array('Ae', 'ae', 'Oe', 'oe', 'Ue', 'ue', 'ss');
 	$anzahl = count($array_1);
 	for($x = 0; $x < $anzahl; $x++)

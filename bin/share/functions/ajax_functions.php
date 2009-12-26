@@ -299,14 +299,14 @@ function getExifPreview(zusatz1, bedingung1, zw1, mod, modus, base_file, bewertu
 {
 	var url = '../../share/get_preview.php';
 	var params ='zusatz1=' + zusatz1 + '&bedingung1=' + bedingung1 + '&zw1=' + zw1 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
-	//alert("Parameter: "+params);
+	alert("Parameter: "+params);
 	var target = 'filmstreifen';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
 function delPicture(FileName, c_username, pic_id)
 {
-	//l�scht Bild-Datei aus dem DOWNLOAD-Ordner
+	//loescht Bild-Datei aus dem DOWNLOAD-Ordner
 	var url = '../../share/del_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id;
 	//alert("Parameter: "+params);
