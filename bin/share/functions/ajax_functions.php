@@ -299,7 +299,7 @@ function getExifPreview(zusatz1, bedingung1, zw1, mod, modus, base_file, bewertu
 {
 	var url = '../../share/get_preview.php';
 	var params ='zusatz1=' + zusatz1 + '&bedingung1=' + bedingung1 + '&zw1=' + zw1 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
-	alert("Parameter: "+params);
+	//alert("Parameter: "+params);
 	var target = 'filmstreifen';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
@@ -346,7 +346,7 @@ function changeGeoRef(FileName, c_username, pic_id)
 */
 function deletePictureGeo1(FileName, c_username, pic_id, long, lat, alt, radius1, einheit1, mod, modus, base_file, form_name, bewertung, position, jump, aktion)
 {
-	//L�SCHT BILD AUS DEM ARCHIV!!!!!!
+	//LOESCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&long=' + long + '&lat=' + lat + '&alt=' + alt + '&radius1=' + radius1 + '&einheit1=' + einheit1 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&form_name=' + form_name + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -356,7 +356,7 @@ function deletePictureGeo1(FileName, c_username, pic_id, long, lat, alt, radius1
 
 function deletePictureGeo2(FileName, c_username, pic_id, ort, radius2, einheit2, mod, modus, base_file, form_name, bewertung, position, jump, aktion)
 {
-	//L�SCHT BILD AUS DEM ARCHIV!!!!!!
+	//LOESCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&ort=' + ort + '&radius2=' + radius2 + '&einheit2=' + einheit2 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&form_name=' + form_name + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter in DeletePictureGeo2: "+params);
@@ -366,7 +366,7 @@ function deletePictureGeo2(FileName, c_username, pic_id, ort, radius2, einheit2,
 
 function deletePictureZeit(FileName, c_username, pic_id, j, m, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//L�SCHT BILD AUS DEM ARCHIV!!!!!!
+	//LOESCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&j=' + j + '&m=' + m + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -376,7 +376,7 @@ function deletePictureZeit(FileName, c_username, pic_id, j, m, mod, modus, base_
 
 function deletePictureKat(FileName, c_username, pic_id, KAT_ID, kat_id, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//L�SCHT BILD AUS DEM ARCHIV!!!!!!
+	//LOESCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&KAT_ID=' + KAT_ID + '&kat_id=' + kat_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -386,7 +386,7 @@ function deletePictureKat(FileName, c_username, pic_id, KAT_ID, kat_id, mod, mod
 
 function deletePictureDesc(FileName, c_username, pic_id, desc1, bed1, desc2, bed2, desc3, bed3, desc4, bed4, desc5, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//L�SCHT BILD AUS DEM ARCHIV!!!!!!
+	//LOESCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&desc1=' + desc1 + '&bed1=' + bed1 + '&desc2=' + desc2 + '&bed2=' + bed2 +'&desc3=' + desc3 + '&bed3=' + bed3 +'&desc4=' + desc4 + '&bed4=' + bed4 +'&desc5=' + desc5 +'&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -396,7 +396,7 @@ function deletePictureDesc(FileName, c_username, pic_id, desc1, bed1, desc2, bed
 
 function deletePictureExif(FileName, c_username, pic_id, zusatz1, bed1, zusatzwert1, mod, modus, base_file, bewertung, position, jump, aktion)
 {
-	//L�SCHT BILD AUS DEM ARCHIV!!!!!!
+	//LOESCHT BILD AUS DEM ARCHIV!!!!!!
 	var url = '../../share/delete_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id + '&zusatz1=' + zusatz1 + '&bed1=' + bed1 + '&zw1=' + zusatzwert1 +'&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump + '&aktion=' + aktion;
 	//alert("Parameter: "+params);
@@ -408,7 +408,7 @@ function getZusatzwert(zusatz1, bewertung)
 {
 	var url = '../../share/get_zusatzwert1.php';
 	var params = 'field=' + zusatz1 + '&bewertung=' + bewertung;
-	alert("Parameter: "+params);
+	//alert("Parameter: "+params);
 	var target = 'zw1';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
