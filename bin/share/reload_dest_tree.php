@@ -73,7 +73,8 @@ WHILE ($kat_id_d > '1')
 {
 	$res0 = mysql_query("SELECT parent FROM $table4 WHERE kat_id='$kat_id_d'");
 	echo mysql_error();
-	$kat_id_d = mysql_result($res0, $i0, 'parent');
+	$kat_id_d = $row['parent'];
+	//$kat_id_d = mysql_result($res0, $i0, 'parent');
 	//echo "Kat-ID in der Funktion: ".$kat_id_d."<BR>";
 	$knoten_arr_d[]=$kat_id_d;
 }
