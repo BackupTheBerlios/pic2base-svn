@@ -37,8 +37,8 @@ IF($user == "")
 	if (mysql_error() !=='') 
 	{
 		//die erforderliche Datenbank gibt es anscheinend noch nicht!
-		$text = "<center><font color='green'><b>Willkommen bei pic2base!</b><BR> Noch konnte keine Verbindung zum Datenbank-Server ".$db_server." hergestellt werden.<BR>Das kann daran liegen, daß Sie pic2base zum ersten Mal starten.<BR><BR>
-		Für die Erst-Eintichtung der pic2base-Datenbank<BR>tragen Sie hier bitte den Benutzernamen und das Passwort<BR>eines <b>vorhandenen</b> MySQL-Benutzers mit <b>Administrator-Rechten</b> ein:
+		$text = "<center><font color='green'><b>Willkommen bei pic2base!</b><BR> Noch konnte keine Verbindung zum Datenbank-Server ".$db_server." hergestellt werden.<BR>Das kann daran liegen, daï¿½ Sie pic2base zum ersten Mal starten.<BR><BR>
+		Fï¿½r die Erst-Eintichtung der pic2base-Datenbank<BR>tragen Sie hier bitte den Benutzernamen und das Passwort<BR>eines <b>vorhandenen</b> MySQL-Benutzers mit <b>Administrator-Rechten</b> ein:
 		<FORM name = 'db_access' method='post' action='index.php'><BR>
 		User-Name (Admin): <INPUT type='text' name='user'>&#160;&#160;&#160;Passwort: <input type='password' name='PWD'>&#160;&#160;<INPUT type='submit' value='OK'></font></center>
 		</FORM>";
@@ -56,7 +56,7 @@ IF($user == "")
 		}
 		ELSE
 		{
-			//echo "Datenbank ".$db." ausgewählt<BR>";
+			//echo "Datenbank ".$db." ausgewaehlt<BR>";
 			$text = '';
 		}
 		
@@ -103,9 +103,9 @@ echo "<br>++++ #### ++++<br>";
 			
 			$res3 = mysql_query( "CREATE TABLE IF NOT EXISTS `geo_tmp` (
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
-			`longitude` varchar(25) NOT NULL COMMENT 'geo-Länge',
+			`longitude` varchar(25) NOT NULL COMMENT 'geo-Laenge',
 			`latitude` varchar(25) NOT NULL COMMENT 'geo-Breite',
-			`altitude` decimal(6,1) NOT NULL COMMENT 'Höhe',
+			`altitude` decimal(6,1) NOT NULL COMMENT 'Hoehe',
 			`date` date NOT NULL default '0000-00-00',
 			`time` time NOT NULL default '00:00:00',
 			`user_id` int(11) NOT NULL,
@@ -148,7 +148,7 @@ echo "<br>++++ #### ++++<br>";
 			KEY `level` (`level`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
-			$res5_1 = mysql_query( "INSERT INTO `kategorien` (`kategorie`, `parent`, `level`) VALUES ('Neuzugänge','0','0');");
+			$res5_1 = mysql_query( "INSERT INTO `kategorien` (`kategorie`, `parent`, `level`) VALUES ('Neuzugaenge','0','0');");
 			
 			
 			$res7 = mysql_query( "CREATE TABLE IF NOT EXISTS `kat_lex` (
@@ -161,9 +161,9 @@ echo "<br>++++ #### ++++<br>";
 			
 			$res6 = mysql_query( "CREATE TABLE IF NOT EXISTS `locations` (
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
-			`longitude` varchar(25) NOT NULL COMMENT 'geo-Länge',
+			`longitude` varchar(25) NOT NULL COMMENT 'geo-Laenge',
 			`latitude` varchar(25) NOT NULL COMMENT 'geo-Breite',
-			`altitude` decimal(6,1) NOT NULL COMMENT 'Höhe',
+			`altitude` decimal(6,1) NOT NULL COMMENT 'Hoehe',
 			`location` varchar(50) NOT NULL default 'Ortsbezeichnung' COMMENT 'Ortname',
 			PRIMARY KEY  (`loc_id`),
 			KEY `location` (`location`)
@@ -180,7 +180,7 @@ echo "<br>++++ #### ++++<br>";
 			`XResolution` varchar(13) default NULL,
 			`YResolution` varchar(13) default NULL,
 			`ExposureTime` varchar(13) default NULL,
-			`FNumber` varchar(13) default NULL,
+			`FNumber` decimal(3,1) default NULL,
 			`ExposureProgram` int(11) NOT NULL,
 			`DateTimeOriginal` datetime default '0000-00-00 00:00:00',
 			`MaxApertureValue` varchar(13) default NULL,
@@ -257,7 +257,7 @@ echo "<br>++++ #### ++++<br>";
 			$res8_1 = mysql_query( "INSERT INTO `permissions` (`id`, `description`, `shortdescription`) VALUES 
 			(1, 'Admin-Login', 'adminlogin'),
 			(2, 'Bilder erfassen', 'addpic'),
-			(3, 'Bilder löschen', 'deletepic'),
+			(3, 'Bilder loeschen', 'deletepic'),
 			(21, 'Bilder downloaden', 'downloadpic'),
 			(20, 'Bilder suchen', 'searchpic'),
 			(19, 'Bilder bearbeiten', 'editpic');");
@@ -276,7 +276,7 @@ echo "<br>++++ #### ++++<br>";
 			`FileNameMono` varchar(20) NOT NULL COMMENT 'Dateiname des Monochrom-Bildes',
 			`Owner` int(11) NOT NULL COMMENT 'user_id',
 			`DateInsert` datetime NOT NULL default '0000-00-00 00:00:00',
-			`loc_id` int(11) NOT NULL default '0' COMMENT 'location_id fÃ?r geo-Referenzierung',
+			`loc_id` int(11) NOT NULL default '0' COMMENT 'location_id fuer geo-Referenzierung',
 			`ranking` int(11) NOT NULL default '0',
 			`note` tinyint(4) NOT NULL default '5' COMMENT 'Bewertung (Note 1 - 5)',
 			`md5sum` varchar(50) NOT NULL,
@@ -429,7 +429,7 @@ echo "<br>++++ #### ++++<br>";
 			$res116 = mysql_query( "GRANT USAGE ON * . * TO 'pb'@'localhost' IDENTIFIED BY 'pic_base' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;");
 			
 			$res117 = mysql_query( "GRANT SELECT , INSERT , UPDATE , DELETE , ALTER ON `pic2base` . * TO 'pb'@'localhost';");
-			//für die Übergangszeit, solange md5sum in pictures eingeführt wird:
+			//fuer die Uebergangszeit, solange md5sum in pictures eingefuehrt wird:
 			$res118 = mysql_query( "GRANT ALTER ON `pic2base`.`pictures` TO 'pb'@'localhost';");
 			//User pb in der user-Tabelle erzeugen:
 			$key = '0815';
