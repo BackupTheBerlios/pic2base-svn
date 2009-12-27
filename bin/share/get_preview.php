@@ -138,14 +138,14 @@ else
 //echo $mod;
 //Auslesen der Vorschau-Bilder aus den EXIF-Daten
 //verwendet in edit_kat_daten.php, recherche2.php, edit_beschreibung.php
-//Festlegung der H�he der Bilder auf dem Filmstreifen:
+//Festlegung der Hoehe der Bilder auf dem Filmstreifen:
 $fs_hoehe = '80';
 //echo "&Uuml;bergebene Parameter: kat_id: ".$kat_id.", ID: ".$ID.", mod: ".$mod.", pic_id: ".$pic_id.", modus: ".$modus;
 //echo $base_file;
 //echo $bewertung;
 //echo "Server-URL: ".$server_url;
 //########################################################################################################################
-//Darstellung der zu einer Kategorie zugeh�rigen Bilder:
+//Darstellung der zu einer Kategorie zugehoerigen Bilder:
 include 'db_connect1.php';
 include 'functions/permissions.php';
 
@@ -420,7 +420,7 @@ SWITCH ($modus)
 		IF($bewertung !== '6')
 		{
 			//Bewertungskriterium wird in Vergleichsoperator und Wert zerlegt:
-			//Gr��er-Zeichen bedeutet: Der Notenwert ist h�her, d.h die Note ist schlechter!
+			//Groesser-Zeichen bedeutet: Der Notenwert ist hoeher, d.h die Note ist schlechter!
 	
 			$op = substr($bewertung,0,strlen($bewertung) - 1);
 			IF($op == '<=')
@@ -1011,7 +1011,7 @@ SWITCH ($modus)
 			{
 				$krit1 = "WHERE ".$table14.".".$zusatz1." ".$bedingung1." '".$zw1."'";
 			}
-			
+			//echo $krit1;
 			$statement = "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal";
 			
 			$result6_1 = mysql_query( "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table2.pic_id FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal");
