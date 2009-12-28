@@ -177,8 +177,11 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 			$kat_id = mysql_result($result15, $i15, 'kat_id');
 			$result16 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_id'");
 			echo mysql_error();
-			$level = mysql_result($result16, $i16, 'level');
-			$kat_name = mysql_result($result16, $i16, 'kategorie');
+			$row = mysql_fetch_array($result16);
+			$level = $row['level'];
+			$kat_name = $row['kategorie'];			
+	//		$level = mysql_result($result16, $i16, 'level');
+	//		$kat_name = mysql_result($result16, $i16, 'kategorie');
 //			echo "Kategorie: ".$kat_id.", Level: ".$level."<BR>";
 			IF($level > $max_level)
 			{
@@ -200,7 +203,9 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 //			echo "Zuordnung zwischen Bild ".$pic_id." und Kategorie ".$kat_id." wurde gelöscht.<BR>";
 			$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 			echo mysql_error();
-			$kat_id = mysql_result($res0, $i0, 'parent');
+			$row = mysql_fetch_array($res0);
+			$kat_id = $row['parent'];
+	//		$kat_id = mysql_result($res0, $i0, 'parent');
 			$KAT_ID[]=$kat_id; //$KAT_ID: Array mit den Eltern-Elementen des betreffenden Bildes
 		}
 		//print_r($KAT_ID);
@@ -217,7 +222,9 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 					//Ermittlung aller Kategorien:
 					$result2 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 					//echo mysql_error()."<BR>";
-					$kategorie = htmlentities(mysql_result($result2, $i2, 'kategorie'))." ".$kategorie;
+					$row = mysql_fetch_array($result2);
+					$kategorie = htmlentities($row['kategorie'])." ".$kategorie;
+				//	$kategorie = htmlentities(mysql_result($result2, $i2, 'kategorie'))." ".$kategorie;
 				}
 			}
 		}
