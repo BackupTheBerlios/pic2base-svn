@@ -41,7 +41,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	}
 	//echo $Orientation;
 	$FileQuality = mysql_result($result1, isset($i1), 'Quality');
-	//abgeleitete Gr��en:
+	//abgeleitete Groessen:
 	$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
 	$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 	$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
