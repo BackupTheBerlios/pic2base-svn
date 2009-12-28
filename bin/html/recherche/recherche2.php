@@ -14,7 +14,7 @@ ELSE
 	$long = 10.952811;
 	$ort = 'Blankenburg';
 }
-//echo "Parameter: ".$parameter.", Breite: ".$lat.", L�nge: ".$long.", Ort: ".$ort."<BR>";
+//echo "Parameter: ".$parameter.", Breite: ".$lat.", Laenge: ".$long.", Ort: ".$ort."<BR>";
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -112,7 +112,7 @@ function rotatePictureSet(orientation, pic_id)
 Fenster1 = window.open('../../share/rotate_picture_set.php?orientation=' + orientation + '&pic_id='+pic_id, 'Speicherung', "width=500px,height=200px,scrollbars,resizable=no,");
 }
 
-//alert("Bildh�he: "+screen.height);
+//alert("Bildhoehe: "+screen.height);
 function CloseWindow()
 {
    anotherWindow = window.open("", "bildfenster", "");
@@ -484,11 +484,11 @@ SWITCH ($mod)
 				</TD>
 				<TD align = 'right'>				
 				<SELECT name='bedingung1' class='Auswahl200'>
-					<OPTION VALUE='='>ist gleich</OPTION>
+					<OPTION VALUE='=' selected>ist gleich</OPTION>
 					<OPTION VALUE='<>'>ist ungleich</OPTION>
 					<OPTION VALUE='>'>ist gr&ouml;sser</OPTION>
 					<OPTION VALUE='<'>ist kleiner</OPTION>
-					<OPTION VALUE='LIKE' selected>enth&auml;lt</OPTION>
+					<OPTION VALUE='LIKE'>enth&auml;lt</OPTION>
 				</SELECT>
 				</TD>
 			</TR>
@@ -514,6 +514,13 @@ SWITCH ($mod)
 			
 			<TR>
 				<TD width = 100% align = 'center' colspan='2'><BR></TD>
+			</TR>
+			
+			<TR>
+				<TD width = 100% align = 'left' colspan='2'><p style='FONT-SIZE:8pt; color:blue;';>Beachten Sie bitte:<BR><BR>
+				Nicht in jedem Fall ist es zweckm&auml;ssig, die Abfrage-Bedingung 'ist gr&ouml;sser' oder 'ist kleiner' zu w&auml;hlen.<BR>
+				Liefert die Auswahl des Meta-Daten-Felds Zahlenwerte als Kriterium, kann man sehr wohl nach Vorkommen suchen, bei denen der Wert gr&ouml;sser oder kleiner als das ausgew&auml;hlte Kriterium ist.<BR>
+				Liefert die Auswahl des Meta-Daten-Felds hingegen eine Zeichenkette, sollte die Bedingung 'ist gleich' oder 'enth&auml;lt' lauten, um zu nachvollziehbaren Treffern zu gelangen.</p></TD>
 			</TR>
 			
 			<TR class='normal' style='height:3px;'>
