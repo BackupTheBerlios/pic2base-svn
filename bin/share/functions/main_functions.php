@@ -1,7 +1,7 @@
 <?php
 
 /*
-Datei enth�lt folgende Funktionen:
+Datei enthaelt folgende Funktionen:
 
 function OptionFields()								verwendet
 function getMonthName($month_number)						verwendet
@@ -777,7 +777,7 @@ function createContentFile($mod, $statement, $c_username, $bild)
 {
 	//Erzeugung der pdf-Galerie
 	//echo $statement;
-	//$statement f�r exif, desc, zeit, kat(au�er Wurzel) �bergeben
+	//$statement fuer exif, desc, zeit, kat(ausser Wurzel) uebergeben
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	SWITCH($mod)
@@ -807,7 +807,7 @@ function createContentFile($mod, $statement, $c_username, $bild)
 		{
 			$pdf->AddPage();
 			$pdf->Cell(0,5,'pic2base-Galerie',0,1,'C');
-			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergr��erte Ansicht des betreffenden Bildes.',0,1,'C');
+			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergroesserte Ansicht des betreffenden Bildes.',0,1,'C');
 			FOR($zeile='0'; $zeile<'5'; $zeile++)
 			{
 				$y_mitte = 50 + $zeile * 48;
