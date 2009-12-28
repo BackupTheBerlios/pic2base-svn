@@ -979,7 +979,7 @@ SWITCH ($modus)
 		IF(substr($zw1,'0','1') == '*')
 		{
 			//Recherche nach Nicht-Meta-Daten (in pictures)
-			//Statement: finde in pictures alles, bei dem in dem gew�hlten Feld der gew�nschte Wert vorkommt, die Qualit�t der gew�hlten Qualit�t entspricht , sortiert nach dem Aufnahmedatum. 
+			//Statement: finde in pictures alles, bei dem in dem gewaehlten Feld der gewuenschte Wert vorkommt, die Qualitaet der gewaehlten Qualitaet entspricht , sortiert nach dem Aufnahmedatum. 
 			$zw1 = str_replace('*', '', $zw1);
 			IF($bedingung1 == 'LIKE')
 			{
@@ -996,8 +996,8 @@ SWITCH ($modus)
 			
 			$result6_1 = mysql_query( "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table2.pic_id, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal");
 			echo mysql_error();
-		
-			$result8 = mysql_query( "SELECT * FROM $table2 $krit1 AND $table2.loc_id <>'0'");
+			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
+			$result8 = mysql_query( "SELECT * FROM $table2 $krit1 AND $table2.loc_id <>'0' $krit2");
 		}
 		
 		ELSE
@@ -1507,7 +1507,7 @@ SWITCH ($modus)
 		}
 		echo "	<TABLE border='0' align='center'>
 		<TR>";	
-		$j = '0';	//Z�hlvariable f�r den Array-Index der Download-Icons
+		$j = '0';	//Zaehlvariable fuer den Array-Index der Download-Icons
 		
 		FOR($i6_1='0'; $i6_1<$num6_1; $i6_1++)
 		{
@@ -1520,7 +1520,7 @@ SWITCH ($modus)
 			$result23 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 			$Orientation = mysql_result($result23, isset($i23), 'Orientation');	// 1: normal; 8: 90� nach rechts gedreht
 			$FileSize = mysql_result($result23, isset($i23), 'FileSize');
-			//abgeleitete Gr��en:
+			//abgeleitete Groessen:
 			IF ($FileNameV == '')
 			{
 				$FileNameV = 'no_preview.jpg';
@@ -1554,7 +1554,7 @@ SWITCH ($modus)
 			$check = fileExists($FileName, $c_username);
 			IF($check > '0')
 			{
-				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon gel�scht:
+				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
 				$icon[$j] = "<TD align='center'><div id='box$pic_id'>
 				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/></SPAN>	
 				</div></TD>";
@@ -1599,7 +1599,7 @@ SWITCH ($modus)
 		echo $text1.$zusatz."	
 		<TABLE border='0' align='center' width='780px'>
 		<TR style='background-color:#000055;' >";
-		$rest = $step - $num6; //wenn weniger als $step Bilder gefunden wurden: Anzahl der aufzuf�llenden Zellen
+		$rest = $step - $num6; //wenn weniger als $step Bilder gefunden wurden: Anzahl der aufzufuellenden Zellen
 		//echo $rest;
 		FOR ($i6=0; $i6<$num6; $i6++)
 		{
@@ -1610,7 +1610,7 @@ SWITCH ($modus)
 			$result22 = mysql_query( "SELECT 'ImageDataSize' FROM $table14 WHERE pic_id = '$pic_id'");
 			$FileSize = mysql_result($result22, isset($i22), 'ImageDataSize');
 			
-			//abgeleitete Gr��en:
+			//abgeleitete Groessen:
 			IF ($FileNameV == '')
 			{
 				$FileNameV = 'no_preview.jpg';
@@ -1638,7 +1638,7 @@ SWITCH ($modus)
 			
 			IF($breite_neu < $hoehe_neu)
 			{
-				//falls die Ausrichtung falsch in den EXIF-Daten gespeichert wurde, kann das Vorschau-Bild nachtr�glich gedreht werden:
+				//falls die Ausrichtung falsch in den EXIF-Daten gespeichert wurde, kann das Vorschau-Bild nachtraeglich gedreht werden:
 				echo "
 				<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
 				<img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='0' />
@@ -1662,11 +1662,11 @@ SWITCH ($modus)
 
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6, $i6, 'Owner');
-			//Pr�fung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur L�sch-Routine:
+			//Pruefung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur L�sch-Routine:
 			$check = fileExists($FileName, $c_username);
 			IF($check > '0')
 			{
-				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon gel��scht:
+				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
 				$icon[$i6] = "
 				<TD align='center' width='43'>
 				<div id='box$pic_id'>
@@ -1695,7 +1695,7 @@ SWITCH ($modus)
 				}
 			}
 		}
-		//Leer-Raum mit Leer-Zellen auff�llen (Zelle mit Dummy-Bild zur Streckung gef�llt), wenn Bilder gefunden wurden:
+		//Leer-Raum mit Leer-Zellen auffuellen (Zelle mit Dummy-Bild zur Streckung gefuellt), wenn Bilder gefunden wurden:
 		IF($num6_1 > '0')
 		{
 			FOR($i_r = '0'; $i_r<$rest; $i_r++)
@@ -1729,7 +1729,7 @@ SWITCH ($modus)
 			//Anzahl der Steps ist Anzahl der Bilder / 6:
 			$steps = $num6_1/6;
 			//echo $steps;
-			//es werden $steps Elemente zur Slider-bar zusammengef�gt, deren Gesamtbreite rund 500 Pixel betr�gt:
+			//es werden $steps Elemente zur Slider-bar zusammengefuegt, deren Gesamtbreite rund 500 Pixel betraegt:
 			//Breite eines Slider-Elements:
 			$sl_width = 500 / $steps;
 			//$action3 = "getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,\"$ziel\",-2)";
@@ -1821,7 +1821,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		$Height = mysql_result($res0, isset($i1), 'ImageHeight');
 	}
 	
-	//Wenn Breite und Hoehe nicht ausgelesen werden konnten, werden die Werte zu Fu� ermittelt und in die Meta-Daten-Tabelle geschrieben:
+	//Wenn Breite und Hoehe nicht ausgelesen werden konnten, werden die Werte zu Fuss ermittelt und in die Meta-Daten-Tabelle geschrieben:
 	IF($Width == '0' OR $Height == '0')
 	{
 		$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
