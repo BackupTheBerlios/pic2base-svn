@@ -62,7 +62,7 @@ IF($field !== '')
 		
 		//Behandlung der recherchierbaren Felder der meta-data-Tabelle
 		default:
-		$result1 = mysql_query("SELECT DISTINCT $field FROM $table14 ORDER BY $field");
+		$result1 = mysql_query("SELECT $table14.$field, $table14.pic_id, $table2.pic_id, $table2.note FROM $table14, $table2 WHERE $table2.$stat AND $table2.pic_id = $table14.pic_id ORDER BY $table14.$field");
 		//echo mysql_error();
 		$num1 = mysql_num_rows($result1);
 		
