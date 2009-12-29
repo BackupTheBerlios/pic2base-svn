@@ -3,7 +3,7 @@
 include 'db_connect1.php';
 INCLUDE 'global_config.php';
 
-// f�r register_globals = off
+// fuer register_globals = off
 if(array_key_exists('kat_id_s',$_GET))
 {
 	$kat_id_s = $_GET['kat_id_s']; 
@@ -13,9 +13,9 @@ else
 	$kat_id_s = 0;
 }
 
-//Es mu� sichergestellt werden, da� als Zielkategorie keine Kategorie unterhalb der Quellkategorie gew�hlt werden kann, denn diese wird ja gel�scht! $child_arr enth�lt alle 'verbotenen' Kategorien
+//Es muss sichergestellt werden, dass als Zielkategorie keine Kategorie unterhalb der Quellkategorie gewaehlt werden kann, denn diese wird ja gel�scht! $child_arr enth�lt alle 'verbotenen' Kategorien
 
-//Bestimmung aller Unterkategorien der gew�hlten Quell-Kategorie:
+//Bestimmung aller Unterkategorien der gewaehlten Quell-Kategorie:
 
 $res1 = mysql_query("SELECT max(level) FROM $table4");
 $max_level = mysql_result($res1, isset($i1), 'max(level)');
@@ -51,10 +51,10 @@ FOREACH($child_arr AS $child)
 	echo $child."<BR>";
 }
 */
-//Erzeugung der Baumstruktur f�r Destination-Kategorie:
+//Erzeugung der Baumstruktur fuer Destination-Kategorie:
 //Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// f�r register_globals = off
+// fuer register_globals = off
 if(array_key_exists('kat_id_d',$_GET))
 {
 	$kat_id_d = $_GET['kat_id_d']; 
@@ -189,7 +189,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+		//Link fuer den Ruecksprung erzeugen, d.h. naechst hoeheren Knoten aufrufen:
 		$kat_id_d_back = array_search($kat_id_d, $knoten_arr_d);
 		IF (in_array($kat_id_d, $knoten_arr_d))
 		{
