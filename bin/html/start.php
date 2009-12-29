@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: start.php
  *
- * Copyright (c) 2006 - 2008 Klaus Henneberg
+ * Copyright (c) 2006 - 2009 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -30,10 +30,6 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2006-2008 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -63,7 +59,7 @@ if(!isset($hinweis))
 //var_dump($_GET);
 
 
-//wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Prüfung, ob eine neuere Version verfügbar ist:
+//wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Prï¿½fung, ob eine neuere Version verfï¿½gbar ist:
 IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 {
 	$file1 = 'http://www.pic2base.de/web/includes/conf.inc.php';
@@ -109,7 +105,7 @@ IF($c_username !== 'pb')
 			$datei_name = $ftp_path."/".$c_username."/kml_files/".$datei_name;
 			if(!@unlink($datei_name))
 			{
-				echo "Konnte die Datei $datei_name nicht löschen!<BR>";
+				echo "Konnte die Datei $datei_name nicht lï¿½schen!<BR>";
 			}
 		}
 	}
@@ -134,7 +130,7 @@ ELSE
 	$hinweis10 = "Es befinden sich zur Zeit noch keine Bilder in der Datenbank.";
 }
 
-//Prüfung, ob Bilder ohne Kategorie-Zuweisung für den Benutzer vorliegen:
+//Prï¿½fung, ob Bilder ohne Kategorie-Zuweisung fï¿½r den Benutzer vorliegen:
 $num_pic = '0';
 $result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id'");
 @$num2 = mysql_num_rows($result2);
@@ -160,7 +156,7 @@ ELSE
 {
 	$hinweis0 = "Sie haben noch keine Bilder in die Datenbank gestellt.";
 }
-//Prüfung, ob Dateien im FTP-Upload-Ordner vorliegen:
+//Prï¿½fung, ob Dateien im FTP-Upload-Ordner vorliegen:
 $n = 0;
 @$verz=opendir($ftp_path."/".$c_username."/uploads");
 //echo "Verzeichnis: ".$verz;
@@ -183,7 +179,7 @@ IF($verz)
 	$hinweis2 = "Es befinden sich ".$n." Datei(en) in Ihrem Upload-Ordner.<BR>";
 }
 
-//Prüfung, ob Dateien im FTP-Download-Ordner vorliegen:
+//Prï¿½fung, ob Dateien im FTP-Download-Ordner vorliegen:
 $m = 0;
 @$verz=opendir($ftp_path."/".$c_username."/downloads");
 //echo "V: ".$verz;
@@ -244,7 +240,7 @@ echo "<div class='page'>
 			
 			<TR class='normal'>
 			<TD class='normal' align='center' style='height:50px;' colspan='10'>
-			<span style='color:red; font-size:18px; font-weight:bold; text-decoration:underline;'>Informationen zum Datenbestand:</span>
+			<span style='color:#d58000; font-size:18px; font-weight:bold; text-decoration:underline;'>Informationen zum Datenbestand:</span>
 			</TD>
 			</TR>
 			
@@ -420,7 +416,7 @@ echo "<div class='page'>
 				
 				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe'></a></TD></span>";
 			}
-			//Leer-Raum affüllen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
+			//Leer-Raum affï¿½llen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
 			FOR($x='0'; $x<(10-$num4); $x++)
 			{
 				echo "<TD class='normal' style='width:80px;'></TD>";
@@ -445,14 +441,14 @@ echo "<div class='page'>
 	}
 	ELSE
 	{
-		//so alnge keine Bilder in der DB sind, wird bei jedem Start geprüft, ob alle notwendigen Applikationen verfügbar sind! Das kann dauern...
+		//so alnge keine Bilder in der DB sind, wird bei jedem Start geprï¿½ft, ob alle notwendigen Applikationen verfï¿½gbar sind! Das kann dauern...
 		echo "<div class='content'>
 		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
 		checkSoftware();
 		echo "</span></p></div>";
 	}
 
-	//Für Test-Zwecke:
+	//Fï¿½r Test-Zwecke:
 	//$text = 'pic2base wurde vom Rechner '.$REMOTE_ADDR.' unter dem User  '.$c_username.' aufgerufen.';
 	
 	//log-file schreiben:
@@ -491,7 +487,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 			breite = breite / diff;
 		}
 		
-		//alert("Breite: "+breite+", Höhe: "+hoehe+", Modus: "+modus+", Format: "+size);
+		//alert("Breite: "+breite+", Hï¿½he: "+hoehe+", Modus: "+modus+", Format: "+size);
 		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe;
 
 		dateiname=bildname.substring(bildname.length-17,bildname.length);
