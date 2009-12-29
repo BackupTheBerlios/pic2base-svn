@@ -6,7 +6,6 @@
 	$sel_one = "<IMG src='$inst_path/pic2base/bin/share/images/one.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='einzelne Bilder dieser Kategorie ausw&auml;hlen'>";
 	$sel_all = "<IMG src='$inst_path/pic2base/bin/share/images/all.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='alle Bilder dieser Kategorie ausw&auml;hlen'>";
 			
-	//include 'functions/main_functions.php';
 	//Datei wird zur Navigation durch die Kategorien mit Hilfe einer Baumstruktur verwendet
 	//$ziel = $target_url;
 	//echo $base_file;
@@ -16,11 +15,11 @@
 //var_dump($_REQUEST);
 	if(array_key_exists('mod',$_GET))
 	{
-		$mod = $_GET['mod']; // für register_globals = off
+		$mod = $_GET['mod']; // fuer register_globals = off
 	}
 	if(array_key_exists('kat_id',$_GET))
 	{
-		$kat_id = $_GET['kat_id']; // für register_globals = off
+		$kat_id = $_GET['kat_id']; // fuer register_globals = off
 	}
 	else
 	{
@@ -29,7 +28,7 @@
 			$kat_id = '';
 		}
 	}
-	$KAT_ID = $kat_id;		//$KAT_ID: übergeordnete Kat., $kat_id: Unterkategorien
+	$KAT_ID = $kat_id;		//$KAT_ID: uebergeordnete Kat., $kat_id: Unterkategorien
 	
 	if(!isset($ID))
 	{
@@ -177,7 +176,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			}
 		
 		//echo $base_file;
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{
@@ -205,7 +204,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				<TD>
 				<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0)'>".$sel_all."</SPAN>
 				</TD>
-				<TD style='font-size:12px;'><BR></TD>
+				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung)."</TD>
 				</TR>";
 			getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
 		}
