@@ -100,7 +100,7 @@ Fenster1 = window.open('save_new_param.php?location='+newlocation+'&ort='+ort+'&
 
 function showDelWarning(FileName, c_username, pic_id)
 {
-	var check = confirm("Wollen SIe das Bild wirklich lï¿½schen?");
+	var check = confirm("Wollen SIe das Bild wirklich löschen?");
 	if(check == true)
 	{
 		window.open('../../share/delete_picture.php?FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=350px');
