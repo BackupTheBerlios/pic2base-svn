@@ -239,7 +239,7 @@ echo "<div class='page'>
 			
 			<TR class='normal'>
 			<TD class='normal' align='center' style='height:50px;' colspan='10'>
-			<span style='color:#d58000; font-size:18px; font-weight:bold; text-decoration:underline;'>Informationen zum Datenbestand:</span>
+			<span style='color:#b01111; font-size:18px; font-weight:bold; text-decoration:underline;'>Informationen zum Datenbestand:</span>
 			</TD>
 			</TR>
 			
