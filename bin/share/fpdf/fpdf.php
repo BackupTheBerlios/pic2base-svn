@@ -9,6 +9,8 @@
 * You may use, modify and redistribute this software as you wish.              *
 *******************************************************************************/
 
+@error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
+
 if(!class_exists('FPDF'))
 {
 define('FPDF_VERSION','1.52');
