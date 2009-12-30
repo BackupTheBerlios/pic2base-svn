@@ -13,7 +13,7 @@
 
 <body style='background-color:#999999'>
 <?php
-// verwendet als Popup-Fenster zur Festlegung Bild-Eigentümers
+// verwendet als Popup-Fenster zur Festlegung Bild-Eigentuemers
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -40,15 +40,7 @@ $name = $row['name'];
 $vorname = $row['vorname'];
 $ort = $row['ort'];
 $username = $row['username'];
-/*
-$FileNameV = mysql_result($result1, $i1, 'FileNameV');
-$owner = mysql_result($result1, $i1, 'Owner');
-$name = mysql_result($result1, $i1, 'name');
-$vorname = mysql_result($result1, $i1, 'vorname');
-$ort = mysql_result($result1, $i1, 'ort');
-$username = mysql_result($result1, $i1, 'username');
-*/
-//echo "derz. User: ".$c_username.", Eigentümer: ".$name."<BR>";
+//echo "derz. User: ".$c_username.", Eigentuemer: ".$name."<BR>";
 //echo $FileNameV.", ".$pic_thumbs;
 IF($c_username === $username)
 {

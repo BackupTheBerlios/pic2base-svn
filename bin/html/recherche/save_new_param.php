@@ -19,10 +19,10 @@ IF(array_key_exists('loc_id', $_REQUEST))
 {
 	$loc_id = $_REQUEST['loc_id'];
 }
-$location = strip_tags($location);	//Breite u. Länge in einem String
+$location = strip_tags($location);	//Breite u. Lï¿½nge in einem String
 $loc_arr = split(',',$location);
 $lat = $loc_arr[0];			//Breite
-$long = $loc_arr[1];			//Länge
+$long = $loc_arr[1];			//Lï¿½nge
 $ort = strip_tags($ort);		//Ortsbezeichnung
 //IPTC::City darf nur max. 18? Zeichen lang sein:
 IF(strlen($ort) > '18')
@@ -33,7 +33,7 @@ ELSE
 {
 	$ort_iptc = utf8_encode($ort);
 }
-//Parameter für nächste Referenzierung speichern:
+//Parameter fuer naechste Referenzierung speichern:
 $parameter = $location.",".$ort;
 setcookie("parameter", $parameter, time()+3600, "/");
 
@@ -50,7 +50,7 @@ IF(($location == '' AND $ort !== '') OR ($location !== '' AND $ort == ''))
 	<input type='button' value = 'Fenster schlie&szlig;en' OnClick='javascript:window.close()'></div>";
 	return;
 }
-//wenn keine loc_id vorliegt und keine Änderungen vorgenommen wurden:  ##########################################
+//wenn keine loc_id vorliegt und keine Aenderungen vorgenommen wurden:  ##########################################
 IF($loc_id == '' AND $ort == '' AND $location == '')
 {
 	echo "<script language='JavaScript'>window.close();</script>";
@@ -68,7 +68,7 @@ ELSEIF(($loc_id !== '' AND $loc_id !== '0') AND $ort !== '' AND $location !== ''
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
 	shell_exec($et_path."/exiftool -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$alt." ".$FN." -overwrite_original");
 }
-//es gab bisher KEINE Referenzierung und es wird eine neue hinzugefügt; Die Höhe wird mit 0.1 festgelegt, um bei der Suche diese Bilder mit  der Bedingung ">0" mit zu erwischen  #########################################
+//es gab bisher KEINE Referenzierung und es wird eine neue hinzugefuegt; Die Hoehe wird mit 0.1 festgelegt, um bei der Suche diese Bilder mit  der Bedingung ">0" mit zu erwischen  #########################################
 ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 {
 	echo "<center>Bitte warten,<BR>&Auml;nderungen werden gespeichert...</center>";
@@ -85,7 +85,7 @@ ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
 	shell_exec($et_path."/exiftool -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=0.1 ".$FN." -overwrite_original");
 }
-//abschließend wird die Ortsbezeichnung in der Bildbeschreibung aktualisiert:
+//abschliessend wird die Ortsbezeichnung in der Bildbeschreibung aktualisiert:
 IF($ort_alt !== $ort)
 {
 	$result4 = mysql_query( "SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$pic_id'");
@@ -93,7 +93,7 @@ IF($ort_alt !== $ort)
 	IF($ort_alt !== '')
 	{
 		$description_neu = str_replace($ort_alt, $ort, $description);
-		//wenn bisher keine Ortsbezeichnung in der Beschreibung gespeichert war, wird sie hier erstmalig zugefügt:
+		//wenn bisher keine Ortsbezeichnung in der Beschreibung gespeichert war, wird sie hier erstmalig zugefï¿½gt:
 		IF($description_neu == $description)
 		{
 			$description_neu = $description.", ".$ort;
@@ -113,7 +113,7 @@ IF($ort_alt !== $ort)
 
 IF (mysql_error() == '')
 {
-	//für Testzwecke hält der Parameter das Karten-Fenster offen...
+	//fuer Testzwecke haelt der Parameter das Karten-Fenster offen...
 	//echo "Bilddaten wurden aktualisiert";
 	//flush();
 	//sleep(1);	

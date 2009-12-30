@@ -53,11 +53,6 @@ function switchBewertung(bewertung)
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 //var_dump($_REQUEST);
@@ -65,8 +60,7 @@ function switchBewertung(bewertung)
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
-//echo $c_username;
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
  
 include '../../share/global_config.php';
@@ -81,14 +75,14 @@ fclose($fh);
 
 $result2 = mysql_query("SELECT * FROM $table2");
 $num2 = mysql_num_rows($result2);
-//echo "Anz. der Bild-Datensätze: ".$num2."<BR>";
+//echo "Anz. der Bild-Datensaetze: ".$num2."<BR>";
 
 //var_dump($_COOKIE);
 
 ?>
 <div class="page">
 
-	<p id="kopf">pic2base :: Recherche-Übersicht <span class='klein'>(User: <?echo $c_username;?>)</span></p>
+	<p id="kopf">pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: <?echo $c_username;?>)</span></p>
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
 		<?
@@ -220,7 +214,7 @@ $num2 = mysql_num_rows($result2);
 		";
 		
 		echo "<center>
-		<a class='subnavi' href='recherche2.php?pic_id=0&mod=zeit&s_m=J'>Auflistung nach Jahrgängen sortiert</a>
+		<a class='subnavi' href='recherche2.php?pic_id=0&mod=zeit&s_m=J'>Auflistung nach Jahrg&auml;ngen sortiert</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=kat'>Suche nach Kategorien</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=exif'>Suche nach Meta-Daten</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=desc'>Suche nach Beschreibungstext</a>
@@ -229,13 +223,13 @@ $num2 = mysql_num_rows($result2);
 	}
 	ELSE
 	{
-		echo "<p style='color:red; text-align:center; font-weight:bold;'>Es gibt zur Zeit keine Einträge in der Datenbank!</P>";
+		echo "<p style='color:red; text-align:center; font-weight:bold;'>Es gibt zur Zeit keine Eintr&auml;ge in der Datenbank!</P>";
 	}
 		
 	?>
 	</div>
 	
-	<div id='spalte2'><p id="elf" style="background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;"><b>Hilfe zu den Suchmöglichkeiten:</b><BR><BR>
+	<div id='spalte2'><p id="elf" style="background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;"><b>Hilfe zu den Suchmï¿½glichkeiten:</b><BR><BR>
 	Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button "Hilfe" in der Navigationsleiste.
 	  </p>
 	</div>

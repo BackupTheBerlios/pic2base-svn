@@ -45,11 +45,6 @@ ELSE
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2005-2006 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  ***********************************************************************************/
  -->
 
@@ -150,7 +145,7 @@ Fenster1.focus();
 unset($username);
 IF ($_COOKIE['login'])
 {
-	list($c_username) = split(',',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 	$benutzername = $c_username;
 }

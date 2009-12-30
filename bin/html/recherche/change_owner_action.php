@@ -40,8 +40,6 @@ IF( $new_owner !== '' AND $new_owner !== NULL)
 	$row = mysql_fetch_array($result1);
 	$vorname = $row['vorname'];
 	$name = $row['name'];
-//	$vorname = mysql_result($result1, $i1, 'vorname');
-//	$name = mysql_result($result1, $i1, 'name');
 	$result2 = mysql_query( "UPDATE $table2 SET Owner = '$new_owner' WHERE pic_id = '$pic_id'");
 	IF(mysql_error() == '')
 	{

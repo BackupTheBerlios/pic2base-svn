@@ -12,11 +12,6 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 //echo "Abfrage-Kriterium: ".$feld."\n";
@@ -30,13 +25,7 @@ FOR ($i1=0; $i1<$num1; $i1++)
 	$inhalt = mysql_result($result1, $i1, $feld);
 	$content[] = $inhalt;
 }
-/*
-echo "Mögliche Werte für das gewählte Abfragekriterium sind:\n";
-FOREACH ($content AS $inh)
-{
- 	echo $inh."\n";
-}
-*/
+
 $antwort = "<entries>";
 FOREACH ($content AS $inh)
 {

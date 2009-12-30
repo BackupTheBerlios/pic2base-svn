@@ -26,25 +26,39 @@ function eraseCookie(name, domain, path)
 
 <body style='background-color:#999999'>
 <?php
-// verwendet als Popup-Fenster zur Festlegung der neuen Konvertierungs-Parameter für das RAW-Bild
+// verwendet als Popup-Fenster zur Festlegung der neuen Konvertierungs-Parameter fuer das RAW-Bild
+
+unset($username);
+IF ($_COOKIE['login'])
+{
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
+	$benutzername = $c_username;
+}
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 //$pic_id = '10';
+
+if ( array_key_exists('pic_id',$_GET) )
+{
+	$pic_id = $_GET['pic_id'];
+}
+
 $result0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 $num0 = mysql_num_rows($result0);
-$FileNameOri = mysql_result($result0, $i0, 'FileNameOri');
-$FileName = mysql_result($result0, $i0, 'FileName');
+$FileNameOri = mysql_result($result0, isset($i0), 'FileNameOri');
+$FileName = mysql_result($result0, isset($i0), 'FileName');
 //Erzeugung des RAW-Dateinamens:
 $FileNameRaw = substr($FileName,0,-4).".".substr($FileNameOri,-3,3);
 //echo $FileNameRaw;
 
-//wenn ein Cookie mit gespeicherten Parametern existiert, werden diese vor-ausgewählt:
+//wenn ein Cookie mit gespeicherten Parametern existiert, werden diese vor-ausgewaehlt:
 IF ($_COOKIE['params'])
 {
-	$param_arr = split(' ',$_COOKIE['params']);
+	$param_arr = preg_split('# #',$_COOKIE['params']);
 	
 	$pos1 = array_search('-H',$param_arr);
 	IF($pos1 !== false)
@@ -398,11 +412,11 @@ ELSE
 		<OPTION VALUE='-t 0'>keine</OPTION>
 		<OPTION VALUE='-t 1'>Spiegelung an der vert. Bildachse</OPTION>
 		<OPTION VALUE='-t 2'>Spiegelung an der hor. Bildachse</OPTION>
-		<OPTION VALUE='-t 3'>Drehung um 180°</OPTION>
-		<OPTION VALUE='-t 4'>Spiegelung an der vert. Bildachse und Drehung um 90° CCW</OPTION>
-		<OPTION VALUE='-t 5'>Drehung um 90° CCW</OPTION>
-		<OPTION VALUE='-t 6'>Drehung um 90° CW</OPTION>
-		<OPTION VALUE='-t 7'>Spiegelung an der vert. Bildachse und Drehung um 90° CW</OPTION>
+		<OPTION VALUE='-t 3'>Drehung um 180&#176;</OPTION>
+		<OPTION VALUE='-t 4'>Spiegelung an der vert. Bildachse und Drehung um 90&#176; CCW</OPTION>
+		<OPTION VALUE='-t 5'>Drehung um 90&#176; CCW</OPTION>
+		<OPTION VALUE='-t 6'>Drehung um 90&#176; CW</OPTION>
+		<OPTION VALUE='-t 7'>Spiegelung an der vert. Bildachse und Drehung um 90&#176; CW</OPTION>
   		</SELECT>
 		</TD>
 	</TR>

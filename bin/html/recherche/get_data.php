@@ -14,13 +14,6 @@ FOR ($i_rs=0; $i_rs<$num_rs; $i_rs++)
 {
 	$ID = $i_rs + 1;
 	$wert = mysql_result($rs, $i_rs, $id);
-	/*$value = $wert;
-	$field_type = mysql_field_type($rs, $id);
-	IF ($field_type == 'datetime')
-	{
-		$wert = date('d.m.Y H:i:s',strtotime($wert));
-	}
-	*/
 	$return_value .= "<data><id>$ID</id><name>$wert</name></data>\n";
 }
 
