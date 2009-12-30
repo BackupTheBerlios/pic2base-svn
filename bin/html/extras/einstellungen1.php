@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Persönliche Einstellungen</TITLE>
+	<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
@@ -52,7 +52,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base :: Persönliche Einstellungen <span class='klein'>(User: $c_username)</span></p>
+	<p id='kopf'>pic2base :: Pers&ouml;nliche Einstellungen <span class='klein'>(User: $c_username)</span></p>
 		
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
@@ -61,7 +61,7 @@ echo "
 	</div>
 	
 	<div id='spalte1'>
-	<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Legen Sie hier Ihre persönlichen Einstellungen fest:<BR>
+	<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Legen Sie hier Ihre pers&ouml;nlichen Einstellungen fest:<BR>
 	<FORM name = 'pwd' method = post action = 'save_pwd1.php'>
 	<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:solid;padding:0px;margin-top:6px;margin-bottom:0px;
     	text-align:center;'>
