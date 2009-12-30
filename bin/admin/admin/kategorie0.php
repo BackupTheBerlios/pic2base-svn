@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -55,7 +55,7 @@ SWITCH ($berechtigung)
 	$navigation = 	"<a class='navi' href='kat_sort1.php'>Sortierung</a>
 			<a class='navi' href='kat_repair1.php'>Wartung</a>
 			<a class='navi_blind'></a>
-			<a class='navi' href='../../html/admin/adminframe.php'>Zurück</a>
+			<a class='navi' href='../../html/admin/adminframe.php'>Zurï¿½ck</a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
 			";
@@ -88,7 +88,7 @@ SWITCH ($berechtigung)
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-	// für register_globals = off
+	// fï¿½r register_globals = off
 	if(array_key_exists('kat_id',$_GET))
 	{
 		$kat_id = $_GET['kat_id']; 
@@ -215,7 +215,7 @@ SWITCH ($berechtigung)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{
@@ -284,11 +284,11 @@ SWITCH ($berechtigung)
 	<DIV id="spalte2">
 		<p id="elf" style="background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;">Hinweis:<BR><BR>
 		Mit einem Klick auf einen Kategorie-Namen f&uuml;gen Sie eine neue Unter-Kategorie unterhalb der gew&auml;hlten Kategorie ein.<BR><BR>
-		Mit einem Klick auf das Bearbeiten-Icon &#160;<img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'>&#160; k&ouml;nnen Sie die Bezeichnung für die ausgew&auml;hlte Kategorie &auml;ndern.<BR><BR>
+		Mit einem Klick auf das Bearbeiten-Icon &#160;<img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'>&#160; k&ouml;nnen Sie die Bezeichnung fï¿½r die ausgew&auml;hlte Kategorie &auml;ndern.<BR><BR>
 		Mit einem Klick auf das L&ouml;schen-Icon &#160;<img src='../../share/images/delete.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Delete-Icon'>&#160; k&ouml;nnen Sie die ausgew&auml;hlte Kategorie l&ouml;schen.<BR>
 		<u>Wichtig!</u><BR>
 		Hierbei werden auch ALLE Unterkategorien der gew&auml;hlten Kategorie gel&ouml;scht!<BR><BR>
-		Über den Men&uuml;punkt "Sortierung" k&ouml;nnen Sie die Kategorie-Struktur neu ordnen. Weitere Informationen erhalten Sie auf der Sortieren-Seite.<BR><BR>
+		ï¿½ber den Men&uuml;punkt "Sortierung" k&ouml;nnen Sie die Kategorie-Struktur neu ordnen. Weitere Informationen erhalten Sie auf der Sortieren-Seite.<BR><BR>
 		Mit dem Men&uuml;punkt "Wartung" haben Sie die M&ouml;glichkeit, die Tabelle der Bild-Kategorie-Zuweisungen auf fehlerhafte Eintr&auml;ge zu &uuml;berpr&uuml;fen und ggf. zu reparieren. Die Aktion wird sofort nach Klick auf den Button gestartet und kann eine Weile dauern.<BR>
 		Am Ende der Wartung wird Ihnen ein Bericht &uuml;ber den Zustand der Tabelle angezeigt.</p>
 	</DIV>

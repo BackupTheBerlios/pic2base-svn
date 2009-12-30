@@ -17,7 +17,7 @@
 <?php
 
 /*
- ##########################  DIESE DATEI WIRD MÖGLICHERWEISE N I C H T GENUTZT ########################################
+ ##########################  DIESE DATEI WIRD Mï¿½GLICHERWEISE N I C H T GENUTZT ########################################
  * Project: pic2base
  * File: vorlage.php
  *
@@ -29,11 +29,6 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 //echo $mod;
 function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
@@ -46,9 +41,9 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 	$FileNameV = mysql_result($res0, $i1, 'FileNameV');
 	$Width = mysql_result($res0, $i1, 'Width');
 	$Height = mysql_result($res0, $i1, 'Height');
-	$Orientation = mysql_result($res0, $i1, 'Orientation');	// 1: normal; 8: 90° nach rechts gedreht
+	$Orientation = mysql_result($res0, $i1, 'Orientation');	// 1: normal; 8: 90 Grad nach rechts gedreht
 	
-	//abgeleitete Größen:
+	//abgeleitete Groessen:
 	
 	SWITCH($Orientation)
 	{
@@ -80,15 +75,15 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 	$parameter_v=getimagesize('../../images/vorschau/thumbs/'.$FileNameV);
 	$breite = $parameter_v[0] * 5;
 	$hoehe = $parameter_v[1] * 5;
-	//echo "Breite: ".$breite.", Höhe: ".$hoehe."<BR>";
+	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
 	IF ($breite == 0 AND $hoehe == 0)
 	{
 		$breite = 800;
 		$hoehe = 600;
 	}
-	//echo "Breite: ".$breite.", Höhe: ".$hoehe."<BR>";
+	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
       	$width_height=$parameter_v[3];
-      	//Für die Darstellung des Vollbildes wird eine mittlete Größe unter Beachtung des Seitenverhältnisses errechnet:
+      	//Fï¿½r die Darstellung des Vollbildes wird eine mittlete Groesse unter Beachtung des Seitenverhaeltnisses errechnet:
       	//max. Ausdehnung: 800px
       	$max = '1000';
       	IF ($Width >= $Height)
@@ -102,7 +97,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
       		$breite = number_format(($hoehe * $Width / $Height),0,',','.');
       	}
       	$ratio_pic = $breite / $hoehe;
-      	//echo "Breite: ".$breite.", Höhe: ".$hoehe."<BR>";
+      	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
       	$bild = '../../images/vorschau/hq-preview/'.$FileNameHQ;
 	echo "<a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='../../images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu'></a>";?>
 	
@@ -111,7 +106,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 	{
 	anotherWindow = window.open("", "bildfenster", "");
 	
-	// Wird bereits ein Bild in der "Großansicht" angezeigt? - dann wird es geschlossen:
+	// Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
 	if (anotherWindow != null)
 	{
 		//alert("Zu!");
@@ -162,8 +157,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 ELSE
 {
@@ -191,7 +185,6 @@ $berechtigung = mysql_result($result000, $i000, 'berechtigung');
 
 //Festlegung der Datenanzeige:
 
-
 SWITCH($bedingung1)
 {
 	CASE 'LIKE':
@@ -216,28 +209,28 @@ else
 SWITCH($bew)
 {
 	CASE '1':
-	$bewert = "Recherche über sehr gute Bilder";
+	$bewert = "Recherche &uuml;ber sehr gute Bilder";
 	break;
 	
 	CASE '2':
-	$bewert = "Recherche über gute Bilder";
+	$bewert = "Recherche &uuml;ber gute Bilder";
 	break;
 	
 	CASE '3':
-	$bewert = "Recherche über m&auml;ssige Bilder";
+	$bewert = "Recherche &uuml;ber m&auml;ssige Bilder";
 	break;
 	
 	CASE '4':
-	$bewert = "Recherche über mangelhafte Bilder";
+	$bewert = "Recherche &uuml;ber mangelhafte Bilder";
 	break;
 	
 	CASE '5':
-	$bewert = "Recherche über nicht bewertete Bilder";
+	$bewert = "Recherche &uuml;ber nicht bewertete Bilder";
 	break;
 	
 	CASE '6':
 	CASE '':
-	$bewert = "Recherche über alle Bilder";
+	$bewert = "Recherche &uuml;ber alle Bilder";
 	$bewertung = '6';
 	break;
 }
@@ -250,9 +243,9 @@ ELSE
 {
 	$result0 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium)");
 }
-//$result0 = mysql_query( "SELECT * FROM $table2 WHERE ($kriterium) AND note = '$bew'");
+
 @$num0 = mysql_num_rows($result0);
-$N = 5;			//Anzahl der anzuzeigenden Datensätze
+$N = 5;			//Anzahl der anzuzeigenden Datensaetze
 
 IF ($num0 > $N)
 {
@@ -338,8 +331,8 @@ echo "
 		$Width = mysql_result($result1, $i1, 'Width');
 		$Height = mysql_result($result1, $i1, 'Height');
 		$DateTime = mysql_result($result1, $i1, 'DateTime');		//Aufnahme-Datum
-		$Orientation = mysql_result($result1, $i1, 'Orientation');	// 1: normal; 8: 90° nach rechts gedreht
-		//abgeleitete Größen:
+		$Orientation = mysql_result($result1, $i1, 'Orientation');	// 1: normal; 8: 90 Grad nach rechts gedreht
+		//abgeleitete Groessen:
 		IF ($FileNameV == '')
 		{
 			$FileNameV = 'no_preview.jpg';
@@ -410,7 +403,7 @@ echo "
 				<TD class='liste2'>$FileName</TD>
 			</TR>
 			<TR  class='liste2' bgcolor = '$bgcolor'>
-				<TD class='liste2'>Datei-Größe (kB)</TD>
+				<TD class='liste2'>Datei-Gr&ouml;&szlig;e (kB)</TD>
 				<TD class='liste2'>$size</TD>
 			</TR>
 			<TR  class='liste2' bgcolor = '$bgcolor'>
@@ -418,7 +411,7 @@ echo "
 				<TD class='liste2'>$Width</TD>
 			</TR>
 			<TR  class='liste2' bgcolor = '$bgcolor'>
-				<TD class='liste2'>Bild-Höhe (px)</TD>
+				<TD class='liste2'>Bild-H&ouml;he (px)</TD>
 				<TD class='liste2'>$Height</TD>
 			</TR>
 			<TR  class='liste2' bgcolor = '$bgcolor'>
@@ -471,19 +464,19 @@ echo "
 			$div3 = $num0 - $N;
 			
 			echo "
-			<A HREF='bearbeitung1.php?div=0&mod=$mod&kriterium=$kriterium&bew=$bew' title='zu den ersten $N Datensätzen'>
+			<A HREF='bearbeitung1.php?div=0&mod=$mod&kriterium=$kriterium&bew=$bew' title='zu den ersten $N Datens&auml;tzen'>
 			<IMG src='../share/images/anfang.gif' width='15' height='15' border='0'>
 			</A>
 			
-			<A HREF='bearbeitung1.php?div=$div1&mod=$mod&kriterium=$kriterium&bew=$bew' title='$N Datensätze zurück'>
+			<A HREF='bearbeitung1.php?div=$div1&mod=$mod&kriterium=$kriterium&bew=$bew' title='$N Datens&auml;tze zur&uuml;ck'>
 			<IMG src='../share/images/zurueck.gif' width='15' height='15' border='0'>
 			</A>
 			
-			<A HREF='bearbeitung1.php?div=$div2&mod=$mod&kriterium=$kriterium&bew=$bew' title='$N Datensätze vor'>
+			<A HREF='bearbeitung1.php?div=$div2&mod=$mod&kriterium=$kriterium&bew=$bew' title='$N Datens&auml;tze vor'>
 			<IMG src='../share/images/vor.gif' width='15' height='15' border='0'>
 			</A>
 			
-			<A HREF='bearbeitung1.php?div=$div3&mod=$mod&kriterium=$kriterium&bew=$bew' title='zu den letzten $N Datensätzen'>
+			<A HREF='bearbeitung1.php?div=$div3&mod=$mod&kriterium=$kriterium&bew=$bew' title='zu den letzten $N Datens&auml;tzen'>
 			<IMG src='../share/images/ende.gif' width='15' height='15' border='0'>
 			</A>";
 		}

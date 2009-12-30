@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -54,7 +54,7 @@ SWITCH ($berechtigung)
 	$navigation = 	"<a class='navi' href='adminframe.php'>Administration</a>
 			<a class='navi' href='erfassung0.php'>Erfassung</a>
 			<a class='navi' href='auswahl0.php?mod=rech'>Recherche</a>
-			<a class='navi' href='start.php'>Zurück</a>
+			<a class='navi' href='start.php'>Zurï¿½ck</a>
 			<a class='navi' href='hilfe1.php'>Hilfe</a>
 			<a class='navi' href='../../index.php'>Logout</a>";
 	break;

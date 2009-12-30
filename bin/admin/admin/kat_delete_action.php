@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
@@ -56,9 +56,9 @@ SWITCH ($berechtigung)
 	break;
 }
 
-//Ausgehend von der gewählten Kategorie müssen alle Unterkategorien bestimmt werden. Dann müssen aus der Tabelle 10 (pic_kat) alle Einträge gelöscht werden, welche auf die gewählte Kategorie bzw. deren Unterkategorie verweisen.
+//Ausgehend von der gewï¿½hlten Kategorie mï¿½ssen alle Unterkategorien bestimmt werden. Dann mï¿½ssen aus der Tabelle 10 (pic_kat) alle Eintrï¿½ge gelï¿½scht werden, welche auf die gewï¿½hlte Kategorie bzw. deren Unterkategorie verweisen.
 
-// für register_globals = off
+// fï¿½r register_globals = off
 $ID = $_GET['ID']; 
 if(array_key_exists('kat_id',$_GET))
 {
@@ -101,10 +101,10 @@ FOREACH($child_arr AS $child)
 		$u_kategorie = '';
 	}
 	$u_kategorie .= mysql_result($res3, isset($i), 'kategorie')."<BR>";
-	//echo $child."<BR>";			//$child - Nummer der zu löschenden Kategorie
-	//Löschvorgang der Kategorie in der Kategorie-Tabelle ($table4):
+	//echo $child."<BR>";			//$child - Nummer der zu lï¿½schenden Kategorie
+	//Lï¿½schvorgang der Kategorie in der Kategorie-Tabelle ($table4):
 	$result4 = mysql_query( "DELETE FROM $table4 WHERE kat_id = '$child'");
-	//Eintrag aus der kat_lex löschen:
+	//Eintrag aus der kat_lex lï¿½schen:
 	$result6 = mysql_query( "DELETE FROM $table11 WHERE kat_id = '$child'");
 	
 	$res4 = mysql_query( "SELECT * FROM $table10 WHERE kat_id = '$child'");
@@ -119,7 +119,7 @@ FOREACH($child_arr AS $child)
 	}
 }
 
-//löschen der Bild-Zuordnungen in der pic_kat-Tabelle:
+//lï¿½schen der Bild-Zuordnungen in der pic_kat-Tabelle:
 FOREACH($pic_arr AS $pic)
 {
 	FOREACH($child_arr AS $child)

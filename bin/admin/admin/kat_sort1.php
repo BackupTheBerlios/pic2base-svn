@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -52,7 +52,7 @@ SWITCH ($berechtigung)
 {
 	//Admin
 	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zurück</a>
+	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zurï¿½ck</a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
 			";
@@ -84,7 +84,7 @@ SWITCH ($berechtigung)
 	//Erzeugung der Baumstruktur:
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// für register_globals = off
+	// fï¿½r register_globals = off
 	if(array_key_exists('kat_id',$_GET))
 	{
 		$kat_id = $_GET['kat_id']; 
@@ -207,7 +207,7 @@ SWITCH ($berechtigung)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{
@@ -282,7 +282,7 @@ SWITCH ($berechtigung)
 		<b><u>Schritt 1:</u></b><BR>
 		Pr&uuml;fen Sie in der linken Spalte, ob die gew&uuml;nschte Zielkategorie vorhanden ist. Wenn nicht, legen Sie sie an.<BR><BR>
 		<b><u>Schritt 2:</u></b><BR>
-		Klicken Sie hier, um zum Auswahlfenster für die Quell- und Zielkaterogie zu gelangen:<BR>
+		Klicken Sie hier, um zum Auswahlfenster fï¿½r die Quell- und Zielkaterogie zu gelangen:<BR>
 		<center><INPUT type="button" value="Weiter zum Kategorie-Auswahlfenster" onClick='location.href="kat_ausw1.php"'></center></p>
 	</DIV>
 	

@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -93,7 +93,7 @@ SWITCH ($berechtigung)
 	</div>
 	
 	<div class="content">
-	<p style="margin:120px 0px; text-align:center">Wählen Sie bitte aus der linken Leiste die gewünschte Aktion aus.</p>
+	<p style="margin:120px 0px; text-align:center">Wï¿½hlen Sie bitte aus der linken Leiste die gewï¿½nschte Aktion aus.</p>
 	</div>
 	<br style="clear:both;" />
 

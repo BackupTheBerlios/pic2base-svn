@@ -6,7 +6,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 unset($username);
 IF ($_COOKIE['login'])
 {
-	list($c_username) = split(',',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 $result15 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $user_id = mysql_result($result15, isset($i15), 'id');

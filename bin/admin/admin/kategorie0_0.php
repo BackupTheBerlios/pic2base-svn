@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -67,15 +67,15 @@ SWITCH ($berechtigung)
 }
 
 //Erzeugung der Baumstruktur:
-//Beim Aufruf der Seite werden nur alle Elemente der höchsten Ebene angezeigt.
-//Zunächst wird die höchste Ebene ermittelt, diese sollte '0' sein:
+//Beim Aufruf der Seite werden nur alle Elemente der hï¿½chsten Ebene angezeigt.
+//Zunï¿½chst wird die hï¿½chste Ebene ermittelt, diese sollte '0' sein:
 $result2 = mysql_query( "SELECT MIN(level) FROM $table4");
 $num2 = mysql_num_rows($result2);
 $min_level = mysql_result($result2, $i2, 'MIN(level)');
-//echo "Höchste Ebene: ".$min_level."<BR>";
+//echo "Hï¿½chste Ebene: ".$min_level."<BR>";
 //$i2='1';
 $result3 = mysql_query( "SELECT * FROM $table4 WHERE level='$min_level'");
-$num3 = mysql_num_rows($result3);					//Anzahl Kategorien höchsten Ebene
+$num3 = mysql_num_rows($result3);					//Anzahl Kategorien hï¿½chsten Ebene
 echo "<TABLE>";
 FOR ($i3=0; $i3<$num3; $i3++)
 {
@@ -96,7 +96,7 @@ FOR ($i3=0; $i3<$num3; $i3++)
 	ELSE
 	{
 		//echo "Level: ".$levl."<BR>";
-		//Der aufgeklappte Baum wird erzeugt. Hierzu wird die Verzweigungs-Tiefe über die Position der Ebene benutzt:
+		//Der aufgeklappte Baum wird erzeugt. Hierzu wird die Verzweigungs-Tiefe ï¿½ber die Position der Ebene benutzt:
 		$par_arr[] = $parent;
 		$sql_string = "SELECT * FROM $table4 WHERE (parent='$parent' AND level='$levl')";
 		FOR ($Z=$levl; $Z>0; $Z--)

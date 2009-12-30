@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -95,8 +95,8 @@ function setFontColor($ID, $kat_id)
 		//Erzeugung der Baumstruktur:
 		//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 		//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		$kat_id = $_GET['kat_id']; // für register_globals = off
-		$ID = $_GET['ID']; // für register_globals = off
+		$kat_id = $_GET['kat_id']; // fï¿½r register_globals = off
+		$ID = $_GET['ID']; // fï¿½r register_globals = off
 		$KAT_ID = $kat_id;
 		//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
@@ -179,7 +179,7 @@ function setFontColor($ID, $kat_id)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		
 		IF (in_array($kat_id, $knoten_arr))
@@ -217,7 +217,7 @@ function setFontColor($ID, $kat_id)
 	Wollen Sie wirklich die Kategorie \"".$kategorie_alt."\" l&ouml;schen?<BR><BR>
 	Es werden dann auch ALLE Unterkategorien zu \"".$kategorie_alt."\" gel&ouml;scht!<BR><BR></b></P>";
 	
-	echo "	<INPUT type='button' class='button1' value='Löschen' onClick='location.href=\"kat_delete_action.php?ID=$ID\"'>&#160;
+	echo "	<INPUT type='button' class='button1' value='Lï¿½schen' onClick='location.href=\"kat_delete_action.php?ID=$ID\"'>&#160;
          	<INPUT TYPE = 'button' class='button1' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
 	</center></div>
 	

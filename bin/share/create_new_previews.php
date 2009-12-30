@@ -3,11 +3,52 @@
 include 'global_config.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-//für alle Dateinamen wird intern Kleinschreibung verwendet, deshalb hier Konvertierung:
-$file_name_raw = strtolower($file_name_raw);
+//fuer alle Dateinamen wird intern Kleinschreibung verwendet, deshalb hier Konvertierung:
+//var_dump($_REQUEST);
+IF(array_key_exists('file_name_raw', $_REQUEST))
+{
+	$file_name_raw = strtolower($_REQUEST['file_name_raw']);
+}
 //echo "RAW-Name: ".$file_name_raw."<BR>";
-$contrast = str_replace('-cont ','',$contrast);
+IF(array_key_exists('contrast', $_REQUEST))
+{
+	$contrast = str_replace('-cont ','',$_REQUEST['contrast']);
+}
 //echo $contrast;
+IF(array_key_exists('modus', $_REQUEST))
+{
+	$modus = $_REQUEST['modus'];
+}
+
+IF(array_key_exists('wb', $_REQUEST))
+{
+	$wb = $_REQUEST['wb'];
+}
+IF(array_key_exists('rota', $_REQUEST))
+{
+	$rota = $_REQUEST['rota'];
+}
+IF(array_key_exists('col_inter', $_REQUEST))
+{
+	$col_inter = $_REQUEST['col_inter'];
+}
+IF(array_key_exists('targ_color', $_REQUEST))
+{
+	$targ_color = $_REQUEST['targ_color'];
+}
+IF(array_key_exists('gamma', $_REQUEST))
+{
+	$gamma = $_REQUEST['gamma'];
+}
+IF(array_key_exists('hl', $_REQUEST))
+{
+	$hl = $_REQUEST['hl'];
+}
+IF(array_key_exists('hsi', $_REQUEST))
+{
+	$hsi = $_REQUEST['hsi'];
+}
+
 IF($modus == 'tmp')
 {
 	//$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi." -r 2.648 1 1.2556 1";
@@ -44,7 +85,7 @@ IF($modus == 'tmp')
 	
 //#########################################################################################
 	/*
-	//Experimentelle Routine zur Helligkeits-Änderung:
+	//Experimentelle Routine zur Helligkeits-Aenderung:
 	$info = getImagesize($pic_path."/tmp/".$new_filename);
 	$breite = $info[0];
 	$hoehe = $info[1];
@@ -60,15 +101,15 @@ IF($modus == 'tmp')
 	echo "# " . $red." ".$green." ".$blue;  
 	*/
 //#########################################################################################
-	$x = time(now);
-	//das Anhängsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
+	$x = time();
+	//das Anhaengsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
 	echo "<img src=\"$inst_path/pic2base/images/originale/tmp/$new_filename?var=$x\">";
 }
 ELSEIF($modus == 'new')
 {
 	echo "Die neuen Vorschaubilder wurden erzeugt.<BR><BR>";
 	//die folgenden Schritte werden abgearbeitet:
-	//	1) jpg-Bild in Originalgröße neu erzeugen
+	//	1) jpg-Bild in Originalgraeue neu erzeugen
 	//	2) jpg-HQ-Vorschau neu erzeugen
 	//	3) jpg-Thumbnail neu erzeugen
 	//	4) Datei-Attribute aller dre neu erzeugten Dateien auf 700 setzen
@@ -193,7 +234,7 @@ ELSEIF($modus == 'new')
 	}
 	
 	$x = time(now);
-	//das Anhängsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
+	//das Anhï¿½ngsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
 	echo "<img src=\"$inst_path/pic2base/images/originale/tmp/$new_filename?var=$x\"><BR><BR>
 	Aktualisieren Sie abschlie&szlig;end bitte Ihre Filmstreifen-Ansicht.";
 }

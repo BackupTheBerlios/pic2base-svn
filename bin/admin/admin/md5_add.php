@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -52,7 +52,7 @@ SWITCH ($berechtigung)
 {
 	//Admin
 	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zurück</a>	
+	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zurï¿½ck</a>	
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>";
 	break;
@@ -67,7 +67,7 @@ SWITCH ($berechtigung)
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base :: Admin-Bereich - Prüfsummen erzeugen</p>
+	<p id='kopf'>pic2base :: Admin-Bereich - Prï¿½fsummen erzeugen</p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
@@ -83,7 +83,7 @@ echo "
 	$res10_1 = mysql_query( "SHOW FIELDS FROM `pictures`");
 	if (!$res10_1) 
 	{
-		echo 'Abfrage konnte nicht ausgeführt werden: ' . mysql_error();
+		echo 'Abfrage konnte nicht ausgefï¿½hrt werden: ' . mysql_error();
 		exit;
 	}
 	if (mysql_num_rows($res10_1) > 0) 
@@ -104,7 +104,7 @@ echo "
 		IF(!mysql_error())
 		{
 			echo "Feld md5sum wurde der Tabelle &lt;pictures&gt; zugef&uuml;gt.<BR>";
-			$res10_3 = mysql_query( "INSERT INTO `pb_column_info` (table_name, column_name, comment, suchfeld) VALUES ('pictures', 'md5sum', 'MD5-Prüfsumme', '0')");
+			$res10_3 = mysql_query( "INSERT INTO `pb_column_info` (table_name, column_name, comment, suchfeld) VALUES ('pictures', 'md5sum', 'MD5-Prï¿½fsumme', '0')");
 			IF(!mysql_error())
 			{
 				echo "Tabelle pb_column_info wurde aktualisiert.<BR>";

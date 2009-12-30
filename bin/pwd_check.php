@@ -25,11 +25,6 @@
  *
  * All files of this project are licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2005-2006 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
  -->
 <DIV Class="klein">
@@ -37,10 +32,6 @@
 <?
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
-foreach($_SERVER as $schluessel => $wert)
-{
-//echo $schluessel." - ".$wert."<BR>";
-};
 
 ?>
 

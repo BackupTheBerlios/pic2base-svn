@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -54,7 +54,7 @@ SWITCH ($berechtigung)
 	CASE $berechtigung == '1':
 	$navigation = 	"
 			<a class='navi_blind'></a>
-			<a class='navi' href='../../html/admin/adminframe.php'>Zurück</a>
+			<a class='navi' href='../../html/admin/adminframe.php'>Zurï¿½ck</a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>";
 	break;
 	
@@ -80,11 +80,11 @@ SWITCH ($berechtigung)
 	
 	<div id="spalte1">
 	<?php
-	//Wartungs-Routine zur Bereinigung der pic-kat-Tabelle, wenn Bilder existieren, welchen nur die kat_id = 1 zugewiesen wurde. Dies ist gleichbedeutend, daß den Bildern noch KEINE Kategorie zugewiesen wurden.
+	//Wartungs-Routine zur Bereinigung der pic-kat-Tabelle, wenn Bilder existieren, welchen nur die kat_id = 1 zugewiesen wurde. Dies ist gleichbedeutend, daï¿½ den Bildern noch KEINE Kategorie zugewiesen wurden.
 	$Z = '0';
 	$result10 = mysql_query( "SELECT DISTINCT pic_id FROM $table10");
 	$num10 = mysql_num_rows($result10);
-	echo "Gefundene Einträge in der Bild-Kategorie-Tabelle: ".$num10."<BR><BR>";
+	echo "Gefundene Eintrï¿½ge in der Bild-Kategorie-Tabelle: ".$num10."<BR><BR>";
 	FOR($i10='0'; $i10<$num10; $i10++)
 	{
 		$pic_id = mysql_result($result10, isset($i10), 'pic_id');

@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -63,8 +63,8 @@ SWITCH ($berechtigung)
 	break;
 }
 
-$kat_id = $_GET['kat_id']; // für register_globals = off
-$ID = $_GET['ID']; // für register_globals = off
+$kat_id = $_GET['kat_id']; // fï¿½r register_globals = off
+$ID = $_GET['ID']; // fï¿½r register_globals = off
 
 function setFontColor($ID, $kat_id)
 {
@@ -178,7 +178,7 @@ function setFontColor($ID, $kat_id)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		
 		IF (in_array($kat_id, $knoten_arr))
@@ -211,11 +211,11 @@ function setFontColor($ID, $kat_id)
 	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
 	$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
 	echo "<p id='elf' style='padding: 5px; width: 400px; margin-top: 40px;'>
-	Nehmen Sie hier bitte die Änderungen für die ausgewählte Kategorie vor:<BR><BR></P>";
+	Nehmen Sie hier bitte die ï¿½nderungen fï¿½r die ausgewï¿½hlte Kategorie vor:<BR><BR></P>";
 	
 	echo "<FORM action='kat_edit_action1.php?kat_id=$KAT_ID&ID=$ID' method='POST'>
          <INPUT type='text' name='kategorie' value='$kategorie_alt' size='30' maxlength='30'>&#160;
-         <INPUT type='submit' value='Ändern'>&#160;
+         <INPUT type='submit' value='ï¿½ndern'>&#160;
          <INPUT TYPE = 'button' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
        </FORM>
 	</center></div>

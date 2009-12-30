@@ -39,7 +39,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 $benutzername = $c_username;
 }
 
@@ -82,7 +82,7 @@ FOR($note='1'; $note<'6'; $note++)
 		$result6 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 		IF(mysql_num_rows($result6) == 0)
 		{
-			//nur wenn es noch keinen Eintrag in der exif-data-Tabelle gibt, wird die Erfassung ausgeführt:
+			//nur wenn es noch keinen Eintrag in der exif-data-Tabelle gibt, wird die Erfassung ausgefï¿½hrt:
 //			echo "Durchlauf ".$i5."; Datensatz ".$pic_id."<BR>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR>";
 			$result7 = mysql_query( "INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
 			//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung:
@@ -110,7 +110,7 @@ FOR($note='1'; $note<'6'; $note++)
 				echo $tab_fieldname[$j0].", ".$tab_fieldtype[$j0]."<BR>";
 			}
 			*/
-			//Beginn der Tabellen-Prüfung, Anpassung und Datenübernahme:
+			//Beginn der Tabellen-Prï¿½fung, Anpassung und Datenï¿½bernahme:
 //			$et_path = '/usr/bin';
 			$text = shell_exec($et_path."/exiftool -v2 ".$FN);
 			$inf_arr = explode(chr(10), $text);
@@ -127,7 +127,7 @@ FOR($note='1'; $note<'6'; $note++)
 						$fieldname = str_replace('-','_',trim(substr($IA, ($pos1 + 1), ($pos2 - $pos1 - 1))));
 						IF($fieldname !== '')
 						{	
-							//Für einige Tags (Feldnamen) müssen die "Klartext-Werte" ausgelesen werden:
+							//Fï¿½r einige Tags (Feldnamen) mï¿½ssen die "Klartext-Werte" ausgelesen werden:
 							$value = formatValues($fieldname, $FN, $IA, $pos2);
 							//echo "Bild-Inhalt: Feldname: ".$fieldname.", Feld-Wert: ".$value."<BR>";
 						}
@@ -135,7 +135,7 @@ FOR($note='1'; $note<'6'; $note++)
 					$X = -1;
 				}
 				
-				// ##### Bestimmung von Feldtyp und Länge: #####
+				// ##### Bestimmung von Feldtyp und Lï¿½nge: #####
 				$pos3 = strpos($IA, '- Tag ');
 				IF($pos3 != '' AND $X == -1)
 				{
@@ -166,12 +166,12 @@ FOR($note='1'; $note<'6'; $note++)
 								break;
 							}
 							$result2 = mysql_query( "ALTER TABLE `$table14` ADD `$fieldname` $fieldtype NOT NULL");
-							//echo "Fehler beim Ergänzen des Feldes: ".mysql_error(),"<BR>";
+							//echo "Fehler beim Ergï¿½nzen des Feldes: ".mysql_error(),"<BR>";
 						}
 						ELSE
 						{
-							//Wenn das Feld in der Tabelle ist, wird Feldtyp und Feldlänge geprüft:
-							//Prüfung Feldtyp:
+							//Wenn das Feld in der Tabelle ist, wird Feldtyp und Feldlï¿½nge geprï¿½ft:
+							//Prï¿½fung Feldtyp:
 							$pos6 = array_search($fieldname, $tab_fieldname);
 							$ist_feldtyp = substr($tab_fieldtype[$pos6],'0','3');
 							SWITCH(substr($fieldtype, '0', '3'))
@@ -186,7 +186,7 @@ FOR($note='1'; $note<'6'; $note++)
 								$soll_feldtyp = 'var';
 								break;
 							}
-							//Prüfung Feldlänge:
+							//Prï¿½fung Feldlï¿½nge:
 							$pos7 = strpos($tab_fieldtype[$pos6],'(');
 							$pos8 = strpos($tab_fieldtype[$pos6],')');
 							$ist_feldlaenge = substr($tab_fieldtype[$pos6],($pos7 + 1),($pos8 - $pos7 - 1));
@@ -215,10 +215,10 @@ FOR($note='1'; $note<'6'; $note++)
 									$fieldtype = 'VARCHAR('.$soll_feldlaenge.')';
 									break;
 								}
-								//echo "Feldtyp muss für ".$fieldname." von ".$ist_feldtyp." auf ".$fieldtype." geändert werden oder<BR>";
+								//echo "Feldtyp muss fï¿½r ".$fieldname." von ".$ist_feldtyp." auf ".$fieldtype." geï¿½ndert werden oder<BR>";
 								//echo "Feldl&auml;nge muss von ".$ist_feldlaenge." auf ".$soll_feldlaenge." angepasst werden.<BR>";
 								$result3 = mysql_query( "ALTER TABLE `$table14` CHANGE `$fieldname` `$fieldname` $fieldtype");
-								//echo "Fehler beim ändern der Feldlänge: ".mysql_error(),"<BR><BR>";
+								//echo "Fehler beim ï¿½ndern der Feldlï¿½nge: ".mysql_error(),"<BR><BR>";
 							}
 						}
 					}
@@ -243,7 +243,7 @@ FOR($note='1'; $note<'6'; $note++)
 			//$result10 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 //			$DateTimeOriginal_pt = mysql_result($result9, isset($i9), 'DateTimeOriginal');	//Wert in der pictures-Tabelle
 //			$DateTimeOriginal_edt = mysql_result($result6, isset($i6), 'DateTimeOriginal');//Wert in der exif_data-Tabelle
-			//Erzeugung einde Log-Datei für alle Bilder ohne Original-Dateidatum:
+			//Erzeugung einde Log-Datei fï¿½r alle Bilder ohne Original-Dateidatum:
 			IF($DateTimeOriginal_pt == '0000-00-00 00:00:00')
 			{
 				$fh = fopen($kml_dir."/exif.log","a");

@@ -65,7 +65,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
@@ -110,7 +110,7 @@ if($result1 != false)
 	}
 }
 
-$elements_number = count($ed_fieldname) - 2;	//minus zwei, weil: Felder ed_id und pic_id werden nicht gezählt!
+$elements_number = count($ed_fieldname) - 2;	//minus zwei, weil: Felder ed_id und pic_id werden nicht gezï¿½hlt!
 $col_groups = 3;		//3 Spaltengruppen ; je Gruppe eine Spalte field_name und eine Spalte writable
 //Berechnung der Zeilenzahl bei 6 Spalten (entspr. 3 Feldwerten):
 $rows = ceil($elements_number / 3);

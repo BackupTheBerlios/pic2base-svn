@@ -57,12 +57,12 @@ $u_name = $row['username'];
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
 //############   Erstellung der Histogramme, falls nicht bereits vorhanden:   #######################
-// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt, wobei XXXXX für pic_id steht und f für die Farbe (rot, grün, blau oder weiß -> rgbw)
+// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt, wobei XXXXX fï¿½r pic_id steht und f fï¿½r die Farbe (rot, grï¿½n, blau oder weiï¿½ -> rgbw)
 generateHistogram($pic_id,$FileNameHQ,$sr);
 
 //############   Histogramm-Erstellung beendet   ####################################################
@@ -162,7 +162,7 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 	</TD>
 	</TR>";
 
-//es werden all diejenigen Tags dargestellt, die das Bild mitgebracht hat und deren Daten in der Tabelle meta_data hinterlegt sind und zusätzlich die editierbaren Felder:
+//es werden all diejenigen Tags dargestellt, die das Bild mitgebracht hat und deren Daten in der Tabelle meta_data hinterlegt sind und zusï¿½tzlich die editierbaren Felder:
 //zuerst werden alle editierbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
 $result4 = mysql_query( "SELECT field_name FROM $table5 WHERE writable = '1'");
 $num4 = mysql_num_rows($result4);

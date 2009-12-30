@@ -42,7 +42,7 @@ $u_name = $row['username'];
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
@@ -104,7 +104,7 @@ $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 $exif_daten = shell_exec($et_path."/exiftool -g -s -x 'Directory' ".$FN);
 //echo $exif_daten."<BR>";
 $info_arr = explode(chr(10), $exif_daten);
-//Umschreibung des Info-Arrays in die Form Schlüssel=$tag / Wert=$value
+//Umschreibung des Info-Arrays in die Form Schlï¿½ssel=$tag / Wert=$value
 $INFO_ARR = array();
 
 FOREACH($info_arr AS $IA)
@@ -120,7 +120,7 @@ FOREACH($info_arr AS $IA)
 $n=0;
 if ( isset($writable_tags) )
 {
-	FOREACH($writable_tags AS $WT)	//über alle in der Tabelle freigegebenen Tags wird geprüft, welche davon im Bild enthalten sind:
+	FOREACH($writable_tags AS $WT)	//ï¿½ber alle in der Tabelle freigegebenen Tags wird geprï¿½ft, welche davon im Bild enthalten sind:
 	{
 		//Steuerung der Zeilen-Hintergrundfarbe
 		IF(bcmod($n,2) == 0)

@@ -152,7 +152,7 @@ include 'functions/permissions.php';
 unset($c_username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 $benutzername = $c_username;
 $result15 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");

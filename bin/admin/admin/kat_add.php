@@ -39,15 +39,14 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
  
 include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
 
 
-$level = $_GET['level'];  // für register_globals = off
+$level = $_GET['level'];  // fï¿½r register_globals = off
 $level_neu = $level + 1;
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
@@ -56,7 +55,7 @@ SWITCH ($berechtigung)
 {
 	//Admin
 	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zurück</a>	
+	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zurï¿½ck</a>	
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>";
 	break;
@@ -67,8 +66,8 @@ SWITCH ($berechtigung)
 	break;
 }
 
-$ID = $_GET['ID'];  // für register_globals = off
-$kat_id = $_GET['kat_id'];  // für register_globals = off
+$ID = $_GET['ID'];  // fï¿½r register_globals = off
+$kat_id = $_GET['kat_id'];  // fï¿½r register_globals = off
 
 function setFontColor($ID, $kat_id)
 {
@@ -183,7 +182,7 @@ function setFontColor($ID, $kat_id)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		
 		IF (in_array($kat_id, $knoten_arr))
