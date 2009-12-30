@@ -13,10 +13,6 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2005-2006 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  ***********************************************************************************/
 
 //var_dump($_GET);
@@ -40,7 +36,7 @@ function delChildKat($kat_id, $pic_id)
 	$kat_id1 = $kat_id;
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	//Ausgehend von der zu löschenden Kategorie wird ermittelt, welch Child-Kategorien diese besitzt und welche davon wurde dem Bild zugewiesen:
+	//Ausgehend von der zu lï¿½schenden Kategorie wird ermittelt, welch Child-Kategorien diese besitzt und welche davon wurde dem Bild zugewiesen:
 	
 	global $kat_ids;
 	$kat_ids[] = $kat_id;
@@ -72,12 +68,12 @@ function delChildKat($kat_id, $pic_id)
 		getChildIDs($kat_id, $kat_ids);
 	}
 	//echo "Anz. Child-Elemente: ".count(getChildIDs($kat_id, $kat_ids))."<BR>";
-	//Wenn alle betreffenden child-ids ermittelt sind, werden die betreffenden Datensätze aus der Tabelle pic_kat entfernt:
+	//Wenn alle betreffenden child-ids ermittelt sind, werden die betreffenden Datensaetze aus der Tabelle pic_kat entfernt:
 	FOREACH(getChildIDs($kat_id, $kat_ids) as $kat_id)
 	{
 		//echo $kat_id."&#160;&#160;";
 		$result4 = mysql_query( "DELETE FROM $table10 WHERE (pic_id = '$pic_id' AND kat_id = '$kat_id') OR (pic_id = '$pic_id' AND kat_id = '$kat_id1')");
-		//Wenn die letzten Kategorie-Zuweisungen aufgehoben wurden, wird auch die Verknüpfung zur Ersten Ebene (Wurzel) aufgehoben sowie der Vermerk has_kat in der pictures-Tabelle auf 0 gesetzt:
+		//Wenn die letzten Kategorie-Zuweisungen aufgehoben wurden, wird auch die Verknuepfung zur Ersten Ebene (Wurzel) aufgehoben sowie der Vermerk has_kat in der pictures-Tabelle auf 0 gesetzt:
 		$result5 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
 		$num5 = mysql_num_rows($result5);
 		IF ($num5 == '1')

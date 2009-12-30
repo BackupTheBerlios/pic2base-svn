@@ -37,7 +37,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-	list($c_username) = split(',',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
 $benutzername = $c_username;
@@ -77,7 +77,7 @@ $geo_file_name = $geo_path_copy."/".$geo_file;
 
 IF($geo_file == '')
 {
-	echo "<H3 style='color:red; margin-top:150px;'>Fehler!<BR><BR>Sie müssen eine gültige Track-Datei ausw&auml;hlen!</H3>";
+	echo "<H3 style='color:red; margin-top:150px;'>Fehler!<BR><BR>Sie m&uuml;ssen eine g&uuml;ltige Track-Datei ausw&auml;hlen!</H3>";
 	echo "<meta http-equiv='Refresh', content='2; url=edit_geo_daten.php'>";
 	return;
 }
@@ -97,21 +97,21 @@ $fh = fopen($geo_file_name, 'r');
 //join() -> Alais zu implode()
 //$txt_file = join('',file($geo_file));
 $txt_file = implode('',file($geo_path_copy."/".$geo_file));
-$line_number = 0;	//Initialisierung des Zeilen-Zählers
+$line_number = 0;	//Initialisierung des Zeilen-Zaehlers
 
 //Ermittlung des Datei-Formates:
 $info = pathinfo($geo_file_name);
 //echo "Datei-Extension: ".strtolower($info['extension'])."<BR>";
-//die ausgewählte Trackdatei wird überprüft, bei Erfolg in eine kml-Datei konvertiert und der Inhalt (Geo-Koordinaten und Zeitstempel in die geo_tmp (table13) geschrieben
+//die ausgewaehlte Trackdatei wird ueberprueft, bei Erfolg in eine kml-Datei konvertiert und der Inhalt (Geo-Koordinaten und Zeitstempel in die geo_tmp (table13) geschrieben
 convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_id,$timezone);
-//Bestimmung der verwertbaren Datensätze:
+//Bestimmung der verwertbaren Datensaetze:
 $result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id'");
 $line_number = mysql_num_rows($result2);
 
 SWITCH($ge)
 {
 	CASE 'Los!':
-	// Wenn Geo-Referenzierung ausgewählt wurde:
+	// Wenn Geo-Referenzierung ausgewaehlt wurde:
 	SWITCH($line_number)
 	{
 		CASE '0':
@@ -121,7 +121,7 @@ SWITCH($ge)
 		
 		DEFAULT:
 		$hinweis1 = "Die Track-Datei enth&auml;lt ".$line_number." verwertbare Trackpunkte.<BR><BR>";
-		//aus der temp. Tabelle wird für jeden Tag die Zeitspanne (der früheste und späteste Zeitpunkt) ermittelt:
+		//aus der temp. Tabelle wird fuer jeden Tag die Zeitspanne (der frueheste und spaeteste Zeitpunkt) ermittelt:
 		$result4 = mysql_query( "SELECT DISTINCT date FROM $table13 WHERE user_id = '$user_id'");
 		$num4 = mysql_num_rows($result4);
 		$hinweis2 = '';
@@ -145,7 +145,7 @@ SWITCH($ge)
 			//$result6 = mysql_query( "SELECT * FROM $table2 WHERE DateTime >= '$start_time' AND DateTime <= '$end_time' AND loc_id ='0' AND Owner = '$user_id'");
 			$result6 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.loc_id, $table2.Owner, $table14.pic_id, $table14.DateTimeOriginal FROM $table2, $table14 WHERE $table14.DateTimeOriginal >= '$start_time' AND $table14.DateTimeOriginal <= '$end_time' AND $table2.loc_id ='0' AND $table2.Owner = '$user_id' AND $table2.pic_id = $table14.pic_id");
 			$num6 = mysql_num_rows($result6);
-			//echo "<p style='color:white';>Treffer für User ".$user_id.": ".$num6."</p><BR>";
+			//echo "<p style='color:white';>Treffer fuer User ".$user_id.": ".$num6."</p><BR>";
 			IF($num6 > '0')
 			{
 				FOR($i6=0; $i6<$num6; $i6++)
@@ -165,7 +165,7 @@ SWITCH($ge)
 						break;
 			
 						default:
-						//Wenn es Trackpunkte gibt, welche innerhalb des Zeitfensters liegen, wird dieses von 0 beginnend so lange vergrößert, bis mind. ein Trackpunkt gefunden wurde:
+						//Wenn es Trackpunkte gibt, welche innerhalb des Zeitfensters liegen, wird dieses von 0 beginnend so lange vergrï¿½ï¿½ert, bis mind. ein Trackpunkt gefunden wurde:
 						$delta = -1;
 						$anz = 0;
 						WHILE($anz == 0)
@@ -232,7 +232,7 @@ SWITCH($ge)
 
 	CASE 'Track ansehen':
 	//Wenn der Track nur in GE angezeigt werden soll:
-	//Da die gpx-Datei schrittweise vom Anfang an abgearbeitet wird, erfolgt der Eintrag in die Tabelle in zeitlicher Reihenfolge. Somit genügt eine Sortierung beim auslesen nach loc_id.
+	//Da die gpx-Datei schrittweise vom Anfang an abgearbeitet wird, erfolgt der Eintrag in die Tabelle in zeitlicher Reihenfolge. Somit genï¿½gt eine Sortierung beim auslesen nach loc_id.
 	//$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' ORDER BY date, time");
 	$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' AND longitude <> '' AND latitude <> '' ORDER BY loc_id");
 	$num2 = mysql_num_rows($result2);

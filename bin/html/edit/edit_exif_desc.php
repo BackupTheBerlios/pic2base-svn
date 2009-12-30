@@ -21,8 +21,6 @@
  *  Boston, MA 02110-1301 USA
  */
 
-/* $Id: edit-description.php 426 2006-07-11 15:22:20Z mgeisler $ */
-
 
 require_once '../share/classes/pel-0.9.1/PelDataWindow.php';
 require_once '../share/classes/pel-0.9.1/PelJpeg.php';

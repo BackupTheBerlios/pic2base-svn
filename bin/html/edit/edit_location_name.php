@@ -48,7 +48,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
@@ -62,8 +62,6 @@ $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AN
 $row = mysql_fetch_array($result1);
 $berechtigung = $row['berechtigung'];
 $user_id = $row['id'];
-//$berechtigung = mysql_result($result1, $i1, 'berechtigung');
-//$user_id = mysql_result($result1, $i1, 'id');
 //echo "User-ID: ".$user_id."<BR>";
 $num2 = '0';
 $loc_id = '';
@@ -101,7 +99,7 @@ echo "
 				<TD id='kat1'>";
 				SWITCH($num2)
 				{
-					//Erzeugung des Hinweistextes über dem Vorschaubild:
+					//Erzeugung des Hinweistextes ï¿½ber dem Vorschaubild:
 					CASE '0':
 					echo "Es gibt kein Bild mehr ohne GPS-Ortszuweisung.<BR>
 					<meta http-equiv='refresh', content='0; URL=edit_start.php'>";
@@ -143,13 +141,13 @@ echo "
 					//echo "Long: ".$long.", Lat: ".$lat."<BR>";
 					//Radius: 5 km, um welchen die vorhandenen Orte ermittelt werden:
 					$radius = 5000;
-					$diff_lat = 0.000008999280058; //(Winkeländerung je Meter)
+					$diff_lat = 0.000008999280058; //(Winkelaenderung je Meter)
 					$delta_lat = $radius * $diff_lat;
 					$lat_min = $lat - $delta_lat;
 					$lat_max = $lat + $delta_lat;
 					//echo "Breite: ".$lat.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
 					
-					//geogr. Länge: hier ist dei Winkeländerung / Entfernung von der geogr. Breite abhängig:
+					//geogr. Laenge: hier ist die Winkelaenderung / Entfernung von der geogr. Breite abhaengig:
 					$delta_long = getDeltaLong($lat, $radius);
 					$long_min = $long - $delta_long;
 					$long_max = $long + $delta_long;
@@ -193,7 +191,7 @@ echo "
 							{
 								$locid[$position] = $location_id;
 								$abstand[$position] = $delta;
-								//echo "neuer Abstand wurde übernommen<BR>";
+								//echo "neuer Abstand wurde uebernommen<BR>";
 							}
 						}
 					}

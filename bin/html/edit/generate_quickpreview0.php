@@ -29,17 +29,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
@@ -71,7 +66,7 @@ if(array_key_exists('z_0',$_REQUEST))
 
 
 
-//für alle notwendigen Drehungen wird geprüft, ob bereits ein Vorschau-Bild existiert. Wenn nicht, wird dieses angelegt:
+//fuer alle notwendigen Drehungen wird geprueft, ob bereits ein Vorschau-Bild existiert. Wenn nicht, wird dieses angelegt:
 
 $result0 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username'");
 $user_id = mysql_result($result0, isset($i0), 'id');
@@ -109,7 +104,6 @@ $t_akt = mktime();
 		<div class="menucontainer">
 		<?
 		createNavi3_1($c_username);
-		//echo $navigation;
 		?>
 		</div>
 	</div>
@@ -119,11 +113,11 @@ $t_akt = mktime();
 	
 	<?php
 	//echo "Es gibt ".$num1." kopfstehende Fotos.<BR>";
-	//echo "Es gibt ".$num2." 90° (cw) gedrehte Fotos .<BR>";
-	//echo "Es gibt ".$num3." -90° (ccw) gedrehte Fotos.<BR>";
+	//echo "Es gibt ".$num2." 90 (cw) gedrehte Fotos .<BR>";
+	//echo "Es gibt ".$num3." -90 (ccw) gedrehte Fotos.<BR>";
 	IF ($num > '0')
 	{
-		//echo $z_0."ter Durchlauf im aktuellen Prozeß<BR>";
+		//echo $z_0."ter Durchlauf im aktuellen Prozess<BR>";
 		SWITCH($num)
 		{
 			CASE 'X':

@@ -27,16 +27,12 @@
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
  *
- * This file is licensed under the terms of the Open Software License
- * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -71,7 +67,7 @@ if ( array_key_exists('pic_sel2',$_POST) )
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
-//Variablen-Umbenennung für die Rücksprung-Adresse:
+//Variablen-Umbenennung fuer die Ruecksprung-Adresse:
 $kat_back = $kat_id;
 $ID_back = $ID;
 
@@ -93,7 +89,7 @@ echo "
 	
 	<div class='content'>";
 flush();
-	//Ermittlung der ausgewählten Checkboxen:
+	//Ermittlung der ausgewaehlten Checkboxen:
 	//echo count($_POST)."<BR>";
 	FOREACH ($_POST AS $key => $post)
 	{
@@ -132,7 +128,7 @@ flush();
 		}
 		IF (mysql_errno() == '0')
 		{
-			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Datenübernahme...</p>
+			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
 			<meta http-equiv='refresh' content='2; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 			
 		}
@@ -152,13 +148,13 @@ flush();
 			//echo $FN.", ".$desc."<BR>";
 			shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
 			
-			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Datenübernahme...</p>
+			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
 			<meta http-equiv='refresh' content='2; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 		}
 		ELSE
 		{
-			echo "<p class='zwoelfred' align='center'>Sie haben kein Bild zur Bearbeitung ausgewählt!<BR><BR>
-			Bitte wählen Sie mindestens ein Bild aus<BR>oder verlassen Sie den vorhergehenden Dialog<BR>mit \"Abbrechen\"!</p>
+			echo "<p class='zwoelfred' align='center'>Sie haben kein Bild zur Bearbeitung ausgew&auml;hlt!<BR><BR>
+			Bitte w&auml;hlen Sie mindestens ein Bild aus<BR>oder verlassen Sie den vorhergehenden Dialog<BR>mit \"Abbrechen\"!</p>
 			<meta http-equiv='refresh' content='3; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 		}
 	}

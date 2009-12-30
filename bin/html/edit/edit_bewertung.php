@@ -31,14 +31,12 @@
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
  *
- * This file is licensed under the terms of the Open Software License
- * http://www.opensource.org/licenses/osl-2.1.php
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  

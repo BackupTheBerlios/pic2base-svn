@@ -34,7 +34,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
@@ -58,7 +58,7 @@ echo "
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Speicherung l&auml;uft...<BR></p>";
 		$result2 = mysql_query( "UPDATE $table12 SET location='$ort' WHERE loc_id = '$loc_id'");
 		
-		//Eintragung des Ortsnamens an den Anfang des Beschreibungstextes des zugehörigen Bildes:
+		//Eintragung des Ortsnamens an den Anfang des Beschreibungstextes des zugehï¿½rigen Bildes:
 		$result3 = mysql_query( "SELECT * FROM $table2 WHERE (loc_id = '$loc_id' AND loc_id <> '')");
 		$num3 = mysql_num_rows($result3);
 		FOR ($i3=0; $i3<$num3; $i3++)

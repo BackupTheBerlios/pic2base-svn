@@ -29,17 +29,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 include '../../share/global_config.php'; 
@@ -49,7 +44,7 @@ include $sr.'/bin/share/db_connect1.php';
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base :: Lösche Duplikat (User: $c_username)</p>
+	<p id='kopf'>pic2base :: L&ouml;sche Duplikat (User: $c_username)</p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>
@@ -57,8 +52,8 @@ echo "
 	</div>
 	
 	<div class='content'>";
-	echo "Lösche Bild ".$pic_id."<BR>";
-	//Ermittlung aller zugehörigen Bild-Dateien (Vorschau, HQ-Preview, rotiertes Bild, Original-Bild):
+	echo "L&ouml;sche Bild ".$pic_id."<BR>";
+	//Ermittlung aller zugeh&ouml;rigen Bild-Dateien (Vorschau, HQ-Preview, rotiertes Bild, Original-Bild):
 	$result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 	$num1 = mysql_num_rows($result1);
 	IF($num1 == '1')
@@ -67,47 +62,47 @@ echo "
 		$filename = mysql_Result($result1, $i1, 'FileName');
 		$filenamehq = mysql_Result($result1, $i1, 'FileNameHQ');
 		$filenamev = mysql_Result($result1, $i1, 'FileNameV');
-		//löschen der Bild-Dateien:
+		//loeschen der Bild-Dateien:
 		IF(@unlink($path_copy.'/'.$filename))
 		{
-			echo "Originalbild wurde gelöscht.<BR>";
+			echo "Originalbild wurde gel&ouml;scht.<BR>";
 		}
 		ELSE
 		{
-			echo "ACHTUNG! Das Originalbild konnte nicht gelöscht werden!<BR>";
+			echo "ACHTUNG! Das Originalbild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
 		IF(@unlink($path_copy.'/rotated/'.$filename))
 		{
-			echo "Das rotierte Originalbild wurde gelöscht.<BR>";
+			echo "Das rotierte Originalbild wurde gel&ouml;scht.<BR>";
 		}
 		ELSE
 		{
-			echo "ACHTUNG! Das rotierte Originalbild konnte nicht gelöscht werden!<BR>";
+			echo "ACHTUNG! Das rotierte Originalbild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
 		IF(@unlink($vorschau_verzeichnis.'/'.$filenamev))
 		{
-			echo "Vorschaubild wurde gelöscht.<BR>";
+			echo "Vorschaubild wurde gel&ouml;scht.<BR>";
 		}
 		ELSE
 		{
-			echo "ACHTUNG! Das Vorschaubild konnte nicht gelöscht werden!<BR>";
+			echo "ACHTUNG! Das Vorschaubild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
 		IF(@unlink($HQ_verzeichnis.'/'.$filenamehq))
 		{
-			echo "HQ-Vorschaubild wurde gelöscht.<BR>";
+			echo "HQ-Vorschaubild wurde gel&ouml;scht.<BR>";
 		}
 		ELSE
 		{
-			echo "ACHTUNG! Das HQ-Vorschaubild konnte nicht gelöscht werden!<BR>";
+			echo "ACHTUNG! Das HQ-Vorschaubild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
-		//löschen des Bild-Datensatzes
+		//lï¿½schen des Bild-Datensatzes
 		$result2 = mysql_query( "DELETE FROM $table2 WHERE pic_id = '$pic_id'");
 		
-		//löschen der Kategorie-Zuordnung
+		//lï¿½schen der Kategorie-Zuordnung
 		$result3 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic_id'");
 		
 		echo "<meta http-equiv='Refresh' Content='1; URL=double_check0.php'>";

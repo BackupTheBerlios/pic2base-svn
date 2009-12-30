@@ -30,16 +30,12 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -69,7 +65,7 @@ $berechtigung = mysql_result($result1, $i1, 'berechtigung');
 	</div>
 	
 	<div class="content">
-	<p class="zwoelfred" style="margin:120px 0px; text-align:center">Wollen Sie wirklich die Kategoriezuweisung<BR> "<?php echo $kategorie;?>" <BR>für das gewählte Bild aufheben?<BR><BR>
+	<p class="zwoelfred" style="margin:120px 0px; text-align:center">Wollen Sie wirklich die Kategoriezuweisung<BR> "<?php echo $kategorie;?>" <BR>fï¿½r das gewï¿½hlte Bild aufheben?<BR><BR>
 	Wenn Sie mit 'JA' fortfahren, werden gleichzeitig<BR>alle Unterkategorie-Zuweisungen mit aufgehoben!<BR><BR>
 	<?php
 	echo "

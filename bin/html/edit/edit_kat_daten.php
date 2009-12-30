@@ -33,17 +33,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -54,25 +49,25 @@ include $sr.'/bin/share/functions/main_functions.php';
 //var_dump($_GET);
 if(array_key_exists('mod',$_GET))
 {
-	$mod = $_GET['mod']; // für register_globals = off
+	$mod = $_GET['mod'];
 }
 
 if(array_key_exists('pic_id',$_GET))
 {
-	$pic_id = $_GET['pic_id']; // für register_globals = off
+	$pic_id = $_GET['pic_id'];
 }
 
 if(array_key_exists('kat_id',$_GET))
 {
-	$kat_id = $_GET['kat_id']; // für register_globals = off
+	$kat_id = $_GET['kat_id']; 
 }
 else
 {
-	$kat_id = 0; // für register_globals = off
+	$kat_id = 0;
 }
 if(array_key_exists('ID',$_REQUEST))
 {
-	$ID = $_GET['ID']; // für register_globals = off
+	$ID = $_GET['ID'];
 }
 //echo"<br>kat_id: ".$kat_id."<br>";
 

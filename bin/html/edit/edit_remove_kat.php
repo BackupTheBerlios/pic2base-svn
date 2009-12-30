@@ -49,15 +49,11 @@ Fenster1 = window.open('../../share/save_changes.php?pic_id='+pic_id + '&descrip
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2005-2006 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  ***********************************************************************************/
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -69,7 +65,7 @@ $base_file = 'recherche2';
 //var_dump($_GET);
 if(array_key_exists('mod',$_GET))
 {
-	$mod = $_GET['mod']; // f¸r register_globals = off
+	$mod = $_GET['mod'];
 }
 
 echo "
@@ -99,12 +95,11 @@ SWITCH ($mod)
 		echo "
 		</div>";
 		break;
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
+		
 		CASE 'desc':
 		echo "
 		<div id='spalte1F'>";
-		$mod='desc';
-		
+			$mod='desc';
 		echo "
 		</div>";
 		break;
@@ -120,12 +115,12 @@ SWITCH ($mod)
 	SWITCH($mod)
 	{		
 		CASE 'kat':
-		$modus='edit';	//bedeutet, daﬂ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaﬂt wird
+		$modus='edit';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
 		$mod='kat';
 		break;
 		
 		CASE 'desc':
-		$modus='edit';	//bedeutet, daﬂ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaﬂt wird
+		$modus='edit';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
 		$mod='desc';		
 		break;
 	}

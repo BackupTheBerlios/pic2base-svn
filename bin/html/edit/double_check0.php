@@ -29,17 +29,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -59,7 +54,7 @@ echo "
 	</div>
 	
 	<div class='content'>";
-	//Prüfung auf übereinstimmende Bildgröße, Original-Dateinamen, Dateigröße:
+	//Prï¿½fung auf ï¿½bereinstimmende Bildgrï¿½ï¿½e, Original-Dateinamen, Dateigrï¿½ï¿½e:
 	echo "<CENTER>
 		<table class='liste1' border='0'>
 		<tbody>
@@ -71,8 +66,8 @@ echo "
 		
 		<TR class='normal'>
 		<TD class='normal' align='center' colspan='10'>
-		Die folgenden Bilder weisen in Breite, Höhe, Original-Dateinamen und Datei-Größe Übereinstimmung auf.<BR>
-		Wenn Sie ein Bild mit der Maus überfahren, erhalten Sie eine verg&ouml;ßerte Vorschau.<BR>
+		Die folgenden Bilder weisen in Breite, Hï¿½he, Original-Dateinamen und Datei-Grï¿½ï¿½e ï¿½bereinstimmung auf.<BR>
+		Wenn Sie ein Bild mit der Maus ï¿½berfahren, erhalten Sie eine verg&ouml;ï¿½erte Vorschau.<BR>
 		<FONT COLOR='red'>Wenn Sie auf ein Bild klicken, wird dies OHNE R&Uuml;CKFRAGE GEL&Ouml;SCHT!</FONT>
 		</TD>
 		</TR>
@@ -102,25 +97,25 @@ echo "
 		FOR($i3='0'; $i3<$num3; $i3++)
 		{
 			$width = mysql_result($result3, $i3, 'Width');
-			//echo "Breite: ".$width.", Höhe: ".$height."<BR>";
+			//echo "Breite: ".$width.", Hï¿½he: ".$height."<BR>";
 			$result4 = mysql_query( "SELECT * FROM $table2 WHERE Width = '$width' AND Height = '$height'");
 			$num4 = mysql_num_rows($result4);
 			
 			IF($num4 > '1')
 			{
-				//echo "Es gibt ".$num4." Bilder mit den Maßen ".$width." x ".$height.", <BR>";
+				//echo "Es gibt ".$num4." Bilder mit den Maï¿½en ".$width." x ".$height.", <BR>";
 				$summe = $summe + $num4;
-				//Wenn es mehr als ein Bild mit den Maßen gibt, wird auf Übereinstimmung des Original-Dateinamens geprüft:
+				//Wenn es mehr als ein Bild mit den Maï¿½en gibt, wird auf ï¿½bereinstimmung des Original-Dateinamens geprï¿½ft:
 				$result5 = mysql_query( "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height' GROUP BY FileNameOri");
 				$num5 = mysql_num_rows($result5);
 				IF($num4 > $num5)
 				{
-					echo "Es gibt ".$num4." Bilder mit den Maßen ".$width." x ".$height.", <BR>
+					echo "Es gibt ".$num4." Bilder mit den Maï¿½en ".$width." x ".$height.", <BR>
 					aber nur ".$num5." Dateinamen<BR>";
 				}
 				FOR($i5='0'; $i5<$num5; $i5++)
 				{
-					//Prüfung auf Übereinstimmung der Dateigröße bei den Bildern mit übereinstimmenden Datei-Namen:
+					//Prï¿½fung auf ï¿½bereinstimmung der Dateigrï¿½ï¿½e bei den Bildern mit ï¿½bereinstimmenden Datei-Namen:
 					$filenameori = mysql_result($result5, $i5, 'FileNameOri');
 					//echo $filenameori."<BR>";
 					$result6 = mysql_query( "SELECT FileSize FROM $table2 WHERE Width = '$width' AND Height = '$height' AND FileNameOri = '$filenameori' ORDER BY FileSize");
@@ -194,7 +189,7 @@ echo "
 		FOR($i3='0'; $i3<$num3; $i3++)
 		{
 			$width = mysql_result($result3, $i3, 'Width');
-			//echo "Breite: ".$width.", Höhe: ".$height."<BR>";
+			//echo "Breite: ".$width.", Hï¿½he: ".$height."<BR>";
 			$result4 = mysql_query( "SELECT FileNameOri FROM $table2 WHERE Width = '$width' AND Height = '$height'");
 			echo mysql_error();
 			unset($filename_arr);
@@ -203,7 +198,7 @@ echo "
 			$num4 = mysql_num_rows($result4);
 			IF($num4 > '1')
 			{
-				echo "Es gibt ".$num4." Bild(er) mit den Maßen ".$width." x ".$height."<BR>";
+				echo "Es gibt ".$num4." Bild(er) mit den Maï¿½en ".$width." x ".$height."<BR>";
 				FOR($i4='0'; $i4<$num4; $i4++)
 				{
 					$filenameori = mysql_result($result4, $i4, 'FileNameOri');
@@ -260,7 +255,7 @@ mysql_close($conn);
 	{
 	anotherWindow = window.open("", "bildfenster", "");
 	
-	// Wird bereits ein Bild in der "Großansicht" angezeigt? - dann wird es geschlossen:
+	// Wird bereits ein Bild in der "Groï¿½ansicht" angezeigt? - dann wird es geschlossen:
 	if (anotherWindow != null)
 	{
 		//alert("Zu!");

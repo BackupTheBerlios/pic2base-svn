@@ -29,15 +29,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -45,15 +42,15 @@ list($c_username) = split(',',$_COOKIE['login']);
 
 if(array_key_exists('kat_id',$_GET))
 {
-	$kat_id = $_GET['kat_id']; // für register_globals = off
+	$kat_id = $_GET['kat_id']; 
 }
 else
 {
-	$kat_id = 0; // für register_globals = off
+	$kat_id = 0;
 }
 if(array_key_exists('ID',$_POST))
 {
-	$ID = $_POST['ID']; // für register_globals = off
+	$ID = $_POST['ID'];
 }
 else
 {
@@ -67,7 +64,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
-//Variablen-Umbenennung für die Rücksprung-Adresse:
+//Variablen-Umbenennung fuer die Ruecksprung-Adresse:
 $kat_back = $kat_id;
 $ID_back = $ID;
 
@@ -93,11 +90,11 @@ echo "
 flush();	
 	//++++++++++++++++++++++++++++++++++++++++++++++++++
 	
-	//HINWEIS: Wenn einem Bild eine Kategorie zugewiesen werden soll, werden ihm gleichzeitig alle Eltern-Kategorien mit zugewiesen, denn ein Motiv in Blankenburg ist zwangsläufig in Sachsen-Anhalt, der BRD und Europa...
+	//HINWEIS: Wenn einem Bild eine Kategorie zugewiesen werden soll, werden ihm gleichzeitig alle Eltern-Kategorien mit zugewiesen, denn ein Motiv in Blankenburg ist zwangslï¿½ufig in Sachsen-Anhalt, der BRD und Europa...
 	
 	//++++++++++++++++++++++++++++++++++++++++++++++++++
 	
-	//Ermittlung der ausgewählten Checkboxen:
+	//Ermittlung der ausgewaehlten Checkboxen:
 	//echo count($_POST)."<BR>";
 	FOREACH ($_POST AS $key => $post)
 	{
@@ -115,7 +112,7 @@ flush();
 		}
 	}
 
-	//Für alle Elemente in dem Kategorie-Array werden die Eltern-Elemente bestimmt und ebenfalls in das Array geschrieben:
+	//Fuer alle Elemente in dem Kategorie-Array werden die Eltern-Elemente bestimmt und ebenfalls in das Array geschrieben:
 	
 	IF (isset($kat_ID) AND count($kat_ID) > 0)
 	{
@@ -131,7 +128,7 @@ flush();
 			}
 		}
 	}
-	//Zufügen der Eltern-Elemente zu dem Kategorien-Array:
+	//Zufï¿½gen der Eltern-Elemente zu dem Kategorien-Array:
 	@$kat_ID = array_merge($kat_ID, $KAT_ID);
 	//echo "Kategorie-Anzahl: ".count($kat_ID)."<BR>";//$kat_ID ist das Array mit allen Kategorie-IDs und deren Eltern-Kategorie-IDs
 	
@@ -169,7 +166,7 @@ flush();
 		//echo mysql_errno();
 		IF (mysql_errno() == '0')
 		{
-			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Datenübernahme...</p>
+			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
 			<meta http-equiv='refresh' content='0; url=edit_kat_daten.php?kat_id=$kat_back&ID=$ID_back'>";
 			
 		}
@@ -180,8 +177,8 @@ flush();
 	}
 	ELSE
 	{
-		echo "<p class='zwoelfred' align='center'>Es wurde kein Bild oder keine Kategorie ausgewählt!<BR><BR>
-		Bitte wählen Sie mindestens ein Bild aus<BR>oder verlassen Sie den vorhergehenden Dialog<BR>mit \"Abbrechen\"!</p>
+		echo "<p class='zwoelfred' align='center'>Es wurde kein Bild oder keine Kategorie ausgew&auml;hlt!<BR><BR>
+		Bitte w&auml;hlen Sie mindestens ein Bild aus<BR>oder verlassen Sie den vorhergehenden Dialog<BR>mit \"Abbrechen\"!</p>
 		<meta http-equiv='refresh' content='5; url=edit_kat_daten.php?kat_id=$kat_back&ID=$ID_back'>";
 	}
 	

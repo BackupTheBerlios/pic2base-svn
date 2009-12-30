@@ -14,13 +14,13 @@
 	{
 		if(document.geo_zuweisung.data_logger.value == "")
 		{
-			alert("Bitte wählen Sie Ihren Daten-Logger aus!");
+			alert("Bitte wï¿½hlen Sie Ihren Daten-Logger aus!");
 			document.geo_zuweisung.data_logger.focus();
 			return false;
 		}
 		if(document.geo_zuweisung.geo_file.value == "")
 		{
-			alert("Bitte wählen Sie eine Track-Datei aus!");
+			alert("Bitte wï¿½hlen Sie eine Track-Datei aus!");
 			document.geo_zuweisung.geo_file.focus();
 			return false;
 		}
@@ -48,17 +48,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -227,7 +222,7 @@ echo "
 			
 			<tr>
 				<td colspan='2'>
-					Wenn Sie Ihre Trackdaten zunächst nur in GoogleEarth darstellen wollen ohne eine Geo-Referenzierung vorzunehmen,<BR>klicken Sie auf den Button \"Track ansehen\".
+					Wenn Sie Ihre Trackdaten zun&auml;chst nur in GoogleEarth darstellen wollen ohne eine Geo-Referenzierung vorzunehmen,<BR>klicken Sie auf den Button \"Track ansehen\".
 				</td>
 			</tr>
 			

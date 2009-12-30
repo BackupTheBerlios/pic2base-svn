@@ -58,17 +58,12 @@ function ZeigeBild(bildname,breite,hoehe)
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -84,7 +79,7 @@ SWITCH ($berechtigung)
 	$navigation = 	"<a class='navi' href='adminframe.php'>Administration</a>
 			<a class='navi' href='../erfassung/erfassung0.php'>Erfassung</a>
 			<a class='navi' href='../recherche/recherche0.php'>Suche</a>
-			<a class='navi' href='../start.php'>Zurück</a>
+			<a class='navi' href='../start.php'>Zur&uuml;ck</a>
 			<a class='navi' href='hilfe1.php'>Hilfe</a>
 			<a class='navi' href='../../../index.php'>Logout</a>";
 	break;
