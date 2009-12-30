@@ -34,18 +34,24 @@
 	<?php
 	//Kontrolle, ob erforderliche Datenbank vorhanden ist:
 	include 'bin/share/global_config.php';
-	include $sr.'/bin/share/db_check1.php';
+	IF(@fopen($sr.'/bin/share/db_check1.php','r'))
+	{
+		include $sr.'/bin/share/db_check1.php';
+		IF($text == '')
+		{
+			$text = "<img src=\"bin/share/images/himmel3.png\" width=\"800\" />";
+		}
+	}
+	ELSE
+	{
+		$text = "<img src=\"bin/share/images/himmel3.png\" width=\"800\" />";
+	}
 	include $sr.'/bin/share/db_connect1.php';
 	
 	$ACTION = $_SERVER['PHP_SELF'];
 	$link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	
 	//var_dump($_REQUEST);
-	IF($text == '')
-	{
-		$text = "<img src=\"bin/share/images/himmel3.png\" width=\"800\" />";
-	}
-
 	@$database = mysql_pconnect($myhost,$myuser,$mypw);
 	if ($database)
 	{
