@@ -55,7 +55,7 @@ SWITCH ($berechtigung)
 			<a class='navi' href='?action=logs&logs=transfer'>Transfer</a>
 			<a class='navi' href='?action=traffic'>Traffic</a>
 			<a class='navi' href='#' onClick='NewWindow=window.open(\"user-online.php\",\"NewWindow\",\"toolbar=no,location=no,directories=no,status=no,me  nubar=no,scrollbars=yes,resizable=yes,width=500,height=400,top=100,left=400\");'>User-Online</a>
-			<a class='navi' href='../html/admin/adminframe.php'>Zur�ck</a>
+			<a class='navi' href='../html/admin/adminframe.php'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../html/help/help1.php?page=5'>Hilfe</a>
@@ -112,19 +112,19 @@ switch($_GET['action'])
 
 // ----------------------------------------------------------
 	
-	case user:
+	case 'user':
 	include('user.php');
 	break;
 
 // ----------------------------------------------------------
 	
-	case logs:
+	case 'logs':
 	include('logs.php');
 	break;
 
 // ----------------------------------------------------------	
 
-	case traffic:
+	case 'traffic':
 	include('config.inc.php');
 	mysql_connect($sql_server, $sql_user, $sql_pw) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error()); 
 	mysql_select_db($sql_db) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
