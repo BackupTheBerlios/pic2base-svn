@@ -156,7 +156,7 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 $benutzername = $c_username;
 $result15 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result15, $i15, 'id');
+$user_id = mysql_result($result15, isset($i15), 'id');
 
 include 'global_config.php';
 include $sr.'/bin/share/functions/main_functions.php';
