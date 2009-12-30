@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<!--sollte die EXIF-Daten-Erzeugung abstürzen, erfolgt nach 300 Sek. ein automat. Neustart-->
+	<!--sollte die EXIF-Daten-Erzeugung abstï¿½rzen, erfolgt nach 300 Sek. ein automat. Neustart-->
 	<!--<meta http-equiv="Refresh" Content="300; URL=../../admin/admin/generate_exifdata0.php">-->
 </HEAD>
 
@@ -22,7 +22,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 

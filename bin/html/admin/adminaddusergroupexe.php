@@ -20,7 +20,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
@@ -53,7 +53,7 @@ include $sr.'/bin/share/db_connect1.php';
 		//include '../../share/db_connect1.php';
 		//include '../../share/functions/permissions.php';
 		
-		$groupname = $_POST['groupname']; // für register_globals = off
+		$groupname = $_POST['groupname']; // fï¿½r register_globals = off
 		
 		$groupname = strip_tags($groupname);
 		if ((hasPermission($c_username, 'adminlogin')) AND ($groupname !== ''))

@@ -1,7 +1,7 @@
 <?
   mysql_connect ($db_server, $user, $PWD);
   mysql_select_db($db);
-  $group_id = $_GET['group_id']; // für register_globals = off
+  $group_id = $_GET['group_id'];
   
   $result1 = mysql_query( "DELETE FROM $table9 WHERE id = $group_id");
   echo mysql_error();

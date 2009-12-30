@@ -1,12 +1,12 @@
 <?php
 // abzuarbeitende Schritte:
-// aus Tabelle pictures alle bilder des alten Users auf neuen User übertragen
-// aus Tabelle users den entsprechenden User löschen
-// aus Tabelle userpermissions alle Einträge des betreffenden Users löschen
-// Userverzeichnis löschen
+// aus Tabelle pictures alle bilder des alten Users auf neuen User uebertragen
+// aus Tabelle users den entsprechenden User loeschen
+// aus Tabelle userpermissions alle Eintraege des betreffenden Users loeschen
+// Userverzeichnis loeschen
 //
-$users = $_POST['users']; // für register_globals = off
-$id = $_GET['id']; // für register_globals = off
+$users = $_POST['users'];
+$id = $_GET['id'];
 
 //echo "User-ID: ".$users;
 if (hasPermission($c_username, 'adminlogin') AND $users !== '')

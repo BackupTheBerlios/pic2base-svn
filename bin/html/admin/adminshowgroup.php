@@ -1,7 +1,7 @@
 <?
   echo "<CENTER>";
 //var_dump($_GET);
-  $id = $_GET['id']; // für register_globals = off
+  $id = $_GET['id']; // fï¿½r register_globals = off
   
   mysql_connect ($db_server, $user, $PWD);
   mysql_select_db($db);
@@ -12,7 +12,7 @@
   }
   else
   {
-    $desc = "[keine Gruppe gewählt]";
+    $desc = "[keine Gruppe gew&auml;hlt]";
   }
   if (hasPermission($c_username, 'adminlogin'))
   {
@@ -62,7 +62,7 @@
 		}
 		if (hasPermission($c_username, 'adminlogin'))
 		{
-			echo "<td><a href=adminchangegrouppermissionflag.php?group_id=".$id."&permission_id=".mysql_result($result, $i, "id").">Ändern</a></td>";
+			echo "<td><a href=adminchangegrouppermissionflag.php?group_id=".$id."&permission_id=".mysql_result($result, $i, "id").">&Auml;ndern</a></td>";
 		}
 		echo "</tr>";
     	}

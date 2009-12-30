@@ -2,7 +2,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-	list($c_username) = split(',',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
 include '../../share/global_config.php';
@@ -44,7 +44,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	</tr>
 	
 	<TR>
-	<TD colspan='2' align='center'><input type=submit value='Hinzufügen'>
+	<TD colspan='2' align='center'><input type=submit value='Hinzufï¿½gen'>
 	</TD>
 	</TR>
 	
@@ -63,6 +63,6 @@ if (hasPermission($c_username, 'adminlogin'))
 }
 ELSE
 {
-	echo "Sie haben nicht genügend Berechtigungen!";
+	echo "Sie haben nicht genï¿½gend Berechtigungen!";
 }
 ?>

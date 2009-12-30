@@ -3,7 +3,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-	list($c_username) = split(',',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
 include '../../share/global_config.php';
@@ -17,7 +17,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	<table class='normal'>
 	<tr>
 	<td colspan='2' align='center' style='font-size:12pt; text-align:center;'>
-	Neuen Benutzer hinzufügen
+	Neuen Benutzer hinzufï¿½gen
 	</td>
 	</tr>
 	
@@ -31,8 +31,8 @@ if (hasPermission($c_username, 'adminlogin'))
 	
 	<tr>
 	<td align=left colspan='2'>Hinweis: Der  Benutzername darf keine Leerzeichen oder Sonderzeichen enthalten<BR>
-	und darf höchstens 15 Zeichen lang sein.!<BR>
-	Die mit * gekennzeichneten Felder MÜSSEN ausgefüllt werden.
+	und darf hï¿½chstens 15 Zeichen lang sein.!<BR>
+	Die mit * gekennzeichneten Felder Mï¿½SSEN ausgefï¿½llt werden.
 	</td>
 	</tr>
 	
@@ -79,7 +79,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	
 	<tr>
 	<td align=left>
-	Straße:
+	Straï¿½e:
 	</td>
 	<td>
 	<input type=text name=strasse class='Auswahl150'>
@@ -173,7 +173,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	
 	<tr>
 	<td align=center colspan='2'>
-	<INPUT type='button' value='Abbrechen' OnClick='location.href=\"adminframe.php?item=adminshowusers\"'>&nbsp;&nbsp;<input type=submit value='Hinzufügen'>
+	<INPUT type='button' value='Abbrechen' OnClick='location.href=\"adminframe.php?item=adminshowusers\"'>&nbsp;&nbsp;<input type=submit value='Hinzufï¿½gen'>
 	</td>
 	</tr>
 	
@@ -190,7 +190,7 @@ if (hasPermission($c_username, 'adminlogin'))
 }
 ELSE
 {
-	echo "Sie haben nicht genügend Berechtigungen!";
+	echo "Sie haben nicht genï¿½gend Berechtigungen!";
 }
 ?>
 <script language="javascript">

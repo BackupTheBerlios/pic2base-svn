@@ -1,10 +1,10 @@
 <?
   mysql_connect ($db_server, $user, $PWD);
   mysql_select_db($db);
-  $group_id = $_GET['group_id']; // für register_globals = off
+  $group_id = $_GET['group_id'];
   
   //echo "Gruppen-Nr: ".$group_id."<BR>";
-  //Ermittlung, ob noch User zu der zu löschenden Gruppe gehören:
+  //Ermittlung, ob noch User zu der zu loeschenden Gruppe gehoeren:
   $result1 = mysql_query( "SELECT * FROM $table1 WHERE group_id = $group_id");
   echo mysql_error();
   $num1 = mysql_num_rows($result1);

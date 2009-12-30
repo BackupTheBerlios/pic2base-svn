@@ -30,25 +30,21 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //$c_username;
 }
  
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$mod = $_GET['mod']; // für register_globals = off
-$id = $_GET['id']; // für register_globals = off
-$gruppe = $_POST['gruppe']; // für register_globals = off
+$mod = $_GET['mod'];
+$id = $_GET['id'];
+$gruppe = $_POST['gruppe'];
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $user_id = mysql_result($result1, isset($i1), 'id');
@@ -63,12 +59,11 @@ IF($num2 == '1')
 		//echo $gruppe."<BR>";
 		//Dem benutzer wird die neue Gruppe zugewiesen:
 		$result3 = mysql_query( "UPDATE $table1 SET group_id = '$gruppe' WHERE id='$id'");
-		//die alten Benutzer-Rechte werden gelöscht:
+		//die alten Benutzer-Rechte werden geloescht:
 		$result4 = mysql_query( "DELETE FROM $table7 WHERE user_id = '$id'");
 		//Die neuen Benutzer-Rechte werden entsprechend der neuen Gruppe zugewiesen:
 		$result5 = mysql_query( "SELECT * FROM $table6 WHERE group_id = '$gruppe' AND enabled = '1'");
 		$num5 = mysql_num_rows($result5);
-		//echo $num5."<BR>";
 		FOR($i5=0; $i5<$num5; $i5++)
 		{
 			$perm_id = mysql_result($result5, $i5, 'permission_id');
@@ -86,7 +81,7 @@ IF($num2 == '1')
 			</div>
 			
 			<div class='content'>
-			<p style='margin:120px 0px; text-align:center'>Die gewünschte Aktion wird ausgef&uuml;hrt.</p>
+			<p style='margin:120px 0px; text-align:center'>Die gew&uuml;nschte Aktion wird ausgef&uuml;hrt.</p>
 			</div>
 			<br style='clear:both;' />
 			<p id='fuss'>$cr</p>

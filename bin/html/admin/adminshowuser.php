@@ -1,6 +1,6 @@
 <?
-  $id = $_GET['id']; // für register_globals = off
-  $del = $_GET['del']; // für register_globals = off
+  $id = $_GET['id']; 
+  $del = $_GET['del'];
     
   if (hasPermission($c_username, 'adminlogin'))
   {
@@ -47,7 +47,7 @@
 	}
 	else
 	{
-		echo "[keine Gruppe gewählt]";
+		echo "[keine Gruppe gew&auml;hlt]";
 	}
     }
     echo "</td>
@@ -64,7 +64,7 @@
     </tr>
     
     <tr>
-    <td align=left>Straße:</td>
+    <td align=left>Stra&szlig;e:</td>
     <td align=left>".mysql_result ($result, 0, "strasse")."</td>
     </tr>
     

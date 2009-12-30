@@ -1,5 +1,5 @@
 <?
-	// für register_globals = off
+	// fuer register_globals = off
 	if(array_key_exists('item',$_GET))
 	{
 		if(array_key_exists('item',$_GET))
