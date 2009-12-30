@@ -29,18 +29,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
  
 include '../../share/global_config.php';
@@ -51,7 +45,7 @@ $sup_ft_arr = explode(chr(10),shell_exec($im_path."/identify -list format"));
 //$sup_ft_arr = explode(chr(10),$sup_ft);
 //print_r($sup_ft_arr);
 
-$page = $_GET['page']; // f�r register_globals = off
+$page = $_GET['page']; 
 
 FOREACH($sup_ft_arr AS $SFT)
 {
@@ -74,7 +68,6 @@ FOREACH($sup_ft_arr AS $SFT)
 		}
 	}
 	//print_r($zeil_arr);	
-	//echo "<BR><BR><BR>";
 }
 
 
@@ -213,7 +206,7 @@ echo "
 		<BR><BR>
 		<u>Suche nach ausgew&auml;hlten Meta-Daten</u><BR>
 		Was sind Meta-Daten?<BR>
-		Meta-Daten sind zus&auml;tzliche, meist nicht sichtbare Informationen zu einem Bild. Dies k�nnen z.B. sein:<BR> Kamera-Modell, Aufnahme-Datum, Blende, Belichtungszeit, aber auch Angaben zum Copyright, Stichworte oder Bildbeschreibungen.<BR>
+		Meta-Daten sind zus&auml;tzliche, meist nicht sichtbare Informationen zu einem Bild. Dies k&ouml;nnen z.B. sein:<BR> Kamera-Modell, Aufnahme-Datum, Blende, Belichtungszeit, aber auch Angaben zum Copyright, Stichworte oder Bildbeschreibungen.<BR>
 		Um &uuml;ber die Meta-Daten recherchieren zu k&ouml;nnen, m&uuml;ssen Sie zuerst das entsprechende Meta-Daten-Feld in der ersten Zeile ausw&auml;hlen.<BR>
 		Dann bestimmen Sie, welche Bedingung dieser Meta-Wert erf&uuml;llen soll. (2. Auswahlfeld).<BR>
 		Wenn dies erfolgt ist, steht Ihnen auch das 3. Auswahlfeld (Kriterium) zur Verf&uuml;gung. In diesem Auswahlfeld werden alle verf&uuml;gbaren Werte des jeweils gew&auml;hlten Meta-Feldes aufgelistet. D.h., der hier angezeigte Werte-Bereich variiert je nach der im Feld \"Meta-Daten-Feld\" getroffenen Auswahl.<BR>
@@ -242,7 +235,7 @@ echo "
 		
 		<U>Bearbeitungsm&ouml;glichkeiten w&auml;hrend der Suche</U><BR>
 		
-		Wenn der angemeldete Benutzer berechtigt ist, Eigenschaften der gefundenen Bilder zu bearbeiten, stehen ihm die folgenden M�glichkeiten zur Verf&uuml;gung:<BR></p>
+		Wenn der angemeldete Benutzer berechtigt ist, Eigenschaften der gefundenen Bilder zu bearbeiten, stehen ihm die folgenden M&ouml;glichkeiten zur Verf&uuml;gung:<BR></p>
 		<ul style='margin:20px 150px; text-align:justify; width:350px;'>
 		<li>&Uuml;bertragung der Bild-Eigent&uuml;merschaft auf einen anderen User
 		<li>l&ouml;schen des Bildes
@@ -288,7 +281,7 @@ echo "
 		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>Hilfe zur Bild-Bewertung:</b><BR><BR>
 		Um die gezielte Suche nach Bildern mit bestimmten Qualit&auml;tsanforderungen zu erm&ouml;glichen, kann jedes Bild qualitativ bewertet werden. Die Bewertung reicht von \"1 Stern\" (ungen&uuml;gend) bis \"5 Sterne\" (sehr gut).<BR>
-		Die eigentliche Vergabe der Sterne erfolgt durch anklicken des betreffenden Sterns unter dem jeweiligen Bild, wobei der linke Stern f�r \"1 Stern\" steht und der reche f�r \"5 Sterne\".<BR>
+		Die eigentliche Vergabe der Sterne erfolgt durch anklicken des betreffenden Sterns unter dem jeweiligen Bild, wobei der linke Stern f&uuml;r \"1 Stern\" steht und der reche f&uuml;r \"5 Sterne\".<BR>
 		Standardm&auml;&szlig;ig wird jedem Bild bei der Erfassung ein Stern - also die niedrigste Qualit&auml;tsstufe - zugewiesen.<BR><BR>
 		<b>Hilfe zur Geo-Referenzierung:</b><BR><BR>
 		
@@ -296,7 +289,7 @@ echo "
 		Im Ergebnis der Referenzierung werden Ihnen in der rechten Spalte alle Bilder aufgelistet, bei denen es eine &Uuml;bereinstimmung der Daten gab.<BR>
 		Sollte es zu keinen 'Treffern' zwischen Bild- und Track-Dateien kommen, pr&uuml;fen Sie bitte zuerst, ob die Zeitstempel der Bild-Dateien mit denen der Track-Daten ann&auml;hernd &uuml;bereinstimmen.<BR>
 		Viele Konvertierungsprogramme &auml;ndern die Zeitangaben bei der Speicherung der Track-Dateien von lokaler Zeit in UTC.<BR><BR>
-		<font color = 'red'>pic2base geht davon aus, da� die Zeitangaben in der Track-Datei als UTC-Angabe vorliegen!<BR>
+		<font color = 'red'>pic2base geht davon aus, da&szlig; die Zeitangaben in der Track-Datei als UTC-Angabe vorliegen!<BR>
 		Gleichzeitig geht pic2base davon aus, da&szlig; die interne Uhr der Kamera auf die aktuelle Ortszeit eingestellt war. Das bedeutet, wenn Aufnahmen in einer anderen Zeitzone als CET aufgenommen wurden, muss <b>VOR</b> der Referenzierung diese Zeitzone manuell eingestellt werden. (Drop-Down-Feld \"Zeitzone\")</font><BR><BR>
 		Vor einer automatischen Geo-Referenzierung ist also immer die Frage zu beantworten: In welchem Verh&auml;ltnis stand die lokale Zeit am Aufnahmeort zur GMT?<BR><BR>
 		Am Ende der rechten Spalte befindet sich der Button \"Weiter\" &uuml;ber welchen man zum folgenden Formular gelangt, in welchem in der linken Spalte das betreffende Bild und ein Eingabefeld zur Erfassung der Ortsbezeichnung des Aufnahmestandortes zu sehen ist und in der rechten Spalte - eine Internetverbindung vorausgesetzt - der Aufnahmestandort in der Karte dargestellt wird.<BR>
