@@ -35,7 +35,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -59,7 +59,7 @@ if(!isset($hinweis))
 //var_dump($_GET);
 
 
-//wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pr�fung, ob eine neuere Version verf�gbar ist:
+//wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist:
 IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 {
 	$file1 = 'http://www.pic2base.de/web/includes/conf.inc.php';
@@ -130,7 +130,7 @@ ELSE
 	$hinweis10 = "Es befinden sich zur Zeit noch keine Bilder in der Datenbank.";
 }
 
-//Pr�fung, ob Bilder ohne Kategorie-Zuweisung f�r den Benutzer vorliegen:
+//Pruefung, ob Bilder ohne Kategorie-Zuweisung fuer den Benutzer vorliegen:
 $num_pic = '0';
 $result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id'");
 @$num2 = mysql_num_rows($result2);
@@ -138,7 +138,6 @@ IF($num2 > '0')
 {
 	$hinweis0 = "Sie haben bisher ".$num2." Bilder in die Datenbank gestellt.";
 	
-	//$result3 = mysql_query("SELECT $table2.pic_id, $table2.Owner FROM $table2 LEFT JOIN $table10 ON $table2.pic_id = $table10.pic_id WHERE ($table10.kat_id IS NULL AND $table2.Owner = '$user_id')");
 	$result3 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id' AND has_kat = '0'");
 	$num_pic = mysql_num_rows($result3);
 	//echo "Num_Pic: ".$num_pic."<BR>";
@@ -156,7 +155,7 @@ ELSE
 {
 	$hinweis0 = "Sie haben noch keine Bilder in die Datenbank gestellt.";
 }
-//Pr�fung, ob Dateien im FTP-Upload-Ordner vorliegen:
+//Pruefung, ob Dateien im FTP-Upload-Ordner vorliegen:
 $n = 0;
 @$verz=opendir($ftp_path."/".$c_username."/uploads");
 //echo "Verzeichnis: ".$verz;
@@ -179,7 +178,7 @@ IF($verz)
 	$hinweis2 = "Es befinden sich ".$n." Datei(en) in Ihrem Upload-Ordner.<BR>";
 }
 
-//Pr�fung, ob Dateien im FTP-Download-Ordner vorliegen:
+//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
 $m = 0;
 @$verz=opendir($ftp_path."/".$c_username."/downloads");
 //echo "V: ".$verz;
@@ -487,7 +486,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 			breite = breite / diff;
 		}
 		
-		//alert("Breite: "+breite+", H�he: "+hoehe+", Modus: "+modus+", Format: "+size);
+		//alert("Breite: "+breite+", Hoehe: "+hoehe+", Modus: "+modus+", Format: "+size);
 		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe;
 
 		dateiname=bildname.substring(bildname.length-17,bildname.length);
