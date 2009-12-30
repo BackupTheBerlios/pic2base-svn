@@ -55,7 +55,7 @@ IF ($pic_id !=='0')
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
 		$note = mysql_result($result8, isset($i8), 'note');
 		$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
-		$Ori_arr = split(' : ',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
+		$Ori_arr = preg_split('# : #',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
 		if ($Ori_arr[0] != '')
 		{
 			$Orientation = $Ori_arr[1];

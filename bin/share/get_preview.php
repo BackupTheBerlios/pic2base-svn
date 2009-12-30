@@ -218,7 +218,7 @@ SWITCH ($modus)
 				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
 				$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
-				$Orientation = mysql_result($result2, 'Orientation');	// 1: normal; 8: 90 CW
+				$Orientation = mysql_result($result2, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')

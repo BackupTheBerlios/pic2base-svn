@@ -1599,7 +1599,7 @@ function checkSoftware()
 	
 	IF(stristr($gb, 'package') OR stristr($gb, 'gpsbabel'))
 	{
-		$gb_test = shell_exec("locate gpsbabel");
+		$gb_test = shell_exec("gpsbabel");
 		IF($gb_test == '')
 		{
 			echo "<TR>

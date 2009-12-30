@@ -158,7 +158,7 @@ FOR ($x='0';$x<$n;$x++)
 	$datei_name = $bild_datei[$x];
 	$bild = $ordner."/".$datei_name;
 	
-	$Ori_arr = split(' : ',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //num. Wert der Ausrichtung des Ori.-bildes
+	$Ori_arr = preg_split('# : #',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //num. Wert der Ausrichtung des Ori.-bildes
 	
 	if (count($Ori_arr) > 1 )
 	{

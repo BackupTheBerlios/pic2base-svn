@@ -28,7 +28,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
 
 	$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
-	$Ori_arr = split(' : ',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
+	$Ori_arr = preg_split('# : #',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
 //	echo $bild."<br>";
 	if ( $Ori_arr[0] != '')
 	{

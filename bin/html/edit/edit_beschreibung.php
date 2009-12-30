@@ -43,7 +43,7 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
@@ -125,11 +125,11 @@ echo "
 		{
 			$edit_mod = 'desc';
 			getPictureDetails($pic_id,$edit_mod);
-			echo "<p align='right'><a href='edit_beschreibung.php?kat_id=$kat_id&ID=$ID&mod=kat&pic_id=0' title='Einzel-Beschreibungsmodus verlassen'><img src='../../share/images/back.gif' width='15' height='15' border='0' alt='zurück' style='margin-right:5px';></a></p>";
+			echo "<p align='right'><a href='edit_beschreibung.php?kat_id=$kat_id&ID=$ID&mod=kat&pic_id=0' title='Einzel-Beschreibungsmodus verlassen'><img src='../../share/images/back.gif' width='15' height='15' border='0' alt='zurï¿½ck' style='margin-right:5px';></a></p>";
 		}
 		ELSE
 		{
-			echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ordne Beschreibungstext den ausgewählten Bildern zu:<BR></p><u>Hinweis:</u><BR>Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgewählten Bildern hinzugef&uuml;gt!<BR><BR><textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
+			echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ordne Beschreibungstext den ausgewï¿½hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgewï¿½hlten Bildern hinzugef&uuml;gt!<BR><BR><textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
 		}
 		
 	echo "

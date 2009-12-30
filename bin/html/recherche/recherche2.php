@@ -1,7 +1,14 @@
 <?php
 unset($parameter);
-$parameter = $_COOKIE['parameter'];
-$param = split(',', $parameter);
+IF(array_key_exists('parameter', $_COOKIE))
+{
+	$parameter = $_COOKIE['parameter'];
+	$param = preg_split('#,#', $parameter);
+}
+ELSE
+{
+		$param = '';
+}
 IF(count($param) == '3')
 {
 	$lat = $param[0];
@@ -149,7 +156,14 @@ IF ($_COOKIE['login'])
 	//echo $c_username;
 	$benutzername = $c_username;
 }
-list($bewertung) = split(',',$_COOKIE['bewertung']);
+IF (array_key_exists('bewertung', $_COOKIE))
+{
+	list($bewertung) = preg_split('#,#',$_COOKIE['bewertung']);
+}
+ELSE
+{
+	$bewertung = '';
+}
 //echo "Kontrolle: Bewertung: ".$bewertung."<BR>";
 IF($bewertung == '')
 {
