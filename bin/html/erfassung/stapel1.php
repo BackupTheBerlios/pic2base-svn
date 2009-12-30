@@ -28,15 +28,12 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-	list($c_username) = split(',',$_COOKIE['login']);
-	//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
 include '../../share/global_config.php';
@@ -51,11 +48,11 @@ fclose($fh);
 //var_dump($_POST);
 if (array_key_exists('ordner',$_POST))
 {
-	$ordner = $_POST['ordner']; // für register_globals = off
+	$ordner = $_POST['ordner']; // fï¿½r register_globals = off
 }
 if (array_key_exists('ordner',$_GET))
 {
-	$ordner = $_GET['ordner']; // für register_globals = off
+	$ordner = $_GET['ordner']; // fï¿½r register_globals = off
 }
 
 $x = 0;
@@ -148,7 +145,7 @@ Bild-Eigenschaften ermitteln (Meta-Daten auslesen)
 mittels exiftool alle verf&uuml;gbaren Metadaten auslesen und, wenn f&uuml;r die einzelnen Parameter Felder in der Tabelle meta_data existieren, die ermittelten Werte dort speichern
 Kontrolle, ob mindestens die Parameter Width, Height und ImageSize ausgelesen wurden. Wenn nicht, diese Parameter mit PHP-Routinen ermitteln und in der DB speichern
 Die Ausrichtung wird intern immer mit '1' verwendet.
-Formatvorgaben der Popup-Vorschaufenster werden aus den tatsächlichen Bild-Abmessungen mittel getimagesize() ermittelt!
+Formatvorgaben der Popup-Vorschaufenster werden aus den tatsï¿½chlichen Bild-Abmessungen mittel getimagesize() ermittelt!
 
 Erfassung eines Bildes abgeschlossen    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
@@ -302,7 +299,7 @@ $runtime1 = ($end1sec + $end1msec) - ($start1sec + $start1msec);
 echo "Zeit f&uuml;r Bildupload: ".$runtime1."<BR>";
 */
 	//Funktions-Parameter: Bild-ID, Anzahl der Scenen; User-ID; Ausrichtung
-	savePicture($pic_id,$z,$user_id,$Orientation);	//Parameter sollten reichen, da sich alles weitere erzeugen l&auml;ßt
+	savePicture($pic_id,$z,$user_id,$Orientation);	//Parameter sollten reichen, da sich alles weitere erzeugen l&auml;ï¿½t
 /*
 $end2 = microtime();
 list($end2msec, $end2sec) = explode(" ",$end2);

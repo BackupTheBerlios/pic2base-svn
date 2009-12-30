@@ -34,17 +34,12 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
-//echo $c_username;
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
-foreach($_SERVER as $schluessel => $wert)
-{
-//echo $schluessel." - ".$wert."<BR>";
-};
-//phpinfo();
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';

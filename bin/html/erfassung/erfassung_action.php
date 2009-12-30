@@ -42,7 +42,7 @@ die Datei wird in den Upload-Ordner des Users heladen und dann der Stapel-Upload
 unset($username);
 IF ($_COOKIE['login'])
 {
-	list($c_username) = split(',',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 	$benutzername = $c_username;
 }
@@ -57,19 +57,13 @@ $datei			Name der Datei im Cache
 */
 
 //var_dump($_FILES);
-$datei_name = $_FILES['datei']['name']; // für register_globals = off
+$datei_name = $_FILES['datei']['name']; // fuer register_globals = off
 $tmp_name = $_FILES['datei']['tmp_name'];
 //echo "Name der hochzuladenden Datei: ".$datei_name."<BR>";
 //echo " Name der Datei im Cache: ".$datei."<BR>";
 
 IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 {
-// alt:
-//	$target = $ftp_path."/".$c_username."/uploads/".$datei_name;
-//	@copy($datei,$target) OR die("Upload fehlgeschlagen");
-//	$tmp_file = $up_dir."/".$datei_name;
-
-// neu für register_globals = off : 
 	$target = $ftp_path."/".$c_username."/uploads/".$datei_name;
 	
 	if ( !move_uploaded_file($tmp_name,$target) )
@@ -77,19 +71,19 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 		switch ($_FILES['datei']['error']) 
 		{
 			case UPLOAD_ERR_INI_SIZE:
-				$fehler = "Die Dateigröße des Bildes: ".$datei_name." ist zu groß!";
+				$fehler = "Die Dateigr&ouml;&szlig;e des Bildes: ".$datei_name." ist zu gro&szlig;!";
 				break;
 			case UPLOAD_ERR_FORM_SIZE:
-				$fehler = "Die Dateigröße des Bildes: ".$datei_name." ist zu groß!";
+				$fehler = "Die Dateigr&ouml;&szlig;e des Bildes: ".$datei_name." ist zu gro&szlig;!";
 				break;
 			case UPLOAD_ERR_PARTIAL:
-				$fehler = "Das Bild: ".$datei_name." konnte nicht vollständig hochgeladen werden!";
+				$fehler = "Das Bild: ".$datei_name." konnte nicht vollst&auml;ndig hochgeladen werden!";
 				break;
 			case UPLOAD_ERR_NO_FILE:
 				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden!";
 				break;
 			case UPLOAD_ERR_NO_TMP_DIR:
-				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: Es fehlt das temporäre Verzeichnis!";
+				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: Es fehlt das tempor&auml;re Verzeichnis!";
 				break;
 			case UPLOAD_ERR_CANT_WRITE:
 				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: Schreibfehler auf dem Server!";
@@ -117,7 +111,7 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 			<div class='content'>
 			<p style='margin:80px 0px; text-align:center; color:red;'>".$fehler."<p style='text-align:center; color:black;'>
 			Bitte w&auml;hlen Sie eine andere Bilddatei aus!<BR><BR>
-			<INPUT TYPE='button' value='Zurück' onclick=\"location.href='javascript:history.back()'\"></P>
+			<INPUT TYPE='button' value='Zur&uuml;ck' onclick=\"location.href='javascript:history.back()'\"></P>
 			</p>
 			</div>
 			<br style='clear:both;' />
@@ -176,7 +170,7 @@ ELSE
 		<div class='content'>
 		<p style='margin:80px 0px; text-align:center'>
 		Bitte w&auml;hlen Sie eine Bilddatei aus!<BR><BR>
-		<INPUT TYPE='button' value='Zurück' onclick=\"location.href='javascript:history.back()'\"></P>
+		<INPUT TYPE='button' value='Zur&uuml;ck' onclick=\"location.href='javascript:history.back()'\"></P>
 		</p>
 		</div>
 		<br style='clear:both;' />

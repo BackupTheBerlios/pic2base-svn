@@ -38,18 +38,13 @@ include $sr.'/bin/share/functions/main_functions.php';
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = split(',',$_COOKIE['login']);
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
 
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
-//foreach($_SERVER as $schluessel => $wert)
-//{
-//echo $schluessel." - ".$wert."<BR>";
-//};
-//phpinfo();
 ?>
 
 <div class="page">
@@ -66,7 +61,7 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	
 	<div class="content">
 	<p style="margin:50px 0px; text-align:center">
-	Wählen Sie die hochzuladende Datei hier aus:</p>
+	W&auml;hlen Sie die hochzuladende Datei hier aus:</p>
 	
 	<center>
 	<form name='files' action='erfassung_action.php' method='post' ENCTYPE='multipart/form-data'>
