@@ -1,7 +1,7 @@
 <?php
 function getNikonD70Params($new_filename,$ext)
 {
-	//wird verwendet für D70, D80
+	//wird verwendet fuer D70, D80
 	include '../../share/global_config.php';
 	//Ermittlung der mitgelieferten Bildparameter:
 	$file_info = pathinfo($new_filename);

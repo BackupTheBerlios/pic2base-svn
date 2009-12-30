@@ -9,11 +9,11 @@ function getFileError($NUM)
 		break;
 		
 		CASE UPLOAD_ERR_INI_SIZE:
-		$err = "<font color='red'>Es wurde die in der php-ini festgelegte Dateigröße überschritten!</font>";
+		$err = "<font color='red'>Es wurde die in der php-ini festgelegte Dateigrï¿½ï¿½e ï¿½berschritten!</font>";
 		break;
 		
 		CASE UPLOAD_ERR_FORM_SIZE:
-		$err = "<font color='red'>Es wurde die im Formular festgelegte Dateigröße überschritten!</font>";
+		$err = "<font color='red'>Es wurde die im Formular festgelegte Dateigrï¿½ï¿½e ï¿½berschritten!</font>";
 		break;
 		
 		CASE UPLOAD_ERR_PARTIAL:
@@ -34,7 +34,7 @@ function getTrackPoints($delta,$pic_time,$datum)
 	include $sr.'/bin/share/db_connect1.php';
 	$start_time = date('H:i:s', strtotime("$pic_time - $delta seconds"));
 	$end_time = date('H:i:s', strtotime("$pic_time + $delta seconds"));
-	//echo "Zeitfenster für Trackdaten: ".$start_time." - ".$end_time."<BR>";
+	//echo "Zeitfenster fï¿½r Trackdaten: ".$start_time." - ".$end_time."<BR>";
 	$result7 = mysql_query( "SELECT * FROM $table13 WHERE date = '$datum' AND time > '$start_time' AND time < '$end_time'");
 	$num7 = mysql_num_rows($result7);
 	//echo "Anz. Trackpunkte: ".$num7."<BR>";
@@ -53,14 +53,14 @@ function findTrackData($delta,$pic_time,$datum,$pic_id)
 	$delta = $delta - 1;
 	$start_time = date('H:i:s', strtotime("$pic_time - $delta seconds"));
 	$end_time = date('H:i:s', strtotime("$pic_time + $delta seconds"));
-	//echo "Zeitgrenzen für Trackdaten: ".$start_time." - ".$end_time."<BR>";
+	//echo "Zeitgrenzen fuer Trackdaten: ".$start_time." - ".$end_time."<BR>";
 	$result8 = mysql_query( "SELECT * FROM $table13 WHERE date = '$datum' AND (time = '$start_time' OR time = '$end_time')");
 	$num8 = mysql_num_rows($result8);
-	//Wenn mehrere Trackpunkte gefunden werden, werden willkürlich die Daten des ersten verwendet:
+	//Wenn mehrere Trackpunkte gefunden werden, werden willkuerlich die Daten des ersten verwendet:
 	$longitude = mysql_result($result8,0,'longitude'); 
 	$latitude = mysql_result($result8,0,'latitude'); 
 	$altitude = mysql_result($result8,0,'altitude'); 
-	//in der 'locations' gespeichert und mit dem Bild 'pic_id' verknüpft:
+	//in der 'locations' gespeichert und mit dem Bild 'pic_id' verknuepft:
 	$result9 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude) VALUES ('$longitude', '$latitude', '$altitude')");
 	echo mysql_error();
 	$result10 = mysql_query( "SELECT max(loc_id) FROM $table12");
@@ -87,7 +87,7 @@ function getDeltaLong($lat, $radius1)
 	$umf_lat = 40000000 * cos(deg2rad($lat));
 	//echo "Umfang auf Breitenkreis ".$lat.": ".($umf_lat / 1000)." km<BR>";
 	$diff_long = 360 / $umf_lat;
-	//echo htmlentities("Winkeläanderung je m: ".$diff_long)." in Grad / m<BR>";
+	//echo htmlentities("Winkelï¿½anderung je m: ".$diff_long)." in Grad / m<BR>";
 	$delta_long = $diff_long * $radius1;
 	return $delta_long;
 }
@@ -97,7 +97,7 @@ function isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius)
 	//Entfernung pro Breitengrad: 111111,111 m
 	$y_abst = pow((($latitude - $lat_mittel) * 111111.111),2); // in qm
 	
-	//Entfernung je Längengrad ist von der Erhebung über Äquator (Breitengrad) abhängig:
+	//Entfernung je Lï¿½ngengrad ist von der Erhebung ï¿½ber ï¿½quator (Breitengrad) abhï¿½ngig:
 	$x_abst = pow(($longitude - $long_mittel) * (40000000 * cos(deg2rad($latitude)) / 360),2); //in qm
 	
 	IF (pow($radius , 2) < ($x_abst + $y_abst))
@@ -129,7 +129,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 	{
 		// Bsp: gpsbabel -t -i nmea -f "Pfad/Datei.log" -o kml -F "Pfad/Datei.kml"
 		CASE '1':
-		//Routine für Sony CS1 (log)
+		//Routine fï¿½r Sony CS1 (log)
 		IF(strtolower($info['extension']) !== 'log')
 		{
 			echo "Es handelt sich nicht um eine SONY-CS1-Datei!<BR>";
@@ -143,7 +143,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		break;
 		
 		CASE '2':
-		//Routine für Garmin GPSmap 60CS(x) tracklogs (.gpx)
+		//Routine fï¿½r Garmin GPSmap 60CS(x) tracklogs (.gpx)
 		IF(strtolower($info['extension']) !== 'gpx')
 		{
 			echo "Es handelt sich nicht um eine Garmin GPSmap 60CS(x)-Datei!<BR>";
@@ -158,17 +158,17 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		break;
 		
 		CASE '5':
-		//Routine für Alan Map500 tracklogs (.trl)
+		//Routine fuer Alan Map500 tracklogs (.trl)
 		
 		break;
 		
 		CASE '6':
-		//Routine für CarteSurTable data file
+		//Routine fuer CarteSurTable data file
 		
 		break;
 		
 		CASE '17':
-		//Routine für Garmin MapSource (gdb)
+		//Routine fuer Garmin MapSource (gdb)
 		IF(strtolower($info['extension']) !== 'gdb')
 		{
 			echo "Es handelt sich nicht um eine Garmin MapSource-Datei!<BR>";
@@ -181,7 +181,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		break;
 		
 		CASE '22':
-		//Routine für Google Earth (Keyhole) Markup Language (kml)
+		//Routine fuer Google Earth (Keyhole) Markup Language (kml)
 		IF(strtolower($info['extension']) !== 'kml')
 		{
 			echo "Es handelt sich nicht um eine Google Earth (Keyhole) Markup Language-Datei!<BR>";
@@ -198,7 +198,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 	{
 		//echo $geo_path_copy."/".$geo_file_name."<BR>";
 		// ######################
-		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet, aus der die Geo-Daten in die Datenbank überführt werden!
+		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet, aus der die Geo-Daten in die Datenbank ï¿½berfï¿½hrt werden!
 		// ######################
 		//$kml_file = shell_exec("gpsbabel -t -i ".$file_format." -f ".$geo_path_copy."/".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
 		$kml_file = shell_exec($gpsb_path."/gpsbabel -t -i ".$file_format." -f ".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
@@ -214,15 +214,15 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		{
 			
 			//echo "parsen der konvertierten Track-Datei und speichern der Werte in der geo_tmp (table13):";
-			//Initialisierung des Array-Positionszählers:
+			//Initialisierung des Array-Positionszaehlers:
 			$geo_arr = array();
 			//$data_arr = array();
 			$data_arr = array('0.00', '0.00', '0.00', '0000-00-00T00:00:00Z');
-			$z = 0; //Indexzähler des Geoarrays (0 - Anz. Datensätz in der Log-Datei)
+			$z = 0; //Indexzï¿½hler des Geoarrays (0 - Anz. Datensaetz in der Log-Datei)
 			
 			WHILE(!feof($fh1))
 			{
-				//Zeilenweise wird der Datei-Inhalt in ein Array überführt:
+				//Zeilenweise wird der Datei-Inhalt in ein Array ueberfuehrt:
 				$line = strip_tags(fgets($fh1, 1024));
 				
 
@@ -268,7 +268,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 			
 			//Was steht in dem Array?
 			//##################################################################
-			//während der Testphase:
+			//waehrend der Testphase:
 			//$result0 = mysql_query( "DELETE FROM $table13");
 			//##################################################################
 			/*

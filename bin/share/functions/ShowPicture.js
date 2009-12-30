@@ -17,7 +17,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 			breite = breite / diff;
 		}
 		
-		//alert("Breite: "+breite+", Höhe: "+hoehe+", Modus: "+modus+", Format: "+size);
+		//alert("Breite: "+breite+", Hoehe: "+hoehe+", Modus: "+modus+", Format: "+size);
 		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe,woerter,location;
 
 		//dateiname=bildname.substring(bildname.length-17,bildname.length);
@@ -56,7 +56,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 			breite = screen.width;
 			hoehe = Math.floor(breite / ratio_pic);
 		}
-		//alert("Breite: "+breite+", Höhe: "+hoehe+", Modus: "+modus);
+		//alert("Breite: "+breite+", Hoehe: "+hoehe+", Modus: "+modus);
 		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe,woerter;
 		
 		woerter = bildname.split("/");

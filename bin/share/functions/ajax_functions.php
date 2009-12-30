@@ -6,12 +6,11 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	unset($username);
 	IF ($_COOKIE['login'])
 	{
-		list($c_username) = split(',',$_COOKIE['login']);
-		//echo $c_username;
+		list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	}
 	
 	//Erzeugung einer Bildvorschau unter optimaler Nutzung des Bildschirmes;
-	//Qualit�ten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
+	//Qualitaeten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	$res0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
@@ -334,16 +333,7 @@ function rotPrevPic(Orientation, FileNameV, pic_id, fs_hoehe)
 		var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 	}
 }
-/*
-function changeGeoRef(FileName, c_username, pic_id)
-{
-	var url = '../../../edit_geo_ref.html';
-	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id;
-	//alert("Parameter: "+params);
-	var target = 'spalte2F';
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
-}
-*/
+
 function deletePictureGeo1(FileName, c_username, pic_id, long, lat, alt, radius1, einheit1, mod, modus, base_file, form_name, bewertung, position, jump, aktion)
 {
 	//LOESCHT BILD AUS DEM ARCHIV!!!!!!
