@@ -284,11 +284,11 @@ SWITCH ($berechtigung)
 	<DIV id="spalte2">
 		<p id="elf" style="background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;">Hinweis:<BR><BR>
 		Mit einem Klick auf einen Kategorie-Namen f&uuml;gen Sie eine neue Unter-Kategorie unterhalb der gew&auml;hlten Kategorie ein.<BR><BR>
-		Mit einem Klick auf das Bearbeiten-Icon &#160;<img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'>&#160; k&ouml;nnen Sie die Bezeichnung f�r die ausgew&auml;hlte Kategorie &auml;ndern.<BR><BR>
+		Mit einem Klick auf das Bearbeiten-Icon &#160;<img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'>&#160; k&ouml;nnen Sie die Bezeichnung f&uuml;r die ausgew&auml;hlte Kategorie &auml;ndern.<BR><BR>
 		Mit einem Klick auf das L&ouml;schen-Icon &#160;<img src='../../share/images/delete.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Delete-Icon'>&#160; k&ouml;nnen Sie die ausgew&auml;hlte Kategorie l&ouml;schen.<BR>
 		<u>Wichtig!</u><BR>
 		Hierbei werden auch ALLE Unterkategorien der gew&auml;hlten Kategorie gel&ouml;scht!<BR><BR>
-		�ber den Men&uuml;punkt "Sortierung" k&ouml;nnen Sie die Kategorie-Struktur neu ordnen. Weitere Informationen erhalten Sie auf der Sortieren-Seite.<BR><BR>
+		&Uuml;ber den Men&uuml;punkt "Sortierung" k&ouml;nnen Sie die Kategorie-Struktur neu ordnen. Weitere Informationen erhalten Sie auf der Sortieren-Seite.<BR><BR>
 		Mit dem Men&uuml;punkt "Wartung" haben Sie die M&ouml;glichkeit, die Tabelle der Bild-Kategorie-Zuweisungen auf fehlerhafte Eintr&auml;ge zu &uuml;berpr&uuml;fen und ggf. zu reparieren. Die Aktion wird sofort nach Klick auf den Button gestartet und kann eine Weile dauern.<BR>
 		Am Ende der Wartung wird Ihnen ein Bericht &uuml;ber den Zustand der Tabelle angezeigt.</p>
 	</DIV>
