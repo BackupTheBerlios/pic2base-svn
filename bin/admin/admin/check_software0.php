@@ -12,8 +12,8 @@
 	<style type="text/css">
 	<!--
 	.tablenormal	{
-			width:200px;
-			margin-left:280px;
+			width:400px;
+			margin-left:200px;
 			}
 			
 	.trflach	{
@@ -22,13 +22,13 @@
 			}
 			
 	.tdleft	{
-			width:80px;
+			width:120px;
 			text-align:left;
 			}
 			
 	.tdright	{
-			width:120px;
-			text-align:center;
+			width:280px;
+			text-align:left;
 			}
 	-->
 	</style>

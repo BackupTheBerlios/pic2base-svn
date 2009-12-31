@@ -1472,13 +1472,11 @@ function convertOrientationTextToNumber($value)
 function checkSoftware()
 {
 	//Kontrolle, ob erforderliche Software-Komponenten installiert sind:
-	
-	$et = shell_exec("rpm -q exiftool");
-	$im = shell_exec("rpm -q ImageMagick");
-	$dc = shell_exec("rpm -q dcraw");
-	$gb = shell_exec("rpm -q gpsbabel");
-	$loc = shell_exec("rpm -q kio-locate");
-	shell_exec("updatedb");
+	$et = shell_exec("which exiftool");
+	$im = shell_exec("which convert");
+	$dc = shell_exec("which dcraw");
+	$gb = shell_exec("which gpsbabel");
+	$loc = shell_exec("which locate");
 	
 	echo "	<TABLE class='tablenormal' border='0'>
 		<TR>
@@ -1491,16 +1489,11 @@ function checkSoftware()
 	flush();
 	sleep(1);
 	
-	IF(stristr($loc, 'kio-locate'))
+	IF($loc !== '')
 	{
-		$loc_db = shell_exec("locate locatedb");
-		IF($loc_db == '')
-		{
-			shell_exec("updatedb");
-		}
 		echo "<TR>
 		<TD class='tdleft'>locate</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$loc." installiert</FONT></TD>
 		</TR>";
 	}
 	ELSE
@@ -1513,108 +1506,78 @@ function checkSoftware()
 	flush();
 	sleep(1);
 	
-	IF(stristr($et, 'package'))
+	IF($et == '')
 	{
-		$et_test = shell_exec("locate *exiftool");
-		IF($et_test == '')
-		{
-			echo "<TR>
-			<TD class='tdleft'>ExifTool</TD>
-			<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>nicht installiert</a></TD>
-			</TR>";
-		}
-		ELSE
-		{
-			echo "<TR>
-			<TD class='tdleft'>ExifTool</TD>
-			<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
-			</TR>";
-		}
+		echo "<TR>
+		<TD class='tdleft'>ExifTool</TD>
+		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>nicht installiert</a></TD>
+		</TR>";
 	}
 	ELSE
 	{
-	echo "<TR>
+		echo "<TR>
 		<TD class='tdleft'>ExifTool</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$et." installiert</FONT></TD>
 		</TR>";
 	}
+	
 	flush();
 	sleep(1);
 	
-	IF(stristr($im, 'package'))
+
+	IF($im == '')
 	{
-		$im_test = shell_exec("locate ImageMagick");
-		IF($im_test == '')
-		{
-			echo "<TR>
-			<TD class='tdleft'>ImageMagick</TD>
-			<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>nicht installiert</a></TD>
-			</TR>";
-		}
-		ELSE
-		{
-			echo "<TR>
-			<TD class='tdleft'>ImageMagick</TD>
-			<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
-			</TR>";
-		}
+		echo "<TR>
+		<TD class='tdleft'>ImageMagick</TD>
+		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>nicht installiert</a></TD>
+		</TR>";
 	}
 	ELSE
 	{
 		echo "<TR>
 		<TD class='tdleft'>ImageMagick</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$im." installiert</FONT></TD>
 		</TR>";
 	}
+
 	flush();
 	sleep(1);
 	
-	IF(stristr($dc, 'package'))
+
+	IF($dc == '')
 	{
-		$dc_test = shell_exec("locate dcraw");
-		IF($dc_test == '')
-		{
-			echo "<TR>
-			<TD class='tdleft'>dcraw</TD>
-			<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>nicht installiert</a></TD>
-			</TR>";
-		}
-		ELSE
-		{
-			echo "<TR>
-			<TD class='tdleft'>dcraw</TD>
-			<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
-			</TR>";
-		}
+		echo "<TR>
+		<TD class='tdleft'>dcraw</TD>
+		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>nicht installiert</a></TD>
+		</TR>";
 	}
 	ELSE
 	{
 		echo "<TR>
 		<TD class='tdleft'>dcraw</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$dc." installiert</FONT></TD>
 		</TR>";
 	}
+
 	flush();
 	sleep(1);
 	
-	IF(stristr($gb, 'package') OR stristr($gb, 'gpsbabel'))
+
+	IF($gb == '')
 	{
-		$gb_test = shell_exec("gpsbabel");
-		IF($gb_test == '')
-		{
-			echo "<TR>
-			<TD class='tdleft'>GPSBabel</TD>
-			<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>nicht installiert</a></TD>
-			</TR>";
-		}
-		ELSE
-		{
-			echo "<TR>
-			<TD class='tdleft'>GPSBabel</TD>
-			<TD class='tdright'><FONT COLOR='green'>ist installiert</FONT></TD>
-			</TR>";
-		}
+		echo "<TR>
+		<TD class='tdleft'>GPSBabel</TD>
+		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>nicht installiert</a></TD>
+		</TR>";
 	}
+	ELSE
+	{
+		echo "<TR>
+		<TD class='tdleft'>GPSBabel</TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$gb." installiert</FONT></TD>
+		</TR>";
+	}
+
 	flush();
 	sleep(1);
 	

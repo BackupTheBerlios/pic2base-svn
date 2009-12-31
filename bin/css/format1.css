@@ -6,7 +6,7 @@ body {
     color: #000000;
   }
 
-/*Überschriften:*/
+/*Ueberschriften:*/
 
 
 
@@ -49,7 +49,7 @@ hr {
     margin-left: 0px;
   }
 
-/*Absätze:*/
+/*Absï¿½tze:*/
 
 
 
@@ -168,7 +168,7 @@ p#fuss0 {
 	/*border-top:5px solid white;*/
 	}
 
-/*Zelleninhalte und Bereiche werden in 8pt dargestellt (Belegungspläne)*/
+/*Zelleninhalte und Bereiche werden in 8pt dargestellt (Belegungsplï¿½ne)*/
 
 
 
@@ -223,7 +223,7 @@ TABLE.normal {
     margin:0px;
   }
   
-/*Tabelle für Kategorie-Verwaltung*/
+/*Tabelle fï¿½r Kategorie-Verwaltung*/
   
 TD#kat1 {
   	width: 340px;
@@ -278,7 +278,7 @@ TABLE#kat {
     	text-align:center;
   	}
   	
-/*Tabelle für Geo-Recherche*/
+/*Tabelle fï¿½r Geo-Recherche*/
   
 TD#geo {
   	width: 360px;
@@ -330,7 +330,7 @@ TABLE#geo {
     	text-align:center;
   	}
   	
-/*Tabelle für Desription-Recherche*/
+/*Tabelle fï¿½r Desription-Recherche*/
   
 TD#desc {
   	width: 360px;
@@ -432,7 +432,7 @@ TABLE.liste2 {
     margin:0px;
   }
 
-/*Formatierung für Textfelder*/
+/*Formatierung fï¿½r Textfelder*/
 
 
 
@@ -468,7 +468,7 @@ TABLE.liste2 {
   
 
 
-/*Formatierung für Auswahlfelder*/
+/*Formatierung fï¿½r Auswahlfelder*/
  
 
 
@@ -514,7 +514,7 @@ TABLE.liste2 {
     width:270px;
   }
 
-/*Formatierungen für Buttons*/
+/*Formatierungen fï¿½r Buttons*/
 
 
 
@@ -564,7 +564,7 @@ a.navi:hover {
     background-color:#eeeeee;
   }
   
-/*für 'blinde' Navigations-Links (Platzhalter):*/
+/*fï¿½r 'blinde' Navigations-Links (Platzhalter):*/
 
 a.navi_blind {
     display:block;
@@ -713,7 +713,7 @@ div#spalte2 {
 	overflow:auto;
 	}
 	
-/* 2 Spalten mit Filmstreifen im Fußbereich ########*/
+/* 2 Spalten mit Filmstreifen im Fuï¿½bereich ########*/
 div#spalte1F {
   	margin-left: 0px;
   	padding: 1px;
