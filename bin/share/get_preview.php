@@ -1,15 +1,43 @@
 <?php
 //var_dump($_REQUEST);
 
-$kat_id = $_GET['kat_id'];
-$mod = $_GET['mod'];
-$pic_id = $_GET['pic_id'];
-$modus = $_GET['modus'];
-$base_file = $_GET['base_file'];
-$bewertung = $_GET['bewertung'];
-$auswahl = $_GET['auswahl'];
-$position = $_GET['position'];
-$jump = $_GET['jump'];
+IF(array_key_exists('kat_id', $_GET))
+{
+	$kat_id = $_GET['kat_id'];
+}
+IF(array_key_exists('mod', $_GET))
+{
+	$mod = $_GET['mod'];
+}
+IF(array_key_exists('pic_id', $_GET))
+{
+	$pic_id = $_GET['pic_id'];
+}
+IF(array_key_exists('modus', $_GET))
+{
+	$modus = $_GET['modus'];
+}
+IF(array_key_exists('base_file', $_GET))
+{
+	$base_file = $_GET['base_file'];
+}
+IF(array_key_exists('bewertung', $_GET))
+{
+	$bewertung = $_GET['bewertung'];
+}
+IF(array_key_exists('auswahl', $_GET))
+{
+	$auswahl = $_GET['auswahl'];
+}
+IF(array_key_exists('position', $_GET))
+{
+	$position = $_GET['position'];
+}
+IF(array_key_exists('jump', $_GET))
+{
+	$jump = $_GET['jump'];
+}
+
 
 $N = '';
 
@@ -1644,7 +1672,7 @@ SWITCH ($modus)
 				<img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='0' />
 				<div id='pic$pic_id'>
 				<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>";
-				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, $mod, $form_name);
+				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
 				echo "
 				<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
 				</div>
@@ -1654,7 +1682,7 @@ SWITCH ($modus)
 			{
 				echo "<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
 				<div id='pic$pic_id'>";
-				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, $mod, $form_name);
+				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
 				echo "
 				</div>
 				</TD>";
