@@ -244,6 +244,7 @@ echo "<br>++++ #### ++++<br>";
 			`lfdnr` int(11) NOT NULL auto_increment,
 			`field_name` varchar(50) NOT NULL default '0',
 			`writable` BOOL NOT NULL DEFAULT '0',
+			`viewable` BOOL NOT NULL DEFAULT '0',
 			PRIMARY KEY  (`lfdnr`)
 			) ENGINE=MyISAM COMMENT='Sperr-Tabelle fuer EXIF-Daten' AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
