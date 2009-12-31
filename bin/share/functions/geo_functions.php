@@ -9,11 +9,11 @@ function getFileError($NUM)
 		break;
 		
 		CASE UPLOAD_ERR_INI_SIZE:
-		$err = "<font color='red'>Es wurde die in der php-ini festgelegte Dateigr��e �berschritten!</font>";
+		$err = "<font color='red'>Es wurde die in der php-ini festgelegte Dateigr&ouml;&szlig;e &uuml;berschritten!</font>";
 		break;
 		
 		CASE UPLOAD_ERR_FORM_SIZE:
-		$err = "<font color='red'>Es wurde die im Formular festgelegte Dateigr��e �berschritten!</font>";
+		$err = "<font color='red'>Es wurde die im Formular festgelegte Dateigr&ouml;&szlig;e &uuml;berschritten!</font>";
 		break;
 		
 		CASE UPLOAD_ERR_PARTIAL:
@@ -34,7 +34,7 @@ function getTrackPoints($delta,$pic_time,$datum)
 	include $sr.'/bin/share/db_connect1.php';
 	$start_time = date('H:i:s', strtotime("$pic_time - $delta seconds"));
 	$end_time = date('H:i:s', strtotime("$pic_time + $delta seconds"));
-	//echo "Zeitfenster f�r Trackdaten: ".$start_time." - ".$end_time."<BR>";
+	//echo "Zeitfenster fuer Trackdaten: ".$start_time." - ".$end_time."<BR>";
 	$result7 = mysql_query( "SELECT * FROM $table13 WHERE date = '$datum' AND time > '$start_time' AND time < '$end_time'");
 	$num7 = mysql_num_rows($result7);
 	//echo "Anz. Trackpunkte: ".$num7."<BR>";
@@ -87,7 +87,7 @@ function getDeltaLong($lat, $radius1)
 	$umf_lat = 40000000 * cos(deg2rad($lat));
 	//echo "Umfang auf Breitenkreis ".$lat.": ".($umf_lat / 1000)." km<BR>";
 	$diff_long = 360 / $umf_lat;
-	//echo htmlentities("Winkel�anderung je m: ".$diff_long)." in Grad / m<BR>";
+	//echo htmlentities("Winkelaeanderung je m: ".$diff_long)." in Grad / m<BR>";
 	$delta_long = $diff_long * $radius1;
 	return $delta_long;
 }
@@ -97,7 +97,7 @@ function isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius)
 	//Entfernung pro Breitengrad: 111111,111 m
 	$y_abst = pow((($latitude - $lat_mittel) * 111111.111),2); // in qm
 	
-	//Entfernung je L�ngengrad ist von der Erhebung �ber �quator (Breitengrad) abh�ngig:
+	//Entfernung je Laengengrad ist von der Erhebung ueber Aequator (Breitengrad) abhaengig:
 	$x_abst = pow(($longitude - $long_mittel) * (40000000 * cos(deg2rad($latitude)) / 360),2); //in qm
 	
 	IF (pow($radius , 2) < ($x_abst + $y_abst))
@@ -129,7 +129,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 	{
 		// Bsp: gpsbabel -t -i nmea -f "Pfad/Datei.log" -o kml -F "Pfad/Datei.kml"
 		CASE '1':
-		//Routine f�r Sony CS1 (log)
+		//Routine fuer Sony CS1 (log)
 		IF(strtolower($info['extension']) !== 'log')
 		{
 			echo "Es handelt sich nicht um eine SONY-CS1-Datei!<BR>";
@@ -143,7 +143,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		break;
 		
 		CASE '2':
-		//Routine f�r Garmin GPSmap 60CS(x) tracklogs (.gpx)
+		//Routine fuer Garmin GPSmap 60CS(x) tracklogs (.gpx)
 		IF(strtolower($info['extension']) !== 'gpx')
 		{
 			echo "Es handelt sich nicht um eine Garmin GPSmap 60CS(x)-Datei!<BR>";
@@ -198,7 +198,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 	{
 		//echo $geo_path_copy."/".$geo_file_name."<BR>";
 		// ######################
-		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet, aus der die Geo-Daten in die Datenbank �berf�hrt werden!
+		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet, aus der die Geo-Daten in die Datenbank ueberfuehrt werden!
 		// ######################
 		//$kml_file = shell_exec("gpsbabel -t -i ".$file_format." -f ".$geo_path_copy."/".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
 		$kml_file = shell_exec($gpsb_path."/gpsbabel -t -i ".$file_format." -f ".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
@@ -218,7 +218,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 			$geo_arr = array();
 			//$data_arr = array();
 			$data_arr = array('0.00', '0.00', '0.00', '0000-00-00T00:00:00Z');
-			$z = 0; //Indexz�hler des Geoarrays (0 - Anz. Datensaetz in der Log-Datei)
+			$z = 0; //Indexzaehler des Geoarrays (0 - Anz. Datensaetz in der Log-Datei)
 			
 			WHILE(!feof($fh1))
 			{
@@ -230,7 +230,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 				{
 					IF($data_arr[0] == 0.00 AND $data_arr[1] == 0.00 AND $data_arr[2] == 0.00)
 					{
-						$lon_value = split(' ',$line);
+						$lon_value = preg_split('# #',$line);
 						//print_r($lon_value)."<BR>";
 						$data_arr[0] = $lon_value[17];
 					}
@@ -238,7 +238,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 					{
 						$geo_arr[$z] = $data_arr;
 						$z++;
-						$lon_value = split(' ',$line);
+						$lon_value = preg_split('# #',$line);
 						//print_r($lon_value)."<BR>";
 						$data_arr[0] = $lon_value[17];
 					}
@@ -246,21 +246,21 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 								
 				IF(stristr($line, 'Latitude:'))
 				{
-					$lat_value = split(' ',$line);
+					$lat_value = preg_split('# #',$line);
 					//print_r($lat_value)."<BR>";
 					$data_arr[1] = $lat_value[17];
 				}
 				
 				IF(stristr($line, 'Altitude:'))
 				{
-					$alt_value = split(' ',$line);
+					$alt_value = preg_split('# #',$line);
 					//print_r($alt_value)."<BR>";
 					$data_arr[2] = $alt_value[17];
 				}
 				
 				IF(stristr($line, 'Time:'))
 				{
-					$time_value = split(' ',$line);
+					$time_value = preg_split('# #',$line);
 					//print_r($time_value)."<BR>";
 					$data_arr[3] = $time_value[17];
 				}
