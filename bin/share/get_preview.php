@@ -356,7 +356,7 @@ SWITCH ($modus)
 				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
 				$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
-				$Orientation = mysql_result($result2, 'Orientation');	// 1: normal; 8: 90 CW
+				$Orientation = mysql_result($result2, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
 				//abgeleitete Gr��en:
 				IF ($FileNameV == '')
@@ -1202,7 +1202,7 @@ SWITCH ($modus)
 				$pic_id = mysql_result($result8, $i8, 'pic_id');
 				$FileNameHQ = mysql_result($result8, $i8, 'FileNameHQ');
 				$result21 = mysql_query( "SELECT 'Caption_Abstract' FROM $table14 WHERE pic_id = '$pic_id'");
-				$Description = mysql_result($result21, 'Caption_Abstract');
+				$Description = mysql_result($result21, '0', 'Caption_Abstract');
 				$loc_id = mysql_result($result8, $i8, 'loc_id');
 				$result7 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
 				$longitude = mysql_result($result7,isset($i7), 'longitude');
