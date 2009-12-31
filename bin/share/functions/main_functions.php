@@ -1476,7 +1476,6 @@ function checkSoftware()
 	$im = shell_exec("which convert");
 	$dc = shell_exec("which dcraw");
 	$gb = shell_exec("which gpsbabel");
-	$loc = shell_exec("which locate");
 	
 	echo "	<TABLE class='tablenormal' border='0'>
 		<TR>
@@ -1489,28 +1488,11 @@ function checkSoftware()
 	flush();
 	sleep(1);
 	
-	IF($loc !== '')
-	{
-		echo "<TR>
-		<TD class='tdleft'>locate</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$loc." installiert</FONT></TD>
-		</TR>";
-	}
-	ELSE
-	{
-		echo "<TR>
-		<TD class='tdleft'>locate</TD>
-		<TD class='tdright'><FONT COLOR='red'>nicht installiert</FONT></TD>
-		</TR>";
-	}
-	flush();
-	sleep(1);
-	
-	IF($et == '')
+	IF($et == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ExifTool</TD>
-		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>ist nicht installiert</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1520,16 +1502,14 @@ function checkSoftware()
 		<TD class='tdright'><FONT COLOR='green'>ist in ".$et." installiert</FONT></TD>
 		</TR>";
 	}
-	
 	flush();
 	sleep(1);
 	
-
-	IF($im == '')
+	IF($im == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ImageMagick</TD>
-		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>ist nicht installiert</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1539,16 +1519,14 @@ function checkSoftware()
 		<TD class='tdright'><FONT COLOR='green'>ist in ".$im." installiert</FONT></TD>
 		</TR>";
 	}
-
 	flush();
 	sleep(1);
 	
-
-	IF($dc == '')
+	IF($dc == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>dcraw</TD>
-		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>ist nicht installiert</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1558,16 +1536,14 @@ function checkSoftware()
 		<TD class='tdright'><FONT COLOR='green'>ist in ".$dc." installiert</FONT></TD>
 		</TR>";
 	}
-
 	flush();
 	sleep(1);
 	
-
-	IF($gb == '')
+	IF($gb == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>GPSBabel</TD>
-		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>ist nicht installiert</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1577,7 +1553,6 @@ function checkSoftware()
 		<TD class='tdright'><FONT COLOR='green'>ist in ".$gb." installiert</FONT></TD>
 		</TR>";
 	}
-
 	flush();
 	sleep(1);
 	
