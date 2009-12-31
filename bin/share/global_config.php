@@ -16,7 +16,7 @@ $HQ_verzeichnis = '../../../images/vorschau/hq-preview';
 $geo_path_copy = $sr."/tracks";
 $ftp_path = $sr."/userdata";
 
-// für register_globals = off
+// fuer register_globals = off
 if(!isset($benutzername)){
 	$benutzername = '';
 }
@@ -33,22 +33,22 @@ $pic_thumbs = $sr."/images/vorschau/thumbs";
 $hist_path = $sr."/images/histogramme";
 $monochrome_path = $sr."/images/monochrome";
 
-//alle unterstützten Datei-Formate (incl- RAW-Dateien):
+//alle unterstuetzten Datei-Formate (incl- RAW-Dateien):
 //$supported_filetypes = array('bmp','gif','xcf','dcm','jpeg','pcx','png','sun','tga','tif','tiff','ico','pdf', 'nef');
 $supported_filetypes = array('bmp','cgm','cr2','crw','dcm','dcr','dcx','eps','exr','fax','gif','html','jng','jpeg','jpg','mng','mrw','mvg','nef','orf','otb','palm','pbm','pcd','pcds','pcl','pcx','pdb','pdf','pgm','png','png8','png24','png32','pnm','ppm','ps','ps2','ps3','psd','raf','rgb','rla','rle','sct','sfw','sgi','shtml','sun','svg','tga','tiff','txt','vicar','viff','wpg','xbm','xcf','xpm','x3f','ycbcr','ycbcra','yuv');
 
-//unterstützten Datei-Formate (OHNE RAW-Dateien):
+//unterstuetzten Datei-Formate (OHNE RAW-Dateien):
 //$supported_extensions = array('bmp','gif','xcf','dcm','jpeg','pcx','png','sun','tga','tif','tiff','ico','pdf');
 $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','html','jng','jpeg','jpg','mng','mvg','otb','palm','pbm','pcd','pcds','pcl','pcx','pdb','pdf','pgm','png','png8','png24','png32','pnm','ppm','ps','ps2','ps3','psd','rla','rle','sct','sfw','sgi','shtml','sun','svg','tga','tiff','vicar','viff','wpg','xbm','xcf','xpm','yuv');
 
 //Standorte der externen Programme:
-$dcraw_path = '/usr/bin';	//Pfad zu dcraw
-$im_path = '/usr/bin';		//Pfad zum ImageMagick
-$et_path = '/usr/bin';		//Pfad zum exiftool
+$dcraw_path = '/usr/bin';		//Pfad zu dcraw
+$im_path = '/usr/bin';			//Pfad zum ImageMagick
+$et_path = '/usr/bin';			//Pfad zum exiftool
 $gpsb_path = '/usr/local/bin';	//Pfad zu GPSBabel
 $md5sum_path = '/usr/bin';
 
-//[GM-Keys; können von http://code.google.com/apis/maps/ bezogen werden]
+//[GM-Keys; koennen von http://code.google.com/apis/maps/ bezogen werden]
 SWITCH($_SERVER['SERVER_NAME'])
 {
 	CASE '192.168.2.1':
@@ -72,12 +72,10 @@ SWITCH($_SERVER['SERVER_NAME'])
 	break;
 	
 	CASE '192.168.2.20':
-	//gültig für http://192.168.2.20/admin/pic2base/
 	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxSuWditJXxW9FLuhokEclMC9S8ZkRRqV3gp37rBxwtpvj3XamxOWAhcxw';
 	break;
 	
 	CASE '192.168.171.199':
-	//gültig für http://192.168.171.199/admin/pic2base/ (Demo-Konfiguration BF)
 	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxRzMcqr4P0Ekez4k72Qu7OM5_F2AxR0urMtZW3iDwHbzkSMKS-R8fYN7w';
 	break;
 }
