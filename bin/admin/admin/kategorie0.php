@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Kategorie-Verwaltung</TITLE>
+	<TITLE>pic2base - Kategorieverwaltung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
@@ -55,7 +55,7 @@ SWITCH ($berechtigung)
 	$navigation = 	"<a class='navi' href='kat_sort1.php'>Sortierung</a>
 			<a class='navi' href='kat_repair1.php'>Wartung</a>
 			<a class='navi_blind'></a>
-			<a class='navi' href='../../html/admin/adminframe.php'>Zur�ck</a>
+			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
 			";
@@ -71,7 +71,7 @@ SWITCH ($berechtigung)
 
 <div class="page">
 
-	<p id="kopf">pic2base :: Admin-Bereich - Kategorie-Verwaltung</p>
+	<p id="kopf">pic2base :: Admin-Bereich - Kategorieverwaltung</p>
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
@@ -88,7 +88,7 @@ SWITCH ($berechtigung)
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-	// f�r register_globals = off
+	// fuer register_globals = off
 	if(array_key_exists('kat_id',$_GET))
 	{
 		$kat_id = $_GET['kat_id']; 
@@ -215,7 +215,7 @@ SWITCH ($berechtigung)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+		//Link fuer den Ruecksprung erzeugen, d.h. naechst hoeheren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{

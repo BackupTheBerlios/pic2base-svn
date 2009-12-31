@@ -128,7 +128,7 @@ flush();
 			}
 		}
 	}
-	//Zuf�gen der Eltern-Elemente zu dem Kategorien-Array:
+	//Zufuegen der Eltern-Elemente zu dem Kategorien-Array:
 	@$kat_ID = array_merge($kat_ID, $KAT_ID);
 	//echo "Kategorie-Anzahl: ".count($kat_ID)."<BR>";//$kat_ID ist das Array mit allen Kategorie-IDs und deren Eltern-Kategorie-IDs
 	
@@ -148,7 +148,7 @@ flush();
 						//Ermittlung aller Kategorien:
 						$result2 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 						//echo mysql_error()."<BR>";
-						$kategorie = htmlentities(mysql_result($result2, 'kategorie'))." ".$kategorie;
+						$kategorie = htmlentities(mysql_result($result2, isset($i2), 'kategorie'))." ".$kategorie;
 					}
 				}
 			}

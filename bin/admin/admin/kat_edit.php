@@ -63,8 +63,8 @@ SWITCH ($berechtigung)
 	break;
 }
 
-$kat_id = $_GET['kat_id']; // f�r register_globals = off
-$ID = $_GET['ID']; // f�r register_globals = off
+$kat_id = $_GET['kat_id'];
+$ID = $_GET['ID'];
 
 function setFontColor($ID, $kat_id)
 {
@@ -178,7 +178,7 @@ function setFontColor($ID, $kat_id)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+		//Link fuer den Ruecksprung erzeugen, d.h. naechst hoeheren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		
 		IF (in_array($kat_id, $knoten_arr))
@@ -211,11 +211,11 @@ function setFontColor($ID, $kat_id)
 	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
 	$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
 	echo "<p id='elf' style='padding: 5px; width: 400px; margin-top: 40px;'>
-	Nehmen Sie hier bitte die �nderungen f�r die ausgew�hlte Kategorie vor:<BR><BR></P>";
+	Nehmen Sie hier bitte die &Auml;nderungen f&uuml;r die ausgew&auml;hlte Kategorie vor:<BR><BR></P>";
 	
 	echo "<FORM action='kat_edit_action1.php?kat_id=$KAT_ID&ID=$ID' method='POST'>
          <INPUT type='text' name='kategorie' value='$kategorie_alt' size='30' maxlength='30'>&#160;
-         <INPUT type='submit' value='�ndern'>&#160;
+         <INPUT type='submit' value='&Auml;ndern'>&#160;
          <INPUT TYPE = 'button' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
        </FORM>
 	</center></div>

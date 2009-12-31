@@ -38,16 +38,26 @@ IF ($_COOKIE['login'])
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
- 
+
+//var_dump($_GET);
+IF(array_key_exists('kat_id', $_GET))
+{
+	$kat_id = $_GET['kat_id'];
+}
+IF(array_key_exists('pic_id', $_GET))
+{
+	$pic_id = $_GET['pic_id'];
+}
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$result2 = mysql($db, "SELECT * FROM $table4 WHERE kat_id =  '$kat_id'");
-$kategorie = mysql_result($result2, $i2, 'kategorie');
-$parent = mysql_result($result2, $i2, 'parent');
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
+$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result2 = mysql_query("SELECT * FROM $table4 WHERE kat_id =  '$kat_id'");
+$kategorie = mysql_result($result2, isset($i2), 'kategorie');
+$parent = mysql_result($result2, isset($i2), 'parent');
+$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 ?>
 
@@ -65,7 +75,7 @@ $berechtigung = mysql_result($result1, $i1, 'berechtigung');
 	</div>
 	
 	<div class="content">
-	<p class="zwoelfred" style="margin:120px 0px; text-align:center">Wollen Sie wirklich die Kategoriezuweisung<BR> "<?php echo $kategorie;?>" <BR>f�r das gew�hlte Bild aufheben?<BR><BR>
+	<p class="zwoelfred" style="margin:120px 0px; text-align:center">Wollen Sie wirklich die Kategoriezuweisung<BR> "<?php echo $kategorie;?>" <BR>f&uuml;r das gew&auml;hlte Bild aufheben?<BR><BR>
 	Wenn Sie mit 'JA' fortfahren, werden gleichzeitig<BR>alle Unterkategorie-Zuweisungen mit aufgehoben!<BR><BR>
 	<?php
 	echo "
