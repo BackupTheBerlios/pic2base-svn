@@ -1564,7 +1564,9 @@ function checkSoftware()
 		<CENTER>
 		<TABLE style='width:500px; text-align:center;'>
 		<TR>
-		<TD><BR><u>WICHTIGER HINWEIS:</u><BR>Sollte eine der gelisteten Software-Komponenten nicht installiert sein, holen Sie dies bitte <b>VOR</b> der ersten Benutzung von pic2base nach.<BR>Anderenfalls werden einige Funktionen fehlen oder fehlerhaft sein!
+		<TD><BR><u>WICHTIGER HINWEIS:</u><BR>Sollte eine der gelisteten Software-Komponenten nicht installiert sein, holen Sie dies bitte <b>VOR</b> der ersten Benutzung von pic2base nach.<BR>Anderenfalls werden einige Funktionen fehlen oder fehlerhaft sein!<BR><BR>
+		Pr&uuml;fen Sie bitte auch, ob die oben ausgegebenen Pfadangaben mit den in der Datei /pic2base/bin/share/global_config.php (Zeilen 45 - 48) angegebenen Pfaden &uuml;bereinstimmen.<BR><BR>
+		Sollte dies nicht der Fall sein, passen Sie bitte die Einstellungen in der global_config.php vor der ersten Benutzung von pic2base an.
 		</TD>
 		</TR>
 		</TABLE>
