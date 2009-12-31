@@ -13,8 +13,6 @@
 <?php
 // verwendet als Popup-Fenster mit dem Tagebuch-Eintrag
 
-//var_dump($_REQUEST);
-
 if(array_key_exists('aufn_dat',$_GET))
 {
 	$aufn_dat = $_GET['aufn_dat'];
@@ -24,8 +22,6 @@ include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 include_once("fckeditor/fckeditor.php");
-
-//$result0 = mysql_query( "SELECT $table4.kat_id, $table4.kategorie, $table11.info, $table11.kat_id  FROM $table4 INNER JOIN $table11 ON $table4.kat_id = '$kat_id' AND $table4.kat_id = $table11.kat_id");
 
 $result0 = mysql_query("SELECT * FROM $table3 WHERE datum = '$aufn_dat'");
 echo mysql_error();
@@ -44,9 +40,8 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 
 $result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
 $row = mysql_fetch_array($result2);
-//$group_id = mysql_result($result2, isset($i2), 'group_id');
 $group_id = $row['group_id'];
-IF($group_id == '1' OR $group_id == '3')	//Admin oder Fotograf
+IF($group_id == '1' OR $group_id == '3')	//Admin oder Fotograf duerfen editieren
 {
 	$editable = '1';
 }
