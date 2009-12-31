@@ -38,6 +38,16 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
+//var_dump($_POST);
+IF(array_key_exists('ort', $_POST))
+{
+	$ort = $_POST['ort'];
+}
+
+IF(array_key_exists('loc_id', $_POST))
+{
+	$loc_id = $_POST['loc_id'];
+}
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/geo_functions.php';
@@ -58,7 +68,7 @@ echo "
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Speicherung l&auml;uft...<BR></p>";
 		$result2 = mysql_query( "UPDATE $table12 SET location='$ort' WHERE loc_id = '$loc_id'");
 		
-		//Eintragung des Ortsnamens an den Anfang des Beschreibungstextes des zugeh�rigen Bildes:
+		//Eintragung des Ortsnamens an den Anfang des Beschreibungstextes des zugehoerigen Bildes:
 		$result3 = mysql_query( "SELECT * FROM $table2 WHERE (loc_id = '$loc_id' AND loc_id <> '')");
 		$num3 = mysql_num_rows($result3);
 		FOR ($i3=0; $i3<$num3; $i3++)
