@@ -2,7 +2,7 @@
 //File-Owner: K. Henneberg
 include 'global_config.php';
 include $sr.'/bin/share/functions/main_functions.php';
-
+$contr = '';
 //fuer alle Dateinamen wird intern Kleinschreibung verwendet, deshalb hier Konvertierung:
 //var_dump($_REQUEST);
 IF(array_key_exists('file_name_raw', $_REQUEST))
