@@ -1,5 +1,4 @@
 <?
-	// f�r register_globals = off
 	if(array_key_exists('item',$_GET))
 	{
 		$item = $_GET['item']; 
@@ -15,46 +14,46 @@
 	{
 		case "":
 		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
-    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
-    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
-    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
+    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
+    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
+    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
     		//echo "<a class='navi' href='start.php'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminshowusers":
-    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='adminframe.php?item=adminadduser' title='Benutzer hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
+    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminadduser' title='Benutzer hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
     		echo "<a class='navi' href='adminframe.php'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminshowgroups":
-    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='adminframe.php?item=adminaddusergroup' title='Gruppen hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
+    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminaddusergroup' title='Gruppen hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
     		echo "<a class='navi' href='adminframe.php'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminshowuser":
-    		echo "<a class='navi' href='adminframe.php?item=adminshowusers'>Zur&uuml;ck</a>";
+    		echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminshowgroup":
-    		echo "<a class='navi' href='adminframe.php?item=adminshowgroups'>Zur&uuml;ck</a>";
+    		echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminadduser":
-    		echo "<a class='navi' href='adminframe.php?item=adminshowusers'>Zur&uuml;ck</a>";
+    		echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminaddusergroup":
-    		echo "<a class='navi' href='adminframe.php?item=adminshowgroups'>Zur&uuml;ck</a>";
+    		echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminshowpermissions":
-    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='adminframe.php?item=adminaddpermission'>Hinzuf&uuml;gen</a>";
+    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminaddpermission'>Hinzuf&uuml;gen</a>";
     		echo "<a class='navi' href='adminframe.php'>Zur&uuml;ck</a>";
     		break;
     		
     		case "adminaddpermission":
     		//if (hasPermission($c_username, 'addpermission')) echo "<a class='navi' href='adminframe.php?item=adminaddpermission'>Hinzuf&uuml;gen</a>";
-    		echo "<a class='navi' href='adminframe.php?item=adminshowpermissions'>Zur&uuml;ck</a>";
+    		echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions'>Zur&uuml;ck</a>";
     		break;
     	}
   
