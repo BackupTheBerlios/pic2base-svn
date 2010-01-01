@@ -18,8 +18,6 @@ include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 //$pic_id = '10';
 
-//var_dump($_GET);
-//var_dump($_POST);
 if( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
@@ -62,7 +60,7 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
 //############   Erstellung der Histogramme, falls nicht bereits vorhanden:   #######################
-// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt, wobei XXXXX f�r pic_id steht und f f�r die Farbe (rot, gr�n, blau oder wei� -> rgbw)
+// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt, wobei XXXXX fuer pic_id steht und f fuer die Farbe (rot, gruen, blau oder weiss -> rgbw)
 generateHistogram($pic_id,$FileNameHQ,$sr);
 
 //############   Histogramm-Erstellung beendet   ####################################################
