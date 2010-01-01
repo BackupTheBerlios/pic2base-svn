@@ -1,5 +1,6 @@
 <?php setcookie('login','',time()-86400);
-//header('Location: wartungshinweis.html'); ?>
+//header('Location: wartungshinweis.html'); 
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
