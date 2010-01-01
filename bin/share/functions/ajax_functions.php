@@ -493,5 +493,15 @@ function changeWritable(lfdnr, checked, sr)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 }
 
+function changeViewable(lfdnr, checked, sr)
+{
+	var url = '../../share/change_viewable.php';
+	var params = 'lfdnr=' + lfdnr + '&checked=' + checked + '&sr=' + sr;
+	//alert("Parameter: "+params);
+	var target = lfdnr;
+	//alert(target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
 -->
 </SCRIPT>
