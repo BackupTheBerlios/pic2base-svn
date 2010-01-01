@@ -56,7 +56,8 @@ $FileNameRaw = substr($FileName,0,-4).".".substr($FileNameOri,-3,3);
 //echo $FileNameRaw;
 
 //wenn ein Cookie mit gespeicherten Parametern existiert, werden diese vor-ausgewaehlt:
-IF ($_COOKIE['params'])
+//IF ($_COOKIE['params'])
+IF(array_key_exists('params', $_COOKIE))
 {
 	$param_arr = preg_split('# #',$_COOKIE['params']);
 	
