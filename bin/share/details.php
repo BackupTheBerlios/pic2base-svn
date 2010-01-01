@@ -46,7 +46,7 @@ $loc_id = $row['loc_id'];
 IF($loc_id !== '0' AND $loc_id !== '')
 {
 	$result1 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-	$location = mysql_result($result1, 'location');
+	$location = mysql_result($result1, isset($i1), 'location');
 }
 $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
