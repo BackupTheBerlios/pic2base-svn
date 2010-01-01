@@ -17,7 +17,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	<table class='normal'>
 	<tr>
 	<td colspan='2' align='center' style='font-size:12pt; text-align:center;'>
-	Neuen Benutzer hinzuf�gen
+	Neuen Benutzer hinzuf&uuml;gen
 	</td>
 	</tr>
 	
@@ -31,8 +31,8 @@ if (hasPermission($c_username, 'adminlogin'))
 	
 	<tr>
 	<td align=left colspan='2'>Hinweis: Der  Benutzername darf keine Leerzeichen oder Sonderzeichen enthalten<BR>
-	und darf h�chstens 15 Zeichen lang sein.!<BR>
-	Die mit * gekennzeichneten Felder M�SSEN ausgef�llt werden.
+	und darf h&ouml;chstens 15 Zeichen lang sein.!<BR>
+	Die mit * gekennzeichneten Felder M&Uuml;SSEN ausgef&uuml;llt werden.
 	</td>
 	</tr>
 	
@@ -79,7 +79,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	
 	<tr>
 	<td align=left>
-	Stra�e:
+	Stra&szlig;e:
 	</td>
 	<td>
 	<input type=text name=strasse class='Auswahl150'>
@@ -173,7 +173,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	
 	<tr>
 	<td align=center colspan='2'>
-	<INPUT type='button' value='Abbrechen' OnClick='location.href=\"adminframe.php?item=adminshowusers\"'>&nbsp;&nbsp;<input type=submit value='Hinzuf�gen'>
+	<INPUT type='button' value='Abbrechen' OnClick='location.href=\"adminframe.php?item=adminshowusers\"'>&nbsp;&nbsp;<input type=submit value='Hinzuf&uuml;gen'>
 	</td>
 	</tr>
 	
@@ -190,7 +190,7 @@ if (hasPermission($c_username, 'adminlogin'))
 }
 ELSE
 {
-	echo "Sie haben nicht gen�gend Berechtigungen!";
+	echo "Sie haben nicht gen&uuml;gend Berechtigungen!";
 }
 ?>
 <script language="javascript">

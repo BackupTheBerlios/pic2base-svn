@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<!--sollte die EXIF-Daten-Erzeugung abst�rzen, erfolgt nach 300 Sek. ein automat. Neustart-->
+	<!--sollte die EXIF-Daten-Erzeugung abstuerzen, erfolgt nach 300 Sek. ein automat. Neustart-->
 	<!--<meta http-equiv="Refresh" Content="300; URL=../../admin/admin/generate_exifdata0.php">-->
 </HEAD>
 
