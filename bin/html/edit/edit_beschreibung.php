@@ -125,11 +125,11 @@ echo "
 		{
 			$edit_mod = 'desc';
 			getPictureDetails($pic_id,$edit_mod);
-			echo "<p align='right'><a href='edit_beschreibung.php?kat_id=$kat_id&ID=$ID&mod=kat&pic_id=0' title='Einzel-Beschreibungsmodus verlassen'><img src='../../share/images/back.gif' width='15' height='15' border='0' alt='zur�ck' style='margin-right:5px';></a></p>";
+			echo "<p align='right'><a href='edit_beschreibung.php?kat_id=$kat_id&ID=$ID&mod=kat&pic_id=0' title='Einzel-Beschreibungsmodus verlassen'><img src='../../share/images/back.gif' width='15' height='15' border='0' alt='zur&uuml;ck' style='margin-right:5px';></a></p>";
 		}
 		ELSE
 		{
-			echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ordne Beschreibungstext den ausgew�hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgew�hlten Bildern hinzugef&uuml;gt!<BR><BR><textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
+			echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ordne Beschreibungstext den ausgew&auml;hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgew&auml;hlten Bildern hinzugef&uuml;gt!<BR><BR><textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
 		}
 		
 	echo "
