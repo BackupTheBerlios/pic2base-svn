@@ -1497,9 +1497,10 @@ function checkSoftware()
 	}
 	ELSE
 	{
+		$v_et = shell_exec("exiftool -ver");
 		echo "<TR>
 		<TD class='tdleft'>ExifTool</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$et." installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$et." installiert (Ver. ".$v_et.")</FONT></TD>
 		</TR>";
 	}
 	flush();
@@ -1514,9 +1515,10 @@ function checkSoftware()
 	}
 	ELSE
 	{
+		$v_im = shell_exec("convert -version");
 		echo "<TR>
 		<TD class='tdleft'>ImageMagick</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$im." installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$im." installiert (Ver. <a href='#' title = '$v_im'>".substr($v_im,20,6)."</a>)</FONT></TD>
 		</TR>";
 	}
 	flush();
@@ -1531,9 +1533,10 @@ function checkSoftware()
 	}
 	ELSE
 	{
+		$v_dc = shell_exec("dcraw");
 		echo "<TR>
 		<TD class='tdleft'>dcraw</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$dc." installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$dc." installiert (Ver. ".substr($v_dc,28,4).")</FONT></TD>
 		</TR>";
 	}
 	flush();
@@ -1548,9 +1551,10 @@ function checkSoftware()
 	}
 	ELSE
 	{
+		$v_gb = shell_exec("gpsbabel -V");
 		echo "<TR>
 		<TD class='tdleft'>GPSBabel</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$gb." installiert</FONT></TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$gb." installiert (Ver. ".substr($v_gb,18,5).")</FONT></TD>
 		</TR>";
 	}
 	flush();
