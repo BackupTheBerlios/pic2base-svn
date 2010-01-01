@@ -64,6 +64,7 @@
 	<a class='navi' href='$inst_path/pic2base/bin/admin/admin/generate_histogram0.php' title='erstellt fehlende Histogramme'>Histogramme</a>
 	<a class='navi' href='$inst_path/pic2base/bin/admin/admin/generate_exifdata0.php' title='&uuml;bertr&auml;gt fehlende Meta-Daten aus den Bildern in die DB'>Meta-Daten</a>
 	<a class='navi' href='$inst_path/pic2base/bin/admin/admin/protect_metadata0.php' title='Festlegung editierbarer Meta-Daten'>Meta-Protect</a>
+	<a class='navi' href='$inst_path/pic2base/bin/admin/admin/kompactview_metadata0.php' title='Welche Meta-Daten werden in der kompakten Detailansicht gezeigt?'>Meta-View</a>
 	<a class='navi' href='$inst_path/pic2base/bin/admin/admin/check_software0.php' title='&uuml;berpr&uuml;ft, ob erforderliche Software installiert ist'>Software-Check</a>
 	<a class='navi_blind'></a>
 	<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
