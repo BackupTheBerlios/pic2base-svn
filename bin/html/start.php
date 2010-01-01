@@ -7,6 +7,29 @@
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../css/format1.css'>
 	<link rel="shortcut icon" href="../share/images/favicon.ico">
+	<style type="text/css">
+	<!--
+	.tablenormal	{
+			width:450px;
+			margin-left:175px;
+			}
+			
+	.trflach	{
+			height:3px;
+			background-color:#FF9900
+			}
+			
+	.tdleft	{
+			width:120px;
+			text-align:left;
+			}
+			
+	.tdright	{
+			width:280px;
+			text-align:left;
+			}
+	-->
+	</style>
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
@@ -56,8 +79,6 @@ if(!isset($hinweis))
 {
 	$hinweis = '';
 }
-//var_dump($_GET);
-
 
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist:
 IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
@@ -105,7 +126,7 @@ IF($c_username !== 'pb')
 			$datei_name = $ftp_path."/".$c_username."/kml_files/".$datei_name;
 			if(!@unlink($datei_name))
 			{
-				echo "Konnte die Datei $datei_name nicht l�schen!<BR>";
+				echo "Konnte die Datei $datei_name nicht l&ouml;schen!<BR>";
 			}
 		}
 	}
@@ -415,7 +436,7 @@ echo "<div class='page'>
 				
 				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe'></a></TD></span>";
 			}
-			//Leer-Raum aff�llen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
+			//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
 			FOR($x='0'; $x<(10-$num4); $x++)
 			{
 				echo "<TD class='normal' style='width:80px;'></TD>";
@@ -440,14 +461,14 @@ echo "<div class='page'>
 	}
 	ELSE
 	{
-		//so alnge keine Bilder in der DB sind, wird bei jedem Start gepr�ft, ob alle notwendigen Applikationen verf�gbar sind! Das kann dauern...
+		//so alnge keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
 		echo "<div class='content'>
 		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
 		checkSoftware();
-		echo "</span></p></div>";
+		echo "</p></div><br style='clear:both;' />";
 	}
 
-	//F�r Test-Zwecke:
+	//Fuer Test-Zwecke:
 	//$text = 'pic2base wurde vom Rechner '.$REMOTE_ADDR.' unter dem User  '.$c_username.' aufgerufen.';
 	
 	//log-file schreiben:
