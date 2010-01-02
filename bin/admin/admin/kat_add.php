@@ -46,7 +46,7 @@ include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
 
 
-$level = $_GET['level'];  // f�r register_globals = off
+$level = $_GET['level']; 
 $level_neu = $level + 1;
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
@@ -55,7 +55,7 @@ SWITCH ($berechtigung)
 {
 	//Admin
 	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur�ck</a>	
+	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>	
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>";
 	break;
@@ -66,8 +66,8 @@ SWITCH ($berechtigung)
 	break;
 }
 
-$ID = $_GET['ID'];  // f�r register_globals = off
-$kat_id = $_GET['kat_id'];  // f�r register_globals = off
+$ID = $_GET['ID']; 
+$kat_id = $_GET['kat_id']; 
 
 function setFontColor($ID, $kat_id)
 {
@@ -182,7 +182,7 @@ function setFontColor($ID, $kat_id)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+		//Link fuer den Ruecksprung erzeugen, d.h. naechst hoeheren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		
 		IF (in_array($kat_id, $knoten_arr))
