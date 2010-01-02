@@ -44,7 +44,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	</tr>
 	
 	<TR>
-	<TD colspan='2' align='center'><input type=submit value='Hinzuf�gen'>
+	<TD colspan='2' align='center'><input type=submit value='Hinzuf&uuml;gen'>
 	</TD>
 	</TR>
 	
@@ -63,6 +63,6 @@ if (hasPermission($c_username, 'adminlogin'))
 }
 ELSE
 {
-	echo "Sie haben nicht gen�gend Berechtigungen!";
+	echo "Sie haben nicht gen&uuml;gend Berechtigungen!";
 }
 ?>
