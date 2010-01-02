@@ -52,7 +52,7 @@ SWITCH ($berechtigung)
 {
 	//Admin
 	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur�ck</a>
+	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
 			";
@@ -282,7 +282,7 @@ SWITCH ($berechtigung)
 		<b><u>Schritt 1:</u></b><BR>
 		Pr&uuml;fen Sie in der linken Spalte, ob die gew&uuml;nschte Zielkategorie vorhanden ist. Wenn nicht, legen Sie sie an.<BR><BR>
 		<b><u>Schritt 2:</u></b><BR>
-		Klicken Sie hier, um zum Auswahlfenster f�r die Quell- und Zielkaterogie zu gelangen:<BR>
+		Klicken Sie hier, um zum Auswahlfenster f&uuml;r die Quell- und Zielkaterogie zu gelangen:<BR>
 		<center><INPUT type="button" value="Weiter zum Kategorie-Auswahlfenster" onClick='location.href="kat_ausw1.php"'></center></p>
 	</DIV>
 	
