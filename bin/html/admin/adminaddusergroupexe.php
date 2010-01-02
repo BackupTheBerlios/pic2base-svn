@@ -50,10 +50,8 @@ include $sr.'/bin/share/db_connect1.php';
 		list($c_username) = split(',',$_COOKIE['login']);
 		//echo $c_username;
 		}
-		//include '../../share/db_connect1.php';
-		//include '../../share/functions/permissions.php';
-		
-		$groupname = $_POST['groupname']; // f�r register_globals = off
+				
+		$groupname = $_POST['groupname'];
 		
 		$groupname = strip_tags($groupname);
 		if ((hasPermission($c_username, 'adminlogin')) AND ($groupname !== ''))
@@ -61,7 +59,7 @@ include $sr.'/bin/share/db_connect1.php';
 			mysql_connect ($db_server, $user, $PWD);
 			$result1 = mysql_query("INSERT INTO $table9 (description) VALUES ('".$groupname."')");
 			$result2 = mysql_query( "SELECT id FROM $table9 WHERE description = '$groupname'");
-			$groupid = mysql_result($result2, $i2, 'id');
+			$groupid = mysql_result($result2, isset($i2), 'id');
 			$result3 = mysql_query( "SELECT id FROM $table8");
 			$num3 = mysql_num_rows($result3);
 			FOR($i3 = '0'; $i3<$num3; $i3++)
