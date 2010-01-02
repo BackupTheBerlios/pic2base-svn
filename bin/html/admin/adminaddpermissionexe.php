@@ -6,7 +6,6 @@
 	//echo $c_username;
 	}
 	//var_dump($_POST);
-	// f�r register_globals = off
 	if(array_key_exists('description',$_POST))
 	{
 	    $description = $_POST['description'];
@@ -26,7 +25,7 @@
 		$result = mysql_query("INSERT INTO $table8 (description, shortdescription) VALUES ('".$description."', '".$shortdescription."')");
 		$result1 = mysql_query( "SELECT * FROM $table8 WHERE description = '$description' AND shortdescription = '$shortdescription'");
 		$perm_id = mysql_result($result1, 0, 'id');
-		//in die Tabelle grouppermissions wird f�r jede existierende Gruppe die neue Berechtigung mit der Eigenschaft "nicht aktiviert" eingetragen:
+		//in die Tabelle grouppermissions wird fuer jede existierende Gruppe die neue Berechtigung mit der Eigenschaft "nicht aktiviert" eingetragen:
 		$result2 =mysql_query( "SELECT * FROM $table9");
 		$num2 = mysql_num_rows($result2);
 		FOR($i2='0'; $i2<$num2; $i2++)
@@ -35,7 +34,7 @@
 			$result3 = mysql_query( "INSERT INTO $table6 (group_id, permission_id, enabled) VALUES ('$group_id', '$perm_id', '0')");
 			
 		}
-		//in die Tabelle userpermissions wird f�r alle User die neue Berechtigung mit der Eigenschaft "nicht aktiviert" eingetragen:
+		//in die Tabelle userpermissions wird fuer alle User die neue Berechtigung mit der Eigenschaft "nicht aktiviert" eingetragen:
 		$result4 =mysql_query( "SELECT * FROM $table1");
 		$num4 = mysql_num_rows($result4);
 		FOR($i4='0'; $i4<$num4; $i4++)
@@ -48,6 +47,7 @@
 	}
 	ELSE
 	{
-		echo "Sie haben nicht gen�gend Berechtigungen oder das Formular wurde nicht vollst&auml;ndig ausgef&uuml;llt!";
+		echo "Sie haben nicht gen&uuml;gend Berechtigungen oder das Formular wurde nicht vollst&auml;ndig ausgef&uuml;llt!<BR><BR>
+		<input type='button' value='Zur&uuml;ck' onClick='javascript:history.back()'";
 	}
 ?>
