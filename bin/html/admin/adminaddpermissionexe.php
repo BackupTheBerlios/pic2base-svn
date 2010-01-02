@@ -47,7 +47,7 @@
 	}
 	ELSE
 	{
-		echo "Sie haben nicht gen&uuml;gend Berechtigungen oder das Formular wurde nicht vollst&auml;ndig ausgef&uuml;llt!<BR><BR>
-		<input type='button' value='Zur&uuml;ck' onClick='javascript:history.back()'";
+		echo "<center><BR><BR>Fehler!<BR><BR>Sie haben nicht gen&uuml;gend Berechtigungen oder das Formular wurde nicht vollst&auml;ndig ausgef&uuml;llt!<BR><BR>
+		<input type='button' value='Zur&uuml;ck' onClick='javascript:history.back()'</center>";
 	}
 ?>
