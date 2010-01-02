@@ -229,7 +229,7 @@ $num2 = mysql_num_rows($result2);
 	?>
 	</div>
 	
-	<div id='spalte2'><p id="elf" style="background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;"><b>Hilfe zu den Suchm�glichkeiten:</b><BR><BR>
+	<div id='spalte2'><p id="elf" style="background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;"><b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
 	Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button "Hilfe" in der Navigationsleiste.
 	  </p>
 	</div>
