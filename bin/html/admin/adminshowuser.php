@@ -25,7 +25,7 @@
 	<FORM name = 'del_user' method='post' action='adminframe.php?item=deleteuser&id=$id'>
 	<table class='normal'>
 	<tr>
-	<td colspan='2' style='font-size:12pt; text-align:center;'>".$warnung." Benutzerprofil f&uuml;r User '.$username.'</td>
+	<td colspan='2' style='font-size:12pt; text-align:center;'>".$warnung." Benutzerprofil f&uuml;r User ".$username."</td>
 	</tr>
 	
 	<tr style='height:3px;'>
