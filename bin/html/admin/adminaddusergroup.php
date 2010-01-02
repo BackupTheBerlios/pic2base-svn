@@ -1,5 +1,5 @@
 <CENTER>
-<FORM method='post' action='adminaddusergroupexe.php'>
+<FORM name='neue_gruppe' method='post' action='adminaddusergroupexe.php'>
 
 <table class='normal'>
 <tr>
@@ -28,7 +28,7 @@ Neue Benutzergruppe hinzuf&uuml;gen
 </tr>
 
 <TR>
-<TD colspan='2' align='center'><input type=submit value='Hinzufügen'>
+<TD colspan='2' align='center'><input type=submit value='Hinzuf&uuml;gen'>
 </TD>
 </TR>
 
@@ -43,3 +43,6 @@ Neue Benutzergruppe hinzuf&uuml;gen
 </table>
 </form>
 </CENTER>
+<script language="javascript">
+document.neue_gruppe.groupname.focus();
+</script>
