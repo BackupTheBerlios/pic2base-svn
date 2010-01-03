@@ -46,6 +46,10 @@ IF($loc_id !== '0' AND $loc_id !== '')
 	$result1 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
 	$location = mysql_result($result1, isset($i1), 'location');
 }
+ELSE
+{
+	$location = '';
+}
 $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
 $vorname = $row['vorname'];
@@ -181,9 +185,9 @@ $result5 = mysql_query("SELECT field_name FROM $table5 WHERE viewable = '1'");
 
 echo mysql_error();
 $num5 = mysql_num_rows($result5);
+$viewable_fields = array();
 IF($num5 > '0')
 {
-	$viewable_fields = array();
 	FOR($i5='0'; $i5<$num5; $i5++)
 	{
 		$field_name = mysql_result($result5, $i5, 'field_name');
