@@ -1,10 +1,9 @@
 <?
-
 //[Programm-Version]
-$version = "0.41 (15.05.2009)";
+$version = "0.45 (RC1, 01.01.2010)";
 
 //[copyright-Vermerk in der Fusszeile]
-$cr = "2006 - 2009 Logiqu";
+$cr = "2006 - 2010 Logiqu";
 
 //Zugangsdaten fuer den Datenbankzugriff (normaler User mit teilwesen Zugriffsbeschraenkungen auf DB pic2base)
 $db_server='localhost';
@@ -13,24 +12,22 @@ $PWD='pic_base';
 $db = 'pic2base';
 
 @$conn = mysql_connect($db_server,$user,$PWD);
-$table1 = 'users';		//Benutzerverzeichnis
-$table2 = 'pictures';		//Tabelle der Bilddaten
-$table3 = 'diary';		//Tabelle der Tagebuch-Eintraege
-$table4 = 'kategorien';		//Kategorie-Tabelle;
-$table5 = 'meta_protect';	//Tabelle der Schreibrechte auf die exif_data-Tabelle
-$table6 = 'grouppermissions';
-$table7 = 'userpermissions';
-$table8 = 'permissions';	//Zugriffsrechte
-$table9 = 'usergroups';
-$table10 = 'pic_kat';		//Bild-Kategorie-Zuordnung
-$table11 = 'kat_lex';		//Kategorie-Lexikon
-$table12 = 'locations';		//Aufnahmestandorte
-$table13 = 'geo_tmp';		//wird bei der automat. Georeferenzierung verwendet
-$table14 = 'meta_data';		//Metadaten der Bilder
-$table15 = 'tmp_tree';		//wird bei der Kategoriebaum-Umstrukturierung verwendet
+$table1 = 'users';				//Benutzerverzeichnis
+$table2 = 'pictures';			//Tabelle der Bilddaten
+$table3 = 'diary';				//Tabelle der Tagebuch-Eintraege
+$table4 = 'kategorien';			//Kategorie-Tabelle;
+$table5 = 'meta_protect';		//Tabelle der Schreibrechte auf die exif_data-Tabelle
+$table6 = 'grouppermissions';	//Gruppenrechte
+$table7 = 'userpermissions';	//Benutzerrechte
+$table8 = 'permissions';		//Zugriffsrechte
+$table9 = 'usergroups';			//Benutzergruppen
+$table10 = 'pic_kat';			//Bild-Kategorie-Zuordnung
+$table11 = 'kat_lex';			//Kategorie-Lexikon
+$table12 = 'locations';			//Aufnahmestandorte
+$table13 = 'geo_tmp';			//wird bei der automat. Georeferenzierung verwendet
+$table14 = 'meta_data';			//Metadaten der Bilder
+$table15 = 'tmp_tree';			//wird bei der Kategoriebaum-Umstrukturierung verwendet
 
-//Fuer Ajax-Funktionalitaet (aus Beispielprojekt kopiert):
-//   ******************************************************************************************************
 $myhost=$db_server;
 $myuser=$user;
 $mypw=$PWD;
@@ -52,7 +49,6 @@ if (!mysql_select_db($mydb))
 	return;
 }
 mysql_query("SET CHARACTER SET latin1");
-//   ******************************************************************************************************
-//Encryption-Key f�r PWD-Ver-/Entschl�sselung
+//Encryption-Key fuer PWD-Ver-/Entschluesselung
 $key = '0815';
 ?>
