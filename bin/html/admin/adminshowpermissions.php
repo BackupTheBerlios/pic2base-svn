@@ -29,11 +29,13 @@
 	  echo "<td align=left>".mysql_result ($result, $i, "shortdescription")."</td>";
 	  if (hasPermission($c_username, 'adminlogin'))
 	  {
-	  	echo "<td align=left width=100>&Auml;ndern</td>";
+	  	//echo "<td align=left width=100>&Auml;ndern</td>";
+	  	echo "<td align=left width=100></td>";
 	  }
 	  if (hasPermission($c_username, 'adminlogin'))
 	  {
-	  	echo "<td align=left>L&ouml;schen</td>";
+	  	//echo "<td align=left>L&ouml;schen</td>";
+	  	echo "<td align=left></td>";
 	  }
 	  echo "</tr>";
 	}
