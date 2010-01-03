@@ -54,7 +54,7 @@ SWITCH ($berechtigung)
 	CASE $berechtigung == '1':
 	$navigation = 	"
 			<a class='navi_blind'></a>
-			<a class='navi' href='../../html/admin/adminframe.php'>Zur�ck</a>
+			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>";
 	break;
 	
@@ -80,11 +80,11 @@ SWITCH ($berechtigung)
 	
 	<div id="spalte1">
 	<?php
-	//Wartungs-Routine zur Bereinigung der pic-kat-Tabelle, wenn Bilder existieren, welchen nur die kat_id = 1 zugewiesen wurde. Dies ist gleichbedeutend, da� den Bildern noch KEINE Kategorie zugewiesen wurden.
+	//Wartungs-Routine zur Bereinigung der pic-kat-Tabelle, wenn Bilder existieren, welchen nur die kat_id = 1 zugewiesen wurde. Dies ist gleichbedeutend, dass den Bildern noch KEINE Kategorie zugewiesen wurden.
 	$Z = '0';
 	$result10 = mysql_query( "SELECT DISTINCT pic_id FROM $table10");
 	$num10 = mysql_num_rows($result10);
-	echo "Gefundene Eintr�ge in der Bild-Kategorie-Tabelle: ".$num10."<BR><BR>";
+	echo "Gefundene Eintr&auml;ge in der Bild-Kategorie-Tabelle: ".$num10."<BR><BR>";
 	FOR($i10='0'; $i10<$num10; $i10++)
 	{
 		$pic_id = mysql_result($result10, isset($i10), 'pic_id');
