@@ -34,11 +34,9 @@ $hist_path = $sr."/images/histogramme";
 $monochrome_path = $sr."/images/monochrome";
 
 //alle unterstuetzten Datei-Formate (incl- RAW-Dateien):
-//$supported_filetypes = array('bmp','gif','xcf','dcm','jpeg','pcx','png','sun','tga','tif','tiff','ico','pdf', 'nef');
 $supported_filetypes = array('bmp','cgm','cr2','crw','dcm','dcr','dcx','eps','exr','fax','gif','html','jng','jpeg','jpg','mng','mrw','mvg','nef','orf','otb','palm','pbm','pcd','pcds','pcl','pcx','pdb','pdf','pgm','png','png8','png24','png32','pnm','ppm','ps','ps2','ps3','psd','raf','rgb','rla','rle','sct','sfw','sgi','shtml','sun','svg','tga','tiff','txt','vicar','viff','wpg','xbm','xcf','xpm','x3f','ycbcr','ycbcra','yuv');
 
 //unterstuetzten Datei-Formate (OHNE RAW-Dateien):
-//$supported_extensions = array('bmp','gif','xcf','dcm','jpeg','pcx','png','sun','tga','tif','tiff','ico','pdf');
 $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','html','jng','jpeg','jpg','mng','mvg','otb','palm','pbm','pcd','pcds','pcl','pcx','pdb','pdf','pgm','png','png8','png24','png32','pnm','ppm','ps','ps2','ps3','psd','rla','rle','sct','sfw','sgi','shtml','sun','svg','tga','tiff','vicar','viff','wpg','xbm','xcf','xpm','yuv');
 
 //Standorte der externen Programme:
