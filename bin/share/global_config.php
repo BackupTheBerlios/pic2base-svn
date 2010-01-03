@@ -5,9 +5,9 @@ error_reporting(E_ALL);
 
 //[Pfade]
 //Globale Konfigurationseinstellungen
-$doc_root = $_SERVER['DOCUMENT_ROOT'];				//DocumentRoot des Web-Servers
-$inst_path = "/admin";						//Pfad zwischen DocumentRoot und pic2base
-$p2b_path = $doc_root.$inst_path."/";				//Pfad zur p2b-Wurzel
+$doc_root = $_SERVER['DOCUMENT_ROOT'];						//DocumentRoot des Web-Servers
+$inst_path = "/admin";										//Pfad zwischen DocumentRoot und pic2base
+$p2b_path = $doc_root.$inst_path."/";						//Pfad zur p2b-Wurzel
 $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
 
 $path_copy = '../../../images/originale';
