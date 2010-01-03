@@ -55,7 +55,7 @@ SWITCH ($berechtigung)
 {
 	//Admin
 	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur�ck</a>
+	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
 			";
