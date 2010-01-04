@@ -246,8 +246,11 @@ echo "
 		<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		Die o.g. Funktionen werden &uuml;ber die jeweiligen Icons aufgerufen.<BR>
 		Weterhin besteht bei entsprechender Berechtigung die M&ouml;glichkeit, die Bildbeschreibung zu &auml;ndern. Hierzu Nehmen Sie die &Auml;nderung direkt in dem angezeigten Textfeld vor und speichern diese dann durch einen Klick auf den Button \"&Auml;nderungen speichern\".<BR><BR>
-		Ab Version 0.41 besteht die M&ouml;glichkeit, ein sogenanntes Kategorie-Lexikon anzulegen. Hiermit besteht die Option, zu jeder Kategorie zus&auml;tzliche Informationen in der Datenbank zu hinterlegen. So k&ouml;nnte man z.B. der Kategorie \"Blankenburg (Harz)\" Informationen zur geografischen Lage, der Einwohnerzahl, der Erreichbarkeit mit Bus / Bahn / Auto usw. zuweisen. Diese zus&auml;tzlichen Informationen werden formatiert abgespeichert und k&ouml;nnen neben Links auch Verweise auf externe Bilder beinhalten.<BR>
-		Kategoriebezeichnungen, denen bereits Informationen zugewiesen wurden, werden im Kategoriebaum blau hervorgehoben.
+		Weiterhin haben Sie die M&ouml;glichkeit, ein sogenanntes Kategorie-Lexikon anzulegen. Hiermit besteht die Option, zu jeder Kategorie zus&auml;tzliche Informationen in der Datenbank zu hinterlegen. So k&ouml;nnte man z.B. der Kategorie \"Blankenburg (Harz)\" Informationen zur geografischen Lage, der Einwohnerzahl, der Erreichbarkeit mit Bus / Bahn / Auto usw. zuweisen.<BR>
+		Die Zuweisung erfolgt, indem Sie in der Ansicht \"Suche nach Kategorien\" auf den gew&uuml;nschten Kategorienamen klicken und dann die Informationen in dem sich &ouml;ffnenden Dialogfenster eintragen. Diese zus&auml;tzlichen Informationen werden formatiert abgespeichert und k&ouml;nnen neben Links auch Verweise auf externe Bilder beinhalten.<BR>
+		Kategoriebezeichnungen, denen bereits Informationen zugewiesen wurden, werden im Kategoriebaum blau hervorgehoben.<BR><BR>
+		Analog kann ein Fototagebuch angelegt werden, indem man in der Ansicht \"Auflistung nach Jahrg&auml;ngen sortiert\" sich den betreffenden Tag heraussucht, anklickt und die gew&uuml;nschte Information hinterlegt.<BR>
+		Auch hier wird ein Tag, zu dem zus&auml;tzliche Informationen gespeichert wurden, farblich hervorgehoben.
 		</p>";
 		break;
 		
