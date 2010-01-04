@@ -184,6 +184,11 @@ $t_akt = mktime();
 			createQuickPreview($Orientation, $FileName);
 			$rest = $num4 - $i4 - 1;
 		}
+		ELSE
+		{
+			$rest = '';
+		}
+		
 		//Restzeit-Berechnung:
 		IF ($z_0 > '0')
 		{
