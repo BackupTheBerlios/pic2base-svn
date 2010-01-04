@@ -219,7 +219,7 @@ $num2 = mysql_num_rows($result2);
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=exif'>Suche nach Meta-Daten</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=desc'>Suche nach Beschreibungstext</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=geo'>Suche nach Geo-Daten</a>
-		<a class='subnavi' href='recherche2.php?pic_id=0&mod=kette'>Experten-Suche: Verkettete Recherche</a><BR></center>";
+		<!--<a class='subnavi' href='recherche2.php?pic_id=0&mod=kette'>Experten-Suche: Verkettete Recherche</a><BR></center>-->";
 	}
 	ELSE
 	{
