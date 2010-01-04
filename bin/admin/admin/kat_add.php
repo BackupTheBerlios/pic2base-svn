@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
+	<TITLE>pic2base - Kategorie hinzuf&uuml;gen</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
@@ -42,9 +42,8 @@ IF ($_COOKIE['login'])
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
  
-include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
-
+include $sr.'/bin/share/db_connect1.php';
 
 $level = $_GET['level']; 
 $level_neu = $level + 1;

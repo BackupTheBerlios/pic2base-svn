@@ -43,8 +43,8 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
-include '../share/db_connect1.php';
 INCLUDE '../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, $i1, 'berechtigung');

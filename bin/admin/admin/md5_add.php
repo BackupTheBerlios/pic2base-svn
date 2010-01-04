@@ -43,8 +43,8 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
  
-include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
@@ -83,7 +83,7 @@ echo "
 	$res10_1 = mysql_query( "SHOW FIELDS FROM `pictures`");
 	if (!$res10_1) 
 	{
-		echo 'Abfrage konnte nicht ausgef�hrt werden: ' . mysql_error();
+		echo 'Abfrage konnte nicht ausgef&uuml;hrt werden: ' . mysql_error();
 		exit;
 	}
 	if (mysql_num_rows($res10_1) > 0) 
@@ -104,7 +104,7 @@ echo "
 		IF(!mysql_error())
 		{
 			echo "Feld md5sum wurde der Tabelle &lt;pictures&gt; zugef&uuml;gt.<BR>";
-			$res10_3 = mysql_query( "INSERT INTO `pb_column_info` (table_name, column_name, comment, suchfeld) VALUES ('pictures', 'md5sum', 'MD5-Pr�fsumme', '0')");
+			$res10_3 = mysql_query( "INSERT INTO `pb_column_info` (table_name, column_name, comment, suchfeld) VALUES ('pictures', 'md5sum', 'MD5-Pruefsumme', '0')");
 			IF(!mysql_error())
 			{
 				echo "Tabelle pb_column_info wurde aktualisiert.<BR>";

@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
+	<TITLE>pic2base - Kategorie hinzuf&uuml;gen</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
@@ -15,7 +15,7 @@
  * Project: pic2base
  * File: kat_add_action1.php
  *
- * Copyright (c) 2003 - 2006 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -24,20 +24,16 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2006 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
-include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
 
-$kategorie = $_POST['kategorie']; // für register_globals = off
-$parent = $_POST['parent']; // für register_globals = off
-$level = $_REQUEST['level']; // für register_globals = off
-$kat_id = $_REQUEST['kat_id']; // für register_globals = off
-$ID = $_REQUEST['ID']; // für register_globals = off
+$kategorie = $_POST['kategorie']; 
+$parent = $_POST['parent']; 
+$level = $_REQUEST['level']; 
+$kat_id = $_REQUEST['kat_id']; 
+$ID = $_REQUEST['ID']; 
 
 
 $res0 = mysql_query( "SELECT * FROM $table4 WHERE kategorie='$kategorie' AND parent='$parent' AND level='$level'");

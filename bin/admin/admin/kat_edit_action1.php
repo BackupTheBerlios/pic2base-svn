@@ -30,13 +30,13 @@
  * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
-include '../../share/db_connect1.php';
 INCLUDE '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
 
 //var_dump($_POST);
-$ID = $_GET['ID']; // für register_globals = off
-$kat_id = $_GET['kat_id']; // für register_globals = off
-$kategorie = $_POST['kategorie']; // für register_globals = off
+$ID = $_GET['ID']; // fï¿½r register_globals = off
+$kat_id = $_GET['kat_id']; // fï¿½r register_globals = off
+$kategorie = $_POST['kategorie']; // fï¿½r register_globals = off
 
 // *#*  echo "kategorie: ".$kategorie."<br>";
 
