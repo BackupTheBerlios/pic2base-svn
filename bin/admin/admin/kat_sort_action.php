@@ -88,7 +88,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	//$child_arr = array();
 	IF($num5 > '0')
 	{
-		$curr_level = mysql_result($result5, $i5, 'level');
+		$curr_level = mysql_result($result5, isset($i5), 'level');
 		WHILE($curr_level <= $max_level)
 		{
 			FOREACH($child_arr AS $child)
