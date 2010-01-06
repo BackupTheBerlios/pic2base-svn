@@ -176,7 +176,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			}
 		
 		//echo $base_file;
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+		//Link fuer den Ruecksprung erzeugen, d.h. noechst hoeheren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{
@@ -204,8 +204,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				<TD>
 				<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0)'>".$sel_all."</SPAN>
 				</TD>
-				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung)."</TD>
-				</TR>";
+				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung)."</TD>";
 			getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
 		}
 		ELSE
