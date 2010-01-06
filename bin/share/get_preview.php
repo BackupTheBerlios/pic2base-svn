@@ -345,7 +345,7 @@ SWITCH ($modus)
 			$kategorie = htmlentities(mysql_result($result4, isset($i4), 'kategorie'));
 			echo "Es gibt ".$num2." Bilder in der Kategorie \"".$kategorie."\"";
 			//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, in der unteren die jeweils dazugeh�rigen Auswahlboxen:
-			//der Normalfall - Es werden alle Bilder angezeigt, welche der gew�hlten Kategorie angeh�ren
+			//der Normalfall - Es werden alle Bilder angezeigt, welche der gewaehlten Kategorie angehoeren
 			echo "	<TABLE border='0' align='center'>
 			<TR>";
 			FOR ($i2=0; $i2<$num2; $i2++)
@@ -358,7 +358,7 @@ SWITCH ($modus)
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
 				$Orientation = mysql_result($result2, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
-				//abgeleitete Gr��en:
+				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
 					//@$parameter_v=getimagesize('../../images/originale/'.$FileName);
@@ -375,7 +375,7 @@ SWITCH ($modus)
 				$hoehe_v = $hoehe * 5;
 				IF ($breite == 0 OR $hoehe == 0)
 				{
-					//echo "Keine Gr��enangaben!";
+					//echo "Keine Groessenangaben!";
 					$breite_v = 800;
 					$hoehe_v = 600;
 				}
@@ -394,7 +394,7 @@ SWITCH ($modus)
 			
 			echo "	</TR>";
 			
-			//nicht in alle F�llen werden die Checkboxen dargestellt:
+			//nicht in alle Faellen werden die Checkboxen dargestellt:
 			SWITCH($base_file)
 			{
 				CASE 'edit_remove_kat':
@@ -474,7 +474,7 @@ SWITCH ($modus)
 		SWITCH ($m)
 		{
 			CASE '0':
-			//Anzeige der Jahrg�nge
+			//Anzeige der Jahrgaenge
 			$krit1 = "WHERE $table14.DateTimeOriginal LIKE '$j%'";
 			break;
 			
@@ -495,7 +495,7 @@ SWITCH ($modus)
 		}
 		//echo $krit1;
 		$statement = "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.pic_id, $table2.note, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal";
-		//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie ben�tigt	
+		//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie benoetigt	
 		
 		$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.pic_id, $table2.note FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal");
 		echo mysql_error();
@@ -527,12 +527,12 @@ SWITCH ($modus)
 		SWITCH ($ID)
 		{
 			CASE '':
-			//Wenn noch keine Kategorie gew�hlt wurde:
+			//Wenn noch keine Kategorie gewaehlt wurde:
 			echo "<p class='gross' style='color:yellow; text-align:center;'>Bitte w&auml;hlen Sie zun&auml;chst in der linken Spalte Bilder einer Kategorie aus!</p>";
 			break;
 
 			CASE '1':
-			//Wenn die Wurzel-Kategorie gew�hlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
+			//Wenn die Wurzel-Kategorie gewaehlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
 			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal");
 			$num6_1 = mysql_num_rows($result6_1);
 			$N = $num6_1;
@@ -558,7 +558,7 @@ SWITCH ($modus)
 			break;
 			
 			default:
-			//bei allen Kategorien au�er der Wurzel:
+			//bei allen Kategorien ausser der Wurzel:
 			$statement = "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' $krit2) ORDER BY $table14.DateTimeOriginal";
 			
 			//Ermittlung aller Bilder der Kategorie:
@@ -568,12 +568,11 @@ SWITCH ($modus)
 			$result8 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table2, $table10, $table14 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND loc_id <>'0' $krit2)");
 		
 			$result4 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id='$ID'");
-			$kategorie = htmlentities(mysql_result($result4, isset($i4), 'kategorie'));
+			$kategorie = mysql_result($result4, isset($i4), 'kategorie');
 			IF(strlen($kategorie) > 17)
 			{
-				$kategorie = substr($kategorie,0,15)."...";
+				$kategorie = htmlentities(substr($kategorie,0,15))."...";
 			}	
-			
 			echo mysql_error();
 			if($result6_1)
 			{
@@ -615,7 +614,7 @@ SWITCH ($modus)
 	{
 			CASE 'geo_rech1':
 			//Suche nach geogr. Koordinaten und Umkreis
-			//Pr�fung auf Plausibilit�t der eingegebenen Daten:
+			//Pruefung auf Plausibilitaet der eingegebenen Daten:
 			$long = str_replace(',','.',$long);
 			IF(!ereg('^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$',$long) OR ($long > abs(180)))
 			{
@@ -645,10 +644,10 @@ SWITCH ($modus)
 			}
 			ELSE
 			{
-			//echo htmlentities("�bergebene Werte: Breite: ".$lat.", L�nge: ".$long.", H�he: ".$alt.", Umkreis: ".$radius." m, Ort. ".$ort.", Umkreis: ".$radius2." ".$einheit2)."<BR>";
+			//echo htmlentities("uebergebene Werte: Breite: ".$lat.", Laenge: ".$long.", Hoehe: ".$alt.", Umkreis: ".$radius." m, Ort. ".$ort.", Umkreis: ".$radius2." ".$einheit2)."<BR>";
 			}
 			
-			//ann�hernde Berechnung des Toleranzfeldes aus dem Radius:
+			//annaehernde Berechnung des Toleranzfeldes aus dem Radius:
 			//geogr. Breite: WInkeldifferenz je m Abweichung: 0,000008999280058�
 			$diff_lat = 0.000008999280058;
 			$delta_lat = $radius * $diff_lat;
@@ -656,16 +655,16 @@ SWITCH ($modus)
 			$lat_max = $lat + $delta_lat;
 			//echo "Breite: ".$lat.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
 			
-			//geogr. L�nge: hier ist dei Winkel�nderung / Entfernun von der geogr. Breite abh�ngig:
+			//geogr. Laenge: hier ist dei Winkelaenderung / Entfernun von der geogr. Breite abhaengig:
 			$delta_long = getDeltaLong($lat, $radius);
 			$long_min = $long - $delta_long;
 			$long_max = $long + $delta_long;
-			//echo htmlentities("L�nge: ".$long.", min. L�nge: ".$long_min.", max. L�nge: ".$long_max)."<BR>";
+			//echo htmlentities("Laenge: ".$long.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
 			
 			//qudratischer Auswahlbereich:
 			$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max') AND (altitude > '$alt')");
 			//echo mysql_error();
-			//Festlegung f�r Pr�fung, ob Punkt im KREIS liegt:
+			//Festlegung fuer Pruefung, ob Punkt im KREIS liegt:
 			$long_mittel = $long;
 			$lat_mittel = $lat;
 			break;
@@ -689,7 +688,7 @@ SWITCH ($modus)
 				$lat = $lat + mysql_result($result10, $i10, 'latitude');
 				$long = $long + mysql_result($result10, $i10, 'longitude');
 			}
-			//echo "Summe Breite: ".$lat.", Summe L�nge: ".$long."<BR>";
+			//echo "Summe Breite: ".$lat.", Summe Laenge: ".$long."<BR>";
 			$lat_mittel = $lat / $num10;
 			$long_mittel = $long / $num10;
 			//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere L�nge: ".$long_mittel)."<BR>";
