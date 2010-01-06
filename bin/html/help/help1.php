@@ -196,14 +196,19 @@ echo "
 		Hinweis:<BR>F&uuml;r diese Funktion m&uuml;ssen Cookies zugelassen sein!<BR><BR>
 		
 		<u>Auflistung nach Jahrg&auml;ngen sortiert</u><BR>
-		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den EXIF-Daten ausgelesen. Handelt es sich um Bilddateien ohne EXIF-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefa&#223;.<BR><BR>
+		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den Meta-Daten ausgelesen. Handelt es sich um Bilddateien ohne Meta-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefa&#223;.<BR><BR>
 		<u>Suche nach Kategorien</u><BR>
 		In dieser Ansicht besteht die M&ouml;glichkeit, Bilder anhand der zugewiesenen Kategorie zu recherchieren.<BR>
 		Die oberste Ebene (Neuzug&auml;nge) beinhaltet alle Bilder, welchen noch keine Kategorie zugewiesen wurden.<BR>
 		Die Ebenen darunter beinhalten Bilder der jeweiligen Kategorien.<BR>
-		Hinweis:<BR>
-		Bilder einer unteren Ebene sind auch immer Mitglieder der dar&uuml;berliegenden Kategorien.
-		<BR><BR>
+		Mit einem Klick auf das Plus-Zeichen vor einem Kategorienamen klappt man den Kategoriebaum an dieser Stelle auf. In der folgenden Ansicht beginnt die Teilansicht des Kategoriebaumes nun auf der Ebene der ausgew&auml;hlten Kategorie. In dieser Ebene folgt weiter rechts in der Zeile ein gr&uuml;nes H&auml;kchen und dann eine Zahl, die die Summe aller Bilder in dieser Kategorie und aller Unterkategorien angibt.<BR>
+		Klickt man nun auf das gr&uuml;ne H&auml;kchen, werden in der Filmstreifenansicht alle Bilder der gew&auml;hlten Kategorie und aller Unterkategorien (sofern vorhanden) angezeigt. Die Anzahl entspricht der Zahl hinter dem gr&uuml;nen H&auml;kchen.<BR>
+		Eine Ausnahme bildet die Kategorie \"Neuzug&auml;nge\":<BR>
+		Hier wird mit der Zahl hinter dem gr&uuml;nen H&auml;kchen nur die Anzahl aller Bilder <u>unterhalb</u> der Kategorie \"Neuzug&auml;nge\" angezeigt.<BR>
+		Trotzdem kann bei einem Klick auf das gr&uuml;ne H&auml;kchen hinter der Kategorie \"Neuzug&auml;nge\" die Meldung erscheinen \"Jedem Bild wurde mind. eine Kategorie zugewiesen.\".<BR>
+		Das bedeutet, die Kategorie \"Neuzug&auml;nge\" selbst ist leer. Alle Bilder sind einer entsprechenden Kategorie zugeordnet worden.<BR>
+		Dies sollte der Normalfall sein, da die Kategorie \"Neuzug&auml;nge\" nur ein vorl&auml;ufiger Ablageort f&uuml;r gerade in das System aufgenommene Bilder ist.<BR>
+		<BR>
 		<u>Suche nach ausgew&auml;hlten Meta-Daten</u><BR>
 		Was sind Meta-Daten?<BR>
 		Meta-Daten sind zus&auml;tzliche, meist nicht sichtbare Informationen zu einem Bild. Dies k&ouml;nnen z.B. sein:<BR> Kamera-Modell, Aufnahme-Datum, Blende, Belichtungszeit, aber auch Angaben zum Copyright, Stichworte oder Bildbeschreibungen.<BR>
