@@ -26,7 +26,7 @@ unset($child_arr);
 $child_arr[] = $kat_id_s;
 IF($num2 > '0')
 {
-	$curr_level = mysql_result($result2, $i2, 'level');
+	$curr_level = mysql_result($result2, isset($i2), 'level');
 	WHILE($curr_level <= $max_level)
 	{
 		FOREACH($child_arr AS $child)
@@ -61,7 +61,7 @@ if(array_key_exists('kat_id_d',$_GET))
 }
 else
 {
-	$kat_id_d = 0;
+	//$kat_id_d = 0;
 }
 
 $KAT_ID_D = $kat_id_d;		//kat_id_d - Kategorie-ID der Destination
@@ -73,8 +73,7 @@ WHILE ($kat_id_d > '1')
 {
 	$res0 = mysql_query("SELECT parent FROM $table4 WHERE kat_id='$kat_id_d'");
 	echo mysql_error();
-	$kat_id_d = $row['parent'];
-	//$kat_id_d = mysql_result($res0, $i0, 'parent');
+	$kat_id_d = mysql_result($res0, isset($i0), 'parent');
 	//echo "Kat-ID in der Funktion: ".$kat_id_d."<BR>";
 	$knoten_arr_d[]=$kat_id_d;
 }
