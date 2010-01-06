@@ -86,8 +86,8 @@
 		?>
 		<noscript>
 		pic2base verwendet in vielen Funktionen JavaScript.<BR>
-		Um sinnvoll mit dieser Anwendung arbeiten zu k�nnen, ist es notwendig,<BR>
-		da� Sie in Ihrem Browser JavaScript aktiviert haben.<BR>
+		Um sinnvoll mit dieser Anwendung arbeiten zu k&ouml;nnen, ist es notwendig,<BR>
+		da&szlig; Sie in Ihrem Browser JavaScript aktiviert haben.<BR>
 		F&uuml;r Unterst&uuml;tzung fragen Sie bitte Ihnen Administrator.<BR><BR>
 		Ihr pic2base-Team.
 		</noscript>
