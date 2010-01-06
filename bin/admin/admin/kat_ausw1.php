@@ -124,7 +124,7 @@ echo "
 
 mysql_close($conn);
 ?>
-<p class="klein">- KH 01/2008 -</P>
+<p class="klein"></P>
 </DIV></CENTER>
 </BODY>
 </HTML>
