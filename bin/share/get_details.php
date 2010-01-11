@@ -70,7 +70,7 @@ IF ($pic_id !=='0')
 		$num9 = mysql_num_rows($result9);
 			
 		$kat_info='';
-		FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gew�hlt, da die Wurzel uninteressant ist!
+		FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewaehlt, da die Wurzel uninteressant ist!
 		{
 			//echo $num5."<BR>";
 			$kategorie = htmlentities(mysql_result($result9, $i9, 'kategorie'));
@@ -106,7 +106,7 @@ IF ($pic_id !=='0')
 		//echo "Kategorien: ".$kat_info."<BR>";
 		echo mysql_error();
 		//$size = round($FileSize / 1024);
-		$max_size = 90;			//max. Seitenl�nge des Vorschau-Bildes
+		$max_size = 90;			//max. Seitenlaenge des Vorschau-Bildes
 		$quality = '3';
 		echo "<FORM name = beschr method=post action=save_desc.php?pic_id=$pic_id&base_file=$base_file>";
 		echo "<TABLE id='detail1'>
