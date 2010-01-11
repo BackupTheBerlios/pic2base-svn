@@ -30,10 +30,6 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -217,6 +213,9 @@ function setFontColor($ID, $kat_id)
          <INPUT type='text' name='kategorie' value='$kategorie_alt' size='30' maxlength='30'>&#160;
          <INPUT type='submit' value='&Auml;ndern'>&#160;
          <INPUT TYPE = 'button' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
+         <p style='margin:20px;'><BR><u>Bitte beachten Sie:</u><BR><BR>
+         Nachdem die Bezeichnung der Kategorie ge&auml;ndert wurde, werden auch alle Eintr&auml;ge in den Meta-Daten der betreffenden Bilder aktualisiert.<BR>
+         Dies kann - je nach Rechenleistung und Anzahl der Bilder - eine Weile dauern.</p>
        </FORM>
 	</center></div>
 	
@@ -226,7 +225,6 @@ function setFontColor($ID, $kat_id)
 
 mysql_close($conn);
 ?>
-<p class="klein">- KH 09/2006 -</P>
 </DIV></CENTER>
 </BODY>
 </HTML>
