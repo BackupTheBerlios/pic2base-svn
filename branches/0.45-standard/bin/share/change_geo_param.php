@@ -76,7 +76,7 @@ ELSE
 	{
 		$lat = $param[0];
 		$long = $param[1];
-		//der erste und zweite Parameter sind die Koordinaten, der dritte und alle weiteren gehören lt. Definition zur Ortsbezeichnung, denn diese kann aus dem Ortsnamen und ggf durch Kommata getrennte Ergänzungen bestehen (z.B.: Blankenburg, Gehren)
+		//der erste und zweite Parameter sind die Koordinaten, der dritte und alle weiteren gehï¿½ren lt. Definition zur Ortsbezeichnung, denn diese kann aus dem Ortsnamen und ggf durch Kommata getrennte Ergï¿½nzungen bestehen (z.B.: Blankenburg, Gehren)
 		$ort = '';
 		FOR($K=2; $K<count($param); $K++)
 		{
@@ -95,7 +95,7 @@ ELSE
 		$ort = 'Blankenburg';
 		$loc = round($lat,6).",".round($long,6);
 	}
-//echo "Parameter: ".$parameter.", Breite: ".$lat.", Länge: ".$long.", Ort: ".$ort."<BR>";
+//echo "Parameter: ".$parameter.", Breite: ".$lat.", Lï¿½nge: ".$long.", Ort: ".$ort."<BR>";
 }
 ?>
 
@@ -116,7 +116,7 @@ ELSE
 	var lon=<?php echo $long;?>;
 	
 	var map=new GMap2(document.getElementById("map"));
-	map.setCenter(new GLatLng(lat,lon),10); 	//Breite, Länge, Zoom-Stufe (2 - Ganz Europa; 8 - Raum Magdeburg)
+	map.setCenter(new GLatLng(lat,lon),10); 	//Breite, Lï¿½nge, Zoom-Stufe (2 - Ganz Europa; 8 - Raum Magdeburg)
 	map.addControl(new GMapTypeControl(1));		//Karte/Sat/Hybrid-Auswahl
 	map.addControl(new GLargeMapControl());		//Zoom-Controls
 	map.enableContinuousZoom();
