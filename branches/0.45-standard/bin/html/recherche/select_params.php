@@ -54,9 +54,7 @@ $FileName = mysql_result($result0, isset($i0), 'FileName');
 
 $file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 $Orientation = trim(shell_exec($et_path."/exiftool -n -s -S '-Orientation' ".$file));
-//echo "'.$Orientation.'";
 
-//$Orientation='1';
 //Erzeugung des RAW-Dateinamens:
 $FileNameRaw = substr($FileName,0,-4).".".substr($FileNameOri,-3,3);
 //echo $FileNameRaw;
