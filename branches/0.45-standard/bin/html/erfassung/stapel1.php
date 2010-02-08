@@ -122,20 +122,20 @@ Bild erfassen
 
 ermitteln, wieviel Bilder im Upload-Ordner des Users liegen
 
-f&uuml;r jedes Bild:
+fuer jedes Bild:
 Ausrichtung des Originalbildes (dsc_123.nef) ermitteln
 Dummy-Datensatz mit Original-Dateinamen und User-ID  anlegen
 pic_id ermitteln
 Bild unter neuem Namen im Originalformat speichern (dsc_123.nef ? 12345.nef)
 Kontrolle, ob Upload erfolgreich war
-pr&uuml;fen, ob hochgeladenes Bild als jpg vorliegt
-wenn nicht: jpg-File erzeugen (neben dem 12345.nef wird das 12345.jpg angelegt; Dieses Bild wird f&uuml;r alle weiteren Verarbeitungen innerhalb von pic2base verwendet!)
+pruefen, ob hochgeladenes Bild als jpg vorliegt
+wenn nicht: jpg-File erzeugen (neben dem 12345.nef wird das 12345.jpg angelegt; Dieses Bild wird fuer alle weiteren Verarbeitungen innerhalb von pic2base verwendet!)
 
 Wenn Ausrichtung nicht 'Horizontal' ist: lagerichtige Kopie des 12345.jpg im Ordner /rotated ablegen
 
-Pr&uuml;fsumme / Vorschaubilder / Histogramme erzeugen
+Pruefsumme / Vorschaubilder / Histogramme erzeugen
 
-Pr&uuml;fsumme aus dem Original-(jpg)Bild erstellen
+Pruefsumme aus dem Original-(jpg)Bild erstellen
 HQ-Vorschaubild aus (rotiertem) 12345.jpg erstellen
 V-Vorschaubild aus (rotiertem) 12345.jpg erstellen
 Histogramme aus 12345.jpg erstellen
@@ -145,7 +145,7 @@ Bild-Eigenschaften ermitteln (Meta-Daten auslesen)
 mittels exiftool alle verf&uuml;gbaren Metadaten auslesen und, wenn f&uuml;r die einzelnen Parameter Felder in der Tabelle meta_data existieren, die ermittelten Werte dort speichern
 Kontrolle, ob mindestens die Parameter Width, Height und ImageSize ausgelesen wurden. Wenn nicht, diese Parameter mit PHP-Routinen ermitteln und in der DB speichern
 Die Ausrichtung wird intern immer mit '1' verwendet.
-Formatvorgaben der Popup-Vorschaufenster werden aus den tats�chlichen Bild-Abmessungen mittel getimagesize() ermittelt!
+Formatvorgaben der Popup-Vorschaufenster werden aus den tatsaechlichen Bild-Abmessungen mittel getimagesize() ermittelt!
 
 Erfassung eines Bildes abgeschlossen    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
@@ -195,14 +195,14 @@ FOR ($x='0';$x<$n;$x++)
 	clearstatcache();	
 //  +++  Egal, was reinkommt: alle Bilder werden in JPEG gewandelt, um bei der Ausgabe die Meta-Daten mitliefern zu k&ouml;nnen:
 	$file_info = pathinfo($tmp_filename);
-	//Pr&uuml;fung auf unterst&uuml;tzte Datei-Formate:
+	//Pruefung auf unterstuetzte Datei-Formate:
 	IF($file_info['extension'] !== 'jpg')
 	{
 		$base_name = $file_info['basename'];
 		$ext = strtolower($file_info['extension']);		//echo "Ext: ".$ext."<BR>";
 		$new_filename = str_replace($ext,'',$base_name)."jpg";	//z.B: 122344.jpg
 		
-		//RAW-Dateien m&uuml;ssen mit dcraw gesondert behandelt werden!!:
+		//RAW-Dateien muessen mit dcraw gesondert behandelt werden!!:
 		//welche Dateitypen sind in supported_filetypes und nicht in supported_extensions?
 		$arr_raw = array();
 		$arr_raw = array_diff($supported_filetypes, $supported_extensions);
