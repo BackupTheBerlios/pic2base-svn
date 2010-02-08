@@ -51,6 +51,12 @@ $result0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 $num0 = mysql_num_rows($result0);
 $FileNameOri = mysql_result($result0, isset($i0), 'FileNameOri');
 $FileName = mysql_result($result0, isset($i0), 'FileName');
+
+$file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
+$Orientation = trim(shell_exec($et_path."/exiftool -n -s -S '-Orientation' ".$file));
+//echo "'.$Orientation.'";
+
+//$Orientation='1';
 //Erzeugung des RAW-Dateinamens:
 $FileNameRaw = substr($FileName,0,-4).".".substr($FileNameOri,-3,3);
 //echo $FileNameRaw;
@@ -490,7 +496,7 @@ echo "	<TR class='normal' style='height:180px;'>
 		
 		<input type='button' value='L&ouml;sche gespeicherte Parameter' onClick=\"eraseCookie('params','','')\" style='margin-top:10px; width:250px'>
 		
-		<input type='button' value='Ansicht mit gew&auml;hlten Parametern' onClick=\"createNewPreview('$pic_id', '$c_username', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'tmp')\" style='margin-top:10px; width:250px'>
+		<input type='button' value='Ansicht mit gew&auml;hlten Parametern' onClick=\"createNewPreview('$pic_id', '$c_username', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'tmp', '$Orientation')\" style='margin-top:10px; width:250px'>
 		</TD>
 	</TR>
 	
@@ -504,7 +510,7 @@ echo "	<TR class='normal' style='height:180px;'>
 		<input type='button' value='Fenster schliessen' onClick='javascript:window.close()' style='width:250px'>
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:center;'>
-		<input type='button' value='Vorschaubilder neu erzeugen' onClick=\"createNewPreview('$pic_id', '$c_username', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'new')\" style='width:250px;'>
+		<input type='button' value='Vorschaubilder neu erzeugen' onClick=\"createNewPreview('$pic_id', '$c_username', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'new', '$Orientation')\" style='width:250px;'>
 		</TD>
 	</TR>
 	
