@@ -430,10 +430,10 @@ function getTimeTreeview(pic_id, mod, s_m, bewertung)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
-function createNewPreview(pic_id, c_username, hl, gamma, targ_color, col_inter, rota, wb, hsi, contrast, FileNameRaw, modus)
+function createNewPreview(pic_id, c_username, hl, gamma, targ_color, col_inter, rota, wb, hsi, contrast, FileNameRaw, modus, Orientation)
 {
 	var url = '../../share/create_new_previews.php';
-	var params = 'pic_id=' + pic_id + '&c_username=' + c_username + '&hl=' + hl + '&gamma=' + gamma + '&targ_color=' + targ_color + '&col_inter=' + col_inter + '&rota=' + rota + '&wb=' + wb + '&hsi=' + hsi + '&contrast=' + contrast + '&file_name_raw=' + FileNameRaw + '&modus=' + modus;
+	var params = 'pic_id=' + pic_id + '&c_username=' + c_username + '&hl=' + hl + '&gamma=' + gamma + '&targ_color=' + targ_color + '&col_inter=' + col_inter + '&rota=' + rota + '&wb=' + wb + '&hsi=' + hsi + '&contrast=' + contrast + '&file_name_raw=' + FileNameRaw + '&modus=' + modus + '&Orientation=' + Orientation;
 	//alert("Parameter: "+params);
 	var target = 'new_preview';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
