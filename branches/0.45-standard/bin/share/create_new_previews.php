@@ -48,6 +48,10 @@ IF(array_key_exists('hsi', $_REQUEST))
 {
 	$hsi = $_REQUEST['hsi'];
 }
+IF(array_key_exists('Orientation', $_REQUEST))
+{
+	$Orientation = $_REQUEST['Orientation'];
+}
 
 IF($modus == 'tmp')
 {
@@ -109,10 +113,11 @@ ELSEIF($modus == 'new')
 {
 	echo "Die neuen Vorschaubilder wurden erzeugt.<BR><BR>";
 	//die folgenden Schritte werden abgearbeitet:
-	//	1) jpg-Bild in Originalgraeue neu erzeugen
-	//	2) jpg-HQ-Vorschau neu erzeugen
-	//	3) jpg-Thumbnail neu erzeugen
-	//	4) Datei-Attribute aller dre neu erzeugten Dateien auf 700 setzen
+	//	1) jpg-Bild in Originalgroesse neu erzeugen
+	//	2) rot. jpg in Originalgroesse neu erzeugen
+	//	3) jpg-HQ-Vorschau neu erzeugen
+	//	4) jpg-Thumbnail neu erzeugen
+	//	5) Datei-Attribute aller dre neu erzeugten Dateien auf 700 setzen
 	
 	//Schritt 1)
 	$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi;
@@ -143,12 +148,31 @@ ELSEIF($modus == 'new')
 		$output = shell_exec($command1_a);
 	}
 	
-	// Schritt 2)
+	//Schritt 2)
+	//echo "Ausrichtung: ".$Orientation."<BR>";
+	$file_info = pathinfo($file_name_raw);
+	$ext = strtolower($file_info['extension']);
+	IF($Orientation == 3 OR $Orientation == 6 OR $Orientation == 8)
+	{
+		IF($ext == 'nef')
+		{
+			copy("$pic_path/$new_filename", "$pic_rot_path/$new_filename");
+			clearstatcache();
+			chmod ($pic_rot_path."/".$new_filename, 0700);
+			clearstatcache();
+		}
+		ELSE
+		{
+			$rot_filename = createQuickPreview($Orientation,$new_filename);
+		}
+	}
+	
+	// Schritt 3)
 	$source = $pic_path."/".$new_filename;
 	$FileNameHQ = substr($file_name_raw,0,-4)."_hq.jpg";
 	$max_len = '800';
 	//$command2 = $im_path."/convert -quality 80 -size ".$max_len."x0 ".$source." -resize ".$max_len."x0 ".$pic_hq_preview."/".$FileNameHQ."";
-	$command2 = $im_path."/convert -quality 80 ".$source." -resize ".$max_len."x".$mac_len." ".$pic_hq_preview."/".$FileNameHQ."";
+	$command2 = $im_path."/convert -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_hq_preview."/".$FileNameHQ."";
  	//echo $command;
  	$output = shell_exec($command2);
  	
@@ -175,7 +199,7 @@ ELSEIF($modus == 'new')
 		$output = shell_exec($command2_a);
 	}
  	
- 	// Schritt 3)
+ 	// Schritt 4)
  	$FileNameV = substr($file_name_raw,0,-4)."_v.jpg";
  	//echo $FileNameV."<BR>";
  	$max_len = '160';
@@ -206,7 +230,7 @@ ELSEIF($modus == 'new')
 		$output = shell_exec($command3_a);
 	}
       	
-      	//abschlie0end Erzeugung des Anzeige-Bildes:
+      	//abschliessend Erzeugung des Anzeige-Bildes:
       	$command4 = $im_path."/convert -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename."";
 	$output = shell_exec($command4);
 	
@@ -233,8 +257,8 @@ ELSEIF($modus == 'new')
 		$output = shell_exec($command4_a);
 	}
 	
-	$x = time(now);
-	//das Anh�ngsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
+	$x = time();
+	//das Anhaengsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
 	echo "<img src=\"$inst_path/pic2base/images/originale/tmp/$new_filename?var=$x\"><BR><BR>
 	Aktualisieren Sie abschlie&szlig;end bitte Ihre Filmstreifen-Ansicht.";
 }
