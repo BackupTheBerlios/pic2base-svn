@@ -806,7 +806,7 @@ function createContentFile($mod, $statement, $c_username, $bild)
 		{
 			$pdf->AddPage();
 			$pdf->Cell(0,5,'pic2base-Galerie',0,1,'C');
-			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergr�sserte Ansicht des betreffenden Bildes.',0,1,'C');
+			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergr�sserte Ansicht des betreffenden Bildes.',0,1,'C');
 			FOR($zeile='0'; $zeile<'5'; $zeile++)
 			{
 				$y_mitte = 50 + $zeile * 48;
@@ -1282,7 +1282,7 @@ function formatValues($fieldname,$FN,$et_path)
 function restoreOriFilename($pic_id, $sr)
 {
 	//erzeugt den eindeutigen Namen des Bildes in Original-Dateiformat
-	include $sr.'/bin/share/db_connect1.php'; // F�R NACHTR�GLICHE exif-Daten-Erzeugung
+	include $sr.'/bin/share/db_connect1.php'; // FUER NACHTRAEGLICHE exif-Daten-Erzeugung
 	$RES = mysql_query("SELECT FileName, FileNameOri FROM $table2 WHERE pic_id = '$pic_id'");
 	mysql_error();
 	$row = mysql_fetch_array($RES);
@@ -1319,7 +1319,7 @@ function extractExifData($pic_id, $sr)
 			}
 		}
 		else die('Fehler bei der Datenbankabfrage');
-		//F�r jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
+		//Fuer jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
 		
 		$text = shell_exec($et_path."/exiftool ".$FN);
 		$inf_arr = explode(chr(10), $text);	//Zerlegung des Textes am Zeilenumbruch
@@ -1357,7 +1357,7 @@ function extractExifData($pic_id, $sr)
 					$value = trim($fs_arr[1]);
 				}
 				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";	
-				//Bildbreite- und H�he werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
+				//Bildbreite- und Hoehe werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
 				IF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight') AND ($value !== '0' AND $value !== ''))
 				{
 					$result4 = mysql_query("UPDATE $table14 SET ExifImageHeight = '$value', ImageHeight = '$value' WHERE pic_id = '$pic_id'");
@@ -1420,7 +1420,7 @@ function extractExifData($pic_id, $sr)
 
 function convertISO_ASCII($text)
 {
-	$array_1 = array('�', '�', '�', '�', '�', '�', '�');
+	$array_1 = array('Ä', 'ä', 'Ö', 'ö', 'Ü', 'ü', 'ß');
 	$array_2 = array('Ae', 'ae', 'Oe', 'oe', 'Ue', 'ue', 'ss');
 	$anzahl = count($array_1);
 	for($x = 0; $x < $anzahl; $x++)
