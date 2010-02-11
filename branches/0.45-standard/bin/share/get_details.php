@@ -55,15 +55,15 @@ IF ($pic_id !=='0')
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
 		$note = mysql_result($result8, isset($i8), 'note');
 		$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
-		$Ori_arr = preg_split('# : #',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
-		if ($Ori_arr[0] != '')
-		{
-			$Orientation = $Ori_arr[1];
-		}
+		$Orientation = trim(shell_exec($et_path."/exiftool -s -S '-Orientation' ".$bild));
 		//echo $Orientation;
-		if (isset($Orientation))
+		if (isset($Orientation) AND ($Orientation !== ''))
 		{
 			$ausrichtung = $Orientation;
+		}
+		ELSE
+		{
+			$ausrichtung = "nicht vermerkt";
 		}
 			//Welche Kategorien wurden dem Bild zugewiesen?
 		$result9 = mysql_query( "SELECT DISTINCT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie, $table4.level FROM $table10 INNER JOIN $table4 ON ($table10.kat_id = $table4.kat_id AND $table10.pic_id = '$pic_id') ORDER BY $table4.level");
@@ -149,7 +149,7 @@ IF ($pic_id !=='0')
 		</TR>
 		
 		<TR id='detail1'>
-		<TD id='detail1'>Aufn.-Datum:</TD>
+		<TD id='detail1'>Aufn.-Datum/Zeit:</TD>
 		<TD id='detail2' colspan='2'>";
 		
 		$file = $sr."/images/originale/".$FileName;
@@ -180,12 +180,12 @@ IF ($pic_id !=='0')
 			}
 			ELSE
 			{
-				$DateTimeOriginal = date('d.m.Y', strtotime($DateTimeOriginal));
+				$DateTimeOriginal = date('d.m.Y - H:i:s', strtotime($DateTimeOriginal));
 			}
 
 			IF($Owner == $c_username)
 			{
-				//Eigent�mer darf Aufnahme-Datum manuell erg�nzen
+				//Eigentuemer darf Aufnahme-Datum manuell ergaenzen
 				echo "<input type='text' id='aufn_dat' name='aufn_dat' value = '$DateTimeOriginal' style='width:70px; height:16px;font-size:10px;text-align:center;'>&#160;<span style='cursor:pointer'><img src=\"$inst_path/pic2base/bin/share/images/calendar.png\" style=\"width:14px; height:14px; vertical-align:middle;\" title='Hier klicken, um Datum auszuw&auml;hlen' onClick='JavaScript:Kalender.anzeige(null,null,\"aufn_dat\",-3650,3651,\"%d.%m.%y\")'></span>";
 				//echo "Kalender";
 			}
@@ -197,8 +197,8 @@ IF ($pic_id !=='0')
 		}
 		ELSE
 		{
-			echo date('d.m.Y', strtotime($DateTimeOriginal));
-			//dies ist ein Dummy, damit bei bereits vorhandenem Datum der Wert f�r $aufn_dat ordentlich als "leer" �bergeben wird:
+			echo date('d.m.Y - H:i:s', strtotime($DateTimeOriginal));
+			//dies ist ein Dummy, damit bei bereits vorhandenem Datum der Wert fuer $aufn_dat ordentlich als "leer" uebergeben wird:
 			echo "<input type='hidden' name = 'aufn_dat'>";
 		}
 		echo "</TD>
@@ -247,7 +247,7 @@ IF ($pic_id !=='0')
 		
 		<TR id='detail1'>
 		<TD id='detail1'>Ausrichtung:</TD>
-		<TD id='detail2' colspan='2'>".isset($ausrichtung)."</TD>
+		<TD id='detail2' colspan='2'>".$ausrichtung."</TD>
 		</TR>
 		
 		<TR id='detail1'>
