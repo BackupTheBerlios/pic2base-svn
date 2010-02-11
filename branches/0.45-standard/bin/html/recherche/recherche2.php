@@ -102,7 +102,7 @@ Fenster1 = window.open('save_new_param.php?location='+newlocation+'&ort='+ort+'&
 
 function showDelWarning(FileName, c_username, pic_id)
 {
-	var check = confirm("Wollen SIe das Bild wirklich löschen?");
+	var check = confirm("Wollen SIe das Bild wirklich lï¿½schen?");
 	if(check == true)
 	{
 		window.open('../../share/delete_picture.php?FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=350px');
@@ -655,10 +655,20 @@ SWITCH ($mod)
 //###############################################################################################################
 	echo "
 	<div id='spalte2F'>
-		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'><b>Hinweis zur Anzeige der Bilder:</b><BR><BR>Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, indem Sie auf das gr&uuml;ne H&auml;kchen neben dem entsprechenden Suchkriterium klicken.<BR>Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie hier in der rechten Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf dieses Bild in dem Filmstreifen, erhalten Sie eine Vorschau in mittlerer Qualit&auml;t.<BR>Klicken Sie hingegen auf das Bild in der Detail-Ansicht, erhalten Sie eine Darstellung in Original-Qualit&auml;t.</p>
+		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'>
+		<b>Hinweis zur Anzeige der Bilder:</b>
+		<BR><BR>Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, 
+		indem Sie auf das gr&uuml;ne H&auml;kchen neben dem entsprechenden Suchkriterium klicken.<BR>
+		Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
+		Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie hier in der rechten 
+		Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf dieses Bild in dem Filmstreifen, erhalten 
+		Sie eine Vorschau in mittlerer Qualit&auml;t.<BR>Klicken Sie hingegen auf das Bild in der Detail-Ansicht, 
+		erhalten Sie eine Darstellung in Original-Qualit&auml;t.</p>
 		
-		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'><b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
-		Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
+		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'>
+		<b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
+		Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der 
+		Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
 	  	</p>
 	  </div>";
 //###############################################################################################################	
@@ -668,23 +678,23 @@ SWITCH ($mod)
 	SWITCH($mod)
 	{
 		CASE 'zeit':
-		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
+		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend angepasst wird
 		$mod='zeit';
 		break;
 		
 		CASE 'kat':
-		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
+		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
 		$base_file = 'recherche2';
 		$mod='kat';
 		break;
 		
 		CASE 'desc':
-		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
+		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
 		$mod='desc';		
 		break;
 		
 		CASE 'geo':
-		$modus='recherche';	//bedeutet, daï¿½ keine Checkboxen angezeigt werden und der Hinweistext entsprechend 				angepaï¿½t wird
+		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
 		$mod='geo';		
 		break;
 	}
@@ -703,10 +713,8 @@ SWITCH ($mod)
 </div>";
 
 mysql_close($conn);
-?>
-</DIV>
-<?
 
+echo "</DIV>";
 ?>
 </CENTER>
 </BODY>
