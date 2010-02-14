@@ -572,6 +572,10 @@ SWITCH ($modus)
 			IF(strlen($kategorie) > 17)
 			{
 				$kategorie = htmlentities(substr($kategorie,0,15))."...";
+			}
+			ELSE
+			{
+				$kategorie = htmlentities($kategorie);
 			}	
 			echo mysql_error();
 			if($result6_1)
