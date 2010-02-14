@@ -156,7 +156,7 @@ IF ($pic_id !=='0')
 		IF(@exif_read_data($file,"",true,false) !== false)
 		{ 
 			@$exifdata=exif_read_data($file,"",true,false);
-		//	var_dump($exifdata);
+			//var_dump($exifdata);
 			if( array_key_exists('EXIF',$exifdata) AND $exifdata["EXIF"]["DateTimeOriginal"])
 			{
 				$DTO=$exifdata["EXIF"]["DateTimeOriginal"];
