@@ -620,28 +620,28 @@ SWITCH ($modus)
 			//Suche nach geogr. Koordinaten und Umkreis
 			//Pruefung auf Plausibilitaet der eingegebenen Daten:
 			$long = str_replace(',','.',$long);
-			IF(!ereg('^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$',$long) OR ($long > abs(180)))
+			IF(!preg_match('/^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$/',$long) OR ($long > abs(180)))
 			{
 				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der geogr. L&auml;nge ist falsch!<BR>(Erlaubte Werte liegen zwischen -180&#176; und +180&#176;)</P>";
 				return;
 			}
 			
 			$lat = str_replace(',','.',$lat);
-			IF(!ereg('^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$',$lat) OR ($lat > abs(90)))
+			IF(!preg_match('/^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$/',$lat) OR ($lat > abs(90)))
 			{
 				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der geogr. Breite ist falsch!<BR>(Erlaubte Werte liegen zwischen -90&#176; und +90&#176;)</P>";
 				return;
 			}
 			
 			$alt = round(str_replace(',','.',$alt),0);
-			IF(!ereg('^([0-9]{1,4})$',$alt) OR ($alt >8850))
+			IF(!preg_match('/^([0-9]{1,4})$/',$alt) OR ($alt >8850))
 			{
 				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der H&ouml;he ist falsch!<BR>(Erlaubte Werte sind kleiner als die H&ouml;he des Mount Everest)</P>";
 				return;
 			}
 			
 			$radius = round(($einheit1 * str_replace(',','.',$radius1)),0);
-			IF(!ereg('^([0-9]{1,5})$',$radius1) OR ($radius >50000))
+			IF(!preg_match('/^([0-9]{1,5})$/',$radius1) OR ($radius >50000))
 			{
 				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe des Umkreises ist falsch! (Erlaubte Werte sind bis max. 50 km)</P>";
 				return;
@@ -675,7 +675,7 @@ SWITCH ($modus)
 			//###############################################################################################
 			CASE 'geo_rech2':
 			//Suche nach Ortsbezeichnung und Umkreis
-			//Bestimmun, welche Koordinaten dem gew�hlten Ort entsprechen und Ermittlung des arithmetischen Mittelwertes als 'gemeinsamer Mittelpunkt':
+			//Bestimmun, welche Koordinaten dem gewaehlten Ort entsprechen und Ermittlung des arithmetischen Mittelwertes als 'gemeinsamer Mittelpunkt':
 			//echo "an get_preview &uuml;bergebene Ortsbezeichnung: ".htmlentities($ort)."<BR>";
 			$ort = utf8_decode($ort);
 			$result10 = mysql_query( "SELECT * FROM $table12 WHERE location = '$ort'");
@@ -695,16 +695,16 @@ SWITCH ($modus)
 			//echo "Summe Breite: ".$lat.", Summe Laenge: ".$long."<BR>";
 			$lat_mittel = $lat / $num10;
 			$long_mittel = $long / $num10;
-			//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere L�nge: ".$long_mittel)."<BR>";
+			//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere Laenge: ".$long_mittel)."<BR>";
 			
-			//Plausibilit�tspr�fung:
+			//Plausibilitaetspruefung:
 			$radius = round(($einheit2 * str_replace(',','.',$radius2)),0);
-			IF(!ereg('^([0-9]{1,5})$',$radius2) OR ($radius >50000))
+			IF(!preg_match('/^([0-9]{1,5})$/',$radius2) OR ($radius >50000))
 			{
 				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe des Umkreises ist falsch! (Erlaubte Werte sind bis max. 50 km)</P>";
 				return;
 			}
-			//ann�hernde Berechnung des Toleranzfeldes aus dem Radius:
+			//annaehernde Berechnung des Toleranzfeldes aus dem Radius:
 			//geogr. Breite: WInkeldifferenz je m Abweichung: 0,000008999280058�
 			$diff_lat = 0.000008999280058;
 			$delta_lat = $radius * $diff_lat;
@@ -712,12 +712,12 @@ SWITCH ($modus)
 			$lat_max = $lat_mittel + $delta_lat;
 			//echo "Breite: ".$lat_mittel.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
 			
-			//geogr. L�nge: hier ist dei Winkel�nderung / Entfernun von der geogr. Breite abh�ngig:
+			//geogr. Laenge: hier ist dei Winkelaenderung / Entfernun von der geogr. Breite abhaengig:
 			//include 'functions/main_functions.php';
 			$delta_long = getDeltaLong($lat_mittel, $radius);
 			$long_min = $long_mittel - $delta_long;
 			$long_max = $long_mittel + $delta_long;
-			//echo htmlentities("L�nge: ".$long_mittel.", min. L�nge: ".$long_min.", max. L�nge: ".$long_max)."<BR>";
+			//echo htmlentities("Laenge: ".$long_mittel.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
 			
 			//qudratischer Auswahlbereich:
 			$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max')");
@@ -725,7 +725,7 @@ SWITCH ($modus)
 			break;
 		}
 		
-		//Erzeugung des 'Mittlpunkt-Icons' f�r die Darstellung in GoogleEarth:
+		//Erzeugung des 'Mittlpunkt-Icons' fuer die Darstellung in GoogleEarth:
 		$mp = '
 		<Placemark>
 		<name>Mittelpunkt</name>
@@ -756,7 +756,7 @@ SWITCH ($modus)
 		
 		IF($lat_mittel !=='' AND $long_mittel !=='')
 		{
-			$content .=$mp;		//Bezugspunkt einf�gen
+			$content .=$mp;		//Bezugspunkt einfuegen
 			//Umkreis mit Mittelpunkt = Bezugspunkt und Radius = radius zeichnen:
 			//Koordinaten bestimmen:
 			$values = '';
@@ -767,7 +767,7 @@ SWITCH ($modus)
 				$y = (sin(deg2rad($i_winkel)) * $radius) / 111111.111;
 				$lat = $lat_mittel + $y;
 				//echo $lat."<BR>";
-				//L�nge (unter Zulassung einer leichten Ellipse)
+				//Laenge (unter Zulassung einer leichten Ellipse)
 				$umf_lat = 40000000 * cos(deg2rad($lat_mittel));
 				$x_norm = $umf_lat / 360; //Strecke in m pro Grad bezogen auf die geogr. Breite des Kreis-Mittelpunktes
 				$x = (cos(deg2rad($i_winkel)) * $radius) / $x_norm;
@@ -817,7 +817,7 @@ SWITCH ($modus)
 			{
 				$longitude = mysql_result($result5, $i5, 'longitude');
 				$latitude = mysql_result($result5, $i5, 'latitude');
-				//Pr�fung, ob der Punkt in einem KREIS-Bereich um das Zentrum herum liegt:
+				//Pruefung, ob der Punkt in einem KREIS-Bereich um das Zentrum herum liegt:
 				$inside = isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius);
 				IF($inside == 'true')
 				{
