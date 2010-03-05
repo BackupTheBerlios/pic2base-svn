@@ -343,54 +343,54 @@ function createNavi0($c_username)
 			CASE '1':
 			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 			
-			//Pr�fung, ob Rechte auf log, images und userdata korrekt gesetzt sind:
+			//Pruefung, ob Rechte auf log, images und userdata korrekt gesetzt sind (700 oder 770 fuer Entwicklung):
 
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/log/" ) );
 			//echo $mod."<BR>";
 			//echo substr($mod,-3)."<BR>";
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /log falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
 			clearstatcache();
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/userdata/" ) );
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /userdata falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
 			clearstatcache();
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/" ) );
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /images falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
 			clearstatcache();
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/" ) );
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /originale falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
 			clearstatcache();
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/rotated" ) );
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /rotated falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
 			clearstatcache();
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/" ) );
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /vorschau falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
 			clearstatcache();
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/hq-preview/" ) );
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /hq-preview falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
 			clearstatcache();
 			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/thumbs" ) );
-			IF(substr($mod,-3) !== '700')
+			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 			{
 				echo "FEHLER! Recht auf /thumbs falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
 			}
