@@ -1,7 +1,7 @@
 <?php
 
 // alle Meldungen ausgeben:
-error_reporting(E_ALL);
+error_reporting(E_ALL); //
 
 //[Pfade]
 //Globale Konfigurationseinstellungen
