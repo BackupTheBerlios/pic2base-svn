@@ -43,7 +43,7 @@ $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','h
 $dcraw_path = '/usr/bin';		//Pfad zu dcraw
 $im_path = '/usr/bin';			//Pfad zum ImageMagick
 $et_path = '/usr/bin';			//Pfad zum exiftool
-$gpsb_path = '/usr/local/bin';	//Pfad zu GPSBabel
+$gpsb_path = '/usr/bin';	//Pfad zu GPSBabel
 $md5sum_path = '/usr/bin';
 
 //[GM-Keys; koennen von http://code.google.com/apis/maps/ bezogen werden]
