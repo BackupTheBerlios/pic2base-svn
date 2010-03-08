@@ -806,14 +806,14 @@ function createContentFile($mod, $statement, $c_username, $bild)
 		{
 			$pdf->AddPage();
 			$pdf->Cell(0,5,'pic2base-Galerie',0,1,'C');
-			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergr�sserte Ansicht des betreffenden Bildes.',0,1,'C');
+			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergr&ouml;sserte Ansicht des betreffenden Bildes.',0,1,'C');
 			FOR($zeile='0'; $zeile<'5'; $zeile++)
 			{
 				$y_mitte = 50 + $zeile * 48;
 				FOR($spalte='0'; $spalte<'4'; $spalte++)
 				{
 					$x_mitte = 45 + $spalte * 45;
-					//Ermittlung des QH-/Ori-Dateinamens und der Bild-Ma�e
+					//Ermittlung des QH-/Ori-Dateinamens und der Bild-Masse
 					$zaehler = $spalte + ($zeile * 4) + ($seite * 20);
 					IF($zaehler < $num100)
 					{
