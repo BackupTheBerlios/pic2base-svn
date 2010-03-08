@@ -32,6 +32,8 @@
 	</style>
 </HEAD>
 
+<script language="javascript" type="text/javascript" src="../share/functions/ShowPicture.js"></script>
+
 <BODY LANG="de-DE" scroll = "auto">
 
 <CENTER>
@@ -434,7 +436,7 @@ echo "<div class='page'>
 				$hoehe = 40;
 				$breite = $hoehe / $height * $width;
 				
-				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe'></a></TD></span>";
+				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe'></a></TD></span>";
 			}
 			//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
 			FOR($x='0'; $x<(10-$num4); $x++)
@@ -487,56 +489,6 @@ echo "<div class='page'>
 
 </div>";
 ?>
-
-<SCRIPT language="JavaScript">
-function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
-{
-	anotherWindow = window.open("", "bildfenster", "");
-	// Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
-	if (anotherWindow != null)
-	{
-		anotherWindow.close();
-	}
-
-	if(modus=='HQ')
-	{		
-		if (hoehe > (screen.height -100))
-		{
-			diff = hoehe / (screen.height -100);
-			hoehe = hoehe / diff;
-			breite = breite / diff;
-		}
-		
-		//alert("Breite: "+breite+", Hoehe: "+hoehe+", Modus: "+modus+", Format: "+size);
-		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe;
-
-		dateiname=bildname.substring(bildname.length-17,bildname.length);
-		htmlcode="<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";
-		htmlcode+="<html style=\"height: 100%\">\n<head>\n<title>"+dateiname+"<\/title>\n";
-		htmlcode+="<\/head>\n<body style=\"margin: 0; padding: 0; height: 100%\"><center>\n";
-		
-		htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
-		htmlcode+="<img src=\"../share/images/p2b.gif\" height=50px>\n";
-		htmlcode+="<\/div>\n";		
-
-		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
-		htmlcode+="<img src=\"../share/images/no_pic.gif\" height="+h+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
-		htmlcode+="<\/div>\n";
-		
-		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 0;\">\n";
-		htmlcode+="<img src=\""+bildname+"\" height="+h+">\n";
-		htmlcode+="<\/div>\n</center>\n<\/body>\n<\/html>\n";
-		
-		parameter="width="+b+",height="+h+",screenX="+(screen.width-b)/2+",screenY="+(screen.height-h)/2+",left="+(screen.width-b)/2+",top="+(screen.height-h)/2;
-	}
-	
-	ref=window.open("","bildfenster",parameter);
-	ref.document.open("text/html");
-	ref.document.write(htmlcode);
-	ref.document.close();
-	ref.focus();
-}
-</SCRIPT>
 </DIV>
 </CENTER>
 </BODY>

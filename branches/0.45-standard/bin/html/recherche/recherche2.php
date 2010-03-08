@@ -63,41 +63,41 @@ ELSE
 
 function showAllDetails(mod, pic_id)
 {
-//alert("Bild-ID: "+pic_id);
-Fenster1 = window.open('../../share/details.php?view=kompact&pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
-Fenster1.focus();
+	//alert("Bild-ID: "+pic_id);
+	Fenster1 = window.open('../../share/details.php?view=kompact&pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
+	Fenster1.focus();
 }
 
 function reloadPreviews(pic_id, c_username)
 {
-Fenster1 = window.open('select_params.php?pic_id='+pic_id + '&c_username=' + c_username, 'Parameter', "width=780,height=580,scrollbars,resizable=no,");
-Fenster1.focus();
+	Fenster1 = window.open('select_params.php?pic_id='+pic_id + '&c_username=' + c_username, 'Parameter', "width=780,height=580,scrollbars,resizable=no,");
+	Fenster1.focus();
 }
 
 function changeOwner(pic_id, c_username)
 {
-Fenster1 = window.open('change_owner.php?pic_id='+pic_id + '&c_username=' + c_username, 'Parameter', "width=780,height=570,scrollbars,resizable=no,");
-Fenster1.focus();
+	Fenster1 = window.open('change_owner.php?pic_id='+pic_id + '&c_username=' + c_username, 'Parameter', "width=780,height=570,scrollbars,resizable=no,");
+	Fenster1.focus();
 }
 
 function showMap(lat,long)
 {
-Fenster1 = window.open('show_map.php?lat='+lat+'&long='+long+'&width='+544+'&height='+424, 'Karte', "width=550,height=430,resizable=no,");
-Fenster1.focus();
+	Fenster1 = window.open('show_map.php?lat='+lat+'&long='+long+'&width='+544+'&height='+424, 'Karte', "width=550,height=430,resizable=no,");
+	Fenster1.focus();
 }
 
 function changeGeoParam(FileName, c_username, pic_id)
 {
-var lat = <?echo $lat; ?>;
-var long = <?echo $long; ?>;
-var ort = "<?echo $ort; ?>";
-var Fenster1 = window.open('../../share/change_geo_param.php?filename='+FileName+'&c_username='+c_username+'&pic_id='+pic_id+'&lat='+lat+'&long='+long+'&ort='+ort, 'Karte', "width=550,height=430,resizable=no,");
-Fenster1.focus();
+	var lat = <?echo $lat; ?>;
+	var long = <?echo $long; ?>;
+	var ort = "<?echo $ort; ?>";
+	var Fenster1 = window.open('../../share/change_geo_param.php?filename='+FileName+'&c_username='+c_username+'&pic_id='+pic_id+'&lat='+lat+'&long='+long+'&ort='+ort, 'Karte', "width=550,height=430,resizable=no,");
+	Fenster1.focus();
 }
 
 function saveNewParam(newlocation, ort, loc_id, pic_id)
 {
-Fenster1 = window.open('save_new_param.php?location='+newlocation+'&ort='+ort+'&loc_id='+loc_id+'&pic_id='+pic_id, 'Speicherung', "width=10,height=10,scrollbars,resizable=no,");
+	Fenster1 = window.open('save_new_param.php?location='+newlocation+'&ort='+ort+'&loc_id='+loc_id+'&pic_id='+pic_id, 'Speicherung', "width=10,height=10,scrollbars,resizable=no,");
 }
 
 function showDelWarning(FileName, c_username, pic_id)
@@ -111,7 +111,7 @@ function showDelWarning(FileName, c_username, pic_id)
 
 function rotatePictureSet(orientation, pic_id)
 {
-Fenster1 = window.open('../../share/rotate_picture_set.php?orientation=' + orientation + '&pic_id='+pic_id, 'Speicherung', "width=500px,height=200px,scrollbars,resizable=no,");
+	Fenster1 = window.open('../../share/rotate_picture_set.php?orientation=' + orientation + '&pic_id='+pic_id, 'Speicherung', "width=500px,height=200px,scrollbars,resizable=no,");
 }
 
 //alert("Bildhoehe: "+screen.height);
@@ -127,14 +127,14 @@ function CloseWindow()
 
 function showKatInfo(kat_id)
 {
-Fenster1 = window.open('../../share/edit_kat_info.php?kat_id='+kat_id, 'Kategorie-Informationen', "width=675,height=768,scrollbars,resizable=no,");
-Fenster1.focus();
+	Fenster1 = window.open('../../share/edit_kat_info.php?kat_id='+kat_id, 'Kategorie-Informationen', "width=675,height=768,scrollbars,resizable=no,");
+	Fenster1.focus();
 }
 
 function showDiary(aufn_dat)
 {
-Fenster1 = window.open('../../share/edit_diary.php?aufn_dat='+aufn_dat, 'Tagebuch-Eintrag', "width=675,height=768,scrollbars,resizable=no,");
-Fenster1.focus();
+	Fenster1 = window.open('../../share/edit_diary.php?aufn_dat='+aufn_dat, 'Tagebuch-Eintrag', "width=675,height=768,scrollbars,resizable=no,");
+	Fenster1.focus();
 }
 
 -->

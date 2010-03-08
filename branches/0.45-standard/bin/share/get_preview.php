@@ -1907,12 +1907,12 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			$note = '0';
 		}
 				
-		echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
+		echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
 		break;
 		
 		CASE 'recherche2':
 		CASE 'edit_remove_kat':
-		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
+		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
 		break;
 		
 		CASE 'edit_kat_daten':
@@ -1934,7 +1934,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			
 		}
 		
-		echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
+		echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
 		
 		break;
 	}

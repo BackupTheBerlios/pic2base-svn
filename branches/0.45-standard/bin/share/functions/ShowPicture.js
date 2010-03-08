@@ -1,6 +1,6 @@
-function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
+function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 {
-	//alert("Name: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus)
+	//alert("Name: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source)
 	anotherWindow = window.open("", "bildfenster", "");
 	// Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
 	if (anotherWindow != null)
@@ -27,14 +27,26 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus)
 		htmlcode+="<html style=\"height: 100%\">\n<head>\n<title>"+dateiname+"<\/title>\n";
 		htmlcode+="<\/head>\n<body style=\"margin: 0; padding: 0; height: 100%\"><center>\n";
 		
-		htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
-		htmlcode+="<img src=\"../../share/images/p2b.gif\" height=50px>\n";
-		htmlcode+="<\/div>\n";		
+		if(source=='start')
+		{
+			htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
+			htmlcode+="<img src=\"../share/images/p2b.gif\" height=50px>\n";
+			htmlcode+="<\/div>\n";		
 
-		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
-		htmlcode+="<img src=\"../../share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
-		htmlcode+="<\/div>\n";
-		
+			htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
+			htmlcode+="<img src=\"../share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
+			htmlcode+="<\/div>\n";
+		}
+		else
+		{
+			htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
+			htmlcode+="<img src=\"../../share/images/p2b.gif\" height=50px>\n";
+			htmlcode+="<\/div>\n";		
+	
+			htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
+			htmlcode+="<img src=\"../../share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
+			htmlcode+="<\/div>\n";
+		}
 		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 0;\">\n";
 		htmlcode+="<img src=\""+bildname+"\" height="+h+">\n";
 		htmlcode+="<\/div>\n</center>\n<\/body>\n<\/html>\n";
