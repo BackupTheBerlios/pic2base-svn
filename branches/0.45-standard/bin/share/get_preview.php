@@ -1074,6 +1074,7 @@ SWITCH ($modus)
 			
 //###########    Erzeugung der thumb-druck.pdf-Datei fuer Thumb-Galerie-Druck:  ###############
 	
+	
 	IF($num6_1 < '101')
 	{
 		$bild = '1';		//HQ-Bilder werden verwendet
@@ -1417,8 +1418,9 @@ SWITCH ($modus)
 		break;
 	}
 	//echo $action1;
-	//Link zum pdf-Druck (Ausdruck bis max. 200 Bilder!)
+	//Link zum pdf-Druck (Ausdruck bis max. 1000 Bilder!)
 	//IF($num6_1 < '1001' AND $mod !== 'geo')
+	
 	IF($num6_1 < '1001')
 	{
 		$pdf_link = "&#160;&#160;&#160;<A HREF='$inst_path/pic2base/userdata/$c_username/kml_files/thumb-gallery.pdf' title='Thumbnail-Galerie drucken'><img src='$inst_path/pic2base/bin/share/images/acroread.png' width='12' height='12' border='0' /></A>";
