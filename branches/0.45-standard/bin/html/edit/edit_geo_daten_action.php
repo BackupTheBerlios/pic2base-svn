@@ -72,8 +72,6 @@ $user_id = $row['id'];
 //var_dump($_FILES);
 $geo_file = $_FILES['geo_file']['name'];
 $geo_file_name = $geo_path_copy."/".$geo_file;
-//echo $geo_file_name."<BR>";
-//echo $geo_path_copy."<BR>";
 
 IF($geo_file == '')
 {
@@ -92,17 +90,16 @@ IF ($geo_file_name != "" && $geo_file_name !='.' && $geo_file_name != '..')
 }
 
 
-//$fh = fopen($geo_path_copy."/".$geo_file_name, 'r');
 $fh = fopen($geo_file_name, 'r');
 //join() -> Alais zu implode()
-//$txt_file = join('',file($geo_file));
 $txt_file = implode('',file($geo_path_copy."/".$geo_file));
 $line_number = 0;	//Initialisierung des Zeilen-Zaehlers
 
 //Ermittlung des Datei-Formates:
 $info = pathinfo($geo_file_name);
 //echo "Datei-Extension: ".strtolower($info['extension'])."<BR>";
-//die ausgewaehlte Trackdatei wird ueberprueft, bei Erfolg in eine kml-Datei konvertiert und der Inhalt (Geo-Koordinaten und Zeitstempel in die geo_tmp (table13) geschrieben
+//die ausgewaehlte Trackdatei wird ueberprueft, bei Erfolg in eine kml-Datei konvertiert und der Inhalt
+//(Geo-Koordinaten und Zeitstempel in die geo_tmp (table13) geschrieben
 convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_id,$timezone);
 //Bestimmung der verwertbaren Datensaetze:
 $result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id'");
@@ -236,7 +233,7 @@ SWITCH($ge)
 	//$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' ORDER BY date, time");
 	$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' AND longitude <> '' AND latitude <> '' ORDER BY loc_id");
 	$num2 = mysql_num_rows($result2);
-	$date = mysql_result($result2, 'date');
+	$date = mysql_result($result2, 0, 'date');
 	IF ($date !== '0000-00-00')
 	{
 		$datum = date('d.m.Y', strtotime($date));
