@@ -76,5 +76,9 @@ SWITCH($_SERVER['SERVER_NAME'])
 	CASE '192.168.171.199':
 	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxRzMcqr4P0Ekez4k72Qu7OM5_F2AxR0urMtZW3iDwHbzkSMKS-R8fYN7w';
 	break;
+	
+	CASE '192.168.2.30':
+	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxS8hLyd-_GDUlLQgu8j9skYQOSoIhS7kdDlVVPS_Uz2FnyXl57IHuq-0w';
+	break;
 }
 ?>
