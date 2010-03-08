@@ -196,11 +196,10 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 	
 	IF($error !== '1')
 	{
-		//echo $geo_path_copy."/".$geo_file_name."<BR>";
 		// ######################
-		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet, aus der die Geo-Daten in die Datenbank ueberfuehrt werden!
+		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet,aus
+		//der die Geo-Daten in die Datenbank ueberfuehrt werden!
 		// ######################
-		//$kml_file = shell_exec("gpsbabel -t -i ".$file_format." -f ".$geo_path_copy."/".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
 		$kml_file = shell_exec($gpsb_path."/gpsbabel -t -i ".$file_format." -f ".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
 		@$fh1 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
 		@$fh0 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
@@ -212,7 +211,6 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		}
 		ELSE
 		{
-			
 			//echo "parsen der konvertierten Track-Datei und speichern der Werte in der geo_tmp (table13):";
 			//Initialisierung des Array-Positionszaehlers:
 			$geo_arr = array();
