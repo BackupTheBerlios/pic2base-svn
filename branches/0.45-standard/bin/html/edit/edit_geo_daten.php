@@ -14,13 +14,13 @@
 	{
 		if(document.geo_zuweisung.data_logger.value == "")
 		{
-			alert("Bitte wï¿½hlen Sie Ihren Daten-Logger aus!");
+			alert("Bitte wählen Sie Ihren Daten-Logger aus!");
 			document.geo_zuweisung.data_logger.focus();
 			return false;
 		}
 		if(document.geo_zuweisung.geo_file.value == "")
 		{
-			alert("Bitte wï¿½hlen Sie eine Track-Datei aus!");
+			alert("Bitte wählen Sie eine Track-Datei aus!");
 			document.geo_zuweisung.geo_file.focus();
 			return false;
 		}
