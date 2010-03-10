@@ -1,5 +1,5 @@
 <?php
-
+//echo "an exif.php &uuml;bergebene Daten: ".$target." ".$latitude." ".$longitude." ".$altitude."<BR>";
 require_once("classes/pel-0.9.1/PelJpeg.php");
 
 /* Dezimale Gradangabe in Grad / Minuten / Sekunden umwandeln */
@@ -21,7 +21,6 @@ function dec2dms($decimal)
 /* Rückgabewerte: 0 bei Erfolg, -1 bei Fehler                  */
 function addGPSdata($infile,$outfile,$GPS_lat,$GPS_lon,$GPS_alt)
 {
-
 	try
 	{
 		$image = new PelJpeg($infile);
@@ -59,14 +58,14 @@ function addGPSdata($infile,$outfile,$GPS_lat,$GPS_lon,$GPS_alt)
 			$gpslat = new PelEntryRational(PelTag::GPS_LATITUDE, array($degrees,1),array($minutes,1),array($milliseconds,1000));
 			list($degrees,$minutes,$milliseconds)=dec2dms(abs($GPS_lon));
 			$gpslon = new PelEntryRational(PelTag::GPS_LONGITUDE, array($degrees,1),array($minutes,1),array($milliseconds,1000));
-			//echo ($GPS_alt * 1000);
+			echo ($GPS_alt * 1000);
 			$gpsalt = new PelEntryRational(PelTag::GPS_ALTITUDE, array(abs(($GPS_alt * 1000)),1000));
 
 			$gpslatref = new PelEntryAscii(PelTag::GPS_LATITUDE_REF, $GPS_latref);
 			$gpslonref = new PelEntryAscii(PelTag::GPS_LONGITUDE_REF, $GPS_lonref);
 			$gpsaltref = new PelEntryByte(PelTag::GPS_ALTITUDE_REF, $GPS_altref);
 			$gpsversion = new PelEntryByte(PelTag::GPS_VERSION_ID, 2, 2, 0, 0);
-
+			
 			/* Daten eintragen.*/
 			$subifd->addEntry($gpsversion);
 			$subifd->addEntry($gpslat);
