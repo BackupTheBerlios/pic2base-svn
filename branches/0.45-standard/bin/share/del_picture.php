@@ -37,7 +37,7 @@ if(@unlink($datei))
 }
 else
 {
-	echo "Konnte die Datei $FileName nicht löschen!<BR>";
+	echo "Konnte die Datei $FileName nicht l&ouml;schen!<BR>";
 }
 
 //es wird ermittelt, ob im Download-Ordner weitere Dateien mit dem Stamm-Namen existieren (z.B. 1234567676)
