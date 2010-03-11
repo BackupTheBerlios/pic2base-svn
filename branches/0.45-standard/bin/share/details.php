@@ -59,8 +59,8 @@ $u_name = $row['username'];
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 //############   Erstellung der Histogramme, falls nicht bereits vorhanden:   #######################
@@ -81,21 +81,21 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 	
 	IF($view == 'kompact')
 	{
-	echo "
-	<TR class='normal'>
-		<TD class='normal' colspan = '2'>
-		Ausgew&auml;hlte Details zum Bild ".$pic_id." >>> <a href=\"details.php?pic_id=$pic_id&view=all\">alle</a> Details
-		</TD>
-	</TR>";
+		echo "
+		<TR class='normal'>
+			<TD class='normal' colspan = '2'>
+			Ausgew&auml;hlte Details zum Bild ".$pic_id." >>> <a href=\"details.php?pic_id=$pic_id&view=all\">alle</a> Details
+			</TD>
+		</TR>";
 	}
 	ELSEIF($view == 'all')
 	{
-	echo "
-	<TR class='normal'>
-		<TD class='normal' colspan = '2'>
-		Alle Details zum Bild ".$pic_id." >>> zur <a href=\"details.php?pic_id=$pic_id&view=kompact\">Kompakt-Ansicht</a>
-		</TD>
-	</TR>";
+		echo "
+		<TR class='normal'>
+			<TD class='normal' colspan = '2'>
+			Alle Details zum Bild ".$pic_id." >>> zur <a href=\"details.php?pic_id=$pic_id&view=kompact\">Kompakt-Ansicht</a>
+			</TD>
+		</TR>";
 	}
 	
 	echo "
@@ -164,7 +164,7 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 	</TD>
 	</TR>";
 
-//es werden all diejenigen Tags dargestellt, die das Bild mitgebracht hat und deren Daten in der Tabelle meta_data hinterlegt sind und zus�tzlich die editierbaren Felder:
+//es werden all diejenigen Tags dargestellt, die das Bild mitgebracht hat und deren Daten in der Tabelle meta_data hinterlegt sind und zusaetzlich die editierbaren Felder:
 //zuerst werden alle editierbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
 $result4 = mysql_query( "SELECT field_name FROM $table5 WHERE writable = '1'");
 $num4 = mysql_num_rows($result4);
@@ -223,7 +223,6 @@ FOREACH($info_arr AS $IA)
 	//echo $IA."<BR>";
 	$pos = strpos($IA, ':');
 	$tag = trim(substr($IA, 0, $pos));
-	//$value = htmlspecialchars(trim(substr($IA, ($pos + 1))), ENT_QUOTES);
 	$value = trim(substr($IA, ($pos + 1)));
 	SWITCH($tag)
 	{
@@ -246,13 +245,14 @@ FOREACH($info_arr AS $IA)
 		$value = $location;
 		break;
 	}
-	
-	IF($tag == '' AND $value !== '')
+	//tag-Gruppen-Ueberschriften (werden nur in der vollst. Ansicht dargestellt):
+	IF($tag == '' AND $value !== '' AND $view == 'all')
 	{
 		echo "<TR class='normal' style='height:3px;' bgcolor = 'lightgreen'>";
 		echo "<TD class='liste2' colspan = '2'>".$value."</TD>
 		</TR>";
 	}
+	//Tag-Darstellung
 	ELSEIF($tag !== '')
 	{
 		$TAG = str_replace('-','_',$tag);
@@ -297,7 +297,53 @@ FOREACH($info_arr AS $IA)
 	}
 	$n++;
 }
-
+IF($view == 'all')
+{
+	//liegen Kategorielexikon-Eintraege zu diesem Bild vor?
+	$result4 = mysql_query("SELECT $table4.kat_id, $table4.kategorie, $table10.pic_id, $table10.kat_id, $table11.lfdnr, $table11.kat_id, $table11.info 
+	FROM $table4, $table10, $table11 
+	WHERE $table10.pic_id = '$pic_id' 
+	AND $table10.kat_id = $table11.kat_id 
+	AND $table4.kat_id = $table10.kat_id
+	AND $table11.info <>''");
+	echo mysql_error();
+	$num4 = mysql_num_rows($result4);
+	//echo $num4." Treffer<BR>";
+	FOR($i4='0'; $i4<$num4; $i4++)
+	{
+		$kategorie = htmlentities(mysql_result($result4, $i4, 'kategorie'));
+		$info = mysql_result($result4, $i4, 'info');
+		//echo $kategorie.": ".$info."<BR>";
+		echo "
+		<TR style='background-color:lightgreen;'>
+			<TD class='liste2' style='width:450px;' colspan='2' >Lexikoneintrag zum Stichwort \"<u>$kategorie</u>\":</TD>
+		</TR>
+		
+		<TR style='background-color:white;'>
+			<TD class='liste2' style='width:450px; border-left-style:solid; border-left-width:3px; border-color:red; padding-left:3px;' colspan='2' >".$info."</TD>
+		</TR>";
+	}
+	
+	//liegen Tagebucheintraege zu diesem Bild vor?
+	$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table14.pic_id, $table14.DateTimeOriginal 
+	FROM $table3, $table14 
+	WHERE year($table14.DateTimeOriginal) = year($table3.datum) 
+	AND month($table14.DateTimeOriginal) = month($table3.datum) 
+	AND day($table14.DateTimeOriginal) = day($table3.datum) 
+	AND $table14.pic_id = '$pic_id'");
+	echo mysql_error();
+	$info = mysql_result($result5, isset($i5), 'info');
+	$datum = date('d.m.Y', strtotime(mysql_result($result5, isset($i5), 'datum')));
+	//echo $info;
+	echo "
+		<TR style='background-color:lightgreen;'>
+			<TD class='liste2' style='width:450px;' colspan='2' >Tagebucheintrag zum <u>$datum</u>:</TD>
+		</TR>
+		
+		<TR style='background-color:white;'>
+			<TD class='liste2' style='width:450px; border-left-style:solid; border-left-width:3px; border-color:red; padding-left:3px;' colspan='2' >".$info."</TD>
+		</TR>";
+}
 echo "
 	<TR style='background-color:lightgreen;'>
 		<TD class='liste2' style='width:450px;' colspan='2' >---- Link zum HQ-Bild ----</TD>
