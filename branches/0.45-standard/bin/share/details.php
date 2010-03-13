@@ -311,38 +311,60 @@ IF($view == 'all')
 	//echo $num4." Treffer<BR>";
 	FOR($i4='0'; $i4<$num4; $i4++)
 	{
-		$kategorie = htmlentities(mysql_result($result4, $i4, 'kategorie'));
-		$info = mysql_result($result4, $i4, 'info');
+		@$kategorie = htmlentities(mysql_result($result4, $i4, 'kategorie'));
+		@$kat_info = mysql_result($result4, $i4, 'info');
 		//echo $kategorie.": ".$info."<BR>";
-		echo "
-		<TR style='background-color:lightgreen;'>
-			<TD class='liste2' style='width:450px;' colspan='2' >Lexikoneintrag zum Stichwort \"<u>$kategorie</u>\":</TD>
-		</TR>
-		
-		<TR style='background-color:white;'>
-			<TD class='liste2' style='width:450px; border-left-style:solid; border-left-width:3px; border-color:red; padding-left:3px;' colspan='2' >".$info."</TD>
-		</TR>";
+		IF($kat_info != '')
+		{
+			echo "
+			<TR style='background-color:lightgreen;'>
+				<TD class='liste2' style='width:450px;' colspan='2' >Lexikoneintrag zum Stichwort \"<u>$kategorie</u>\":</TD>
+			</TR>
+			
+			<TR style='background-color:white;'>
+				<TD class='liste2' style='width:450px; border-left-style:solid; border-left-width:3px; border-color:red; padding-left:3px;' colspan='2' >".$kat_info."</TD>
+			</TR>";
+		}
 	}
 	
 	//liegen Tagebucheintraege zu diesem Bild vor?
-	$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table14.pic_id, $table14.DateTimeOriginal 
-	FROM $table3, $table14 
-	WHERE year($table14.DateTimeOriginal) = year($table3.datum) 
-	AND month($table14.DateTimeOriginal) = month($table3.datum) 
-	AND day($table14.DateTimeOriginal) = day($table3.datum) 
-	AND $table14.pic_id = '$pic_id'");
-	echo mysql_error();
-	$info = mysql_result($result5, isset($i5), 'info');
-	$datum = date('d.m.Y', strtotime(mysql_result($result5, isset($i5), 'datum')));
-	//echo $info;
-	echo "
+	//echo mysql_get_server_info();
+	IF(mysql_get_server_info() < 5.1)
+	{
+		//echo "Version < 5.1";
+		$result5 = mysql_query("SELECT DateTimeOriginal FROM $table14 WHERE pic_id = '$pic_id'");
+		$dat = date('Y-m-d', strtotime(mysql_result($result5, 0, 'DateTimeOriginal')));
+		$res6 = mysql_query("SELECT * FROM $table3 WHERE datum = '$dat'");
+		//echo mysql_error();
+		@$diary_info = mysql_result($res6, isset($i6), 'info');
+		@$datum = date('d.m.Y', strtotime(mysql_result($res6, isset($i6), 'datum')));
+	}
+	ELSE
+	{
+		//echo "Version > 5.1";
+		//Abfrage-Syntax ist erst ab mysql-Version 5.1 ferfuegbar:
+		$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table14.pic_id, $table14.DateTimeOriginal 
+		FROM $table3, $table14 
+		WHERE year($table14.DateTimeOriginal) = year($table3.datum) 
+		AND month($table14.DateTimeOriginal) = month($table3.datum) 
+		AND day($table14.DateTimeOriginal) = day($table3.datum) 
+		AND $table14.pic_id = '$pic_id'");
+		//echo mysql_error();
+		@$diary_info = mysql_result($result5, isset($i5), 'info');
+		@$datum = date('d.m.Y', strtotime(mysql_result($result5, isset($i5), 'datum')));
+	}
+	
+	IF($diary_info != '')
+	{
+		echo "
 		<TR style='background-color:lightgreen;'>
 			<TD class='liste2' style='width:450px;' colspan='2' >Tagebucheintrag zum <u>$datum</u>:</TD>
 		</TR>
 		
 		<TR style='background-color:white;'>
-			<TD class='liste2' style='width:450px; border-left-style:solid; border-left-width:3px; border-color:red; padding-left:3px;' colspan='2' >".$info."</TD>
+			<TD class='liste2' style='width:450px; border-left-style:solid; border-left-width:3px; border-color:red; padding-left:3px;' colspan='2' >".$diary_info."</TD>
 		</TR>";
+	}
 }
 echo "
 	<TR style='background-color:lightgreen;'>
