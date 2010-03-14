@@ -118,7 +118,7 @@ function rotatePictureSet(orientation, pic_id)
 function CloseWindow()
 {
    anotherWindow = window.open("", "bildfenster", "");
-   // Wird bereits ein Bild in der "Gro�ansicht" angezeigt? - dann wird es geschlossen:
+   // Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
    if (anotherWindow != null)
    {
    	anotherWindow.close();
