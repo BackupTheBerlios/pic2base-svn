@@ -33,6 +33,16 @@
 </HEAD>
 
 <script language="javascript" type="text/javascript" src="../share/functions/ShowPicture.js"></script>
+<script language="JavaScript">
+<!--
+function delAllMetadata(c_username)
+{
+	//alert("User: "+c_username);
+	Fenster1 = window.open('../share/del_all_metadata.php?c_username='+c_username, 'entferne Metadaten...', "width=300,height=70,scrollbars,resizable=no,");
+	Fenster1.focus();
+}
+-->
+</SCRIPT>
 
 <BODY LANG="de-DE" scroll = "auto">
 
@@ -221,7 +231,7 @@ IF($verz)
 			}
 		}
 	}
-	$hinweis3 = "Es befinden sich ".$m." Datei(en) in Ihrem Download-Ordner.<BR>";
+	$hinweis3 = $m." Datei(en) liegen in Ihrem Download-Ordner: ";
 }
 
 //Ermittlung der 'Top-Ten':
@@ -369,14 +379,14 @@ echo "<div class='page'>
 			<tr class='normal' style='height:50px;'>
 			<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
 			<td class='normal' align='left' valign='top' colspan='7' style='color:red';>".$hinweis3."
-			Die Adresse zu Ihrem Download-Ordner lautet: <BR>
 			<a href=".$download_path." target='_blank'>".$download_path."</a>
-			<!--<BR><a href=".$html_path." target='blank'>".$html_path."</a>-->
 			</style></TD>
 			</TR>
 			
-			<tr class='normal'>
-			<td class='normal' align='center' colspan='10'>&nbsp;
+			<TR class='normal'>
+			<TD class='normal' align='left' valign='top' colspan='3'></TD>
+			<TD class='normal' align='left' colspan='7'>
+			<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$c_username\")'>
 			</TD>
 			</TR>";
 		}
