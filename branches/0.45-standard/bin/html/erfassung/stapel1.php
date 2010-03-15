@@ -142,7 +142,7 @@ Histogramme aus 12345.jpg erstellen
 
 Bild-Eigenschaften ermitteln (Meta-Daten auslesen)
 
-mittels exiftool alle verf&uuml;gbaren Metadaten auslesen und, wenn f&uuml;r die einzelnen Parameter Felder in der Tabelle meta_data existieren, die ermittelten Werte dort speichern
+mittels exiftool alle verfuegbaren Metadaten auslesen und, wenn fuer die einzelnen Parameter Felder in der Tabelle meta_data existieren, die ermittelten Werte dort speichern
 Kontrolle, ob mindestens die Parameter Width, Height und ImageSize ausgelesen wurden. Wenn nicht, diese Parameter mit PHP-Routinen ermitteln und in der DB speichern
 Die Ausrichtung wird intern immer mit '1' verwendet.
 Formatvorgaben der Popup-Vorschaufenster werden aus den tatsaechlichen Bild-Abmessungen mittel getimagesize() ermittelt!
@@ -193,7 +193,7 @@ FOR ($x='0';$x<$n;$x++)
 	clearstatcache();  
 	chmod ($tmp_file, 0700);
 	clearstatcache();	
-//  +++  Egal, was reinkommt: alle Bilder werden in JPEG gewandelt, um bei der Ausgabe die Meta-Daten mitliefern zu k&ouml;nnen:
+//  +++  Egal, was reinkommt: alle Bilder werden in JPEG gewandelt, um bei der Ausgabe die Meta-Daten mitliefern zu koennen:
 	$file_info = pathinfo($tmp_filename);
 	//Pruefung auf unterstuetzte Datei-Formate:
 	IF($file_info['extension'] !== 'jpg')
@@ -267,13 +267,13 @@ FOR ($x='0';$x<$n;$x++)
 						break; //echo "Die Datei beinhaltet ".$z." Bilder.";
 					}
 				}
-				//Wenn eine Datei mehrere Bilder enth&auml;lt, wird nur der Datei-Rumpf als Parameter &uuml;bergeben:
+				//Wenn eine Datei mehrere Bilder enthaelt, wird nur der Datei-Rumpf als Parameter uebergeben:
 				$new_filename = str_replace('.'.$ext,'',$base_name);
 			}
 		}
 		ELSE
 		{
-			//nicht unterst&uuml;tzte Datei-Typen werden gel&ouml;scht und Meldung ausgegeben:
+			//nicht unterstuetzte Datei-Typen werden geloescht und Meldung ausgegeben:
 			unlink($pic_path."/".$tmp_filename);
 			echo "Dateien des Typs *.".$ext." werden nicht unterst&uuml;tzt.";
 			$del++;
@@ -286,7 +286,7 @@ FOR ($x='0';$x<$n;$x++)
 		$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 	}
 	
-	//die Datei-Attribute werden f&uuml;r die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
+	//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
 	$fileOri = $pic_path."/".$new_filename;
 	clearstatcache();
 	chmod ($fileOri, 0700);
@@ -299,7 +299,7 @@ $runtime1 = ($end1sec + $end1msec) - ($start1sec + $start1msec);
 echo "Zeit f&uuml;r Bildupload: ".$runtime1."<BR>";
 */
 	//Funktions-Parameter: Bild-ID, Anzahl der Scenen; User-ID; Ausrichtung
-	savePicture($pic_id,$z,$user_id,$Orientation);	//Parameter sollten reichen, da sich alles weitere erzeugen l&auml;�t
+	savePicture($pic_id,$z,$user_id,$Orientation);	//Parameter sollten reichen, da sich alles weitere erzeugen laesst
 /*
 $end2 = microtime();
 list($end2msec, $end2sec) = explode(" ",$end2);
@@ -327,7 +327,7 @@ list($end4msec, $end4sec) = explode(" ",$end4);
 $runtime4 = ($end4sec + $end4msec) - ($start1sec + $start1msec);
 echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";	
 */
-//  +++  l&ouml;schen der soeben in die DB aufgenommene Datei aus dem Upload-Ordner:  +++
+//  +++  loeschen der soeben in die DB aufgenommene Datei aus dem Upload-Ordner:  +++
 	IF($datei_name != "." && $datei_name != "..")
 	{
 		$datei_name = $ftp_path."/".$c_username."/uploads/".$datei_name;
