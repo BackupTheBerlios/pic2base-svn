@@ -1167,7 +1167,7 @@ function generateHistogram($pic_id,$FileName,$sr)
 	IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r') OR @!fopen($file_mono, 'r'))
 	{
 		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
-		$file = $pic_hq_preview."/".$FileName; //<- aus Performance-Gr�nden wird Histogr. aus HQ-Bild erstellt!
+		$file = $pic_hq_preview."/".$FileName; //<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
 		shell_exec($im_path."/convert ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
 		//shell_exec($im_path."/convert ".$file." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif");
 		shell_exec($im_path."/convert ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
