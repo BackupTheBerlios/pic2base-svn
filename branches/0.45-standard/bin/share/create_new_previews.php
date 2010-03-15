@@ -87,24 +87,6 @@ IF($modus == 'tmp')
 		$output = shell_exec($command_a);
 	}
 	
-//#########################################################################################
-	/*
-	//Experimentelle Routine zur Helligkeits-Aenderung:
-	$info = getImagesize($pic_path."/tmp/".$new_filename);
-	$breite = $info[0];
-	$hoehe = $info[1];
-	echo $breite." x ".$hoehe;
-	
-	$im = ImageCreateFromJPEG($pic_path."/tmp/".$new_filename);
-	$rgba = imagecolorat($im,449,297);
-	$alpha = ($rgba & 0x7F000000) >> 24;
-	$red = ($rgba & 0xFF0000) >> 16;
-	$green = ($rgba & 0x00FF00) >> 8;
-	$blue = ($rgba & 0x0000FF);
-	
-	echo "# " . $red." ".$green." ".$blue;  
-	*/
-//#########################################################################################
 	$x = time();
 	//das Anhaengsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
 	echo "<img src=\"$inst_path/pic2base/images/originale/tmp/$new_filename?var=$x\">";
@@ -117,7 +99,8 @@ ELSEIF($modus == 'new')
 	//	2) rot. jpg in Originalgroesse neu erzeugen
 	//	3) jpg-HQ-Vorschau neu erzeugen
 	//	4) jpg-Thumbnail neu erzeugen
-	//	5) Datei-Attribute aller dre neu erzeugten Dateien auf 700 setzen
+	//	5) Graustufenbild neu erzeugen
+	//	6) Datei-Attribute aller neu erzeugten Dateien auf 700 setzen
 	
 	//Schritt 1)
 	$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi;
@@ -203,7 +186,7 @@ ELSEIF($modus == 'new')
  	$FileNameV = substr($file_name_raw,0,-4)."_v.jpg";
  	//echo $FileNameV."<BR>";
  	$max_len = '160';
- 	$command3 = $im_path."/convert -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs."/".$FileNameV."";
+ 	$command3 = $im_path."/convert -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs."/".$FileNameV;
       	//echo $command."<BR>";
       	$output = shell_exec($command3);
       	
@@ -229,9 +212,14 @@ ELSEIF($modus == 'new')
 		$command3_a = $im_path."/convert ".$pic_thumbs."/".$FileNameV." ".$contr." ".$pic_Thumbs."/".$FileNameV;
 		$output = shell_exec($command3_a);
 	}
-      	
-      	//abschliessend Erzeugung des Anzeige-Bildes:
-      	$command4 = $im_path."/convert -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename."";
+	
+	// Schritt 5) Graustufenbild neu erzeugen
+	$FileNameMono = substr($file_name_raw,0,-4)."_mono.jpg";
+	$command5 = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -colorspace Gray -quality 80% ".$monochrome_path."/".$FileNameMono;
+	$output = shell_exec($command5);
+	
+    // Schritt 6) Erzeugung des Anzeige-Bildes:
+    $command4 = $im_path."/convert -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename;
 	$output = shell_exec($command4);
 	
 	IF($contrast !== '0')
