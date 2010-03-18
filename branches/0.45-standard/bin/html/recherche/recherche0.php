@@ -1,4 +1,4 @@
-<?
+<?php
 //var_dump($_COOKIE);
 IF( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )
 {
@@ -39,7 +39,7 @@ function switchBewertung(bewertung)
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -82,10 +82,10 @@ $num2 = mysql_num_rows($result2);
 ?>
 <div class="page">
 
-	<p id="kopf">pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: <?echo $c_username;?>)</span></p>
+	<p id="kopf">pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		createNavi2($c_username);
 		//echo $navigation;
 		?>
@@ -93,7 +93,7 @@ $num2 = mysql_num_rows($result2);
 	</div>
 	<div id="spalte1">
 	
-	<?
+	<?php
 	IF( array_key_exists('bewertung',$_COOKIE) )
 	{
 		$bewertung = $_COOKIE['bewertung'];
@@ -238,7 +238,7 @@ $num2 = mysql_num_rows($result2);
 
 </div>
 
-<?
+<?php
 mysql_close($conn);
 ?>
 </DIV>

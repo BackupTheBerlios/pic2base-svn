@@ -44,7 +44,7 @@ function ZeigeBild(bildname,breite,hoehe)
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -122,7 +122,7 @@ echo "
 	oFCKeditor.Height=300;
 	
 	</script>
-	<?
+	<?php
 	echo "	
 	</div>
 	

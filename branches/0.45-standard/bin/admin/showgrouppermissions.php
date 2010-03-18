@@ -1,7 +1,7 @@
 <center><h2>Rechtevergabe für Benutzergruppe</h2></center>
 <center>
 Gruppe: 
-<?
+<?php
   mysql_connect ($db_host, $db_username, $db_password);
   $result = mysql_query("select * from usergroups WHERE id=".$id);
   if (mysql_num_rows($result) == 1)
@@ -13,7 +13,7 @@ Gruppe:
   }
 ?>
 <table><tr><td width=150>Parameter</td><td width=100 align=right>Erlaubnis</td></tr>
-<?
+<?php
   $result = mysql_query("select * from permissions ORDER BY id");
   $num = mysql_num_rows($result);
   for ($i = 0; $i < $num; $i++)

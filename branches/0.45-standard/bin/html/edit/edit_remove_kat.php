@@ -35,7 +35,7 @@ Fenster1 = window.open('../../share/save_changes.php?pic_id='+pic_id + '&descrip
 
 <DIV Class="klein">
 
-<?
+<?php
 /***********************************************************************************
  * Project: pic2base
  * File: edit_remove_kat.php

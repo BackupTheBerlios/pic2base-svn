@@ -1,5 +1,4 @@
-
-<?
+<?php
 	mysql_connect ($db_server, $user, $PWD);
 	$result = mysql_query("select * from permissions ORDER BY description");
 	$num = mysql_num_rows($result);

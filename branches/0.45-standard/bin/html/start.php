@@ -50,7 +50,7 @@ function delAllMetadata(c_username)
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base

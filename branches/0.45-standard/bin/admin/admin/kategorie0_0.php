@@ -15,7 +15,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -158,7 +158,7 @@ echo "</TABLE>";
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		echo $navigation;
 		?>
 		</div>
@@ -179,7 +179,7 @@ echo "</TABLE>";
 
 </div>
 
-<?
+<?php
 mysql_close($conn);
 ?>
 <p class="klein">- KH 09/2006 -</P>

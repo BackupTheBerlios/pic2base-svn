@@ -38,7 +38,7 @@ A:hover{color:red;text-decoration:underline}
 
 <body>
 
-<div id="map" style="position: absolute; top:3px;left:3px;width:<?echo $width;?>px; height:<?echo $height;?>px"></div>
+<div id="map" style="position: absolute; top:3px;left:3px;width:<?php echo $width;?>px; height:<?php echo $height;?>px"></div>
 
 <script type="text/javascript">
 var lat=<?php echo $lat;?>;

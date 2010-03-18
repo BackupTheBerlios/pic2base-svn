@@ -16,7 +16,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base

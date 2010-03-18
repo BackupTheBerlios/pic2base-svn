@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<?
+<?php
 
 /*
  * Project: pic2base

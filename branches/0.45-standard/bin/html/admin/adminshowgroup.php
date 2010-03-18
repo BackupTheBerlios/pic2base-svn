@@ -1,4 +1,4 @@
-<?
+<?php
   echo "<CENTER>";
 //var_dump($_GET);
   $id = $_GET['id']; // f�r register_globals = off

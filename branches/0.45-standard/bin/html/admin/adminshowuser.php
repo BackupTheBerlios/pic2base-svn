@@ -1,4 +1,4 @@
-<?
+<?php
   $id = $_GET['id']; 
   $del = $_GET['del'];
     

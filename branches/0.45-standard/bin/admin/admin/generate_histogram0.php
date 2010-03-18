@@ -16,7 +16,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -108,11 +108,11 @@ echo "<div class='page'>
 			?>
 			<SCRIPT language="JavaScript">
 			document.bar.src='../../share/images/green.gif';
-			document.bar.width=<?echo $laenge?>;
+			document.bar.width=<?php echo $laenge?>;
 			document.bar.height='11';
-			document.getElementById('zaehler').innerHTML='<?echo $text?>';
+			document.getElementById('zaehler').innerHTML='<?php echo $text?>';
 			</SCRIPT>
-			<?
+			<?php
 			IF(($i4 + 1) == $num4)
 			{
 				echo "<meta http-equiv='Refresh', Content='0; URL=../../html/admin/adminframe.php'>";

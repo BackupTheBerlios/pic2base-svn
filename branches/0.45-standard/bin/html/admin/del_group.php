@@ -1,4 +1,4 @@
-<?
+<?php
   mysql_connect ($db_server, $user, $PWD);
   mysql_select_db($db);
   $group_id = $_GET['group_id'];

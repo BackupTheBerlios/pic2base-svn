@@ -15,7 +15,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -35,7 +35,7 @@ include $sr.'/bin/share/db_connect1.php';
 
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		  include "adminnavigation.php";
 		?>
 		</div>
@@ -43,7 +43,7 @@ include $sr.'/bin/share/db_connect1.php';
 
 	<div class="content">
 		<p style="margin:70px 0px; text-align:center">
-		<?
+		<?php
 		unset($username);
 		IF ($_COOKIE['login'])
 		{

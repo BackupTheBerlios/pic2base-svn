@@ -17,7 +17,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -43,7 +43,7 @@ fclose($fh);
 
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		  include "adminnavigation.php";
 		?>
 		</div>
@@ -51,7 +51,7 @@ fclose($fh);
 
 	<div class="content">
 		<p style="margin:30px 0px; text-align:center">
-		<?
+		<?php
 			include "admincontent.php";
 		?>
 		</p>

@@ -1,4 +1,4 @@
-<?
+<?php
   mysql_connect ($db_host, $db_username, $db_password);
   $result = mysql_query("select * from users WHERE name='".$username."' AND password='".$pass."'");
   echo mysql_error();

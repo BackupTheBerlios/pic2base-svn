@@ -1,4 +1,4 @@
-<?
+<?php 
 
 //Beim normalen Start wird versucht mit den Standard-Parametern eine Verbindung zur Datenbank herzustellen:
 //echo "User: ".$user."<BR>PWD: ".$PWD."<BR>";

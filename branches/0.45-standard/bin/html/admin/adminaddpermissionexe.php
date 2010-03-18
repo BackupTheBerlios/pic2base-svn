@@ -1,4 +1,4 @@
-<?
+<?php
 	unset($username);
 	IF ($_COOKIE['login'])
 	{

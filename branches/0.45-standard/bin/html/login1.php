@@ -34,7 +34,7 @@
  -->
 <DIV Class="klein">
  
-<?
+<?php
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 include '../share/global_config.php';

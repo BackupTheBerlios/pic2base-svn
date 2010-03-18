@@ -15,7 +15,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -84,7 +84,7 @@ function setFontColor($ID, $kat_id)
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-			<?
+			<?php
 			echo $navigation;
 			?>
 		</div>

@@ -1,4 +1,4 @@
-<?
+<?php
 	// fuer register_globals = off
 	if(array_key_exists('item',$_GET))
 	{

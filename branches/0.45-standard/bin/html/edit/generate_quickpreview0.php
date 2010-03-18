@@ -15,7 +15,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -98,11 +98,11 @@ $t_akt = mktime();
 
 <div class="page">
 
-	<p id="kopf">pic2base :: Quick-Preview-Erzeugung <span class='klein'>(User: <?echo $c_username;?>)</span></p>
+	<p id="kopf">pic2base :: Quick-Preview-Erzeugung <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		createNavi3_1($c_username);
 		?>
 		</div>

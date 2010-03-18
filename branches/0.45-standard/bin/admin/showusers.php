@@ -1,5 +1,5 @@
 <center><h2>Benutzer</h2></center>
-<?
+<?php
   mysql_connect ($db_host, $db_username, $db_password);
   $result = mysql_query("select * from users ORDER BY name");
   $num = mysql_num_rows($result);

@@ -1,4 +1,4 @@
-<?
+<?php
 	if(array_key_exists('item',$_GET))
 	{
 		$item = $_GET['item']; 

@@ -15,7 +15,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -72,7 +72,7 @@ SWITCH ($berechtigung)
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		echo $navigation;
 		?>
 		</div>

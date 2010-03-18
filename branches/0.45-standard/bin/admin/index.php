@@ -1,6 +1,6 @@
 <html>
 <body>
-<?
+<?php
   include "config/all.php";
   switch ($item)
   {

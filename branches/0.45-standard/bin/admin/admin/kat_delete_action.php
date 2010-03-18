@@ -15,7 +15,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -29,11 +29,6 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);

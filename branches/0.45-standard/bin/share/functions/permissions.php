@@ -1,4 +1,4 @@
-<?
+<?php 
 
 function hasPermission($username, $permissionString)
 {

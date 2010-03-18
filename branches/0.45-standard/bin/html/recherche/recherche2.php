@@ -88,9 +88,9 @@ function showMap(lat,long)
 
 function changeGeoParam(FileName, c_username, pic_id)
 {
-	var lat = <?echo $lat; ?>;
-	var long = <?echo $long; ?>;
-	var ort = "<?echo $ort; ?>";
+	var lat = <?php echo $lat; ?>;
+	var long = <?php echo $long; ?>;
+	var ort = "<?php echo $ort; ?>";
 	var Fenster1 = window.open('../../share/change_geo_param.php?filename='+FileName+'&c_username='+c_username+'&pic_id='+pic_id+'&lat='+lat+'&long='+long+'&ort='+ort, 'Karte', "width=550,height=430,resizable=no,");
 	Fenster1.focus();
 }
@@ -146,7 +146,7 @@ function showDiary(aufn_dat)
 
 <DIV Class="klein">
 
-<?
+<?php 
 //var_dump($_REQUEST);
 
 unset($username);

@@ -49,7 +49,7 @@ hr {
     margin-left: 0px;
   }
 
-/*Abs�tze:*/
+/*Absaetze:*/
 
 
 
@@ -168,7 +168,7 @@ p#fuss0 {
 	/*border-top:5px solid white;*/
 	}
 
-/*Zelleninhalte und Bereiche werden in 8pt dargestellt (Belegungspl�ne)*/
+/*Zelleninhalte und Bereiche werden in 8pt dargestellt*/
 
 
 
@@ -223,7 +223,7 @@ TABLE.normal {
     margin:0px;
   }
   
-/*Tabelle f�r Kategorie-Verwaltung*/
+/*Tabelle fuer Kategorie-Verwaltung*/
   
 TD#kat1 {
   	width: 340px;
@@ -278,7 +278,7 @@ TABLE#kat {
     	text-align:center;
   	}
   	
-/*Tabelle f�r Geo-Recherche*/
+/*Tabelle fuar Geo-Recherche*/
   
 TD#geo {
   	width: 360px;
@@ -330,7 +330,7 @@ TABLE#geo {
     	text-align:center;
   	}
   	
-/*Tabelle f�r Desription-Recherche*/
+/*Tabelle fuer Desription-Recherche*/
   
 TD#desc {
   	width: 360px;
@@ -432,7 +432,7 @@ TABLE.liste2 {
     margin:0px;
   }
 
-/*Formatierung f�r Textfelder*/
+/*Formatierung fuer Textfelder*/
 
 
 
@@ -468,7 +468,7 @@ TABLE.liste2 {
   
 
 
-/*Formatierung f�r Auswahlfelder*/
+/*Formatierung fuer Auswahlfelder*/
  
 
 
@@ -514,7 +514,7 @@ TABLE.liste2 {
     width:270px;
   }
 
-/*Formatierungen f�r Buttons*/
+/*Formatierungen fuer Buttons*/
 
 
 
@@ -564,7 +564,7 @@ a.navi:hover {
     background-color:#eeeeee;
   }
   
-/*f�r 'blinde' Navigations-Links (Platzhalter):*/
+/*fuer 'blinde' Navigations-Links (Platzhalter):*/
 
 a.navi_blind {
     display:block;
@@ -713,7 +713,7 @@ div#spalte2 {
 	overflow:auto;
 	}
 	
-/* 2 Spalten mit Filmstreifen im Fu�bereich ########*/
+/* 2 Spalten mit Filmstreifen im Fussbereich ########*/
 div#spalte1F {
   	margin-left: 0px;
   	padding: 1px;

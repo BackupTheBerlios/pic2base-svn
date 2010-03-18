@@ -1,4 +1,4 @@
-<?
+<?php
 
 /*
  * Project: pic2base

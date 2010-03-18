@@ -13,7 +13,7 @@
 <CENTER>
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -49,11 +49,11 @@ fclose($fh);
 
 <div class="page">
 
-	<p id="kopf">pic2base :: Datensatz-Bearbeitung <span class='klein'>(User: <?echo $c_username;?>)</span></p>
+	<p id="kopf">pic2base :: Datensatz-Bearbeitung <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		createNavi3($c_username);
 		//echo $navigation;
 		?>
@@ -83,7 +83,7 @@ fclose($fh);
 
 </div>
 
-<?
+<?php
 mysql_close($conn);
 ?>
 </DIV>

@@ -1,4 +1,4 @@
-<?setcookie('login',$_REQUEST['username']);?>
+<?php setcookie('login',$_REQUEST['username']);?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -29,7 +29,7 @@
  -->
 <DIV Class="klein">
  
-<?
+<?php 
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 
@@ -47,7 +47,7 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	<div class="content">
 	<p style="margin:170px 0px; text-align:center">
 	
-	<?
+	<?php 
 	//include 'share/db_connect1.php';
 	include 'share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';

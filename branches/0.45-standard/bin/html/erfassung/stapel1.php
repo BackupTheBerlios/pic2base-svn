@@ -14,7 +14,7 @@
 <CENTER>
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -349,12 +349,12 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 	
 	<SCRIPT language="JavaScript">
 	document.bar.src='../../share/images/green.gif';
-	document.bar.width=<?echo $laenge?>;
+	document.bar.width=<?php echo $laenge?>;
 	document.bar.height='11';
-	document.getElementById('zaehler').innerHTML='<?echo $text?>';
+	document.getElementById('zaehler').innerHTML='<?php echo $text?>';
 	</SCRIPT>
 	
-	<?
+	<?php
 	IF($n == $del)
 	{
 		$meldung = "Erfassung abgeschlossen: ". date('d.m.Y, H:i:s')."<BR>";
@@ -362,9 +362,9 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 		//echo $meldung;
 		?>
 		<SCRIPT language="JavaScript">
-		document.getElementById('meldung').innerHTML='<?echo $meldung?>';
+		document.getElementById('meldung').innerHTML='<?php echo $meldung?>';
 		</SCRIPT>
-		<?
+		<?php
 	}
 	flush();
 }

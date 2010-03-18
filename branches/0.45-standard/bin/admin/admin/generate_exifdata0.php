@@ -233,31 +233,6 @@ FOR($note='1'; $note<'6'; $note++)
 			}
 	
 		}
-		/*
-		// auskommentiert, da keine doppelte Datenhaltung mehr sein soll!
-		ELSE
-		{
-			//Wenn es schon einnen Eintrag in der exef_data gibt, werden bestimmte Daten mit der Tabelle pictures abgeglichen:
-			//Abgleich des Aufnahme-Datums:
-			$result9 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-			//$result10 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-//			$DateTimeOriginal_pt = mysql_result($result9, isset($i9), 'DateTimeOriginal');	//Wert in der pictures-Tabelle
-//			$DateTimeOriginal_edt = mysql_result($result6, isset($i6), 'DateTimeOriginal');//Wert in der exif_data-Tabelle
-			//Erzeugung einde Log-Datei f�r alle Bilder ohne Original-Dateidatum:
-			IF($DateTimeOriginal_pt == '0000-00-00 00:00:00')
-			{
-				$fh = fopen($kml_dir."/exif.log","a");
-				fwrite($fh, $pic_id." | ".$DateTimeOriginal_pt." | ".$DateTimeOriginal_edt."\n");
-				fclose($fh);
-			}
-			//Wenn in der exif_data-Tabelle ein Datum hinterlegt ist, wird die pictures-Tabelle aktualisiert:
-			IF(($DateTimeOriginal_edt !== '0000-00-00 00:00:00') AND ($DateTimeOriginal_edt !== ''))
-			{
-				$result11 = mysql_query( "UPDATE $table2 SET DateTimeOriginal = '$DateTimeOriginal_edt' WHERE pic_id = '$pic_id'");
-				echo mysql_error();
-			}
-		}
-		*/
 			
 		$laenge = (round((($i5 + 1) / $num5) * 500));
 		$anteil = number_format(($laenge / 5),2,',','.');

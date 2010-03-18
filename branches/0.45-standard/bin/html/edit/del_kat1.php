@@ -15,7 +15,7 @@
 
 <DIV Class="klein">
 
-<?
+<?php
 
 /*
  * Project: pic2base
@@ -63,11 +63,11 @@ $berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 <div class="page">
 
-	<p id="kopf">pic2base :: Kategoriezuweisung aufheben <span class='klein'>(User: <?echo $c_username;?>)</span></p>
+	<p id="kopf">pic2base :: Kategoriezuweisung aufheben <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
-		<?
+		<?php
 		createNavi3_1($c_username);
 		//echo $navigation;
 		?>
