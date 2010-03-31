@@ -7,11 +7,13 @@
     if (hasPermission(mysql_result ($result, 0, "id"), "adminlogin"))
     {
       echo "Login erfolgreich! <a href='index.php?item=showusers'>Hier gehts weiter.</a>";
-    } else
+    } 
+    else
     {
       echo "Der Benutzer ist nicht berechtig, sich in den Admin-Bereich einzuloggen!";
     }
-  } else
+  } 
+  else
   {
     echo "Login fehlgeschlagen!";
   }
