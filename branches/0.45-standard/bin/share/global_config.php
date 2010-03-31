@@ -17,7 +17,8 @@ $geo_path_copy = $sr."/tracks";
 $ftp_path = $sr."/userdata";
 
 // fuer register_globals = off
-if(!isset($benutzername)){
+if(!isset($benutzername))
+{
 	$benutzername = '';
 }
 
