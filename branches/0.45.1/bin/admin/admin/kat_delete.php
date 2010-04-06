@@ -217,7 +217,7 @@ function setFontColor($ID, $kat_id)
 	Wollen Sie wirklich die Kategorie \"".$kategorie_alt."\" l&ouml;schen?<BR><BR>
 	Es werden dann auch ALLE Unterkategorien zu \"".$kategorie_alt."\" gel&ouml;scht!<BR><BR></b></P>";
 	
-	echo "	<INPUT type='button' class='button1' value='L�schen' onClick='location.href=\"kat_delete_action.php?ID=$ID\"'>&#160;
+	echo "	<INPUT type='button' class='button1' value='L&ouml;schen' onClick='location.href=\"kat_delete_action.php?ID=$ID\"'>&#160;
          	<INPUT TYPE = 'button' class='button1' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
 	</center></div>
 	
