@@ -81,7 +81,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	//Bestimmung der Unterkategorieen ausgehend von der Quell-Kategorie
 	$res1 = mysql_query( "SELECT max(level) FROM $table4");
 	$max_level = mysql_result($res1, isset($i1), 'max(level)');
-	//echo "max. Level: ".$max_level."<BR>";
+	echo "max. Level: ".$max_level."<BR>";
 	$result5 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$kat_source'");
 	$num5 = mysql_num_rows($result5);
 	$child_arr[] = $kat_source;
@@ -113,12 +113,11 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	//Bestimmung, ueber wieviele Ebenen sich der zu uebertragende Kategoriezweig erstreckt:
 	$result8 = mysql_query( "SELECT * FROM $table15 GROUP BY 'old_level' ORDER BY 'old_level'");
 	$num8 = mysql_num_rows($result8);
-//	echo $num8." Ebenen<BR>";
+	echo $num8." Ebenen<BR>";
 	
 	//das Wurzelelement des Kategoriezweigs wird neu eingehaengt und das neue parent- und level-Element in die tmp-Tabelle eingetragen:
 	$result9 = mysql_query( "SELECT * FROM $table15 WHERE old_level = '0'");
 	$kat_id = mysql_result($result9, isset($i9), 'kat_id');
-	//$kat_name = mysql_result($result9, isset($i9), 'kat_name');
 	$new_level = $dest_level + 1;
 	$result12 = mysql_query( "UPDATE $table15 SET new_parent = '$kat_dest', new_level = '$new_level' WHERE kat_id = '$kat_id' AND user_id = '$user_id'");
 	echo mysql_error();
@@ -179,9 +178,9 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 			$row = mysql_fetch_array($result16);
 			$level = $row['level'];
 			$kat_name = $row['kategorie'];			
-	//		$level = mysql_result($result16, $i16, 'level');
+			$level = $row['level'];
 	//		$kat_name = mysql_result($result16, $i16, 'kategorie');
-//			echo "Kategorie: ".$kat_id.", Level: ".$level."<BR>";
+			echo "Kategorie: ".$kat_id.", Level: ".$level."<BR>";
 			IF($level > $max_level)
 			{
 				$max_level = $level;
@@ -189,7 +188,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 				$max_kat_name = $kat_name;
 			}
 		}
-//		echo "Bild: ".$pic_id.", tiefste Kategorie: ".$max_kat.", (".$max_kat_name.") max. Level: ".$max_level."<BR>";
+		echo "Bild: ".$pic_id.", tiefste Kategorie: ".$max_kat.", (".$max_kat_name.") max. Level: ".$max_level."<BR>";
 		
 		//Bestimmung aller Eltern-Elemente zu der tiefsten Kategorie; gleichzeitig Entfernung der pic_kat-Eintraege aus der pic_kat-Tabelle:
 		$kat_id = $max_kat;
@@ -204,7 +203,6 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 			echo mysql_error();
 			$row = mysql_fetch_array($res0);
 			$kat_id = $row['parent'];
-	//		$kat_id = mysql_result($res0, $i0, 'parent');
 			$KAT_ID[]=$kat_id; //$KAT_ID: Array mit den Eltern-Elementen des betreffenden Bildes
 		}
 		//print_r($KAT_ID);
@@ -223,7 +221,6 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 					//echo mysql_error()."<BR>";
 					$row = mysql_fetch_array($result2);
 					$kategorie = htmlentities($row['kategorie'])." ".$kategorie;
-				//	$kategorie = htmlentities(mysql_result($result2, $i2, 'kategorie'))." ".$kategorie;
 				}
 			}
 		}
