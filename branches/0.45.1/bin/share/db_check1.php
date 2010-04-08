@@ -163,7 +163,7 @@ echo "<br>++++ #### ++++<br>";
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
 			`longitude` varchar(25) NOT NULL COMMENT 'geo-Laenge',
 			`latitude` varchar(25) NOT NULL COMMENT 'geo-Breite',
-			`altitude` decimal(6,1) NOT NULL COMMENT 'Hoehe',
+			`altitude` varchar(13) NOT NULL COMMENT 'Hoehe',
 			`location` varchar(50) NOT NULL default 'Ortsbezeichnung' COMMENT 'Ortname',
 			PRIMARY KEY  (`loc_id`),
 			KEY `location` (`location`)
