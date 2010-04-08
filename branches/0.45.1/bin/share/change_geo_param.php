@@ -69,24 +69,27 @@ IF($loc_id !== '0' AND $loc_id !== '')
 ELSE
 {
 	//echo "Pos. vorhanden<BR>";
-	unset($parameter);
-	$parameter = $_COOKIE['parameter'];
-	$param = split(',', $parameter);
-	IF(count($param) > '2')
+	IF(isset($parameter))
 	{
-		$lat = $param[0];
-		$long = $param[1];
-		//der erste und zweite Parameter sind die Koordinaten, der dritte und alle weiteren geh�ren lt. Definition zur Ortsbezeichnung, denn diese kann aus dem Ortsnamen und ggf durch Kommata getrennte Erg�nzungen bestehen (z.B.: Blankenburg, Gehren)
-		$ort = '';
-		FOR($K=2; $K<count($param); $K++)
+		unset($parameter);
+		$parameter = $_COOKIE['parameter'];
+		$param = split(',', $parameter);
+		IF(count($param) > '2')
 		{
-			$ort .= htmlentities($param[$K]);
-			IF($K<count($param) - 1)
+			$lat = $param[0];
+			$long = $param[1];
+			//der erste und zweite Parameter sind die Koordinaten, der dritte und alle weiteren geh�ren lt. Definition zur Ortsbezeichnung, denn diese kann aus dem Ortsnamen und ggf durch Kommata getrennte Erg�nzungen bestehen (z.B.: Blankenburg, Gehren)
+			$ort = '';
+			FOR($K=2; $K<count($param); $K++)
 			{
-				$ort .= ',';
+				$ort .= htmlentities($param[$K]);
+				IF($K<count($param) - 1)
+				{
+					$ort .= ',';
+				}
 			}
+			$loc = round($lat,6).",".round($long,6);
 		}
-		$loc = round($lat,6).",".round($long,6);
 	}
 	ELSE
 	{
@@ -95,7 +98,7 @@ ELSE
 		$ort = 'Blankenburg';
 		$loc = round($lat,6).",".round($long,6);
 	}
-//echo "Parameter: ".$parameter.", Breite: ".$lat.", L�nge: ".$long.", Ort: ".$ort."<BR>";
+//echo "Parameter: ".$parameter.", Breite: ".$lat.", Laenge: ".$long.", Ort: ".$ort."<BR>";
 }
 ?>
 
@@ -116,7 +119,7 @@ ELSE
 	var lon=<?php echo $long;?>;
 	
 	var map=new GMap2(document.getElementById("map"));
-	map.setCenter(new GLatLng(lat,lon),10); 	//Breite, L�nge, Zoom-Stufe (2 - Ganz Europa; 8 - Raum Magdeburg)
+	map.setCenter(new GLatLng(lat,lon),10); 	//Breite, Laenge, Zoom-Stufe (2 - Ganz Europa; 8 - Raum Magdeburg)
 	map.addControl(new GMapTypeControl(1));		//Karte/Sat/Hybrid-Auswahl
 	map.addControl(new GLargeMapControl());		//Zoom-Controls
 	map.enableContinuousZoom();
