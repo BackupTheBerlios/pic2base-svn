@@ -116,7 +116,7 @@ echo "
 		Weitere Informationen zu pic2base erhalten Sie auf unserer <A HREF='http://www.pic2base.de'>Homepage</A>.<BR>
 		<p style='margin:20px 150px; text-align:left'>
 		<b>&Uuml;ber pic2base</B><BR>
-		aktuelle Version: ".$version."<BR><BR>
+		installierte Version: ".$version." ".$vom."<BR><BR>
 		<b>Entwickler:</b><BR>
 		Klaus Henneberg, <a href='mailto:info@pic2base.de?subject=Supportanfrage zur Version .$version.'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
 		Holger R&ouml;mer, <a href='mailto:hr@bshr.de'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
