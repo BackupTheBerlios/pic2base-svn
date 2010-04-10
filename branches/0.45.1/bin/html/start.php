@@ -110,7 +110,7 @@ IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 		$V2 = str_replace('.','',$var2);
 		$install_ver = substr($version,0,6);
 		$IV = str_replace('.','',$install_ver);
-		echo "verwendete Version: ".$install_ver." (".$IV."); aktuelle Version: ".$var2." (".$V2.")<BR>";
+		//echo "verwendete Version: ".$install_ver." (".$IV."); aktuelle Version: ".$var2." (".$V2.")<BR>";
 		$ol_text = "Online-Updates:";
 		IF($V2 > $IV)
 		{
