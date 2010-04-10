@@ -106,11 +106,13 @@ IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 		$html = join('',file($file1));
 		$needle_1 = "aktuelle Version:<BR>";
 		$var1 = stristr($html,$needle_1);
-		$var2 = substr($var1,21,4);
-		$install_ver = substr($version,0,4);
-		//echo "verwendete Version: ".$install_ver."; aktuelle Version: ".$var2."<BR>";
+		$var2 = substr($var1,21,6);
+		$V2 = str_replace('.','',$var2);
+		$install_ver = substr($version,0,6);
+		$IV = str_replace('.','',$install_ver);
+		echo "verwendete Version: ".$install_ver." (".$IV."); aktuelle Version: ".$var2." (".$V2.")<BR>";
 		$ol_text = "Online-Updates:";
-		IF($var2 > $install_ver)
+		IF($V2 > $IV)
 		{
 			$online_hinweis = "Es ist ein Online-Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
 		}
