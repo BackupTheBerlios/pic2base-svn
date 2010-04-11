@@ -86,7 +86,7 @@ ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 	echo mysql_error();
 	$result2 = mysql_query( "SELECT max(loc_id) FROM $table12");
 	echo mysql_error();
-	$loc_id = mysql_result($result2, $i2, 'max(loc_id)');
+	$loc_id = mysql_result($result2, 0, 'max(loc_id)');
 	$result3 = mysql_query( "UPDATE $table2 SET loc_id = '$loc_id' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	$result4 = mysql_query( "INSERT INTO $table14 (GPSLongitude, GPSLatitude, GPSAltitude, City) VALUES ('$long', '$lat', '$ele', '$ort')");
@@ -97,7 +97,7 @@ ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 IF($ort_alt !== $ort)
 {
 	$result4 = mysql_query( "SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$pic_id'");
-	$description = mysql_result($result4, $i4, 'Caption_Abstract');
+	$description = mysql_result($result4, 0, 'Caption_Abstract');
 	IF($ort_alt !== '')
 	{
 		$description_neu = str_replace($ort_alt, $ort, $description);
@@ -111,12 +111,12 @@ IF($ort_alt !== $ort)
 	{
 		$description_neu = $description.", Kamerastandort: ".$ort;
 	}
-	echo "alter Ort: ".$ort_alt."<BR>alte Beschreibung: ".$description."<BR>neuer Ort: ".$ort."<BR>neue Beschreibung: ".$desc_neu."<BR>";
+	//echo "alter Ort: ".$ort_alt."<BR>alte Beschreibung: ".$description."<BR>neuer Ort: ".$ort."<BR>neue Beschreibung: ".$desc_neu."<BR>";
 	//$result5 = mysql_query( "UPDATE $table2 SET description = '$description_neu' WHERE pic_id = '$pic_id'");
 	$result5 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description_neu' WHERE pic_id = '$pic_id'");
 	//Vermerk im IPTC:Caption-Abstract-Tag:
 	$desc_neu = htmlentities($description_neu);
-	echo shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc_neu' ".$FN)."<BR>";
+	shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc_neu' ".$FN." -overwrite_original")."<BR>";
 }
 
 IF (mysql_error() == '')
@@ -134,7 +134,6 @@ IF (mysql_error() == '')
 	}
 	window.close('Speicherung2');
 	</script>";
-	
 }
 ELSE
 {
