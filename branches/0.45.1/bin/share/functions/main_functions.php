@@ -806,7 +806,7 @@ function createContentFile($mod, $statement, $c_username, $bild)
 		{
 			$pdf->AddPage();
 			$pdf->Cell(0,5,'pic2base-Galerie',0,1,'C');
-			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergrösserte Ansicht des betreffenden Bildes.',0,1,'C');
+			$pdf->Cell(0,5,'Tipp: Mit einem Klick auf den Dateinamen erhalten Sie die vergrï¿½sserte Ansicht des betreffenden Bildes.',0,1,'C');
 			FOR($zeile='0'; $zeile<'5'; $zeile++)
 			{
 				$y_mitte = 50 + $zeile * 48;
@@ -1301,7 +1301,7 @@ function extractExifData($pic_id, $sr)
 	$result6 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 	IF(mysql_num_rows($result6) == 0)
 	{
-		//nur wenn es noch keinen Eintrag in der exif-data-Tabelle fï¿½r dieses Bild gibt, wird die Erfassung ausgefï¿½hrt:
+		//nur wenn es noch keinen Eintrag in der exif-data-Tabelle fuer dieses Bild gibt, wird die Erfassung ausgefuehrt:
 		$result7 = mysql_query("INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
 		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
 		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
@@ -1344,7 +1344,7 @@ function extractExifData($pic_id, $sr)
 			
 			IF(in_array($fieldname,$tab_fieldname))
 			{
-				//$value = formatValues($fieldname,$bild,$et_path);
+				//$value = formatValues($fieldname,$FN,$et_path);
 				IF($fieldname == 'DateTimeOriginal')
 				{
 					$tmp_value = explode(" ",$value);
@@ -1355,6 +1355,20 @@ function extractExifData($pic_id, $sr)
 					$value = shell_exec($et_path."/exiftool -FileSize -n ".$FN);
 					$fs_arr = explode(' : ', $value);
 					$value = trim($fs_arr[1]);
+				}
+				SWITCH($fieldname)
+				{
+					CASE 'GPSLatitude':
+					$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);
+					break;
+					
+					CASE 'GPSLongitude':
+					$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLongitude -n -s -s -s ".$FN);
+					break;
+					
+					CASE 'GPSAltitude':
+					$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSAltitude -n -s -s -s ".$FN);
+					break;
 				}
 				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";	
 				//Bildbreite- und Hoehe werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
@@ -1373,14 +1387,19 @@ function extractExifData($pic_id, $sr)
 				ELSE
 				{
 					$result4 = mysql_query("UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
+					$statement = "UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'";
 				}
 				IF(mysql_error() !== '')
 				{
-					echo "Fehler beim speichern der Meta-Daten: ".mysql_error()."<BR>~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR>";
+					echo "Fehler beim speichern der Meta-Daten (".$fieldname.", ".$value.", ".$statement."): ".mysql_error()."<BR>~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR>";
+				}
+				ELSE
+				{
+					//echo $statement."<BR>";	
 				}
 			}
 		}
-		//Wenn Breite, Hï¿½he, Dateigrï¿½ï¿½e oder Ausrichtung nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
+		//Wenn Breite, Hoehe, Dateigroesse oder Ausrichtung nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
 		$result9 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 		$row = mysql_fetch_array($result9);
 		$ImageWidth = $row['ImageWidth'];
@@ -1397,7 +1416,7 @@ function extractExifData($pic_id, $sr)
 		$breite = $params[0];
 		$hoehe = $params[1];
 		clearstatcache();
-		$FileSize = filesize($FN);	//Dateigrï¿½ï¿½e in Byte
+		$FileSize = filesize($FN);	//Dateigroesse in Byte
 		
 		IF($ImageWidth == '0' OR $ImageWidth == '')
 		{
@@ -1415,6 +1434,21 @@ function extractExifData($pic_id, $sr)
 		}
 		//Ausrichtung wird intern immer als '1' angesehen!
 		$result13 = mysql_query("UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$pic_id'");	
+	}
+	//Wenn alle Meta-Daten in table14 uebernommen wurden, wird geprueft, ob Geo-Koordinaten dabei waren.
+	//Wenn ja, wird eine neue location angelegt (in table12) und diese mit dem Bild referenziert:
+	$result14 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+	@$GPSLatitude = mysql_result($result14,0,'GPSLatitude');
+	@$GPSLongitude = mysql_result($result14,0,'GPSLongitude');
+	@$GPSAltitude = mysql_result($result14,0,'GPSAltitude');
+	IF($GPSLongitude !== NULL AND $GPSLatitude !== NULL)
+	{
+		$result15 = mysql_query("INSERT INTO $table12 (longitude, latitude, altitude) VALUES ('$GPSLongitude', '$GPSLatitude', '$GPSAltitude')");
+		echo mysql_error();
+		$loc_id = mysql_insert_id();
+		echo mysql_error();
+		$result16 = mysql_query("UPDATE $table2 SET loc_id = '$loc_id' WHERE pic_id = '$pic_id'");
+		echo mysql_error();
 	}
 }
 
