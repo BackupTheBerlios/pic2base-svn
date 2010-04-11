@@ -45,7 +45,7 @@ var lat=<?php echo $lat;?>;
 var lon=<?php echo $long;?>;
 
 var map=new GMap2(document.getElementById("map"));
-map.setCenter(new GLatLng(lat,lon),14); 	//Breite, Länge, Zoom-Stufe (2 - Ganz Europa; 8 - Raum Magdeburg)
+map.setCenter(new GLatLng(lat,lon),14); 	//Breite, Laenge, Zoom-Stufe (2 - Ganz Europa; 8 - Raum Magdeburg)
 map.addControl(new GMapTypeControl(1));		//Karte/Sat/Hybrid-Auswahl
 map.addControl(new GLargeMapControl());		//Zoom-Controls
 map.enableContinuousZoom();
