@@ -281,7 +281,7 @@ IF ($pic_id !=='0')
 			$longitude = mysql_result($result12,isset($i12), 'longitude');
 			$latitude = mysql_result($result12,isset($i12), 'latitude');
 			$altitude = mysql_result($result12,isset($i12), 'altitude');
-			echo "<TD id='detail6'><span style='cursor:pointer;'><img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap('$latitude', '$longitude')\"/></span>";
+			echo "<TD id='detail6'><span style='cursor:pointer;'><img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude, $longitude)\"/></span>";
 		}
 		ELSE
 		{
@@ -294,7 +294,7 @@ IF ($pic_id !=='0')
 			}
 			ELSE
 			{
-				echo "<TD id='detail6'><span style='cursor:pointer;'><img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap('$latitude2', '$longitude2')\"/></span>";
+				echo "<TD id='detail6'><span style='cursor:pointer;'><img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude2, $longitude2)\"/></span>";
 			}
 		}
 		
