@@ -56,8 +56,8 @@ if (array_key_exists('ordner',$_GET))
 }
 
 $x = 0;
-$n = 0;				//Zaehlvariable fuer die zu bearbeitenden Bilder (Bilder im Upload-Ordner)
-$del = 0;			//Zaehlvariable fuer die nach dem Upload aus dem Upload-Ordner geloeschten Bilder
+$n = 0;						//Zaehlvariable fuer die zu bearbeitenden Bilder (Bilder im Upload-Ordner)
+$del = 0;					//Zaehlvariable fuer die nach dem Upload aus dem Upload-Ordner geloeschten Bilder
 $verz=opendir($ordner);		//$ordner: Upload-Ordner des angemeldeten Users (wird von start.php geliefert)
 $hinweis = '';
 //Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
@@ -169,11 +169,12 @@ FOR ($x='0';$x<$n;$x++)
 	{
 		$Orientation = '';	
 	}
-	//echo "...bearbeite Bild ".$bild."<BR>Ausrichtung: ".$Orientation."<BR>";
+	
 	IF($Orientation == '')
 	{
 		$Orientation = '1';
 	}
+	$Orientation = trim($Orientation);
 	
 //  +++  Vergabe eines eindeutigen Dateinamens  +++++
 	/*Zur eindeutigen Identifizierung der Bilddateien wird seit dem 12.06.2008 die Datensatz-Nr. des jeweiligen Bildes verwendet. Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:*/
@@ -213,7 +214,7 @@ FOR ($x='0';$x<$n;$x++)
 			$command = $dcraw_path."/dcraw -w -c ".$pic_path."/".$tmp_filename." | convert - ".$pic_path."/".$new_filename."";
 			$output = shell_exec($command);
 			//das Original(jpg-)Bild wird ggf als rotierte Kopie abgelegt
-			IF($Orientation == 3 OR $Orientation == 6 OR $Orientation == 8)
+			IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 			{
 				IF($ext == 'nef')
 				{
@@ -256,7 +257,7 @@ FOR ($x='0';$x<$n;$x++)
 					IF(file_exists($pic_path."/".$new_filename))
 					{
 						//das Original(jpg)Bild wird ggf als rotierte Kopie abgelegt
-						IF($Orientation == 3 OR $Orientation == 6 OR $Orientation == 8)
+						IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 						{
 							$rot_filename = createQuickPreview($Orientation,$new_filename);
 						}
@@ -282,10 +283,18 @@ FOR ($x='0';$x<$n;$x++)
 	}
 	ELSE
 	{
+		//hier werden *.jpg-s bearbeitet:
 		$z = '1';
 		$new_filename = $tmp_filename;	//jpg-Dateien behalten ihren eindeutigen Dateinamen
+		
+		IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
+		{
+			$rot_filename = createQuickPreview($Orientation,$new_filename);
+		}
+		
 		$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 	}
+
 	
 	//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
 	$fileOri = $pic_path."/".$new_filename;
