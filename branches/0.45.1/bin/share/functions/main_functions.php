@@ -187,20 +187,20 @@ function createQuickPreview($Orientation,$FileName)
 	SWITCH($Orientation)
 	{
 		case '3':
-		echo "Das Vorschaubild muss 180 gedreht werden<BR>";
+		//echo "Das Vorschaubild muss 180 gedreht werden<BR>";
 		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
  		$output = shell_exec($command);
 		break;
 		
 		case '6':
-		echo "Das Vorschaubild muss 90 CW gedreht werden<BR>";
+		//echo "Das Vorschaubild muss 90 CW gedreht werden<BR>";
 		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
  		$output = shell_exec($command);
 		break;
 		
 		case '8':
 		//echo "Erzeuge Quick-Preview-Bild von ".$pic_path."/".$FileName."<BR> nach ".$pic_rot_path."/".$FileName."<BR>";
-		echo "Das Vorschaubild muss 270 CW gedreht werden<BR>";
+		//echo "Das Vorschaubild muss 270 CW gedreht werden<BR>";
 		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
  		$output = shell_exec($command);
 		break;
@@ -223,11 +223,11 @@ function createPreviewPicture($FILE, $dest_path, $max_len)
 function resizeOriginalPicture($FILE, $dest_path, $max_len)
 {
 	include '../../share/global_config.php';
-	//Die Funktion generiert aus der Quelle ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel betr�gt und speichert dieses unter dem Destination-Pfad ab.
+	//Die Funktion generiert aus der Quelle ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel betraegt und speichert dieses unter dem Destination-Pfad ab.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	$file_nameT = str_replace('.jpg','_hq.jpg',basename($FILE));
       	$command = $im_path."/convert -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
- 	$output = shell_exec($command);
+      	$output = shell_exec($command);
 	return $file_nameT;
 }
 
@@ -1086,46 +1086,45 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation)
 {
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	//$Orientation = trim($Orientation);
 	IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 	{
+		//echo "Es liegt ein gedrehtes Bild vor!<BR>";
 		$FILE = $pic_rot_path."/".$pic_id.".jpg";
 	}
 	ELSE
 	{
+		//echo "Es liegt KEIN gedrehtes Bild vor!<BR>";
 		$FILE = $pic_path."/".$pic_id.".jpg";
 	}
-	//vom Original-JPG-Bild wird die Pr�fsumme gebildet:
+	//vom Original-JPG-Bild wird die Pruefsumme gebildet:
 	$command = $md5sum_path."/md5sum $FILE";
 	$sum = explode(' ',shell_exec($command));
 	//echo "Pr&uuml;fsumme: ".$sum[0]."<BR>";
 	
 	IF($anzahl == '1')
 	{
-		//echo "...bearbeite Bild ".$bild."<BR>";
-		// 1) anlegen des hq-Bildes: (resamplen, ggf. drehen, speichern unter /vorschau/hq-preview)
-		$max_len = '800';				//HQ aus Original erzeugen
-		$FileNameHQ = resizeOriginalPicture($FILE, $HQ_verzeichnis, $max_len);
-		//echo "tempor�rer Datei-Name: ".$FileNameHQ." Ausrichtung: ".$Orientation."<BR>";
-		$FILE = $pic_hq_preview."/".$FileNameHQ;	//Thumb aus HQ erzeugen
+		// 1) anlegen des hq-Bildes: (resamplen, speichern unter /vorschau/hq-preview)
+		//HQ aus Original erzeugen
+		$max_len = '800';				
+		$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_preview, $max_len);
+		$FILEHQ = $pic_hq_preview."/".$FileNameHQ;	
+		//Thumb aus HQ erzeugen
 		// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
 		$max_len = '160';
-		$FileNameV = createPreviewPicture($FILE, $vorschau_verzeichnis, $max_len);
+		$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs, $max_len);
 		
 		$result1 = mysql_query("UPDATE $table2 SET FileNameHQ = '$FileNameHQ', FileNameV = '$FileNameV', md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
 	}
-	ELSE
-	{
 	
-	}
-	
-	//die Datei-Attribute werden f�r alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
+	//die Datei-Attribute werden fuer alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
 	//HQ-Datei:
-	$fileHQ = $HQ_verzeichnis."/".$FileNameHQ;
+	$fileHQ = $pic_hq_preview."/".$FileNameHQ;
 	clearstatcache();  
 	chmod ($fileHQ, 0700);
 	clearstatcache();
 	//Vorschaubild:
-	$fileV = $vorschau_verzeichnis."/".$FileNameV;
+	$fileV = $pic_thumbs."/".$FileNameV;
 	clearstatcache();  
 	chmod ($fileV, 0700);
 	clearstatcache();
