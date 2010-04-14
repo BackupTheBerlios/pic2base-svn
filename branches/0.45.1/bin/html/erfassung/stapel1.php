@@ -48,16 +48,16 @@ fclose($fh);
 //var_dump($_POST);
 if (array_key_exists('ordner',$_POST))
 {
-	$ordner = $_POST['ordner']; // f�r register_globals = off
+	$ordner = $_POST['ordner']; // fuer register_globals = off
 }
 if (array_key_exists('ordner',$_GET))
 {
-	$ordner = $_GET['ordner']; // f�r register_globals = off
+	$ordner = $_GET['ordner']; // fuer register_globals = off
 }
 
 $x = 0;
-$n = 0;				//Z&auml;hlvariable f&uuml;r die zu bearbeitenden Bilder (Bilder im Upload-Ordner)
-$del = 0;			//Z&auml;hlvariable f&uuml;r die nach dem Upload aus dem Upload-Ordner gel&ouml;schten Bilder
+$n = 0;				//Zaehlvariable fuer die zu bearbeitenden Bilder (Bilder im Upload-Ordner)
+$del = 0;			//Zaehlvariable fuer die nach dem Upload aus dem Upload-Ordner geloeschten Bilder
 $verz=opendir($ordner);		//$ordner: Upload-Ordner des angemeldeten Users (wird von start.php geliefert)
 $hinweis = '';
 //Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
@@ -144,12 +144,13 @@ Bild-Eigenschaften ermitteln (Meta-Daten auslesen)
 
 mittels exiftool alle verfuegbaren Metadaten auslesen und, wenn fuer die einzelnen Parameter Felder in der Tabelle meta_data existieren, die ermittelten Werte dort speichern
 Kontrolle, ob mindestens die Parameter Width, Height und ImageSize ausgelesen wurden. Wenn nicht, diese Parameter mit PHP-Routinen ermitteln und in der DB speichern
+Bringt ein Bild Geo-Daten mit, werden diese in der location-Tabelle hinterlegt
 Die Ausrichtung wird intern immer mit '1' verwendet.
 Formatvorgaben der Popup-Vorschaufenster werden aus den tatsaechlichen Bild-Abmessungen mittel getimagesize() ermittelt!
 
 Erfassung eines Bildes abgeschlossen    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
-//$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
+$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
 flush();
 FOR ($x='0';$x<$n;$x++)
 {
@@ -357,7 +358,18 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 	<?php
 	IF($n == $del)
 	{
+		//Berechnung der Zeit bis zur vollstaendigen Erfassung aller Bilder:
+		$end5 = microtime();
+		list($end5msec, $end5sec) = explode(" ",$end5);
+		list($start1msec, $start1sec) = explode(" ",$start1);
+		$runtime5 = ($end5sec + $end5msec) - ($start1sec + $start1msec);
+		$rt5 = number_format(($runtime5 / 60),2);
+		//echo "Zeit bis zur Fertigstellung: ".$rt5." Minuten<BR>";
+		//Berechnung der durchschnittlichen Zeit pro Bild:
+		$av_rt = number_format(($runtime5 / $n),2);
+
 		$meldung = "Erfassung abgeschlossen: ". date('d.m.Y, H:i:s')."<BR>";
+		$meldung .= "Gesamtzeit: ".$rt5." Minuten (durchschnittliche Bearbeitungszeit: ".$av_rt." sek / Bild)<BR><BR>";
 		$meldung .= "<input type=\"button\" VALUE = \"Fertig - zur&uuml;ck zur Startseite\" onClick=\"location.href=\'../start.php\'\">";
 		//echo $meldung;
 		?>
