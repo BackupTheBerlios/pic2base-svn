@@ -58,6 +58,7 @@ $loc_id = mysql_result($result1,0,'loc_id');
 //echo "LocID: ".$loc_id."<BR>";
 IF($loc_id !== '0' AND $loc_id !== '')
 {
+	echo "Bild hat eine Loc_id.<BR>";
 	$result12 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
 	$long = mysql_result($result12,0, 'longitude');
 	$lat = mysql_result($result12,0, 'latitude');
@@ -68,40 +69,40 @@ IF($loc_id !== '0' AND $loc_id !== '')
 }
 ELSE
 {
-	//echo "Pos. vorhanden<BR>";
-	IF(isset($parameter))
+	unset($parameter);
+	$parameter = $_COOKIE['parameter'];
+	$param = preg_split("/,/", $parameter);
+	IF(count($param) > '2')
 	{
-		unset($parameter);
-		$parameter = $_COOKIE['parameter'];
-		$param = split(',', $parameter);
-		IF(count($param) > '2')
+		$lat = $param[0];
+		$long = $param[1];
+		//der erste und zweite Parameter sind die Koordinaten,
+		//der dritte und alle weiteren gehoeren lt. Definition zur Ortsbezeichnung,
+		//denn diese kann aus dem Ortsnamen und ggf durch Kommata getrennte Ergaenzungen bestehen
+		//(z.B.: Blankenburg, Gehren)
+		$ort = '';
+		FOR($K=2; $K<count($param); $K++)
 		{
-			$lat = $param[0];
-			$long = $param[1];
-			//der erste und zweite Parameter sind die Koordinaten, der dritte und alle weiteren geh�ren lt. Definition zur Ortsbezeichnung, denn diese kann aus dem Ortsnamen und ggf durch Kommata getrennte Erg�nzungen bestehen (z.B.: Blankenburg, Gehren)
-			$ort = '';
-			FOR($K=2; $K<count($param); $K++)
+			$ort .= htmlentities($param[$K]);
+			IF($K<count($param) - 1)
 			{
-				$ort .= htmlentities($param[$K]);
-				IF($K<count($param) - 1)
-				{
-					$ort .= ',';
-				}
+				$ort .= ',';
 			}
-			$loc = round($lat,6).",".round($long,6);
 		}
+		$loc = round($lat,6).",".round($long,6);
 	}
-	ELSE
+
+	IF($lat == '' OR $long == '' OR $loc == '')	//wenn der Cookie noch nichts mitbringt...
 	{
 		$lat = 51.791232;
 		$long = 10.952811;
 		$ort = 'Blankenburg';
 		$loc = round($lat,6).",".round($long,6);
 	}
-//echo "Parameter: ".$parameter.", Breite: ".$lat.", Laenge: ".$long.", Ort: ".$ort."<BR>";
+	//echo "Parameter: ".htmlentities($parameter).", Breite: ".$lat.", Laenge: ".$long.", Ort: ".$ort."<BR>";
 }
 ?>
-
+ 
 <div id="map" style="position: absolute; top:10px;left:10px;width:530px; height:370px"></div>
 <div id="loc" style="position: absolute; top:390px;left:10px;">
 <form name = 'lok' method = 'post' action = 'save_param.php'>
