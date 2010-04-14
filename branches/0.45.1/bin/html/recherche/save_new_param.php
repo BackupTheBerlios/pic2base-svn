@@ -76,7 +76,7 @@ ELSEIF(($loc_id !== '' AND $loc_id !== '0') AND $ort !== '' AND $location !== ''
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
 	shell_exec($et_path."/exiftool -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$FN." -overwrite_original");
 }
-//es gab bisher KEINE Referenzierung und es wird eine neue hinzugefuegt; Die Hoehe wird mit 0.1 festgelegt, um bei der Suche diese Bilder mit  der Bedingung ">0" mit zu erwischen  #########################################
+//es gab bisher KEINE Referenzierung und es wird eine neue hinzugefuegt;  #########################################
 ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 {
 	echo "<center>Bitte warten,<BR>&Auml;nderungen werden gespeichert...</center>";
