@@ -112,8 +112,18 @@ IF ($pic_id !=='0')
 		echo "<TABLE id='detail1'>
 		<TR id='detail1'>
 		<TD id='detail1'>Orig.-Dateiname:</TD>
-		<TD id='detail2' colspan='2'>$FileNameOri</TD>
-		<!--<TD id='detailuo1' colspan = '5'><img src=\"$inst_path/pic2base/bin/share/images/spacer.gif\" style=\"width:90px; height:1px;\"'></TD>-->
+		<TD id='detail2' colspan='2'>";
+		IF(strlen($FileNameOri) > 14)
+		{
+			$fn_text = 	substr($FileNameOri,0,10)."...";
+			echo "<a href='#' title='$FileNameOri' style='text-decoration:none;'>".$fn_text."</a>";
+		}
+		ELSE
+		{
+			$fn_text = $FileNameOri;
+			echo $fn_text;	
+		}
+		echo "</TD>
 		<TD id='detailuo1' colspan = '5' style='text-align:center;'>";
 		SWITCH($note)
 		{
