@@ -2,6 +2,27 @@
 <?php
 include 'global_config.php';
 
+//var_dump($_REQUEST);
+
+IF(array_key_exists('Orientation', $_REQUEST))
+{
+	$Orientation = $_REQUEST['Orientation'];
+}
+
+IF(array_key_exists('FileNameV', $_REQUEST))
+{
+	$FileNameV = $_REQUEST['FileNameV'];
+}
+
+IF(array_key_exists('pic_id', $_REQUEST))
+{
+	$pic_id = $_REQUEST['pic_id'];
+}
+
+IF(array_key_exists('fs_hoehe', $_REQUEST))
+{
+	$fs_hoehe = $_REQUEST['fs_hoehe'];
+}
 
 SWITCH($Orientation)
 {
@@ -24,7 +45,7 @@ SWITCH($Orientation)
 		$output = shell_exec($command);
 	break;
 }
-$time = time(now);
+$time = time();
 
 echo "
 <SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"10\" height=\"10\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
