@@ -328,7 +328,7 @@ function rotPrevPic(Orientation, FileNameV, pic_id, fs_hoehe)
 	{
 		var url = '../../share/rot_prev_pic.php';
 		var params = 'FileNameV=' + FileNameV + '&Orientation=' + Orientation + '&pic_id=' + pic_id + '&fs_hoehe=' + fs_hoehe;
-		//alert("Parameter: "+params);
+		alert("Parameter: "+params);
 		var target = 'pic' + pic_id;
 		var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 	}
