@@ -235,7 +235,7 @@ FOR ($x='0';$x<$n;$x++)
 		ELSEIF(in_array($ext,$supported_extensions)) 
 		{
 			//das oder die jpg-Bilder werden erzeugt:
-			$command = $im_path."/convert ".$pic_path."/".$tmp_filename." ".$pic_path."/".$new_filename."";
+			$command = $im_path."/convert -flatten ".$pic_path."/".$tmp_filename." ".$pic_path."/".$new_filename."";
 			$output = shell_exec($command);
 			IF(file_exists($pic_path."/".$new_filename))
 			{
@@ -245,14 +245,27 @@ FOR ($x='0';$x<$n;$x++)
 					$rot_filename = createQuickPreview($Orientation,$new_filename);
 				}
 				$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
+				//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
+				$fileOri = $pic_path."/".$new_filename;
+				clearstatcache();
+				chmod ($fileOri, 0700);
+				clearstatcache();
 				$z = '1';//echo "Die Datei enth&auml;lt nur EIN Bild.!";
 			}
 			ELSE
 			{
-				//es war vermutlich eine Datei mit mehreren Bildern (max. 100 Bilder werden je Datei verarbeitet!)
+				echo "Es liegt ein Problem bei der Datenerfassung vor!";
+				/*
+				//es war vermutlich eine Datei mit mehreren Ebenen
 				$z = '0';
 				WHILE($z<100)
 				{
+					//########################################################################
+					//jedes Bild der Datei muss wie ein eigenstaendiges Bild behandelt werden!
+					//########################################################################
+					$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$datei_name', '$DateInsert')");
+					echo mysql_error();
+					$pic_id = mysql_insert_id();			//echo "User-ID: ".$user_id."; Rec-ID: ".$pic_id."<BR>";
 					$new_filename = str_replace('.'.$ext,'',$base_name)."-".$z.".jpg";
 					IF(file_exists($pic_path."/".$new_filename))
 					{
@@ -262,6 +275,11 @@ FOR ($x='0';$x<$n;$x++)
 							$rot_filename = createQuickPreview($Orientation,$new_filename);
 						}
 						$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
+						//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
+						$fileOri = $pic_path."/".$new_filename;
+						clearstatcache();
+						chmod ($fileOri, 0700);
+						clearstatcache();
 						$z++;
 					}
 					ELSE
@@ -271,6 +289,7 @@ FOR ($x='0';$x<$n;$x++)
 				}
 				//Wenn eine Datei mehrere Bilder enthaelt, wird nur der Datei-Rumpf als Parameter uebergeben:
 				$new_filename = str_replace('.'.$ext,'',$base_name);
+				*/
 			}
 		}
 		ELSE
@@ -293,14 +312,14 @@ FOR ($x='0';$x<$n;$x++)
 		}
 		
 		$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
+		
+		//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
+		$fileOri = $pic_path."/".$new_filename;
+		clearstatcache();
+		chmod ($fileOri, 0700);
+		clearstatcache();
 	}
 
-	
-	//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
-	$fileOri = $pic_path."/".$new_filename;
-	clearstatcache();
-	chmod ($fileOri, 0700);
-	clearstatcache();
 /*
 $end1 = microtime();
 list($start1msec, $start1sec) = explode(" ",$start1);
@@ -308,7 +327,7 @@ list($end1msec, $end1sec) = explode(" ",$end1);
 $runtime1 = ($end1sec + $end1msec) - ($start1sec + $start1msec);
 echo "Zeit f&uuml;r Bildupload: ".$runtime1."<BR>";
 */
-	//Funktions-Parameter: Bild-ID, Anzahl der Scenen; User-ID; Ausrichtung
+	//Funktions-Parameter: Bild-ID, Anzahl der Szenen; User-ID; Ausrichtung
 	savePicture($pic_id,$z,$user_id,$Orientation);	//Parameter sollten reichen, da sich alles weitere erzeugen laesst
 /*
 $end2 = microtime();
