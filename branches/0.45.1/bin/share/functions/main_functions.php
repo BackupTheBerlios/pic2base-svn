@@ -1086,7 +1086,6 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation)
 {
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	//$Orientation = trim($Orientation);
 	IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 	{
 		//echo "Es liegt ein gedrehtes Bild vor!<BR>";
@@ -1102,20 +1101,17 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation)
 	$sum = explode(' ',shell_exec($command));
 	//echo "Pr&uuml;fsumme: ".$sum[0]."<BR>";
 	
-	IF($anzahl == '1')
-	{
-		// 1) anlegen des hq-Bildes: (resamplen, speichern unter /vorschau/hq-preview)
-		//HQ aus Original erzeugen
-		$max_len = '800';				
-		$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_preview, $max_len);
-		$FILEHQ = $pic_hq_preview."/".$FileNameHQ;	
-		//Thumb aus HQ erzeugen
-		// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
-		$max_len = '160';
-		$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs, $max_len);
-		
-		$result1 = mysql_query("UPDATE $table2 SET FileNameHQ = '$FileNameHQ', FileNameV = '$FileNameV', md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
-	}
+	// 1) anlegen des hq-Bildes: (resamplen, speichern unter /vorschau/hq-preview)
+	//HQ aus Original erzeugen
+	$max_len = '800';				
+	$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_preview, $max_len);
+	$FILEHQ = $pic_hq_preview."/".$FileNameHQ;	
+	//Thumb aus HQ erzeugen
+	// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
+	$max_len = '160';
+	$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs, $max_len);
+	
+	$result1 = mysql_query("UPDATE $table2 SET FileNameHQ = '$FileNameHQ', FileNameV = '$FileNameV', md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
 	
 	//die Datei-Attribute werden fuer alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
 	//HQ-Datei:
