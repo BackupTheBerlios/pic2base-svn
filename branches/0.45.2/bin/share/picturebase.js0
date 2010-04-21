@@ -1,0 +1,99 @@
+var CurrentUser = '';
+var CurrentDomain = '';
+var CurrentAlias = '';
+var CurrentHiddenObject = null;
+var CurrentPopup = null;
+
+// onLoad Funktion registrieren
+Event.observe(window, 'load', init, false);
+
+function init() {
+	// Initialisierung der Seite
+	zusatz1();
+	}
+
+function zusatz1() 
+{
+	// alle verfügbaren Zusatzwerte auflisten
+	var url = 'zusatz1.php';
+	var target = 'zusatz1';
+	var myAjax = new Ajax.Updater(target,url,{method: 'get'});
+}
+	
+function getuser(user) {
+	// Einen speziellen User rausgreifen
+	var url = 'getuser.php';
+	var target = 'userdetail';
+	var params = 'user=' + user;
+	var myAjax = new Ajax.Updater(target,url,{method: 'get', parameters: params});
+	CurrentUser = user;
+	// Emails dieses Accounts anzeigen
+	var url = 'getemailsofuser.php';
+	var target = 'emaillist';
+	var myAjax = new Ajax.Updater(target,url,{method: 'get', parameters: params});
+	// Domains dieses Users anzeigen
+	var url = 'getdomainsofuser.php';
+	var target = 'domainlist';
+	var myAjax = new Ajax.Updater(target,url,{method: 'get', parameters: params});
+	// individuelle Domainanzeige loeschen
+	$('domaindetail').innerHTML = '';
+	}
+
+////////////////////
+// Context Menues //
+////////////////////
+function context_menu(id) 
+{
+	// close previous popup (if any)
+	closePopup();
+	CurrentHiddenObject = $(id);
+	Element.hide(CurrentHiddenObject);
+	var menutable = '';
+	switch (id) {
+		case 'userlist_header':
+			menutable = '<table id="' + id + '_context_menu" class="menu" '
+				+ 'style="z-index:100;position:relative;top:0px;left:0px;">'
+				+ '<tr><td onClick="closePopup();userlist()">komplette User-Liste neu einlesen</td></tr>'
+				+ '<tr><td onClick="createUser()">neuen User anlegen</td></tr>'
+				+ '<tr><td onClick="closePopup()">abbrechen</td></tr>'
+				+ '</table>';
+			break;
+		
+		default:
+			menutable ='<table id="' + id + '_context_menu" class="menu" '
+				+ 'style="z-index:100;position:relative;top:0px;left:0px;">'
+				+ '<tr><td onClick="closePopup()">context menu not yet implemented</td></tr>'
+				+ '</table>';
+			break;
+		}
+	new Insertion.After(CurrentHiddenObject, menutable);
+	CurrentPopup = $(id + '_context_menu');
+	window.setTimeout("closePopup()",10000);
+}
+		
+////////////////////////
+// Editier-Funktionen //
+////////////////////////
+function showAsEditable(id) {
+	var obj = $(id);
+	Element.addClassName(obj, 'editable');
+	}
+function unshowAsEditable(id) {
+	var obj = $(id);
+	Element.removeClassName(obj, 'editable');
+	}
+function edit(id){
+	var obj = $(id);
+	Element.hide(obj);
+	var textarea ='<div id="' + id + '_editor" '
+		+ 'style="font-size:9pt;height:10px"><nobr>'
+		+ '<input id="' + id + '_edit" name="' + id + '" type="text" '
+		+ 'value="' + obj.innerHTML + '"'
+		+ 'style="font-size:9pt;height:11px" /> ';
+	var buttons = '<input id="' + id + '_save" type="button" value="SAVE" />'
+		+ ' OR <input id="' + id + '_cancel" type="button" value="CANCEL" />'
+		+ '</nobr></div>';
+	new Insertion.After(obj, textarea+buttons);
+	Event.observe(id+'_save', 'click', function(){saveChanges(obj)}, false);
+	Event.observe(id+'_cancel', 'click', function(){cleanUp(obj)}, false);
+	}
