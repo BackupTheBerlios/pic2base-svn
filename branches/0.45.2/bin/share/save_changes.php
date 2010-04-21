@@ -17,6 +17,12 @@ if (array_key_exists('aufn_dat',$_GET) )
 	$aufn_dat = $_GET['aufn_dat'];
 }
 
+$result1 = mysql_query("SELECT FileName FROM $table2 WHERE pic_id = '$pic_id'");
+// $fn ist der interne Dateiname
+$fn = mysql_result($result1,0,'FileName');
+$fn = $pic_path."/".$fn;
+echo $fn."<BR>";
+//$FN ist der Original-Dateiname
 $FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 //echo $FN."<BR>";
 //$description = str_replace('?','',$description);
@@ -27,7 +33,10 @@ IF($aufn_dat == '')
 {
 	$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description' WHERE pic_id = '$pic_id'");
 	$desc = htmlentities($description);
+	//Aenderungen in Original-Datei speichern, wenn moeglich:
 	shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
+	//Aenderungen in jpg-Datei speichern:
+	shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$fn." -overwrite_original");
 }
 ELSE
 {
@@ -39,11 +48,17 @@ ELSE
 	IF(checkdate($month,$day,$year))
 	{
 		$aufndat = $year."-".$month."-".$day." 00:00:00";
+		$dto = $year.":".$month.":".$day." 00:00:00";
 		//echo $aufndat."<BR>";
+		//echo $dto."<BR>";
 		$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description', DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
 		$desc = htmlentities($description);
+		//Aenderungen in Original-Datei speichern, wenn moeglich:
 		shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
-		shell_exec($et_path."/exiftool -EXIF:DateTimeOriginal='$aufndat' ".$FN." -overwrite_original");
+		shell_exec($et_path."/exiftool -EXIF:DateTimeOriginal='$dto' ".$FN." -overwrite_original");
+		//Aenderungen in jpg-Datei speichern:
+		shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$fn." -overwrite_original");
+		shell_exec($et_path."/exiftool -EXIF:DateTimeOriginal='$dto' ".$fn." -overwrite_original");
 	}
 	ELSE
 	{
