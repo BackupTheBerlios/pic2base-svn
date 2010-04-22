@@ -333,7 +333,7 @@ IF ($pic_id !=='0')
 			$symb3 = "<BR>";
 		}
 		
-		//Wenn der angemeldete User Admin-Rechte hat, werden die Icons zum l�schen bzw. aufheben der Geo-Referenzierung angezeigt. Anderenfalls nur das Icon f�r den Download.
+		//Wenn der angemeldete User Admin-Rechte hat, werden die Icons zum loeschen bzw. aufheben der Geo-Referenzierung angezeigt. Anderenfalls nur das Icon f�r den Download.
 		IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'deletepic')))
 		{
 			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
