@@ -10,9 +10,12 @@ $inst_path = "";										//Pfad zwischen DocumentRoot und pic2base
 $p2b_path = $doc_root.$inst_path."/";						//Pfad zur p2b-Wurzel
 $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
 
-$path_copy = '../../../images/originale';
-$vorschau_verzeichnis = '../../../images/vorschau/thumbs';
-$HQ_verzeichnis = '../../../images/vorschau/hq-preview';
+//$path_copy = '../../../images/originale';
+$path_copy = $sr."/images/originale";
+//$vorschau_verzeichnis = '../../../images/vorschau/thumbs';
+$vorschau_verzeichnis = $sr."/images/vorschau/thumbs";
+//$HQ_verzeichnis = '../../../images/vorschau/hq-preview';
+$HQ_verzeichnis = $sr."/images/vorschau/hq-preview";
 $geo_path_copy = $sr."/tracks";
 $ftp_path = $sr."/userdata";
 
