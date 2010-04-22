@@ -21,7 +21,7 @@ $result1 = mysql_query("SELECT FileName FROM $table2 WHERE pic_id = '$pic_id'");
 // $fn ist der interne Dateiname
 $fn = mysql_result($result1,0,'FileName');
 $fn = $pic_path."/".$fn;
-echo $fn."<BR>";
+//echo $fn."<BR>";
 //$FN ist der Original-Dateiname
 $FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 //echo $FN."<BR>";
