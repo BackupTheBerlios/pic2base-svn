@@ -439,11 +439,10 @@ echo "<div class='page'>
 			{
 				$file = mysql_result($result4, $i4, 'FileNameHQ');
 				$ranking = mysql_result($result4, $i4, 'ranking');
-				$bild = '../../images/vorschau/hq-preview/'.$file;
-				$param = getimagesize('../../images/vorschau/hq-preview/'.$file);
+				$bild = $pic_hq_preview."/".$file;
+				$param = getimagesize($pic_hq_preview."/".$file);
 				$width = $param[0];
 				$height = $param[1];
-				//echo $width."/".$height."<BR>";
 				
 				$hoehe = 40;
 				$breite = $hoehe / $height * $width;
