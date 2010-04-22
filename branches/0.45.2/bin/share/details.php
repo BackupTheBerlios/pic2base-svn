@@ -73,6 +73,11 @@ $hist_file_g = $pic_id.'_hist_1.gif';
 $hist_file_b = $pic_id.'_hist_2.gif';
 $hist_file = $pic_id.'_hist.gif';
 //echo $hist_file;
+
+//es wird ermittelt, ob der Original-Dateityp Exif-Daten-Speicherung unterstuetzt:
+$file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
+$ed = trim(shell_exec($et_path."/exiftool ".$file));	//$ed = exifdaten, leer oder nicht
+
 echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
@@ -81,10 +86,18 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 	
 	IF($view == 'kompact')
 	{
+		IF($ed !== '')
+		{
+			$link_text = " >>> <a href=\"details.php?pic_id=$pic_id&view=all\">alle</a> Details";
+		}
+		ELSE
+		{
+			$link_text = "";
+		}
 		echo "
 		<TR class='normal'>
 			<TD class='normal' colspan = '2'>
-			Ausgew&auml;hlte Details zum Bild ".$pic_id." >>> <a href=\"details.php?pic_id=$pic_id&view=all\">alle</a> Details
+			Ausgew&auml;hlte Details zum Bild ".$pic_id.$link_text."
 			</TD>
 		</TR>";
 	}
@@ -93,7 +106,7 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 		echo "
 		<TR class='normal'>
 			<TD class='normal' colspan = '2'>
-			Alle Details zum Bild ".$pic_id." >>> zur <a href=\"details.php?pic_id=$pic_id&view=kompact\">Kompakt-Ansicht</a>
+			Alle Details zum Bild ".$pic_id." >>> <a href=\"details.php?pic_id=$pic_id&view=kompact\">zur Kompaktansicht</a>
 			</TD>
 		</TR>";
 	}
@@ -179,7 +192,7 @@ IF($num4 > '0')
 }
 //print_r($writable_fields);
 
-//dann werden alle in der Kompact-Ansicht lesbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
+//dann werden alle in der Kompakt-Ansicht lesbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
 
 $result5 = mysql_query("SELECT field_name FROM $table5 WHERE viewable = '1'");
 
@@ -381,8 +394,17 @@ echo "
 	
 	<TR style='background-color:white;'>
 		<TD class='liste2' style='width:450px;text-align:center;' colspan='2' ><img src=\"../../images/monochrome/".$pic_id."_mono.jpg\" width='400px' alt='Monochrome-Ansicht' title='Monochrome-Ansicht' border='0' /></TD>
-	</TR>
-	
+	</TR>";
+	IF($ed == '')
+	{
+		echo "
+		<TR style='background-color:white; color:red;'>
+			<TD class='liste2' style='width:450px;text-align:center; border-right-style:solid; border-right-width:3px; border-left-style:solid; border-left-width:3px; border-color:red;' colspan='2'>
+			<b>Das Dateiformat des Originalbildes kann keine Meta-Daten speichern.</B>
+			</TD>
+		</TR>";
+	}
+	echo "
 	<!--
 	<TR style='background-color:white;'>
 		<TD class='liste2' style='width:450px;' colspan='2' >Link zum <a href=http://".$_SERVER['SERVER_NAME'].$inst_path."/pic2base/images/originale/".restoreOriFilename($pic_id, $sr).">Originalbild</a></TD>
@@ -394,7 +416,7 @@ echo "
 		</TD>
 	</TR>";
 	//echo count($writable_fields);
-	IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username)
+	IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username AND $ed !== '')
 	{
 		echo "
 		<TR class='normal'>
