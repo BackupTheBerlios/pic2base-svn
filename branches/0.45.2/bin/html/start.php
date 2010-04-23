@@ -439,11 +439,12 @@ echo "<div class='page'>
 			{
 				$file = mysql_result($result4, $i4, 'FileNameHQ');
 				$ranking = mysql_result($result4, $i4, 'ranking');
-				$bild = $pic_hq_preview."/".$file;
+				//$bild = $pic_hq_preview."/".$file;
+				$bild = "http://".$_SERVER['SERVER_NAME']."/".$inst_path."pic2base/images/vorschau/hq-preview/".$file;
 				$param = getimagesize($pic_hq_preview."/".$file);
 				$width = $param[0];
 				$height = $param[1];
-				
+				//echo $bild;
 				$hoehe = 40;
 				$breite = $hoehe / $height * $width;
 				
@@ -480,9 +481,6 @@ echo "<div class='page'>
 		checkSoftware();
 		echo "</p></div><br style='clear:both;' />";
 	}
-
-	//Fuer Test-Zwecke:
-	//$text = 'pic2base wurde vom Rechner '.$REMOTE_ADDR.' unter dem User  '.$c_username.' aufgerufen.';
 	
 	//log-file schreiben:
 	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
