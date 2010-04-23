@@ -1,6 +1,6 @@
 function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 {
-	alert("Bildname: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source)
+	//alert("Bildname: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source)
 	anotherWindow = window.open("", "bildfenster", "");
 	// Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
 	if (anotherWindow != null)
