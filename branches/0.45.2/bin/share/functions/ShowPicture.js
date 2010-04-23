@@ -1,6 +1,6 @@
 function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 {
-	//alert("Name: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source)
+	alert("Bildname: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source)
 	anotherWindow = window.open("", "bildfenster", "");
 	// Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
 	if (anotherWindow != null)
@@ -18,7 +18,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 		}
 		
 		//alert("Breite: "+breite+", Hoehe: "+hoehe+", Modus: "+modus+", Format: "+size);
-		var ref,parameter,dateiname,htmlcode,b=breite,h=hoehe,woerter,location;
+		var sr,ref,parameter,dateiname,htmlcode,b=breite,h=hoehe,woerter,location;
 
 		//dateiname=bildname.substring(bildname.length-17,bildname.length);
 		woerter = bildname.split("/");
@@ -30,11 +30,11 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 		if(source=='start')
 		{
 			htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
-			htmlcode+="<img src=\"../share/images/p2b.gif\" height=50px>\n";
+			htmlcode+="<img src=\"/pic2base/bin/share/images/p2b.gif\" alt=\"pic2base\" height=50px>\n";
 			htmlcode+="<\/div>\n";		
 
 			htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
-			htmlcode+="<img src=\"../share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic.gif\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
+			htmlcode+="<img src=\"/pic2base/bin/share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
 			htmlcode+="<\/div>\n";
 		}
 		else
@@ -50,7 +50,7 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 		htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 0;\">\n";
 		htmlcode+="<img src=\""+bildname+"\" height="+h+">\n";
 		htmlcode+="<\/div>\n</center>\n<\/body>\n<\/html>\n";
-		
+		//alert(htmlcode);
 		parameter="width="+b+",height="+h+",screenX="+(screen.width-b)/2+",screenY="+(screen.height-h)/2+",left="+(screen.width-b)/2+",top="+(screen.height-h)/2;
 	}
 	
