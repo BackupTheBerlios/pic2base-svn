@@ -1879,9 +1879,9 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		$breite = 800;
 		$hoehe = 600;
 	}
-	//echo "Breite: ".$breite.", H�he: ".$hoehe."<BR>";
+	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
       	$width_height=$parameter_v[3];
-      	//F�r die Darstellung des Vollbildes wird eine mittlete Gr��e unter Beachtung des Seitenverh�ltnisses errechnet:
+      	//Fuer die Darstellung des Vollbildes wird eine mittlete Groesse unter Beachtung des Seitenverhaeltnisses errechnet:
       	//max. Ausdehnung: 800px
       	$max = '1000';
       	$bild = $inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ;
