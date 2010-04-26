@@ -176,7 +176,8 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	//echo "O: ".$Orientation.", B: ".$breite_v.", H: ".$hoehe_v."<BR>";
 	echo "<a href='' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori');return false\"  title='Ansicht in optimaler Qualit&auml;t'>
 	<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5'>
-	</a>";
+	</a>
+	<img src='$bildname' width=1 height=1 border=0 z='-99'>";
 }
 
 function getShortFS($FileSize)
