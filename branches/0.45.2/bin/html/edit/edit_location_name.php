@@ -99,7 +99,7 @@ echo "
 				<TD id='kat1'>";
 				SWITCH($num2)
 				{
-					//Erzeugung des Hinweistextes �ber dem Vorschaubild:
+					//Erzeugung des Hinweistextes ueber dem Vorschaubild:
 					CASE '0':
 					echo "Es gibt kein Bild mehr ohne GPS-Ortszuweisung.<BR>
 					<meta http-equiv='refresh', content='0; URL=edit_start.php'>";
@@ -264,7 +264,7 @@ echo "
 
 				<TR id='kat'>
 					<TD id='kat1'>
-					<p align='center'><INPUT type='submit' value='Weiter'></p>
+					<p align='center'><INPUT id='button1' type='submit' value='Weiter'></p>
 					</TD>
 				</TR>";
 			}
@@ -298,7 +298,7 @@ mysql_close($conn);
 
 ?>
 <script language="javascript">
-document.ortsbezeichnung.ort.focus();
+document.ortsbezeichnung.button1.focus();
 </script>
 </DIV>
 </CENTER>
