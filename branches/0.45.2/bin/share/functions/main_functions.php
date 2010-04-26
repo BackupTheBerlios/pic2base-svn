@@ -421,7 +421,14 @@ function createNavi0($c_username)
 			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=0' title='Online-Hilfe aufrufen'>Hilfe</a>
 			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	
-	echo $navigation;
+	echo $navigation."<BR>
+	<p>
+	<a href='http://jigsaw.w3.org/css-validator/check/referer'>
+	    <img style='position:relative;border:0;width:88px;height:31px;margin-top:410px;left:5px''
+	        src='http://jigsaw.w3.org/css-validator/images/vcss-blue'
+	        alt='CSS ist valide!' />
+	</a>
+	</p>";
 }
 
 function createNavi1($c_username)
