@@ -496,9 +496,9 @@ echo "<div class='page'>
 
 	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
 
-</div>";
-?>
+</div>
 </DIV>
 </CENTER>
 </BODY>
-</HTML>
+</HTML>";
+?>
