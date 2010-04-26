@@ -65,7 +65,7 @@ IF ($pic_id !=='0')
 		{
 			$ausrichtung = "nicht vermerkt";
 		}
-			//Welche Kategorien wurden dem Bild zugewiesen?
+		//Welche Kategorien wurden dem Bild zugewiesen?
 		$result9 = mysql_query( "SELECT DISTINCT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie, $table4.level FROM $table10 INNER JOIN $table4 ON ($table10.kat_id = $table4.kat_id AND $table10.pic_id = '$pic_id') ORDER BY $table4.level");
 		$num9 = mysql_num_rows($result9);
 			
