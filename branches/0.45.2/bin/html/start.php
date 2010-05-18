@@ -99,6 +99,7 @@ IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 	@$fh = fopen($file1,'r');
 	IF(!$fh)
 	{
+		$ol_text = "";
 		$online_hinweis = "Es konnte keine &Uuml;berpr&uuml;fung auf Online-Updates erfolgen.<BR>M&ouml;glicherweise haben Sie keinen Internet-Zugang.";
 	}
 	ELSE
@@ -475,7 +476,7 @@ echo "<div class='page'>
 	}
 	ELSE
 	{
-		//so alnge keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
+		//so lange keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
 		echo "<div class='content'>
 		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
 		checkSoftware();
