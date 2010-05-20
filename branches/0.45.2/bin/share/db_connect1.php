@@ -7,9 +7,9 @@ $vom = "(21.04.2010)";
 $cr = "2006 - 2010 Logiqu";
 
 //Zugangsdaten fuer den Datenbankzugriff (normaler User mit teilwesen Zugriffsbeschraenkungen auf DB pic2base)
-$db_server='localhost';
-$user='pb';
-$PWD='pic_base';
+$db_server = 'localhost';
+$user = 'pb';
+$PWD = 'pic_base';
 $db = 'pic2base';
 
 @$conn = mysql_connect($db_server,$user,$PWD);
@@ -49,6 +49,7 @@ if (!mysql_select_db($mydb))
 	//echo "##MySQL ERROR: " . mysql_error() . "<br>\n";
 	return;
 }
+
 mysql_query("SET CHARACTER SET latin1");
 //Encryption-Key fuer PWD-Ver-/Entschluesselung
 $key = '0815';
