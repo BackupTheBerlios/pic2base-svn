@@ -1715,12 +1715,24 @@ SWITCH ($modus)
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
 				IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
 				{
-					$icon[$i6] = "
-					<TD align='center'width='43'>
-					<div id='box$pic_id'>
-					<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den Download-Ordner kopieren'/></SPAN>
-					</div>	
-					</TD>";
+					IF($direkt_download > '0')
+					{
+						$icon[$i6] = "
+						<TD align='center'width='43'>
+						<div id='box$pic_id'>
+						<SPAN style='cursor:pointer;' onClick='window.open(\"../../share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild herunterladen'/></SPAN>
+						</div>	
+						</TD>";
+					}
+					ELSE
+					{
+						$icon[$i6] = "
+						<TD align='center'width='43'>
+						<div id='box$pic_id'>
+						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den Download-Ordner kopieren'/></SPAN>
+						</div>	
+						</TD>";
+					}
 				}
 				ELSE
 				{

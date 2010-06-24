@@ -50,6 +50,9 @@ $et_path = '/usr/bin';			//Pfad zum exiftool
 $gpsb_path = '/usr/bin';	//Pfad zu GPSBabel
 $md5sum_path = '/usr/bin';
 
+//Filmstreifen Download - direkt -> "1" oder per ftp -> "0"
+$direkt_download = "0";
+
 //[GM-Keys; koennen von http://code.google.com/apis/maps/ bezogen werden]
 SWITCH($_SERVER['SERVER_NAME'])
 {
