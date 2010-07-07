@@ -27,4 +27,7 @@ header("Content-Disposition: attachment; filename=\"$save_as\"");
 // Datei ausgeben.
 readfile($datei);
 
+//Downloadzaehler aktualisieren:
+$result1 = mysql_query("UPDATE $table2 SET ranking = ranking + 1 WHERE pic_id = '$pic_id'");
+
 ?>
