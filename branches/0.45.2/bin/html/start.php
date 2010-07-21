@@ -165,77 +165,78 @@ ELSE
 {
 	$hinweis10 = "Es befinden sich zur Zeit noch keine Bilder in der Datenbank.";
 }
+//Nur wenn der angemeldete User Erfassungs- und Downloadrechte hat, werden die folgenden Kontrollen durchgefuehrt:
 
-//Pruefung, ob Bilder ohne Kategorie-Zuweisung fuer den Benutzer vorliegen:
-$num_pic = '0';
-$result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id'");
-@$num2 = mysql_num_rows($result2);
-IF($num2 > '0')
-{
-	$hinweis0 = "Sie haben bisher ".$num2." Bilder in die Datenbank gestellt.";
-	
-	$result3 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id' AND has_kat = '0'");
-	$num_pic = mysql_num_rows($result3);
-	//echo "Num_Pic: ".$num_pic."<BR>";
-	IF($num_pic == '0')
+	//Pruefung, ob Bilder ohne Kategorie-Zuweisung fuer den Benutzer vorliegen:
+	$num_pic = '0';
+	$result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id'");
+	@$num2 = mysql_num_rows($result2);
+	IF($num2 > '0')
 	{
-		$hinweis = "<span style='color:green;'>Jedes Ihrer Bilder wurde mindestens einer Kategorie zugeordnet.</span>";
+		$result3 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id' AND has_kat = '0'");
+		$num_pic = mysql_num_rows($result3);
+		//echo "Num_Pic: ".$num_pic."<BR>";
+		
+		$hinweis0 = "Sie haben bisher ".$num2." Bilder in die Datenbank gestellt.";
+		IF($num_pic == '0')
+		{
+			$hinweis = "<span style='color:green;'>Jedes Ihrer Bilder wurde mindestens einer Kategorie zugeordnet.</span>";
+		}
+		ELSE
+		{
+			$hinweis = $num_pic." Ihrer Bilder sind noch ohne Kategorie-Zuweisung!<BR>
+			Tipps f&uuml;r eine effektive Archivierung finden Sie <A HREF='help/help1.php?page=0'>hier</A>";
+		}
 	}
 	ELSE
 	{
-		$hinweis = $num_pic." Ihrer Bilder sind noch ohne Kategorie-Zuweisung!<BR>
-		Tipps f&uuml;r eine effektive Archivierung finden Sie <A HREF='help/help1.php?page=0'>hier</A>";
+		$hinweis0 = "Sie haben noch keine Bilder in die Datenbank gestellt.";
 	}
-}
-ELSE
-{
-	$hinweis0 = "Sie haben noch keine Bilder in die Datenbank gestellt.";
-}
-//Pruefung, ob Dateien im FTP-Upload-Ordner vorliegen:
-$n = 0;
-@$verz=opendir($ftp_path."/".$c_username."/uploads");
-//echo "Verzeichnis: ".$verz;
-//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
-IF($verz)
-{
-	while($datei=readdir($verz))
+	//Pruefung, ob Dateien im FTP-Upload-Ordner vorliegen:
+	$n = 0;
+	@$verz=opendir($ftp_path."/".$c_username."/uploads");
+	//echo "Verzeichnis: ".$verz;
+	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
+	IF($verz)
 	{
-		if($datei != "." && $datei != "..")
+		while($datei=readdir($verz))
 		{
-			$info = pathinfo($datei);
-			$extension = strtolower($info['extension']);
-			IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
+			if($datei != "." && $datei != "..")
 			{
-				$bild_datei[] = $datei;
-				$n++;
+				$info = pathinfo($datei);
+				$extension = strtolower($info['extension']);
+				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
+				{
+					$bild_datei[] = $datei;
+					$n++;
+				}
 			}
 		}
+		$hinweis2 = "Es befinden sich ".$n." Datei(en) in Ihrem Upload-Ordner.<BR>";
 	}
-	$hinweis2 = "Es befinden sich ".$n." Datei(en) in Ihrem Upload-Ordner.<BR>";
-}
-
-//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
-$m = 0;
-@$verz=opendir($ftp_path."/".$c_username."/downloads");
-//echo "V: ".$verz;
-//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
-IF($verz)
-{
-	while($datei=readdir($verz))
+	
+	//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
+	$m = 0;
+	@$verz=opendir($ftp_path."/".$c_username."/downloads");
+	//echo "V: ".$verz;
+	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
+	IF($verz)
 	{
-		if($datei != "." && $datei != "..")
+		while($datei=readdir($verz))
 		{
-			$info = pathinfo($datei);
-			$extension = strtolower($info['extension']);
-			IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
+			if($datei != "." && $datei != "..")
 			{
-				$bild_datei[] = $datei;
-				$m++;
+				$info = pathinfo($datei);
+				$extension = strtolower($info['extension']);
+				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
+				{
+					$bild_datei[] = $datei;
+					$m++;
+				}
 			}
 		}
+		$hinweis3 = $m." Datei(en) liegen in Ihrem Download-Ordner: ";
 	}
-	$hinweis3 = $m." Datei(en) liegen in Ihrem Download-Ordner: ";
-}
 
 //Ermittlung der 'Top-Ten':
 $result4 = mysql_query("SELECT * FROM $table2 WHERE ranking <>'' AND ranking >'0' ORDER BY ranking DESC LIMIT 10");
@@ -294,21 +295,31 @@ echo "<div class='page'>
 			
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
-			</TR>
+			</TR>";
 			
-			<Form name='folder' method='post' action='erfassung/stapel1.php'>
-			
-			<tr class='normal'>
- 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Ihr Datenbestand:</TD>
-			<td class='normal' align='left' valign='top' colspan='7'>".$hinweis0."</TD>
-			</TR>
-			
+			IF(hasPermission($c_username, 'addpic'))
+			{
+				echo "
+				<tr class='normal'>
+	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Ihr Datenbestand:</TD>
+				<td class='normal' align='left' valign='top' colspan='7'>".$hinweis0."</TD>
+				</TR>";
+			}
+			ELSE
+			{
+				echo "
+				<tr class='normal'>
+	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'><BR></TD>
+				<td class='normal' align='left' valign='top' colspan='7'><BR></TD>
+				</TR>";
+			}
+			echo "
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 			</TR>";
 
 		
-		IF ($num_pic > '0')
+		IF ($num_pic > '0' AND hasPermission($c_username, 'addpic'))
 		{
 			echo "
 			<tr class='normal'>
@@ -333,9 +344,11 @@ echo "<div class='page'>
 			</TR>";
 		}
 	
-		IF($n > '0')
+		IF($n > '0' AND hasPermission($c_username, 'addpic'))
 		{
 			echo "
+			<Form name='folder' method='post' action='erfassung/stapel1.php'>
+			
 			<tr class='normal' style='height:50px;'>
 			<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
 			<td class='normal' align='left' valign='top' colspan='7'>".$hinweis2."</TD>
@@ -356,24 +369,43 @@ echo "<div class='page'>
 		}
 		ELSE
 		{
-			echo "
-			<TR class='normal' style='height:25px;'>
-			<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
-			<td class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Upload-Ordner ist leer.</TD>
-			</TR>
-			
-			<TR>
-			<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
-			</TR>
-			
-			<INPUT type='hidden' name='ordner' value='$ftp_path/$c_username/uploads' size='70' readonly>
-			
-			<TR class='normal'>
-			<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
-			</TR>";
+			IF(hasPermission($c_username, 'addpic'))
+			{
+				echo "
+				<TR class='normal' style='height:25px;'>
+				<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
+				<td class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Upload-Ordner ist leer.</TD>
+				</TR>
+				
+				<TR>
+				<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
+				</TR>
+				
+				<INPUT type='hidden' name='ordner' value='$ftp_path/$c_username/uploads' size='70' readonly>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
+				</TR>";
+			}
+			ELSE
+			{
+				echo "
+				<TR class='normal' style='height:25px;'>
+				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
+				<td class='normal' align='left' valign='top' colspan='7' style='color:green';><BR></TD>
+				</TR>
+				
+				<TR>
+				<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
+				</TR>";
+			}
 		}
 		
-		IF($m > '0')
+		IF($m > '0' AND hasPermission($c_username, 'addpic'))
 		{
 			$download_path = 'ftp://'.$c_username."@".$_SERVER['SERVER_NAME'].'/downloads/';
 			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$c_username.'/downloads/';
@@ -395,15 +427,30 @@ echo "<div class='page'>
 		}
 		ELSE
 		{
-			echo "
-			<tr class='normal' style='height:50px;'>
-			<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
-			<TD class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Download-Ordner ist leer.</style></TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
-			</TR>";
+			IF(hasPermission($c_username, 'addpic'))
+			{	
+				echo "
+				<tr class='normal' style='height:50px;'>
+				<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
+				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Download-Ordner ist leer.</style></TD>
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
+				</TR>";
+			}
+			ELSE
+			{
+				echo "
+				<tr class='normal' style='height:50px;'>
+				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
+				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';><BR></style></TD>
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
+				</TR>";
+			}
 		}
 		
 		echo "	<TR class='normal' style='height:35px;'>
