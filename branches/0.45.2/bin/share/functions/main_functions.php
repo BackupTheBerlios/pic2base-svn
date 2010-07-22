@@ -409,7 +409,7 @@ function createNavi0($c_username)
 			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 			break;
 			
-			CASE '26':
+			CASE '23':
 			$navigation .= "<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 			break;
