@@ -9,8 +9,8 @@
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
 	
-	$group_id = $_GET['group_id']; // f�r register_globals = off
-	$permission_id = $_GET['permission_id']; // f�r register_globals = off
+	$group_id = $_GET['group_id']; // fuer register_globals = off
+	$permission_id = $_GET['permission_id']; // fuer register_globals = off
 	if (hasPermission($c_username, 'adminlogin'))
 	{
 		mysql_connect ($db_server, $user, $PWD);
@@ -30,7 +30,7 @@
 		$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
 		$num2 = mysql_num_rows($result2);
 		//echo "Anzahl User in der Gruppe: ".$num2."<BR>";
-		//F�r alle User dieser Gruppe wird das gew�hlte Recht neu gesetzt
+		//Fuer alle User dieser Gruppe wird das gewaehlte Recht neu gesetzt
 		FOR($i2=0; $i2<$num2; $i2++)
 		{
 			$user_id = mysql_result($result2, $i2, 'id');
@@ -44,6 +44,6 @@
 	}
 	ELSE
 	{
-		echo "Sie haben nicht gen�gend Berechtigungen!";
+		echo "Sie haben nicht gen&uuml;gend Berechtigungen!";
 	}
 ?>
