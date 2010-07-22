@@ -439,6 +439,18 @@ echo "<div class='page'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
 			}
+			ELSEIF(hasPermission($c_username, 'addpic') AND $direkt_download == '1')
+			{
+				echo "
+				<tr class='normal' style='height:50px;'>
+				<TD class='normal' align='left' valign='top' colspan='3'>Download-Modus:</TD>
+				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';>Direkter Download</style></TD>
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
+				</TR>";
+			}
 			ELSE
 			{
 				echo "
