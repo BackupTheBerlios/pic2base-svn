@@ -1,3 +1,12 @@
+<?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>

@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+
 	if(array_key_exists('item',$_GET))
 	{
 		$item = $_GET['item']; 

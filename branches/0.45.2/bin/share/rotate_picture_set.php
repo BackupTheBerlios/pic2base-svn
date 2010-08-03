@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../index.php');
+}
+
 //in get_details; recherche2, edit_remove_kat zur nachträglichen, manuellen Rotation der Bilder verwendet
 include 'global_config.php';
 include 'db_connect1.php';

@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../index.php');
+}
+
 //###############################################################
 //wird beim löschen von Bildern aus dem Download-Ordner verwendet
 //###############################################################

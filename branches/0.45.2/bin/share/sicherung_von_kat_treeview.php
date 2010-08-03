@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../index.php');
+}
+
 	include 'db_connect1.php';
 	INCLUDE 'global_config.php';
 	include 'functions/ajax_functions.php';

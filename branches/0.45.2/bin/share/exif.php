@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../index.php');
+}
+
 //echo "an exif.php &uuml;bergebene Daten: ".$target." ".$latitude." ".$longitude." ".$altitude."<BR>";
 require_once("classes/pel-0.9.1/PelJpeg.php");
 

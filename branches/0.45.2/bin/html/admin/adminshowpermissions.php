@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+
 	mysql_connect ($db_server, $user, $PWD);
 	$result = mysql_query("select * from permissions ORDER BY description");
 	$num = mysql_num_rows($result);

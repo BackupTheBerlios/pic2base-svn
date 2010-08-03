@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	mysql_connect ($db_server, $user, $PWD);

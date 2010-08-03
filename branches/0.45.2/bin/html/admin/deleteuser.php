@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+
 // abzuarbeitende Schritte:
 // aus Tabelle pictures alle bilder des alten Users auf neuen User uebertragen
 // aus Tabelle users den entsprechenden User loeschen

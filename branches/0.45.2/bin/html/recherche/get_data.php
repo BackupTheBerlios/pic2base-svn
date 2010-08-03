@@ -1,5 +1,14 @@
 <?php
-header('Content-Type: text/xml'); 
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+else
+{
+  header('Content-Type: text/xml'); 
+}
 
 //mysql-Zugriff:
 include '../../share/global_config.php';

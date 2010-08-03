@@ -1,4 +1,11 @@
-<?PHP
+<?php
+IF (!$_COOKIE['login'])
+{
+include '../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../index.php');
+}
+
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Vorschau des gew&auml;hlten Bildes</p>";

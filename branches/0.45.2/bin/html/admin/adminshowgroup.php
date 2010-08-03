@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+
   echo "<CENTER>";
 //var_dump($_GET);
   $id = $_GET['id']; // f�r register_globals = off

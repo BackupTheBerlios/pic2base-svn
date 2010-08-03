@@ -1,4 +1,11 @@
 <?php
+IF (!$_COOKIE['login'])
+{
+include '../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../index.php');
+}
+
 //var_dump($_REQUEST);
 
 IF(array_key_exists('kat_id', $_GET))

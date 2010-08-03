@@ -1,4 +1,4 @@
-<?php 
+<?php
 //[Programm-Version]
 $version = "0.45.2";
 $vom = "(21.04.2010)";
