@@ -51,7 +51,7 @@ ELSE
  * Project: pic2base
  * File: recherche2.php
  *
- * Copyright (c) 2006 - 2007 Klaus Henneberg
+ * Copyright (c) 2006 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
