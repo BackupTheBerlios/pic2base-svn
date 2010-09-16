@@ -11,11 +11,12 @@ include '../../share/global_config.php';
 <html>
 
 <head>
-  <title>Willkommen bei pic2base</title>
+  <title>pic2base - Erfassung</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
   <link rel=stylesheet type="text/css" href="../../css/format1.css">
+  <link rel="shortcut icon" href="../../share/images/favicon.ico">
 </head>
 
 <!--
