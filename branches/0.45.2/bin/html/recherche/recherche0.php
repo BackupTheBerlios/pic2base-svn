@@ -1,10 +1,28 @@
 <?php
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/permissions.php';
+
+//Zugriffskontrolle ######################################################
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
 //var_dump($sr);
   header('Location: ../../../index.php');
 }
+ELSE
+{
+	unset($c_username);
+	IF ($_COOKIE['login'])
+	{
+		list($c_username) = preg_split('#,#',$_COOKIE['login']);
+		IF(!hasPermission($c_username, 'searchpic'))
+		{
+			header('Location: ../../../index.php');
+		}
+	}
+}
+//########################################################################
 
 //var_dump($_COOKIE);
 IF( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )
@@ -50,9 +68,9 @@ function switchBewertung(bewertung)
 
 /*
  * Project: pic2base
- * File: start.php
+ * File: recherche0.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -62,19 +80,7 @@ function switchBewertung(bewertung)
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-//var_dump($_REQUEST);
-
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
- 
-include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
-include $sr.'/bin/share/functions/main_functions.php';
-
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
@@ -83,7 +89,6 @@ fclose($fh);
 $result2 = mysql_query("SELECT * FROM $table2");
 $num2 = mysql_num_rows($result2);
 //echo "Anz. der Bild-Datensaetze: ".$num2."<BR>";
-
 //var_dump($_COOKIE);
 
 ?>
