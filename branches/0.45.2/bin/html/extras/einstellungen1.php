@@ -6,7 +6,7 @@
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../share/images/favicon.ico">
+	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
