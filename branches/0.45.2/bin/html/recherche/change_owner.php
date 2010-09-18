@@ -11,7 +11,7 @@ include '../../share/global_config.php';
 <html>
 
 <head>
-  <title>Neune Eigent&uuml;mer festlegen</title>
+  <title>Neuen Eigent&uuml;mer festlegen</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta http-equiv="Content-Style-Type" content="text/css">
@@ -53,8 +53,15 @@ $username = $row['username'];
 //echo $FileNameV.", ".$pic_thumbs;
 IF($c_username === $username)
 {
-	//welche User gibt es noch im System mit mind. Fotografen-Status?
-	$result2 = mysql_query( "SELECT * FROM $table1 WHERE (group_id = '3' OR group_id = '1') AND username <> 'pb'");
+	//welche User gibt es noch im System, der Bilder erfassen darf (permission 799)?
+	$result2 = mysql_query("SELECT $table1.id, $table1.username, $table1.vorname, $table1.name, $table1.ort, $table1.aktiv, 
+	$table7.user_id, $table7.permission_id, $table7.enabled
+	FROM $table1 INNER JOIN $table7
+	ON $table1.id = $table7.user_id
+	AND $table1.aktiv = '1'
+	AND $table1.username <> 'pb'
+	AND $table7.enabled = '1'
+	AND $table7.permission_id = '799'");
 	$num2 = mysql_num_rows($result2);
 	//echo "gefundene User: ".$num2;
 	echo "<FORM name='n_owner' method='post' action='change_owner_action.php'>
