@@ -23,13 +23,13 @@ include '../../share/global_config.php';
 	{
 		if(document.geo_zuweisung.data_logger.value == "")
 		{
-			alert("Bitte wählen Sie Ihren Daten-Logger aus!");
+			alert("Bitte wï¿½hlen Sie Ihren Daten-Logger aus!");
 			document.geo_zuweisung.data_logger.focus();
 			return false;
 		}
 		if(document.geo_zuweisung.geo_file.value == "")
 		{
-			alert("Bitte wählen Sie eine Track-Datei aus!");
+			alert("Bitte wï¿½hlen Sie eine Track-Datei aus!");
 			document.geo_zuweisung.geo_file.focus();
 			return false;
 		}
@@ -272,7 +272,7 @@ echo "
 	<div id='filmstreifen'>
 	</div>
 	
-	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
 </div>
 </FORM>";
