@@ -13,7 +13,7 @@
 </TR>
 
 <?php
-
+//var_dump($_GET);
 if (!isset($_GET['startp'])) {
 $_GET['startp'] = "";
 $_GET['startp'] = 0;
@@ -22,8 +22,10 @@ $_GET['startp'] = 0;
 if(!isset($_GET['lpp'])) {
 $_GET['lpp'] = 50;
 }
-
 $lpp = 50;
+
+IF(!isset($_GET['userlog']))
+$_GET['userlog']="";
 
 include('config.inc.php');
 MYSQL_CONNECT("$sql_server","$sql_user","$sql_pw");
@@ -53,7 +55,8 @@ else{
 echo "<TR>\n";
 }
 
-$row[1] = ereg_replace("/", "/ ", $row[1]);
+//$row[1] = preg_replace("/", "/ ", $row[1]);
+$row[1] = preg_replace('#///#', '/ ', $row[1]);
 
 echo "
 <TD>$row[0]</TD>\n
