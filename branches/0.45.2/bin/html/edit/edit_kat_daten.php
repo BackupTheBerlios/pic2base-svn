@@ -119,8 +119,8 @@ echo "
 	<div id='filmstreifen'>";
 	$modus='edit';
 	echo "
-	</div>";
-echo "<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+	</div>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 </div>
 </FORM>
 
