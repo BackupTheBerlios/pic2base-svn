@@ -223,9 +223,8 @@ $num2 = mysql_num_rows($result2);
 		</TD>
 		</TR>
 		</TABLE>
-		";
 		
-		echo "<center>
+		<center>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=zeit&s_m=J'>Auflistung nach Jahrg&auml;ngen sortiert</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=kat'>Suche nach Kategorien</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=exif'>Suche nach Meta-Daten</a>
@@ -238,19 +237,17 @@ $num2 = mysql_num_rows($result2);
 		echo "<p style='color:red; text-align:center; font-weight:bold;'>Es gibt zur Zeit keine Eintr&auml;ge in der Datenbank!</P>";
 	}
 		
-	?>
+	echo "
 	</div>
 	
-	<div id='spalte2'><p id="elf" style="background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;"><b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
-	Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button "Hilfe" in der Navigationsleiste.
-	  </p>
+	<div id='spalte2'><p id='elf' style='background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;'><b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
+	Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button 'Hilfe' in der Navigationsleiste.</p>
 	</div>
 
-	<p id="fuss"><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A><?php echo $cr; ?></p>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
-</div>
+</div>";
 
-<?php
 mysql_close($conn);
 ?>
 </DIV>
