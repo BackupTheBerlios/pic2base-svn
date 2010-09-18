@@ -63,14 +63,13 @@ echo "
 	<div id='spalte1'>
 	<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Legen Sie hier Ihre pers&ouml;nlichen Einstellungen fest:<BR>
 	<FORM name = 'pwd' method = post action = 'save_pwd1.php'>
-	<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:solid;padding:0px;margin-top:6px;margin-bottom:0px;
+	<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:none;padding:0px;margin-top:6px;margin-bottom:0px;
     	text-align:center;'>
-	<TR id='kat'>
-		<TD id='kat1' style='background-color:#ff9900;height:10px' colspan = '3'>
-		</TD>
+	<TR id='kat' style='height:3px;'>
+		<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
 	</TR>
 	
-	<TR id='kat'>
+	<TR id='normal'>
 		<TD id='kat1' colspan='3'>Passwort &auml;ndern</TD>
 	</TR>
 	
@@ -89,17 +88,16 @@ echo "
 		<TD id='kat1' colspan='2'><input type='password' name='new_pwd_2' style='width:200px;'</TD>
 	</TR>
 	
-	<TR id='kat'>
-		<TD id='kat1' colspan='3'></TD>
+	<TR id='normal' style='height:10px;>
+		<TD id='normal' colspan='3'></TD>
 	</TR>
 	
 	<TR id='kat'>
 		<TD id='kat1' colspan='3' style='text-align:center;'><INPUT type=\"submit\" value=\"Speichern\" style='margin-right:20px;'><INPUT type=\"button\" value=\"Abbrechen\" onClick=\"javascript:history.back()\"></TD>
 	</TR>
 	
-	<TR id='kat'>
-		<TD id='kat1' style='background-color:#ff9900;height:10px' colspan = '3'>
-		</TD>
+	<TR id='kat' style='height:3px;'>
+		<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
 	</TR>
 	
 	</TABLE>
