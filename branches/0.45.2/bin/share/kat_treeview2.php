@@ -9,11 +9,11 @@ include '../share/global_config.php';
 	INCLUDE 'global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 /*
-----------------------------------------------------------------------------------------	
-|											|
+---------------------------------------------------------------------------------
+|																				|
 |	Datei wird zur Darstellung des kompletten Kategorien-Baumes verwendet		|
-|											|
----------------------------------------------------------------------------------------	
+|																				|
+---------------------------------------------------------------------------------
 */
 
 $bg_color = 0;
@@ -42,7 +42,7 @@ $bg_color = 0;
 		break;
 		
 		CASE 'complete_view':
-			//zunächst werden alle Knotenelemente des Baumes ermittelt:
+			//zunï¿½chst werden alle Knotenelemente des Baumes ermittelt:
 			$res1 = mysql_query("SELECT * FROM $table4");
 			$num1 = mysql_num_rows($res1);
 			FOR ($i1=0; $i1<$num1; $i1++)
@@ -184,7 +184,7 @@ $bg_color = 0;
 			break;
 		}
 		
-		//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+		//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{
