@@ -284,8 +284,9 @@ echo "<div class='page'>
 			</TR>
 			
 			<TR class='normal'>
-			<TD class='normal' align='center' style='height:50px;' colspan='10'>
-			<span style='color:#b01111; font-size:18px; font-weight:bold; text-decoration:underline;'>Informationen zum Datenbestand:</span>
+			<TD class='normal' align='center' style='height:50px;' colspan='3'></TD>
+			<TD class='normal' align='center' style='height:50px;' colspan='7'>
+			<p id='kopf' style='color:RGB(80,80,80); text-align:left; padding-left:0px;'>Informationen zum Datenbestand:</p>
 			</TD>
 			</TR>
 			
@@ -563,7 +564,7 @@ echo "<div class='page'>
 	</div>
 	<br style='clear:both;' />
 
-	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
 </div>
 </DIV>
