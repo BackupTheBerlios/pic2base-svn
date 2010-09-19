@@ -238,7 +238,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung)
 	{
 		list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	}
-	//echo "Modus: ".$modus."User: ".$c_username."<BR>";
+	//echo "Modus: ".$modus.", User: ".$c_username."<BR>";
 	
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
@@ -263,27 +263,107 @@ function getNumberOfPictures($kat_id, $modus, $bewertung)
 	{
 		IF($modus == 'edit')
 		{
-			$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id FROM $table10 INNER JOIN $table2 ON $table10.kat_id = '$kat_nr' AND $table10.pic_id = $table2.pic_id AND $table2.Owner = '$id'");
+			//abhaengig von der Berechtigung wird die Anzahl der Bilder ermittelt:
+			IF(hasPermission($c_username, 'editallpics'))
+			{
+				//Sonderfall Neuzugaenge: hier wird nur die Anz. der noch nicht kategorisierten Bilder ermittelt:
+				$result3 = mysql_query("SELECT * FROM $table4 WHERE kat_id = '$kat_nr'");
+				$parent = mysql_result($result3, isset($i3), 'parent');
+				IF($parent == '0')
+				{
+					//es handelt sich um die oberste Kategorie (Neuzugenge)
+					$result2 = mysql_query("SELECT * 
+					FROM $table2 
+					WHERE has_kat = '0'");
+				}
+				ELSE
+				{
+					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+					FROM $table10 INNER JOIN $table2 
+					ON $table10.kat_id = '$kat_nr' 
+					AND $table10.pic_id = $table2.pic_id");
+				}
+				
+			}
+			ELSEIF(hasPermission($c_username, 'editmypics'))
+			{
+				//Sonderfall Neuzugaenge: hier wird nur die Anz. der noch nicht kategorisierten Bilder ermittelt:
+				$result3 = mysql_query("SELECT * FROM $table4 WHERE kat_id = '$kat_nr'");
+				$parent = mysql_result($result3, isset($i3), 'parent');
+				IF($parent == '0')
+				{
+					//es handelt sich um die oberste Kategorie (Neuzugenge)
+					$result2 = mysql_query("SELECT * 
+					FROM $table2 
+					WHERE has_kat = '0'
+					AND Owner = '$id'");
+				}
+				ELSE
+				{
+					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+					FROM $table10 INNER JOIN $table2 
+					ON $table10.kat_id = '$kat_nr' 
+					AND $table10.pic_id = $table2.pic_id 
+					AND $table2.Owner = '$id'");
+				}
+			}
 			echo mysql_error();
 			$nop = mysql_num_rows($result2);
 		}
-		ELSE
+		ELSEIF($modus == 'recherche')
 		{
 			$stat = createStatement($bewertung);
 			IF($bewertung !== '6')
 			{
-				$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id FROM $table10 INNER JOIN $table2 ON ($table10.kat_id = '$kat_nr' AND $table10.pic_id = $table2.pic_id AND $stat)");
-				echo mysql_error();
-				$nop = mysql_num_rows($result2);
+				//Sonderfall Neuzugaenge: hier wird nur die Anz. der noch nicht kategorisierten Bilder ermittelt:
+				$result3 = mysql_query("SELECT * FROM $table4 WHERE kat_id = '$kat_nr'");
+				$parent = mysql_result($result3, isset($i3), 'parent');
+				IF($parent == '0')
+				{
+					//es handelt sich um die oberste Kategorie (Neuzugenge)
+					$result2 = mysql_query("SELECT * 
+					FROM $table2 
+					WHERE has_kat = '0' 
+					AND $stat");
+					//echo mysql_error();
+					//$nop = mysql_num_rows($result2);
+				}
+				ELSE
+				{
+					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+					FROM $table10 INNER JOIN $table2 
+					ON ($table10.kat_id = '$kat_nr' 
+					AND $table10.pic_id = $table2.pic_id 
+					AND $stat)");
+					//echo mysql_error();
+					//$nop = mysql_num_rows($result2);
+				}
 			}
 			ELSE
 			{
-				$result2 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$kat_nr'");
-				$num2 = mysql_num_rows($result2);
-				$nop = $nop + $num2;
+				//Sonderfall Neuzugaenge: hier wird nur die Anz. der noch nicht kategorisierten Bilder ermittelt:
+				$result3 = mysql_query("SELECT * FROM $table4 WHERE kat_id = '$kat_nr'");
+				$parent = mysql_result($result3, isset($i3), 'parent');
+				IF($parent == '0')
+				{
+					//es handelt sich um die oberste Kategorie (Neuzugenge)
+					$result2 = mysql_query("SELECT * 
+					FROM $table2 
+					WHERE has_kat = '0' ");
+					//echo mysql_error();
+					//$nop = mysql_num_rows($result2);
+				}
+				ELSE
+				{
+					$result2 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$kat_nr'");
+					//$num2 = mysql_num_rows($result2);
+					//$nop = $nop + $num2;
+					//$nop = mysql_num_rows($result2);
+				}
 			}
+			echo mysql_error();
+			$nop = mysql_num_rows($result2);
 		}
-		
 	}
 	return $nop;	
 }
@@ -327,108 +407,127 @@ function createNavi0($c_username)
 	//Navigationsstruktur der Startseite
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
 	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
+		
+		//Pruefung, ob Rechte auf log, images und userdata korrekt gesetzt sind (700 oder 770 fuer Entwicklung):
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/log/" ) );
+		//echo $mod."<BR>";
+		//echo substr($mod,-3)."<BR>";
+		IF(!isset($text))
 		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			
-			//Pruefung, ob Rechte auf log, images und userdata korrekt gesetzt sind (700 oder 770 fuer Entwicklung):
-
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/log/" ) );
-			//echo $mod."<BR>";
-			//echo substr($mod,-3)."<BR>";
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /log falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/userdata/" ) );
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /userdata falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/" ) );
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /images falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/" ) );
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /originale falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/rotated" ) );
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /rotated falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/" ) );
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /vorschau falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/hq-preview/" ) );
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /hq-preview falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/thumbs" ) );
-			IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
-			{
-				echo "FEHLER! Recht auf /thumbs falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
-			}
-			clearstatcache();
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
-			break;
-			
-			CASE '23':
-			$navigation .= "<a class='navi_blind'></a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
-			break;
+			$text = '';
 		}
-		$perm_id_arr[] = $perm_id;
+		
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /log falsch gesetzt! Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/userdata/" ) );
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /userdata falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/images/" ) );
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /images falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/" ) );
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /originale falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/images/originale/rotated" ) );
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /rotated falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/" ) );
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /vorschau falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/hq-preview/" ) );
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /hq-preview falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+		$mod = decoct ( fileperms ( $p2b_path."pic2base/images/vorschau/thumbs" ) );
+		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
+		{
+			$text .= "FEHLER! Recht auf /thumbs falsch gesetzt!<BR>Soll: 700; Ist: ".substr($mod,-3);
+		}
+		clearstatcache();
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+		$text = '';
 	}
 	
-	$navigation .= "<a class='navi_blind'></a>
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
+	$navigation .= "<a class='navi_blind'></a>";
+	IF($text !== '')
+	{
+		$navigation .= "<a class='navi' href='#' title='$text'>Hinweis</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_blind'></a>";
+	}
+	$navigation .= "	<a class='navi_blind' href='$inst_path/pic2base/bin/html/start.php'>Startseite</a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=0' title='Online-Hilfe aufrufen'>Hilfe</a>
 			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	
-	echo $navigation."<BR>
-	<p>
-	<a href='http://jigsaw.w3.org/css-validator/check/referer'>
-	    <img style='position:relative;border:0;width:88px;height:31px;margin-top:410px;left:5px''
-	        src='http://jigsaw.w3.org/css-validator/images/vcss-blue'
-	        alt='CSS ist valide!' />
-	</a>
-	</p>";
+	echo $navigation;
 }
 
 function createNavi1($c_username)
@@ -436,41 +535,57 @@ function createNavi1($c_username)
 	//Navigationsstruktur der Erfassungs-Startseite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
+	include $sr.'/bin/share/functions/permissions.php';
 	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi_blind'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
-			break;
-		}
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
 	$navigation .= "<a class='navi_blind'></a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=1'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=1' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
 
@@ -479,41 +594,56 @@ function createNavi2($c_username)
 	//Navigationsstruktur der Recherche-Startseite (recherche0.php)
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
-	if(!isset($navigation))
+if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi_blind'>Suche</a>";
-			break;
-		}
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
 	$navigation .= "<a class='navi_blind'></a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
 
@@ -522,52 +652,72 @@ function createNavi2_1($c_username)
 	//Navigationsstruktur der Recherche-Unter-Seite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
+	include $sr.'/bin/share/functions/permissions.php';
 	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi_blind'>Suche</a>";
-			break;
-		}
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
 	$navigation .= "<a class='navi' href='recherche0.php'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
-
+/*
 function createNavi2_2($c_username, $mod)
 {
-	//Navigationsstruktur der Seite 'bearbeitung1.php' (Suche �ber EXIF-Daten)
+	//Navigationsstruktur der Seite 'bearbeitung1.php' (Suche ueber EXIF-Daten)
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
+	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id DESC");
 	$num2 = mysql_num_rows($result2);
 	if(!isset($navigation))
 	{
@@ -578,19 +728,19 @@ function createNavi2_2($c_username, $mod)
 		$perm_id = mysql_result($result2, $i2, 'permission_id');
 		SWITCH($perm_id)
 		{
-			CASE '1':
+			CASE '999':
 			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 			break;
 			
-			CASE '2':
+			CASE '799':
 			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
 			break;
 			
-			CASE '19':
+			CASE '629':
 			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
 			break;
 			
-			CASE '20':
+			CASE '100':
 			$navigation .= "<a class='navi_blind'>Suche</a>";
 			break;
 		}
@@ -599,50 +749,66 @@ function createNavi2_2($c_username, $mod)
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
-
+*/
 function createNavi3($c_username)
 {
 	//Navigationsstruktur der Edit-Startseite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
-	if(!isset($navigation))
+	include $sr.'/bin/share/functions/permissions.php';
+if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi_blind'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
-			break;
-		}
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
 	$navigation .= "<a class='navi_blind'></a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=3'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=3' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
 
@@ -651,41 +817,61 @@ function createNavi3_1($c_username)
 	//Navigationsstruktur der Edit-Unter-Seite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
+	include $sr.'/bin/share/functions/permissions.php';
 	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi_blind'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
-			break;
-		}
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
 	$navigation .= "<a class='navi' href='edit_start.php'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=4'>Hilfe</a>
- 			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=4' title='Online-Hilfe aufrufen'>Hilfe</a>
+ 			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
 
@@ -694,45 +880,61 @@ function createNavi4_1($c_username)
 	//Navigationsstruktur der Hilfe-Seite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
-	if(!isset($navigation))
+	include $sr.'/bin/share/functions/permissions.php';
+if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
-			break;
-		}
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
-	if(!isset($navigation))
+	ELSE
 	{
-		$navigation = '';
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
+	
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
 	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
 			<a class='navi_blind'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
 
@@ -741,41 +943,124 @@ function createNavi5($c_username)
 	//Navigationsstruktur der Einstellungs-Seite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id");
-	$num2 = mysql_num_rows($result2);
+include $sr.'/bin/share/functions/permissions.php';
 	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	FOR($i2=0; $i2<$num2; $i2++)
+	IF(hasPermission($c_username, 'adminlogin'))
 	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '1':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '2':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
-			break;
-			
-			CASE '19':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
-			break;
-			
-			CASE '20':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php'>Suche</a>";
-			break;
-		}
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy'>Administration</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
 	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
-			<a class='navi_blind'>Einstellungen</a>
+			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=6'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=6' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
+	echo $navigation;
+}
+
+function createNavi6($c_username)
+{
+	//Navigationsstruktur der Log-Datei-Seite
+	include '../bin/share/global_config.php';
+	//include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
+	if(!isset($navigation))
+	{
+		$navigation = '';
+	}
+	IF(hasPermission($c_username, 'adminlogin'))
+	{
+		$navigation = "<a class='navi_blind' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmyprofile'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'editmypics'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($c_username, 'searchpic'))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
+	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=6' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
 	echo $navigation;
 }
 
