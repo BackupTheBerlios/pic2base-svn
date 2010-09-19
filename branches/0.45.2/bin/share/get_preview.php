@@ -45,7 +45,6 @@ IF(array_key_exists('jump', $_GET))
 	$jump = $_GET['jump'];
 }
 
-
 $N = '';
 
 if(array_key_exists('ID',$_GET))
@@ -182,7 +181,7 @@ $fs_hoehe = '80';
 //########################################################################################################################
 //Darstellung der zu einer Kategorie zugehoerigen Bilder:
 include 'db_connect1.php';
-include 'functions/permissions.php';
+//include 'functions/permissions.php';
 
 unset($c_username);
 IF ($_COOKIE['login'])
@@ -195,6 +194,7 @@ $user_id = mysql_result($result15, isset($i15), 'id');
 
 include 'global_config.php';
 include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/permissions.php';
 
 $server_url = "http://{$_SERVER['SERVER_NAME']}$inst_path";
 
@@ -338,12 +338,23 @@ SWITCH ($modus)
 //################################################################################################################
 		default:
 		//gueltig fuer alle Kategorien ausser Wurzel:
-		$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND $table2.Owner = '$user_id' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+		//abhaengig von der Berechtigung werden die in Frage kommenden Bilder dargestellt:
+
+		IF(hasPermission($c_username, 'editallpics'))
+		{
+			$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 
+			WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+		}
+		ELSEIF(hasPermission($c_username, 'editmypics'))
+		{
+			$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 
+			WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND $table2.Owner = '$user_id' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+		}
 		//echo mysql_error();
 		$num2 = mysql_num_rows($result2);
 		IF ($num2 == '0')
 		{
-			echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die den gew&auml;hlten Kategorie zugewiesen wurden!</p>";
+			echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die den gew&auml;hlten Kategorien zugewiesen wurden!</p>";
 			return;
 		}
 		ELSE
@@ -423,8 +434,8 @@ SWITCH ($modus)
 				{
 					$pic_id = mysql_result($result2, $i2, 'pic_id');
 					echo "	<TD align='center'>
-						<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
-						</TD>";
+							<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
+							</TD>";
 				}
 				break;
 				
@@ -433,9 +444,11 @@ SWITCH ($modus)
 				FOR ($i2=0; $i2<$num2; $i2++)
 				{
 					$pic_id = mysql_result($result2, $i2, 'pic_id');
-					echo "	<TD align='center'><div id = 'star_set$pic_id'>";
-						showStars($pic_id);
-					echo "</div></TD>";
+					echo "	<TD align='center'>
+							<div id = 'star_set$pic_id'>";
+							showStars($pic_id);
+					echo "	</div>
+							</TD>";
 				}
 				break;
 			}
@@ -1638,7 +1651,7 @@ SWITCH ($modus)
 		//echo "Z 1594; Num 6-1: ".$num6_1.", Num 8: ".$num8."<BR>";
 		echo $text1.$zusatz."	
 		<TABLE border='0' align='center' width='780px'>
-		<TR style='background-color:#000055;' >";
+		<TR style='background-color:RGB(120,120,120,);' >";
 		$rest = $step - $num6; //wenn weniger als $step Bilder gefunden wurden: Anzahl der aufzufuellenden Zellen
 		//echo $rest;
 		FOR ($i6=0; $i6<$num6; $i6++)
