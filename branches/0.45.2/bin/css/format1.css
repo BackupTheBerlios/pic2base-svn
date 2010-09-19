@@ -1,14 +1,14 @@
 body {
     /*background-color:#110011;*/
-    background-color:#b2b2b2;	/*18% Grau*/
+    /*Original:*/
+    /*background-color:#b2b2b2;*/	/*18% Grau*/
+    background-color:RGB(46,46,46);
     font-family:Verdana;
     text-align:center;
     color: #000000;
   }
 
 /*Ueberschriften:*/
-
-
 
 h1 {
     font-size:16pt;
@@ -19,17 +19,14 @@ h1 {
     color:#FFFFFF;
   }
 
-
 h2 {
     font-size:24pt;
     font-family:Helvitica,Arial;
     text-align:center;
   }
 
-
 h3 {
   }
-
 
 h4 {
   }
@@ -50,11 +47,6 @@ hr {
   }
 
 /*Absaetze:*/
-
-
-
-
-
 
 p {
     font-family:Helvitica,Arial;
@@ -132,15 +124,19 @@ p.big18 {
   
 p#kopf {
 	font-size: 150.01%;	
-	background-image:url(../share/images/verlauf4.gif); background-repeat:repeat-x;	
+	/*background-image:url(../share/images/verlauf4.gif); background-repeat:repeat-x;*/
+	background-color:RGB(120,120,120,);	
 	padding: 7px;
 	margin: 0px;
 	text-align: left;
+	color:#eeeeee;
 	}
 	
 p#fuss {
 	font-size: 75.01%;		
-	background-image:url(../share/images/verlauf3.gif); background-repeat:repeat-x;	
+	/*background-image:url(../share/images/verlauf3.gif); background-repeat:repeat-x;*/
+	color:#eeeeee;
+	background-color:RGB(120,120,120,);		
 	padding: 13px;
 	margin: 0px;
 	text-align: right;
@@ -170,8 +166,6 @@ p#fuss0 {
 
 /*Zelleninhalte und Bereiche werden in 8pt dargestellt*/
 
-
-
 div.mini TD {
     font-size:8pt;
     font-family:Helvitica,Arial;
@@ -179,9 +173,8 @@ div.mini TD {
     margin-bottom:1px;
   }
 
+
 /*Zelleninhalte und Bereiche werden in 10pt dargestellt*/
-
-
 
 div.klein {
     font-size:10pt;
@@ -191,8 +184,6 @@ div.klein {
   }
 
 /*Tabellen:*/
-
-
 
 TD.normal {
     font-size:10pt;
@@ -209,7 +200,6 @@ TD.normal_left {
     text-align:left
   }
 
-
 TR.normal {
     height:11pt;
   }
@@ -222,6 +212,7 @@ TABLE.normal {
     padding:0px;
     margin:0px;
   }
+  
   
 /*Tabelle fuer Kategorie-Verwaltung*/
   
@@ -330,7 +321,7 @@ TABLE#geo {
     	text-align:center;
   	}
   	
-/*Tabelle fuer Desription-Recherche*/
+/*Tabelle fuer Description-Recherche*/
   
 TD#desc {
   	width: 360px;
@@ -434,8 +425,6 @@ TABLE.liste2 {
 
 /*Formatierung fuer Textfelder*/
 
-
-
 .Feld {
     background-color:#FFFFFF;
     font-family: Arial, Helvetica, sans-serif;
@@ -470,8 +459,6 @@ TABLE.liste2 {
 
 /*Formatierung fuer Auswahlfelder*/
  
-
-
 .Auswahl {
     background-color:#FFFFFF;
     font-family: Arial, Helvetica, sans-serif;
@@ -516,8 +503,6 @@ TABLE.liste2 {
 
 /*Formatierungen fuer Buttons*/
 
-
-
 .button1 {
     font-family: Arial, Helvetica, sans-serif;
     font-size:10pt;
@@ -547,7 +532,8 @@ TABLE.liste2 {
 a.navi {
     display:block;
     padding:2px;
-    background-color:#737994;
+    /*background-color:#737994;*/
+    background-color:RGB(120,120,120);
     text-align:center;
     vertical-align:top;
     font-size:12px;
@@ -560,7 +546,8 @@ a.navi {
 
 
 a.navi:hover {
-    color:#737994;
+    /*color:#737994;*/
+    color:RGB(120,120,120);
     background-color:#eeeeee;
   }
   
@@ -569,7 +556,8 @@ a.navi:hover {
 a.navi_blind {
     display:block;
     padding:2px;
-    background-color:#737994;
+    /*background-color:#737994;*/
+    background-color:RGB(120,120,120);
     text-align:center;
     font-size:12px;
     font-weight:normal;
@@ -578,11 +566,12 @@ a.navi_blind {
     height:16px;
     width: 100px;
   }
-  
+ /*fuer inaktive Navigations-Links:*/
 a.navi_dummy {
     display:block;
     padding:2px;
-    background-color:#737994;
+    /*background-color:#737994;*/
+    background-color:RGB(120,120,120);
     text-align:center;
     font-size:12px;
     font-weight:bold;
@@ -595,7 +584,8 @@ a.navi_dummy {
 a.subnavi {
     display:block;
     padding:2px;
-    background-color:#737994;
+    /*background-color:#737994;*/
+    background-color:RGB(120,120,120);
     text-align:center;
     font-size:12px;
     font-weight:bold;
@@ -606,14 +596,16 @@ a.subnavi {
   }
   
 a.subnavi:hover {
-    color:#737994;
+    /*color:#737994;*/
+    color:RGB(120,120,120);
     background-color:#eeeeee;
   }
   
 a.subnavi_blind {
     display:block;
     padding:2px;
-    background-color:#737994;
+    /*background-color:#737994;*/
+    background-color:RGB(120,120,120);
     text-align:center;
     font-size:12px;
     font-weight:normal;
@@ -633,15 +625,22 @@ a#std:hover
 	{
 	color: blue;
 	}
+	
 
+/*####################################################*/
+/* Seitenformatierungen*/
 
 div.page {
     width:950px;
     height:700px;
     margin:0px auto;
     text-align:left;
-    background-color:#bdbec6;
-    border:1px solid #000000;
+    /*original*/
+    /*background-color:#bdbec6;*/
+    background-color:RGB(80,80,80);
+    /*original*/
+    /*border:1px solid #000000;*/
+    border:1px solid #888888;
   }
 
 /*
@@ -667,7 +666,8 @@ div.menucontainer1 {
 div.navi {
     background-color:transparent;
     /*background-color:#ff00ff;*/
-    padding:5px;
+    padding-right:5px;
+    padding-left:5px;
     width:104px;
     height: 612px;
     float:left;
@@ -677,7 +677,7 @@ div.navi {
 
 
 div.content {
-    	margin-left: 0px;
+    margin-left: 0px;
   	padding: 5px;
 	background-color:#efeff7;
   	border:1px solid #efeff7;
@@ -711,7 +711,7 @@ div#spalte1 {
   	border-right:1px solid #000000;
 	float:left;
 	height:617px;
-  	width: 411px; 
+  	width: 414px; /*FF ok; IE 411?*/
 	overflow: auto;
 	text-align: center;
 	}
@@ -735,7 +735,7 @@ div#spalte1F {
   	border-right:1px solid #000000;
 	float:left;
 	height:460px;
-  	width: 411px; 
+  	width: 414px; /*FF ok; IE 411?*/
 	overflow: auto;
 	}
 
