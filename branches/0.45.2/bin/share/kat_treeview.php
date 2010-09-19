@@ -16,6 +16,7 @@ include '../share/global_config.php';
 	//Datei wird zur Navigation durch die Kategorien mit Hilfe einer Baumstruktur verwendet
 	//$ziel = $target_url;
 	//echo $base_file;
+	//echo $modus;
 	//Erzeugung der Baumstruktur:
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -189,7 +190,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 		{
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR id='kat'>
-				<TD id='kat1'>";
+					<TD id='kat1'>";
 			IF(!isset($space))
 			{
 				$space = '';
@@ -212,7 +213,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0)'>".$sel_all."</SPAN>
 				</TD>
 				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung)."</TD>";
-			getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
+				getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
 		}
 		ELSE
 		{
