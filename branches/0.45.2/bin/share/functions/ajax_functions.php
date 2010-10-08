@@ -251,7 +251,7 @@ function magnifyPic(pic_id)
 
 function getDetails(pic_id, base_file, mod, form_name)
 {
-	//alert("�bergebener Parameter: " + pic_id);
+	//alert("uebergebener Parameter: " + pic_id);
 	var url = '../../share/get_details.php';
 	var params = 'pic_id=' + pic_id + '&base_file=' + base_file + '&mod=' + mod + '&form_name=' + form_name;
 	//alert("Parameter: "+params);
@@ -289,8 +289,8 @@ function getGeoPreview2(ort, radius2, einheit2, mod, modus, base_file, form_name
 function getDescPreview1(desc1, bed1, desc2, bed2, desc3, bed3, desc4, bed4, desc5, mod, modus, base_file, bewertung, position, jump)
 {
 	var url = '../../share/get_preview.php';
-	var params ='desc1=' + desc1 + '&bed1=' + bed1 + '&desc2=' + desc2 + '&bed2=' + bed2 + '&desc3=' + desc3 + '&bed3=' + bed3 + '&desc4=' + desc4 + '&bed4=' + bed4 + '&desc5=' + desc5 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
-	//alert("Parameter: "+params);
+	//var params ='desc1=' + desc1 + '&bed1=' + bed1 + '&desc2=' + desc2 + '&bed2=' + bed2 + '&desc3=' + desc3 + '&bed3=' + bed3 + '&desc4=' + desc4 + '&bed4=' + bed4 + '&desc5=' + desc5 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
+	alert("Parameter: "+params);
 	var target = 'filmstreifen';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
