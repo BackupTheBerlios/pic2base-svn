@@ -872,11 +872,11 @@ SWITCH ($modus)
 //###################################################################################
 		CASE 'desc':
 		//Bereinigung der Text-Eingabe-Felder:
-		$desc1 = strip_tags($desc1);
-		$desc2 = strip_tags($desc2);
-		$desc3 = strip_tags($desc3);
-		$desc4 = strip_tags($desc4);
-		$desc5 = strip_tags($desc5);
+		$desc1 = utf8_decode(strip_tags($desc1));
+		$desc2 = utf8_decode(strip_tags($desc2));
+		$desc3 = utf8_decode(strip_tags($desc3));
+		$desc4 = utf8_decode(strip_tags($desc4));
+		$desc5 = utf8_decode(strip_tags($desc5));
 		
 		//Montage des SQL-Statements:
 		$statement = 'SELECT '.$table2.'.*, '.$table14.'.* FROM '.$table2.', '.$table14.' WHERE '.$table2.'.pic_id = '.$table14.'.pic_id AND ('.$table14.'.Caption_Abstract LIKE ';
@@ -972,7 +972,7 @@ SWITCH ($modus)
 			IF($bewertung !== '6')
 			{
 				//Bewertungskriterium wird in Vergleichsoperator und Wert zerlegt:
-				//Gr��er-Zeichen bedeutet: Der Notenwert ist h�her, d.h die Note ist schlechter!
+				//Groesser-Zeichen bedeutet: Der Notenwert ist hoeher, d.h die Note ist schlechter!
 				
 				$op = substr($bewertung,0,strlen($bewertung) - 1);
 				IF($op == '<=')
