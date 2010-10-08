@@ -21,7 +21,7 @@ include '../share/global_config.php';
 <body style='background-color:#999999'>
 
 <?php
-//skript speichert die geänderten Meta-Daten in die exif_data-Tabelle und in das betreffende Bild
+//skript speichert die geaenderten Meta-Daten in die exif_data-Tabelle und in das betreffende Bild
 IF(array_key_exists('pic_id', $_POST))
 {
 	$pic_id = $_POST['pic_id'];
@@ -34,11 +34,11 @@ $FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 
 FOREACH($_POST AS $key => $value)
 {
-	//Festlegung: Kleinschreibung: Original-Werte; Großschreibung: formatierte Werte
-	//Kontrolle, ob ein Datum geändert werden soll:
+	//Festlegung: Kleinschreibung: Original-Werte; Grossschreibung: formatierte Werte
+	//Kontrolle, ob ein Datum geaendert werden soll:
 	IF(stristr($key,'date'))
 	{
-		//um das Datum in ein gültiges Format zu wandeln, müssen die Doppelpunkte im Datum ersetzt werden:
+		//um das Datum in ein gueltiges Format zu wandeln, muessen die Doppelpunkte im Datum ersetzt werden:
 		$VAL = explode(" ",$value);
 		$VALUE = str_replace(":","-",$VAL[0])." ".$VAL[1];
 		$KEY = $key;
