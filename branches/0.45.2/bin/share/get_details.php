@@ -34,7 +34,7 @@ if(array_key_exists('base_file',$_GET))
 }
 
 //Darstellung der Detailangaben zum gewaehlten Bild:
-//echo "Bild-ID: ".$pic_id."<BR>";
+//echo "Bild-ID: ".$pic_id."<BR>BaseFile: ".$base_file."<BR>";
 IF ($pic_id !=='0')
 {
 	//$result8 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
