@@ -11,10 +11,11 @@ include '../../share/global_config.php';
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Datensatz-Recherche</TITLE>
+	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
@@ -27,7 +28,7 @@ include '../../share/global_config.php';
 <!--
 function showAllDetails(mod, pic_id)
 {
-Fenster1 = window.open('../../share/details.php?pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
+Fenster1 = window.open('../../share/details.php?view=kompact&pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
 Fenster1.focus();
 }
 
