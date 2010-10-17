@@ -33,8 +33,8 @@ if ( array_key_exists('pic_id',$_GET) )
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
-
-if (hasPermission($c_username, 'deletepic'))
+//nicht ganz sauber, aber die eigentliche Rechtekontrolle erfolgt eh schon einen Schritt vorher:
+if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'deleteallpics')) 
 {
 	//echo "Datei l&ouml;schen??"
 	$datei_ori = $pic_path."/".$FileName;
