@@ -25,6 +25,7 @@ include '../share/global_config.php';
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/permissions.php';
 //$pic_id = '10';
 
 if( array_key_exists('pic_id',$_GET) )
@@ -425,7 +426,11 @@ echo "
 		</TD>
 	</TR>";
 	//echo count($writable_fields);
-	IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username AND $ed !== '')
+	//IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username AND $ed !== '')
+	IF(($editable == '1' OR count(isset($writable_fields)) > 0) 
+	AND (($u_name == $c_username AND hasPermission($c_username, 'editmypics'))
+	OR ($u_name !== $c_username AND hasPermission($c_username, 'editallpics'))) 
+	AND $ed !== '')
 	{
 		echo "
 		<TR class='normal'>
