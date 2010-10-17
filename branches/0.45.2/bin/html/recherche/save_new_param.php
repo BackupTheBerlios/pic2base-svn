@@ -71,7 +71,7 @@ IF($loc_id == '' AND $ort == '' AND $location == '')
 //es gab bereits eine Referenzierung, dann wird diese aktualisiert:  ############################################
 ELSEIF(($loc_id !== '' AND $loc_id !== '0') AND $ort !== '' AND $location !== '')
 {
-	echo "<center>Bitte warten,<BR>&Auml;nderungen werden gespeichert...<BR></center>";
+	echo "<p><center>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</center></p>";
 	flush();
 	$result01 = mysql_query( "SELECT location FROM $table12 WHERE loc_id = '$loc_id'");
 	$ort_alt = mysql_result($result01,0, 'location');
@@ -86,7 +86,7 @@ ELSEIF(($loc_id !== '' AND $loc_id !== '0') AND $ort !== '' AND $location !== ''
 //es gab bisher KEINE Referenzierung und es wird eine neue hinzugefuegt;  #########################################
 ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 {
-	echo "<center>Bitte warten,<BR>&Auml;nderungen werden gespeichert...</center>";
+	echo "<p><center>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</center></p>";
 	flush();
 	$ort_alt = '';
 	$result1 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude, location) VALUES ('$long', '$lat', '$ele', '$ort')");
@@ -129,10 +129,11 @@ IF($ort_alt !== $ort)
 IF (mysql_error() == '')
 {
 	//fuer Testzwecke haelt der Parameter das Karten-Fenster offen...
-	echo "Bilddaten wurden aktualisiert<BR>";
+	echo "<p><center>Die Bilddaten wurden aktualisiert</center></p>";
 	
 	flush(0);
 	sleep(0);	
+	
 	echo "<script language='JavaScript'>
 	anotherWindow = window.open('', 'Karte', '');
 	if (anotherWindow != null)
@@ -141,6 +142,7 @@ IF (mysql_error() == '')
 	}
 	window.close('Speicherung2');
 	</script>";
+	
 }
 ELSE
 {
