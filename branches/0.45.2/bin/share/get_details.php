@@ -343,27 +343,26 @@ IF ($pic_id !=='0')
 		}
 		
 		//Bild kann nachtraeglich mit neuen Parametern eingelesen werden, wenn es sich um ein RAW-Format handelt:
+		//welche RAW-Formate werden unterstuetzt?
+		$supp_rawformats = array_diff($supported_filetypes, $supported_extensions);
+		//print_r($supp_rawformats);
 		$ext = strtolower(substr($FileNameOri,-3,3));
-		IF($Owner == $c_username AND ((hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic'))) AND $ext == 'nef')
+		IF(($Owner == $c_username AND (hasPermission($c_username, 'editmypics')) 
+		OR ($Owner !== $c_username AND (hasPermission($c_username, 'editallpics')))) 
+		AND in_array($ext, $supp_rawformats))
 		{
-			$symb3 = "<SPAN style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/reload.png\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Vorschaubilder mit neuen Parametern einlesen\" onClick=\"reloadPreviews('$pic_id', '$c_username')\" /></SPAN>";
+			$symb3 = "<SPAN style='cursor:pointer;'>
+			<img src=\"$inst_path/pic2base/bin/share/images/reload.png\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Vorschaubilder mit neuen Parametern einlesen\" onClick=\"reloadPreviews('$pic_id', '$c_username')\" />
+			</SPAN>";
 		}
 		ELSE
 		{
-			$symb3 = "<BR>";
+			$symb3 = "<SPAN style='cursor:pointer;'>
+			<img src=\"$inst_path/pic2base/bin/share/images/no_reload.png\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"kein NIKON-RAW-Format!\" />
+			</SPAN>";
 		}
-		/*
-		//Wenn der angemeldete User Admin-Rechte hat, werden die Icons zum loeschen bzw. aufheben der Geo-Referenzierung angezeigt. Anderenfalls nur das Icon fuer den Download.
-		IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'deletepic')))
-		{
-			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
-		}
-		ELSE
-		{
-			$symb2 = "<BR>";
-		}
-		*/
-		//wenn der User Bilder loeschen darf, wird das trash-Icon angezeigt:
+		
+		//wenn der User Bilder loeschen darf, wird das Trash-Icon angezeigt:
 		IF($Owner == $c_username AND (hasPermission($c_username, 'deletemypics')) OR ($Owner !== $c_username AND (hasPermission($c_username, 'deleteallpics'))))
 		{
 			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
@@ -414,11 +413,15 @@ IF ($pic_id !=='0')
 		</TR>
 		
 		</TABLE>";
-		IF($Owner == $c_username)
+		IF($Owner == $c_username AND hasPermission($c_username, 'editmypics')
+		OR $Owner !== $c_username AND hasPermission($c_username, 'editallpics'))
 		{
 			//saveChanges ist in ajax_functions.php:
 			echo "<CENTER><input type=button value=\"&Auml;nderungen speichern\" OnClick='saveChanges(\"$pic_id\", beschr.description.value, beschr.aufn_dat.value)'></CENTER>";
-			
+		}
+		ELSE
+		{
+			echo "<span style='color:grey; font-size:10px;'><center>Sie haben keine Berechtigung, die Bildbeschreibung zu &auml;ndern.</center></span>";
 		}
 		echo "
 		</FORM>
