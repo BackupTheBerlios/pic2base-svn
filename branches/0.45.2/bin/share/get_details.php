@@ -243,7 +243,9 @@ IF ($pic_id !=='0')
 		}
 		ELSE
 		{
-			echo "<TD id='detail6'><BR>";
+			echo "<TD id='detail6'><span style='cursor:pointer;'>
+			<img src=\"$inst_path/pic2base/bin/share/images/no_change_owner.gif\" width='30' height='15' border='0' title='keine Berechtigung' />
+			</span>";
 		}
 		
 		echo "
@@ -298,7 +300,9 @@ IF ($pic_id !=='0')
 			$longitude = mysql_result($result12,isset($i12), 'longitude');
 			$latitude = mysql_result($result12,isset($i12), 'latitude');
 			$altitude = mysql_result($result12,isset($i12), 'altitude');
-			echo "<TD id='detail6'><span style='cursor:pointer;'><img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude, $longitude)\"/></span>";
+			echo "<TD id='detail6'><span style='cursor:pointer;'>
+			<img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude, $longitude)\"/>
+			</span>";
 		}
 		ELSE
 		{
@@ -307,11 +311,15 @@ IF ($pic_id !=='0')
 			@$altitude2 = mysql_result($result11,isset($i11), 'GPSAltitude');
 			IF(($longitude2 == "") OR ($latitude2 == ""))
 			{
-				echo "<TD id='detail6'><BR>";
+				echo "<TD id='detail6'><span style='cursor:pointer;'>
+				<img src='$inst_path/pic2base/bin/share/images/no_googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='keine Geo-Informationen' />
+				</span>";
 			}
 			ELSE
 			{
-				echo "<TD id='detail6'><span style='cursor:pointer;'><img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude2, $longitude2)\"/></span>";
+				echo "<TD id='detail6'><span style='cursor:pointer;'>
+				<img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude2, $longitude2)\"/>
+				</span>";
 			}
 		}
 		
@@ -320,13 +328,18 @@ IF ($pic_id !=='0')
 		$symb1 = "<BR>";
 		$symb5 = "<BR>";
 		
-		IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic')))
+		//IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic')))
+		IF($Owner == $c_username AND (hasPermission($c_username, 'georefmypics')) OR ($Owner !== $c_username AND (hasPermission($c_username, 'georefallpics'))))
 		{
-			$symb4 = "<SPAN style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Geo-Referenzierung &auml;ndern\" onClick=\"changeGeoParam('$FileName','$c_username','$pic_id')\" /></SPAN>";
+			$symb4 = "<SPAN style='cursor:pointer;'>
+			<img src=\"$inst_path/pic2base/bin/share/images/del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Geo-Referenzierung &auml;ndern\" onClick=\"changeGeoParam('$FileName','$c_username','$pic_id')\" />
+			</SPAN>";
 		}
 		ELSE
 		{
-			$symb4 = "<BR>";
+			$symb4 = "<SPAN style='cursor:pointer;'>
+			<img src=\"$inst_path/pic2base/bin/share/images/no_del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title='keine Berechtigung' />
+			</span>";
 		}
 		
 		//Bild kann nachtraeglich mit neuen Parametern eingelesen werden, wenn es sich um ein RAW-Format handelt:
@@ -339,8 +352,8 @@ IF ($pic_id !=='0')
 		{
 			$symb3 = "<BR>";
 		}
-		
-		//Wenn der angemeldete User Admin-Rechte hat, werden die Icons zum loeschen bzw. aufheben der Geo-Referenzierung angezeigt. Anderenfalls nur das Icon f�r den Download.
+		/*
+		//Wenn der angemeldete User Admin-Rechte hat, werden die Icons zum loeschen bzw. aufheben der Geo-Referenzierung angezeigt. Anderenfalls nur das Icon fuer den Download.
 		IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'deletepic')))
 		{
 			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
@@ -348,6 +361,18 @@ IF ($pic_id !=='0')
 		ELSE
 		{
 			$symb2 = "<BR>";
+		}
+		*/
+		//wenn der User Bilder loeschen darf, wird das trash-Icon angezeigt:
+		IF($Owner == $c_username AND (hasPermission($c_username, 'deletemypics')) OR ($Owner !== $c_username AND (hasPermission($c_username, 'deleteallpics'))))
+		{
+			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
+		}
+		ELSE
+		{
+			$symb2 = "<SPAN style='cursor:pointer;'>
+			<img src='$inst_path/pic2base/bin/share/images/notrash.gif' style='width:15px; height:15px; border:none;' title='keine Berechtigung' />
+			</span>";
 		}
 		
 		echo "
