@@ -1225,15 +1225,15 @@ SWITCH ($modus)
 			{
 				$pic_id = mysql_result($result8, $i8, 'pic_id');
 				$FileNameHQ = mysql_result($result8, $i8, 'FileNameHQ');
-				$result21 = mysql_query( "SELECT 'Caption_Abstract' FROM $table14 WHERE pic_id = '$pic_id'");
-				$Description = mysql_result($result21, '0', 'Caption_Abstract');
+				$result21 = mysql_query( "SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$pic_id'");
+				$Description = utf8_encode(mysql_result($result21, '0', 'Caption_Abstract'));
 				$loc_id = mysql_result($result8, $i8, 'loc_id');
 				$result7 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
 				$longitude = mysql_result($result7,isset($i7), 'longitude');
 				$latitude = mysql_result($result7,isset($i7), 'latitude');
 				$altitude = mysql_result($result7,isset($i7), 'altitude');
 				$location = mysql_result($result7,isset($i7), 'location');
-				//Skalierung der Bilder auf max. Seitenl�nge 300px:
+				//Skalierung der Bilder auf max. Seitenlaenge 300px:
 				$max_size = '400';
 				@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 				$breite = $parameter_v[0];
@@ -1253,9 +1253,13 @@ SWITCH ($modus)
 				$content .= '<Style id="exampleBalloonStyle">
 					<BalloonStyle>
 					<bgColor>55ffffbb</bgColor>
-					<text><![CDATA[
-					<b>'.$Description.'<br><img src="'.$server_url.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ.'" width='.$Breite.'. height='.$Hoehe.' /><br>Bild-ID: '.$pic_id.'</b>
-					]]></text>
+					<text>
+					<![CDATA[
+					<b>'.$Description.'<br>
+					<img src="'.$server_url.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ.'" width='.$Breite.'. height='.$Hoehe.' />
+					<br>Bild-ID: '.$pic_id.'</b>
+					]]>
+					</text>
 					</BalloonStyle>
 					</Style>
 					<Placemark>
@@ -1443,7 +1447,7 @@ SWITCH ($modus)
 	
 	IF($num6_1 < '1001')
 	{
-		$pdf_link = "&#160;&#160;&#160;<A HREF='$inst_path/pic2base/userdata/$c_username/kml_files/thumb-gallery.pdf' title='Thumbnail-Galerie drucken'><img src='$inst_path/pic2base/bin/share/images/acroread.png' width='12' height='12' border='0' /></A>";
+		$pdf_link = "&#160;&#160;&#160;<A HREF='$inst_path/pic2base/userdata/$c_username/kml_files/thumb-gallery.pdf' title='Thumbnail-Galerie drucken' target = '_blank'><img src='$inst_path/pic2base/bin/share/images/acroread.png' width='12' height='12' border='0' /></A>";
 	}
 	ELSE
 	{
