@@ -358,7 +358,7 @@ IF ($pic_id !=='0')
 		ELSE
 		{
 			$symb3 = "<SPAN style='cursor:pointer;'>
-			<img src=\"$inst_path/pic2base/bin/share/images/no_reload.png\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"kein NIKON-RAW-Format!\" />
+			<img src=\"$inst_path/pic2base/bin/share/images/no_reload.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"kein RAW-Format!\" />
 			</SPAN>";
 		}
 		
