@@ -102,6 +102,7 @@ include '../share/global_config.php';
 			
 			IF (in_array($kat_id, $knoten_arr))
 			{
+				$treestatus = 'minus';
 				$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 				echo 	"<TR id='kat'>
 					<TD id='kat1'>
@@ -125,11 +126,25 @@ include '../share/global_config.php';
 			}
 			ELSE
 			{
-				$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-				echo 	"<TR id='kat'>
+				$treestatus = 'plus';
+				//Das plus wird nur gezeigt, wenn es weitere Unterkategorien gibt:
+				$result11 = mysql_query("SELECT * FROM $table4 WHERE parent = '$kat_id'");
+				$num11 = mysql_num_rows($result11);
+				IF($num11 > 0)
+				{
+					$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+					echo 	"<TR id='kat'>
 					<TD id='kat1'>
 					".$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;";
-				
+				}
+				ELSE
+				{
+					//$img = "&#160;&#160;&#160;";
+					$img = "<IMG src='$inst_path/pic2base/bin/share/images/platzhalter.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+					echo 	"<TR id='kat'>
+					<TD id='kat1'>
+					".$space."".$img."&#160;";
+				}
 					echo "<span style='cursor:pointer; color:$font_color' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
 					IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
 					{
@@ -142,7 +157,7 @@ include '../share/global_config.php';
 					<TD>
 					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0)'>".$sel_all."</SPAN>
 					</TD>
-					<TD style='font-size:12px;text-align:right;'>".getNumberOfPictures($kat_id, $modus, $bewertung)."</TD>
+					<TD style='font-size:12px;text-align:right;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>
 					</TR>";
 			}
 		}
@@ -188,6 +203,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{
+			$treestatus = 'minus';
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR id='kat'>
 					<TD id='kat1'>";
@@ -212,11 +228,12 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				<TD>
 				<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0)'>".$sel_all."</SPAN>
 				</TD>
-				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung)."</TD>";
+				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>";
 				getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
 		}
 		ELSE
 		{
+			$treestatus = 'plus';
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR id='kat'>
 				<TD id='kat1'>";
