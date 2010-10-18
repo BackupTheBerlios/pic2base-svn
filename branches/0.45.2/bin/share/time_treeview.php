@@ -50,7 +50,9 @@ $base_file = 'recherche2';
 $start1 = microtime();
 list($start1msec,$start1sec) = explode(" ",$start1);
 
-$result2 = mysql_query( "SELECT MAX(YEAR(DateTimeOriginal)) AS MAX_DTO, MIN(YEAR(DateTimeOriginal)) AS MIN_DTO FROM $table14 WHERE YEAR(DateTimeOriginal) <> '0000'");
+$result2 = mysql_query( "SELECT MAX(YEAR(DateTimeOriginal)) AS MAX_DTO, MIN(YEAR(DateTimeOriginal)) AS MIN_DTO 
+FROM $table14 
+WHERE YEAR(DateTimeOriginal) <> '0000'");
 $Min_DT = mysql_result($result2, isset($i2), 'MIN_DTO');
 $Max_DT = mysql_result($result2, isset($i2), 'MAX_DTO');
 //echo "Fr&uuml;hestes Jahr: ".$Min_DT.", sp&auml;testes Jahr: ".$Max_DT."<BR>";
@@ -63,14 +65,17 @@ echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; 
 	<TD id='kat2'>Anz.</TD>
 	</TR>";
 $runtime_sum = 0;
-//Bestimmung der Jahrgänge, in denen Bilder entstanden sind:
-$result1 = mysql_query( "SELECT DISTINCT YEAR(DateTimeOriginal) AS DTO FROM $table14 WHERE YEAR(DateTimeOriginal) <> '0000' ORDER BY YEAR(DateTimeOriginal)");
+//Bestimmung der Jahrgï¿½nge, in denen Bilder entstanden sind:
+$result1 = mysql_query( "SELECT DISTINCT YEAR(DateTimeOriginal) AS DTO 
+FROM $table14 
+WHERE YEAR(DateTimeOriginal) <> '0000' 
+ORDER BY YEAR(DateTimeOriginal)");
 $num1 = mysql_num_rows($result1);
 FOR($i1 = '0'; $i1<$num1; $i1++)
 {
 	$D = mysql_result($result1, $i1, 'DTO');
-	//Die einzelnen "Jahrgänge" werden ermittelt:
-	//Zur Laufzeitoptimierung wird kontrolliert, ob in dem betreffenden Jahr überhaupt Bilder vorhanden sind:
+	//Die einzelnen "Jahrgï¿½nge" werden ermittelt:
+	//Zur Laufzeitoptimierung wird kontrolliert, ob in dem betreffenden Jahr ï¿½berhaupt Bilder vorhanden sind:
 	$start2 = microtime();
 	//$result3a = mysql_query( "EXPLAIN SELECT * FROM $table2 WHERE note = '2'");
 	$result3 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '$D-%' AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' AND $table2.$stat)");
@@ -92,7 +97,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 		}
 		ELSE
 		{
-			$s_m = $jahr;		//Anzeige-Modus: Jahresübersicht
+			$s_m = $jahr;		//Anzeige-Modus: Jahresï¿½bersicht
 			$info_nr = '1';
 		}
 		
@@ -111,7 +116,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 		IF(substr($show_mod,0,4) == $jahr)
 		{
 			
-			//Die einzelnen Monate im gewählten Jahr werden ermittelt:
+			//Die einzelnen Monate im gewï¿½hlten Jahr werden ermittelt:
 			FOR($i_M='1'; $i_M<='12'; $i_M++)
 			{
 				IF($i_M < '10')
@@ -122,7 +127,13 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 				$result9 = mysql_query( "SELECT DISTINCT YEAR(DateTimeOriginal), MONTH(DateTimeOriginal) FROM $table14 WHERE (YEAR(DateTimeOriginal) = '$jahr' AND MONTH(DateTimeOriginal) = '$i_M' AND DateTimeOriginal <> '0000-00-00 00:00:00')");
 				IF(mysql_num_rows($result9) > 0)
 				{
-					$result4 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '$jahr-$i_M%' AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' AND $table2.$stat) ORDER BY $table14.DateTimeOriginal");
+					$result4 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id 
+					FROM $table14 INNER JOIN $table2 
+					ON ($table14.pic_id = $table2.pic_id 
+					AND $table14.DateTimeOriginal LIKE '$jahr-$i_M%' 
+					AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' 
+					AND $table2.$stat) 
+					ORDER BY $table14.DateTimeOriginal");
 					$num4 = mysql_num_rows($result4);
 				}
 				ELSE
@@ -132,7 +143,13 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 				//Wenn in dem Monat Bilder gemacht wurden - Ermittlung der Anzahl:
 				IF($num4 > '0')
 				{					
-					$result5 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '%$jahr-$i_M%' AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' AND $table2.$stat) ORDER BY $table14.DateTimeOriginal");
+					$result5 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id 
+					FROM $table14 INNER JOIN $table2 
+					ON ($table14.pic_id = $table2.pic_id 
+					AND $table14.DateTimeOriginal LIKE '%$jahr-$i_M%' 
+					AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' 
+					AND $table2.$stat) 
+					ORDER BY $table14.DateTimeOriginal");
 					$num5 = mysql_num_rows($result5);
 					//echo $num5." Bilder im Monat ".$i_M." im Jahr ".$jahr."<BR>";
 					
@@ -145,7 +162,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 					IF(substr($show_mod,0,4) == $jahr AND substr($show_mod,5,2) !== $month_number)
 					{
 						//echo "normale Monats-Darstellung: ";
-						$s_m = $jahr."_".$month_number;	//$show_mod: Anzeige-Modus für Tages-Anzeige
+						$s_m = $jahr."_".$month_number;	//$show_mod: Anzeige-Modus fï¿½r Tages-Anzeige
 						echo "<SPAN style='cursor:pointer;' onClick='getTimeTreeview(\"$pic_id\",\"$mod\",\"$s_m\",\"$bewertung\")'  title='Tagesauswahl f&uuml;r ".getMonthName($month_number)." &ouml;ffnen'>".getMonthName($month_number)."</SPAN>
 						</TD>
 						<TD id='kat2'>
@@ -195,7 +212,13 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 								<TD id='kat1'> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style='cursor:pointer; color:$font_color' onClick=\"showDiary('$aufn_DAT')\" title='Tagebucheintrag zum $aufn_dat' alt='Info' />".$aufn_dat."</span></TD>";
 								//Ermittlung der an diesem Tag gemachten Bilder:
 								
-								$result12 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '%".$aufn_DAT."%' AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' AND $table2.$stat) ORDER BY $table14.DateTimeOriginal");
+								$result12 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id 
+								FROM $table14 INNER JOIN $table2 
+								ON ($table14.pic_id = $table2.pic_id 
+								AND $table14.DateTimeOriginal LIKE '%".$aufn_DAT."%' 
+								AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' 
+								AND $table2.$stat) 
+								ORDER BY $table14.DateTimeOriginal");
 								
 								echo mysql_error();
 								$num12 = mysql_num_rows($result12);
@@ -229,7 +252,11 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 }
 //Ermittlung der Bilder, welche noch keinem Datum zugeordnet wurden:
 
-$result7 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal = '0000-00-00 00:00:00' AND $table2.$stat)");
+$result7 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id 
+FROM $table14 INNER JOIN $table2 
+ON ($table14.pic_id = $table2.pic_id 
+AND $table14.DateTimeOriginal = '0000-00-00 00:00:00' 
+AND $table2.$stat)");
 
 $num7 = mysql_num_rows($result7);
 echo "<TR id='kat'>
