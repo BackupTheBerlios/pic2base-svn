@@ -231,7 +231,7 @@ function resizeOriginalPicture($FILE, $dest_path, $max_len)
 	return $file_nameT;
 }
 
-function getNumberOfPictures($kat_id, $modus, $bewertung)
+function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 {
 	unset($username);
 	IF ($_COOKIE['login'])
@@ -258,11 +258,17 @@ function getNumberOfPictures($kat_id, $modus, $bewertung)
 		}
 	}
 	$anz = count($kat_arr);
+	//echo "Elemente im Kat-Array: ".$anz."<BR>";
 	$nop = '0';		//number of pictures :-)
 	FOREACH($kat_arr AS $kat_nr)
 	{
 		IF($modus == 'edit')
 		{
+			//fuer die Oberkategorie (mit Minus) werden nur diejenigen Bilder angezeigt,
+			//die keiner weiteren Unterkategorie zugeordnert sind.
+			//Fuer Unterkategorien (mit Plus) werden die Bilder in dieser und aller weiteren Unterkategorien angezeigt
+			
+			//echo $treestatus;
 			//abhaengig von der Berechtigung wird die Anzahl der Bilder ermittelt:
 			IF(hasPermission($c_username, 'editallpics'))
 			{
@@ -278,12 +284,91 @@ function getNumberOfPictures($kat_id, $modus, $bewertung)
 				}
 				ELSE
 				{
-					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
-					FROM $table10 INNER JOIN $table2 
-					ON $table10.kat_id = '$kat_nr' 
-					AND $table10.pic_id = $table2.pic_id");
+					IF($treestatus == 'plus')
+					{
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+						FROM $table10 INNER JOIN $table2 
+						ON $table10.kat_id = '$kat_nr' 
+						AND $table10.pic_id = $table2.pic_id");
+					}
+					ELSEIF($treestatus == 'minus')
+					{
+						
+						$result10 = mysql_query("SELECT kat_id 
+						FROM $table4 
+						WHERE parent = '$kat_nr'");
+						$num10 = mysql_num_rows($result10);
+						IF($num10 > 0)
+						{
+							$kat_array = array();
+							FOR($i10='0'; $i10<$num10; $i10++)
+							{
+								$kat_id = mysql_result($result10, $i10, 'kat_id');
+								$kat_array[] = $kat_id;
+							}
+						}
+						//print_r($kat_array); echo "<BR>";//Array aller Unterkategorien der selektierten Kategorie
+						//es werden alle Bilder ermittelt, die zur selektierten Kategorie zaehlen:
+						$result11 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$kat_nr'");
+						$num11 = mysql_num_rows($result11);
+						//echo "Motive: ".$num11."<BR>";
+						$pic_ids = array();
+						FOR($i11='0'; $i11<$num11; $i11++)
+						{
+							$pic_id = mysql_result($result11, $i11, 'pic_id');
+							$pic_ids[] = $pic_id;
+						}
+						//print_r($pic_ids);
+						//es werden alle Bilder ermittelt, die auch zu Unterkategorien gehoeren. Diese werden aus dem 
+						//Array geloescht.
+						/*
+						FOREACH($kat_array AS $KA)
+						{
+							$result12 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$KA'");
+							$num12 = mysql_num_rows($result12);
+							FOR($i12=0; $i12<$num12; $i12++)
+							{
+							$pic_id = mysql_result($result12, $i12, 'pic_id');
+							//echo "Kat: ".$KA.", Pic: ".$pic_id."<BR>";
+							$ID = array_search($pic_id,$pic_ids);
+							//echo $pic_ids[$ID]."<BR>";
+							unset($pic_ids[$ID]);
+							$pic_ids = array_values($pic_ids);
+							}
+							
+						}
+						*/
+						//print_r($pic_ids);
+						//$nop = count($pic_ids);
+						//echo $nop;
+						echo "Kat-Nr: ".$kat_nr."<BR>";
+						$res1 = mysql_query("SELECT * FROM $table4
+						WHERE parent = '$kat_nr'");
+						$num1 = mysql_num_rows($res1);
+						echo "Anz. Unterkat: ".$num1."<BR>";
+						$result2 = mysql_query("SELECT pic_id, kat_id FROM $table10
+						GROUP BY pic_id 
+						HAVING COUNT(pic_id) = '1' 
+						AND kat_id = '$kat_nr' 
+						AND kat_id NOT IN ('5', '6', '9', '10', '12', '13')");
+						echo mysql_error();
+						$num2 = mysql_num_rows($result2);
+						FOR($i2='0'; $i2<$num2; $i2++)
+						{
+							$PI = mysql_result($result2, $i2, 'pic_id');
+							echo "Bild-ID: ".$PI."<BR>";
+						}
+						
+						/*						
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, 
+						$table2.Owner, $table2.pic_id
+						FROM $table10 INNER JOIN $table2 
+						ON $table10.kat_id = '$kat_nr' 
+						AND $table10.pic_id = $table2.pic_id
+						$string");
+						*/
+					}
 				}
-				
 			}
 			ELSEIF(hasPermission($c_username, 'editmypics'))
 			{
@@ -300,11 +385,18 @@ function getNumberOfPictures($kat_id, $modus, $bewertung)
 				}
 				ELSE
 				{
-					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
-					FROM $table10 INNER JOIN $table2 
-					ON $table10.kat_id = '$kat_nr' 
-					AND $table10.pic_id = $table2.pic_id 
-					AND $table2.Owner = '$id'");
+					IF($treestatus == 'plus')
+					{
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+						FROM $table10 INNER JOIN $table2 
+						ON $table10.kat_id = '$kat_nr' 
+						AND $table10.pic_id = $table2.pic_id 
+						AND $table2.Owner = '$id'");
+					}
+					ELSEIF($treestatus == 'minus')
+					{
+						
+					}
 				}
 			}
 			echo mysql_error();
@@ -478,7 +570,8 @@ function createNavi0($c_username)
 		$text = '';
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile')
+	OR hasPermission($c_username, 'editallprofiles'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -943,7 +1036,7 @@ function createNavi5($c_username)
 	//Navigationsstruktur der Einstellungs-Seite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/permissions.php';
+	include_once $sr.'/bin/share/functions/permissions.php';
 	if(!isset($navigation))
 	{
 		$navigation = '';
@@ -957,7 +1050,7 @@ include $sr.'/bin/share/functions/permissions.php';
 		$navigation .= "<a class='navi_dummy'>Administration</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile') OR hasPermission($c_username, 'editallprofiles'))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -1181,7 +1274,7 @@ function createContentFile($mod, $statement, $c_username, $bild)
 						$y1 = $y_mitte + 21;
 						$pdf->SetXY($x1,$y1);
 						$pdf->SetFont('Arial','',8);
-						$pdf->Cell(30,5,$FileName,0,0,'C',0,'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ);
+						$pdf->Cell(30,5,$FileName,0,0,'C',5,'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ);
 						//$pdf->Cell(30,5,$FileName,0,0,C,0,'http://www.pic2base.de');
 					}
 				}
@@ -1588,7 +1681,7 @@ function extractExifData($pic_id, $sr)
 	$result6 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 	IF(mysql_num_rows($result6) == 0)
 	{
-		//nur wenn es noch keinen Eintrag in der exif-data-Tabelle fuer dieses Bild gibt, wird die Erfassung ausgefuehrt:
+		//nur wenn es noch keinen Eintrag in der meta_data-Tabelle fuer dieses Bild gibt, wird die Erfassung ausgefuehrt:
 		$result7 = mysql_query("INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
 		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
 		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
@@ -1600,8 +1693,7 @@ function extractExifData($pic_id, $sr)
 		{
 			while($liste = mysql_fetch_row($result8))
 			{
-				//$tab_fieldname[$i] = $liste[0];	//vorh. Tabellen-Feldname
-				$tab_fieldname[$i] = str_replace('_','-',$liste[0]);	//vorh. Tabellen-Feldname
+				$tab_fieldname[$i] = $liste[0];	//vorh. Tabellen-Feldname
 				$i++;
 			}
 		}
@@ -1616,10 +1708,10 @@ function extractExifData($pic_id, $sr)
 		{
 			$F_W = explode(' : ', $IA);	//Zerlegung der Zeilen in Feld und Wert
 			$fieldname = $F_W[0];
-			//'Bereinigung des Feldnamen:
-			$fieldname = str_replace(" ","",$fieldname);
-			$fieldname = str_replace("/","",$fieldname);
-			$fieldname = str_replace("-","_",$fieldname);
+			//Bereinigung des Feldnamen:
+			$fieldname = str_replace(" ","",$fieldname);  //Leerzeichen entfernen
+			$fieldname = str_replace("/","",$fieldname);  //Schraegstriche entfernen
+			$fieldname = str_replace("-","_",$fieldname); //Bindestrich des Meta-Tags durch Unterstrich ersetzen, da Tabellen-Feldnamen nur Unterstriche aufweisen duerfen
 			if ( count($F_W) > 1)
 			{
 				$value = trim($F_W[1]);
@@ -1673,6 +1765,7 @@ function extractExifData($pic_id, $sr)
 				}
 				ELSE
 				{
+					$value = utf8_decode($value);
 					$result4 = mysql_query("UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
 					$statement = "UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'";
 				}
