@@ -1,4 +1,4 @@
-<?php setcookie('login',$_REQUEST['username']);?>
+<?php //setcookie('login',$_POST['username']);?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -37,6 +37,20 @@ IF ($_COOKIE['login'])
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
+$vorname = $_POST['vorname'];
+$name = $_POST['name'];
+$titel = $_POST['titel'];
+$strasse = $_POST['strasse'];
+$plz = $_POST['plz'];
+$ort = $_POST['ort'];
+$tel = $_POST['tel'];
+$email = $_POST['email'];
+$internet = $_POST['internet'];
+$old_pwd = $_POST['old_pwd'];
+$new_pwd_1 = $_POST['new_pwd_1'];
+$new_pwd_2 = $_POST['new_pwd_2'];
+$mod = $_REQUEST['mod'];
+$u_name = $_POST['u_name'];
 
 echo "
 <div class='page'>
@@ -54,24 +68,45 @@ echo "
 	//include 'share/db_connect1.php';
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
-	echo mysql_error();
-	$num1 = mysql_num_rows($result1);
+	IF($mod == 'my')
+	{
+		$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
+		echo mysql_error();
+		$num1 = mysql_num_rows($result1);
+	}
+	ELSEIF($mod == 'all')
+	{
+		$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$u_name' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
+		echo mysql_error();
+		$num1 = mysql_num_rows($result1);
+	}
 	IF ($num1 > '0' AND $new_pwd_1 !== ''  AND $new_pwd_2 !== '' AND strlen($new_pwd_1) > '4' AND $new_pwd_1 === $new_pwd_2)
 	{
-		echo "<p class='mittel' align='center'>Neues Passwort wird gespeichert...</p>";
+		echo "<p class='mittel' align='center'>Die ge&auml;nderten Daten werden gespeichert...</p>";
 		
-		$user_id = mysql_result($result1, $i1, 'id');
+		$user_id = mysql_result($result1, isset($i1), 'id');
 		$key = '0815';
 		$ftp_passwd = crypt($new_pwd_1);
 		//echo $ftp_passwd;
 		//Benutzerdaten erfassen:
-		$result2 = mysql_query( "UPDATE $table1 SET pwd = ENCRYPT('$new_pwd_1','$key'), ftp_passwd = '$ftp_passwd' WHERE id = '$user_id'");
+		$result2 = mysql_query( "UPDATE $table1 
+		SET 
+		titel = '$titel',
+		vorname = '$vorname',
+		name = '$name',
+		strasse = '$strasse',
+		plz = '$plz',
+		ort = '$ort',
+		tel = '$tel',
+		email = '$email',
+		internet = '$internet',
+		pwd = ENCRYPT('$new_pwd_1','$key'), 
+		ftp_passwd = '$ftp_passwd' 
+		WHERE id = '$user_id'");
 		IF(mysql_error() == '')
 		{
 			shell_exec('/opt/lampp/lampp reloadftp');
-			echo "<meta http-equiv='refresh' content = '1; URL=../start.php'>";
+			echo "<meta http-equiv='refresh' content = '2; URL=../start.php'>";
 		}
 		ELSE
 		{
