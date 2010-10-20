@@ -57,7 +57,7 @@ $gruppe = $_POST['gruppe'];
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $user_id = mysql_result($result1, isset($i1), 'id');
-$result2 = mysql_query( "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' AND permission_id = '1'");
+$result2 = mysql_query( "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' AND permission_id = '999'");
 $num2 = mysql_num_rows($result2);
 
 IF($num2 == '1')

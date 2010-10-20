@@ -8,7 +8,7 @@ include '../../share/global_config.php';
 
   echo "<CENTER>";
 //var_dump($_GET);
-  $id = $_GET['id']; // f�r register_globals = off
+  $id = $_GET['id']; // fuer register_globals = off
   
   mysql_connect ($db_server, $user, $PWD);
   mysql_select_db($db);
@@ -38,38 +38,38 @@ include '../../share/global_config.php';
 	
 	<tr>
 	<td width=250 align=left><b>Parameter</b></td>
-	<td width=150 align=left><b>Erlaubnis</b></td>";
+	<td width=150 align=center><b>Erlaubnis</b></td>";
 	if (hasPermission($c_username, 'adminlogin'))
   	{
   	  echo "<td width=100></td>";
   	}
   	echo "</tr>";
 
-	$result = mysql_query("select * from permissions ORDER BY description");
+	$result = mysql_query("select * from permissions ORDER BY perm_id DESC");
 	$num = mysql_num_rows($result);
 	for ($i = 0; $i < $num; $i++)
 	{
 		echo "<tr>
 		<td align=left>".mysql_result($result, $i, "description")."</td>";
-		$result2 = mysql_query("select * from grouppermissions WHERE group_id=".$id." AND permission_id=".mysql_result($result, $i, "id"));
+		$result2 = mysql_query("select * from grouppermissions WHERE group_id=".$id." AND permission_id=".mysql_result($result, $i, "perm_id"));
 		if (mysql_num_rows($result2) == 1)
 		{
 			if (mysql_result($result2, 0, "enabled") == "1")
 			{
-				echo "<td align=left>Ja</td>";
+				echo "<td align=center><img src='../../share/images/ok.gif' title='Berechtigung erteilt'></td>";
 			}
 			else
 			{
-				echo "<td align=left>Nein</td>";
+				echo "<td align=center><img src='../../share/images/delete.gif' title='keine Berechtigung'></td>";
 			}
 		} 
 		else
 		{
-			echo "<td align=left>Nein</td>";
+			echo "<td align=left><img src='../../share/images/delete.gif' title='keine Berechtigung'></td>";
 		}
 		if (hasPermission($c_username, 'adminlogin'))
 		{
-			echo "<td><a href=adminchangegrouppermissionflag.php?group_id=".$id."&permission_id=".mysql_result($result, $i, "id").">&Auml;ndern</a></td>";
+			echo "<td><a href=adminchangegrouppermissionflag.php?group_id=".$id."&permission_id=".mysql_result($result, $i, "perm_id")."><img src='../../share/images/edit.gif' title='Berechtigung &auml;ndern' style='border:none'></a></td>";
 		}
 		echo "</tr>";
     	}

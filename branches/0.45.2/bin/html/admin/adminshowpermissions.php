@@ -7,11 +7,11 @@ include '../../share/global_config.php';
 }
 
 	mysql_connect ($db_server, $user, $PWD);
-	$result = mysql_query("select * from permissions ORDER BY description");
+	$result = mysql_query("select * from permissions ORDER BY perm_id DESC");
 	$num = mysql_num_rows($result);
 	echo "
 	<center>
-	<table class='normal'>
+	<table class='normal' border='0'>
 	<tr>
 	<td colspan='4' style='font-size:12pt; text-align:center;'>Berechtigungen</td>
 	</tr>
@@ -25,23 +25,23 @@ include '../../share/global_config.php';
 	</tr>
 	
 	<tr>
-	<td align=left><b>Bezeichnung</b></td>
-	<td align=left width=200><b>Kurzbezeichnung</b></td>
+	<td align=left colspan='2' width='50%'><b>Bezeichnung</b></td>
+	<td align=left colspan='2' width='50%'><b>Kurzbezeichnung</b></td>
 	</tr>";
 	for ($i = 0; $i < $num; $i++)
 	{
 	  echo "<tr>";
-	  echo "<td align=left>".mysql_result ($result, $i, "description")."</td>";
-	  echo "<td align=left>".mysql_result ($result, $i, "shortdescription")."</td>";
+	  echo "<td align=left colspan='2'>".mysql_result ($result, $i, "description")."</td>";
+	  echo "<td align=left colspan='2'>".mysql_result ($result, $i, "perm_id")." - ".mysql_result ($result, $i, "shortdescription")."</td>";
 	  if (hasPermission($c_username, 'adminlogin'))
 	  {
 	  	//echo "<td align=left width=100>&Auml;ndern</td>";
-	  	echo "<td align=left width=100></td>";
+	  	//echo "<td align=left width=100></td>";
 	  }
 	  if (hasPermission($c_username, 'adminlogin'))
 	  {
 	  	//echo "<td align=left>L&ouml;schen</td>";
-	  	echo "<td align=left></td>";
+	  	//echo "<td align=left></td>";
 	  }
 	  echo "</tr>";
 	}

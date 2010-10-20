@@ -11,7 +11,7 @@ include '../../share/global_config.php';
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
+	<TITLE>pic2base - Administration</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
@@ -36,40 +36,35 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
 include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-	
+include $sr.'/bin/share/db_connect1.php';	
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 
-?>
+echo "<div class='page'>
 
-<div class="page">
+	<p id='kopf'>pic2base :: Admin-Bereich</p>
 
-	<p id="kopf">pic2base :: Admin-Bereich</p>
-
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
-		  include "adminnavigation.php";
-		?>
-		</div>
+	<div class='navi' style='clear:right;'>
+		<div class='menucontainer'>";
+		  include 'adminnavigation.php';
+		echo "</div>
 	</div>
 
-	<div class="content">
-		<p style="margin:30px 0px; text-align:center">
-		<?php
-			include "admincontent.php";
-		?>
-		</p>
+	<div class='content'>
+		<p style='margin:30px 0px; text-align:center'>";
+			include 'admincontent.php';
+	echo "</p>
 	</div>
-	<br style="clear:both;" />
-
-	<p id="fuss"><?php echo $cr; ?></p>
-
+	
+	<br style='clear:both;' />
+	<!--<p id='fuss'>$cr</p>-->
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 </div>
-</DIV></CENTER>
+</DIV>";
+?>
+</CENTER>
 </BODY>
 </HTML>

@@ -114,7 +114,7 @@ include '../../share/global_config.php';
 	<td width=250 align=left><b>Erlaubnis</b></td>
 	</tr>";
 	//include "../share/functions/permissions.php";
-	$result = mysql_query("select * from permissions ORDER BY description");
+	$result = mysql_query("select * from permissions ORDER BY perm_id DESC");
 	$num = mysql_num_rows($result);
 	for ($i = 0; $i < $num; $i++)
 	{

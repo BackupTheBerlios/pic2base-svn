@@ -69,11 +69,11 @@ include $sr.'/bin/share/db_connect1.php';
 			$result1 = mysql_query("INSERT INTO $table9 (description) VALUES ('".$groupname."')");
 			$result2 = mysql_query( "SELECT id FROM $table9 WHERE description = '$groupname'");
 			$groupid = mysql_result($result2, isset($i2), 'id');
-			$result3 = mysql_query( "SELECT id FROM $table8");
+			$result3 = mysql_query( "SELECT perm_id FROM $table8");
 			$num3 = mysql_num_rows($result3);
 			FOR($i3 = '0'; $i3<$num3; $i3++)
 			{
-				$perm_id = mysql_result($result3, $i3, 'id');
+				$perm_id = mysql_result($result3, $i3, 'perm_id');
 				$result4 = mysql_query( "INSERT INTO $table6 (group_id, permission_id, enabled) VALUES ('$groupid', '$perm_id', '0')");
 			}
 			

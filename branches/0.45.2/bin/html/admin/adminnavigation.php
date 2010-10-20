@@ -20,7 +20,7 @@ include '../../share/global_config.php';
 	switch ($item)
 	{
 		case "":
-		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
+		if (hasPermission($c_username, 'editkattree')) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
     		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
     		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
     		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
