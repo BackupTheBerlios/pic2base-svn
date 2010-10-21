@@ -181,7 +181,6 @@ $fs_hoehe = '80';
 //########################################################################################################################
 //Darstellung der zu einer Kategorie zugehoerigen Bilder:
 include 'db_connect1.php';
-//include 'functions/permissions.php';
 
 unset($c_username);
 IF ($_COOKIE['login'])
@@ -517,7 +516,7 @@ SWITCH ($modus)
 		$statement = "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.note, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 		//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie benoetigt	
 		
-		$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.note FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+		$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.Owner, $table2.note FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 		echo mysql_error();
 		
 		$result8 = mysql_query( "SELECT $table2.pic_id, $table2.loc_id, $table2.note, $table2.FileNameHQ, $table14.Caption_Abstract, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount FROM $table2 LEFT JOIN $table14 ON $table2.pic_id = $table14.pic_id $krit1 $krit2 AND $table2.loc_id <>'0' ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
@@ -553,7 +552,7 @@ SWITCH ($modus)
 
 			CASE '1':
 			//Wenn die Wurzel-Kategorie gewaehlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
-			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.Owner, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 			$num6_1 = mysql_num_rows($result6_1);
 			$N = $num6_1;
 		
@@ -1045,7 +1044,7 @@ SWITCH ($modus)
 			
 			$statement = "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 			
-			$result6_1 = mysql_query( "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.Owner, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 			echo mysql_error();
 			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
 			$result8 = mysql_query( "SELECT * FROM $table2 $krit1 AND $table2.loc_id <>'0' $krit2");
@@ -1065,7 +1064,7 @@ SWITCH ($modus)
 			//echo $krit1;
 			$statement = "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 			
-			$result6_1 = mysql_query( "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.Owner FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 			echo mysql_error();
 			
 			$result8 = mysql_query( "SELECT $table2.pic_id, $table2.loc_id, $table2.FileNameHQ, $table14.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.loc_id <>'0' AND $table2.pic_id = $table14.pic_id $krit2");
@@ -1608,20 +1607,64 @@ SWITCH ($modus)
 			echo "</div></TD>";
 		
 			//Erzeugung der Download-Icons:
+			$Owner = mysql_result($result6_1, $i6_1, 'Owner');
 			$check = fileExists($FileName, $c_username);
 			IF($check > '0')
 			{
 				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-				$icon[$j] = "<TD align='center'><div id='box$pic_id'>
-				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/></SPAN>	
-				</div></TD>";
+				$icon[$j] = "<TD align='center'>
+				<div id='box$pic_id'>
+				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/>
+				</SPAN>	
+				</div>
+				</TD>";
 			}
 			ELSE
 			{
+			//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				$icon[$j] = "<TD align='center'><div id='box$pic_id'>
-				<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0'/></SPAN>	
-				</div></TD>";
+				//IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
+				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
+				{
+					IF($direkt_download > '0')
+					{
+						$icon[$j] = "
+						<TD align='center'width='43'>
+						<div id='box$pic_id'>
+						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
+						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild herunterladen'/>
+						</SPAN>
+						</div>	
+						</TD>";
+					}
+					ELSE
+					{
+						$icon[$j] = "
+						<TD align='center'width='43'>
+						<div id='box$pic_id'>
+						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den Download-Ordner kopieren'/>
+						</SPAN>
+						</div>	
+						</TD>";
+					}
+				}
+				ELSE
+				{
+					$icon[$j] = "<TD align='center' width='43'><BR></TD>";
+				}
+				
+				/*
+				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
+				$icon[$j] = "<TD align='center'>
+				<div id='box$pic_id'>
+				<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+				<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0'/>
+				</SPAN>	
+				</div>
+				</TD>";
+				*/
 			}
 			$j++;
 		}
@@ -1737,7 +1780,8 @@ SWITCH ($modus)
 			{
 				//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
+				//IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
+				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
 				{
 					IF($direkt_download > '0')
 					{
