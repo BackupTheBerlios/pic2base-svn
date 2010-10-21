@@ -99,6 +99,7 @@ function isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius)
 	
 	//Entfernung je Laengengrad ist von der Erhebung ueber Aequator (Breitengrad) abhaengig:
 	$x_abst = pow(($longitude - $long_mittel) * (40000000 * cos(deg2rad($latitude)) / 360),2); //in qm
+	//echo $x_abst."<BR>";
 	
 	IF (pow($radius , 2) < ($x_abst + $y_abst))
 	{
