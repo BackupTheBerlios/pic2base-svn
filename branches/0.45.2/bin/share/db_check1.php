@@ -160,9 +160,9 @@ echo "<br>++++ #### ++++<br>";
 			
 			$res6 = mysql_query( "CREATE TABLE IF NOT EXISTS `locations` (
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
-			`longitude` varchar(25) NOT NULL COMMENT 'geo-Laenge',
-			`latitude` varchar(25) NOT NULL COMMENT 'geo-Breite',
-			`altitude` varchar(13) NOT NULL COMMENT 'Hoehe',
+			`longitude` FLOAT NOT NULL COMMENT 'geo-Laenge',
+			`latitude` FLOAT NOT NULL COMMENT 'geo-Breite',
+			`altitude` FLOAT NOT NULL COMMENT 'Hoehe',
 			`location` varchar(50) NOT NULL default 'Ortsbezeichnung' COMMENT 'Ortname',
 			PRIMARY KEY  (`loc_id`),
 			KEY `location` (`location`)
