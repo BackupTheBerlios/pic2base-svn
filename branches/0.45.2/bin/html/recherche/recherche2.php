@@ -323,7 +323,7 @@ SWITCH ($mod)
 		</TR>
 		
 		<TR id='desc'>
-			<TD id='desc' style='border-style:none;'>&nbsp;</TD>
+			<TD id='desc' style='border-style:none; height:15px;'></TD>
 		</TR>
 		
 		<TR id='desc'>
