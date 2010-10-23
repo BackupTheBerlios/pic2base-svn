@@ -21,6 +21,15 @@ include '../../share/global_config.php';
 	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
 	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
 </HEAD>
+<script language="JavaScript">
+<!--
+function showKatInfo(kat_id)
+{
+	Fenster1 = window.open('../../share/edit_kat_info.php?kat_id='+kat_id, 'Kategorie-Informationen', "width=675,height=768,scrollbars,resizable=no,");
+	Fenster1.focus();
+}
+-->
+</script>
 
 <BODY LANG="de-DE" scroll = "auto">
 
