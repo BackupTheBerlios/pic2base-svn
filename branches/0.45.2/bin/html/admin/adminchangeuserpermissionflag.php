@@ -1,0 +1,58 @@
+<?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+
+unset($username);
+IF ($_COOKIE['login'])
+{
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
+}
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
+
+$user_id = $_GET['user_id']; // fuer register_globals = off
+$perm_id = $_GET['perm_id']; // fuer register_globals = off
+if (hasPermission($c_username, 'adminlogin'))
+{
+	mysql_connect ($db_server, $user, $PWD);
+	$result = mysql_query("SELECT * FROM $table7 WHERE user_id='".$user_id."' AND permission_id='".$perm_id."'");
+	$enabled = mysql_result($result, 0, 'enabled');
+	IF($enabled == '1')
+	{
+		$en = '0';
+	}
+	ELSE
+	{
+		$en = '1';
+	}
+	
+	$result = mysql_query("UPDATE $table7 SET enabled='$en' WHERE user_id='".$user_id."' AND permission_id='".$perm_id."'");
+	/*
+	//Es werden die Benutzer der Gruppe ermittelt:
+	$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
+	$num2 = mysql_num_rows($result2);
+	//echo "Anzahl User in der Gruppe: ".$num2."<BR>";
+	//Fuer alle User dieser Gruppe wird das gewaehlte Recht neu gesetzt
+	FOR($i2=0; $i2<$num2; $i2++)
+	{
+		$user_id = mysql_result($result2, $i2, 'id');
+		//echo "User-ID: ".$user_id."<BR>";
+		//echo "Recht-ID: ".$permission_id."<BR>";
+		$result3 = mysql_query( "UPDATE $table7 SET enabled='$en' WHERE user_id = '$user_id' AND permission_id='$permission_id'");
+		//echo mysql_error();
+	}
+	*/
+	//echo mysql_error();
+	echo "<meta http-equiv='Refresh' content='0; URL=adminframe.php?item=adminshowuser&id=".$user_id."&del=0'>";
+}
+ELSE
+{
+	echo "Sie haben nicht gen&uuml;gend Berechtigungen!";
+}
+?>
