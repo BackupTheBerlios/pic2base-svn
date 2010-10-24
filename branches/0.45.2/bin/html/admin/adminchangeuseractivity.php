@@ -16,7 +16,7 @@ include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
 	
-	$user_id = $_GET['user_id']; // f�r register_globals = off
+	$user_id = $_GET['user_id']; // fuer register_globals = off
 	if (hasPermission($c_username, 'adminlogin'))
 	{
 		mysql_connect ($db_server, $user, $PWD);
@@ -34,6 +34,6 @@ include '../../share/global_config.php';
 	}
 	ELSE
 	{
-		echo "Sie haben nicht gen�gend Berechtigungen!";
+		echo "Sie haben nicht gen&uuml;gend Berechtigungen!";
 	}
 ?>
