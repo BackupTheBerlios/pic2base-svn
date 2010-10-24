@@ -115,6 +115,10 @@ FCKConfig.ToolbarSets["Default"] = [
 	['FitWindow','ShowBlocks','-','About']		// No comma for the last row.
 ] ;
 
+FCKConfig.ToolbarSets["Readonly"] = [
+   	['FitWindow','-','About']		// No comma for the last row.
+] ;
+
 FCKConfig.ToolbarSets["Basic"] = [
 	['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','About']
 ] ;
