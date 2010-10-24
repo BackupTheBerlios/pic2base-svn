@@ -30,6 +30,7 @@ if(array_key_exists('aufn_dat',$_GET))
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
+include_once $sr.'/bin/share/functions/permissions.php';
 include_once("fckeditor/fckeditor.php");
 
 $result0 = mysql_query("SELECT * FROM $table3 WHERE datum = '$aufn_dat'");
@@ -50,9 +51,14 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 $result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
 $row = mysql_fetch_array($result2);
 $group_id = $row['group_id'];
-IF($group_id == '1' OR $group_id == '3')	//Admin oder Fotograf duerfen editieren
+IF(hasPermission($c_username, 'editdiary'))	//berechtigte User duerfen das Tagebuch editieren
 {
 	$editable = '1';
+	$view = 'Default';
+}
+ELSE
+{
+	$view = 'Readonly';
 }
 
 echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat&AD=$aufn_DAT' method='post'>
@@ -79,6 +85,7 @@ echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat&AD=$aufn_DAT' meth
 		$oFCKeditor = new FCKeditor('FCKeditor1') ;
 		$oFCKeditor->BasePath = 'fckeditor/' ;
 		$oFCKeditor->Value = $info ;
+		$oFCKeditor->ToolbarSet = $view ;	//legt fest, ob editierbar oder nur lesbar
 		$oFCKeditor->Height = 685;
 		$oFCKeditor->Create() ;
 		

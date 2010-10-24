@@ -32,6 +32,7 @@ if(array_key_exists('kat_id',$_GET))
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
+include_once $sr.'/bin/share/functions/permissions.php';
 include_once("fckeditor/fckeditor.php");
 
 $result0 = mysql_query( "SELECT $table4.kat_id, $table4.kategorie, $table11.info, $table11.kat_id  FROM $table4 INNER JOIN $table11 ON $table4.kat_id = '$kat_id' AND $table4.kat_id = $table11.kat_id");
@@ -55,9 +56,14 @@ $result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_usern
 $row = mysql_fetch_array($result2);
 //$group_id = mysql_result($result2, isset($i2), 'group_id');
 $group_id = $row['group_id'];
-IF($group_id == '1' OR $group_id == '3')	//Admin oder Fotograf
+IF(hasPermission($c_username, 'editkatlex'))	//berechtigte User duerfen das Kat.-Lexikon editieren
 {
 	$editable = '1';
+	$view = 'Default';
+}
+ELSE
+{
+	$view = 'Readonly';
 }
 
 echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post' target='_blank'>
@@ -84,6 +90,7 @@ echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post' targ
 		$oFCKeditor = new FCKeditor('FCKeditor1') ;
 		$oFCKeditor->BasePath = 'fckeditor/' ;
 		$oFCKeditor->Value = $info ;
+		$oFCKeditor->ToolbarSet = $view ;	//legt fest, ob editierbar oder nur lesbar
 		$oFCKeditor->Height = 685;
 		$oFCKeditor->Create() ;
 		
