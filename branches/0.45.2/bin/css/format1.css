@@ -125,7 +125,7 @@ p.big18 {
 p#kopf {
 	font-size: 150.01%;	
 	/*background-image:url(../share/images/verlauf4.gif); background-repeat:repeat-x;*/
-	background-color:RGB(120,120,120);	
+	background-color:RGB(120,120,120,);	
 	padding: 7px;
 	margin: 0px;
 	text-align: left;
@@ -136,7 +136,7 @@ p#fuss {
 	font-size: 75.01%;		
 	/*background-image:url(../share/images/verlauf3.gif); background-repeat:repeat-x;*/
 	color:#eeeeee;
-	background-color:RGB(120,120,120);		
+	background-color:RGB(120,120,120,);		
 	padding: 13px;
 	margin: 0px;
 	text-align: right;
