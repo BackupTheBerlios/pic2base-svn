@@ -26,71 +26,54 @@ include '../../share/global_config.php';
     }
     if (mysql_num_rows($result) == 1)
     {
-	$groupid = mysql_result ($result, 0, "group_id");
-	$username = mysql_result ($result, 0, "username");
-	echo "<center>
-	<FORM name = 'del_user' method='post' action='adminframe.php?item=deleteuser&id=$id'>
-	<table class='normal'>
-	<tr>
-	<td colspan='2' style='font-size:12pt; text-align:center;'>".$warnung." Benutzerprofil f&uuml;r User ".$username."</td>
-	</tr>
-	
-	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
-	</TR>
-	
-	<tr>
-	<td colspan='2'>&nbsp;</td>
-	</tr>
+		$user_id = $id;
+    	$groupid = mysql_result ($result, 0, "group_id");
+		$username = mysql_result ($result, 0, "username");
+		echo "<center>
+		<FORM name = 'del_user' method='post' action='adminframe.php?item=deleteuser&id=$id'>
+		<table class='normal' border='0'>
+		<tr>
+		<td colspan='3' style='font-size:12pt; text-align:center;'>".$warnung." Benutzerprofil f&uuml;r User ".$username."</td>
+		</tr>
 		
-	<tr>
-	<td align=left>Gruppe:</td>
-	<td align=left>";
-	
-	$result2 = mysql_query("select * from usergroups WHERE id=".$groupid);
-	if (mysql_num_rows($result2) == 1)
-	{
-		echo mysql_result ($result2, 0, "description");
-	}
-	else
-	{
-		echo "[keine Gruppe gew&auml;hlt]";
-	}
+		<tr style='height:3px;'>
+		<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
+		</TR>
+			
+		<tr>
+		<td align=left>Gruppe:</td>
+		<td align=left colspan='2'>";
+		
+		$result2 = mysql_query("select * from usergroups WHERE id=".$groupid);
+		if (mysql_num_rows($result2) == 1)
+		{
+			echo mysql_result ($result2, 0, "description");
+		}
+		else
+		{
+			echo "[keine Gruppe gew&auml;hlt]";
+		}
     }
     echo "</td>
     </tr>
     
     <tr>
-    <td align=left>Name:</td>
-    <td align=left>".$name."</td>
-    </tr>
-    
-    <tr>
-    <td align=left>Vorname:</td>
-    <td align=left>".$vorname."</td>
+    <td align=left>Name, Vorname:</td>
+    <td align=left colspan='2'>".$name.", ".$vorname."</td>
     </tr>
     
     <tr>
     <td align=left>Stra&szlig;e:</td>
-    <td align=left>".mysql_result ($result, 0, "strasse")."</td>
+    <td align=left colspan='2'>".mysql_result ($result, 0, "strasse")."</td>
     </tr>
     
     <tr>
-    <td align=left>PLZ:</td>
-    <td align=left>".mysql_result ($result, 0, "plz")."</td>
+    <td align=left>PLZ, Ort:</td>
+    <td align=left colspan='2'>".mysql_result ($result, 0, "plz").", ".mysql_result ($result, 0, "ort")."</td>
     </tr>
-    
-    <tr>
-    <td align=left>Ort:</td>
-    <td align=left>".mysql_result ($result, 0, "ort")."</td>
-    </tr>
-    
-    <tr>
-	<td colspan='2'>&nbsp;</td>
-	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
 	</TR>";
     
    
@@ -98,20 +81,25 @@ include '../../share/global_config.php';
   if (hasPermission($c_username, 'adminlogin'))
   {
 	echo "<tr>
-	<td colspan='2' style='font-size:12pt; text-align:center;'>Erteilte Berechtigungen</td>
+	<td colspan='3' style='font-size:12pt; text-align:center;'>Erteilte Berechtigungen</td>
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
 	</TR>
 		
 	<tr>
-	<td colspan='2'>&nbsp;</td>
+	<td colspan='3'>&nbsp;</td>
 	</tr>
 	
 	<tr>
 	<td width=250 align=left><b>Parameter</b></td>
-	<td width=250 align=left><b>Erlaubnis</b></td>
+	<td width=100 align=center><b>Erlaubnis</b></td>";
+	if (hasPermission($c_username, 'adminlogin'))
+  	{
+  	  echo "<td width=100 align=center><b>Status &auml;ndern</b></td>";
+  	}
+  	echo "
 	</tr>";
 	//include "../share/functions/permissions.php";
 	$result = mysql_query("select * from permissions ORDER BY perm_id DESC");
@@ -119,43 +107,55 @@ include '../../share/global_config.php';
 	for ($i = 0; $i < $num; $i++)
 	{
 		$description = mysql_result($result, $i, "description");
+		$perm_id = mysql_result($result, $i, "perm_id");
 		IF ($description !== '')
 		{
 			echo "<tr>
 			<td align=left>".$description."</td>";
 			if (hasPermission($username, mysql_result($result, $i, "shortdescription")))
 			{
-				echo "<td align=left>Ja</td>";
+				echo "<td align=center><img src='../../share/images/ok.gif' title='Berechtigung erteilt'></td>";
 			}
 			else
 			{
-				echo "<td align=left>Nein</td>";
+				echo "<td align=center><img src='../../share/images/delete.gif' title='keine Berechtigung'></td>";
+			}
+			if (hasPermission($c_username, 'adminlogin'))
+			{
+				echo "<td align=center><a href=adminchangeuserpermissionflag.php?user_id=".$id."&perm_id=".$perm_id.">
+				<img src='../../share/images/edit.gif' title='Erlaubnis-Status &auml;ndern' style='border:none'>
+				</a>
+				</td>";
+			}
+			ELSE
+			{
+				echo "<td align=center>&nbsp;</td>";
 			}
 			echo "</tr>";
 		}
 	}
 	echo "<tr>
-	<td colspan='2'>&nbsp;</td>
+	<td colspan='3'>&nbsp;</td>
 	</tr>
 
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
 	</TR>";
   }
   IF($del == '1')
   {
   	echo "
   	<tr>
-	<td colspan='2'>&nbsp;</td>
+	<td colspan='3'>&nbsp;</td>
 	</tr>
 	
   	<TR>
-  	<TD colspan='2' align='center'>An wen sollen die Rechte von ".$vorname." ".$name." &uuml;bertragen werden?</TD>
+  	<TD colspan='3' align='center'>An wen sollen die Rechte von ".$vorname." ".$name." &uuml;bertragen werden?</TD>
   	</TR>
   	
   	<TR align='center'>
   	<TD>Neuer Eigent&uuml;mer:</TD>
-  	<TD><SELECT name='users' style='width:200px;'>
+  	<TD colspan='2'><SELECT name='users' style='width:200px;'>
   	<OPTION Value = '' selected>--- neuen User ausw&auml;hlen ---</OPTION>";
   	$result3 = mysql_query( "SELECT * FROM $table1 WHERE id <> '$id'");
   	$num3 = mysql_num_rows($result3);
@@ -173,15 +173,15 @@ include '../../share/global_config.php';
   	
   	<TR align='center'>
   	<TD><input type='button' Value='Abbrechen' OnClick='location.href=\"adminframe.php?item=adminshowusers\"'></TD>
-  	<TD><input type='submit' Value='alten User l&ouml;schen und Rechte &uuml;bertragen'></TD>
+  	<TD colspan='2'><input type='submit' Value='alten User l&ouml;schen und Rechte &uuml;bertragen'></TD>
   	</TR>
   	
   	<tr>
-	<td colspan='2'>&nbsp;</td>
+	<td colspan='3'>&nbsp;</td>
 	</tr>
   	
   	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
 	</TR>";
   }
 ?>
