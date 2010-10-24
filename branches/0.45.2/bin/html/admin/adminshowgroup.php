@@ -23,7 +23,7 @@ include '../../share/global_config.php';
   }
   if (hasPermission($c_username, 'adminlogin'))
   {
-	echo "<table class='normal'>
+	echo "<table class='normal' border='0'>
 	<tr>
 	<td colspan='3' style='font-size:12pt; text-align:center;'>Benutzergruppe ".$desc."</td>
 	</tr>
@@ -38,10 +38,10 @@ include '../../share/global_config.php';
 	
 	<tr>
 	<td width=250 align=left><b>Parameter</b></td>
-	<td width=150 align=center><b>Erlaubnis</b></td>";
+	<td width=100 align=center><b>Erlaubnis</b></td>";
 	if (hasPermission($c_username, 'adminlogin'))
   	{
-  	  echo "<td width=100></td>";
+  	  echo "<td width=100 align=center><b>Status &auml;ndern</b></td>";
   	}
   	echo "</tr>";
 
@@ -65,11 +65,18 @@ include '../../share/global_config.php';
 		} 
 		else
 		{
-			echo "<td align=left><img src='../../share/images/delete.gif' title='keine Berechtigung'></td>";
+			echo "<td align=center><img src='../../share/images/delete.gif' title='keine Berechtigung'></td>";
 		}
 		if (hasPermission($c_username, 'adminlogin'))
 		{
-			echo "<td><a href=adminchangegrouppermissionflag.php?group_id=".$id."&permission_id=".mysql_result($result, $i, "perm_id")."><img src='../../share/images/edit.gif' title='Berechtigung &auml;ndern' style='border:none'></a></td>";
+			echo "<td align=center><a href=adminchangegrouppermissionflag.php?group_id=".$id."&permission_id=".mysql_result($result, $i, "perm_id").">
+			<img src='../../share/images/edit.gif' title='Erlaubnis-Status &auml;ndern' style='border:none'>
+			</a>
+			</td>";
+		}
+		ELSE
+		{
+			echo "<td align=center>&nbsp;</td>";
 		}
 		echo "</tr>";
     	}
