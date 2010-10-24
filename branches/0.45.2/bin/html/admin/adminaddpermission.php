@@ -37,6 +37,10 @@ if (hasPermission($c_username, 'adminlogin'))
 	</tr>
 	
 	<tr>
+	<td colspan='2'><p style='color:red; text-align:center'>ACHTUNG! - Diese Funktion nur als Programmierhilfe verwenden!</p></td>
+	</tr>
+	
+	<tr>
 	<td align=left>Bezeichnung:</td>
 	<td><input type=text name=description></td>
 	</tr>
@@ -44,6 +48,11 @@ if (hasPermission($c_username, 'adminlogin'))
 	<tr>
 	<td align=left>Kurzbezeichnung:</td>
 	<td><input type=text name=shortdescription></td>
+	</tr>
+	
+	<tr>
+	<td align=left>Berechtigungs-ID:</td>
+	<td><input type=text name=permission_id></td>
 	</tr>
 	
 	<tr>
