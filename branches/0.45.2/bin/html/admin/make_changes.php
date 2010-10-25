@@ -74,12 +74,13 @@ IF(hasPermission($c_username, 'adminlogin'))
 		//die alten Benutzer-Rechte werden geloescht:
 		$result4 = mysql_query( "DELETE FROM $table7 WHERE user_id = '$id'");
 		//Die neuen Benutzer-Rechte werden entsprechend der neuen Gruppe zugewiesen:
-		$result5 = mysql_query( "SELECT * FROM $table6 WHERE group_id = '$gruppe' AND enabled = '1'");
+		$result5 = mysql_query( "SELECT * FROM $table6 WHERE group_id = '$gruppe'");
 		$num5 = mysql_num_rows($result5);
 		FOR($i5=0; $i5<$num5; $i5++)
 		{
 			$perm_id = mysql_result($result5, $i5, 'permission_id');
-			$result6 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$id', '$perm_id', '1')");
+			$enabled = mysql_result($result5, $i5, 'enabled');
+			$result6 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$id', '$perm_id', '$enabled')");
 		}
 		echo mysql_error();
 		echo "
@@ -104,7 +105,7 @@ IF(hasPermission($c_username, 'adminlogin'))
 }
 ELSE
 {
-	echo "Falsche Rechte!<meta http-equiv='Refresh', Content='5; URL=../../../index.php'>";
+	echo "Sie haben falsche Rechte!<meta http-equiv='Refresh', Content='2; URL=../../../index.php'>";
 	return;
 }
 mysql_close($conn);
