@@ -11,7 +11,7 @@ include '../../share/global_config.php';
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
+	<TITLE>pic2base - Gruppe wechseln</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
@@ -28,9 +28,9 @@ include '../../share/global_config.php';
 
 /*
  * Project: pic2base
- * File: start.php
+ * File: make_changes.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -50,17 +50,20 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
  
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
 
 $mod = $_GET['mod'];
 $id = $_GET['id'];
 $gruppe = $_POST['gruppe'];
-
+/*
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $user_id = mysql_result($result1, isset($i1), 'id');
 $result2 = mysql_query( "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' AND permission_id = '999'");
 $num2 = mysql_num_rows($result2);
 
 IF($num2 == '1')
+*/
+IF(hasPermission($c_username, 'adminlogin'))
 {
 	SWITCH($mod)
 	{
@@ -101,12 +104,11 @@ IF($num2 == '1')
 }
 ELSE
 {
-	echo "<meta http-equiv='Refresh', Content='0; URL=../../../index.php'>";
+	echo "Falsche Rechte!<meta http-equiv='Refresh', Content='5; URL=../../../index.php'>";
 	return;
 }
 mysql_close($conn);
 ?>
-<p class="klein">- KH 09/2007 -</P>
 </DIV>
 </CENTER>
 </BODY>
