@@ -48,7 +48,7 @@ if (hasPermission($c_username, 'adminlogin'))
 		//echo mysql_error();
 	}
 	*/
-	//echo mysql_error();
+	echo mysql_error();
 	echo "<meta http-equiv='Refresh' content='0; URL=adminframe.php?item=adminshowuser&id=".$user_id."&del=0'>";
 }
 ELSE
