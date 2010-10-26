@@ -33,7 +33,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	}
 	
 	$result = mysql_query("UPDATE $table7 SET enabled='$en' WHERE user_id='".$user_id."' AND permission_id='".$perm_id."'");
-	/*
+	
 	//Es werden die Benutzer der Gruppe ermittelt:
 	$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
 	$num2 = mysql_num_rows($result2);
@@ -47,7 +47,7 @@ if (hasPermission($c_username, 'adminlogin'))
 		$result3 = mysql_query( "UPDATE $table7 SET enabled='$en' WHERE user_id = '$user_id' AND permission_id='$permission_id'");
 		//echo mysql_error();
 	}
-	*/
+	
 	echo mysql_error();
 	echo "<meta http-equiv='Refresh' content='0; URL=adminframe.php?item=adminshowuser&id=".$user_id."&del=0'>";
 }
