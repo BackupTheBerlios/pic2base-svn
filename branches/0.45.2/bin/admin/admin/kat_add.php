@@ -44,26 +44,28 @@ IF ($_COOKIE['login'])
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
+IF(hasPermission($c_username, 'editkattree'))
+{
+	$navigation = "
+			<a class='navi' href='kat_sort1.php'>Sortierung</a>
+			<a class='navi' href='kat_repair1.php'>Wartung</a>
+			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='../../html/start.php'>zur Startseite</a>
+			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+}
+ELSE
+{
+	header('Location: ../../../index.php');
+}
 
 $level = $_GET['level']; 
 $level_neu = $level + 1;
-
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
-{
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>	
-			<a class='navi' href='../../html/start.php'>zur Startseite</a>
-			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>";
-	break;
-	
-	//alle anderen
-	CASE $berechtigung > '1':
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-	break;
-}
 
 $ID = $_GET['ID']; 
 $kat_id = $_GET['kat_id']; 
@@ -215,8 +217,8 @@ function setFontColor($ID, $kat_id)
 		$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
 		$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
 		echo "<p id='elf' style='padding: 5px; width: 400px; margin-top: 40px;'>
-		Tragen Sie hier bitte den Namen der neuen Unter-Kategorie ein:<BR>
-		Diese wird unterhalb der Kategorie <font color='red'>\"".$kategorie_alt."\"</font> angelegt und darf	max. 30 Zeichen lang sein.<BR><BR></P>";
+		Tragen Sie hier bitte den Namen<BR>der neuen Unter-Kategorie ein:<BR><BR>
+		Diese wird unterhalb der Kategorie <BR><BR><font color='red'>\"".$kategorie_alt."\"</font><BR><BR>angelegt und darf	max. 30 Zeichen lang sein.<BR><BR></P>";
 		
 		echo "<FORM name='kat_neu' action='kat_add_action1.php?kat_id=$KAT_ID&level=$level&ID=$ID' method='POST'>
 		<INPUT type='hidden' name='parent' value='$ID'>
@@ -228,7 +230,7 @@ function setFontColor($ID, $kat_id)
 		</center>
 	</div>
 	
-	<p id='fuss'>(C)2006 Logiqu</p>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
 </div>";
 
@@ -237,7 +239,6 @@ mysql_close($conn);
 <script language="javascript">
 document.kat_neu.kategorie.focus();
 </script>
-<p class="klein">- KH 09/2006 -</P>
 </DIV></CENTER>
 </BODY>
 </HTML>

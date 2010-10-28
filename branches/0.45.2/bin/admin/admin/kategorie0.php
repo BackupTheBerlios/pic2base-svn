@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: kategorie0.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -30,10 +30,6 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -45,45 +41,39 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
+include $sr.'/bin/share/functions/permissions.php';
+IF(hasPermission($c_username, 'editkattree'))
 {
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='kat_sort1.php'>Sortierung</a>
+	$navigation = "
+			<a class='navi' href='kat_sort1.php'>Sortierung</a>
 			<a class='navi' href='kat_repair1.php'>Wartung</a>
-			<a class='navi_blind'></a>
 			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-			";
-	break;
-	
-	//alle anderen
-	CASE $berechtigung > '1':
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-	break;
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+}
+ELSE
+{
+	header('Location: ../../../index.php');
 }
 
-?>
+echo "
+<div class='page'>
 
-<div class="page">
-
-	<p id="kopf">pic2base :: Admin-Bereich - Kategorieverwaltung</p>
+	<p id='kopf'>pic2base :: Admin-Bereich - Kategorieverwaltung</p>
 	
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
-		echo $navigation;
-		?>
-		</div>
+	<div class='navi' style='clear:right;'>
+		<div class='menucontainer'>".
+		$navigation
+		."</div>
 	</div>
 	
-	<div  id="spalte1">
-	
-	<?php
+	<div  id='spalte1'>";
+
 	//Erzeugung der Baumstruktur:
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -277,31 +267,28 @@ SWITCH ($berechtigung)
 				</TR>";
 		}
 	}
-	echo "</TABLE>";
-	?>
+	echo "</TABLE>
 	</div>
 	
-	<DIV id="spalte2">
-		<p id="elf" style="background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;">Hinweis:<BR><BR>
+	<DIV id='spalte2'>
+		<p id='elf'' style='background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;'>
+		Hinweis:<BR><BR>
 		Mit einem Klick auf einen Kategorie-Namen f&uuml;gen Sie eine neue Unter-Kategorie unterhalb der gew&auml;hlten Kategorie ein.<BR><BR>
 		Mit einem Klick auf das Bearbeiten-Icon &#160;<img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'>&#160; k&ouml;nnen Sie die Bezeichnung f&uuml;r die ausgew&auml;hlte Kategorie &auml;ndern.<BR><BR>
 		Mit einem Klick auf das L&ouml;schen-Icon &#160;<img src='../../share/images/delete.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Delete-Icon'>&#160; k&ouml;nnen Sie die ausgew&auml;hlte Kategorie l&ouml;schen.<BR>
 		<u>Wichtig!</u><BR>
 		Hierbei werden auch ALLE Unterkategorien der gew&auml;hlten Kategorie gel&ouml;scht!<BR><BR>
-		&Uuml;ber den Men&uuml;punkt "Sortierung" k&ouml;nnen Sie die Kategorie-Struktur neu ordnen. Weitere Informationen erhalten Sie auf der Sortieren-Seite.<BR><BR>
-		Mit dem Men&uuml;punkt "Wartung" haben Sie die M&ouml;glichkeit, die Tabelle der Bild-Kategorie-Zuweisungen auf fehlerhafte Eintr&auml;ge zu &uuml;berpr&uuml;fen und ggf. zu reparieren. Die Aktion wird sofort nach Klick auf den Button gestartet und kann eine Weile dauern.<BR>
+		&Uuml;ber den Men&uuml;punkt \"Sortierung\" k&ouml;nnen Sie die Kategorie-Struktur neu ordnen. Weitere Informationen erhalten Sie auf der Sortieren-Seite.<BR><BR>
+		Mit dem Men&uuml;punkt \"Wartung\" haben Sie die M&ouml;glichkeit, die Tabelle der Bild-Kategorie-Zuweisungen auf fehlerhafte Eintr&auml;ge zu &uuml;berpr&uuml;fen und ggf. zu reparieren. Die Aktion wird sofort nach Klick auf den Button gestartet und kann eine Weile dauern.<BR>
 		Am Ende der Wartung wird Ihnen ein Bericht &uuml;ber den Zustand der Tabelle angezeigt.</p>
 	</DIV>
 	
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
-	<p id="fuss"><?php echo $cr; ?></p>
+</div>";
 
-</div>
-
-<?php
 mysql_close($conn);
 ?>
-<p class="klein">- KH 09/2006 -</P>
 </DIV></CENTER>
 </BODY>
 </HTML>

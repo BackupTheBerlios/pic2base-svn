@@ -45,23 +45,24 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
+include $sr.'/bin/share/functions/permissions.php';
+IF(hasPermission($c_username, 'editkattree'))
 {
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+	$navigation = "
+			<a class='navi_blind' href='kat_sort1.php'>Sortierung</a>
+			<a class='navi' href='kat_repair1.php'>Wartung</a>
+			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-			";
-	break;
-	
-	//alle anderen
-	CASE $berechtigung > '1':
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-	break;
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+}
+ELSE
+{
+	header('Location: ../../../index.php');
 }
 
 ?>

@@ -30,10 +30,6 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -45,41 +41,39 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
+include $sr.'/bin/share/functions/permissions.php';
+IF(hasPermission($c_username, 'editkattree'))
 {
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"
-			<a class='navi_blind'></a>
+	$navigation = "
+			<a class='navi' href='kat_sort1.php'>Sortierung</a>
+			<a class='navi_blind' href='kat_repair1.php'>Wartung</a>
 			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
-			<a class='navi' href='../../html/start.php'>zur Startseite</a>";
-	break;
-	
-	//alle anderen
-	CASE $berechtigung > '1':
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-	break;
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='../../html/start.php'>zur Startseite</a>
+			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+}
+ELSE
+{
+	header('Location: ../../../index.php');
 }
 
-?>
+echo "
+<div class='page'>
 
-<div class="page">
-
-	<p id="kopf">pic2base :: Admin-Bereich - Datenbank-Wartung</p>
+	<p id='kopf'>pic2base :: Admin-Bereich - Datenbank-Wartung</p>
 	
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
-		echo $navigation;
-		?>
+	<div class='navi' style='clear:right;'>
+		<div class='menucontainer'>";
+		echo $navigation."
 		</div>
 	</div>
 	
-	<div id="spalte1">
-	<?php
+	<div id='spalte1'>";
+
 	//Wartungs-Routine zur Bereinigung der pic-kat-Tabelle, wenn Bilder existieren, welchen nur die kat_id = 1 zugewiesen wurde. Dies ist gleichbedeutend, dass den Bildern noch KEINE Kategorie zugewiesen wurden.
 	$Z = '0';
 	$result10 = mysql_query( "SELECT DISTINCT pic_id FROM $table10");
@@ -118,13 +112,12 @@ SWITCH ($berechtigung)
 		Die &Uuml;berpr&uuml;fung ist abgeschlossen<BR>und lieferte die links stehende Ergebnis-Meldung.</p>
 	</DIV>
 	
-	<p id='fuss'><?php echo $cr; ?></p>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
 </div>";
 
 mysql_close($conn);
 ?>
-<p class="klein">- KH 09/2006 -</P>
 </DIV></CENTER>
 </BODY>
 </HTML>
