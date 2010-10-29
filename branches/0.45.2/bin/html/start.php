@@ -415,7 +415,7 @@ echo "<div class='page'>
 			}
 		}
 		
-		IF($m > '0' AND hasPermission($c_username, 'addpic') AND $direkt_download == '0')
+		IF($m > '0' AND (hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND $direkt_download == '0')
 		{
 			$download_path = 'ftp://'.$c_username."@".$_SERVER['SERVER_NAME'].'/downloads/';
 			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$c_username.'/downloads/';
@@ -437,7 +437,7 @@ echo "<div class='page'>
 		}
 		ELSE
 		{
-			IF(hasPermission($c_username, 'addpic') AND $direkt_download == '0')
+			IF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND $direkt_download == '0')
 			{	
 				echo "
 				<tr class='normal' style='height:50px;'>
@@ -449,7 +449,7 @@ echo "<div class='page'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
 			}
-			ELSEIF(hasPermission($c_username, 'addpic') AND $direkt_download == '1')
+			ELSEIF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND $direkt_download == '1')
 			{
 				echo "
 				<tr class='normal' style='height:50px;'>
