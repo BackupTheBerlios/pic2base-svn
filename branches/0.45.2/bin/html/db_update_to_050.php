@@ -71,7 +71,6 @@ include '../share/functions/permissions.php';
 		{
 			echo "Sicherheitskopie \"permissions_bak\" wurde angelegt<BR><BR>";
 
-		
 			$res2 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic2base`.`permissions` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `perm_id` int(11) NOT NULL,
@@ -79,7 +78,7 @@ include '../share/functions/permissions.php';
 				  `shortdescription` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
 				  PRIMARY KEY (`id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=36 ;");
-			echo mysql_error()."<BR>";
+			//echo mysql_error()."<BR>";
 		}
 		IF(mysql_error() == '')
 		{
@@ -217,16 +216,26 @@ include '../share/functions/permissions.php';
 					//###############################################################
 					IF(mysql_error() == '')
 					{
-						echo "Tabelle \"grouppermissions\" wurde neu aufgebaut.<BR>";
-						//Aenderung derFelder locations.longitude, locations.latitude, locations.altitude in DOUBLE:
+						echo "Tabelle \"grouppermissions\" wurde neu aufgebaut.<BR><BR>";
+						//Aenderung der Felder locations.longitude, locations.latitude, locations.altitude in DOUBLE:
 						$res17 = mysql_query("ALTER TABLE `pic2base`.`locations` CHANGE `longitude` `longitude` DOUBLE NOT NULL COMMENT 'geo-Laenge',
 						CHANGE `latitude` `latitude` DOUBLE NOT NULL COMMENT 'geo-Breite',
 						CHANGE `altitude` `altitude` DOUBLE NOT NULL COMMENT 'Hoehe'");
-						echo mysql_error()."<BR>";
 						IF(mysql_error() == '')
 						{
-							echo "Die Tabelle \"locations\"wurde aktualisiert.<BR><BR>
-							Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+							echo "Die Tabelle \"locations\"wurde aktualisiert.<BR><BR>";
+							//Tabelle rights loeschen, da sie nicht mehr verwendet wird:
+							$res18 = mysql_query("DROP TABLE IF EXISTS `pic2base`.`rights`");
+							//echo mysql_error()."<BR>";
+							IF(mysql_error() == '')
+							{
+								echo "Die nicht mehr genutzte Tabelle \"rights\" wurde entfernt.<BR><BR>
+								Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+							}
+							ELSE
+							{
+								echo "Die Tabelle \"rights\" konnte NICHT entfernt werden.";
+							}
 						}
 						ELSE
 						{
