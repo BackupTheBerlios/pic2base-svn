@@ -503,7 +503,7 @@ function createNavi0($c_username)
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin'))
+	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree'))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 		
@@ -610,7 +610,7 @@ function createNavi0($c_username)
 	$navigation .= "<a class='navi_blind'></a>";
 	IF($text !== '')
 	{
-		$navigation .= "<a class='navi' href='#' title='$text'>Hinweis</a>";
+		$navigation .= "<a class='navi' href='#' title='$text'><blink>>> Hinweis <<</blink></a>";
 	}
 	ELSE
 	{
