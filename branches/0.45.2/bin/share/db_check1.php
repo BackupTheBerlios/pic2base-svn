@@ -69,6 +69,7 @@ echo "<br>++++ #### ++++<br>";
 	//mit den neuen Parametern wird versucht eine Datenbank-Verbindung aufzubauen:
 	@$conn = mysql_connect($db_server,$user,$PWD);
 	@$database = mysql_pconnect($db_server,$user,$PWD);
+	mysql_set_charset('utf8', $conn);
 //	mysql_error();
 	if (!$database) 
 	{
