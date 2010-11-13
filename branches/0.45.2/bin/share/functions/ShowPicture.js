@@ -43,10 +43,10 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 		}
 		else
 		{
-			//htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
-			//htmlcode+="<img src=\"../../share/images/p2b.gif\" height=50px>\n";
-			htmlcode+="<div style=\"position: absolute; top: 5px; left: 5px; z-index: 5;\">\n";
-			htmlcode+="<img src=\"../../share/images/full.gif\" height=20px title=\"[Bild vergr&ouml;&szlig;ern, Bildname: "+ bildname +", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source+"]\" onclick=\"#\">\n";
+			htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
+			htmlcode+="<img src=\"../../share/images/p2b.gif\" height=50px>\n";
+			//htmlcode+="<div style=\"position: absolute; top: 5px; left: 5px; z-index: 5;\">\n";
+			//htmlcode+="<img src=\"../../share/images/full.gif\" height=20px title=\"[Bild vergr&ouml;&szlig;ern, Bildname: "+ bildname +", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source+"]\" onclick=\"#\">\n";
 			htmlcode+="<\/div>\n";		
 	
 			htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
