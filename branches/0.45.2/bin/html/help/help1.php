@@ -359,14 +359,16 @@ echo "
 		<a name='groups'>Gruppen</a><BR><BR>
 		
 		Im Arbeitsbereich Gruppen k&ouml;nnen Benutzergruppen und deren Zugriffsrechte definiert werden.
-		Standardm&auml;&#223;ig sind die Gruppen 'Admin', 'Fotograf', 'Gast' und 'Web-User' mit vordefinierten Rechten angelegt. Diese k&ouml;nnen entsprechend der Erfordernisse im jeweiligen Anwendungsfall individuell angepa&#223;t werden.<BR>
+		Nach der Installation sind die Gruppen 'Admin', 'Superuser', Fotograf', 'Gast' und 'Web-User' angelegt, wobei aber zun&auml;chst lediglich der Gruppe Admin alle Rechte zugeteilt wurden. Die Rechte der anderen Gruppen k&ouml;nnen entsprechend der Erfordernisse im jeweiligen Anwendungsfall individuell festgelegt werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name='rights'>Berechtigungen</a><BR><BR>
 		
 		Im Arbeitsbereich Berechtigungen kann festgelegt werden, welche Handlungen in pic2base durch Zugriffsbeschr&auml;nkungen reglementiert werden sollen.
-		Eine typische Frage ist, welcher Benutzergruppe der Datei-Upload gestattet wird. Dies wird &uuml;ber die Berechtigung 'Bilder erfassen' (addpic) geregelt. Wird einer Gruppe dies erlaubt. D&uuml;rfen alle Mitglieder dieser Gruppe Bilder erfassen (Upload ist m&ouml;glich)
-		M&ouml;gliche Berechtigungen m&uuml;ssen programmseitig vorgegeben werden (fest einprogrammiert!)<BR>
+		Die Rechtevergabe erfolgt &uuml;ber Gruppen- und Benutzerrechte.<BR>
+		Zun&auml;chst werden Gruppen angelegt und diesen entsprechenden Rechte zugeteilt.<BR>
+		Wenn ein neuer Benutzer angelegt und einer bestehenden Gruppe zugeteilt wird, erbt er automatisch die Rechte dieser Gruppe.<BR>
+		Diese geerbten Rechte k&ouml;nnen jedoch f&uuml;r jeden einzelnen Benutzer noch individuell angepa&szlig;t werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name='ftp'>FTP-Statistik</a><BR><BR>
@@ -376,7 +378,7 @@ echo "
 		
 		<a name='log'>P2b-Log</a><BR><BR>
 		
-		In der p2b-Logdatei werden Aktivit&auml;ten protokolliert, die Auskunft &uuml;ber die Zugriffe auf die pic2base-Datenbank geben.<BR>
+		In der p2b-Logdatei werden Aktivit&auml;ten protokolliert, die dem Administrator Auskunft &uuml;ber die Zugriffe auf die pic2base-Datenbank geben.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name='md5'>md5-Check</a><BR><BR>
@@ -392,8 +394,8 @@ echo "
 		
 		<a name='md'>Meta-Daten</a><BR><BR>
 		
-		Im Arbeitsbereich Meta-Daten hat der Administrator die M&ouml;glichkeit zu kontrollieren, ob aus allen Fotos die vorhandenen Meta-Daten ausgelesen und in die Datenbank &uuml;bertragen wurden.
-		Wichtiger Hinweis: Hier treffen die selben Einschr&auml;nkungen wie beim Punkt 'Histogramme' zu.<BR>
+		Im Arbeitsbereich Meta-Daten hat der Administrator die M&ouml;glichkeit zu kontrollieren, ob aus allen Fotos die vorhandenen Meta-Daten ausgelesen und in die Datenbank &uuml;bertragen wurden.<BR>
+		HINWEIS: Hier treffen die selben Einschr&auml;nkungen wie beim Punkt 'Histogramme' zu.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a ame='mp'>Meta-Protect</a></a><BR><BR>
