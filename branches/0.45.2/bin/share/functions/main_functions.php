@@ -239,7 +239,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 		list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	}
 	//echo "Modus: ".$modus.", User: ".$c_username."<BR>";
-	
+	//echo $treestatus;
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	$kat_arr[] = $kat_id;		//Kategorie-Nummern-Container
@@ -267,8 +267,6 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 			//fuer die Oberkategorie (mit Minus) werden nur diejenigen Bilder angezeigt,
 			//die keiner weiteren Unterkategorie zugeordnert sind.
 			//Fuer Unterkategorien (mit Plus) werden die Bilder in dieser und aller weiteren Unterkategorien angezeigt
-			
-			//echo $treestatus;
 			//abhaengig von der Berechtigung wird die Anzahl der Bilder ermittelt:
 			IF(hasPermission($c_username, 'editallpics'))
 			{
@@ -294,8 +292,10 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 					ELSEIF($treestatus == 'minus')
 					{
 						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id FROM $table10
-						WHERE ($table10.kat_id = '$kat_nr') AND ($table10.pic_id <> ALL (SELECT pic_id 
-						FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) WHERE parent = '$kat_nr'))");
+						WHERE ($table10.kat_id = '$kat_nr') 
+						AND ($table10.pic_id <> ALL (SELECT pic_id 
+						FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) 
+						WHERE parent = '$kat_nr'))");
 						
 						echo mysql_error();
 						$num2 = mysql_num_rows($result2);
