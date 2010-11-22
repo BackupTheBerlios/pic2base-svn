@@ -168,6 +168,10 @@ else
 	$form_name ='';
 }
 
+if( array_key_exists('treestatus',$_GET))
+{
+	$treestatus = $_GET['treestatus'];
+}
 //echo $param;
 //echo $mod;
 //Auslesen der Vorschau-Bilder aus den EXIF-Daten
@@ -341,15 +345,49 @@ SWITCH ($modus)
 
 		IF(hasPermission($c_username, 'editallpics'))
 		{
-			$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 
-			WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			IF($treestatus == 'plus')
+			{
+				$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 
+				WHERE ($table2.pic_id = $table10.pic_id 
+				AND $table14.pic_id = $table2.pic_id 
+				AND $table10.kat_id = '$ID' $krit2) 
+				ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			}
+			ELSEIF($treestatus == 'minus')
+			{
+				$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id FROM $table10
+				WHERE ($table10.kat_id = '$kat_id') 
+				AND ($table10.pic_id <> ALL (SELECT pic_id 
+				FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) 
+				WHERE parent = '$kat_id'))");
+				echo mysql_error();
+			}
+			
 		}
 		ELSEIF(hasPermission($c_username, 'editmypics'))
 		{
-			$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 
-			WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND $table2.Owner = '$user_id' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			IF($treestatus == 'plus')
+			{
+				$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* 
+				FROM $table14, $table2, $table10 
+				WHERE ($table2.pic_id = $table10.pic_id 
+				AND $table14.pic_id = $table2.pic_id 
+				AND $table10.kat_id = '$ID' 
+				AND $table2.Owner = '$user_id' $krit2) 
+				ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			}
+			ELSEIF($treestatus == 'minus')
+			{
+				$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+				FROM $table10 INNER JOIN $table2
+				ON ($table10.kat_id = '$kat_id')
+				AND $table10.pic_id = $table2.pic_id 
+				AND $table2.Owner = '$user_id' 
+				AND ($table10.pic_id <> ALL (SELECT pic_id 
+				FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) WHERE parent = '$kat_id'))");
+			}
 		}
-		//echo mysql_error();
+		echo mysql_error();
 		$num2 = mysql_num_rows($result2);
 		IF ($num2 == '0')
 		{
@@ -361,19 +399,21 @@ SWITCH ($modus)
 			$result4 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id='$ID'");
 			$kategorie = htmlentities(mysql_result($result4, isset($i4), 'kategorie'));
 			echo "Es gibt ".$num2." Bilder in der Kategorie \"".$kategorie."\"";
-			//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, in der unteren die jeweils dazugeh�rigen Auswahlboxen:
+			//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, 
+			//in der unteren die jeweils dazugehoerigen Auswahlboxen:
 			//der Normalfall - Es werden alle Bilder angezeigt, welche der gewaehlten Kategorie angehoeren
 			echo "	<TABLE border='0' align='center'>
 			<TR>";
 			FOR ($i2=0; $i2<$num2; $i2++)
 			{
 				$pic_id = mysql_result($result2, $i2, 'pic_id');
-				$FileName = mysql_result($result2, $i2, 'FileName');
-				$FileNameHQ = mysql_result($result2, $i2, 'FileNameHQ');
-				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
-				$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
+				$res2_1 = mysql_query("SELECT FileName, FileNameHQ, FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
+				$FileName = mysql_result($res2_1, isset($i2_1), 'FileName');
+				$FileNameHQ = mysql_result($res2_1, isset($i2_1), 'FileNameHQ');
+				$FileNameV = mysql_result($res2_1, isset($i2_1), 'FileNameV');
+				$result24 = mysql_query( "SELECT FileSize, Orientation FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
-				$Orientation = mysql_result($result2, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
+				$Orientation = mysql_result($result24, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
