@@ -121,20 +121,24 @@ echo "<br>++++ #### ++++<br>";
 			PRIMARY KEY  (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=42 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			$res4_1 = mysql_query( "INSERT INTO `grouppermissions` (`id`, `group_id`, `permission_id`, `enabled`) VALUES 
-			(1, 1, 1, 1),
-			(2, 0, 0, 0),
-			(3, 1, 2, 1),
-			(4, 1, 3, 1),
-			(5, 1, 19, 1),
-			(6, 1, 20, 1),
-			(7, 1, 21, 1),
-			(8, 2, 20, 1),
-			(9, 4, 20, 1),
-			(10, 3, 19, 1),
-			(11, 3, 21, 1),
-			(12, 3, 2, 1),
-			(13, 3, 3, 1),
-			(14, 3, 20, 1);");
+			(1, 1, 999, 1),
+			(2, 1, 799, 1),
+			(3, 1, 519, 1),
+			(4, 1, 219, 1),
+			(5, 1, 100, 1),
+			(6, 1, 629, 1),
+			(7, 1, 989, 1),
+			(8, 1, 859, 1),
+			(9, 1, 619, 1),
+			(10, 1, 529, 1),
+			(11, 1, 229, 1),
+			(12, 1, 899, 1),
+			(13, 1, 869, 1),
+			(14, 1, 849, 1),
+			(15, 1, 539, 1),
+			(16, 1, 549, 1),
+			(17, 1, 639, 1),
+			(18, 1, 649, 1);");
 			
 			
 			$res5 = mysql_query( "CREATE TABLE IF NOT EXISTS `kategorien` (
@@ -261,21 +265,21 @@ echo "<br>++++ #### ++++<br>";
 			(1, 999, 'Admin-Login', 'adminlogin'),
 			(2, 799, 'Bilder erfassen', 'addpic'),
 			(3, 519, 'eigene Bilder löschen', 'deletemypics'),
-			(21, 219, 'eigene Bilder downloaden', 'downloadmypics'),
-			(20, 100, 'Bilder suchen', 'searchpic'),
-			(19, 629, 'alle Bilder bearbeiten', 'editallpics'),
-			(22, 989, 'Rechte hinzufügen', 'addpermission'),
-			(23, 859, 'eigenes Benutzer-Profil bearbeiten', 'editmyprofile'),
-			(24, 619, 'eigene Bilder bearbeiten', 'editmypics'),
-			(25, 529, 'alle Bilder löschen', 'deleteallpics'),
-			(26, 229, 'alle Bilder downloaden', 'downloadallpics'),
-			(27, 899, 'Kategoriebaum bearbeiten', 'editkattree'),
-			(28, 869, 'alle Benutzer-Profile bearbeiten', 'editallprofiles'),
-			(29, 849, 'Benutzer anzeigen', 'showusers'),
-			(30, 539, 'eigene Bilder geo-referenzieren', 'georefmypics'),
-			(31, 549, 'alle Bilder geo-referenzieren', 'georefallpics'),
-			(32, 639, 'Tagebuch bearbeiten', 'editdiary'),
-			(35, 649, 'Kategorielexikon bearbeiten', 'editkatlex');");
+			(4, 219, 'eigene Bilder downloaden', 'downloadmypics'),
+			(5, 100, 'Bilder suchen', 'searchpic'),
+			(6, 629, 'alle Bilder bearbeiten', 'editallpics'),
+			(7, 989, 'Rechte hinzufügen', 'addpermission'),
+			(8, 859, 'eigenes Benutzer-Profil bearbeiten', 'editmyprofile'),
+			(9, 619, 'eigene Bilder bearbeiten', 'editmypics'),
+			(10, 529, 'alle Bilder löschen', 'deleteallpics'),
+			(11, 229, 'alle Bilder downloaden', 'downloadallpics'),
+			(12, 899, 'Kategoriebaum bearbeiten', 'editkattree'),
+			(13, 869, 'alle Benutzer-Profile bearbeiten', 'editallprofiles'),
+			(14, 849, 'Benutzer anzeigen', 'showusers'),
+			(15, 539, 'eigene Bilder geo-referenzieren', 'georefmypics'),
+			(16, 549, 'alle Bilder geo-referenzieren', 'georefallpics'),
+			(17, 639, 'Tagebuch bearbeiten', 'editdiary'),
+			(18, 649, 'Kategorielexikon bearbeiten', 'editkatlex');");
 			
 			
 			$res10 = mysql_query( "CREATE TABLE IF NOT EXISTS `pictures` (
@@ -346,12 +350,24 @@ echo "<br>++++ #### ++++<br>";
 			PRIMARY KEY  (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=2 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			$res13_1 = mysql_query( "INSERT INTO `userpermissions` (`id`, `user_id`, `permission_id`, `enabled`) VALUES 
-			(1, 1, 1, 1),
-			(2, 1, 2, 1),
-			(3, 1, 3, 1),
-			(4, 1, 19, 1),
-			(5, 1, 20, 1),
-			(6, 1, 21, 1);");
+			(1, 1, 999, 1),
+			(2, 1, 799, 1),
+			(3, 1, 519, 1),
+			(4, 1, 219, 1),
+			(5, 1, 100, 1),
+			(6, 1, 629, 1),
+			(7, 1, 989, 1),
+			(8, 1, 859, 1),
+			(9, 1, 619, 1),
+			(10, 1, 529, 1),
+			(11, 1, 229, 1),
+			(12, 1, 899, 1),
+			(13, 1, 869, 1),
+			(14, 1, 849, 1),
+			(15, 1, 539, 1),
+			(16, 1, 549, 1),
+			(17, 1, 639, 1),
+			(18, 1, 649, 1);");
 			
 			$res14 = mysql_query( "CREATE TABLE IF NOT EXISTS `users` (
 			`id` int(11) NOT NULL auto_increment,
