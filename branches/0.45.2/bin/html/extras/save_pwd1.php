@@ -46,7 +46,14 @@ $ort = $_POST['ort'];
 $tel = $_POST['tel'];
 $email = $_POST['email'];
 $internet = $_POST['internet'];
-$old_pwd = $_POST['old_pwd'];
+IF( array_key_exists('old_pwd',$_GET) )
+{
+	$old_pwd = $_GET['old_pwd'];
+}
+ELSE
+{
+	$old_pwd = '';
+}
 $new_pwd_1 = $_POST['new_pwd_1'];
 $new_pwd_2 = $_POST['new_pwd_2'];
 $mod = $_REQUEST['mod'];
@@ -76,7 +83,7 @@ echo "
 	}
 	ELSEIF($mod == 'all')
 	{
-		$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$u_name' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
+		$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$u_name' AND aktiv = '1'");
 		echo mysql_error();
 		$num1 = mysql_num_rows($result1);
 	}
@@ -106,7 +113,7 @@ echo "
 		IF(mysql_error() == '')
 		{
 			shell_exec('/opt/lampp/lampp reloadftp');
-			echo "<meta http-equiv='refresh' content = '2; URL=../start.php'>";
+			echo "<meta http-equiv='refresh' content = '1; URL=../start.php'>";
 		}
 		ELSE
 		{

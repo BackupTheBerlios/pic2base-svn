@@ -135,10 +135,10 @@ IF(hasPermission($c_username, 'editallprofiles'))
 			<TD id='kat1' colspan='3'>Passwort &auml;ndern</TD>
 		</TR>
 		
-		<TR id='kat'>
+		<!--<TR id='kat'>
 			<TD id='kat1'>Altes Passwort:</TD>
 			<TD id='kat1' colspan='2'><input type='password' name='old_pwd' style='width:200px;'></TD>
-		</TR>
+		</TR>-->
 		
 		<TR id='kat'>
 			<TD id='kat1'>Neues Passwort:</TD>
@@ -169,11 +169,9 @@ IF(hasPermission($c_username, 'editallprofiles'))
 		<div id='spalte2'>
 		<p id='elf' style='background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;'><b>Hilfe zu den Bearbeitungsm&ouml;glichkeiten:</b><BR><BR>
 		Sie k&ouml;nnen die pers&ouml;nlichen Angaben unver&auml;ndert lassen und nur das Passwort &auml;ndern.<BR>
-		F&uuml;llen Sie hierzu lediglich die drei unteren Eingabefelder aus.<BR><BR>
+		F&uuml;llen Sie hierzu lediglich die beiden unteren Eingabefelder aus.<BR><BR>
 		Wenn Sie die pers&ouml;nlichen Daten ver&auml;ndern wollen, m&uuml;ssen Sie die &Auml;nderungen mit dem Passwort des betreffenden Benutzers best&auml;tigen.<BR>
-		F&uuml;llen Sie hierzu ebenfalls die drei unteren Passwort-Felder aus.<BR><BR>
-		Hinweis: <BR>
-		Wollen Sie das altes Passwort beibehalten, tragen Sie dies in alle drei Passwort-Felder ein.</p>
+		F&uuml;llen Sie hierzu - nachdem Sie die entsprechenden &Auml;nderungen an den pers&ouml;nlichen Daten vorgenommen haben - ebenfalls die beiden unteren Passwort-Felder aus.</p>
 		</div>
 	
 		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>

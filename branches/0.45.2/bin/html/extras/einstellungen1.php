@@ -241,12 +241,7 @@ ELSEIF(hasPermission($c_username, 'editallprofiles'))
 		
 		<div id='spalte2'>
 		<p id='elf' style='background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;'><b>Hilfe zu den Bearbeitungsm&ouml;glichkeiten:</b><BR><BR>
-		Sie k&ouml;nnen Ihre pers&ouml;nlichen Angaben unver&auml;ndert lassen und nur Ihr Passwort &auml;ndern.<BR>
-		F&uuml;llen Sie hierzu lediglich die drei unteren Eingabefelder aus.<BR><BR>
-		Wenn Sie Ihre pers&ouml;nlichen Daten ver&auml;ndern wollen, m&uuml;ssen Sie die &Auml;nderungen mit Ihrem Passwort best&auml;tigen.<BR>
-		F&uuml;llen Sie hierzu ebenfalls die drei unteren Passwort-Felder aus.<BR><BR>
-		Hinweis: <BR>
-		Wollen Sie Ihr altes Passwort beibehalten, tragen Sie dies in alle drei Passwort-Felder ein.</p>
+		Klicken Sie auf den Bearbeiten-Button, wenn Sie die pers&ouml;nlichen Daten eines Benutzers &auml;ndern wollen.</p>
 		</div>
 	
 		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
