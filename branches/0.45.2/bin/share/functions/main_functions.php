@@ -3,31 +3,31 @@
 /*
 Datei enthaelt folgende Funktionen:
 
-function OptionFields()								verwendet
+function OptionFields()										verwendet
 function getMonthName($month_number)						verwendet
-function createPreview($pic_id)							verwendet			Z. 423 - DEAKTIVIERT 05.10.2009
-function rotatePreviewPictures($Orientation, $FileNameV)			verwendet (Stapel-Erfassung)	Z. 472
-function rotateOriginalPictures($Orientation, $FileName)			verwendet (Stapel-Erfassung)	Z. 500
-function createQuickPreview($Orientation, $FileNameOri)				verwendet (Bearbeitung - Quick-Preview)
-function getPictureDetails($pic_id)						verwendet in edit_beschreibung	Z. 558 - DEAKTIVIERT 05.10.2009
+function createPreview($pic_id)								verwendet			Z. 423 - DEAKTIVIERT 05.10.2009
+function rotatePreviewPictures($Orientation, $FileNameV)	verwendet (Stapel-Erfassung)	Z. 472
+function rotateOriginalPictures($Orientation, $FileName)	verwendet (Stapel-Erfassung)	Z. 500
+function createQuickPreview($Orientation, $FileNameOri)		verwendet (Bearbeitung - Quick-Preview)
+function getPictureDetails($pic_id)							verwendet in edit_beschreibung	Z. 558 - DEAKTIVIERT 05.10.2009
 function createPreviewPicture($file_name, $path_copy, $dest_path, $max_len)	verwendet
 function resizeOriginalPicture($FileName, $path_copy, $dest_path, $max_len)	verwendet 			Z. 698
-function createFullScreenView($pic_id, $quality)				(nicht) verwendet
+function createFullScreenView($pic_id, $quality)			(nicht) verwendet
 function getDeltaLong($lat, $radius1);						verwendet
 function getNumberOfPictures($kat_id)						verwendet in kat_treeview.php	Z. 721
-function getAllChildIds($kat_id)						verwendet
+function getAllChildIds($kat_id)							verwendet
 function fileExists($FileName, $c_username)					verwendet
-function createNavi(X)								verwendet in diversen		Z. 810
-function createContentFile()							verwendet in get_preveiw.php
-function showStars								verwendet in get_preview  	Z. 1345
-function showBewertung								verwendet in Kopfzeile der Such-Formulare
-function createStatement							verwendet in recherche2
-function savePicture							^	verwendet in erfassung_action	Z. 1481
-function getRecDays								verwendet in recherche2 (Zeit)	Z. 1737
-function generateHistogram()							verwendet in details, stapel1	Z. 1880
-function formatValues()								verwendet in generate_exifdata0, 
-function restoreOriFilename							verwendet in details, generate_exifdata0, 
-function extractExifData							verwendet 			Z 2060
+function createNavi(X)										verwendet in diversen		Z. 810
+function createContentFile()								verwendet in get_preveiw.php
+function showStars											verwendet in get_preview  	Z. 1345
+function showBewertung										verwendet in Kopfzeile der Such-Formulare
+function createStatement									verwendet in recherche2
+function savePicture										verwendet in erfassung_action	Z. 1481
+function getRecDays											verwendet in recherche2 (Zeit)	Z. 1737
+function generateHistogram()								verwendet in details, stapel1	Z. 1880
+function formatValues()										verwendet in generate_exifdata0, 
+function restoreOriFilename									verwendet in details, generate_exifdata0, 
+function extractExifData									verwendet 			Z 2060
 
 */
 
@@ -293,80 +293,12 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 					}
 					ELSEIF($treestatus == 'minus')
 					{
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id FROM $table10
+						WHERE ($table10.kat_id = '$kat_nr') AND ($table10.pic_id <> ALL (SELECT pic_id 
+						FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) WHERE parent = '$kat_nr'))");
 						
-						$result10 = mysql_query("SELECT kat_id 
-						FROM $table4 
-						WHERE parent = '$kat_nr'");
-						$num10 = mysql_num_rows($result10);
-						IF($num10 > 0)
-						{
-							$kat_array = array();
-							FOR($i10='0'; $i10<$num10; $i10++)
-							{
-								$kat_id = mysql_result($result10, $i10, 'kat_id');
-								$kat_array[] = $kat_id;
-							}
-						}
-						//print_r($kat_array); echo "<BR>";//Array aller Unterkategorien der selektierten Kategorie
-						//es werden alle Bilder ermittelt, die zur selektierten Kategorie zaehlen:
-						$result11 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$kat_nr'");
-						$num11 = mysql_num_rows($result11);
-						//echo "Motive: ".$num11."<BR>";
-						$pic_ids = array();
-						FOR($i11='0'; $i11<$num11; $i11++)
-						{
-							$pic_id = mysql_result($result11, $i11, 'pic_id');
-							$pic_ids[] = $pic_id;
-						}
-						//print_r($pic_ids);
-						//es werden alle Bilder ermittelt, die auch zu Unterkategorien gehoeren. Diese werden aus dem 
-						//Array geloescht.
-						/*
-						FOREACH($kat_array AS $KA)
-						{
-							$result12 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$KA'");
-							$num12 = mysql_num_rows($result12);
-							FOR($i12=0; $i12<$num12; $i12++)
-							{
-							$pic_id = mysql_result($result12, $i12, 'pic_id');
-							//echo "Kat: ".$KA.", Pic: ".$pic_id."<BR>";
-							$ID = array_search($pic_id,$pic_ids);
-							//echo $pic_ids[$ID]."<BR>";
-							unset($pic_ids[$ID]);
-							$pic_ids = array_values($pic_ids);
-							}
-							
-						}
-						*/
-						//print_r($pic_ids);
-						//$nop = count($pic_ids);
-						//echo $nop;
-						echo "Kat-Nr: ".$kat_nr."<BR>";
-						$res1 = mysql_query("SELECT * FROM $table4
-						WHERE parent = '$kat_nr'");
-						$num1 = mysql_num_rows($res1);
-						echo "Anz. Unterkat: ".$num1."<BR>";
-						$result2 = mysql_query("SELECT pic_id, kat_id FROM $table10
-						GROUP BY pic_id 
-						HAVING COUNT(pic_id) = '1' 
-						AND kat_id = '$kat_nr' 
-						AND kat_id NOT IN ('5', '6', '9', '10', '12', '13')");
 						echo mysql_error();
 						$num2 = mysql_num_rows($result2);
-						FOR($i2='0'; $i2<$num2; $i2++)
-						{
-							$PI = mysql_result($result2, $i2, 'pic_id');
-							echo "Bild-ID: ".$PI."<BR>";
-						}
-						
-						/*						
-						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, 
-						$table2.Owner, $table2.pic_id
-						FROM $table10 INNER JOIN $table2 
-						ON $table10.kat_id = '$kat_nr' 
-						AND $table10.pic_id = $table2.pic_id
-						$string");
-						*/
 					}
 				}
 			}
@@ -395,7 +327,13 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 					}
 					ELSEIF($treestatus == 'minus')
 					{
-						
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+						FROM $table10 INNER JOIN $table2
+						ON ($table10.kat_id = '$kat_nr')
+						AND $table10.pic_id = $table2.pic_id 
+						AND $table2.Owner = '$id' 
+						AND ($table10.pic_id <> ALL (SELECT pic_id 
+						FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) WHERE parent = '$kat_nr'))");
 					}
 				}
 			}
