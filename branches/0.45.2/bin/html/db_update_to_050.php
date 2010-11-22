@@ -42,7 +42,7 @@ include '../share/functions/permissions.php';
 
 
 	mysql_close($conn);
-	@$conn = mysql_connect('localhost','root','cx4dd');
+	@$conn = mysql_connect('localhost','user','pwd');
 	$res0 = mysql_select_db('pic2base');
 	echo "
 	<div class='page'>
