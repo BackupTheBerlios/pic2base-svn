@@ -207,12 +207,12 @@ function getShortFS($FileSize)
 
 <SCRIPT language="javascript">
 <!--
-function getPreview(kat_id, ID, mod, pic_id, modus, base_file, bewertung, auswahl, position, jump)
+function getPreview(kat_id, ID, mod, pic_id, modus, base_file, bewertung, auswahl, position, jump, treestatus)
 {
-	//confirm("kat_id: " + kat_id + ", ID: "+ID+", mod: "+mod+", pic_id: "+pic_id+", modus: "+modus+", base_file: "+base_file +", bewertung: "+bewertung +", Auswahl: "+auswahl +", Position: "+position +", Sprung-Richtung: "+jump);
+	//confirm("kat_id: " + kat_id + ", ID: "+ID+", mod: "+mod+", pic_id: "+pic_id+", modus: "+modus+", base_file: "+base_file +", bewertung: "+bewertung +", Auswahl: "+auswahl +", Position: "+position +", Sprung-Richtung: "+jump +", Treestatus: "+treestatus);
 	
 	var url = '../../share/get_preview.php';
-	var params ='kat_id=' + kat_id + '&ID=' + ID + '&mod=' + mod + '&pic_id=' + pic_id + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&auswahl=' + auswahl + '&position=' + position + '&jump=' + jump;
+	var params ='kat_id=' + kat_id + '&ID=' + ID + '&mod=' + mod + '&pic_id=' + pic_id + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&auswahl=' + auswahl + '&position=' + position + '&jump=' + jump + '&treestatus=' + treestatus;
 	var target = 'filmstreifen';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 	
