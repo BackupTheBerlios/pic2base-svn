@@ -218,7 +218,6 @@ IF($num5 > '0')
 	}
 }
 //print_r($viewable_fields);
-
 //$file = $pic_path."/".$FileName;
 $file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 //echo $file."<BR>";
