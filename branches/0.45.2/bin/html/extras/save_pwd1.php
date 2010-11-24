@@ -46,9 +46,9 @@ $ort = $_POST['ort'];
 $tel = $_POST['tel'];
 $email = $_POST['email'];
 $internet = $_POST['internet'];
-IF( array_key_exists('old_pwd',$_GET) )
+IF( array_key_exists('old_pwd',$_POST) )
 {
-	$old_pwd = $_GET['old_pwd'];
+	$old_pwd = $_POST['old_pwd'];
 }
 ELSE
 {

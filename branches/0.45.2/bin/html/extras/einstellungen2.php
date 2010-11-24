@@ -78,7 +78,7 @@ IF(hasPermission($c_username, 'editallprofiles'))
 		</div>
 		
 		<div id='spalte1'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Pers. Einstellungen f&uuml;r ".$vorname." ".$name.":<BR>
+		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Pers. Einstellungen f&uuml;r ".$vorname." ".$name." (".$u_name."):<BR>
 		<FORM name = 'pwd' method = post action = 'save_pwd1.php?mod=all'>
 		<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:none;padding:0px;margin-top:6px;margin-bottom:0px;
 	    	text-align:center;'>
@@ -142,12 +142,12 @@ IF(hasPermission($c_username, 'editallprofiles'))
 		
 		<TR id='kat'>
 			<TD id='kat1'>Neues Passwort:</TD>
-			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_1' style='width:200px;'></TD>
+			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_1' style='width:200px;' value='$u_name'></TD>
 		</TR>
 		
 		<TR id='kat'>
 			<TD id='kat1'>Passwort wiederholen:</TD>
-			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_2' style='width:200px;'></TD>
+			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_2' style='width:200px;' value='$u_name'></TD>
 		</TR>
 		
 		<TR id='normal' style='height:10px;>
@@ -169,9 +169,12 @@ IF(hasPermission($c_username, 'editallprofiles'))
 		<div id='spalte2'>
 		<p id='elf' style='background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;'><b>Hilfe zu den Bearbeitungsm&ouml;glichkeiten:</b><BR><BR>
 		Sie k&ouml;nnen die pers&ouml;nlichen Angaben unver&auml;ndert lassen und nur das Passwort &auml;ndern.<BR>
-		F&uuml;llen Sie hierzu lediglich die beiden unteren Eingabefelder aus.<BR><BR>
-		Wenn Sie die pers&ouml;nlichen Daten ver&auml;ndern wollen, m&uuml;ssen Sie die &Auml;nderungen mit dem Passwort des betreffenden Benutzers best&auml;tigen.<BR>
-		F&uuml;llen Sie hierzu - nachdem Sie die entsprechenden &Auml;nderungen an den pers&ouml;nlichen Daten vorgenommen haben - ebenfalls die beiden unteren Passwort-Felder aus.</p>
+		F&uuml;llen Sie hierzu lediglich die beiden unteren Eingabefelder aus.<BR>
+		Standardm&auml;&szlig;ig ist hier der betreffende Benutzername als Passwort vorbelegt.<BR><BR>
+		Wenn Sie nur die pers&ouml;nlichen Daten ver&auml;ndern wollen, m&uuml;ssen Sie die &Auml;nderungen mit dem Passwort des betreffenden Benutzers best&auml;tigen.<BR>
+		F&uuml;llen Sie hierzu - nachdem Sie die entsprechenden &Auml;nderungen an den pers&ouml;nlichen Daten vorgenommen haben - die beiden unteren Passwort-Felder mit dem bisherigen Passwort des betreffenden Benutzers aus.<BR>
+		Anderenfalls wird das bisherige Passwort durch den Benutzernamen des betreffenden Benutzers ersetzt.<BR>
+		Dies ist die Voreinstellung.</p>
 		</div>
 	
 		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
