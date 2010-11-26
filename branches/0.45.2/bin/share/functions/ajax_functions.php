@@ -504,5 +504,25 @@ function changeViewable(lfdnr, checked, sr)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 }
 
+function changeUserpermission(user_id, perm_id, checked, sr)
+{
+	var url = '../../share/change_userpermission.php';
+	var params = 'user_id=' + user_id + '&perm_id=' + perm_id + '&checked=' + checked + '&sr=' + sr;
+	//alert("Parameter: "+params);
+	var target = perm_id;
+	//alert(target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
+function changeGrouppermission(group_id, perm_id, checked, sr)
+{
+	var url = '../../share/change_grouppermission.php';
+	var params = 'group_id=' + group_id + '&perm_id=' + perm_id + '&checked=' + checked + '&sr=' + sr;
+	//alert("Parameter: "+params);
+	var target = perm_id;
+	//alert(target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
 -->
 </SCRIPT>
