@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 
 // abzuarbeitende Schritte:
@@ -38,7 +38,7 @@ if (hasPermission($c_username, 'adminlogin') AND $users !== '')
 
 	IF(mysql_error() == '')
 	{
-		echo "<meta http-equiv='Refresh' content='5; URL=adminframe.php?item=adminshowusers'>";
+		echo "<meta http-equiv='Refresh' content='2; URL=adminframe.php?item=adminshowusers'>";
 	}
 	
 }
