@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 
 //echo "an exif.php &uuml;bergebene Daten: ".$target." ".$latitude." ".$longitude." ".$altitude."<BR>";
@@ -23,9 +23,9 @@ function dec2dms($decimal)
 	return array($degrees,$minutes,$milliseconds);
 }
 
-/* Fügt EXIF GPS-Tag zu JPEG Datei hinzu                       */
-/* Existiert schon ein solches Tag wird das alte überschrieben */
-/* Rückgabewerte: 0 bei Erfolg, -1 bei Fehler                  */
+/* Fuegt EXIF GPS-Tag zu JPEG Datei hinzu                       */
+/* Existiert schon ein solches Tag wird das alte ueberschrieben */
+/* Rueckgabewerte: 0 bei Erfolg, -1 bei Fehler                  */
 function addGPSdata($infile,$outfile,$GPS_lat,$GPS_lon,$GPS_alt)
 {
 	try
