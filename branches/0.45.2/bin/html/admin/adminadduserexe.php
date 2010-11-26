@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
@@ -25,7 +25,6 @@ include '../../share/global_config.php';
 <DIV Class="klein">
 
 <?php
-
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -43,7 +42,7 @@ $strasse = $_POST['strasse'];
 $plz = $_POST['plz'];
 $ort = $_POST['ort'];
 $group = $_POST['group'];
-$berechtigung = $_POST['group'];
+//$berechtigung = $_POST['group'];
 $telefon = $_POST['telefon'];
 $email = $_POST['email'];
 $internet = $_POST['internet'];
@@ -92,7 +91,7 @@ include $sr.'/bin/share/db_connect1.php';
 				$key = '0815';
 				$ftp_passwd = crypt($pwd);
 				//Benutzerdaten erfassen:
-				$result1 = mysql_query( "INSERT INTO $table1 (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, berechtigung, group_id) VALUES ('$benutzername', '$titel', '$name', '$vorname', '$strasse', '$plz', '$ort', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', '$email', '$internet', '65534', '65534', '1', '$user_dir', '$up_dir', '$down_dir','$berechtigung', '$group')");
+				$result1 = mysql_query( "INSERT INTO $table1 (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, group_id) VALUES ('$benutzername', '$titel', '$name', '$vorname', '$strasse', '$plz', '$ort', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', '$email', '$internet', '65534', '65534', '1', '$user_dir', '$up_dir', '$down_dir', '$group')");
 				echo mysql_error();
 				$result4 = mysql_query( "SELECT * FROM $table1 WHERE username = '$benutzername' AND name = '$name' AND vorname = '$vorname'");
 				$user_id = mysql_result($result4, isset($i4), 'id');

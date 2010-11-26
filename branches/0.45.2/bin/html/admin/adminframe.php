@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
@@ -18,6 +18,7 @@ include '../../share/global_config.php';
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<!--sollte die EXIF-Daten-Erzeugung abstuerzen, erfolgt nach 300 Sek. ein automat. Neustart-->
 	<!--<meta http-equiv="Refresh" Content="300; URL=../../admin/admin/generate_exifdata0.php">-->
+	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
