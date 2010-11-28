@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 ?>
 
@@ -510,7 +510,7 @@ echo "<div class='page'>
 				$file = mysql_result($result4, $i4, 'FileNameHQ');
 				$ranking = mysql_result($result4, $i4, 'ranking');
 				//$bild = $pic_hq_preview."/".$file;
-				$bild = "http://".$_SERVER['SERVER_NAME']."/".$inst_path."pic2base/images/vorschau/hq-preview/".$file;
+				$bild = "http://".$_SERVER['SERVER_NAME']."".$inst_path."/pic2base/images/vorschau/hq-preview/".$file;
 				$param = getimagesize($pic_hq_preview."/".$file);
 				$width = $param[0];
 				$height = $param[1];
