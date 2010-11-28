@@ -34,11 +34,11 @@ function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 		if(source=='start')
 		{
 			htmlcode+="<div style=\"position: absolute; top: "+(Math.random()*(h-50))+"px; left: "+(Math.random()*(b-200))+"px; z-index: 1;\">\n";
-			htmlcode+="<img src=\"/pic2base/bin/share/images/p2b.gif\" alt=\"pic2base\" height=50px>\n";
+			htmlcode+="<img src=\"../share/images/p2b.gif\" alt=\"pic2base\" height=50px>\n";
 			htmlcode+="<\/div>\n";		
 
 			htmlcode+="<div style=\"position: absolute; top: 0px; left: 0px; z-index: 2;\">\n";
-			htmlcode+="<img src=\"/pic2base/bin/share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
+			htmlcode+="<img src=\"../share/images/no_pic.gif\" height="+h+" width="+b+" alt=\"no_pic\" title=\"[Mausklick schlie&szlig;t Fenster!]\" onclick=\"window.close()\">\n";
 			htmlcode+="<\/div>\n";
 		}
 		else
