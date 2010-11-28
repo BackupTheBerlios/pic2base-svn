@@ -70,6 +70,7 @@ echo "<br>++++ #### ++++<br>";
 	@$conn = mysql_connect($db_server,$user,$PWD);
 	@$database = mysql_pconnect($db_server,$user,$PWD);
 	mysql_set_charset('utf8', $conn);
+	
 //	mysql_error();
 	if (!$database) 
 	{
@@ -90,6 +91,7 @@ echo "<br>++++ #### ++++<br>";
 			mysql_close($conn);
 			$conn_neu = mysql_connect('localhost', $user, $PWD);
 			mysql_select_db($db);
+			mysql_set_charset('utf8', $conn_neu);
 			$res15 = mysql_query( "CREATE TABLE IF NOT EXISTS `ftp_transfer` (
 			`username` tinytext collate latin1_german1_ci,
 			`filename` text collate latin1_german1_ci,
