@@ -195,10 +195,19 @@ echo "
 		break;
 		
 		CASE '2':
-		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
+		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
+		<b>Hilfe zu den Suchm&ouml;glichkeiten</b><BR><BR>
 		
-		<u>Auswahl der Bild-Bewertung</u><BR>
+		Inhalt:<BR>
+		<a href='#2_bewertung'>Auswahl der Bild-Bewertung</a><BR>
+		<a href='#2_zeit'>Auflistung nach Jahrg&auml;ngen sortiert</a><BR>
+		<a href='#2_kat'>Suche nach Kategorien</a><BR>
+		<a href='#2_meta'>Suche nach ausgew&auml;hlten Meta-Daten</a><BR>
+		<a href='#2_desc'>Suche nach Beschreibungstext</a><BR>
+		<a href='#2_geo'>Suche nach Geo-Daten</a><BR>
+		<a href='#2_edit'>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse</a><BR><BR>
+		
+		<a name = '2_bewertung'></a>Auswahl der Bild-Bewertung<BR>
 		Um die Anzahl der dargestellten Bilder einzuschr&auml;nken ist es m&ouml;glich, diese mit einer \"Benotung\" zu versehen. (siehe Bearbeitung | Bilder bewerten / Bewertung &auml;ndern)<BR>
 		Die Note 1 (\"Sehr gut\"; 5 Sterne) stellt hierbei das h&ouml;chste Qualit&auml;tsniveau dar und die Note 5 (\"Ungen&uuml;gend\"; 1 Stern) das niedrigste.<BR>
 		Wurde ein Bild noch nicht bewertet, erh&auml;lt es automatisch w&auml;hrend der Daten-Erfassung die Note 6 (kein Stern).<BR>
@@ -211,9 +220,10 @@ echo "
 		nur der f&uuml;nf (rechte) Stern - gew&auml;hlte Benotung: sehr gut<BR><BR>
 		Werden mehrere Sterne dargestellt (z.B. der dritte bis f&uuml;nfte), so bedeutet dies, es sollen alle Bilder gesucht werden, die die Note 3 (befriedigend) oder besser haben.<BR><BR>
 		
-		Hinweis:<BR>F&uuml;r diese Funktion m&uuml;ssen Cookies zugelassen sein!<BR><BR>
+		Hinweis:<BR>F&uuml;r diese Funktion m&uuml;ssen Cookies zugelassen sein!<BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<u>Auflistung nach Jahrg&auml;ngen sortiert</u><BR>
+		<a name = '2_zeit'></a>Auflistung nach Jahrg&auml;ngen sortiert<BR>
 		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum der Bilder unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den Meta-Daten ausgelesen.
 		Handelt es sich um Bilddateien ohne Meta-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefasst. Diesen Bildern kann - die entsprechenden Berechtigung vorausgesetzt - sp&auml;ter manuell das Aufnahmedatum zugewiesen werden.<BR>
 		Die zeitliche Darstellung kann bis auf die Tages-Ebene heruntergebrochen werden, indem zun&auml;chst das Aufnahmejahr mit einem Klick auf die betreffende Jahreszahl gew&auml;hlt wird,
@@ -223,8 +233,9 @@ echo "
 		Wenn man auf das Datum klickt, kann man - je nach erteiltem Recht - einen Tagebucheintrag hinzuf&uuml;gen oder einsehen. Auf diese Weise kann auf bequeme Art ein sogenanntes Foto-Tagebuch gef&uuml;hrt werden.
 		Der Inhalt des Fototagebuchs wird in der Detailansicht zu den entsprechenden Bildern mit angezeigt.<BR>
 		Ein Datum, dem bereits Informationen zugewiesen wurden, wird in der Ansicht blau hervorgehoben.<BR>
-		<BR>
-		<u>Suche nach Kategorien</u><BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
+		<a name = '2_kat'></a>Suche nach Kategorien<BR>
 		In dieser Ansicht besteht die M&ouml;glichkeit, Bilder anhand der zugewiesenen Kategorie zu recherchieren.<BR>
 		Die oberste Ebene (Neuzug&auml;nge) beinhaltet alle Bilder, welchen noch keine Kategorie zugewiesen wurden.<BR>
 		Die Ebenen darunter beinhalten Bilder der jeweiligen Kategorien.<BR>
@@ -235,8 +246,9 @@ echo "
 		Trotzdem kann bei einem Klick auf das gr&uuml;ne H&auml;kchen hinter der Kategorie \"Neuzug&auml;nge\" die Meldung erscheinen \"Jedem Bild wurde mind. eine Kategorie zugewiesen.\".<BR>
 		Das bedeutet, die Kategorie \"Neuzug&auml;nge\" selbst ist leer. Alle Bilder sind einer entsprechenden Kategorie zugeordnet worden.<BR>
 		Dies sollte der Normalfall sein, da die Kategorie \"Neuzug&auml;nge\" nur ein vorl&auml;ufiger Ablageort f&uuml;r gerade in das System aufgenommene Bilder ist.<BR>
-		<BR>
-		<u>Suche nach ausgew&auml;hlten Meta-Daten</u><BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
+		<a name = '2_meta'></a>Suche nach ausgew&auml;hlten Meta-Daten<BR>
 		Was sind Meta-Daten?<BR>
 		Meta-Daten sind zus&auml;tzliche, meist nicht sichtbare Informationen zu einem Bild. Dies k&ouml;nnen z.B. sein:<BR> Kamera-Modell, Aufnahme-Datum, Blende, Belichtungszeit, aber auch Angaben zum Copyright, Stichworte oder Bildbeschreibungen.<BR>
 		Um &uuml;ber die Meta-Daten recherchieren zu k&ouml;nnen, m&uuml;ssen Sie zuerst das entsprechende Meta-Daten-Feld in der ersten Zeile des Suchformulars ausw&auml;hlen.<BR>
@@ -244,17 +256,19 @@ echo "
 		Wenn dies erfolgt ist, steht Ihnen auch das 3. Auswahlfeld (Kriterium) zur Verf&uuml;gung. In diesem Auswahlfeld werden alle verf&uuml;gbaren Werte des jeweils gew&auml;hlten Meta-Feldes aufgelistet. D.h., der hier angezeigte Werte-Bereich variiert je nach der im Feld \"Meta-Daten-Feld\" getroffenen Auswahl.<BR>
 		Wenn alle drei Felder ausgew&auml;hlt wurden, starten Sie die Suche mit einem Klick auf den Button \"Suche starten\".<BR>
 		Beachten Sie bitte:<BR>
-		Auch hier wird &uuml;ber all diejenigen Bilder recherchiert, welche der evtl. gew&auml;hlten Bewertung entsprechen. Einen entsprechenden Hinweis zur eingestellten Bewertung finden Sie in der pic2base-Kopfzeile.
-		<BR><BR>
-		<u>Suche nach Beschreibungstext</u><BR>
+		Auch hier wird &uuml;ber all diejenigen Bilder recherchiert, welche der evtl. gew&auml;hlten Bewertung entsprechen. Einen entsprechenden Hinweis zur eingestellten Bewertung finden Sie in der pic2base-Kopfzeile.<BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
+		<a name = '2_desc'></a>Suche nach Beschreibungstext<BR>
 		Innerhalb der Beschreibungstexte der einzelnen Bilder k&ouml;nnen Sie nach Vorkommen bestimmter Begriffe suchen.<BR>
 		Insgesamt steht eine Suche &uuml;ber 5 Begriffe zur Verfgung, welche mit den Booleschen Operatoren UND und OR verkn&uuml;pft werden k&ouml;nnen.<BR>
 		Die Suche bezieht sich immer auf das Vorhandensein des Begriffs an einer beliebigen Stelle im Beschreibungstext. So liefert die Suche nach dem Wort \"Haus\" alle Bilder, in deren Beschreibungen \"Haus\" aber auch \"Hausmeister\" oder \"Bauhaus\" vorkommt.<BR>
 		Eine Unterscheidung zwischen Gro&#223;- und Kleinschreibung wird nicht vorgenommen.<BR>
 		Bilder, welchen noch kein Beschreibungstext zugewiesen wurden, werden von der Suche ausgeschlossen.<BR>
-		Die Verwendung von Platzhaltern ist (noch) nicht m&ouml;glich.
-		<BR><BR>
-		<u>Suche nach Geo-Daten</u><BR>
+		Die Verwendung von Platzhaltern ist (noch) nicht m&ouml;glich.<BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
+		<a name = '2_geo'></a>Suche nach Geo-Daten<BR>
 		Bei der Suche nach Geo-Daten haben Sie zwei M&ouml;glichkeiten:<BR>
 		- Die Suche anhand konkreter geografischer Koordinaten:<BR>
 		Hier tragen Sie in die entsprechenden Felder die Angaben f&uuml;r L&auml;nge, Breite und ggf. H&ouml;he sowie den Umkreis, innerhalb dessen rund um den angegebenen Punkt gesucht werden soll, ein.<BR>
@@ -262,27 +276,31 @@ echo "
 		- Suche nach Ortsbezeichnungen:<BR>
 		Wenn Sie bei der Geo-Referenzierung Ihrer Bilder diesen die entsprechenden Ortsnamen zugewiesen haben, haben Sie nun die M&ouml;glichkeit, in diesem Formular nach Bildern innerhalb eines bestimmten Umkreises um einen Ort zu suchen.<BR>
 		Hierzu wird zun&auml;chst der geometrische Mittelpunkt aller Fotos ermittelt, welche an dem ausgew&auml;hlten Ort aufgenommen wurden. Von diesem Punkt aus werden alle Bilder ermittelt, welche sich innerhalb des angegebenen Umkreises befinden.<BR><BR>
-		In beiden Suchm&ouml;glichkeiten kann als maximaler Umkreis eine Entfernung von 50 km angegeben werden.
-		<BR><BR>
+		In beiden Suchm&ouml;glichkeiten kann als maximaler Umkreis eine Entfernung von 50 km angegeben werden.<BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<U>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse</U><BR>
+		<a name = '2_edit'></a>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse<BR>
 		
 		Wenn der angemeldete Benutzer berechtigt ist, Eigenschaften der gefundenen Bilder zu bearbeiten, stehen ihm die folgenden M&ouml;glichkeiten zur Verf&uuml;gung:<BR></p>
 		<ul style='margin:20px 150px; text-align:justify; width:350px;'>
-		<li>&Uuml;bertragung der Bild-Eigent&uuml;merschaft auf einen anderen User
-		<li>l&ouml;schen des Bildes
-		<li>Korrektur der Vorschau-Ansicht bei RAW-Format-Bildern
-		<li>manuelle Georeferenzierung bzw. Korrektur der bereits erfolgten automatischen Geo-Referenzierung
-		<li>manuelle Bearbeitung freigegebener Meta-Daten
+		<li>&Uuml;bertragung der Bild-Eigent&uuml;merschaft auf einen anderen User: <img src='../../share/images/change_owner.gif' height='12px' />
+		<li>l&ouml;schen des Bildes: <img src='../../share/images/trash.gif' height='12px' />
+		<li>Korrektur der Vorschau-Ansicht bei RAW-Bildern: <img src='../../share/images/reload.png' height='12px' />
+		<li>manuelle Georeferenzierung bzw. Korrektur der bereits erfolgten automatischen Geo-Referenzierung: <img src='../../share/images/del_geo_ref.gif' height='12px' />
+		<li>manuelle Bearbeitung freigegebener Meta-Daten: <img src='../../share/images/info.gif' height='12px' />
 		</ul>
 		<p style='margin:20px 150px; text-align:justify; width:400px;'>
-		Die o.g. Funktionen werden &uuml;ber die jeweiligen Icons aufgerufen.<BR>
+		Bei entsprechender Berechtigung k&ouml;nnen die o.g. Funktionen &uuml;ber die jeweiligen Icons aufgerufen werden. (siehe Abb.:)<BR><BR>
+		<img src='img/recherche1.png'></img><BR><BR>
 		Weiterhin besteht bei entsprechender Berechtigung die M&ouml;glichkeit, die Bildbeschreibung zu &auml;ndern. Hierzu Nehmen Sie die &Auml;nderung direkt in dem angezeigten Textfeld vor und speichern diese dann durch einen Klick auf den Button \"&Auml;nderungen speichern\".<BR><BR>
 		Zus&auml;tzlich haben Sie die M&ouml;glichkeit, ein sogenanntes Kategorie-Lexikon anzulegen. Hiermit besteht die Option, zu jeder Kategorie zus&auml;tzliche Informationen in der Datenbank zu hinterlegen. So k&ouml;nnte man z.B. der Kategorie \"Blankenburg (Harz)\" Informationen zur geografischen Lage, der Einwohnerzahl, der Erreichbarkeit mit Bus / Bahn / Auto usw. zuweisen.<BR>
 		Die Zuweisung erfolgt, indem Sie in der Ansicht \"Suche nach Kategorien\" auf den gew&uuml;nschten Kategorienamen klicken und dann die Informationen in dem sich &ouml;ffnenden Dialogfenster eintragen. Diese zus&auml;tzlichen Informationen werden formatiert abgespeichert und k&ouml;nnen neben Links auch Verweise auf externe Bilder beinhalten.<BR>
 		Kategorien, denen bereits Informationen zugewiesen wurden, werden im Kategoriebaum blau hervorgehoben.<BR><BR>
 		Analog kann ein Fototagebuch angelegt werden, indem man sich in der Ansicht \"Auflistung nach Jahrg&auml;ngen sortiert\" den betreffenden Tag heraussucht, anklickt und die gew&uuml;nschte Information hinterlegt.<BR>
-		Auch hier wird ein Tag, zu dem bereits zus&auml;tzliche Informationen existieren, farblich hervorgehoben.
+		Auch hier wird ein Tag, zu dem bereits zus&auml;tzliche Informationen existieren, farblich hervorgehoben.<BR><BR>
+		Der Inhalt des Kategorielexikons und des Forttagebuchs werden bei den betreffenden Bildern jeweils mit in der Komplett-Ansicht der Detailinformationen ausgegeben. (siehe Abb.:)<BR><BR>
+		<img src='img/recherche2.png' width='400px'></img><BR><BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		</p>";
 		break;
 		
