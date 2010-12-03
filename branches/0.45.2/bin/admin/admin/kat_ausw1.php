@@ -20,9 +20,9 @@
 
 /*
  * Project: pic2base
- * File: kategorie0.php
+ * File: kat_ausw1.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -31,24 +31,21 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 //setlocale(LC_CTYPE, 'de_DE');
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
 include_once $sr.'/bin/share/functions/ajax_functions.php';
 
-
+/*
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 SWITCH ($berechtigung)
@@ -66,7 +63,18 @@ SWITCH ($berechtigung)
 	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
 	break;
 }
-
+*/
+IF(hasPermission($c_username, 'editkattree'))
+{
+	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+					<a class='navi' href='../../html/start.php'>zur Startseite</a>
+					<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
+					";
+}
+ELSE
+{
+	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
+}
 echo "
 <div class='page'>
 <FORM name='kat-zuweisung' method='post' action='kat_sort_action.php'>
@@ -75,7 +83,7 @@ echo "
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>".
 		$navigation
-		."<INPUT type='submit' class='button3' value = 'Speichern' style='margin-top:500px;'><BR>
+		."<INPUT type='submit' class='button3' value = 'Speichern' style='margin-top:520px;'><BR>
 		<INPUT type='button' class='button3' style='margin-top:5px;' value='Abbrechen' OnClick='location.href=\"$inst_path/pic2base/bin/html/admin/adminframe.php\"'>
 		</div>
 	</div>
@@ -87,7 +95,6 @@ echo "
 		</TR>";
 	
 	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
-
 	$kategorie = mysql_result($result10, isset($i10), 'kategorie');
 	$kat_id_s = mysql_result($result10, isset($i10), 'kat_id');
 		
@@ -113,7 +120,7 @@ echo "
 	Wenn Sie auch diese ausgew&auml;hlt haben, best&auml;tigen Sie Ihre Auswahl mit einem Klick auf den Button \"Speichern\".<BR>
 	</p>
 	</DIV>
-<p id='fuss'><?php echo $cr; ?></p>
+<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 </div>
 </FORM>
 
