@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: kat_sort_action.php
  *
- * Copyright (c) 2003 - 2008 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
