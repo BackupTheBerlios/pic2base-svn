@@ -279,6 +279,7 @@ echo "
 		<u>Wichtig!</u><BR>
 		Hierbei werden auch ALLE Unterkategorien der gew&auml;hlten Kategorie gel&ouml;scht!<BR><BR>
 		&Uuml;ber den Men&uuml;punkt \"Sortierung\" k&ouml;nnen Sie die Kategorie-Struktur neu ordnen. Weitere Informationen erhalten Sie auf der Sortieren-Seite.<BR><BR>
+		Werden Kategorien gel&ouml;scht oder neu sortiert, hat dies auch Auswirkungen auf die darin befindlichen Bilder. In diesem Fall m&uuml;ssen die jeweiligen Meta-Daten konsistent gehalten werden, was - je nach Anzahl der Bilder und der Rechenleistung des Servers - einige Zeit in Anspruch nehmen kann.<BR><BR>
 		Mit dem Men&uuml;punkt \"Wartung\" haben Sie die M&ouml;glichkeit, die Tabelle der Bild-Kategorie-Zuweisungen auf fehlerhafte Eintr&auml;ge zu &uuml;berpr&uuml;fen und ggf. zu reparieren. Die Aktion wird sofort nach Klick auf den Button gestartet und kann eine Weile dauern.<BR>
 		Am Ende der Wartung wird Ihnen ein Bericht &uuml;ber den Zustand der Tabelle angezeigt.</p>
 	</DIV>
