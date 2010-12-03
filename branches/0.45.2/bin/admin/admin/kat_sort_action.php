@@ -19,7 +19,7 @@
 
 /*
  * Project: pic2base
- * File: kat_delete_action.php
+ * File: kat_sort_action.php
  *
  * Copyright (c) 2003 - 2008 Klaus Henneberg
  *
@@ -35,27 +35,22 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result1, isset($i1), 'id');
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
+IF(hasPermission($c_username, 'editkattree'))
 {
-	//Admin
-	CASE $berechtigung == '1':
 	$navigation = "<a class='navi' href='kategorie0.php?kat_id=0'>Zur&uuml;ck</a>";
-	break;
 }
 
-$kat_source = $_POST['kat_source'];
-$kat_dest = $_POST['kat_dest'];
+@$kat_source = $_POST['kat_source'];
+@$kat_dest = $_POST['kat_dest'];
 
 //##############  Kategorie-Neusortierung mit Mitnahme der Unterkategorien der Quellkategorie   ######################
 IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND $kat_dest !== '' AND $kat_dest !== NULL)
@@ -244,7 +239,8 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 }
 ELSE
 {
-	echo "Fehler!<BR><BR>";
+	echo "<p style='color:yellow;'>Es ist ein Fehler aufgetreten!<BR><BR>
+	Sie m&uuml;ssen eine Quell- und eine Zielkategorie ausw&auml;hlen!</style><BR><BR>";
 	echo "<input type='button' Value='Zur&uuml;ck' onClick='location.href=\"javascript:history.back()\"'>";
 }
 //#####   Ende   ##########################################################################################################
