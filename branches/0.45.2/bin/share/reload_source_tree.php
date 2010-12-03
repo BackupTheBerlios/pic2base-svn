@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 ?>
 
@@ -26,7 +26,7 @@ setlocale(LC_CTYPE, 'de_DE');
 include 'db_connect1.php';
 INCLUDE 'global_config.php';
 
-// für register_globals = off
+// fuer register_globals = off
 if(array_key_exists('kat_id_s',$_GET))
 {
 	$kat_id_s = $_GET['kat_id_s']; 
@@ -35,13 +35,13 @@ else
 {
 	$kat_id_s = 0;
 }
-//Erzeugung der Baumstruktur für Source-Kategorie:
+//Erzeugung der Baumstruktur fuer Source-Kategorie:
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 $KAT_ID_S = $kat_id_s;		//kat_id_s - Kategorie-ID der Source
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
 $knoten_arr_s[]=$kat_id_s;
-$kat_id_s_d = $kat_id_s;	//Die Source-Kat-ID muß unverändert bis in den Destination-Bereich des Skripts durchgereicht 					werden, deshalb hier Umbenennung!
+$kat_id_s_d = $kat_id_s;	//Die Source-Kat-ID muss unveraendert bis in den Destination-Bereich des Skripts durchgereicht 					werden, deshalb hier Umbenennung!
 WHILE ($kat_id_s > '1')
 {
 	$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id_s'");
@@ -93,7 +93,7 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 				IF($kat_id_s !== '1')
 				{
 					echo "
-					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
+					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 					</TD>";
 				}
 				ELSE
@@ -115,7 +115,7 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 				IF($kat_id_s !== '1')
 				{
 					echo "
-					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
+					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 					</TD>";
 				}
 				ELSE
@@ -143,7 +143,7 @@ FOR ($i10=0; $i10<$num10; $i10++)
 		$space .="&#160;&#160;&#160;";
 	}
 	
-	//Link für den Rücksprung erzeugen, d.h. nächst höheren Knoten aufrufen:
+	//Link fï¿½r den Rï¿½cksprung erzeugen, d.h. nï¿½chst hï¿½heren Knoten aufrufen:
 	$kat_id_s_back = array_search($kat_id_s, $knoten_arr_s);
 	IF (in_array($kat_id_s, $knoten_arr_s))
 	{

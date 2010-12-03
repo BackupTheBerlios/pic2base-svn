@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 
 //echo "Quell-Kat-ID: ".$kat_id_s."<BR>";
@@ -51,13 +51,7 @@ IF($num2 > '0')
 		$curr_level++;
 	}
 }
-//Kontrolle:
-/*
-FOREACH($child_arr AS $child)
-{
-	echo $child."<BR>";
-}
-*/
+
 //Erzeugung der Baumstruktur fuer Destination-Kategorie:
 //Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -129,44 +123,44 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 				//echo $kat_id_d_back;
 				$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 				echo 	"<TR id='kat'>
-					<TD id='kat1'>
-					".$space."<span style='cursor:pointer'; onClick='reloadDestTree(\"$kat_id_d_back\", \"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
+				<TD id='kat1'>
+				".$space."<span style='cursor:pointer'; onClick='reloadDestTree(\"$kat_id_d_back\", \"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
+				</TD>";
+				
+				IF($kat_id_d !== '1')
+				{
+					echo "
+					<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d $status>
 					</TD>";
-					
-					IF($kat_id_d !== '1')
-					{
-						echo "
-						<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d title=$kat_id_d $status>
-						</TD>";
-					}
-					ELSE
-					{
-						echo "<TD id='kat2'><BR></TD>";
-					}
-					
-					echo "</TR>";
+				}
+				ELSE
+				{
+					echo "<TD id='kat2'><BR></TD>";
+				}
+				
+				echo "</TR>";
 				getElementsD($kat_id_d, $knoten_arr_d, $KAT_ID_D, $child_arr, $kat_id_s);
 			}
 			ELSE
 			{
 				$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 				echo 	"<TR id='kat'>
-					<TD id='kat1'>
-					".$space."<span style='cursor:pointer'; onClick='reloadDestTree(\"$kat_id_d\", \"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
+				<TD id='kat1'>
+				".$space."<span style='cursor:pointer'; onClick='reloadDestTree(\"$kat_id_d\", \"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
+				</TD>";
+				
+				IF($kat_id_d !== '1')
+				{
+					echo "
+					<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d $status>
 					</TD>";
-					
-					IF($kat_id_d !== '1')
-					{
-						echo "
-						<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d title=$kat_id_d $status>
-						</TD>";
-					}
-					ELSE
-					{
-						echo "<TD id='kat2'><BR></TD>";
-					}
-					
-					echo "</TR>";
+				}
+				ELSE
+				{
+					echo "<TD id='kat2'><BR></TD>";
+				}
+				
+				echo "</TR>";
 			}
 		}
 	}
@@ -211,7 +205,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 				IF($kat_id_d !== '1')
 				{
 					echo "
-					<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d title=$kat_id_d $status>
+					<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d $status>
 					</TD>";
 				}
 				ELSE
@@ -234,7 +228,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 				IF($kat_id_d !== '1')
 				{
 					echo "
-					<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d title=$kat_id_d $status>
+					<TD id='kat2'><input type='radio' name='kat_dest' value=$kat_id_d $status>
 					</TD>";
 				}
 				ELSE
@@ -246,6 +240,4 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 		}
 	}
 	echo "</TABLE>";
-
-
 ?>
