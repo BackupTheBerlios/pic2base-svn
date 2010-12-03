@@ -71,7 +71,7 @@ echo "
 		<center>
 		<a class='subnavi' href='edit_geo_daten.php?pic_id=0&mod=kat'>Geo-Referenzierung</a>
 		<a class='subnavi' href='edit_bewertung.php?pic_id=0&mod=kat'>Bilder bewerten / Bewertung &auml;ndern</a>
-		<a class='subnavi' href='edit_beschreibung.php?pic_id=0&mod=kat'>Beschreibungen zuweisen / &auml;ndern</a>
+		<a class='subnavi' href='edit_beschreibung.php?pic_id=0&mod=kat'>Beschreibungen zuweisen</a>
 		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=edit'>Kategorien zuweisen</a>
 		<a class='subnavi' href='edit_remove_kat.php?pic_id=0&mod=kat'>Kategorie-Zuweisungen aufheben</a>
 		<a class='subnavi_blind'></a>
