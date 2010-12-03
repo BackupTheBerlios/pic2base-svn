@@ -19,9 +19,9 @@
 
 /*
  * Project: pic2base
- * File: kategorie0.php
+ * File: kat_sort1.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -29,18 +29,13 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
  
 INCLUDE '../../share/global_config.php';
@@ -270,32 +265,26 @@ ELSE
 				</TR>";
 		}
 	}
-	echo "</TABLE>";
-	?>
+	echo "</TABLE>
 	</div>
 	
-	<DIV id="spalte2">
-		<p id="elf" style="background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;">Hinweis:<BR><BR>
+	<DIV id='spalte2'>
+		<p id='elf'' style='background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;'>Hinweis:<BR><BR>
 		Die Kategorie-Sortierung dient dem Zweck, Bilder, die bisher in der Kategorie A einsortiert waren nun einer neuen (oder bereits vorhandenen) Kategorie B zuzuordnen.<BR><BR>
 		Anschlie&szlig;end wird die alte Kategorie A gel&ouml;scht.<BR><BR>
-		Dies kann man nutzen, um eine Kategorie innerhalb des Kategoriebaumes "umziehen" zu lassen.<BR><BR>
+		Dies kann man nutzen, um eine Kategorie innerhalb des Kategoriebaumes \"umziehen\" zu lassen.<BR><BR>
 		Dazu wird zun&auml;chst eine neue Kategorie B mit dem gleichen Namen der bisherigen Kategorie A an einer neuen Stelle im Kategoriebaum angelegt. Nun l&auml;&szlig;t man einfach die gew&uuml;nschte Kategorie von A nach B umziehen, womit die betroffenen Bilder zwar unter dem gleichen Kategorienamen, aber an einer anderen Stelle zu finden sind.<BR><BR>
 		<b><u>Schritt 1:</u></b><BR>
 		Pr&uuml;fen Sie in der linken Spalte, ob die gew&uuml;nschte Zielkategorie vorhanden ist. Wenn nicht, legen Sie sie an.<BR><BR>
 		<b><u>Schritt 2:</u></b><BR>
 		Klicken Sie hier, um zum Auswahlfenster f&uuml;r die Quell- und Zielkaterogie zu gelangen:<BR>
-		<center><INPUT type="button" value="Weiter zum Kategorie-Auswahlfenster" onClick='location.href="kat_ausw1.php"'></center></p>
+		<center><INPUT type='button' value='Weiter zum Kategorie-Auswahlfenster' onClick='location.href=\"kat_ausw1.php\"'></center></p>
 	</DIV>
-	
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+</div>";
 
-	<p id="fuss"><?php echo $cr; ?></p>
-
-</div>
-
-<?php
 mysql_close($conn);
 ?>
-<p class="klein">- KH 09/2006 -</P>
 </DIV></CENTER>
 </BODY>
 </HTML>
