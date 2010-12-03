@@ -45,25 +45,6 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 include_once $sr.'/bin/share/functions/ajax_functions.php';
 
-/*
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
-{
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
-			<a class='navi' href='../../html/start.php'>zur Startseite</a>
-			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-			";
-	break;
-	
-	//alle anderen
-	CASE $berechtigung > '1':
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-	break;
-}
-*/
 IF(hasPermission($c_username, 'editkattree'))
 {
 	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
