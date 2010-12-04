@@ -168,7 +168,7 @@ echo "
 		break;
 		
 		CASE '1':
-		echo "<p style='margin:120px 150px; text-align:justify; width:400px;'>
+		echo "<p style='margin:80px 150px; text-align:justify; width:400px;'>
 		<b>Hinweise zum Bild-Upload per FTP (Batch-Prozess):</b><BR><BR>
 		Derzeit (Software-Version ".$version.") werden die folgenden Datei-Typen von pic2base unterst&uuml;tzt:<BR>";
 		$i='0';
@@ -190,7 +190,16 @@ echo "
 		
 		echo "
 		<BR><BR>
-		Unter Windows verwenden Sie einen geeigneten FTP-Client (z.B. WS-FTP) um Ihre Bilder auf den pic2base-Server hochzuladen. LINUX-Benutzer k&ouml;nnen z.B. den Konqueror f&uuml;r den Upload benutzen, wobei sich eine zweigeteilte Fenster-Ansicht als vorteilhaft erwiesen hat.<BR>Die Adresse des pic2base-FTP-Servers lautet ".$_SERVER['SERVER_NAME'].". Melden Sie sich mit Ihren pers&ouml;nlichen Zugangsdaten (Benutzername: ".$c_username." und entsprechendem Passwort) an und kopieren Ihre Bild-Dateien in Ihren <b>UPLOAD</b>-Ordner. Wenn Sie nun zu pic2base zur&uuml;ckkehren erhalten Sie einen Hinweis, da&#223; Bilddateien in Ihrem Upload-Ordner liegen. Klicken Sie zur &Uuml;bernahme auf den Button 'Upload starten'. Je nach Anzahl der Bilder und deren Dateigr&ouml;&#223;e kann der Upload eine Weile dauern. Im Anschlu&#223; daran werden Sie aufgefordert, den soeben &uuml;bernommenen Bildern weitere Informationen hinzuzuf&uuml;gen (Geo.Koordinaten, Bewertung, Beschreibung) und abschlie&#223;end allen Bildern Kategorien zuzuweisen. Dies ist f&uuml;r die sp&auml;tere Recherche von Vorteil.<BR><BR>
+		Unter Windows verwenden Sie einen geeigneten FTP-Client (z.B. WS-FTP) um Ihre Bilder auf den pic2base-Server hochzuladen. 
+		LINUX-Benutzer k&ouml;nnen z.B. den Konqueror f&uuml;r den Upload benutzen, wobei sich eine zweigeteilte Fenster-Ansicht als 
+		vorteilhaft erwiesen hat.<BR>
+		Die Adresse des pic2base-FTP-Servers lautet ".$_SERVER['SERVER_NAME'].". 
+		Melden Sie sich mit Ihren pers&ouml;nlichen Zugangsdaten (Benutzername: ".$c_username." und entsprechendem Passwort) an und 
+		kopieren Ihre Bild-Dateien in Ihren <b>UPLOAD</b>-Ordner. Wenn Sie nun zu pic2base zur&uuml;ckkehren erhalten Sie 
+		einen Hinweis, da&#223; Bilddateien in Ihrem Upload-Ordner liegen. Klicken Sie zur &Uuml;bernahme auf den Button 'Upload starten'. 
+		Je nach Anzahl der Bilder und deren Dateigr&ouml;&#223;e kann der Upload eine Weile dauern. Im Anschlu&#223; daran werden Sie aufgefordert, 
+		den soeben &uuml;bernommenen Bildern weitere Informationen hinzuzuf&uuml;gen (Geo.Koordinaten, Bewertung, Beschreibung) und abschlie&#223;end 
+		allen Bildern Kategorien zuzuweisen. Dies ist f&uuml;r die sp&auml;tere Recherche wichtig.
 		</p>";
 		break;
 		
