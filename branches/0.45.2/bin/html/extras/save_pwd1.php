@@ -46,6 +46,8 @@ $ort = $_POST['ort'];
 $tel = $_POST['tel'];
 $email = $_POST['email'];
 $internet = $_POST['internet'];
+$dir_down = $_POST['direkt_download'];
+
 IF( array_key_exists('old_pwd',$_POST) )
 {
 	$old_pwd = $_POST['old_pwd'];
@@ -54,6 +56,7 @@ ELSE
 {
 	$old_pwd = '';
 }
+
 $new_pwd_1 = $_POST['new_pwd_1'];
 $new_pwd_2 = $_POST['new_pwd_2'];
 $mod = $_REQUEST['mod'];
@@ -87,6 +90,7 @@ echo "
 		echo mysql_error();
 		$num1 = mysql_num_rows($result1);
 	}
+	
 	IF ($num1 > '0' AND $new_pwd_1 !== ''  AND $new_pwd_2 !== '' AND strlen($new_pwd_1) > '4' AND $new_pwd_1 === $new_pwd_2)
 	{
 		echo "<p class='mittel' align='center'>Die ge&auml;nderten Daten werden gespeichert...</p>";
@@ -94,7 +98,7 @@ echo "
 		$user_id = mysql_result($result1, isset($i1), 'id');
 		$key = '0815';
 		$ftp_passwd = crypt($new_pwd_1);
-		//echo $ftp_passwd;
+		//echo $dir_down;
 		//Benutzerdaten erfassen:
 		$result2 = mysql_query( "UPDATE $table1 
 		SET 
@@ -107,9 +111,11 @@ echo "
 		tel = '$tel',
 		email = '$email',
 		internet = '$internet',
+		direkt_download = '$dir_down',
 		pwd = ENCRYPT('$new_pwd_1','$key'), 
 		ftp_passwd = '$ftp_passwd' 
 		WHERE id = '$user_id'");
+		echo mysql_error();
 		IF(mysql_error() == '')
 		{
 			shell_exec('/opt/lampp/lampp reloadftp');

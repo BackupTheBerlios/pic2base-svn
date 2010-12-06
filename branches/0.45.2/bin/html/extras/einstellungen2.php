@@ -65,6 +65,7 @@ IF(hasPermission($c_username, 'editallprofiles'))
 	$tel = mysql_result($result1, isset($i1), 'tel');
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
+	$direkt_download = mysql_result($result1, isset($i1), 'direkt_download');
 	
 	echo "
 	<div class='page'>
@@ -129,6 +130,28 @@ IF(hasPermission($c_username, 'editallprofiles'))
 		<TR id='kat'>
 			<TD id='kat1'>Internet:</TD>
 			<TD id='kat1' colspan='2'><input type='text' name='internet' value = '$internet' style='width:200px;'></TD>
+		</TR>
+		
+		<TR id='kat'>
+			<TD id='kat1'>Bild-Download:</TD>
+			<TD id='kat1' colspan='2'>
+			<!--<input type='text' name='direkt_download' value = '$direkt_download' style='width:200px;'>-->
+			<SELECT name='direkt_download' style='width:200px;'>";
+			IF($direkt_download == '0')
+			{
+				echo "
+				<option value='0' selected>per FTP</option>
+				<option value='1'>Direkt-Download</option>";
+			}
+			ELSEIF($direkt_download == '1')
+			{
+				echo "
+				<option value='0'>per FTP</option>
+				<option value='1' selected>Direkt-Download</option>";
+			}
+			
+			echo "
+			</TD>
 		</TR>
 		
 		<TR id='normal'>
