@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 //[Pfade]
 //Globale Konfigurationseinstellungen
 $doc_root = $_SERVER['DOCUMENT_ROOT'];						//DocumentRoot des Web-Servers
-$inst_path = "";										//Pfad zwischen DocumentRoot und pic2base
+$inst_path = "";											//Pfad zwischen DocumentRoot und pic2base
 $p2b_path = $doc_root.$inst_path."/";						//Pfad zur p2b-Wurzel
 $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
 
@@ -19,7 +19,6 @@ $HQ_verzeichnis = $sr."/images/vorschau/hq-preview";
 $geo_path_copy = $sr."/tracks";
 $ftp_path = $sr."/userdata";
 
-// fuer register_globals = off
 if(!isset($benutzername))
 {
 	$benutzername = '';
@@ -43,15 +42,19 @@ $supported_filetypes = array('bmp','cgm','cr2','crw','dcm','dcr','dcx','eps','ex
 //unterstuetzten Datei-Formate (OHNE RAW-Dateien):
 $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','html','jng','jpeg','jpg','mng','mvg','otb','palm','pbm','pcd','pcds','pcl','pcx','pdb','pdf','pgm','png','png8','png24','png32','pnm','ppm','ps','ps2','ps3','psd','rla','rle','sct','sfw','sgi','shtml','sun','svg','tga','tiff','vicar','viff','wpg','xbm','xcf','xpm','yuv');
 
+//###################  in DB abzulegende Parameter  ##################################
+
 //Standorte der externen Programme:
 $dcraw_path = '/usr/bin';		//Pfad zu dcraw
 $im_path = '/usr/bin';			//Pfad zum ImageMagick
 $et_path = '/usr/bin';			//Pfad zum exiftool
-$gpsb_path = '/usr/bin';	//Pfad zu GPSBabel
+$gpsb_path = '/usr/bin';		//Pfad zu GPSBabel
 $md5sum_path = '/usr/bin';
 
 //Filmstreifen Download - direkt -> "1" oder per ftp -> "0"
 $direkt_download = "0";
+
+//####################################################################################
 
 //[GM-Keys; koennen von http://code.google.com/apis/maps/ bezogen werden]
 SWITCH($_SERVER['SERVER_NAME'])
