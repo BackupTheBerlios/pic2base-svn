@@ -399,6 +399,7 @@ echo "<br>++++ #### ++++<br>";
 			`user_dir` varchar(75) NOT NULL COMMENT 'ftp-Stammverz. des Users',
 			`up_dir` varchar(75) NOT NULL COMMENT 'ftp_uploadverzeichnis des Users',
 			`down_dir` varchar(75) NOT NULL COMMENT 'ftp-Downloadverz. des Users',
+			`direkt_download` int(1) NOT NULL DEFAULT '0' COMMENT '0-per FTP, 1-per Direkt-Download je Bild',
 			`uid` int(5) NOT NULL default '65534',
 			`gid` int(5) NOT NULL default '65534',
 			UNIQUE KEY `homedir` (`up_dir`),
@@ -412,6 +413,16 @@ echo "<br>++++ #### ++++<br>";
 			`datum` DATE NOT NULL ,
 			`info` TEXT NOT NULL
 			) ENGINE = MYISAM COMMENT = 'p2b-Tagebuch' CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			
+			// Ablage der Pfade zu den benoetigten Hilfsprogrammen, wird nach der Installation oder dem Softwarecheck neu befuellt
+			$res21 = mysql_query("CREATE TABLE `pfade` (
+			`path_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			`dcraw_path` VARCHAR( 50 ) NOT NULL ,
+			`im_path` VARCHAR( 50 ) NOT NULL ,
+			`et_path` VARCHAR( 50 ) NOT NULL ,
+			`gpsb_path` VARCHAR( 50 ) NOT NULL ,
+			`md5sum_path` VARCHAR( 50 ) NOT NULL
+			) ENGINE = MYISAM COMMENT = 'Pfade zur Hilfssoftware';");
 			
 			if(!isset($titel))
 			{
