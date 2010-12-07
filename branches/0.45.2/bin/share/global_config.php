@@ -52,7 +52,7 @@ $gpsb_path = '/usr/bin';		//Pfad zu GPSBabel
 $md5sum_path = '/usr/bin';
 
 //Filmstreifen Download - direkt -> "1" oder per ftp -> "0"
-$direkt_download = "0";
+//$direkt_download = "0";
 
 //####################################################################################
 

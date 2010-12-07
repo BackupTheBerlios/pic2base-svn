@@ -28,6 +28,7 @@ function generateHistogram()								verwendet in details, stapel1	Z. 1880
 function formatValues()										verwendet in generate_exifdata0, 
 function restoreOriFilename									verwendet in details, generate_exifdata0, 
 function extractExifData									verwendet 			Z 2060
+function directDownload										verwendet in get_previev	Z 1933
 
 */
 
@@ -1929,4 +1930,20 @@ function checkSoftware()
 		</CENTER>";
 }
 
+function directDownload($c_username, $sr)
+{
+	include $sr.'/bin/share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$res_direct_download = mysql_query("SELECT direkt_download FROM $table1 WHERE username = '$c_username'");
+	//echo mysql_error();
+	$dir_down = mysql_result($res_direct_download, isset($i1), 'direkt_download');
+	IF($dir_down == 1)
+	{
+		RETURN True;
+	}
+	ELSEIF($dir_down == 0)
+	{
+		RETURN False;
+	}
+}
 ?>

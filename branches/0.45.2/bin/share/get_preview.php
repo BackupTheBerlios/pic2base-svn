@@ -1667,7 +1667,8 @@ SWITCH ($modus)
 				//IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
 				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
 				{
-					IF($direkt_download > '0')
+					IF(directDownload($c_username, $sr))
+					//IF($direkt_download > '0')
 					{
 						$icon[$j] = "
 						<TD align='center'width='43'>
@@ -1823,7 +1824,8 @@ SWITCH ($modus)
 				//IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
 				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
 				{
-					IF($direkt_download > '0')
+					IF(directDownload($c_username, $sr))
+					//IF($direkt_download > '0')
 					{
 						$icon[$i6] = "
 						<TD align='center'width='43'>
