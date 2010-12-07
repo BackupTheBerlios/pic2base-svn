@@ -1674,7 +1674,7 @@ SWITCH ($modus)
 						<TD align='center'width='43'>
 						<div id='box$pic_id'>
 						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
-						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild herunterladen'/>
+						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/>
 						</SPAN>
 						</div>	
 						</TD>";
@@ -1685,7 +1685,7 @@ SWITCH ($modus)
 						<TD align='center'width='43'>
 						<div id='box$pic_id'>
 						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
-						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den Download-Ordner kopieren'/>
+						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/>
 						</SPAN>
 						</div>	
 						</TD>";
@@ -1830,7 +1830,7 @@ SWITCH ($modus)
 						$icon[$i6] = "
 						<TD align='center'width='43'>
 						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild herunterladen'/></SPAN>
+						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
 						</div>	
 						</TD>";
 					}
@@ -1839,7 +1839,7 @@ SWITCH ($modus)
 						$icon[$i6] = "
 						<TD align='center'width='43'>
 						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den Download-Ordner kopieren'/></SPAN>
+						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
 						</div>	
 						</TD>";
 					}
