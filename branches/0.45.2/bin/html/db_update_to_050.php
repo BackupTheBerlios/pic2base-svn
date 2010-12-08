@@ -229,8 +229,20 @@ include '../share/functions/permissions.php';
 							//echo mysql_error()."<BR>";
 							IF(mysql_error() == '')
 							{
-								echo "Die nicht mehr genutzte Tabelle \"rights\" wurde entfernt.<BR><BR>
-								Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+								echo "Die nicht mehr genutzte Tabelle \"rights\" wurde entfernt.";
+								$res19 = mysql_query("ALTER TABLE `pic2base`.`users`
+								ADD `direkt_download` TINYINT( 4 ) NOT NULL DEFAULT '0' 
+								COMMENT '0-FTP-Download, 1-direkter Download' ");
+								//echo mysql_error()."<BR>";
+								IF(mysql_error() == '')
+								{
+									echo "Die Tabelle \"users\" wurde erfolgreich angepasst.<BR><BR>
+									Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+								}
+								ELSE
+								{
+									echo "Die Tabelle \"users\" konnte NICHT bearbeitet werden.";
+								}
 							}
 							ELSE
 							{
