@@ -24,6 +24,7 @@ function showBewertung										verwendet in Kopfzeile der Such-Formulare
 function createStatement									verwendet in recherche2
 function savePicture										verwendet in erfassung_action	Z. 1481
 function getRecDays											verwendet in recherche2 (Zeit)	Z. 1737
+function checkSoftware										verwendet in admin/admin/check_software0.php Z 1825
 function generateHistogram()								verwendet in details, stapel1	Z. 1880
 function formatValues()										verwendet in generate_exifdata0, 
 function restoreOriFilename									verwendet in details, generate_exifdata0, 
@@ -1822,13 +1823,15 @@ function convertOrientationTextToNumber($value)
 	return $value;
 }
 
-function checkSoftware()
+function checkSoftware($sr)
 {
+	include $sr.'/bin/share/db_connect1.php';
 	//Kontrolle, ob erforderliche Software-Komponenten installiert sind:
 	$et = shell_exec("which exiftool");
 	$im = shell_exec("which convert");
 	$dc = shell_exec("which dcraw");
 	$gb = shell_exec("which gpsbabel");
+	$md = shell_exec("which md5sum");
 	
 	echo "	<TABLE class='tablenormal' border='0'>
 		<TR>
@@ -1912,6 +1915,31 @@ function checkSoftware()
 	}
 	flush();
 	sleep(1);
+	
+	IF($md == NULL)
+	{
+		echo "<TR>
+		<TD class='tdleft'>md5sum</TD>
+		<TD class='tdright'><a href='http://www.gnu.org/software/coreutils/'>ist nicht installiert</a></TD>
+		</TR>";
+	}
+	ELSE
+	{
+		$v_md = shell_exec("md5sum --version");
+		echo "<TR>
+		<TD class='tdleft'>md5sum</TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$md." installiert (Ver. ".substr($v_md,23,3).")</FONT></TD>
+		</TR>";
+	}
+	flush();
+	sleep(1);
+	
+	//Speicherung der Software-Pfade in der Tabelle 'pfade':
+	$result1 = mysql_query("DELETE FROM $table16");
+	echo mysql_error();
+	$result2 = mysql_query("INSERT INTO $table16 (dcraw_path, im_path, et_path, gpsb_path, md5sum_path) 
+	VALUES ('$dc', '$im', '$et', '$gb', '$md')");
+	echo mysql_error();
 	
 	echo "	<TR class='trflach'>
 		<TD colspan='2'></TD>
