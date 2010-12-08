@@ -240,7 +240,7 @@ include '../share/functions/permissions.php';
 									$res20 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic2base`.`pfade` (
 									  `path_id` int(11) NOT NULL AUTO_INCREMENT,
 									  `dcraw_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-									  `im_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+									  `conv_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
 									  `et_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
 									  `gpsb_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
 									  `md5sum_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
