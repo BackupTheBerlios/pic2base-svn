@@ -236,8 +236,27 @@ include '../share/functions/permissions.php';
 								//echo mysql_error()."<BR>";
 								IF(mysql_error() == '')
 								{
-									echo "Die Tabelle \"users\" wurde erfolgreich angepasst.<BR><BR>
-									Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+									echo "Die Tabelle \"users\" wurde erfolgreich angepasst.";
+									$res20 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic2base`.`pfade` (
+									  `path_id` int(11) NOT NULL AUTO_INCREMENT,
+									  `dcraw_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+									  `im_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+									  `et_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+									  `gpsb_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+									  `md5sum_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+									  PRIMARY KEY (`path_id`)
+									) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci 
+									COMMENT='Pfade zur Hilfssoftware' AUTO_INCREMENT=1 ;");
+									//echo mysql_error()."<BR>";
+									IF(mysql_error() == '')
+									{
+										echo "Die Tabelle \"pfade\" wurde erfolgreich angelegt.<BR><BR>
+										Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+									}
+									ELSE
+									{
+										echo "Die Tabelle \"pfade\" konnte NICHT angelegt werden.";
+									}
 								}
 								ELSE
 								{
