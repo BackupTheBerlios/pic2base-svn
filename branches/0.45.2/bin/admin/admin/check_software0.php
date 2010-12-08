@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	 header('Location: ../../../index.php');
 }
 ?>
 
@@ -55,7 +55,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: check_software0.php
  *
- * Copyright (c) 2006 - 2009 Klaus Henneberg
+ * Copyright (c) 2006 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -84,14 +84,14 @@ echo "
 		
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			include '../../html/admin/adminnavigation.php';
+			include $sr.'/bin/html/admin/adminnavigation.php';
 			echo "
 			</div>
 		</div>
 		
 		<div class='content'>
 		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
-		checkSoftware();
+		checkSoftware($sr);
 		echo "</p>
 		</div>
 		<br style='clear:both;' />
