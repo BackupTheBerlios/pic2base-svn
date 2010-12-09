@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
@@ -29,7 +29,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: stapel1.php
  *
- * Copyright (c) 2003 - 2009 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -48,6 +48,10 @@ IF ($_COOKIE['login'])
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$conv = buildConvertCommand($sr);
+$exiftool = buildExiftoolCommand($sr);
+$dcraw = buildDcrawCommand($sr);
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
@@ -168,7 +172,7 @@ FOR ($x='0';$x<$n;$x++)
 	$datei_name = $bild_datei[$x];
 	$bild = $ordner."/".$datei_name;
 	
-	$Ori_arr = preg_split('# : #',shell_exec($et_path."/exiftool -Orientation -n ".$bild)); //num. Wert der Ausrichtung des Ori.-bildes
+	$Ori_arr = preg_split('# : #',shell_exec($exiftool." -Orientation -n ".$bild)); //num. Wert der Ausrichtung des Ori.-bildes
 	
 	if (count($Ori_arr) > 1 )
 	{
@@ -186,7 +190,8 @@ FOR ($x='0';$x<$n;$x++)
 	$Orientation = trim($Orientation);
 	
 //  +++  Vergabe eines eindeutigen Dateinamens  +++++
-	/*Zur eindeutigen Identifizierung der Bilddateien wird seit dem 12.06.2008 die Datensatz-Nr. des jeweiligen Bildes verwendet. Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:*/
+	/*Zur eindeutigen Identifizierung der Bilddateien wird seit dem 12.06.2008 die Datensatz-Nr. des jeweiligen Bildes verwendet. 
+	 * Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:*/
 	$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");echo mysql_error();
 	$user_id = mysql_result($result1, isset($i), 'id');
 	$DateInsert = date('Y-m-d H:i:s');
@@ -220,7 +225,7 @@ FOR ($x='0';$x<$n;$x++)
 		IF(in_array($ext,$arr_raw))
 		{
 			//echo "aus RAW-Bildern werden JPGs erzeugt<BR>";
-			$command = $dcraw_path."/dcraw -w -c ".$pic_path."/".$tmp_filename." | convert - ".$pic_path."/".$new_filename."";
+			$command = $dcraw." -w -c ".$pic_path."/".$tmp_filename." | ".$conv." - ".$pic_path."/".$new_filename."";
 			$output = shell_exec($command);
 			//das Original(jpg-)Bild wird ggf als rotierte Kopie abgelegt
 			IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
@@ -244,7 +249,7 @@ FOR ($x='0';$x<$n;$x++)
 		ELSEIF(in_array($ext,$supported_extensions)) 
 		{
 			//das oder die jpg-Bilder werden erzeugt:
-			$command = $im_path."/convert -flatten ".$pic_path."/".$tmp_filename." ".$pic_path."/".$new_filename."";
+			$command = $conv." -flatten ".$pic_path."/".$tmp_filename." ".$pic_path."/".$new_filename."";
 			$output = shell_exec($command);
 			IF(file_exists($pic_path."/".$new_filename))
 			{
