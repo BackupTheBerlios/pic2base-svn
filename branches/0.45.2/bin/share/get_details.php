@@ -1,15 +1,18 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$exiftool = buildExiftoolCommand($sr);
+
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -62,7 +65,7 @@ IF ($pic_id !=='0')
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
 		$note = mysql_result($result8, isset($i8), 'note');
 		$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
-		$Orientation = trim(shell_exec($et_path."/exiftool -s -S '-Orientation' ".$bild));
+		$Orientation = trim(shell_exec($exiftool." -s -S '-Orientation' ".$bild));
 		//echo $Orientation;
 		if (isset($Orientation) AND ($Orientation !== ''))
 		{

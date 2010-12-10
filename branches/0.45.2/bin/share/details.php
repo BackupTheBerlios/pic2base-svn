@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 ?>
 
@@ -26,7 +26,8 @@ include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
-//$pic_id = '10';
+
+$exiftool = buildExiftoolCommand($sr);
 
 if( array_key_exists('pic_id',$_GET) )
 {
@@ -74,7 +75,8 @@ IF ($_COOKIE['login'])
 }
 
 //############   Erstellung der Histogramme, falls nicht bereits vorhanden:   #######################
-// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt, wobei XXXXX fuer pic_id steht und f fuer die Farbe (rot, gruen, blau oder weiss -> rgbw)
+// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt, 
+//wobei XXXXX fuer pic_id steht und f fuer die Farbe (rot, gruen, blau oder weiss -> rgbw)
 generateHistogram($pic_id,$FileNameHQ,$sr);
 
 //############   Histogramm-Erstellung beendet   ####################################################
@@ -86,7 +88,7 @@ $hist_file = $pic_id.'_hist.gif';
 
 //es wird ermittelt, ob der Original-Dateityp Exif-Daten-Speicherung unterstuetzt:
 $file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-$ed = trim(shell_exec($et_path."/exiftool ".$file));	//$ed = exifdaten, leer oder nicht
+$ed = trim(shell_exec($exiftool." ".$file));	//$ed = exifdaten, leer oder nicht
 
 echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
@@ -221,7 +223,7 @@ IF($num5 > '0')
 //$file = $pic_path."/".$FileName;
 $file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 //echo $file."<BR>";
-$exif_daten = shell_exec($et_path."/exiftool -g -s -x 'Directory' ".$file);
+$exif_daten = shell_exec($exiftool." -g -s -x 'Directory' ".$file);
 //echo $exif_daten."<BR>";
 $info_arr = explode(chr(10), $exif_daten);
 //print_r($info_arr)."<BR>";

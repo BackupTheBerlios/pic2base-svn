@@ -1,14 +1,18 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 
 //File-Owner: K. Henneberg
 include 'global_config.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$dcraw = buildDcrawCommand($sr);
+$conv = buildConvertCommand($sr);
+
 $contr = '';
 //fuer alle Dateinamen wird intern Kleinschreibung verwendet, deshalb hier Konvertierung:
 //var_dump($_REQUEST);
@@ -65,7 +69,7 @@ IF($modus == 'tmp')
 	//$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi." -r 2.648 1 1.2556 1";
 	$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi;
 	$new_filename = substr($file_name_raw,0,-4).".jpg";
-	$command = $dcraw_path."/dcraw ".$parameter." ".$pic_path."/".$file_name_raw." | convert -quality 90 -resize 450x450 - ".$pic_path."/tmp/".$new_filename."";
+	$command = $dcraw." ".$parameter." ".$pic_path."/".$file_name_raw." | ".$conv." -quality 90 -resize 450x450 - ".$pic_path."/tmp/".$new_filename."";
 	//echo $command;
 	$output = shell_exec($command);
 	echo $output;
@@ -112,7 +116,7 @@ ELSEIF($modus == 'new')
 	//Schritt 1)
 	$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi;
 	$new_filename = substr($file_name_raw,0,-4).".jpg";
-	$command1 = $dcraw_path."/dcraw ".$parameter." ".$pic_path."/".$file_name_raw." | convert -quality 100 - ".$pic_path."/".$new_filename."";
+	$command1 = $dcraw." ".$parameter." ".$pic_path."/".$file_name_raw." | ".$conv." -quality 100 - ".$pic_path."/".$new_filename."";
 	$output = shell_exec($command1);
 	
 	IF($contrast !== '0')
@@ -162,7 +166,7 @@ ELSEIF($modus == 'new')
 	$FileNameHQ = substr($file_name_raw,0,-4)."_hq.jpg";
 	$max_len = '800';
 	//$command2 = $im_path."/convert -quality 80 -size ".$max_len."x0 ".$source." -resize ".$max_len."x0 ".$pic_hq_preview."/".$FileNameHQ."";
-	$command2 = $im_path."/convert -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_hq_preview."/".$FileNameHQ."";
+	$command2 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_hq_preview."/".$FileNameHQ."";
  	//echo $command;
  	$output = shell_exec($command2);
  	
@@ -193,7 +197,7 @@ ELSEIF($modus == 'new')
  	$FileNameV = substr($file_name_raw,0,-4)."_v.jpg";
  	//echo $FileNameV."<BR>";
  	$max_len = '160';
- 	$command3 = $im_path."/convert -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs."/".$FileNameV;
+ 	$command3 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs."/".$FileNameV;
       	//echo $command."<BR>";
       	$output = shell_exec($command3);
       	
@@ -222,11 +226,11 @@ ELSEIF($modus == 'new')
 	
 	// Schritt 5) Graustufenbild neu erzeugen
 	$FileNameMono = substr($file_name_raw,0,-4)."_mono.jpg";
-	$command5 = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -colorspace Gray -quality 80% ".$monochrome_path."/".$FileNameMono;
+	$command5 = $conv." ".$pic_hq_preview."/".$FileNameHQ." -colorspace Gray -quality 80% ".$monochrome_path."/".$FileNameMono;
 	$output = shell_exec($command5);
 	
     // Schritt 6) Erzeugung des Anzeige-Bildes:
-    $command4 = $im_path."/convert -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename;
+    $command4 = $conv." -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename;
 	$output = shell_exec($command4);
 	
 	IF($contrast !== '0')
@@ -248,7 +252,7 @@ ELSEIF($modus == 'new')
 				$c++;
 			}
 		}
-		$command4_a = $im_path."/convert ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
+		$command4_a = $conv." ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
 		$output = shell_exec($command4_a);
 	}
 	

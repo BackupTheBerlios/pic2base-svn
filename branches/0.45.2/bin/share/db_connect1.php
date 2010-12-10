@@ -28,6 +28,7 @@ $table12 = 'locations';			//Aufnahmestandorte
 $table13 = 'geo_tmp';			//wird bei der automat. Georeferenzierung verwendet
 $table14 = 'meta_data';			//Metadaten der Bilder
 $table15 = 'tmp_tree';			//wird bei der Kategoriebaum-Umstrukturierung verwendet
+$table16 = 'pfade';				//speichert die Pfade zu den Hilfsprogrammen
 
 $myhost=$db_server;
 $myuser=$user;

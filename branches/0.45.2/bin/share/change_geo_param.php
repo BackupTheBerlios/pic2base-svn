@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 ?>
 
@@ -51,7 +51,7 @@ A:hover{color:red;text-decoration:underline}
 <script language="JavaScript">
 function saveNewParam(newlocation, ort, loc_id, pic_id)
 {
-Fenster2 = window.open('../html/recherche/save_new_param.php?location='+newlocation+'&ort='+ort+'&loc_id='+loc_id+'&pic_id='+pic_id, 'Speicherung2', "width=300,height=100,scrollbars,resizable=no,");
+	Fenster2 = window.open('../html/recherche/save_new_param.php?location='+newlocation+'&ort='+ort+'&loc_id='+loc_id+'&pic_id='+pic_id, 'Speicherung2', "width=300,height=100,scrollbars,resizable=no,");
 }
 </script>
 </head>

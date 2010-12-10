@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 ?>
 
@@ -25,6 +25,8 @@ include '../share/global_config.php';
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
+
+$exiftool = buildExiftoolCommand($sr);
 
 //var_dump($_GET);
 if (array_key_exists('pic_id',$_GET))
@@ -110,7 +112,7 @@ echo "<FORM name='edit_details' method='post' action='save_meta_data_action.php'
 //Ermittlung aller Tags in der Bild-Datei
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 //echo $file."<BR>";
-$exif_daten = shell_exec($et_path."/exiftool -g -s -x 'Directory' ".$FN);
+$exif_daten = shell_exec($exiftool." -g -s -x 'Directory' ".$FN);
 //echo $exif_daten."<BR>";
 $info_arr = explode(chr(10), $exif_daten);
 //Umschreibung des Info-Arrays in die Form Schl�ssel=$tag / Wert=$value
