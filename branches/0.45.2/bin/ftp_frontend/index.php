@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
+	<TITLE>pic2base - FTP</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../css/format1.css'>
@@ -19,9 +19,9 @@
 
 /*
  * Project: pic2base
- * File: start.php
+ * File: index.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -30,27 +30,21 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
- 
-include '../share/db_connect1.php';
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
+include '../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
+
+IF(hasPermission($c_username, 'adminlogin'))
 {
-	//Admin
-	CASE $berechtigung == '1':
 	$navigation = 	"<a class='navi' href='?action=about'>About</a>
 			<a class='navi' href='?action=logs&logs=transfer'>Transfer</a>
 			<a class='navi' href='?action=traffic'>Traffic</a>
@@ -60,13 +54,11 @@ SWITCH ($berechtigung)
 			<a class='navi' href='../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../html/help/help1.php?page=5'>Hilfe</a>
 			<a class='navi' href='../../index.php'>Logout</a>";
-	break;
 }
-
 
 echo "<div class='page'>
 
-	<p id='kopf'>pic2base :: Startseite</p>
+	<p id='kopf'>pic2base :: FTP-Verwaltung</p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>".$navigation."</div>
