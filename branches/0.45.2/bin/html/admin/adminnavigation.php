@@ -54,7 +54,9 @@ include '../../share/global_config.php';
     		break;
     		
     		case "adminshowpermissions":
-    		if (hasPermission($c_username, 'adminlogin')) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminaddpermission'>Hinzuf&uuml;gen</a>";
+    		if (hasPermission($c_username, 'adminlogin')) 
+    		//echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminaddpermission'>Hinzuf&uuml;gen</a>";
+    		echo "<a class='navi_blind'></a>";
     		echo "<a class='navi' href='adminframe.php'>Zur&uuml;ck</a>";
     		break;
     		
