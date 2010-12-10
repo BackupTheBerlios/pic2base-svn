@@ -182,53 +182,63 @@ function rotateOriginalPictures($Orientation, $FileNameHQ)
 	return $FileNameHQ;
 }
 
-function createQuickPreview($Orientation,$FileName)
+function createQuickPreview($Orientation,$FileName,$sr)
 {
-	include '../../share/global_config.php';
+	include $sr.'/bin/share/global_config.php';
+	
+	$conv = buildConvertCommand($sr);
+	
 	@$parameter_o=getimagesize($pic_path."/".$FileName);
 	SWITCH($Orientation)
 	{
 		case '3':
 		//echo "Das Vorschaubild muss 180 gedreht werden<BR>";
-		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
+		$command = $conv." ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
  		$output = shell_exec($command);
 		break;
 		
 		case '6':
 		//echo "Das Vorschaubild muss 90 CW gedreht werden<BR>";
-		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
+		$command = $conv." ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
  		$output = shell_exec($command);
 		break;
 		
 		case '8':
 		//echo "Erzeuge Quick-Preview-Bild von ".$pic_path."/".$FileName."<BR> nach ".$pic_rot_path."/".$FileName."<BR>";
 		//echo "Das Vorschaubild muss 270 CW gedreht werden<BR>";
-		$command = $im_path."/convert ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
+		$command = $conv." ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
  		$output = shell_exec($command);
 		break;
 	}
 	return $FileName;
 }
 
-function createPreviewPicture($FILE, $dest_path, $max_len)
+function createPreviewPicture($FILE, $dest_path, $max_len, $sr)
 {
-	include '../../share/global_config.php';
-	//Wenn das Originalbild kein EXIF-Vorschaubild mitbringt, generiert diese Funktion aus der Quelle ein Vorschaubild, dessen max. Ausdehnung max_len Pixel betr�gt und speichert dieses unter dem Destination-Pfad ab. -wird bei der Erfassung von Bildern angewendet.
+	include $sr.'/bin/share/global_config.php';
+	
+	$conv = buildConvertCommand($sr);
+	
+	//Wenn das Originalbild kein EXIF-Vorschaubild mitbringt, generiert diese Funktion aus der Quelle ein Vorschaubild, 
+	//dessen max. Ausdehnung max_len Pixel betraegt und speichert dieses unter dem Destination-Pfad ab. 
+	//-wird bei der Erfassung von Bildern angewendet.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
-	//$file_nameV = str_replace('.jpg','_v.jpg',basename($FILE));	//Variante, bei der Vorschau aus Original erzeugt wird
 	$file_nameV = str_replace('_hq.jpg','_v.jpg',basename($FILE));	//Variante, bei der Vorschau aus HQ erzeugt wird
-      	$command = $im_path."/convert -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameV."";
-      	$output = shell_exec($command);
+    $command = $conv." -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameV."";
+    $output = shell_exec($command);
 	return $file_nameV;
 }
 
-function resizeOriginalPicture($FILE, $dest_path, $max_len)
+function resizeOriginalPicture($FILE, $dest_path, $max_len, $sr)
 {
-	include '../../share/global_config.php';
+	include $sr.'/bin/share/global_config.php';
+	
+	$conv = buildConvertCommand($sr);
+	
 	//Die Funktion generiert aus der Quelle ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel betraegt und speichert dieses unter dem Destination-Pfad ab.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	$file_nameT = str_replace('.jpg','_hq.jpg',basename($FILE));
-      	$command = $im_path."/convert -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
+      	$command = $conv." -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
       	$output = shell_exec($command);
 	return $file_nameT;
 }
@@ -1407,10 +1417,13 @@ function createStatement($bewertung)
 	return $stat;
 }
 
-function savePicture($pic_id,$anzahl,$user_id,$Orientation)
+function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 {
-	include '../../share/global_config.php';
+	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	
+	$md5 = buildMd5sumCommand($sr);
+	
 	IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 	{
 		//echo "Es liegt ein gedrehtes Bild vor!<BR>";
@@ -1422,19 +1435,19 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation)
 		$FILE = $pic_path."/".$pic_id.".jpg";
 	}
 	//vom Original-JPG-Bild wird die Pruefsumme gebildet:
-	$command = $md5sum_path."/md5sum $FILE";
+	$command = $md5." $FILE";
 	$sum = explode(' ',shell_exec($command));
 	//echo "Pr&uuml;fsumme: ".$sum[0]."<BR>";
 	
 	// 1) anlegen des hq-Bildes: (resamplen, speichern unter /vorschau/hq-preview)
 	//HQ aus Original erzeugen
 	$max_len = '800';				
-	$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_preview, $max_len);
+	$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_preview, $max_len, $sr);
 	$FILEHQ = $pic_hq_preview."/".$FileNameHQ;	
 	//Thumb aus HQ erzeugen
 	// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
 	$max_len = '160';
-	$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs, $max_len);
+	$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs, $max_len, $sr);
 	
 	$result1 = mysql_query("UPDATE $table2 SET FileNameHQ = '$FileNameHQ', FileNameV = '$FileNameV', md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
 	
@@ -1484,24 +1497,26 @@ function generateHistogram($pic_id,$FileName,$sr)
 	$hist_r = $hist_path."/".$pic_id."_hist_0.gif";
 	$hist_g = $hist_path."/".$pic_id."_hist_1.gif";
 	$hist_b = $hist_path."/".$pic_id."_hist_2.gif";
+	$conv = buildConvertCommand($sr);
+	//echo "<BR>".$conv."<BR>";
 	IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r') OR @!fopen($file_mono, 'r'))
 	{
 		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
 		$file = $pic_hq_preview."/".$FileName; //<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
-		shell_exec($im_path."/convert ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
-		//shell_exec($im_path."/convert ".$file." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif");
-		shell_exec($im_path."/convert ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
+		shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
+		
+		shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
 		$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
-		shell_exec($im_path."/convert ".$file_mono." histogram:".$hist_path."/".$pic_id."_hist.gif");
+		shell_exec($conv." ".$file_mono." histogram:".$hist_path."/".$pic_id."_hist.gif");
 		
 		$hist_file_r = $pic_id.'_hist_0.gif';
-		shell_exec($im_path."/convert ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
+		shell_exec($conv." ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
 
 		$hist_file_g = $pic_id.'_hist_1.gif';
-		shell_exec($im_path."/convert ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
+		shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
 		
 		$hist_file_b = $pic_id.'_hist_2.gif';
-		shell_exec($im_path."/convert ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
+		shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
 		
 		$hist_file = $pic_id.'_hist.gif';
 		$mono_file = $pic_id."_mono.jpg";
@@ -1532,66 +1547,67 @@ function getImageInfo($FileName)
 
 function formatValues($fieldname,$FN,$et_path)
 {
+	$exiftool = buildExiftoolCommand($sr);
 	SWITCH($fieldname)
 	{
 		CASE 'DateTimeOriginal':
-		$value = shell_exec($et_path."/exiftool -d '%Y-%m-%d %H:%M:%S' -DateTimeOriginal ".$FN);
+		$value = shell_exec($exiftool." -d '%Y-%m-%d %H:%M:%S' -DateTimeOriginal ".$FN);
 		break;
 		
 		CASE 'GPSLatitude':
-		$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLatitude -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n ".$FN);
 		break;
 		
 		CASE 'GPSLongitude':
-		$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLongitude -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n ".$FN);
 		break;
 		
 		CASE 'GPSAltitude':
-		$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSAltitude -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n ".$FN);
 		break;
 		
 		CASE 'XResolution':
-		$value = shell_exec($et_path."/exiftool -c '%.11f' -XResolution -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.11f' -XResolution -n ".$FN);
 		break;
 		
 		CASE 'YResolution':
-		$value = shell_exec($et_path."/exiftool -c '%.11f' -YResolution -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.11f' -YResolution -n ".$FN);
 		break;
 		
 		CASE 'FNumber':
-		$value = shell_exec($et_path."/exiftool -c '%.11f' -FNumber -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.11f' -FNumber -n ".$FN);
 		break;
 		
 		CASE 'ExposureTime':
-		$value = shell_exec($et_path."/exiftool -c '%.5f' -ExposureTime -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.5f' -ExposureTime -n ".$FN);
 		break;
 		
 		CASE 'SensorPixelSize':
-		$value = shell_exec($et_path."/exiftool -c '%.5f' -SensorPixelSize -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.5f' -SensorPixelSize -n ".$FN);
 		break;
 		
 		CASE 'SerialNumber':
-		$value = shell_exec($et_path."/exiftool -c '%.5f' -SerialNumber -n ".$FN);
+		$value = shell_exec($exiftool." -c '%.5f' -SerialNumber -n ".$FN);
 		break;
 		
 		CASE 'Lens':
-		$value = shell_exec($et_path."/exiftool -c '%.11f' -Lens ".$FN);
+		$value = shell_exec($exiftool." -c '%.11f' -Lens ".$FN);
 		break;
 		
 		CASE 'UserComment':
-		$value = shell_exec($et_path."/exiftool -UserComment ".$FN);
+		$value = shell_exec($exiftool." -UserComment ".$FN);
 		break;
 		
 		CASE 'Orientation':
-		$value = shell_exec($et_path."/exiftool -Orientation -n ".$FN);
+		$value = shell_exec($exiftool." -Orientation -n ".$FN);
 		break;
 		
 		CASE 'FileSize':
-		$value = shell_exec($et_path."/exiftool -FileSize -n ".$FN);
+		$value = shell_exec($exiftool." -FileSize -n ".$FN);
 		break;
 		
 		default:
-		$value = shell_exec($et_path."/exiftool -".$fieldname." ".$FN);
+		$value = shell_exec($exiftool." -".$fieldname." ".$FN);
 		break;
 	}
 	$info_arr = explode(' : ', $value);
@@ -1618,6 +1634,9 @@ function extractExifData($pic_id, $sr)
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	
+	$exiftool = buildExiftoolCommand($sr);
+	
 	$result6 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 	IF(mysql_num_rows($result6) == 0)
 	{
@@ -1640,7 +1659,7 @@ function extractExifData($pic_id, $sr)
 		else die('Fehler bei der Datenbankabfrage');
 		//Fuer jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
 		
-		$text = shell_exec($et_path."/exiftool ".$FN);
+		$text = shell_exec($exiftool." ".$FN);
 		$inf_arr = explode(chr(10), $text);	//Zerlegung des Textes am Zeilenumbruch
 		//echo count($inf_arr)." Meta-Angaben im Bild ".$FN."<BR><BR>";;
 		
@@ -1671,22 +1690,22 @@ function extractExifData($pic_id, $sr)
 				}
 				IF($fieldname == 'FileSize')
 				{
-					$value = shell_exec($et_path."/exiftool -FileSize -n ".$FN);
+					$value = shell_exec($exiftool." -FileSize -n ".$FN);
 					$fs_arr = explode(' : ', $value);
 					$value = trim($fs_arr[1]);
 				}
 				SWITCH($fieldname)
 				{
 					CASE 'GPSLatitude':
-					$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);
+					$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);
 					break;
 					
 					CASE 'GPSLongitude':
-					$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSLongitude -n -s -s -s ".$FN);
+					$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n -s -s -s ".$FN);
 					break;
 					
 					CASE 'GPSAltitude':
-					$value = shell_exec($et_path."/exiftool -c '%.11f' -GPSAltitude -n -s -s -s ".$FN);
+					$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n -s -s -s ".$FN);
 					break;
 				}
 				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";	
@@ -1828,7 +1847,7 @@ function checkSoftware($sr)
 	include $sr.'/bin/share/db_connect1.php';
 	//Kontrolle, ob erforderliche Software-Komponenten installiert sind:
 	$et = shell_exec("which exiftool");
-	$im = shell_exec("which convert");
+	$conv = shell_exec("which convert");
 	$dc = shell_exec("which dcraw");
 	$gb = shell_exec("which gpsbabel");
 	$md = shell_exec("which md5sum");
@@ -1862,7 +1881,7 @@ function checkSoftware($sr)
 	flush();
 	sleep(1);
 	
-	IF($im == NULL)
+	IF($conv == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ImageMagick</TD>
@@ -1871,10 +1890,10 @@ function checkSoftware($sr)
 	}
 	ELSE
 	{
-		$v_im = shell_exec("convert -version");
+		$v_conv = shell_exec("convert -version");
 		echo "<TR>
-		<TD class='tdleft'>ImageMagick</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$im." installiert (Ver. <a href='#' title = '$v_im'>".substr($v_im,20,6)."</a>)</FONT></TD>
+		<TD class='tdleft'>Convert</TD>
+		<TD class='tdright'><FONT COLOR='green'>ist in ".$conv." installiert (Ver. <a href='#' title = '$v_conv'>".substr($v_conv,20,6)."</a>)</FONT></TD>
 		</TR>";
 	}
 	flush();
@@ -1937,8 +1956,8 @@ function checkSoftware($sr)
 	//Speicherung der Software-Pfade in der Tabelle 'pfade':
 	$result1 = mysql_query("DELETE FROM $table16");
 	echo mysql_error();
-	$result2 = mysql_query("INSERT INTO $table16 (dcraw_path, im_path, et_path, gpsb_path, md5sum_path) 
-	VALUES ('$dc', '$im', '$et', '$gb', '$md')");
+	$result2 = mysql_query("INSERT INTO $table16 (dcraw_path, conv_path, et_path, gpsb_path, md5sum_path) 
+	VALUES ('$dc', '$conv', '$et', '$gb', '$md')");
 	echo mysql_error();
 	
 	echo "	<TR class='trflach'>
@@ -1973,5 +1992,45 @@ function directDownload($c_username, $sr)
 	{
 		RETURN False;
 	}
+}
+
+function buildDcrawCommand($sr)
+{
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql_query("SELECT dcraw_path FROM $table16");
+	$dcraw_path = trim(mysql_result($result1, isset($i1), 'dcraw_path'));	//trim beseitigt Fehler verursachende Leerzeichen!!!
+	RETURN $dcraw_path;
+}
+
+function buildConvertCommand($sr)
+{
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql_query("SELECT conv_path FROM $table16");
+	$conv_path = trim(mysql_result($result1, isset($i1), 'conv_path'));		//trim beseitigt Fehler verursachende Leerzeichen!!!
+	RETURN $conv_path;
+}
+
+function buildExiftoolCommand($sr)
+{
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql_query("SELECT et_path FROM $table16");
+	$et_path = trim(mysql_result($result1, isset($i1), 'et_path'));		//trim beseitigt Fehler verursachende Leerzeichen!!!
+	RETURN $et_path;
+}
+
+function buildGpsbabelCommand($sr)
+{
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql_query("SELECT gpsb_path FROM $table16");
+	$gpsb_path = trim(mysql_result($result1, isset($i1), 'gpsb_path'));		//trim beseitigt Fehler verursachende Leerzeichen!!!
+	RETURN $gpsb_path;
+}
+
+function buildMd5sumCommand($sr)
+{
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql_query("SELECT md5sum_path FROM $table16");
+	$md5sum_path = trim(mysql_result($result1, isset($i1), 'md5sum_path'));		//trim beseitigt Fehler verursachende Leerzeichen!!!
+	RETURN $md5sum_path;
 }
 ?>
