@@ -239,7 +239,7 @@ FOR ($x='0';$x<$n;$x++)
 				}
 				ELSE
 				{
-					$rot_filename = createQuickPreview($Orientation,$new_filename);
+					$rot_filename = createQuickPreview($Orientation,$new_filename,$sr);
 				}
 			}
 			$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
@@ -256,7 +256,7 @@ FOR ($x='0';$x<$n;$x++)
 				//das Original(jpg-)Bild wird ggf als rotierte Kopie abgelegt
 				IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 				{
-					$rot_filename = createQuickPreview($Orientation,$new_filename);
+					$rot_filename = createQuickPreview($Orientation,$new_filename,$sr);
 				}
 				$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 				//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
@@ -286,7 +286,7 @@ FOR ($x='0';$x<$n;$x++)
 						//das Original(jpg)Bild wird ggf als rotierte Kopie abgelegt
 						IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 						{
-							$rot_filename = createQuickPreview($Orientation,$new_filename);
+							$rot_filename = createQuickPreview($Orientation,$new_filename,$sr);
 						}
 						$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
 						//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
@@ -322,7 +322,7 @@ FOR ($x='0';$x<$n;$x++)
 		
 		IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 		{
-			$rot_filename = createQuickPreview($Orientation,$new_filename);
+			$rot_filename = createQuickPreview($Orientation,$new_filename,$sr);
 		}
 		
 		$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
@@ -342,7 +342,7 @@ $runtime1 = ($end1sec + $end1msec) - ($start1sec + $start1msec);
 echo "Zeit f&uuml;r Bildupload: ".$runtime1."<BR>";
 */
 	//Funktions-Parameter: Bild-ID, Anzahl der Szenen; User-ID; Ausrichtung
-	savePicture($pic_id,$z,$user_id,$Orientation);	//Parameter sollten reichen, da sich alles weitere erzeugen laesst
+	savePicture($pic_id,$z,$user_id,$Orientation,$sr);	//Parameter sollten reichen, da sich alles weitere erzeugen laesst
 /*
 $end2 = microtime();
 list($end2msec, $end2sec) = explode(" ",$end2);
