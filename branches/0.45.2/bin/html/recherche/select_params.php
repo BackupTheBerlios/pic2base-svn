@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -49,6 +49,9 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
+
+$exiftool = buildExiftoolCommand($sr);
+
 //$pic_id = '10';
 
 if ( array_key_exists('pic_id',$_GET) )
@@ -62,7 +65,7 @@ $FileNameOri = mysql_result($result0, isset($i0), 'FileNameOri');
 $FileName = mysql_result($result0, isset($i0), 'FileName');
 
 $file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-$Orientation = trim(shell_exec($et_path."/exiftool -n -s -S '-Orientation' ".$file));
+$Orientation = trim(shell_exec($exiftool." -n -s -S '-Orientation' ".$file));
 
 //Erzeugung des RAW-Dateinamens:
 $FileNameRaw = substr($FileName,0,-4).".".substr($FileNameOri,-3,3);
