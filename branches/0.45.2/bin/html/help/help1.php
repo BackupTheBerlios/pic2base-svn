@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -50,7 +50,10 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$sup_ft_arr = explode(chr(10),shell_exec($im_path."/identify -list format"));
+$conv = buildConvertCommand($sr);
+$identify = str_replace('convert', 'identify', $conv);
+
+$sup_ft_arr = explode(chr(10),shell_exec($identify." -list format"));
 //$sup_ft_arr = explode(chr(10),$sup_ft);
 //print_r($sup_ft_arr);
 
@@ -71,12 +74,7 @@ FOREACH($sup_ft_arr AS $SFT)
 	IF($mod !== ' ')
 	{
 		$file_format = strtolower(str_replace('*','',$zeil_arr[0]));
-		IF($file_format !== '')
-		{
-			//echo $file_format."<BR>";
-		}
 	}
-	//print_r($zeil_arr);	
 }
 
 
