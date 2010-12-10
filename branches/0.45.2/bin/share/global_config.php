@@ -39,20 +39,6 @@ $supported_filetypes = array('bmp','cgm','cr2','crw','dcm','dcr','dcx','eps','ex
 //unterstuetzten Datei-Formate (OHNE RAW-Dateien):
 $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','html','jng','jpeg','jpg','mng','mvg','otb','palm','pbm','pcd','pcds','pcl','pcx','pdb','pdf','pgm','png','png8','png24','png32','pnm','ppm','ps','ps2','ps3','psd','rla','rle','sct','sfw','sgi','shtml','sun','svg','tga','tiff','vicar','viff','wpg','xbm','xcf','xpm','yuv');
 
-//###################  in DB abzulegende Parameter  ##################################
-/*
-//Standorte der externen Programme:
-$dcraw_path = '/usr/bin';		//Pfad zu dcraw
-$im_path = '/usr/bin';			//Pfad zum ImageMagick
-$et_path = '/usr/bin';			//Pfad zum exiftool
-$gpsb_path = '/usr/bin';		//Pfad zu GPSBabel
-$md5sum_path = '/bin';			//Pfad zu md5sum
-
-//Filmstreifen Download - direkt -> "1" oder per ftp -> "0"
-//$direkt_download = "0";
-*/
-//####################################################################################
-
 //[GM-Keys; koennen von http://code.google.com/apis/maps/ bezogen werden]
 SWITCH($_SERVER['SERVER_NAME'])
 {
