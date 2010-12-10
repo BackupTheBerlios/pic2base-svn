@@ -1498,7 +1498,6 @@ function generateHistogram($pic_id,$FileName,$sr)
 	$hist_g = $hist_path."/".$pic_id."_hist_1.gif";
 	$hist_b = $hist_path."/".$pic_id."_hist_2.gif";
 	$conv = buildConvertCommand($sr);
-	//echo "<BR>".$conv."<BR>";
 	IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r') OR @!fopen($file_mono, 'r'))
 	{
 		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
@@ -1506,6 +1505,7 @@ function generateHistogram($pic_id,$FileName,$sr)
 		shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
 		
 		shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
+		
 		$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
 		shell_exec($conv." ".$file_mono." histogram:".$hist_path."/".$pic_id."_hist.gif");
 		
