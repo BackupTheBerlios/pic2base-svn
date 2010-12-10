@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -26,9 +26,9 @@ include '../../share/global_config.php';
 
 /*
  * Project: pic2base
- * File: start.php
+ * File: edit_start.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
