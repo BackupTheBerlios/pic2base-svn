@@ -123,6 +123,10 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	//include $sr.'/bin/share/functions/main_functions.php';
+	
+	$gpsbabel = buildGpsbabelCommand($sr);
+	
 	$error = 0;
 	//var_dump($info);
 	//Sony-CS1-log-Dateien werden von GPSBabel als nmea verarbeitet!
@@ -201,7 +205,8 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet,aus
 		//der die Geo-Daten in die Datenbank ueberfuehrt werden!
 		// ######################
-		$kml_file = shell_exec($gpsb_path."/gpsbabel -t -i ".$file_format." -f ".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
+		
+		$kml_file = shell_exec($gpsbabel." -t -i ".$file_format." -f ".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
 		@$fh1 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
 		@$fh0 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
 		IF(!$fh1)
