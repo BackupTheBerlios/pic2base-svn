@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 
 	mysql_connect ($db_server, $user, $PWD);
@@ -30,20 +30,10 @@ include '../../share/global_config.php';
 	</tr>";
 	for ($i = 0; $i < $num; $i++)
 	{
-	  echo "<tr>";
-	  echo "<td align=left colspan='2'>".mysql_result ($result, $i, "description")."</td>";
-	  echo "<td align=left colspan='2'>".mysql_result ($result, $i, "perm_id")." - ".mysql_result ($result, $i, "shortdescription")."</td>";
-	  if (hasPermission($c_username, 'adminlogin'))
-	  {
-	  	//echo "<td align=left width=100>&Auml;ndern</td>";
-	  	//echo "<td align=left width=100></td>";
-	  }
-	  if (hasPermission($c_username, 'adminlogin'))
-	  {
-	  	//echo "<td align=left>L&ouml;schen</td>";
-	  	//echo "<td align=left></td>";
-	  }
-	  echo "</tr>";
+	  echo "<tr>
+	  <td align=left colspan='2'>".mysql_result ($result, $i, "description")."</td>
+	  <td align=left colspan='2'>".mysql_result ($result, $i, "perm_id")." - ".mysql_result ($result, $i, "shortdescription")."</td>
+	  </tr>";
 	}
 	echo "
 	<tr>
