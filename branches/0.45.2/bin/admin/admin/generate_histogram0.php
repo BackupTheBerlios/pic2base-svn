@@ -46,12 +46,14 @@ unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	//echo $c_username;
 }
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$conv = buildConvertCommand($sr);
 
 $result0 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username'");
 $user_id = mysql_result($result0, isset($i0), 'id');
@@ -74,7 +76,7 @@ echo "<div class='page'>
 	<center>
 	Status der Histogramm-Erstellung
 	<div id='prog_bar' style='border:solid; border-color:red; width:500px; height:12px; margin-top:30px; text-align:left; vertical-align:middle'>
-	<img src='../../share/images/green.gif' name='bar' />
+	<img src='.$sr.'/bin/share/images/green.gif' name='bar' />
 	</div>
 	<p id='zaehler'>1</p>
 	</center>";
@@ -89,7 +91,7 @@ echo "<div class='page'>
 		{
 			
 			$pic_id = mysql_result($result4, $i4, 'pic_id');
-			$FileName = mysql_result($result4, $i4, 'FileName');
+			$FileName = mysql_result($result4, $i4, 'FileNameHQ');
 			
 			//Wenn mind. ein Bild nicht vorhanden ist, werden die Histogramme neu erstellt:
 			$hist = $hist_path."/".$pic_id."_hist.gif";
@@ -98,12 +100,25 @@ echo "<div class='page'>
 			$hist_b = $hist_path."/".$pic_id."_hist_2.gif";
 			IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r'))
 			{
-				$file = $pic_path."/".$FileName;
-				shell_exec($im_path."/convert ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
-				shell_exec($im_path."/convert ".$file." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif");
+				//$file = $pic_path."/".$FileName;
+				$file = trim($pic_hq_preview."/".$FileName);
+				echo $file."<BR>";
+				shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
+				
+				shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
+				$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
+				shell_exec($conv." ".$file_mono." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif");
+				
 				$hist_file_r = $pic_id.'_hist_0.gif';
+				shell_exec($conv." ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
+				//shell_exec($conv." ".$hist_path."/".$hist_file_r." ".$hist_path."/".$hist_file_r);
+				
 				$hist_file_g = $pic_id.'_hist_1.gif';
+				shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
+				
 				$hist_file_b = $pic_id.'_hist_2.gif';
+				shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
+				
 				$hist_file = $pic_id.'_hist.gif';
 				$result2 = mysql_query( "UPDATE $table2 SET FileNameHist = '$hist_file', FileNameHist_r = '$hist_file_r', FileNameHist_g = '$hist_file_g', FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
 				echo mysql_error();
@@ -124,7 +139,7 @@ echo "<div class='page'>
 			<?php
 			IF(($i4 + 1) == $num4)
 			{
-				echo "<meta http-equiv='Refresh', Content='0; URL=../../html/admin/adminframe.php'>";
+				echo "<meta http-equiv='Refresh', Content='10; URL=../../html/admin/adminframe.php'>";
 			}
 		}
 	}
