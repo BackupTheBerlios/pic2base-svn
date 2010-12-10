@@ -560,6 +560,7 @@ echo "
 		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>Hilfe zu den pers&ouml;nlichen Einstellungen</b><BR><BR>
 		Auf dieser Seite haben Sie die M&ouml;glichkeit, pers&ouml;nliche Einstellungen anzupassen sowie Passworte zu &auml;ndern.<BR>
+		Es kann auch festgelegt werden, wie der Download der gefundenen Bilde erfolgen soll, per FTP oder als Direkt-Download.<BR><BR>
 		Je nach erteilter Berechtigung, k&ouml;nnen Sie dies f&uuml;r Ihr eigenes Konto oder aber auch f&uuml;r die Konten der anderen Benutzer tun.<BR><BR>
 		Weitere Hinweise finden Sie auf der Einstellungen-Seite.
 		</p>";
