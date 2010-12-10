@@ -1,13 +1,16 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 
 include 'global_config.php';
-include 'db_connect1.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+
+$exiftool = buildExiftoolCommand($sr);
 
 if ( array_key_exists('FileName',$_GET) )
 {
@@ -35,7 +38,7 @@ else
 {
 	echo "Konnte die Datei $FileName nicht kopieren!<BR>";
 }
-//es wird geprüft, ob ggf. ein Originalbild als NICHT-JPG vorliegt
+//es wird geprï¿½ft, ob ggf. ein Originalbild als NICHT-JPG vorliegt
 $file_info = pathinfo($datei);
 $base_name = substr($file_info['basename'],0,-4);
 //echo $base_name;
@@ -47,7 +50,7 @@ FOREACH($supported_filetypes AS $sft)
 		//echo "Es gibt eine ".$sft."-Datei";
 		copy($pic_path."/".$base_name.".".$sft, $ftp_path."/".$c_username."/downloads/".$base_name.".".$sft);
 		//die Meta-Daten dieses nicht-jpg-Bildes werden in das bereits herauskopierte jpg-Bild uebertragen:
-		$command = $et_path."/exiftool -tagsFromFile ".$ftp_path."/".$c_username."/downloads/".$base_name.".".$sft." ".$ftp_path."/".$c_username."/downloads/".$FileName." -overwrite_original";
+		$command = $exiftool." -tagsFromFile ".$ftp_path."/".$c_username."/downloads/".$base_name.".".$sft." ".$ftp_path."/".$c_username."/downloads/".$FileName." -overwrite_original";
 		//echo $command;
 		shell_exec($command);
 		$k++;
