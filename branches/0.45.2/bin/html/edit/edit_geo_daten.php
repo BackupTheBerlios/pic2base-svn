@@ -23,13 +23,13 @@ include '../../share/global_config.php';
 	{
 		if(document.geo_zuweisung.data_logger.value == "")
 		{
-			alert("Bitte w�hlen Sie Ihren Daten-Logger aus!");
+			alert("Geben Sie bitte Ihren Daten-Logger an!");
 			document.geo_zuweisung.data_logger.focus();
 			return false;
 		}
 		if(document.geo_zuweisung.geo_file.value == "")
 		{
-			alert("Bitte w�hlen Sie eine Track-Datei aus!");
+			alert("Bitte geben Sie eine Track-Datei an!");
 			document.geo_zuweisung.geo_file.focus();
 			return false;
 		}
