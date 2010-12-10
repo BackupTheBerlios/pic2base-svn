@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -66,7 +66,6 @@ $result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND
 $result2 = mysql_query("SELECT * FROM $table4 WHERE kat_id =  '$kat_id'");
 $kategorie = mysql_result($result2, isset($i2), 'kategorie');
 $parent = mysql_result($result2, isset($i2), 'parent');
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 ?>
 

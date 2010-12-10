@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -42,11 +42,6 @@ include '../../share/global_config.php';
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -70,6 +65,7 @@ if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
 }
+/*
 if(array_key_exists('art',$_GET))
 {
 	$art = $_GET['art'];
@@ -81,6 +77,7 @@ else
 		$art = '';
 	}
 }
+*/
 if(array_key_exists('kat_id',$_GET))
 {
 	$kat_id = $_GET['kat_id'];
@@ -92,6 +89,7 @@ else
 		$kat_id = '';
 	}
 }
+
 if(array_key_exists('ID',$_REQUEST))
 {
 	$ID = $_REQUEST['ID'];
@@ -129,7 +127,7 @@ echo "
 	</div>
 	
 	<div id='spalte2F'>";
-	
+	/*
 		IF ($art == 'single_desc_edit')
 		{
 			$edit_mod = 'desc';
@@ -138,9 +136,17 @@ echo "
 		}
 		ELSE
 		{
-			echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ordne Beschreibungstext den ausgew&auml;hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgew&auml;hlten Bildern hinzugef&uuml;gt!<BR><BR><textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
+			echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>
+			Ordne Beschreibungstext den ausgew&auml;hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>
+			Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgew&auml;hlten Bildern hinzugef&uuml;gt!<BR><BR>
+			<textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
 		}
-		
+	*/	
+	echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>
+			Ordne Beschreibungstext den ausgew&auml;hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>
+			Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgew&auml;hlten Bildern hinzugef&uuml;gt!<BR><BR>
+			<textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
+	
 	echo "
 	</div>
 	

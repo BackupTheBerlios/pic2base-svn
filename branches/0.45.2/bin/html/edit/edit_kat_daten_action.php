@@ -70,8 +70,10 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$exiftool = buildExiftoolCommand($sr);
+
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
+//$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 //Variablen-Umbenennung fuer die Ruecksprung-Adresse:
 $kat_back = $kat_id;
@@ -166,7 +168,7 @@ flush();
 			$FN = strtolower($pic_path."/".restoreOriFilename($bild_id, $sr));
 			//echo $FN."<BR>";
 			//eintragen der Kategorien in IPTC:Keywords
-			shell_exec($et_path."/exiftool -IPTC:Keywords+='$kategorie' -overwrite_original ".$FN);
+			shell_exec($exiftool." -IPTC:Keywords+='$kategorie' -overwrite_original ".$FN);
 			
 			//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
 			$result3 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$bild_id'");

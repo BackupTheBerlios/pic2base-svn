@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 
 /***********************************************************************************
@@ -42,7 +42,7 @@ function delChildKat($kat_id, $pic_id)
 	$kat_id1 = $kat_id;
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	//Ausgehend von der zu l�schenden Kategorie wird ermittelt, welch Child-Kategorien diese besitzt und welche davon wurde dem Bild zugewiesen:
+	//Ausgehend von der zu loeschenden Kategorie wird ermittelt, welch Child-Kategorien diese besitzt und welche davon wurde dem Bild zugewiesen:
 	
 	global $kat_ids;
 	$kat_ids[] = $kat_id;
@@ -95,14 +95,15 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$exiftool = buildExiftoolCommand($sr);
+
 if ( !isset($kw) )
 {
 	$kw = '';
 }
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-shell_exec($et_path."/exiftool -IPTC:Keywords='' -overwrite_original ".$FN);
+shell_exec($exiftool." -IPTC:Keywords='' -overwrite_original ".$FN);
 $result7 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
-//$result7 = mysql_query( "SELECT $table10.kat_id, $table10.pic_id, $table4.kategorie, $table4.kat_id FROM $table10 LEFT JOIN $table4 ON $table10.pic_id = '$pic_id' AND $table10.kat_id = $table4.kat_id");
 echo mysql_error();
 $num7 = mysql_num_rows($result7);
 FOR($i7='0'; $i7<$num7; $i7++)

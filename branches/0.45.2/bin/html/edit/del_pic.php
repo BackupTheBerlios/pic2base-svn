@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -48,7 +48,6 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 include '../../share/global_config.php'; 
 include $sr.'/bin/share/db_connect1.php';
-
 
 echo "
 <div class='page'>
@@ -108,10 +107,10 @@ echo "
 			echo "ACHTUNG! Das HQ-Vorschaubild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
-		//l�schen des Bild-Datensatzes
+		//loeschen des Bild-Datensatzes
 		$result2 = mysql_query( "DELETE FROM $table2 WHERE pic_id = '$pic_id'");
 		
-		//l�schen der Kategorie-Zuordnung
+		//loeschen der Kategorie-Zuordnung
 		$result3 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic_id'");
 		
 		echo "<meta http-equiv='Refresh' Content='1; URL=double_check0.php'>";
@@ -119,7 +118,6 @@ echo "
 	ELSE
 	{
 		echo "Es gibt keine oder mehrere Dateien mit dieser Bild-ID!<BR>Der Vorgang wird abgebrochen.";
-		//echo "<meta http-equiv='Refresh' Content=2; URL=double_check0.php'>";
 	}
 	echo "
 	</div>

@@ -74,10 +74,7 @@ if ( array_key_exists('ge',$_POST) )
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $row = mysql_fetch_array($result1);
-$berechtigung = $row['berechtigung'];
 $user_id = $row['id'];
-//$berechtigung = mysql_result($result1, $i1, 'berechtigung');
-//$user_id = mysql_result($result1, $i1, 'id');
 //var_dump($_FILES);
 $geo_file = $_FILES['geo_file']['name'];
 $geo_file_name = $geo_path_copy."/".$geo_file;
@@ -141,8 +138,6 @@ SWITCH($ge)
 			$min_time = $row['MIN(time)'];
 			$max_time = $row['MAX(time)'];
 			
-			//$min_time = mysql_result($result5, $i5, 'MIN(time)');
-			//$max_time = mysql_result($result5, $i5, 'MAX(time)');
 			//echo "Zeitspanne: ".$min_time." - ".$max_time."<BR>";
 			//alle Bilder des Users werden ermittelt, welche an dem besagten Tag in der ermittelten Zeitspanne aufgenommen wurden und denen noch keine Koordinaten zugewiesen wurden:
 			$start_time = $datum." ".$min_time;

@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -49,6 +49,8 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$exiftool = buildExiftoolCommand($sr);
+
 //var_dump($_POST);
 //var_dump($_GET);
 
@@ -74,7 +76,7 @@ if ( array_key_exists('pic_sel2',$_POST) )
 }
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
+//$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 //Variablen-Umbenennung fuer die Ruecksprung-Adresse:
 $kat_back = $kat_id;
@@ -133,12 +135,12 @@ flush();
 			$FN = $pic_path."/".restoreOriFilename($bild_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
-			shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
+			shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
 		}
 		IF (mysql_errno() == '0')
 		{
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
-			<meta http-equiv='refresh' content='2; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
+			<meta http-equiv='refresh' content='1; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 			
 		}
 		ELSE
@@ -155,10 +157,10 @@ flush();
 			$FN = $pic_path."/".restoreOriFilename($PIC_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
-			shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
+			shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
 			
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
-			<meta http-equiv='refresh' content='2; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
+			<meta http-equiv='refresh' content='1; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 		}
 		ELSE
 		{
