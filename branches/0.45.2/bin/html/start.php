@@ -87,7 +87,7 @@ include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
-
+//echo buildDcrawCommand($sr);
 IF(array_key_exists('check',$_GET))
 {
 	$check = $_GET['check'];
