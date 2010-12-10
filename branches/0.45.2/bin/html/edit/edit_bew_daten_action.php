@@ -38,6 +38,8 @@ include '../../share/global_config.php';
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
+ * +++++++++++++++++++++++++++++++++++  !!!
+ * Datei wurde verwendet, wenn gleichzeitig mehreren Bildern eine Benotung zugeteilt erden sollte!
  */
 
 unset($username);
