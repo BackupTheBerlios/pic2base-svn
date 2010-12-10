@@ -195,6 +195,7 @@ IF(hasPermission($c_username, 'editallprofiles'))
 		F&uuml;llen Sie hierzu lediglich die beiden unteren Eingabefelder aus.<BR>
 		Standardm&auml;&szlig;ig ist hier der betreffende Benutzername als Passwort vorbelegt.<BR><BR>
 		Wenn Sie nur die pers&ouml;nlichen Daten ver&auml;ndern wollen, m&uuml;ssen Sie die &Auml;nderungen mit dem Passwort des betreffenden Benutzers best&auml;tigen.<BR>
+		Dies gilt auch, wenn Sie nur die Downloadoption &auml;ndern wollen.<BR><BR>
 		F&uuml;llen Sie hierzu - nachdem Sie die entsprechenden &Auml;nderungen an den pers&ouml;nlichen Daten vorgenommen haben - die beiden unteren Passwort-Felder mit dem bisherigen Passwort des betreffenden Benutzers aus.<BR>
 		Anderenfalls wird das bisherige Passwort durch den Benutzernamen des betreffenden Benutzers ersetzt.<BR>
 		Dies ist die Voreinstellung.</p>
