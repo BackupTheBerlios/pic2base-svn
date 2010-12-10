@@ -299,7 +299,7 @@ echo "
 		<li>manuelle Bearbeitung freigegebener Meta-Daten: <img src='../../share/images/info.gif' height='12px' />
 		</ul>
 		<p style='margin:20px 150px; text-align:justify; width:400px;'>
-		Bei entsprechender Berechtigung k&ouml;nnen die o.g. Funktionen &uuml;ber die jeweiligen Icons aufgerufen werden. (siehe Abb.:)<BR><BR>
+		Bei entsprechender Berechtigung k&ouml;nnen die o.g. Funktionen &uuml;ber die jeweiligen Icons aufgerufen werden. (siehe Abb.)<BR><BR>
 		<img src='img/recherche1.png'></img><BR><BR>
 		Weiterhin besteht bei entsprechender Berechtigung die M&ouml;glichkeit, die Bildbeschreibung zu &auml;ndern. Hierzu Nehmen Sie die &Auml;nderung direkt in dem angezeigten Textfeld vor und speichern diese dann durch einen Klick auf den Button \"&Auml;nderungen speichern\".<BR><BR>
 		Zus&auml;tzlich haben Sie die M&ouml;glichkeit, ein sogenanntes Kategorie-Lexikon anzulegen. Hiermit besteht die Option, zu jeder Kategorie zus&auml;tzliche Informationen in der Datenbank zu hinterlegen. So k&ouml;nnte man z.B. der Kategorie \"Blankenburg (Harz)\" Informationen zur geografischen Lage, der Einwohnerzahl, der Erreichbarkeit mit Bus / Bahn / Auto usw. zuweisen.<BR>
@@ -307,7 +307,7 @@ echo "
 		Kategorien, denen bereits Informationen zugewiesen wurden, werden im Kategoriebaum blau hervorgehoben.<BR><BR>
 		Analog kann ein Fototagebuch angelegt werden, indem man sich in der Ansicht \"Auflistung nach Jahrg&auml;ngen sortiert\" den betreffenden Tag heraussucht, anklickt und die gew&uuml;nschte Information hinterlegt.<BR>
 		Auch hier wird ein Tag, zu dem bereits zus&auml;tzliche Informationen existieren, farblich hervorgehoben.<BR><BR>
-		Der Inhalt des Kategorielexikons und des Forttagebuchs werden bei den betreffenden Bildern jeweils mit in der Komplett-Ansicht der Detailinformationen ausgegeben. (siehe Abb.:)<BR><BR>
+		Der Inhalt des Kategorielexikons und des Fototagebuchs werden bei den betreffenden Bildern jeweils mit in der Komplett-Ansicht der Detailinformationen ausgegeben. (siehe Abb.)<BR><BR>
 		<img src='img/recherche2.png' width='400px'></img><BR><BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		</p>";
