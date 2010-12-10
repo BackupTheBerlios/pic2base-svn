@@ -1489,7 +1489,8 @@ SWITCH ($modus)
 	
 	IF($num6_1 < '1001')
 	{
-		$pdf_link = "&#160;&#160;&#160;<A HREF='$inst_path/pic2base/userdata/$c_username/kml_files/thumb-gallery.pdf' title='Thumbnail-Galerie drucken' target = '_blank'><img src='$inst_path/pic2base/bin/share/images/acroread.png' width='12' height='12' border='0' /></A>";
+		$pdf_link = "&#160;&#160;&#160;<A HREF='$inst_path/pic2base/userdata/$c_username/kml_files/thumb-gallery.pdf' title='Thumbnail-Galerie drucken' target = '_blank'>
+		<img src='$inst_path/pic2base/bin/share/images/acroread.png' width='12' height='12' border='0' /></A>";
 	}
 	ELSE
 	{
@@ -1499,7 +1500,8 @@ SWITCH ($modus)
 	IF(isset($num8) AND $num8 > '0')
 	{
 		$zusatz = "
-			(davon ".$num8." geo-ref.; Diese in <a href='$inst_path/pic2base/userdata/$c_username/kml_files/$file'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\" /><span>
+			(davon ".$num8." geo-ref.; Diese in <a href='$inst_path/pic2base/userdata/$c_username/kml_files/$file'>
+			<img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\" /><span>
 			<strong>Zur Anzeige der Fotos in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
 			<br />
 			Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
@@ -1667,7 +1669,6 @@ SWITCH ($modus)
 			{
 			//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				//IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
 				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
 				{
 					IF(directDownload($c_username, $sr))
@@ -1698,17 +1699,6 @@ SWITCH ($modus)
 				{
 					$icon[$j] = "<TD align='center' width='43'><BR></TD>";
 				}
-				
-				/*
-				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				$icon[$j] = "<TD align='center'>
-				<div id='box$pic_id'>
-				<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
-				<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0'/>
-				</SPAN>	
-				</div>
-				</TD>";
-				*/
 			}
 			$j++;
 		}
@@ -1787,10 +1777,12 @@ SWITCH ($modus)
 				<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
 				<img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='0' />
 				<div id='pic$pic_id'>
-				<!-- <SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span> -->";
+				<!-- <SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span> -->";
 				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
 				echo "
-				<!-- <SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span> -->
+				<!-- <SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+				<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span> -->
 				</div>
 				</TD>";
 			}
@@ -1833,7 +1825,8 @@ SWITCH ($modus)
 						$icon[$i6] = "
 						<TD align='center'width='43'>
 						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
+						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
 						</div>	
 						</TD>";
 					}
@@ -1842,7 +1835,8 @@ SWITCH ($modus)
 						$icon[$i6] = "
 						<TD align='center'width='43'>
 						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
 						</div>	
 						</TD>";
 					}
@@ -1858,7 +1852,8 @@ SWITCH ($modus)
 		{
 			FOR($i_r = '0'; $i_r<$rest; $i_r++)
 			{
-				echo "<TD align='center' colspan='1'><img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='10' /></TD>";
+				echo "<TD align='center' colspan='1'>
+				<img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='10' /></TD>";
 			}
 		}
 		
@@ -1914,32 +1909,44 @@ SWITCH ($modus)
 				{
 					CASE 'kat':
 					echo "
-					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'><img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' /></SPAN>";
+					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'>
+					<img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' />
+					</SPAN>";
 					break;
 					
 					CASE 'zeit':
 					echo "
-					<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$j\",\"$m\",\"$t\",0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'><img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' /></SPAN>";
+					<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$j\",\"$m\",\"$t\",0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'>
+					<img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' />
+					</SPAN>";
 					break;
 					
 					CASE 'exif':
 					echo "
-					<SPAN style='cursor:pointer;'onClick='getExifPreview(exif_param.zusatz1.value, exif_param.bedingung1.value, exif_param.zusatzwert1.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",\"$position\",99)'; title='zeige Bilder $ziel bis $ziel_ende'><img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' /></SPAN>";
+					<SPAN style='cursor:pointer;'onClick='getExifPreview(exif_param.zusatz1.value, exif_param.bedingung1.value, exif_param.zusatzwert1.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",\"$position\",99)'; title='zeige Bilder $ziel bis $ziel_ende'>
+					<img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' />
+					</SPAN>";
 					break;
 					
 					CASE 'desc':
 					echo "
-					<SPAN style='cursor:pointer;' onClick='getDescPreview1(descr1.desc1.value, descr1.bed1.value, descr1.desc2.value, descr1.bed2.value, descr1.desc3.value,  descr1.bed3.value, descr1.desc4.value, descr1.bed4.value, descr1.desc5.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'><img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' /></SPAN>";
+					<SPAN style='cursor:pointer;' onClick='getDescPreview1(descr1.desc1.value, descr1.bed1.value, descr1.desc2.value, descr1.bed2.value, descr1.desc3.value,  descr1.bed3.value, descr1.desc4.value, descr1.bed4.value, descr1.desc5.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'>
+					<img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' />
+					</SPAN>";
 					break;
 					
 					CASE 'geo':
 					IF($form_name == "geo_rech1")
 					{
-						echo "<SPAN style='cursor:pointer;' onClick='getGeoPreview1(geo_rech1.long.value, geo_rech1.lat.value, geo_rech1.alt.value, geo_rech1.radius1.value, geo_rech1.einheit1.value, \"$mod\", \"$modus\", \"$base_file\", \"geo_rech1\", \"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'><img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' /></SPAN>";
+						echo "<SPAN style='cursor:pointer;' onClick='getGeoPreview1(geo_rech1.long.value, geo_rech1.lat.value, geo_rech1.alt.value, geo_rech1.radius1.value, geo_rech1.einheit1.value, \"$mod\", \"$modus\", \"$base_file\", \"geo_rech1\", \"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'>
+						<img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' />
+						</SPAN>";
 					}
 					ELSEIF($form_name == "geo_rech2")
 					{
-						echo "<SPAN style='cursor:pointer;' onClick='getGeoPreview2(geo_rech2.ort.value, geo_rech2.radius2.value, geo_rech2.einheit2.value, \"$mod\", \"$modus\", \"$base_file\", \"geo_rech2\", \"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'><img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' /></SPAN>";
+						echo "<SPAN style='cursor:pointer;' onClick='getGeoPreview2(geo_rech2.ort.value, geo_rech2.radius2.value, geo_rech2.einheit2.value, \"$mod\", \"$modus\", \"$base_file\", \"geo_rech2\", \"$bewertung\",\"$position\",99)' title='zeige Bilder $ziel bis $ziel_ende'>
+						<img src=\"$slider_img\" width=\"$sl_width\" height=\"10\"  border='0' style='margin:-1px; padding:0px;' />
+						</SPAN>";
 					}
 					break;
 				}
@@ -2021,7 +2028,12 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			$description = 'keine';
 		}
 		//echo "<div id='tooltip1'><a href=edit_beschreibung.php?kat_id=$kat_id&pic_id=$pic_id&art=single_desc_edit&ID=$ID title='Nur Beschreibung dieses einen Bildes &auml;ndern'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
-		echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
+		echo "<div id='tooltip1'>
+		<a href='#'>
+		<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'>
+		<span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span>
+		</a>
+		</div>";
 		break;
 		
 		CASE 'edit_bewertung':
@@ -2032,12 +2044,20 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			$note = '0';
 		}
 				
-		echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
+		echo "<SPAN style='cursor:pointer;'>
+		<a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
+		<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'>
+		</a>
+		</span>";
 		break;
 		
 		CASE 'recherche2':
 		CASE 'edit_remove_kat':
-		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
+		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
+		<a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
+		<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
+		</a>
+		</span>";
 		break;
 		
 		CASE 'edit_kat_daten':
@@ -2059,7 +2079,12 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			
 		}
 		
-		echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
+		echo "<div id='tooltip1'>
+		<a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
+		<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu'>
+		<span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span>
+		</a>
+		</div>";
 		
 		break;
 	}
