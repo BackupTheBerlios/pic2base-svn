@@ -101,7 +101,7 @@ echo "<div class='page'>
 			IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r'))
 			{
 				//$file = $pic_path."/".$FileName;
-				$file = trim($pic_hq_preview."/".$FileName);
+				$file = trim($pic_hq_path."/".$FileName);
 				echo $file."<BR>";
 				shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
 				
