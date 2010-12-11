@@ -203,7 +203,7 @@ FOR ($x='0';$x<$n;$x++)
 	//echo "tempor&auml;rer Dateiname: ".$tmp_filename."<BR>";
 	
 	//  Kontrolle, ob Upload erfolgreich war  +++++
-	@copy("$bild","$path_copy/$tmp_filename")	// Bild wird nach (z.B.) ....images/originale/12345.nef kopiert
+	@copy("$bild","$pic_path/$tmp_filename")	// Bild wird nach (z.B.) ....images/originale/12345.nef kopiert
 	or die("Upload fehlgeschlagen!");
 	$tmp_file = $sr."/images/originale/".$tmp_filename;
 	clearstatcache();  
