@@ -5,6 +5,21 @@ IF (!$_COOKIE['login'])
 	//var_dump($sr);
 	 header('Location: ../../../index.php');
 }
+/*
+ * Project: pic2base
+ * File: check_software0.php
+ *
+ * Copyright (c) 2006 - 2010 Klaus Henneberg
+ *
+ * Project owner:
+ * Dipl.-Ing. Klaus Henneberg
+ * 38889 Blankenburg, BRD
+ *
+ * This file is licensed under the terms of the Open Software License
+ * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ * prueft, ob die erforderliche Software auf dem System verfuegbar ist
+ */
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -50,22 +65,6 @@ IF (!$_COOKIE['login'])
 <DIV Class="klein">
 
 <?php
-
-/*
- * Project: pic2base
- * File: check_software0.php
- *
- * Copyright (c) 2006 - 2010 Klaus Henneberg
- *
- * Project owner:
- * Dipl.-Ing. Klaus Henneberg
- * 38889 Blankenburg, BRD
- *
- * This file is licensed under the terms of the Open Software License
- * http://www.opensource.org/licenses/osl-2.1.php
- *
- *pr&uuml;ft, ob die erforderliche Software auf dem System verf&uuml;gbar ist
- */
 
 unset($username);
 IF ($_COOKIE['login'])
