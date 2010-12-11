@@ -41,7 +41,7 @@ $hist_path = $sr."/images/histogramme";
 $monochrome_path = $sr."/images/monochrome";
 
 //Ablage der Trackdaten fuer die Geo-Referenzierung
-$geo_path_copy = $sr."/tracks";							// in track_path umbenennen
+$track_path = $sr."/tracks";
 //#####################################################################################
 //[unterstuetzte Dateiformate]
 //alle unterstuetzten Datei-Formate (incl- RAW-Dateien):
