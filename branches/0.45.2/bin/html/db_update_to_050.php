@@ -250,8 +250,24 @@ include '../share/functions/permissions.php';
 									//echo mysql_error()."<BR>";
 									IF(mysql_error() == '')
 									{
-										echo "Die Tabelle \"pfade\" wurde erfolgreich angelegt.<BR><BR>
-										Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+										echo "Die Tabelle \"pfade\" wurde erfolgreich angelegt.";
+										$res21 = mysql_query("CREATE TABLE IF NOT EXISTS `pic2base`.`fileformats` (
+										`format_id` INT NOT NULL AUTO_INCREMENT, 
+										`format` VARCHAR(10) NOT NULL, 
+										`raw` TINYINT(1) NOT NULL DEFAULT '0', 
+										PRIMARY KEY (`format_id`), 
+										INDEX (`format`)
+										) ENGINE = MyISAM COMMENT = 'von dcraw unterstützte Dateiformate';");
+										IF(mysql_error() == '')
+										{
+											echo "Die Tabelle \"fileformats\" wurde erfolgreich angelegt.<BR><BR>
+											Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+										}
+										ELSE
+										{
+											echo "Die Tabelle \"fileformats\" konnte NICHT angelegt werden.";
+										}
+										
 									}
 									ELSE
 									{
