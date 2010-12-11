@@ -22,20 +22,17 @@ $down_dir = $ftp_path.'/'.$benutzername.'/downloads';
 $kml_dir = $ftp_path.'/'.$benutzername.'/kml_files';
 //#####################################################################################
 //[Datei-Ablagepfade]
-//Ablage der Originale									DOPPELUNG KORRIGIEREN!
-//$path_copy = $sr."/images/originale";	//verwerfen
+//Ablage der Originale									
 $pic_path = $sr."/images/originale";
 
 //Ablage der rotierten Vorschaubilder
 $pic_rot_path = $sr."/images/originale/rotated";
 
-//Ablage der HQ-Vorschaubilder							DOPPELUNG KORRIGIEREN!
-//$HQ_verzeichnis = $sr."/images/vorschau/hq-preview";	//verwefen
-$pic_hq_path = $sr."/images/vorschau/hq-preview";	//in pic_hq_path umbenennen
+//Ablage der HQ-Vorschaubilder							
+$pic_hq_path = $sr."/images/vorschau/hq-preview";
 
-//Ablage der kleinen Vorschaubilder						DOPPELUNG KORRIGIEREN!
-$vorschau_verzeichnis = $sr."/images/vorschau/thumbs";	//verwerfen
-$pic_thumbs = $sr."/images/vorschau/thumbs";			//in pic_thumbs_path umbenennen
+//Ablage der kleinen Vorschaubilder	
+$pic_thumbs_path = $sr."/images/vorschau/thumbs";
 
 //Histogramm-Ablage
 $hist_path = $sr."/images/histogramme";
