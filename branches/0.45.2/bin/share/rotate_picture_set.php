@@ -6,7 +6,7 @@ include '../share/global_config.php';
   header('Location: ../../index.php');
 }
 
-//in get_details; recherche2, edit_remove_kat zur nachträglichen, manuellen Rotation der Bilder verwendet
+//in get_details; recherche2, edit_remove_kat zur nachtrï¿½glichen, manuellen Rotation der Bilder verwendet
 include 'global_config.php';
 include 'db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
@@ -25,7 +25,7 @@ SWITCH($orientation)
 	$command = "/usr/bin/convert ".$pic_thumbs."/".$FileNameV." -rotate 90 ".$pic_thumbs."/".$FileNameV."";
 	$output = shell_exec($command);
 	echo "Vorschaubild wurde gedreht<BR>";
-	$command = "/usr/bin/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 90 ".$pic_hq_preview."/".$FileNameHQ."";
+	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_preview."/".$FileNameHQ."";
 	$output = shell_exec($command);
 	echo "HQ-Bild wurde gedreht<BR>";
 	$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
@@ -38,7 +38,7 @@ SWITCH($orientation)
 	$command = "/usr/bin/convert ".$pic_thumbs."/".$FileNameV." -rotate 270 ".$pic_thumbs."/".$FileNameV."";
 	$output = shell_exec($command);
 	echo "Vorschaubild wurde gedreht<BR>";
-	$command = "/usr/bin/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 270 ".$pic_hq_preview."/".$FileNameHQ."";
+	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_preview."/".$FileNameHQ."";
 	$output = shell_exec($command);
 	echo "HQ-Bild wurde gedreht<BR>";
 	$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
@@ -47,7 +47,7 @@ SWITCH($orientation)
 	break;
 }
 
-//in der Tabelle vermerkte Werte für Breite und Höhe werden getauscht:
+//in der Tabelle vermerkte Werte fï¿½r Breite und Hï¿½he werden getauscht:
 $result2 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 $Width  = mysql_result($result2, $i2, 'ImageWidth');
 $Height  = mysql_result($result2, $i2, 'ImageHeight');
@@ -56,7 +56,7 @@ $result3 = mysql_query( "UPDATE $table14 SET ImageWidth = '$Height', ExifImageWi
 IF (mysql_error() == '')
 {
 	echo "Schlie&szlig;en Sie nun bitte dieses Fenster und aktualisieren Sie die pic2base-Ansicht.<BR><BR>
-	<input type='button' value='Fenster schließen' align='right' onClick='JavaScript:window.close()'>";
+	<input type='button' value='Fenster schlieï¿½en' align='right' onClick='JavaScript:window.close()'>";
 }
 ELSE
 {
