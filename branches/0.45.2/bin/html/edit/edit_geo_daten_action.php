@@ -77,7 +77,7 @@ $row = mysql_fetch_array($result1);
 $user_id = $row['id'];
 //var_dump($_FILES);
 $geo_file = $_FILES['geo_file']['name'];
-$geo_file_name = $geo_path_copy."/".$geo_file;
+$geo_file_name = $track_path."/".$geo_file;
 
 IF($geo_file == '')
 {
@@ -89,7 +89,7 @@ IF($geo_file == '')
 IF ($geo_file_name != "" && $geo_file_name !='.' && $geo_file_name != '..')
 {
 	move_uploaded_file($_FILES['geo_file']['tmp_name'],$geo_file_name)
-//	@copy("$geo_file","$geo_path_copy/$geo_file_name")
+//	@copy("$geo_file","$track_path/$geo_file_name")
 	or die("Upload fehlgeschlagen!");
 	$error = getFileError($_FILES['geo_file']['error']);
 	//echo $error."<br>";
@@ -98,7 +98,7 @@ IF ($geo_file_name != "" && $geo_file_name !='.' && $geo_file_name != '..')
 
 $fh = fopen($geo_file_name, 'r');
 //join() -> Alais zu implode()
-$txt_file = implode('',file($geo_path_copy."/".$geo_file));
+$txt_file = implode('',file($track_path."/".$geo_file));
 $line_number = 0;	//Initialisierung des Zeilen-Zaehlers
 
 //Ermittlung des Datei-Formates:
