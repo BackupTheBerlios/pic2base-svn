@@ -2,8 +2,7 @@
 // alle Meldungen ausgeben:
 error_reporting(E_ALL);
 //#####################################################################################
-//[Pfade]
-//Globale Konfigurationseinstellungen
+//[Pfade] Globale Konfigurationseinstellungen
 $doc_root = $_SERVER['DOCUMENT_ROOT'];						//DocumentRoot des Web-Servers
 $inst_path = "";											//Pfad zwischen DocumentRoot und pic2base
 $p2b_path = $doc_root.$inst_path."/";						//Pfad zur p2b-Wurzel
@@ -21,27 +20,14 @@ $up_dir = $ftp_path.'/'.$benutzername.'/uploads';
 $down_dir = $ftp_path.'/'.$benutzername.'/downloads';
 $kml_dir = $ftp_path.'/'.$benutzername.'/kml_files';
 //#####################################################################################
-//[Datei-Ablagepfade]
-//Ablage der Originale									
-$pic_path = $sr."/images/originale";
-
-//Ablage der rotierten Vorschaubilder
-$pic_rot_path = $sr."/images/originale/rotated";
-
-//Ablage der HQ-Vorschaubilder							
-$pic_hq_path = $sr."/images/vorschau/hq-preview";
-
-//Ablage der kleinen Vorschaubilder	
-$pic_thumbs_path = $sr."/images/vorschau/thumbs";
-
-//Histogramm-Ablage
-$hist_path = $sr."/images/histogramme";
-
-//Ablage der Monochrome-Vorschau
-$monochrome_path = $sr."/images/monochrome";
-
-//Ablage der Trackdaten fuer die Geo-Referenzierung
-$track_path = $sr."/tracks";
+//[Datei-Ablagepfade]				
+$pic_path = $sr."/images/originale";						//Ablage der Originale	
+$pic_rot_path = $sr."/images/originale/rotated";			//Ablage der rotierten Vorschaubilder
+$pic_hq_path = $sr."/images/vorschau/hq-preview";			//Ablage der HQ-Vorschaubilder
+$pic_thumbs_path = $sr."/images/vorschau/thumbs";			//Ablage der kleinen Vorschaubilder
+$hist_path = $sr."/images/histogramme";						//Histogramm-Ablage
+$monochrome_path = $sr."/images/monochrome";				//Ablage der Monochrome-Vorschau
+$track_path = $sr."/tracks";								//Ablage der Trackdaten fuer die Geo-Referenzierung
 //#####################################################################################
 //[unterstuetzte Dateiformate]
 //alle unterstuetzten Datei-Formate (incl- RAW-Dateien):
