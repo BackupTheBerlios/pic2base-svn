@@ -98,7 +98,7 @@ echo "
 			echo "ACHTUNG! Das Vorschaubild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
-		IF(@unlink($HQ_verzeichnis.'/'.$filenamehq))
+		IF(@unlink($pic_hq_path.'/'.$filenamehq))
 		{
 			echo "HQ-Vorschaubild wurde gel&ouml;scht.<BR>";
 		}
