@@ -89,7 +89,7 @@ echo "
 			echo "ACHTUNG! Das rotierte Originalbild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
-		IF(@unlink($vorschau_verzeichnis.'/'.$filenamev))
+		IF(@unlink($pic_thumbs_path.'/'.$filenamev))
 		{
 			echo "Vorschaubild wurde gel&ouml;scht.<BR>";
 		}
