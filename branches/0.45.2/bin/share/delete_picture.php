@@ -40,7 +40,7 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 	$datei_ori = $pic_path."/".$FileName;
 	$datei_rotated = $pic_rot_path."/".$FileName;
 	$datei_hq = $pic_hq_path."/".str_replace('.','_hq.',$FileName);
-	$datei_thumbs = $pic_thumbs."/".str_replace('.','_v.',$FileName);
+	$datei_thumbs = $pic_thumbs_path."/".str_replace('.','_v.',$FileName);
 	
 	//Die Bild-ID wird ermittelt:
 	$result1 = mysql_query( "SELECT * FROM $table2 WHERE FileName = '$FileName'");
