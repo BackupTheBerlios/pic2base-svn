@@ -165,8 +165,8 @@ ELSEIF($modus == 'new')
 	$source = $pic_path."/".$new_filename;
 	$FileNameHQ = substr($file_name_raw,0,-4)."_hq.jpg";
 	$max_len = '800';
-	//$command2 = $im_path."/convert -quality 80 -size ".$max_len."x0 ".$source." -resize ".$max_len."x0 ".$pic_hq_preview."/".$FileNameHQ."";
-	$command2 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_hq_preview."/".$FileNameHQ."";
+	//$command2 = $im_path."/convert -quality 80 -size ".$max_len."x0 ".$source." -resize ".$max_len."x0 ".$pic_hq_path."/".$FileNameHQ."";
+	$command2 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_hq_path."/".$FileNameHQ."";
  	//echo $command;
  	$output = shell_exec($command2);
  	
@@ -189,7 +189,7 @@ ELSEIF($modus == 'new')
 				$c++;
 			}
 		}
-		$command2_a = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." ".$contr." ".$pic_hq_preview."/".$FileNameHQ;
+		$command2_a = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." ".$contr." ".$pic_hq_path."/".$FileNameHQ;
 		$output = shell_exec($command2_a);
 	}
  	
@@ -226,7 +226,7 @@ ELSEIF($modus == 'new')
 	
 	// Schritt 5) Graustufenbild neu erzeugen
 	$FileNameMono = substr($file_name_raw,0,-4)."_mono.jpg";
-	$command5 = $conv." ".$pic_hq_preview."/".$FileNameHQ." -colorspace Gray -quality 80% ".$monochrome_path."/".$FileNameMono;
+	$command5 = $conv." ".$pic_hq_path."/".$FileNameHQ." -colorspace Gray -quality 80% ".$monochrome_path."/".$FileNameMono;
 	$output = shell_exec($command5);
 	
     // Schritt 6) Erzeugung des Anzeige-Bildes:
