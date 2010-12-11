@@ -407,7 +407,7 @@ echo "<br>++++ #### ++++<br>";
 			KEY `username` (`username`)
 			) ENGINE=MyISAM COMMENT='Benutzeraccounts' AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
-			$res20 = mysql_query( "CREATE TABLE `diary` (
+			$res20 = mysql_query( "CREATE TABLE IF NOT EXISTS `diary` (
 			`diary_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 			`user_id` INT NOT NULL ,
 			`datum` DATE NOT NULL ,
@@ -415,7 +415,7 @@ echo "<br>++++ #### ++++<br>";
 			) ENGINE = MYISAM COMMENT = 'p2b-Tagebuch' CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			
 			// Ablage der Pfade zu den benoetigten Hilfsprogrammen, wird nach der Installation oder dem Softwarecheck neu befuellt
-			$res21 = mysql_query("CREATE TABLE `pfade` (
+			$res21 = mysql_query("CREATE TABLE IF NOT EXISTS `pfade` (
 			`path_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 			`dcraw_path` VARCHAR( 50 ) NOT NULL ,
 			`im_path` VARCHAR( 50 ) NOT NULL ,
@@ -423,6 +423,15 @@ echo "<br>++++ #### ++++<br>";
 			`gpsb_path` VARCHAR( 50 ) NOT NULL ,
 			`md5sum_path` VARCHAR( 50 ) NOT NULL
 			) ENGINE = MYISAM COMMENT = 'Pfade zur Hilfssoftware';");
+			
+			//Ablage der von dcraw unterstuetzten Dateiformate
+			$res22 = mysql_query("CREATE TABLE `fileformats` (
+			`format_id` INT NOT NULL AUTO_INCREMENT, 
+			`format` VARCHAR(10) NOT NULL, 
+			`raw` TINYINT(1) NOT NULL DEFAULT '0', 
+			PRIMARY KEY (`format_id`), 
+			INDEX (`format`)
+			) ENGINE = MyISAM COMMENT = 'von dcraw unterstützte Dateiformate';");
 			
 			if(!isset($titel))
 			{
