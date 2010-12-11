@@ -22,7 +22,7 @@ SWITCH($orientation)
 {	
 	case '6':
 	//Das Bild muss 90 im Uhrzeigersinn gedreht werden:
-	$command = "/usr/bin/convert ".$pic_thumbs."/".$FileNameV." -rotate 90 ".$pic_thumbs."/".$FileNameV."";
+	$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 90 ".$pic_thumbs_path."/".$FileNameV."";
 	$output = shell_exec($command);
 	echo "Vorschaubild wurde gedreht<BR>";
 	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_path."/".$FileNameHQ."";
@@ -35,7 +35,7 @@ SWITCH($orientation)
 	
 	case '8':
 	//Das Bild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-	$command = "/usr/bin/convert ".$pic_thumbs."/".$FileNameV." -rotate 270 ".$pic_thumbs."/".$FileNameV."";
+	$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 270 ".$pic_thumbs_path."/".$FileNameV."";
 	$output = shell_exec($command);
 	echo "Vorschaubild wurde gedreht<BR>";
 	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_path."/".$FileNameHQ."";
