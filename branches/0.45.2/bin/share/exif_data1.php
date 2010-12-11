@@ -14,14 +14,14 @@ $vernum=$verstr[0]*100+$verstr[1]*10+$verstr[2]*1;
 if($vernum >= 420)
 {
       // Daten aus den Bildern auslesen
-      $bild = $path_copy."/".$new_filename;
+      $bild = $pic_path."/".$new_filename;
       @$exifdata=exif_read_data($bild,"",true,false);
 
       if($exifdata["FILE"]["FileName"])$FileName=$exifdata["FILE"]["FileName"];
       if($exifdata["FILE"]["FileDateTime"])
       {
       	$FileDateTime=date("d.m.Y &#8211; H:i:s",$exifdata["FILE"]["FileDateTime"]);
-      	$FileDateTime_EP = 1;	//Erweiterung _EP steht für exif_protect-Tabelle
+      	$FileDateTime_EP = 1;	//Erweiterung _EP steht fï¿½r exif_protect-Tabelle
       }
       if($exifdata["FILE"]["FileSize"])
       {
