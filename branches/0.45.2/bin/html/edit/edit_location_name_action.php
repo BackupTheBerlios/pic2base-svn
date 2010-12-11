@@ -64,7 +64,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 $exiftool = buildExiftoolCommand($sr);
 
-//echo $geo_path_copy;
+//echo $track_path;
 
 echo "
 <div class='page'>
