@@ -65,11 +65,11 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/geo_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
-//echo $geo_path_copy;
+//echo $track_path;
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $row = mysql_fetch_array($result1);
-$berechtigung = $row['berechtigung'];
+//$berechtigung = $row['berechtigung'];
 $user_id = $row['id'];
 //echo "User-ID: ".$user_id."<BR>";
 $num2 = '0';
@@ -131,16 +131,16 @@ echo "
 				//echo "Loc_ID: ".$loc_id."<BR>File: ".$FileNameV."<BR>Ort: ".$ort."<BR>";
 				IF ($num2 > '0')
 				{
-					$bildinfo = getimagesize($vorschau_verzeichnis."/".$FileNameV);
+					$bildinfo = getimagesize($pic_thumbs_path."/".$FileNameV);
 					$breite = $bildinfo[0];
 					$hoehe = $bildinfo[1];
 					IF($breite > $hoehe)
 					{
-						$imgsrc = "<img src=\"$vorschau_verzeichnis/$FileNameV\" width= \"300\" />";
+						$imgsrc = "<img src=\"$pic_thumbs_path/$FileNameV\" width= \"300\" />";
 					}
 					ELSE
 					{
-						$imgsrc = "<img src=\"$vorschau_verzeichnis/$FileNameV\" height= \"270\" />";
+						$imgsrc = "<img src=\"$pic_thumbs_path/$FileNameV\" height= \"270\" />";
 					}
 					
 					//Bestimmung der Geo-Koordinaten am Aufnahmeort:
