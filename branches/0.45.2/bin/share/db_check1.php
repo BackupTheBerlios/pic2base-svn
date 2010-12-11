@@ -425,7 +425,7 @@ echo "<br>++++ #### ++++<br>";
 			) ENGINE = MYISAM COMMENT = 'Pfade zur Hilfssoftware';");
 			
 			//Ablage der von dcraw unterstuetzten Dateiformate
-			$res22 = mysql_query("CREATE TABLE `fileformats` (
+			$res22 = mysql_query("CREATE TABLE IF NOT EXISTS `fileformats` (
 			`format_id` INT NOT NULL AUTO_INCREMENT, 
 			`format` VARCHAR(10) NOT NULL, 
 			`raw` TINYINT(1) NOT NULL DEFAULT '0', 
