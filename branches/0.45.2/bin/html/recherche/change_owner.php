@@ -50,7 +50,7 @@ $vorname = $row['vorname'];
 $ort = $row['ort'];
 $username = $row['username'];
 //echo "derz. User: ".$c_username.", Eigentuemer: ".$name."<BR>";
-//echo $FileNameV.", ".$pic_thumbs;
+//echo $FileNameV.", ".$pic_thumbs_path;
 IF($c_username === $username)
 {
 	//welche User gibt es noch im System, der Bilder erfassen darf (permission 799)?
