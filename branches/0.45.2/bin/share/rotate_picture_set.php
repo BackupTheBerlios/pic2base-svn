@@ -25,7 +25,7 @@ SWITCH($orientation)
 	$command = "/usr/bin/convert ".$pic_thumbs."/".$FileNameV." -rotate 90 ".$pic_thumbs."/".$FileNameV."";
 	$output = shell_exec($command);
 	echo "Vorschaubild wurde gedreht<BR>";
-	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_preview."/".$FileNameHQ."";
+	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_path."/".$FileNameHQ."";
 	$output = shell_exec($command);
 	echo "HQ-Bild wurde gedreht<BR>";
 	$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
@@ -38,7 +38,7 @@ SWITCH($orientation)
 	$command = "/usr/bin/convert ".$pic_thumbs."/".$FileNameV." -rotate 270 ".$pic_thumbs."/".$FileNameV."";
 	$output = shell_exec($command);
 	echo "Vorschaubild wurde gedreht<BR>";
-	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_preview."/".$FileNameHQ."";
+	$command = "/usr/bin/convert ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_path."/".$FileNameHQ."";
 	$output = shell_exec($command);
 	echo "HQ-Bild wurde gedreht<BR>";
 	$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
