@@ -431,7 +431,7 @@ echo "<br>++++ #### ++++<br>";
 			`raw` TINYINT(1) NOT NULL DEFAULT '0', 
 			PRIMARY KEY (`format_id`), 
 			INDEX (`format`)
-			) ENGINE = MyISAM COMMENT = 'von dcraw unterstützte Dateiformate';");
+			) ENGINE = MyISAM COMMENT = 'von ImageMagick unterstützte Dateiformate';");
 			
 			if(!isset($titel))
 			{
