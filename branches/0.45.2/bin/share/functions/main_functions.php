@@ -10,8 +10,8 @@ function rotatePreviewPictures($Orientation, $FileNameV)	verwendet (Stapel-Erfas
 function rotateOriginalPictures($Orientation, $FileName)	verwendet (Stapel-Erfassung)	Z. 500
 function createQuickPreview($Orientation, $FileNameOri)		verwendet (Bearbeitung - Quick-Preview)
 function getPictureDetails($pic_id)							verwendet in edit_beschreibung	Z. 558 - DEAKTIVIERT 05.10.2009
-function createPreviewPicture($file_name, $path_copy, $dest_path, $max_len)	verwendet
-function resizeOriginalPicture($FileName, $path_copy, $dest_path, $max_len)	verwendet 			Z. 698
+function createPreviewPicture($File, $dest_path, $max_len, $sr)	verwendet
+function resizeOriginalPicture($File, $dest_path, $max_len, $sr)	verwendet 			Z. 698
 function createFullScreenView($pic_id, $quality)			(nicht) verwendet
 function getDeltaLong($lat, $radius1);						verwendet
 function getNumberOfPictures($kat_id)						verwendet in kat_treeview.php	Z. 721
@@ -125,56 +125,58 @@ function getMonthName($month_number)
 
 
 
-function rotatePreviewPictures($Orientation, $FileNameV)
+function rotatePreviewPictures($Orientation, $FileNameV, $sr)
 {
-	include '../../share/global_config.php';
+	include $sr.'/bin/share/global_config.php';
+	
+	$conv = buildConvertCommand($sr);
 	//@$parameter_v=getimagesize($pic_thumbs."/".$FileNameV);
 	SWITCH($Orientation)
 	{
 		case '3':
 		//Das Vorschaubild muss 180 gedreht werden:
-		$command = $im_path."/convert ".$pic_thumbs."/".$FileNameV." -rotate 180 ".$pic_thumbs."/".$FileNameV."";
+		$command = $conv." ".$pic_thumbs."/".$FileNameV." -rotate 180 ".$pic_thumbs."/".$FileNameV."";
  		$output = shell_exec($command);
 		break;
 		
 		case '6':
 		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-		$command = $im_path."/convert ".$pic_thumbs."/".$FileNameV." -rotate 90 ".$pic_thumbs."/".$FileNameV."";
+		$command = $conv." ".$pic_thumbs."/".$FileNameV." -rotate 90 ".$pic_thumbs."/".$FileNameV."";
  		$output = shell_exec($command);
 		break;
 		
 		case '8':
-		//echo "drehe Thumb-Bild ".$pic_thumbs."/".$FileNameV."<BR>";
 		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-		$command = $im_path."/convert ".$pic_thumbs."/".$FileNameV." -rotate 270 ".$pic_thumbs."/".$FileNameV."";
+		$command = $conv." ".$pic_thumbs."/".$FileNameV." -rotate 270 ".$pic_thumbs."/".$FileNameV."";
  		$output = shell_exec($command);
 		break;
 	}
 	return $FileNameV;
 }
 
-function rotateOriginalPictures($Orientation, $FileNameHQ)
+function rotateOriginalPictures($Orientation, $FileNameHQ, $sr)
 {
-	include '../../share/global_config.php';
-	//@$parameter_o=getimagesize($pic_hq_preview."/".$FileNameHQ);
+	include $sr.'/bin/share/global_config.php';
+	
+	$conv = buildConvertCommand($sr);
+	//@$parameter_o=getimagesize($pic_hq_path."/".$FileNameHQ);
 	SWITCH($Orientation)
 	{
 		case '3':
 		//Das Vorschaubild muss 180 gedreht werden:
-		$command = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 180 ".$pic_hq_preview."/".$FileNameHQ."";
+		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 180 ".$pic_hq_preview."/".$FileNameHQ."";
 		$output = shell_exec($command);
 		break;
 		
 		case '6':
 		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-		$command = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 90 ".$pic_hq_preview."/".$FileNameHQ."";
+		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_preview."/".$FileNameHQ."";
 		$output = shell_exec($command);
 		break;
 		
 		case '8':
-		//echo "drehe HQ-Bild ".$pic_hq_preview."/".$FileNameHQ."<BR>";
 		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-		$command = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." -rotate 270 ".$pic_hq_preview."/".$FileNameHQ."";
+		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_preview."/".$FileNameHQ."";
 		$output = shell_exec($command);
 		break;
 		
@@ -1442,8 +1444,8 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	// 1) anlegen des hq-Bildes: (resamplen, speichern unter /vorschau/hq-preview)
 	//HQ aus Original erzeugen
 	$max_len = '800';				
-	$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_preview, $max_len, $sr);
-	$FILEHQ = $pic_hq_preview."/".$FileNameHQ;	
+	$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_path, $max_len, $sr);
+	$FILEHQ = $pic_hq_path."/".$FileNameHQ;	
 	//Thumb aus HQ erzeugen
 	// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
 	$max_len = '160';
@@ -1453,7 +1455,7 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	
 	//die Datei-Attribute werden fuer alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
 	//HQ-Datei:
-	$fileHQ = $pic_hq_preview."/".$FileNameHQ;
+	$fileHQ = $pic_hq_path."/".$FileNameHQ;
 	clearstatcache();  
 	chmod ($fileHQ, 0700);
 	clearstatcache();
@@ -1501,7 +1503,7 @@ function generateHistogram($pic_id,$FileName,$sr)
 	IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r') OR @!fopen($file_mono, 'r'))
 	{
 		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
-		$file = $pic_hq_preview."/".$FileName; //<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
+		$file = $pic_hq_path."/".$FileName; //<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
 		shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
 		
 		shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
