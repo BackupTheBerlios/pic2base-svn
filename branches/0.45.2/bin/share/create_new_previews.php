@@ -189,7 +189,7 @@ ELSEIF($modus == 'new')
 				$c++;
 			}
 		}
-		$command2_a = $im_path."/convert ".$pic_hq_preview."/".$FileNameHQ." ".$contr." ".$pic_hq_path."/".$FileNameHQ;
+		$command2_a = $im_path."/convert ".$pic_hq_path."/".$FileNameHQ." ".$contr." ".$pic_hq_path."/".$FileNameHQ;
 		$output = shell_exec($command2_a);
 	}
  	
