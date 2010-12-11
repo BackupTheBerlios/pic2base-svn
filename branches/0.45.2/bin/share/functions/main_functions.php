@@ -130,24 +130,24 @@ function rotatePreviewPictures($Orientation, $FileNameV, $sr)
 	include $sr.'/bin/share/global_config.php';
 	
 	$conv = buildConvertCommand($sr);
-	//@$parameter_v=getimagesize($pic_thumbs."/".$FileNameV);
+	//@$parameter_v=getimagesize($pic_thumbs_path."/".$FileNameV);
 	SWITCH($Orientation)
 	{
 		case '3':
 		//Das Vorschaubild muss 180 gedreht werden:
-		$command = $conv." ".$pic_thumbs."/".$FileNameV." -rotate 180 ".$pic_thumbs."/".$FileNameV."";
+		$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 180 ".$pic_thumbs_path."/".$FileNameV."";
  		$output = shell_exec($command);
 		break;
 		
 		case '6':
 		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_thumbs."/".$FileNameV." -rotate 90 ".$pic_thumbs."/".$FileNameV."";
+		$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 90 ".$pic_thumbs_path."/".$FileNameV."";
  		$output = shell_exec($command);
 		break;
 		
 		case '8':
 		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_thumbs."/".$FileNameV." -rotate 270 ".$pic_thumbs."/".$FileNameV."";
+		$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 270 ".$pic_thumbs_path."/".$FileNameV."";
  		$output = shell_exec($command);
 		break;
 	}
@@ -164,19 +164,19 @@ function rotateOriginalPictures($Orientation, $FileNameHQ, $sr)
 	{
 		case '3':
 		//Das Vorschaubild muss 180 gedreht werden:
-		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 180 ".$pic_hq_preview."/".$FileNameHQ."";
+		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 180 ".$pic_hq_path."/".$FileNameHQ."";
 		$output = shell_exec($command);
 		break;
 		
 		case '6':
 		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_preview."/".$FileNameHQ."";
+		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_path."/".$FileNameHQ."";
 		$output = shell_exec($command);
 		break;
 		
 		case '8':
 		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_preview."/".$FileNameHQ."";
+		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_path."/".$FileNameHQ."";
 		$output = shell_exec($command);
 		break;
 		
@@ -1449,7 +1449,7 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	//Thumb aus HQ erzeugen
 	// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
 	$max_len = '160';
-	$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs, $max_len, $sr);
+	$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs_path, $max_len, $sr);
 	
 	$result1 = mysql_query("UPDATE $table2 SET FileNameHQ = '$FileNameHQ', FileNameV = '$FileNameV', md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
 	
@@ -1460,7 +1460,7 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	chmod ($fileHQ, 0700);
 	clearstatcache();
 	//Vorschaubild:
-	$fileV = $pic_thumbs."/".$FileNameV;
+	$fileV = $pic_thumbs_path."/".$FileNameV;
 	clearstatcache();  
 	chmod ($fileV, 0700);
 	clearstatcache();
