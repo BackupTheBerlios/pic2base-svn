@@ -197,7 +197,7 @@ ELSEIF($modus == 'new')
  	$FileNameV = substr($file_name_raw,0,-4)."_v.jpg";
  	//echo $FileNameV."<BR>";
  	$max_len = '160';
- 	$command3 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs."/".$FileNameV;
+ 	$command3 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs_path."/".$FileNameV;
       	//echo $command."<BR>";
       	$output = shell_exec($command3);
       	
@@ -220,7 +220,7 @@ ELSEIF($modus == 'new')
 				$c++;
 			}
 		}
-		$command3_a = $im_path."/convert ".$pic_thumbs."/".$FileNameV." ".$contr." ".$pic_Thumbs."/".$FileNameV;
+		$command3_a = $im_path."/convert ".$pic_thumbs_path."/".$FileNameV." ".$contr." ".$pic_thumbs_path."/".$FileNameV;
 		$output = shell_exec($command3_a);
 	}
 	
