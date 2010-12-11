@@ -71,7 +71,7 @@ echo "
 		$filenamehq = mysql_Result($result1, $i1, 'FileNameHQ');
 		$filenamev = mysql_Result($result1, $i1, 'FileNameV');
 		//loeschen der Bild-Dateien:
-		IF(@unlink($path_copy.'/'.$filename))
+		IF(@unlink($pic_path.'/'.$filename))
 		{
 			echo "Originalbild wurde gel&ouml;scht.<BR>";
 		}
@@ -80,7 +80,7 @@ echo "
 			echo "ACHTUNG! Das Originalbild konnte nicht gel&ouml;scht werden!<BR>";
 		}
 		
-		IF(@unlink($path_copy.'/rotated/'.$filename))
+		IF(@unlink($pic_rot_path.'/'.$filename))
 		{
 			echo "Das rotierte Originalbild wurde gel&ouml;scht.<BR>";
 		}
