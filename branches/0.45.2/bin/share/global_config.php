@@ -23,19 +23,19 @@ $kml_dir = $ftp_path.'/'.$benutzername.'/kml_files';
 //#####################################################################################
 //[Datei-Ablagepfade]
 //Ablage der Originale									DOPPELUNG KORRIGIEREN!
-$path_copy = $sr."/images/originale";
+//$path_copy = $sr."/images/originale";	//verwerfen
 $pic_path = $sr."/images/originale";
 
 //Ablage der rotierten Vorschaubilder
 $pic_rot_path = $sr."/images/originale/rotated";
 
 //Ablage der HQ-Vorschaubilder							DOPPELUNG KORRIGIEREN!
-$HQ_verzeichnis = $sr."/images/vorschau/hq-preview";
-$pic_hq_preview = $sr."/images/vorschau/hq-preview";
+//$HQ_verzeichnis = $sr."/images/vorschau/hq-preview";	//verwefen
+$pic_hq_path = $sr."/images/vorschau/hq-preview";	//in pic_hq_path umbenennen
 
 //Ablage der kleinen Vorschaubilder						DOPPELUNG KORRIGIEREN!
-$vorschau_verzeichnis = $sr."/images/vorschau/thumbs";
-$pic_thumbs = $sr."/images/vorschau/thumbs";
+$vorschau_verzeichnis = $sr."/images/vorschau/thumbs";	//verwerfen
+$pic_thumbs = $sr."/images/vorschau/thumbs";			//in pic_thumbs_path umbenennen
 
 //Histogramm-Ablage
 $hist_path = $sr."/images/histogramme";
@@ -44,7 +44,7 @@ $hist_path = $sr."/images/histogramme";
 $monochrome_path = $sr."/images/monochrome";
 
 //Ablage der Trackdaten fuer die Geo-Referenzierung
-$geo_path_copy = $sr."/tracks";
+$geo_path_copy = $sr."/tracks";							// in track_path umbenennen
 //#####################################################################################
 //[unterstuetzte Dateiformate]
 //alle unterstuetzten Datei-Formate (incl- RAW-Dateien):
