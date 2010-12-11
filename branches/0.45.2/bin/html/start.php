@@ -509,9 +509,9 @@ echo "<div class='page'>
 			{
 				$file = mysql_result($result4, $i4, 'FileNameHQ');
 				$ranking = mysql_result($result4, $i4, 'ranking');
-				//$bild = $pic_hq_preview."/".$file;
+				//$bild = $pic_hq_path."/".$file;
 				$bild = "http://".$_SERVER['SERVER_NAME']."".$inst_path."/pic2base/images/vorschau/hq-preview/".$file;
-				$param = getimagesize($pic_hq_preview."/".$file);
+				$param = getimagesize($pic_hq_path."/".$file);
 				$width = $param[0];
 				$height = $param[1];
 				//echo $bild;
