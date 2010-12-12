@@ -1869,7 +1869,7 @@ function checkSoftware($sr)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ExifTool</TD>
-		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>wurde nicht gefunden</a></TD>
+		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1887,7 +1887,7 @@ function checkSoftware($sr)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ImageMagick</TD>
-		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>wurde nicht gefunden</a></TD>
+		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1905,7 +1905,7 @@ function checkSoftware($sr)
 	{
 		echo "<TR>
 		<TD class='tdleft'>dcraw</TD>
-		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>wurde nicht gefunden</a></TD>
+		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1923,7 +1923,7 @@ function checkSoftware($sr)
 	{
 		echo "<TR>
 		<TD class='tdleft'>GPSBabel</TD>
-		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>wurde nicht gefunden</a></TD>
+		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1941,7 +1941,7 @@ function checkSoftware($sr)
 	{
 		echo "<TR>
 		<TD class='tdleft'>md5sum</TD>
-		<TD class='tdright'><a href='http://www.gnu.org/software/coreutils/'>wurde nicht gefunden</a></TD>
+		<TD class='tdright'><a href='http://www.gnu.org/software/coreutils/' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
