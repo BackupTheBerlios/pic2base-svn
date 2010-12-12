@@ -42,7 +42,12 @@ include '../share/functions/permissions.php';
 
 
 	mysql_close($conn);
+	//#######################################################################################################
+	//
+	//in der folgenden Zeile ist ein user mit Admin-Rechten auf der Datenbank und dessen Passwort einzutragen!
 	@$conn = mysql_connect('localhost','user','pwd');
+	//
+	//#######################################################################################################
 	$res0 = mysql_select_db('pic2base');
 	echo "
 	<div class='page'>
@@ -69,8 +74,7 @@ include '../share/functions/permissions.php';
 		$res1 = mysql_query("RENAME TABLE `pic2base`.`permissions` TO `pic2base`.`permissions_bak`");
 		IF(mysql_error() == '')
 		{
-			echo "Sicherheitskopie \"permissions_bak\" wurde angelegt<BR><BR>";
-
+			echo "Sicherheitskopie \"permissions_bak\" wurde angelegt<BR>";
 			$res2 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic2base`.`permissions` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `perm_id` int(11) NOT NULL,
@@ -229,14 +233,14 @@ include '../share/functions/permissions.php';
 							//echo mysql_error()."<BR>";
 							IF(mysql_error() == '')
 							{
-								echo "Die nicht mehr genutzte Tabelle \"rights\" wurde entfernt.";
+								echo "Die nicht mehr genutzte Tabelle \"rights\" wurde entfernt.<BR><BR>";
 								$res19 = mysql_query("ALTER TABLE `pic2base`.`users`
 								ADD `direkt_download` TINYINT( 4 ) NOT NULL DEFAULT '0' 
 								COMMENT '0-FTP-Download, 1-direkter Download' ");
 								//echo mysql_error()."<BR>";
 								IF(mysql_error() == '')
 								{
-									echo "Die Tabelle \"users\" wurde erfolgreich angepasst.";
+									echo "Die Tabelle \"users\" wurde erfolgreich angepasst.<BR><BR>";
 									$res20 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic2base`.`pfade` (
 									  `path_id` int(11) NOT NULL AUTO_INCREMENT,
 									  `dcraw_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -250,7 +254,7 @@ include '../share/functions/permissions.php';
 									//echo mysql_error()."<BR>";
 									IF(mysql_error() == '')
 									{
-										echo "Die Tabelle \"pfade\" wurde erfolgreich angelegt.";
+										echo "Die Tabelle \"pfade\" wurde erfolgreich angelegt.<BR><BR>";
 										$res21 = mysql_query("CREATE TABLE IF NOT EXISTS `pic2base`.`fileformats` (
 										`format_id` INT NOT NULL AUTO_INCREMENT, 
 										`format` VARCHAR(10) NOT NULL, 
@@ -306,7 +310,9 @@ include '../share/functions/permissions.php';
 		}
 		ELSE
 		{
-			echo "Sicherungskopie der Tabelle \"permissions\" konnte NICHT erstellt werden.";
+			echo "Sicherungskopie der Tabelle \"permissions\" konnte NICHT erstellt werden.<BR><BR>
+			WICHTIG: In Zeile 48 dieses Skriptes muss ein User mit Admin-Rechten<BR>
+			auf der Datenbank und dessen Passwort eingetragen werden!";
 		}
 	    echo "</p>
 		</div>
