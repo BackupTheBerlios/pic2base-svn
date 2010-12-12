@@ -8,12 +8,11 @@ $inst_path = "";											//Pfad zwischen DocumentRoot und pic2base
 $p2b_path = $doc_root.$inst_path."/";						//Pfad zur p2b-Wurzel
 $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
 //#####################################################################################
+//[Benutzerspezifische Pfade]
 if(!isset($benutzername))
 {
 	$benutzername = '';
 }
-//#####################################################################################
-//[Benutzerspezifische Pfade]
 $ftp_path = $sr."/userdata";
 $user_dir = $ftp_path.'/'.$benutzername;
 $up_dir = $ftp_path.'/'.$benutzername.'/uploads';
