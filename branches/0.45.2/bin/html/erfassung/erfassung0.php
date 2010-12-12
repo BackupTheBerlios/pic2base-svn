@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
@@ -11,12 +11,12 @@ include '../../share/global_config.php';
 <html>
 
 <head>
-  <title>pic2base - Erfassung</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
-  <link rel=stylesheet type="text/css" href="../../css/format1.css">
-  <link rel="shortcut icon" href="../../share/images/favicon.ico">
+<title>pic2base - Erfassung</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta name="AUTHOR" content="k. henneberg">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+<link rel=stylesheet type="text/css" href="../../css/format1.css">
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </head>
 
 <!--
@@ -38,13 +38,12 @@ include '../../share/global_config.php';
  */
  -->
 
-<BODY LANG="de-DE" scroll = "auto">
-<DIV Class="klein">
-<?php
+<BODY LANG="de-DE" scroll="auto">
+<DIV Class="klein"><?php
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
 $ACTION = $_SERVER['PHP_SELF'];
@@ -61,8 +60,8 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi1($c_username);
-		echo "</div>
+createNavi1($c_username);
+echo "</div>
 	</div>
 	
 	<div class='content'>
@@ -87,8 +86,6 @@ echo "
 
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 </div>";
-?>
-
-</div>
+?></div>
 </body>
 </html>

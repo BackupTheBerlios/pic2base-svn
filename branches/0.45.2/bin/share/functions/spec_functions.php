@@ -6,25 +6,25 @@ function getNikonD70Params($new_filename,$ext)
 	//Ermittlung der mitgelieferten Bildparameter:
 	$file_info = pathinfo($new_filename);
 	$base_name = $file_info['basename'];
-	$file_name_raw = str_replace($file_info['extension'],'',$base_name).$ext;	
+	$file_name_raw = str_replace($file_info['extension'],'',$base_name).$ext;
 	$cmd = $dcraw_path."/dcraw -i -c -v ".$pic_path."/".$file_name_raw;
 	$pic_param = shell_exec($cmd);
 	$param_arr = split("\n",$pic_param);
 	/*
-	FOREACH($param_arr AS $parm)
-	{
+	 FOREACH($param_arr AS $parm)
+	 {
 		echo $parm."<BR>";
-	}
-	*/
+		}
+		*/
 	$date = split(' ',str_replace(': ','',strstr($param_arr[2],':')));
 	/*
-	$z = '0';
-	FOREACH($date AS $element)
-	{
+	 $z = '0';
+	 FOREACH($date AS $element)
+	 {
 		echo $z.": ".$element."<BR>";
 		$z++;
-	}
-	*/
+		}
+		*/
 	//Das ist wohl eine Eigenart der NIKON-Bauer!?!:
 	IF($date[2] == '')
 	{
@@ -43,63 +43,63 @@ function getNikonD70Params($new_filename,$ext)
 	//echo "Jahr: ".$jahr."<BR>";
 	//echo "Monat: ".$monat."<BR>";
 	//echo "Tag: ".$tag."<BR>";
-	
+
 	SWITCH($monat)
 	{
 		CASE 'Jan':
-		$monat = '01';
-		break;
-		
+			$monat = '01';
+			break;
+
 		CASE 'Feb':
-		$monat = '02';
-		break;
-		
+			$monat = '02';
+			break;
+
 		CASE 'Mar':
-		$monat = '03';
-		break;
-		
+			$monat = '03';
+			break;
+
 		CASE 'Apr':
-		$monat = '04';
-		break;
-		
+			$monat = '04';
+			break;
+
 		CASE 'May':
-		$monat = '05';
-		break;
-		
+			$monat = '05';
+			break;
+
 		CASE 'Jun':
-		$monat = '06';
-		break;
-		
+			$monat = '06';
+			break;
+
 		CASE 'Jul':
-		$monat = '07';
-		break;
-		
+			$monat = '07';
+			break;
+
 		CASE 'Aug':
-		$monat = '08';
-		break;
-		
+			$monat = '08';
+			break;
+
 		CASE 'Sep':
-		$monat = '09';
-		break;
-		
+			$monat = '09';
+			break;
+
 		CASE 'Oct':
-		$monat = '10';
-		break;
-		
+			$monat = '10';
+			break;
+
 		CASE 'Nov':
-		$monat = '11';
-		break;
-		
+			$monat = '11';
+			break;
+
 		CASE 'Dec':
-		$monat = '12';
-		break;
+			$monat = '12';
+			break;
 	}
-	
+
 	IF($tag < '10')
 	{
 		$tag = '0'.$tag;
 	}
-	
+
 	$dto = $jahr."-".$monat."-".$tag." ".$zeit;	//$dto : DateTimeOriginal
 	//echo $dto."<BR>";
 	$cam = str_replace(': ','',strstr($param_arr[3],':'));

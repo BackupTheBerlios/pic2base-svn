@@ -1,27 +1,27 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 
-  mysql_connect ($db_server, $user, $PWD);
-  mysql_select_db($db);
-  $group_id = $_GET['group_id'];
-  
-  //echo "Gruppen-Nr: ".$group_id."<BR>";
-  //Ermittlung, ob noch User zu der zu loeschenden Gruppe gehoeren:
-  $result1 = mysql_query( "SELECT * FROM $table1 WHERE group_id = $group_id");
-  echo mysql_error();
-  $num1 = mysql_num_rows($result1);
-  //echo "Gruppenmitglieder: ".$num1."<BR>";
-  $result2 = mysql_query( "SELECT * FROM $table9 WHERE id = $group_id");
-  $group_desc = mysql_result($result2, isset($i2), 'description');
-  
-  IF($num1 == '0')
-  {
-  	echo "<center>
+mysql_connect ($db_server, $user, $PWD);
+mysql_select_db($db);
+$group_id = $_GET['group_id'];
+
+//echo "Gruppen-Nr: ".$group_id."<BR>";
+//Ermittlung, ob noch User zu der zu loeschenden Gruppe gehoeren:
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE group_id = $group_id");
+echo mysql_error();
+$num1 = mysql_num_rows($result1);
+//echo "Gruppenmitglieder: ".$num1."<BR>";
+$result2 = mysql_query( "SELECT * FROM $table9 WHERE id = $group_id");
+$group_desc = mysql_result($result2, isset($i2), 'description');
+
+IF($num1 == '0')
+{
+	echo "<center>
   	<table class='normal' border='0'>
 	<tr>
 	<td colspan='4' style='font-size:12pt; text-align:center;'>Wollen Sie die Gruppe <u>".$group_desc."</u> wirklich l&ouml;schen?</td>
@@ -50,10 +50,10 @@ include '../../share/global_config.php';
   
 	</table>
 	</center>";
-  }
-  ELSE
-  {
-  	echo "<center>
+}
+ELSE
+{
+	echo "<center>
   	<table class='normal' border='0'>
 	<tr>
 	<td colspan='4' style='font-size:12pt; text-align:center;'><font color='red'><b>ACHTUNG</b></font></td>
@@ -86,5 +86,5 @@ include '../../share/global_config.php';
   
 	</table>
 	</center>";
-  }
+}
 ?>

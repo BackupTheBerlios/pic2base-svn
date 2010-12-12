@@ -10,34 +10,32 @@ IF (!$_COOKIE['login'])
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Administration</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<!--sollte die EXIF-Daten-Erzeugung abstuerzen, erfolgt nach 300 Sek. ein automat. Neustart-->
-	<!--<meta http-equiv="Refresh" Content="300; URL=../../admin/admin/generate_exifdata0.php">-->
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Administration</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<!--sollte die EXIF-Daten-Erzeugung abstuerzen, erfolgt nach 300 Sek. ein automat. Neustart-->
+<!--<meta http-equiv="Refresh" Content="300; URL=../../admin/admin/generate_exifdata0.php">-->
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';	
+include $sr.'/bin/share/db_connect1.php';
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
@@ -50,14 +48,14 @@ echo "<div class='page'>
 
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		  include 'adminnavigation.php';
-		echo "</div>
+include 'adminnavigation.php';
+echo "</div>
 	</div>
 
 	<div class='content'>
 		<p style='margin:30px 0px; text-align:center'>";
-			include 'admincontent.php';
-	echo "</p>
+include 'admincontent.php';
+echo "</p>
 	</div>
 	
 	<br style='clear:both;' />
@@ -66,6 +64,7 @@ echo "<div class='page'>
 </div>
 </DIV>";
 ?>
+
 </CENTER>
 </BODY>
 </HTML>

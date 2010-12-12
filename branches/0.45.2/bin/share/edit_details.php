@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 ?>
 
@@ -11,14 +11,14 @@ IF (!$_COOKIE['login'])
 <html>
 
 <head>
-  <title>Bild-Details</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../css/format1.css'>
-  <link rel="shortcut icon" href="images/favicon.ico">
+<title>Bild-Details</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="images/favicon.ico">
 </head>
-<body style='background-color:#999999'>
+<body style='background-color: #999999'>
 <?php
 // verwendet als Popup-Fenster mit den Detail-Infos zum Bild
 
@@ -53,8 +53,8 @@ $u_name = $row['username'];
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 //Ermittlung aller writable gesetzten Tags in der exif_protect-Tabelle (Obermenge):
@@ -108,7 +108,7 @@ echo "<FORM name='edit_details' method='post' action='save_meta_data_action.php'
 		--- editierbare Daten ----
 		</TD>
 	</TR>";
-	
+
 //Ermittlung aller Tags in der Bild-Datei
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 //echo $file."<BR>";
@@ -142,33 +142,33 @@ if ( isset($writable_tags) )
 		{
 			$bgcolor = 'white';
 		}
-	
+
 		$wt = str_replace('_','-',$WT);		//$WT Tag-Darstellungsform in der Tabelle (Unterstrich); $wt 							Tag-Darstellungsform im Bild (Bindestrich)
-		IF(@$INFO_ARR[$wt] !== NULL)		//Wenn im Bild-Array das freigegebene Array vorkommt, wird der Wert 	
-							//ermittelt, ggf. dieser zuvor formatiert
+		IF(@$INFO_ARR[$wt] !== NULL)		//Wenn im Bild-Array das freigegebene Array vorkommt, wird der Wert
+		//ermittelt, ggf. dieser zuvor formatiert
 		{
 			//echo "Tag in Tabelle: ".$WT.", Tag im Bild: ".$WT."<BR>";
 			$value = $INFO_ARR[$wt];
 			SWITCH($wt)
 			{
 				CASE 'GPSAltitude':
-				$val_arr = explode(' ',$value);
-				$value = $val_arr[0];
-				break;
-			
+					$val_arr = explode(' ',$value);
+					$value = $val_arr[0];
+					break;
+
 				CASE 'GPSLongitude':
-				$val_arr = explode(' ',$value);
-				$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
-				break;
-			
+					$val_arr = explode(' ',$value);
+					$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
+					break;
+
 				CASE 'GPSLatitude':
-				$val_arr = explode(' ',$value);
-				$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
-				break;
-			
+					$val_arr = explode(' ',$value);
+					$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
+					break;
+
 				CASE 'GPSPosition':
-				$value = $location;
-				break;
+					$value = $location;
+					break;
 			}
 			//echo $wt." / ".$INFO_ARR[$wt]."<BR>";
 			//Fallunterscheidungen:
@@ -176,26 +176,26 @@ if ( isset($writable_tags) )
 			{
 				//Es handelt sich um ein Datumsfeld:
 				CASE (stristr($wt,'date') == true):
-				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
 				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
 				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
 				</TR>";
-				break;
-			
-				//Es handelt sich um Textfelder:
+					break;
+
+					//Es handelt sich um Textfelder:
 				CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
-				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
 				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
 				<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'>".$value."</textarea></TD>
 				</TR>";
-				break;
-			
+					break;
+
 				default:
-				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
 				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
 				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
 				</TR>";
-				break;
+					break;
 			}
 		}
 		ELSE
@@ -205,33 +205,33 @@ if ( isset($writable_tags) )
 			{
 				//Es handelt sich um ein Datumsfeld:
 				CASE (stristr($wt,'date') == true):
-				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
 				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
 				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
 				</TR>";
-				break;
-			
-				//Es handelt sich um Textfelder:
+					break;
+
+					//Es handelt sich um Textfelder:
 				CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
-				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
 				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
 				<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'></textarea></TD>
 				</TR>";
-				break;
-			
+					break;
+
 				default:
-				echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
 				<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
 				<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
 				</TR>";
-				break;
+					break;
 			}
-		}		
+		}
 		$n++;
 	}
 }
 
-echo "	
+echo "
 	<TR class='normal' style='background-color:yellow;'>
 		<TD class='normal' colspan = '2' align='center'><b>--- W&#160;I&#160;C&#160;H&#160;T&#160;I&#160;G&#160;! ---</b></TD>
 	</TR>

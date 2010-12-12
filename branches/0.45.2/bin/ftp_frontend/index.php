@@ -1,21 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - FTP</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../css/format1.css'>
-	<link rel="shortcut icon" href="../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - FTP</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?
+<DIV Class="klein"><?
 
 /*
  * Project: pic2base
@@ -71,7 +69,7 @@ if(!isset($_GET['action'])) $_GET['action'] = "";
 switch($_GET['action'])
 {
 	default:
-	echo "
+		echo "
 	<br>
 	Willkommen zum ProFTPd-Frontend!
 	<BR><BR>
@@ -79,12 +77,12 @@ switch($_GET['action'])
 	Achtung, dies ist eine Beta Version!
 	<img src='img/warning.gif' alt='Warnung'>
 	<br><br>";
-	break;
+		break;
 
-// ----------------------------------------------------------
-	
+		// ----------------------------------------------------------
+
 	case 'about':
-	echo "
+		echo "
 	<br>
 	ProFTPd-Frontend
 	<br><br> 
@@ -100,88 +98,90 @@ switch($_GET['action'])
 	<br>
 	Homepage: <a href='http://addons.xampp.org' target='_blank'>http://addons.xampp.org</a>
 	<br><br>";
-	break;
+		break;
 
-// ----------------------------------------------------------
-	
+		// ----------------------------------------------------------
+
 	case 'user':
-	include('user.php');
-	break;
+		include('user.php');
+		break;
 
-// ----------------------------------------------------------
-	
+		// ----------------------------------------------------------
+
 	case 'logs':
-	include('logs.php');
-	break;
+		include('logs.php');
+		break;
 
-// ----------------------------------------------------------	
+		// ----------------------------------------------------------
 
 	case 'traffic':
-	include('config.inc.php');
-	mysql_connect($sql_server, $sql_user, $sql_pw) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error()); 
-	mysql_select_db($sql_db) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
-	
-	$traffic_up = "";
-	$traffic_down = "";
-	$result = MYSQL_QUERY("SELECT ul_bytes, dl_bytes FROM users")
-	 or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
-	while($row  =  mysql_fetch_row($result))  {
-	$traffic_down = $traffic_down + $row[1];
-	$traffic_up = $traffic_up + $row[0];
-	}
-	$traffic_down = number_format(round($traffic_down,2) /1024 / 1024,2,",","."); 
-	$traffic_up = number_format(round($traffic_up,2) /1024 / 1024,2,",","."); 
-	?>
-	<DIV><CENTER>
-	<!--<TABLE id="text" align="center" cellpadding="0" cellspacing="5" border="1">-->
-	<table class='normal' border='0'>
-	
-	<tr>
-	<td colspan='3' style='font-size:12pt; text-align:center;'>Traffic:</td>
-	</tr>
-	
-	<TR style='height:3px;'>
-	<TD class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
-	</TR>
-	
-	<tr>
-	<td colspan='3'>&nbsp;</td>
-	</tr>
-	
-	<TR>
-	<TD width='150'>Upload Traffic:</TD>
-	<TD align='right'><?=$traffic_up?> MB </TD>
-	<TD width='150' align='center'><img src="img/up.gif" alt="UP"></TD>
-	</TR>
-	
-	<TR>
-	<TD width='150'>Download Traffic:</TD>
-	<TD align='right'><?=$traffic_down?> MB </TD>
-	<TD width='150' align='center'><img src="img/down.gif" alt="DOWN"></TD>
-	</TR>
-	
-	<tr>
-	<td colspan='3'>&nbsp;</td>
-	</tr>
-	
-	<TR style='height:3px;'>
-	<TD class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
-	</TR>
-	
-	</TABLE></CENTER></DIV>
-	<?PHP
-	mysql_close();
-	break;
+		include('config.inc.php');
+		mysql_connect($sql_server, $sql_user, $sql_pw) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
+		mysql_select_db($sql_db) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
 
-// ----------------------------------------------------------
-	
+		$traffic_up = "";
+		$traffic_down = "";
+		$result = MYSQL_QUERY("SELECT ul_bytes, dl_bytes FROM users")
+	 or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
+	 while($row  =  mysql_fetch_row($result))  {
+	 	$traffic_down = $traffic_down + $row[1];
+	 	$traffic_up = $traffic_up + $row[0];
+	 }
+	 $traffic_down = number_format(round($traffic_down,2) /1024 / 1024,2,",",".");
+	 $traffic_up = number_format(round($traffic_up,2) /1024 / 1024,2,",",".");
+	 ?>
+<DIV>
+<CENTER><!--<TABLE id="text" align="center" cellpadding="0" cellspacing="5" border="1">-->
+<table class='normal' border='0'>
+
+	<tr>
+		<td colspan='3' style='font-size: 12pt; text-align: center;'>Traffic:</td>
+	</tr>
+
+	<TR style='height: 3px;'>
+		<TD class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
+	</TR>
+
+	<tr>
+		<td colspan='3'>&nbsp;</td>
+	</tr>
+
+	<TR>
+		<TD width='150'>Upload Traffic:</TD>
+		<TD align='right'><?=$traffic_up?> MB</TD>
+		<TD width='150' align='center'><img src="img/up.gif" alt="UP"></TD>
+	</TR>
+
+	<TR>
+		<TD width='150'>Download Traffic:</TD>
+		<TD align='right'><?=$traffic_down?> MB</TD>
+		<TD width='150' align='center'><img src="img/down.gif" alt="DOWN"></TD>
+	</TR>
+
+	<tr>
+		<td colspan='3'>&nbsp;</td>
+	</tr>
+
+	<TR style='height: 3px;'>
+		<TD class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
+	</TR>
+
+</TABLE>
+</CENTER>
+</DIV>
+	 <?PHP
+	 mysql_close();
+	 break;
+
+	 // ----------------------------------------------------------
+
 }
 
 ?>
-	</p>
-	</div>
-	<br style="clear:both;" />
-	<p id="fuss"><?php echo $cr; ?></p>
+</p>
+</div>
+<br style="clear: both;" />
+<p id="fuss"><?php echo $cr; ?></p>
 
 </div>
 </DIV>

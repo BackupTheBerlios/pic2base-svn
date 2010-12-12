@@ -30,9 +30,9 @@ error_reporting(E_ALL);
 
 /* a printf() variant that appends a newline to the output. */
 function println(/* fmt, args... */) {
-    $args = func_get_args();
-    $fmt = array_shift($args);
-    vprintf($fmt . "\n", $args);
+	$args = func_get_args();
+	$fmt = array_shift($args);
+	vprintf($fmt . "\n", $args);
 }
 
 
@@ -50,44 +50,44 @@ $error = false;
 /* The next argument could be -d to signal debug mode where lots of
  * extra information is printed out when the image is parsed. */
 if (isset($argv[0]) && $argv[0] == '-d') {
-  Pel::$debug = true;
-  array_shift($argv);
+	Pel::$debug = true;
+	array_shift($argv);
 }
 
 /* The mandatory input filename. */
 if (isset($argv[0])) {
-  $input = array_shift($argv);
+	$input = array_shift($argv);
 } else {
-  $error = true;
+	$error = true;
 }
 
 /* The mandatory output filename. */
 if (isset($argv[0])) {
-  $output = array_shift($argv);
+	$output = array_shift($argv);
 } else {
-  $error = true;
+	$error = true;
 }
 
 /* The mandatory scale factor. */
 if (isset($argv[0])) {
-  $scale = array_shift($argv);
+	$scale = array_shift($argv);
 } else {
-  $error = true;
+	$error = true;
 }
 
 
 /* Usage information is printed if an error was found in the command
  * line arguments. */
 if ($error) {
-  println('Usage: %s [-d] <input> <output> <scale>', $prog);
-  println('Optional arguments:');
-  println('  -d    turn debug output on.');
-  println('Mandatory arguments:');
-  println('  input   the input filename, a JPEG image.');
-  println('  output  filename for saving the changed image.');
-  println('  scale   scale factor, say 0.5 to resize to half the ' .
+	println('Usage: %s [-d] <input> <output> <scale>', $prog);
+	println('Optional arguments:');
+	println('  -d    turn debug output on.');
+	println('Mandatory arguments:');
+	println('  input   the input filename, a JPEG image.');
+	println('  output  filename for saving the changed image.');
+	println('  scale   scale factor, say 0.5 to resize to half the ' .
           'original size.');
-  exit(1);
+	exit(1);
 }
 
 /* The input file is now loaded into a PelJpeg object. */
@@ -106,10 +106,10 @@ $scaled_h = $original_h * $scale;
 /* Now create the scaled image. */
 $scaled = ImageCreateTrueColor($scaled_w, $scaled_h);
 ImageCopyResampled($scaled, $original,
-                   0, 0, /* dst (x,y) */
-                   0, 0, /* src (x,y) */
-                   $scaled_w, $scaled_h,
-                   $original_w, $original_h);
+0, 0, /* dst (x,y) */
+0, 0, /* src (x,y) */
+$scaled_w, $scaled_h,
+$original_w, $original_h);
 
 /* We want the raw JPEG data from $scaled. Luckily, one can create a
  * PelJpeg object from an image resource directly: */
@@ -120,7 +120,7 @@ $exif = $input_jpeg->getExif();
 
 /* If no Exif data was present, then $exif is null. */
 if ($exif != null)
-  $output_jpeg->setExif($exif);
+$output_jpeg->setExif($exif);
 
 /* We can now save the scaled image. */
 println('Writing file "%s".', $output);

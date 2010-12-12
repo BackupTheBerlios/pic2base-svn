@@ -23,13 +23,13 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>FCKeditor - Sample</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="robots" content="noindex, nofollow" />
-	<link href="../sample.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="../../fckeditor.js"></script>
-	<script type="text/javascript" src="assets/swfobject.js"></script>
-	<script type="text/javascript">
+<title>FCKeditor - Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="noindex, nofollow" />
+<link href="../sample.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../fckeditor.js"></script>
+<script type="text/javascript" src="assets/swfobject.js"></script>
+<script type="text/javascript">
 function sendToFlash()
 {
 	var html = FCKeditorAPI.GetInstance( 'FCKeditor1' ).GetData() ;
@@ -46,19 +46,15 @@ function init()
 	</script>
 </head>
 <body onload="init();">
-	<h1>
-		FCKeditor - JavaScript - Sample 16
-	</h1>
-	<div>
-		This sample shows FCKeditor configured to produce HTML code that can be used with
-		<a href="http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_14808#TextArea_Component">
-			Flash</a>.
-	</div>
-	<hr />
-	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td style="width: 100%">
-				<script type="text/javascript">
+<h1>FCKeditor - JavaScript - Sample 16</h1>
+<div>This sample shows FCKeditor configured to produce HTML code
+that can be used with <a
+	href="http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_14808#TextArea_Component">
+Flash</a>.</div>
+<hr />
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td style="width: 100%"><script type="text/javascript">
 <!--
 if ( document.location.protocol == 'file:' )
 	alert( 'Warning: This samples does not work when loaded from local filesystem due to security restrictions implemented in Flash.'
@@ -80,12 +76,11 @@ oFCKeditor.ToolbarSet = 'Flash' ;
 oFCKeditor.Value = '<p>This is some <b>sample text<\/b>. You are using <a href="http://www.fckeditor.net/">FCKeditor<\/a>.<\/p>' ;
 oFCKeditor.Create() ;
 //-->
-				</script>
-				<input type="button" value="Send to Flash" onclick="sendToFlash();" />
-			</td>
-			<td valign="top" style="padding-left: 15px" id="fckFlashContainer">
-			</td>
-		</tr>
-	</table>
+				</script> <input type="button" value="Send to Flash" onclick="sendToFlash();" />
+		</td>
+		<td valign="top" style="padding-left: 15px" id="fckFlashContainer">
+		</td>
+	</tr>
+</table>
 </body>
 </html>

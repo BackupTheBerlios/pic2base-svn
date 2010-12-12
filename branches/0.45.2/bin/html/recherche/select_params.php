@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 ?>
 
@@ -11,13 +11,13 @@ IF (!$_COOKIE['login'])
 <html>
 
 <head>
-  <title>Neue Konvertierungs-Parameter</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../../css/format1.css'>
-  <link rel="shortcut icon" href="../../share/images/favicon.ico">
-  <script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<title>Neue Konvertierungs-Parameter</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </head>
 
 <script language="JavaScript">
@@ -33,7 +33,7 @@ function eraseCookie(name, domain, path)
 }
 </script>
 
-<body style='background-color:#999999'>
+<body style='background-color: #999999'>
 <?php
 // verwendet als Popup-Fenster zur Festlegung der neuen Konvertierungs-Parameter fuer das RAW-Bild
 
@@ -76,7 +76,7 @@ $FileNameRaw = substr($FileName,0,-4).".".substr($FileNameOri,-3,3);
 IF(array_key_exists('params', $_COOKIE))
 {
 	$param_arr = preg_split('# #',$_COOKIE['params']);
-	
+
 	$pos1 = array_search('-H',$param_arr);
 	IF($pos1 !== false)
 	{
@@ -89,7 +89,7 @@ IF(array_key_exists('params', $_COOKIE))
 	{
 		$hl_text = 'Highlight-Clipping';
 	}
-	
+
 	$pos2 = array_search('-b',$param_arr);
 	IF($pos2 !== false)
 	{
@@ -102,7 +102,7 @@ IF(array_key_exists('params', $_COOKIE))
 		$gamma_mode = 'automatisch';
 		//echo $gamma_mode."<BR>";
 	}
-	
+
 	$pos3 = array_search('-o',$param_arr);
 	IF($pos3 !== false)
 	{
@@ -110,7 +110,7 @@ IF(array_key_exists('params', $_COOKIE))
 		$targ_color = "-o ".$param_arr[$next_pos3];
 		//echo $targ_color."<BR>";
 	}
-	
+
 	$pos4 = array_search('-q',$param_arr);
 	IF($pos4 !== false)
 	{
@@ -118,7 +118,7 @@ IF(array_key_exists('params', $_COOKIE))
 		$col_inter = "-q ".$param_arr[$next_pos4];
 		//echo $col_inter."<BR>";
 	}
-	
+
 	$pos5 = array_search('-t',$param_arr);
 	IF($pos5 !== false)
 	{
@@ -131,7 +131,7 @@ IF(array_key_exists('params', $_COOKIE))
 	{
 		$rota_text = 'lt. Kamera';
 	}
-	
+
 	IF(in_array('-w',$param_arr))
 	{
 		$wb_mode = '-w';
@@ -142,7 +142,7 @@ IF(array_key_exists('params', $_COOKIE))
 		$wb_mode = '-a';
 		//echo $wb_mode."<BR>";
 	}
-	
+
 	IF(in_array('-h',$param_arr))
 	{
 		$konv_mode = '-h';
@@ -153,7 +153,7 @@ IF(array_key_exists('params', $_COOKIE))
 		$konv_mode = '';
 		//echo $konv_mode."<BR>";
 	}
-	
+
 	$pos8 = array_search('-cont',$param_arr);
 	//echo $pos8;
 	IF($pos8 !== false)
@@ -290,7 +290,7 @@ IF(array_key_exists('params', $_COOKIE))
 		<TD class='normal' bgcolor='#EEEEAA' style='width:120px; text-align:left;  vertical-align:center'>".$contrast_val."
 		</TD>
 	</TR>";
-	
+
 	IF($gamma_mode == 'automatisch')
 	{
 		$gamma_mode = '';
@@ -367,12 +367,12 @@ ELSE
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>
 		<SELECT name=\"gamma\" STYLE='WIDTH:120px;height:20px'>
 		<OPTION VALUE='' selected>automatisch</OPTION>";
-		FOR($k=1; $k<=50; $k++)
-		{
-			$val = '-b '.number_format(($k/10),1,'.','.');
-			echo "<OPTION VALUE='$val'>".substr($val,3,3)."</OPTION>";
-		}
-		echo "
+	FOR($k=1; $k<=50; $k++)
+	{
+		$val = '-b '.number_format(($k/10),1,'.','.');
+		echo "<OPTION VALUE='$val'>".substr($val,3,3)."</OPTION>";
+	}
+	echo "
   		</SELECT>
 		</TD>
 	</TR>
@@ -495,7 +495,7 @@ ELSE
 		</TD>
 	</TR>";
 }
-	
+
 echo "	<TR class='normal' style='height:180px;'>
 		<TD class='normal' bgcolor='#EEEEAA' colspan = '2' style='vertical-align:top'>
 		<input type='button' value='Lade Standard-Parameter' onClick=\"eraseCookie('params','',''); location.href='select_params.php?pic_id=$pic_id'\" style='margin-top:30px; width:250px'>

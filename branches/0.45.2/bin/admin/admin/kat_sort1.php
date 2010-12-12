@@ -1,21 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Startseite</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -37,7 +35,7 @@ IF ($_COOKIE['login'])
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
- 
+
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
@@ -64,131 +62,51 @@ ELSE
 
 <div class="page">
 
-	<p id="kopf">pic2base :: Admin-Bereich - Kategorie-Sortierung</p>
-	
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
-		echo $navigation;
-		?>
-		</div>
-	</div>
-	
-	<div  id="spalte1">
-	
-	<?php
-	//Erzeugung der Baumstruktur:
-	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
-	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// f�r register_globals = off
-	if(array_key_exists('kat_id',$_GET))
-	{
-		$kat_id = $_GET['kat_id']; 
-	}
-	else
-	{
-		$kat_id = 0;
-	}
-	$KAT_ID = $kat_id;
-	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
+<p id="kopf">pic2base :: Admin-Bereich - Kategorie-Sortierung</p>
+
+<div class="navi" style="clear: right;">
+<div class="menucontainer"><?php
+echo $navigation;
+?></div>
+</div>
+
+<div id="spalte1"><?php
+//Erzeugung der Baumstruktur:
+//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
+//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// f�r register_globals = off
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id'];
+}
+else
+{
+	$kat_id = 0;
+}
+$KAT_ID = $kat_id;
+//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
+$knoten_arr[]=$kat_id;
+
+WHILE ($kat_id > '1')
+{
+	//include '../../share/db_connect1.php';
+	//INCLUDE '../../share/global_config.php';
+	$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
+	echo mysql_error();
+	$kat_id = mysql_result($res0, isset($i0), 'parent');
+	//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
 	$knoten_arr[]=$kat_id;
-	
-	WHILE ($kat_id > '1')
-	{
-		//include '../../share/db_connect1.php';
-		//INCLUDE '../../share/global_config.php';
-		$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
-		echo mysql_error();
-		$kat_id = mysql_result($res0, isset($i0), 'parent');
-		//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
-		$knoten_arr[]=$kat_id;
-	}
-	$knoten_arr = array_reverse($knoten_arr);
-	
-	echo "<TABLE id='kat'>";
-	
-	function getElements($kat_id, $knoten_arr, $KAT_ID)
-	{
-		include '../../share/db_connect1.php';
-		INCLUDE '../../share/global_config.php';
-		$result10 = mysql_query( "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
-		$num10 = mysql_num_rows($result10);
-		FOR ($i10=0; $i10<$num10; $i10++)
-		{
-			$kategorie = mysql_result($result10, $i10, 'kategorie');
-			$parent = mysql_result($result10, $i10, 'parent');
-			$level = mysql_result($result10, $i10, 'level');
-			$kat_id = mysql_result($result10, $i10, 'kat_id');
-			$space='';
-			FOR ($N=0; $N<$level; $N++)
-			{
-				$space .="&#160;&#160;&#160;";
-			}
-			
-			$kat_id_pos = array_search($kat_id, $knoten_arr);
-			$kat_id_back = $knoten_arr[$kat_id_pos - 1];
-			IF (in_array($kat_id, $knoten_arr))
-			{
-				
-				//echo $kat_id_back;
-				$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-				echo 	"<TR id='kat'>
-					<TD id='kat3'>
-					".$space."<a href='kategorie0.php?kat_id=$kat_id_back'>".$img."</a>&#160;
-					<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
-					</TD>
-					
-					<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
-					</TD>";
-					
-					IF($kat_id !== '1')
-					{
-						echo "
-						<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
-						</TD>";
-					}
-					ELSE
-					{
-						echo "<TD id='kat2'><BR></TD>";
-					}
-					
-					echo "
-					
-					</TR>";
-				getElements($kat_id, $knoten_arr, $KAT_ID);
-			}
-			ELSE
-			{
-				$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-				echo 	"<TR id='kat'>
-					<TD id='kat3'>
-					".$space."<a href='kategorie0.php?kat_id=$kat_id'>".$img."</a>&#160;
-					<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
-					</TD>
-					
-					<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
-					</TD>";
-					
-					IF($kat_id !== '1')
-					{
-						echo "
-						<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
-						</TD>";
-					}
-					ELSE
-					{
-						echo "<TD id='kat2'><BR></TD>";
-					}
-					
-					echo "
-					
-					</TR>";
-			}
-		}
-	}
-	
-	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
+}
+$knoten_arr = array_reverse($knoten_arr);
+
+echo "<TABLE id='kat'>";
+
+function getElements($kat_id, $knoten_arr, $KAT_ID)
+{
+	include '../../share/db_connect1.php';
+	INCLUDE '../../share/global_config.php';
+	$result10 = mysql_query( "SELECT * FROM $table4 WHERE parent='$kat_id' ORDER BY kategorie");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
@@ -197,21 +115,97 @@ ELSE
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id = mysql_result($result10, $i10, 'kat_id');
 		$space='';
-		//echo $level;
 		FOR ($N=0; $N<$level; $N++)
 		{
 			$space .="&#160;&#160;&#160;";
 		}
-		
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
-		$kat_id_back = array_search($kat_id, $knoten_arr);
+			
+		$kat_id_pos = array_search($kat_id, $knoten_arr);
+		$kat_id_back = $knoten_arr[$kat_id_pos - 1];
 		IF (in_array($kat_id, $knoten_arr))
 		{
-			
-			//echo "Space: ".$space."<BR>";
+
 			//echo $kat_id_back;
 			$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR id='kat'>
+					<TD id='kat3'>
+					".$space."<a href='kategorie0.php?kat_id=$kat_id_back'>".$img."</a>&#160;
+					<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
+					</TD>
+					
+					<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
+					</TD>";
+
+			IF($kat_id !== '1')
+			{
+				echo "
+						<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
+						</TD>";
+			}
+			ELSE
+			{
+				echo "<TD id='kat2'><BR></TD>";
+			}
+
+			echo "
+					
+					</TR>";
+			getElements($kat_id, $knoten_arr, $KAT_ID);
+		}
+		ELSE
+		{
+			$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+			echo 	"<TR id='kat'>
+					<TD id='kat3'>
+					".$space."<a href='kategorie0.php?kat_id=$kat_id'>".$img."</a>&#160;
+					<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
+					</TD>
+					
+					<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
+					</TD>";
+
+			IF($kat_id !== '1')
+			{
+				echo "
+						<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
+						</TD>";
+			}
+			ELSE
+			{
+				echo "<TD id='kat2'><BR></TD>";
+			}
+
+			echo "
+					
+					</TR>";
+		}
+	}
+}
+
+$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
+$num10 = mysql_num_rows($result10);
+FOR ($i10=0; $i10<$num10; $i10++)
+{
+	$kategorie = mysql_result($result10, $i10, 'kategorie');
+	$parent = mysql_result($result10, $i10, 'parent');
+	$level = mysql_result($result10, $i10, 'level');
+	$kat_id = mysql_result($result10, $i10, 'kat_id');
+	$space='';
+	//echo $level;
+	FOR ($N=0; $N<$level; $N++)
+	{
+		$space .="&#160;&#160;&#160;";
+	}
+
+	//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+	$kat_id_back = array_search($kat_id, $knoten_arr);
+	IF (in_array($kat_id, $knoten_arr))
+	{
+			
+		//echo "Space: ".$space."<BR>";
+		//echo $kat_id_back;
+		$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+		echo 	"<TR id='kat'>
 				<TD id='kat3'>
 				".$space."<a href='kategorie0.php?kat_id=$kat_id_back'>".$img."</a>&#160;
 				<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
@@ -219,28 +213,28 @@ ELSE
 				
 				<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
 				</TD>";
-					
-				IF($kat_id !== '1')
-				{
-					echo "
+			
+		IF($kat_id !== '1')
+		{
+			echo "
 					<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
 					</TD>";
-				}
-				ELSE
-				{
-					echo "<TD id='kat2'><BR></TD>";
-				}
-				
-				echo "
-				
-				</TR>";
-			getElements($kat_id, $knoten_arr, $KAT_ID);
 		}
 		ELSE
 		{
-			//echo "Space: ".$space."|<BR>";
-			$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-			echo 	"<TR id='kat'>
+			echo "<TD id='kat2'><BR></TD>";
+		}
+
+		echo "
+				
+				</TR>";
+		getElements($kat_id, $knoten_arr, $KAT_ID);
+	}
+	ELSE
+	{
+		//echo "Space: ".$space."|<BR>";
+		$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+		echo 	"<TR id='kat'>
 				<TD id='kat3'>
 				".$space."<a href='kategorie0.php?kat_id=$kat_id'>".$img."</a>&#160;
 				<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
@@ -248,24 +242,24 @@ ELSE
 				
 				<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
 				</TD>";
-					
-				IF($kat_id !== '1')
-				{
-					echo "
+			
+		IF($kat_id !== '1')
+		{
+			echo "
 					<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
 					</TD>";
-				}
-				ELSE
-				{
-					echo "<TD id='kat2'><BR></TD>";
-				}
-					
-				echo "
+		}
+		ELSE
+		{
+			echo "<TD id='kat2'><BR></TD>";
+		}
+			
+		echo "
 				
 				</TR>";
-		}
 	}
-	echo "</TABLE>
+}
+echo "</TABLE>
 	</div>
 	
 	<DIV id='spalte2'>
@@ -284,7 +278,8 @@ ELSE
 </div>";
 
 mysql_close($conn);
-?>
-</DIV></CENTER>
+?></DIV>
+
+</CENTER>
 </BODY>
 </HTML>

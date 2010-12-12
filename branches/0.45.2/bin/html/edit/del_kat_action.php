@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 
 /***********************************************************************************
@@ -34,7 +34,7 @@ if( array_key_exists('parent',$_GET) )
 {
 	$parent = $_GET['parent'];
 }
- 
+
 delChildKat($kat_id, $pic_id);
 
 function delChildKat($kat_id, $pic_id)
@@ -43,7 +43,7 @@ function delChildKat($kat_id, $pic_id)
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	//Ausgehend von der zu loeschenden Kategorie wird ermittelt, welch Child-Kategorien diese besitzt und welche davon wurde dem Bild zugewiesen:
-	
+
 	global $kat_ids;
 	$kat_ids[] = $kat_id;
 	function getChildIDs($kat_id, $kat_ids)
@@ -53,7 +53,7 @@ function delChildKat($kat_id, $pic_id)
 		include $sr.'/bin/share/db_connect1.php';
 		$result2 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$kat_id'");
 		$num2 = mysql_num_rows($result2);
-		
+
 		IF ($num2 > '0')
 		{
 			FOR ($i2=0; $i2<$num2; $i2++)
@@ -61,13 +61,13 @@ function delChildKat($kat_id, $pic_id)
 				$kat_id = mysql_result($result2, $i2, 'kat_id');
 				IF (!in_array($kat_id, $kat_ids))
 				{
-				$kat_ids[] = $kat_id;
+					$kat_ids[] = $kat_id;
 				}
 			}
 		}
 		RETURN $kat_ids;
 	}
-	
+
 	FOREACH($kat_ids as $kat_id)
 	{
 		//echo "bestimme Child-Element vom Element ".$kat_id."<BR>";
@@ -87,7 +87,7 @@ function delChildKat($kat_id, $pic_id)
 			$result6 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic_id' AND kat_id = '1'");
 			$result10 = mysql_query( "UPDATE $table2 SET has_kat = '0' WHERE pic_id = '$pic_id'");
 		}
-	}	
+	}
 }
 
 //Update der exif-daten-Tabelle;

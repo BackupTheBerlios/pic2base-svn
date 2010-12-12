@@ -30,13 +30,13 @@ echo "<CENTER>
 $group_id = $_GET['id']; 	// fuer register_globals = off
 $col_groups = 2;	//2 Spaltengruppen ; je Gruppe eine Spalte Parameter und eine Spalte Erlaubnis
 $content = '';
-  
+
 mysql_connect ($db_server, $user, $PWD);
 mysql_select_db($db);
 $result = mysql_query("select * from $table9 WHERE id=".$group_id); //usergroups
 if (mysql_num_rows($result) == 1)
 {
-    $desc = mysql_result ($result, 0, "description");
+	$desc = mysql_result ($result, 0, "description");
 }
 else
 {
@@ -45,7 +45,7 @@ else
 
 if (hasPermission($c_username, 'adminlogin'))
 {
-	
+
 	echo "<table class='tablenormal' border='0'>
 	<tr style='height:3px;'>
 	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
@@ -79,7 +79,7 @@ if (hasPermission($c_username, 'adminlogin'))
 			IF ($description !== '')
 			{
 				$content = $content."<td class='tdbreit'>".$description."</td>";
-				
+
 				IF (hasGroupPermission($group_id, $shortdescription))
 				{
 					$checked = 'checked';
@@ -88,9 +88,9 @@ if (hasPermission($c_username, 'adminlogin'))
 				ELSE
 				{
 					$checked = '';
-					$text = 'keine Berechtigung';	
+					$text = 'keine Berechtigung';
 				}
-				
+
 				$content = $content."<TD class='tdschmal'>
 				<div id = '$perm_id'>
 				<input type=checkbox name='cb' '$checked' title= '$text' onClick='changeGrouppermission(\"$group_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
@@ -128,7 +128,7 @@ if (hasPermission($c_username, 'showusers'))
 			if ($i == 0)
 			{
 				echo mysql_result($result, $i, "username");
-			} 
+			}
 			else
 			{
 				echo ", ".mysql_result($result, $i, "username");

@@ -8,31 +8,31 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	{
 		list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	}
-	
+
 	//Erzeugung einer Bildvorschau unter optimaler Nutzung des Bildschirmes;
 	//Qualitaeten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	
+
 	$exiftool = buildExiftoolCommand($sr);
-	
+
 	$res0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
 	$row = mysql_fetch_array($res0);
 	$FileNameV = $row['FileNameV'];
 	$FileNameHQ = $row['FileNameHQ'];
 	$FileName = $row['FileName'];
 	$FileNameOri = $row['FileNameOri'];
-	
+
 	$FileNameOri_ext = explode('.', $FileNameOri);
 	$ext = strtolower(isset($FileNameOri_ext[1]));//Extension des Original-Bildes
-	
+
 	$result1 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 	$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
 	$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
 
 	$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
 	$Ori_arr = preg_split('# : #',shell_exec($exiftool." -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
-//	echo $bild."<br>";
+	//	echo $bild."<br>";
 	if ( $Ori_arr[0] != '')
 	{
 		$Orientation = $Ori_arr[1];
@@ -47,135 +47,135 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
 	$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 	$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
-	
+
 	SWITCH($quality)
 	{
 		CASE '1':
-		$breite = $parameter_v[0];
-		$hoehe = $parameter_v[1];
-		$bildname = 'http://'.$sr.'/images/vorschau/thumbs/'.$FileNameV;
-		break;
-		
+			$breite = $parameter_v[0];
+			$hoehe = $parameter_v[1];
+			$bildname = 'http://'.$sr.'/images/vorschau/thumbs/'.$FileNameV;
+			break;
+
 		CASE '2':
-		$breite = $parameter_hq[0];
-		$hoehe = $parameter_hq[1];
-		$bildname = 'http://'.$sr.'/images/vorschau/hq-preview/'.$FileNameHQ;
-		break;
-		
+			$breite = $parameter_hq[0];
+			$hoehe = $parameter_hq[1];
+			$bildname = 'http://'.$sr.'/images/vorschau/hq-preview/'.$FileNameHQ;
+			break;
+
 		CASE '3':
-		$breite = $parameter_o[0];
-		$hoehe = $parameter_o[1];
-		SWITCH($Orientation)
-		{
-			CASE '':
-			CASE 0:
-			CASE 1:
-			$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/'.$FileName;
-			break;
-			
-			default:
-			//wenn das bild nicht landscape ist wird gepr�ft, ob es dieses Bild schon in gedrehter Form gibt:
-			$verz=opendir($sr.'/images/originale/rotated');
-			$n = 0;
-			while($bilddatei=readdir($verz))
+			$breite = $parameter_o[0];
+			$hoehe = $parameter_o[1];
+			SWITCH($Orientation)
 			{
-				if($bilddatei != "." && $bilddatei != "..")
-				{
-					//$bildd=$bilder_verzeichnis."/".$bilddatei;
-					//echo "Bild: ".$bilddatei."; Datei: ".$file_name."<BR>";
-					IF ($bilddatei == $FileName)
-					{
-						$n++;
-					}
-				}
-			}
-//			echo "N: ".$n."<BR>";
-			IF ($n > '0')
-			{
-				//wenn ein bereits gedrehtes Bild gefunden wurde, verwende dies:
-				$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/rotated/'.$FileName;
-			}
-			ELSE
-			{
-				//wenn keins gefunden wurde wird es gedreht und dann angezeigt:
-				$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/'.$FileName;
-				
-				IF($ext == 'nef')
-				{
-					copy("$pic_path/$FileName", "$pic_rot_path/$FileName");
-					clearstatcache();
-					chmod ($pic_rot_path."/".$FileName, 0700);
-					clearstatcache();
-				}
-				ELSE
-				{
-					SWITCH($Orientation)
-					{
-						case 3:
-						//Das Vorschaubild muss 180 gedreht werden:
-						$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
-						$output = shell_exec($command);
-						break;
+				CASE '':
+				CASE 0:
+				CASE 1:
+					$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/'.$FileName;
+					break;
 						
-						case 6:
-						//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-						$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
-						//echo $command;
-						$output = shell_exec($command);
-						break;
-						
-						case 8:
-						//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-						$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
-						$output = shell_exec($command);
-						break;
+				default:
+					//wenn das bild nicht landscape ist wird gepr�ft, ob es dieses Bild schon in gedrehter Form gibt:
+					$verz=opendir($sr.'/images/originale/rotated');
+					$n = 0;
+					while($bilddatei=readdir($verz))
+					{
+						if($bilddatei != "." && $bilddatei != "..")
+						{
+							//$bildd=$bilder_verzeichnis."/".$bilddatei;
+							//echo "Bild: ".$bilddatei."; Datei: ".$file_name."<BR>";
+							IF ($bilddatei == $FileName)
+							{
+								$n++;
+							}
+						}
 					}
-				}
+					//			echo "N: ".$n."<BR>";
+					IF ($n > '0')
+					{
+						//wenn ein bereits gedrehtes Bild gefunden wurde, verwende dies:
+						$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/rotated/'.$FileName;
+					}
+					ELSE
+					{
+						//wenn keins gefunden wurde wird es gedreht und dann angezeigt:
+						$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/'.$FileName;
+
+						IF($ext == 'nef')
+						{
+							copy("$pic_path/$FileName", "$pic_rot_path/$FileName");
+							clearstatcache();
+							chmod ($pic_rot_path."/".$FileName, 0700);
+							clearstatcache();
+						}
+						ELSE
+						{
+							SWITCH($Orientation)
+							{
+								case 3:
+									//Das Vorschaubild muss 180 gedreht werden:
+									$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
+									$output = shell_exec($command);
+									break;
+
+								case 6:
+									//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
+									$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
+									//echo $command;
+									$output = shell_exec($command);
+									break;
+
+								case 8:
+									//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
+									$command = "/usr/bin/convert ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
+									$output = shell_exec($command);
+									break;
+							}
+						}
+					}
+					$parameter_o_r=getimagesize($sr.'/images/originale/rotated/'.$FileName);
+					$breite = $parameter_o_r[0];
+					$hoehe = $parameter_o_r[1];
+					break;
 			}
-			$parameter_o_r=getimagesize($sr.'/images/originale/rotated/'.$FileName);
-			$breite = $parameter_o_r[0];
-			$hoehe = $parameter_o_r[1];
+			//echo $bildname;
 			break;
-		}
-		//echo $bildname;
-		break;
 	}
-	
+
 	$ratio_pic = $breite / $hoehe;
 	//echo $breite." - ".$hoehe;
 	//echo $FileQuality;
-	
+
 	SWITCH($Orientation)
 	{
 		CASE '':
 		CASE '0':
 		CASE '1':
 		CASE '3':
-		$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
-		$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
-		break;
-		
+			$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
+			$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
+			break;
+
 		CASE '6':
 		CASE '8':
-		$Height = mysql_result($result1, $i1, 'ExifImageWidth');
-		$Width = mysql_result($result1, $i1, 'ExifImageHeight');
-		break;
+			$Height = mysql_result($result1, $i1, 'ExifImageWidth');
+			$Width = mysql_result($result1, $i1, 'ExifImageHeight');
+			break;
 	}
-	
+
 	$breite_v = $parameter_v[0];
 	$hoehe_v = $parameter_v[1];
 	IF ($breite_v >= $hoehe_v)
 	//IF ($Width >= $Height)
-      	{
-      		$Breite = $max_size;
-      		$Hoehe = number_format(($Breite * $hoehe_v / $breite_v),0,',','.');
-      	}
-      	ELSE
-      	{
-      		$Hoehe = $max_size;
-      		$Breite = number_format(($Hoehe * $breite_v / $hoehe_v),0,',','.');
-      	}
-	
+	{
+		$Breite = $max_size;
+		$Hoehe = number_format(($Breite * $hoehe_v / $breite_v),0,',','.');
+	}
+	ELSE
+	{
+		$Hoehe = $max_size;
+		$Breite = number_format(($Hoehe * $breite_v / $hoehe_v),0,',','.');
+	}
+
 	//echo "O: ".$Orientation.", B: ".$breite_v.", H: ".$hoehe_v."<BR>";
 	echo "<a href='' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori');return false\"  title='Ansicht in optimaler Qualit&auml;t'>
 	<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5'>
@@ -188,19 +188,19 @@ function getShortFS($FileSize)
 	SWITCH ($FileSize)
 	{
 		CASE $FileSize < 1024:
-		$fs = $FileSize;
-		echo $fs." Byte";
-		break;
-		
+			$fs = $FileSize;
+			echo $fs." Byte";
+			break;
+
 		case $FileSize < 1048576:
-		$fs = number_format(($FileSize / 1024),1,',','.');
-		echo $fs." kB";
-		break;
-		
+			$fs = number_format(($FileSize / 1024),1,',','.');
+			echo $fs." kB";
+			break;
+
 		case $FileSize >= 1048576:
-		$fs = number_format(($FileSize / 1048576),1,',','.');
-		echo $fs." MB";
-		break;
+			$fs = number_format(($FileSize / 1048576),1,',','.');
+			echo $fs." MB";
+			break;
 	}
 }
 ?>

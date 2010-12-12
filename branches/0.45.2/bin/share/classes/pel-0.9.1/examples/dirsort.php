@@ -28,9 +28,9 @@ error_reporting(E_ALL);
 
 /* a printf() variant that appends a newline to the output. */
 function println(/* fmt, args... */) {
-    $args = func_get_args();
-    $fmt = array_shift($args);
-    vprintf($fmt . "\n", $args);
+	$args = func_get_args();
+	$fmt = array_shift($args);
+	vprintf($fmt . "\n", $args);
 }
 
 
@@ -45,17 +45,17 @@ $prog = array_shift($argv);
 $error = false;
 
 if (isset($argv[0]) && $argv[0] == '-d') {
-  Pel::$debug = true;
-  array_shift($argv);
+	Pel::$debug = true;
+	array_shift($argv);
 }
 
 if (empty($argv)) {
-  println('Usage: %s [-d] <file> ...', $prog);
-  println('Optional arguments:');
-  println('  -d        turn debug output on.');
-  println('Mandatory arguments:');
-  println('  file ...  one or more file names.');
-  exit(1);
+	println('Usage: %s [-d] <file> ...', $prog);
+	println('Optional arguments:');
+	println('  -d        turn debug output on.');
+	println('Mandatory arguments:');
+	println('  file ...  one or more file names.');
+	exit(1);
 }
 
 /* We typically need lots of RAM to parse TIFF images since they tend
@@ -64,45 +64,45 @@ ini_set('memory_limit', '32M');
 
 foreach ($argv as $file) {
 
-  println('Reading file "%s".', $file);
-  $data = new PelDataWindow(file_get_contents($file));
+	println('Reading file "%s".', $file);
+	$data = new PelDataWindow(file_get_contents($file));
 
-  if (PelJpeg::isValid($data)) {
-    $jpeg = new PelJpeg();
-    $jpeg->load($data);
-    $app1 = $jpeg->getExif();
-    if ($app1 == null) {
-      println('Skipping %s because no APP1 section was found.', $file);
-      continue;
-    }
+	if (PelJpeg::isValid($data)) {
+		$jpeg = new PelJpeg();
+		$jpeg->load($data);
+		$app1 = $jpeg->getExif();
+		if ($app1 == null) {
+			println('Skipping %s because no APP1 section was found.', $file);
+			continue;
+		}
 
-    $tiff = $app1->getTiff();
-  } elseif (PelTiff::isValid($data)) {
-    $tiff = new PelTiff($data);
-  } else {
-    println('Unrecognized image format! Skipping.');
-    continue;
-  }
-  
-  $ifd0 = $tiff->getIfd();
-  $entry = $ifd0->getEntry(PelTag::DATE_TIME);
+		$tiff = $app1->getTiff();
+	} elseif (PelTiff::isValid($data)) {
+		$tiff = new PelTiff($data);
+	} else {
+		println('Unrecognized image format! Skipping.');
+		continue;
+	}
 
-  if ($entry == null) {
-    println('Skipping %s because no DATE_TIME tag was found.', $file);
-    continue;
-  }
+	$ifd0 = $tiff->getIfd();
+	$entry = $ifd0->getEntry(PelTag::DATE_TIME);
 
-  
-  $time = $entry->getValue();
-  
-  $new = gmdate('../Y-m/', $time) . $file;
+	if ($entry == null) {
+		println('Skipping %s because no DATE_TIME tag was found.', $file);
+		continue;
+	}
 
-  if (file_exists($new))
-    die('Aborting, ' . $new . ' exists!');
 
-  println('mv %s %s', $file, $new);
+	$time = $entry->getValue();
 
-  rename($file, $new);
+	$new = gmdate('../Y-m/', $time) . $file;
+
+	if (file_exists($new))
+	die('Aborting, ' . $new . ' exists!');
+
+	println('mv %s %s', $file, $new);
+
+	rename($file, $new);
 }
 
 

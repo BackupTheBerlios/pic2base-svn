@@ -1,14 +1,15 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:v="urn:schemas-microsoft-com:vml">
 <?php
 include '../../share/global_config.php';
 //var_dump($_REQUEST);
@@ -30,17 +31,27 @@ IF(array_key_exists('height',$_REQUEST))
 }
 ?>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-<title>Kamera-Standort</title> 
+<title>Kamera-Standort</title>
 
 <style type="text/css">
 /*v\:*{behavior:url(#default#VML)}*/
-BODY{font-family:Arial;font-size:small;background-color:#BDBEC6}
-A:hover{color:red;text-decoration:underline}
-</style> 
+BODY {
+	font-family: Arial;
+	font-size: small;
+	background-color: #BDBEC6
+}
 
-<script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $gm_key; ?>" type="text/javascript">
+A:hover {
+	color: red;
+	text-decoration: underline
+}
+</style>
+
+<script
+	src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $gm_key; ?>"
+	type="text/javascript">
 </script>
 
 </head>

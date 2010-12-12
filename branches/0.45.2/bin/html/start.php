@@ -10,38 +10,39 @@ IF (!$_COOKIE['login'])
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../css/format1.css'>
-	<link rel="shortcut icon" href="../share/images/favicon.ico">
-	<style type="text/css">
-	<!--
-	.tablenormal	{
-			width:450px;
-			margin-left:175px;
-			}
-			
-	.trflach	{
-			height:3px;
-			background-color:#FF9900
-			}
-			
-	.tdleft	{
-			width:120px;
-			text-align:left;
-			}
-			
-	.tdright	{
-			width:280px;
-			text-align:left;
-			}
-	-->
-	</style>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Startseite</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="../share/images/favicon.ico">
+<style type="text/css">
+<!--
+.tablenormal {
+	width: 450px;
+	margin-left: 175px;
+}
+
+.trflach {
+	height: 3px;
+	background-color: #FF9900
+}
+
+.tdleft {
+	width: 120px;
+	text-align: left;
+}
+
+.tdright {
+	width: 280px;
+	text-align: left;
+}
+-->
+</style>
 </HEAD>
 
-<script language="javascript" type="text/javascript" src="../share/functions/ShowPicture.js"></script>
+<script language="javascript" type="text/javascript"
+	src="../share/functions/ShowPicture.js"></script>
 <script language="JavaScript">
 <!--
 function delAllMetadata(c_username)
@@ -53,13 +54,11 @@ function delAllMetadata(c_username)
 -->
 </SCRIPT>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -79,10 +78,10 @@ function delAllMetadata(c_username)
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
- 
+
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
@@ -142,7 +141,7 @@ ELSE
 //bei jedem Aufruf der Startseite wird der kml-Ordner des betreffenden Users geleert:
 IF($c_username !== 'pb')
 {
-	$folder = opendir($ftp_path."/".$c_username."/kml_files");	
+	$folder = opendir($ftp_path."/".$c_username."/kml_files");
 	while($datei_name=readdir($folder))
 	{
 		if($datei_name != "." && $datei_name != "..")
@@ -176,76 +175,76 @@ ELSE
 }
 //Nur wenn der angemeldete User Erfassungs- und Downloadrechte hat, werden die folgenden Kontrollen durchgefuehrt:
 
-	//Pruefung, ob Bilder ohne Kategorie-Zuweisung fuer den Benutzer vorliegen:
-	$num_pic = '0';
-	$result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id'");
-	@$num2 = mysql_num_rows($result2);
-	IF($num2 > '0')
+//Pruefung, ob Bilder ohne Kategorie-Zuweisung fuer den Benutzer vorliegen:
+$num_pic = '0';
+$result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id'");
+@$num2 = mysql_num_rows($result2);
+IF($num2 > '0')
+{
+	$result3 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id' AND has_kat = '0'");
+	$num_pic = mysql_num_rows($result3);
+	//echo "Num_Pic: ".$num_pic."<BR>";
+
+	$hinweis0 = "Sie haben bisher ".$num2." Bilder in die Datenbank gestellt.";
+	IF($num_pic == '0')
 	{
-		$result3 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id' AND has_kat = '0'");
-		$num_pic = mysql_num_rows($result3);
-		//echo "Num_Pic: ".$num_pic."<BR>";
-		
-		$hinweis0 = "Sie haben bisher ".$num2." Bilder in die Datenbank gestellt.";
-		IF($num_pic == '0')
-		{
-			$hinweis = "<span style='color:green;'>Jedes Ihrer Bilder wurde mindestens einer Kategorie zugeordnet.</span>";
-		}
-		ELSE
-		{
-			$hinweis = $num_pic." Ihrer Bilder sind noch ohne Kategorie-Zuweisung!<BR>
-			Tipps f&uuml;r eine effektive Archivierung finden Sie <A HREF='help/help1.php?page=0'>hier</A>";
-		}
+		$hinweis = "<span style='color:green;'>Jedes Ihrer Bilder wurde mindestens einer Kategorie zugeordnet.</span>";
 	}
 	ELSE
 	{
-		$hinweis0 = "Sie haben noch keine Bilder in die Datenbank gestellt.";
+		$hinweis = $num_pic." Ihrer Bilder sind noch ohne Kategorie-Zuweisung!<BR>
+			Tipps f&uuml;r eine effektive Archivierung finden Sie <A HREF='help/help1.php?page=0'>hier</A>";
 	}
-	//Pruefung, ob Dateien im FTP-Upload-Ordner vorliegen:
-	$n = 0;
-	@$verz=opendir($ftp_path."/".$c_username."/uploads");
-	//echo "Verzeichnis: ".$verz;
-	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
-	IF($verz)
+}
+ELSE
+{
+	$hinweis0 = "Sie haben noch keine Bilder in die Datenbank gestellt.";
+}
+//Pruefung, ob Dateien im FTP-Upload-Ordner vorliegen:
+$n = 0;
+@$verz=opendir($ftp_path."/".$c_username."/uploads");
+//echo "Verzeichnis: ".$verz;
+//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
+IF($verz)
+{
+	while($datei=readdir($verz))
 	{
-		while($datei=readdir($verz))
+		if($datei != "." && $datei != "..")
 		{
-			if($datei != "." && $datei != "..")
+			$info = pathinfo($datei);
+			$extension = strtolower($info['extension']);
+			IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
 			{
-				$info = pathinfo($datei);
-				$extension = strtolower($info['extension']);
-				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
-				{
-					$bild_datei[] = $datei;
-					$n++;
-				}
+				$bild_datei[] = $datei;
+				$n++;
 			}
 		}
-		$hinweis2 = "Es befinden sich ".$n." Datei(en) in Ihrem Upload-Ordner.<BR>";
 	}
-	
-	//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
-	$m = 0;
-	@$verz=opendir($ftp_path."/".$c_username."/downloads");
-	//echo "V: ".$verz;
-	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
-	IF($verz)
+	$hinweis2 = "Es befinden sich ".$n." Datei(en) in Ihrem Upload-Ordner.<BR>";
+}
+
+//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
+$m = 0;
+@$verz=opendir($ftp_path."/".$c_username."/downloads");
+//echo "V: ".$verz;
+//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
+IF($verz)
+{
+	while($datei=readdir($verz))
 	{
-		while($datei=readdir($verz))
+		if($datei != "." && $datei != "..")
 		{
-			if($datei != "." && $datei != "..")
+			$info = pathinfo($datei);
+			$extension = strtolower($info['extension']);
+			IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
 			{
-				$info = pathinfo($datei);
-				$extension = strtolower($info['extension']);
-				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
-				{
-					$bild_datei[] = $datei;
-					$m++;
-				}
+				$bild_datei[] = $datei;
+				$m++;
 			}
 		}
-		$hinweis3 = $m." Datei(en) liegen in Ihrem Download-Ordner: ";
 	}
+	$hinweis3 = $m." Datei(en) liegen in Ihrem Download-Ordner: ";
+}
 
 //Ermittlung der 'Top-Ten':
 $result4 = mysql_query("SELECT * FROM $table2 WHERE ranking <>'' AND ranking >'0' ORDER BY ranking DESC LIMIT 10");
@@ -258,23 +257,23 @@ echo "<div class='page'>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi0($c_username);
-		echo "</div>
+createNavi0($c_username);
+echo "</div>
 	</div>
 	
 	<div class='content'>
 	<span style='font-size:14px;'>";
-	//$num2		Summe der Bilder des Users
-	//$m		Dateien im Download-Ordner
-	//$n		Dateien im Upload-Ordner
-	//$num_pic	Bilder ohne Kat-Zuweisung
-	//echo $m.", ".$n.", ".$num2.", ".$num_pic.", ".$num_user."<BR>";
-	
-	IF($num_pic > '0' OR $n > '0' OR $m > '0' OR $num2 > '0' OR $num_user > '2')
-	{
-		$p_info = pathinfo($_SERVER['PHP_SELF']);
-		//$file_name = $p_info['basename'];
-		echo "<BR><CENTER>
+//$num2		Summe der Bilder des Users
+//$m		Dateien im Download-Ordner
+//$n		Dateien im Upload-Ordner
+//$num_pic	Bilder ohne Kat-Zuweisung
+//echo $m.", ".$n.", ".$num2.", ".$num_pic.", ".$num_user."<BR>";
+
+IF($num_pic > '0' OR $n > '0' OR $m > '0' OR $num2 > '0' OR $num_user > '2')
+{
+	$p_info = pathinfo($_SERVER['PHP_SELF']);
+	//$file_name = $p_info['basename'];
+	echo "<BR><CENTER>
 			<TABLE class='liste1' border='0'>
 			<tbody>
 			
@@ -306,32 +305,32 @@ echo "<div class='page'>
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 			</TR>";
-			
-			IF(hasPermission($c_username, 'addpic'))
-			{
-				echo "
+
+	IF(hasPermission($c_username, 'addpic'))
+	{
+		echo "
 				<tr class='normal'>
 	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Ihr Datenbestand:</TD>
 				<td class='normal' align='left' valign='top' colspan='7'>".$hinweis0."</TD>
 				</TR>";
-			}
-			ELSE
-			{
-				echo "
+	}
+	ELSE
+	{
+		echo "
 				<tr class='normal'>
 	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'><BR></TD>
 				<td class='normal' align='left' valign='top' colspan='7'><BR></TD>
 				</TR>";
-			}
-			echo "
+	}
+	echo "
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 			</TR>";
 
-		
-		IF ($num_pic > '0' AND hasPermission($c_username, 'addpic'))
-		{
-			echo "
+
+	IF ($num_pic > '0' AND hasPermission($c_username, 'addpic'))
+	{
+		echo "
 			<tr class='normal'>
  			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Bearbeitungsstatus:</TD>
 			<TD class='normal' align='left' valign='top' colspan='7'>".$hinweis."</TD>
@@ -340,10 +339,10 @@ echo "<div class='page'>
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 			</TR>";
-		}
-		ELSE
-		{
-			echo "
+	}
+	ELSE
+	{
+		echo "
 			<tr class='normal'>
  			<TD class='normal' align='left' valign='top' width='243' colspan='3'><BR></TD>
 			<TD class='normal' align='left' valign='top' colspan='7'><BR></TD>
@@ -352,11 +351,11 @@ echo "<div class='page'>
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 			</TR>";
-		}
-	
-		IF($n > '0' AND hasPermission($c_username, 'addpic'))
-		{
-			echo "
+	}
+
+	IF($n > '0' AND hasPermission($c_username, 'addpic'))
+	{
+		echo "
 			<Form name='folder' method='post' action='erfassung/stapel1.php'>
 			
 			<tr class='normal' style='height:50px;'>
@@ -376,12 +375,12 @@ echo "<div class='page'>
 			</TR>
 			
 			</FORM>";
-		}
-		ELSE
+	}
+	ELSE
+	{
+		IF(hasPermission($c_username, 'addpic'))
 		{
-			IF(hasPermission($c_username, 'addpic'))
-			{
-				echo "
+			echo "
 				<TR class='normal' style='height:25px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
 				<td class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Upload-Ordner ist leer.</TD>
@@ -396,10 +395,10 @@ echo "<div class='page'>
 				<TR class='normal'>
 				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 				</TR>";
-			}
-			ELSE
-			{
-				echo "
+		}
+		ELSE
+		{
+			echo "
 				<TR class='normal' style='height:25px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
 				<td class='normal' align='left' valign='top' colspan='7' style='color:green';><BR></TD>
@@ -412,15 +411,15 @@ echo "<div class='page'>
 				<TR class='normal'>
 				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 				</TR>";
-			}
 		}
-		
-		IF($m > '0' AND (hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND !directDownload($c_username, $sr))
-		{
-			$download_path = 'ftp://'.$c_username."@".$_SERVER['SERVER_NAME'].'/downloads/';
-			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$c_username.'/downloads/';
-			//echo $download_path;
-			echo "
+	}
+
+	IF($m > '0' AND (hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND !directDownload($c_username, $sr))
+	{
+		$download_path = 'ftp://'.$c_username."@".$_SERVER['SERVER_NAME'].'/downloads/';
+		$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$c_username.'/downloads/';
+		//echo $download_path;
+		echo "
 			<tr class='normal' style='height:50px;'>
 			<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
 			<td class='normal' align='left' valign='top' colspan='7' style='color:red';>".$hinweis3."
@@ -434,12 +433,12 @@ echo "<div class='page'>
 			<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$c_username\")'>
 			</TD>
 			</TR>";
-		}
-		ELSE
+	}
+	ELSE
+	{
+		IF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND !directDownload($c_username, $sr))
 		{
-			IF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND !directDownload($c_username, $sr))
-			{	
-				echo "
+			echo "
 				<tr class='normal' style='height:50px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
 				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Download-Ordner ist leer.</style></TD>
@@ -448,10 +447,10 @@ echo "<div class='page'>
 				<TR class='normal'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
-			}
-			ELSEIF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND directDownload($c_username, $sr))
-			{
-				echo "
+		}
+		ELSEIF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND directDownload($c_username, $sr))
+		{
+			echo "
 				<tr class='normal' style='height:50px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Download-Modus:</TD>
 				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';>Direkter Download</style></TD>
@@ -460,10 +459,10 @@ echo "<div class='page'>
 				<TR class='normal'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
-			}
-			ELSE
-			{
-				echo "
+		}
+		ELSE
+		{
+			echo "
 				<tr class='normal' style='height:50px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
 				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';><BR></style></TD>
@@ -472,10 +471,10 @@ echo "<div class='page'>
 				<TR class='normal'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
-			}
 		}
-		
-		echo "	<TR class='normal' style='height:35px;'>
+	}
+
+	echo "	<TR class='normal' style='height:35px;'>
 			<TD class='normal' align='left' valign='top' colspan='3'>".$ol_text."</TD>
 			<TD class='normal' align='left' valign='top' colspan='7'>".$online_hinweis."</TD>
 			</TR>
@@ -505,28 +504,28 @@ echo "<div class='page'>
 			</TR>
 			
 			<tr class='normal'>";
-			FOR($i4='0'; $i4<$num4; $i4++)
-			{
-				$file = mysql_result($result4, $i4, 'FileNameHQ');
-				$ranking = mysql_result($result4, $i4, 'ranking');
-				//$bild = $pic_hq_path."/".$file;
-				$bild = "http://".$_SERVER['SERVER_NAME']."".$inst_path."/pic2base/images/vorschau/hq-preview/".$file;
-				$param = getimagesize($pic_hq_path."/".$file);
-				$width = $param[0];
-				$height = $param[1];
-				//echo $bild;
-				$hoehe = 40;
-				$breite = $hoehe / $height * $width;
-				
-				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe'></a></TD></span>";
-			}
-			//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
-			FOR($x='0'; $x<(10-$num4); $x++)
-			{
-				echo "<TD class='normal' style='width:80px;'></TD>";
-			}
-			
-			echo "
+	FOR($i4='0'; $i4<$num4; $i4++)
+	{
+		$file = mysql_result($result4, $i4, 'FileNameHQ');
+		$ranking = mysql_result($result4, $i4, 'ranking');
+		//$bild = $pic_hq_path."/".$file;
+		$bild = "http://".$_SERVER['SERVER_NAME']."".$inst_path."/pic2base/images/vorschau/hq-preview/".$file;
+		$param = getimagesize($pic_hq_path."/".$file);
+		$width = $param[0];
+		$height = $param[1];
+		//echo $bild;
+		$hoehe = 40;
+		$breite = $hoehe / $height * $width;
+
+		echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe'></a></TD></span>";
+	}
+	//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
+	FOR($x='0'; $x<(10-$num4); $x++)
+	{
+		echo "<TD class='normal' style='width:80px;'></TD>";
+	}
+
+	echo "
 			</TR>
 			
 			<TR class='normal'>
@@ -542,23 +541,23 @@ echo "<div class='page'>
 			</TBODY>
 			</TABLE>
 			</CENTER>";
-	}
-	ELSE
-	{
-		//so lange keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
-		echo "<div class='content'>
+}
+ELSE
+{
+	//so lange keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
+	echo "<div class='content'>
 		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
-		checkSoftware();
-		echo "</p></div><br style='clear:both;' />";
-	}
-	
-	//log-file schreiben:
-	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-	fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
-	fclose($fh);
-	mysql_close($conn);
-	
-	echo "</span>
+	checkSoftware();
+	echo "</p></div><br style='clear:both;' />";
+}
+
+//log-file schreiben:
+$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
+fclose($fh);
+mysql_close($conn);
+
+echo "</span>
 	</p>
 	
 	</div>

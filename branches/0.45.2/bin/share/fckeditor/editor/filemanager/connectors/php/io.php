@@ -30,9 +30,9 @@ function GetResourceTypePath( $resourceType, $sCommand )
 	global $Config ;
 
 	if ( $sCommand == "QuickUpload")
-		return $Config['QuickUploadPath'][$resourceType] ;
+	return $Config['QuickUploadPath'][$resourceType] ;
 	else
-		return $Config['FileTypesPath'][$resourceType] ;
+	return $Config['FileTypesPath'][$resourceType] ;
 }
 
 function GetResourceTypeDirectory( $resourceType, $sCommand )
@@ -41,7 +41,7 @@ function GetResourceTypeDirectory( $resourceType, $sCommand )
 	if ( $sCommand == "QuickUpload")
 	{
 		if ( strlen( $Config['QuickUploadAbsolutePath'][$resourceType] ) > 0 )
-			return $Config['QuickUploadAbsolutePath'][$resourceType] ;
+		return $Config['QuickUploadAbsolutePath'][$resourceType] ;
 
 		// Map the "UserFiles" path to a local directory.
 		return Server_MapPath( $Config['QuickUploadPath'][$resourceType] ) ;
@@ -49,7 +49,7 @@ function GetResourceTypeDirectory( $resourceType, $sCommand )
 	else
 	{
 		if ( strlen( $Config['FileTypesAbsolutePath'][$resourceType] ) > 0 )
-			return $Config['FileTypesAbsolutePath'][$resourceType] ;
+		return $Config['FileTypesAbsolutePath'][$resourceType] ;
 
 		// Map the "UserFiles" path to a local directory.
 		return Server_MapPath( $Config['FileTypesPath'][$resourceType] ) ;
@@ -74,7 +74,7 @@ function ServerMapFolder( $resourceType, $folderPath, $sCommand )
 	// Ensure that the directory exists.
 	$sErrorMsg = CreateServerFolder( $sResourceTypePath ) ;
 	if ( $sErrorMsg != '' )
-		SendError( 1, "Error creating folder \"{$sResourceTypePath}\" ({$sErrorMsg})" ) ;
+	SendError( 1, "Error creating folder \"{$sResourceTypePath}\" ({$sErrorMsg})" ) ;
 
 	// Return the resource type directory combined with the required path.
 	return CombinePaths( $sResourceTypePath , $folderPath ) ;
@@ -107,7 +107,7 @@ function CreateServerFolder( $folderPath, $lastFolder = null )
 
 		$sErrorMsg = CreateServerFolder( $sParent, $folderPath ) ;
 		if ( $sErrorMsg != '' )
-			return $sErrorMsg ;
+		return $sErrorMsg ;
 	}
 
 	if ( !file_exists( $folderPath ) )
@@ -145,7 +145,7 @@ function CreateServerFolder( $folderPath, $lastFolder = null )
 		return $sErrorMsg ;
 	}
 	else
-		return '' ;
+	return '' ;
 }
 
 function GetRootPath()
@@ -167,7 +167,7 @@ function GetRootPath()
 	// This can check only that this script isn't run from a virtual dir
 	// But it avoids the problems that arise if it isn't checked
 	if ( $position === false || $position <> strlen( $sRealPath ) - strlen( $sSelfPath ) )
-		SendError( 1, 'Sorry, can\'t map "UserFilesPath" to a physical path. You must set the "UserFilesAbsolutePath" value in "editor/filemanager/connectors/php/config.php".' ) ;
+	SendError( 1, 'Sorry, can\'t map "UserFilesPath" to a physical path. You must set the "UserFilesAbsolutePath" value in "editor/filemanager/connectors/php/config.php".' ) ;
 
 	return substr( $sRealPath, 0, $position ) ;
 }
@@ -196,10 +196,10 @@ function IsAllowedExt( $sExtension, $resourceType )
 	$arDenied	= $Config['DeniedExtensions'][$resourceType] ;
 
 	if ( count($arAllowed) > 0 && !in_array( $sExtension, $arAllowed ) )
-		return false ;
+	return false ;
 
 	if ( count($arDenied) > 0 && in_array( $sExtension, $arDenied ) )
-		return false ;
+	return false ;
 
 	return true ;
 }
@@ -208,7 +208,7 @@ function IsAllowedType( $resourceType )
 {
 	global $Config ;
 	if ( !in_array( $resourceType, $Config['ConfigAllowedTypes'] ) )
-		return false ;
+	return false ;
 
 	return true ;
 }
@@ -218,7 +218,7 @@ function IsAllowedCommand( $sCommand )
 	global $Config ;
 
 	if ( !in_array( $sCommand, $Config['ConfigAllowedCommands'] ) )
-		return false ;
+	return false ;
 
 	return true ;
 }
@@ -232,9 +232,9 @@ function GetCurrentFolder()
 
 	// Check the current folder syntax (must begin and start with a slash).
 	if ( !preg_match( '|/$|', $sCurrentFolder ) )
-		$sCurrentFolder .= '/' ;
+	$sCurrentFolder .= '/' ;
 	if ( strpos( $sCurrentFolder, '/' ) !== 0 )
-		$sCurrentFolder = '/' . $sCurrentFolder ;
+	$sCurrentFolder = '/' . $sCurrentFolder ;
 
 	// Ensure the folder path has no double-slashes
 	while ( strpos ($sCurrentFolder, '//') !== false ) {
@@ -243,7 +243,7 @@ function GetCurrentFolder()
 
 	// Check for invalid folder paths (..)
 	if ( strpos( $sCurrentFolder, '..' ) || strpos( $sCurrentFolder, "\\" ))
-		SendError( 102, '' ) ;
+	SendError( 102, '' ) ;
 
 	return $sCurrentFolder ;
 }
@@ -268,7 +268,7 @@ function SanitizeFileName( $sNewFileName )
 
 	// Replace dots in the name with underscores (only one dot can be there... security issue).
 	if ( $Config['ForceSingleExtension'] )
-		$sNewFileName = preg_replace( '/\\.(?![^.]*$)/', '_', $sNewFileName ) ;
+	$sNewFileName = preg_replace( '/\\.(?![^.]*$)/', '_', $sNewFileName ) ;
 
 	// Remove \ / | : ? * " < >
 	$sNewFileName = preg_replace( '/\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[[:cntrl:]]/', '_', $sNewFileName ) ;

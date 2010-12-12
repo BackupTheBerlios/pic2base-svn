@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
-	 header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 /*
  * Project: pic2base
@@ -25,46 +25,44 @@ IF (!$_COOKIE['login'])
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Software-Check</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<meta http-equiv="Refresh" Content="3600; URL=generate_exifdata0.php">-->
-	<style type="text/css">
-	<!--
-	.tablenormal	{
-			width:450px;
-			margin-left:175px;
-			}
-			
-	.trflach	{
-			height:3px;
-			background-color:#FF9900
-			}
-			
-	.tdleft	{
-			width:120px;
-			text-align:left;
-			}
-			
-	.tdright	{
-			width:330px;
-			text-align:left;
-			}
-	-->
-	</style>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Software-Check</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<!--<meta http-equiv="Refresh" Content="3600; URL=generate_exifdata0.php">-->
+<style type="text/css">
+<!--
+.tablenormal {
+	width: 450px;
+	margin-left: 175px;
+}
+
+.trflach {
+	height: 3px;
+	background-color: #FF9900
+}
+
+.tdleft {
+	width: 120px;
+	text-align: left;
+}
+
+.tdright {
+	width: 330px;
+	text-align: left;
+}
+-->
+</style>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -83,15 +81,15 @@ echo "
 		
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			include $sr.'/bin/html/admin/adminnavigation.php';
-			echo "
+include $sr.'/bin/html/admin/adminnavigation.php';
+echo "
 			</div>
 		</div>
 		
 		<div class='content'>
 		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
-		checkSoftware($sr);
-		echo "</p>
+checkSoftware($sr);
+echo "</p>
 		</div>
 		<br style='clear:both;' />
 	

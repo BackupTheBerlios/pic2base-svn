@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 
 include 'global_config.php';
@@ -46,19 +46,19 @@ IF ($pic_id !=='0')
 	IF(mysql_num_rows($result8) > '0')
 	{
 		echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Details zum ausgew&auml;hlten Bild:<BR>";
-		
+
 		$DateTimeOriginal = mysql_result($result8, isset($i8), 'DateTimeOriginal');
 		$FileName = mysql_result($result8, isset($i8), 'FileName');
 		$FileNameOri = mysql_result($result8, isset($i8), 'FileNameOri');
 		$user_id = mysql_result($result8, isset($i8), 'Owner');
-		
+
 		$result10 = mysql_query( "SELECT username, titel, vorname, name, ort FROM $table1 WHERE id = '$user_id'");
 		@$Owner = mysql_result($result10, $i10, 'username');
 		@$titel = mysql_result($result10, $i10, 'titel');
 		@$vorname = mysql_result($result10, $i10, 'vorname');
 		@$name = mysql_result($result10, $i10, 'name');
 		@$ort = mysql_result($result10, $i10, 'ort');
-		
+
 		$FileSize = mysql_result($result8, isset($i8), 'FileSize');
 		$Width = mysql_result($result8, isset($i8), 'ExifImageWidth');
 		$Height = mysql_result($result8, isset($i8), 'ExifImageHeight');
@@ -90,28 +90,28 @@ IF ($pic_id !=='0')
 			SWITCH ($base_file)
 			{
 				CASE 'edit_remove_kat':
-				IF ($i9 < $num9 - 1)
-				{
-					$kat_info .="<a href=del_kat1.php?kat_id=$kat_id&pic_id=$pic_id title='klicken um diese Kategorie zu entfernen'>".$kategorie."</a> - "; //  <-der Bindestrich ist der Unterschied!!
-				}
-				ELSE
-				{
-					$kat_info .="<a href=del_kat1.php?kat_id=$kat_id&pic_id=$pic_id title='klicken um diese Kategorie zu entfernen'>".$kategorie."</a>";
-				}
-				break;
-				
+					IF ($i9 < $num9 - 1)
+					{
+						$kat_info .="<a href=del_kat1.php?kat_id=$kat_id&pic_id=$pic_id title='klicken um diese Kategorie zu entfernen'>".$kategorie."</a> - "; //  <-der Bindestrich ist der Unterschied!!
+					}
+					ELSE
+					{
+						$kat_info .="<a href=del_kat1.php?kat_id=$kat_id&pic_id=$pic_id title='klicken um diese Kategorie zu entfernen'>".$kategorie."</a>";
+					}
+					break;
+
 				default:
-				IF ($i9 < $num9 - 1)
-				{
-					$kat_info .=$kategorie." - ";
-				}
-				ELSE
-				{
-					$kat_info .=$kategorie;
-				}
-				break;
+					IF ($i9 < $num9 - 1)
+					{
+						$kat_info .=$kategorie." - ";
+					}
+					ELSE
+					{
+						$kat_info .=$kategorie;
+					}
+					break;
 			}
-			
+				
 		}
 		//echo "Kategorien: ".$kat_info."<BR>";
 		echo mysql_error();
@@ -131,31 +131,31 @@ IF ($pic_id !=='0')
 		ELSE
 		{
 			$fn_text = $FileNameOri;
-			echo $fn_text;	
+			echo $fn_text;
 		}
 		echo "</TD>
 		<TD id='detailuo1' colspan = '5' style='text-align:center;'>";
 		SWITCH($note)
 		{
 			CASE '1':
-			echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note1.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Sehr gut\"'></span>";
-			break;
-			
+				echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note1.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Sehr gut\"'></span>";
+				break;
+					
 			CASE '2':
-			echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note2.gif\" style=\"width:90px; height:18px;\" title='Note \"Gut\"'></span>";
-			break;
-			
+				echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note2.gif\" style=\"width:90px; height:18px;\" title='Note \"Gut\"'></span>";
+				break;
+					
 			CASE '3':
-			echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note3.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Befriedigend\"'></span>";
-			break;
-			
+				echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note3.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Befriedigend\"'></span>";
+				break;
+					
 			CASE '4':
-			echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note4.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Gen&uuml;gend\"'></span>";
-			break;
-			
+				echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note4.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Gen&uuml;gend\"'></span>";
+				break;
+					
 			CASE '5':
-			echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note5.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Ungen&uuml;gend\"'></span>";
-			break;
+				echo "<span style='cursor:pointer;'><img src=\"$inst_path/pic2base/bin/share/images/note5.gif\" style=\"width:90px; height:18px;\" title = 'Note \"Ungen&uuml;gend\"'></span>";
+				break;
 		}
 		echo "</TD>
 		</TR>
@@ -171,10 +171,10 @@ IF ($pic_id !=='0')
 		<TR id='detail1'>
 		<TD id='detail1'>Aufn.-Datum/Zeit:</TD>
 		<TD id='detail2' colspan='2'>";
-		
+
 		$file = $sr."/images/originale/".$FileName;
 		IF(@exif_read_data($file,"",true,false) !== false)
-		{ 
+		{
 			@$exifdata=exif_read_data($file,"",true,false);
 			//var_dump($exifdata);
 			if( array_key_exists('EXIF',$exifdata) AND $exifdata["EXIF"]["DateTimeOriginal"])
@@ -213,7 +213,7 @@ IF ($pic_id !=='0')
 			{
 				echo "nicht vermerkt";
 			}
-			
+				
 		}
 		ELSE
 		{
@@ -223,7 +223,7 @@ IF ($pic_id !=='0')
 		}
 		echo "</TD>
 		</TR>";
-		
+
 		IF(strlen(substr($vorname,0,1).". ".$name) > '14')
 		{
 			$autor = substr((substr($vorname,0,1).". ".$name),0,12)."...";
@@ -237,7 +237,7 @@ IF ($pic_id !=='0')
 		<TD id='detail1'>Autor:</TD>
 		<TD id='detail5'><span style='cursor:pointer;' title= \"$vorname $name, $ort\">".$autor."</span></TD>
 		";
-		
+
 		IF($Owner == $c_username AND ((hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic'))))
 		{
 			echo "<TD id='detail6'><span style='cursor:pointer;'>
@@ -250,7 +250,7 @@ IF ($pic_id !=='0')
 			<img src=\"$inst_path/pic2base/bin/share/images/no_change_owner.gif\" width='30' height='15' border='0' title='keine Berechtigung' />
 			</span>";
 		}
-		
+
 		echo "
 		</TD>
 		</TR>
@@ -291,10 +291,10 @@ IF ($pic_id !=='0')
 		{
 			echo "</span>";
 		}
-		
+
 		echo "
 		</TD>";
-		
+
 		$result11 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 		$loc_id = mysql_result($result11, isset($i11), 'loc_id');
 		IF($loc_id !== '0' AND $loc_id !== '')
@@ -325,12 +325,12 @@ IF ($pic_id !=='0')
 				</span>";
 			}
 		}
-		
+
 		echo "
 		</TD>";
 		$symb1 = "<BR>";
 		$symb5 = "<BR>";
-		
+
 		//IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic')))
 		IF($Owner == $c_username AND (hasPermission($c_username, 'georefmypics')) OR ($Owner !== $c_username AND (hasPermission($c_username, 'georefallpics'))))
 		{
@@ -344,14 +344,14 @@ IF ($pic_id !=='0')
 			<img src=\"$inst_path/pic2base/bin/share/images/no_del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title='keine Berechtigung' />
 			</span>";
 		}
-		
+
 		//Bild kann nachtraeglich mit neuen Parametern eingelesen werden, wenn es sich um ein RAW-Format handelt:
 		//welche RAW-Formate werden unterstuetzt?
 		$supp_rawformats = array_diff($supported_filetypes, $supported_extensions);
 		//print_r($supp_rawformats);
 		$ext = strtolower(substr($FileNameOri,-3,3));
-		IF(($Owner == $c_username AND (hasPermission($c_username, 'editmypics')) 
-		OR ($Owner !== $c_username AND (hasPermission($c_username, 'editallpics')))) 
+		IF(($Owner == $c_username AND (hasPermission($c_username, 'editmypics'))
+		OR ($Owner !== $c_username AND (hasPermission($c_username, 'editallpics'))))
 		AND in_array($ext, $supp_rawformats))
 		{
 			$symb3 = "<SPAN style='cursor:pointer;'>
@@ -364,7 +364,7 @@ IF ($pic_id !=='0')
 			<img src=\"$inst_path/pic2base/bin/share/images/no_reload.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"kein RAW-Format!\" />
 			</SPAN>";
 		}
-		
+
 		//wenn der User Bilder loeschen darf, wird das Trash-Icon angezeigt:
 		IF($Owner == $c_username AND (hasPermission($c_username, 'deletemypics')) OR ($Owner !== $c_username AND (hasPermission($c_username, 'deleteallpics'))))
 		{
@@ -376,7 +376,7 @@ IF ($pic_id !=='0')
 			<img src='$inst_path/pic2base/bin/share/images/notrash.gif' style='width:15px; height:15px; border:none;' title='keine Berechtigung' />
 			</span>";
 		}
-		
+
 		echo "
 		<TD id='detailoro1'>".$symb1."</TD>
 		<TD id='detailorlo1'>".$symb2."</TD>
@@ -388,7 +388,7 @@ IF ($pic_id !=='0')
 		<TR id='detail2'>
 		<TD id='detail4' colspan='8' bgcolor='#bdbec6' height=5px></TD>
 		</TR>";
-		
+
 		IF ($base_file == 'edit_remove_kat')
 		{
 			$text = '<BR>Klicken Sie auf eine Kategorie um diese und alle ihre Unterkategorien zu l&ouml;schen.';
@@ -397,7 +397,7 @@ IF ($pic_id !=='0')
 		{
 			$text = '';
 		}
-		
+
 		echo "
 		<TR id='detail2'>
 		<TD id='detail4' colspan='8' height=70px valign=top><b>zugewiesene Kategorien:</b><BR>".$kat_info.$text."</TD>

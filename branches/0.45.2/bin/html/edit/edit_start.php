@@ -3,26 +3,24 @@ IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 <CENTER>
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -41,10 +39,10 @@ IF (!$_COOKIE['login'])
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
- 
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
@@ -62,8 +60,8 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi3($c_username);
-		echo "</div>
+createNavi3($c_username);
+echo "</div>
 	</div>
 	
 	<div id='spalte1'>
@@ -89,8 +87,7 @@ echo "
 </div>";
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

@@ -10,21 +10,19 @@ IF (!$_COOKIE['login'])
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Datenerfassung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Datenerfassung</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <DIV>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -40,12 +38,12 @@ IF (!$_COOKIE['login'])
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
-*/
+ */
 //################################################################################################################################
 /*
-Es werden die folgenden Schritte abgearbeitet:
-die Datei wird in den Upload-Ordner des Users heladen und dann der Stapel-Upload gestartet
-*/
+ Es werden die folgenden Schritte abgearbeitet:
+ die Datei wird in den Upload-Ordner des Users heladen und dann der Stapel-Upload gestartet
+ */
 //################################################################################################################################
 
 unset($username);
@@ -61,9 +59,9 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 /*Dateinamens-Konventionen:
-$datei_name		Name der hochzuladenden Datei
-$datei			Name der Datei im Cache
-*/
+ $datei_name		Name der hochzuladenden Datei
+ $datei			Name der Datei im Cache
+ */
 
 //var_dump($_FILES);
 $datei_name = $_FILES['datei']['name']; // fuer register_globals = off
@@ -74,10 +72,10 @@ $tmp_name = $_FILES['datei']['tmp_name'];
 IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 {
 	$target = $ftp_path."/".$c_username."/uploads/".$datei_name;
-	
+
 	if ( !move_uploaded_file($tmp_name,$target) )
 	{
-		switch ($_FILES['datei']['error']) 
+		switch ($_FILES['datei']['error'])
 		{
 			case UPLOAD_ERR_INI_SIZE:
 				$fehler = "Die Dateigr&ouml;&szlig;e des Bildes: ".$datei_name." ist zu gro&szlig;!";
@@ -103,7 +101,7 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 			default:
 				$fehler = "Das Bild: ".$datei_name." konnte nicht hochgeladen werden: Unknown upload error.";
 				break;
-		} 		
+		}
 		echo "
 		<div class='page'>
 		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
@@ -133,7 +131,7 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 		// alt:	chmod($tmp_file, 0777);
 		chmod($target, 0777);
 		clearstatcache();
-	
+
 		echo "
 		<div class='page'>
 			<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
@@ -151,8 +149,8 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 			<div class='content'>
 			<p style='margin:70px 0px; text-align:center'>".isset($meldung)."<BR></p>
 			<p style='margin:70px 0px; text-align:center; color:green;'>".$datei_name.isset($hinweis)." wurde erfolgreich hochgeladen.<BR></p>";
-		
-			echo "
+
+		echo "
 			</div>
 			<br style='clear:both;' />
 			<p id='fuss'>".$cr."</p>
@@ -187,7 +185,8 @@ ELSE
 	</div>";
 }
 mysql_close($conn);
-?>
-</DIV></CENTER>
+?></DIV>
+</CENTER>
+
 </BODY>
 </HTML>

@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 
 //###############################################################
@@ -34,14 +34,14 @@ $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
 //nicht ganz sauber, aber die eigentliche Rechtekontrolle erfolgt eh schon einen Schritt vorher:
-if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'deleteallpics')) 
+if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'deleteallpics'))
 {
 	//echo "Datei l&ouml;schen??"
 	$datei_ori = $pic_path."/".$FileName;
 	$datei_rotated = $pic_rot_path."/".$FileName;
 	$datei_hq = $pic_hq_path."/".str_replace('.','_hq.',$FileName);
 	$datei_thumbs = $pic_thumbs_path."/".str_replace('.','_v.',$FileName);
-	
+
 	//Die Bild-ID wird ermittelt:
 	$result1 = mysql_query( "SELECT * FROM $table2 WHERE FileName = '$FileName'");
 	@$num1 = mysql_num_rows($result1);
@@ -63,15 +63,15 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 	//Tabelle pic_kat wird um alle Eintraege bereinigt fuer die Bild-ID:
 	$result2 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic_id'");
 	echo mysql_affected_rows(). " Eintr&auml;ge wurden aus der Kategorie-Zuordnungstabelle gel&ouml;scht<BR>";
-	
+
 	//Das Bild wird aus der Tabelle pictures geloescht:
 	$result4 = mysql_query( "DELETE FROM $table2 WHERE pic_id = '$pic_id' AND FileName = '$FileName'");
 	echo mysql_affected_rows(). " Eintrag wurden aus der Bild-Tabelle gel&ouml;scht<BR>";
-	
+
 	//EXIF-Data-Taballe wird bereinigt;
 	$result6 = mysql_query( "DELETE FROM $table14 WHERE pic_id = '$pic_id'");
 	echo mysql_affected_rows(). " Eintrag wurden aus der Meta-Daten-Tabelle gel&ouml;scht<BR>";
-	
+
 	//alle Bilder werden aus der Verzeichnis-Struktur geloescht:
 	$l1 = unlink($datei_ori);
 	IF($l1)
@@ -97,10 +97,10 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 	//es wird ermittelt, ob im Originale-Ordner weitere Dateien mit dem Stamm-Namen existieren (z.B. 1234567676)
 	//Wenn ja, wird geprueft, wieviel hiervon Scene-Dateien sind (z.B. 1234567676-1.jpg) und wieviele Nicht-JPG-Bilder sind (z.B. 1234567676.bmp)
 	//nur wenn keine scene-Dateien mehr im Originale-Ordner sind, wird auch die Nicht-JPG-Datei geloescht
-	
+
 	$file_info = pathinfo($datei_ori);
 	$ext = ".".$file_info['extension'];				//Dateiendung mit Punkt
-	$base_name = str_replace($ext,'',$file_info['basename']);	//Dateiname ohne Punkt und Rumpf 
+	$base_name = str_replace($ext,'',$file_info['basename']);	//Dateiname ohne Punkt und Rumpf
 	//echo $base_name;
 	$base_name1 = $base_name.".";
 	$base_name2 = $base_name."_";
@@ -121,7 +121,7 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 	//echo "davon ".$k." noch im Originale-Ordner.";
 	IF($k == '0')
 	{
-	//wenn keine Stamm-Datei mehr im Originale-Ordner mehr ist wird eine evtl. vorh. Nicht-JPG-Datei gel�scht:
+		//wenn keine Stamm-Datei mehr im Originale-Ordner mehr ist wird eine evtl. vorh. Nicht-JPG-Datei gel�scht:
 		FOREACH($supported_filetypes AS $sft)
 		{
 			IF(file_exists($pic_path."/".$base_name.".".$sft))

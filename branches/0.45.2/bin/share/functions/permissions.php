@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function hasPermission($username, $permissionString)
 {
@@ -9,7 +9,7 @@ function hasPermission($username, $permissionString)
 	include $sr.'/bin/share/db_connect1.php';
 	mysql_connect($db_server, $user, $PWD);
 	mysql_select_db ($db);
-	$result1 = mysql_query("SELECT $table1.id, $table1.username, $table1.aktiv, $table7.user_id, $table7.permission_id, 
+	$result1 = mysql_query("SELECT $table1.id, $table1.username, $table1.aktiv, $table7.user_id, $table7.permission_id,
 	$table7.enabled, $table8.perm_id, $table8.shortdescription
 	FROM $table1 inner join $table7 inner join $table8
 	ON $table1.id = $table7.user_id 
@@ -38,8 +38,8 @@ function hasGroupPermission($group_id, $permissionString)
 	include $sr.'/bin/share/db_connect1.php';
 	mysql_connect($db_server, $user, $PWD);
 	mysql_select_db ($db);
-	$result2 = mysql_query("SELECT $table6.group_id, $table6.permission_id, $table6.enabled, 
-	$table8.perm_id, $table8.shortdescription 
+	$result2 = mysql_query("SELECT $table6.group_id, $table6.permission_id, $table6.enabled,
+	$table8.perm_id, $table8.shortdescription
 	FROM $table6 INNER JOIN $table8
 	ON $table6.group_id = '$group_id'
 	AND $table6.permission_id = $table8.perm_id

@@ -1,13 +1,13 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 else
 {
-  header('Content-Type: text/xml'); 
+	header('Content-Type: text/xml');
 }
 
 //mysql-Zugriff:
@@ -28,5 +28,5 @@ FOR ($i_rs=0; $i_rs<$num_rs; $i_rs++)
 
 mysql_close($conn);
 $return_value .= "</entries>";
-echo $return_value; 
+echo $return_value;
 ?>

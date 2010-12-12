@@ -1,37 +1,37 @@
 <?php
 
 /*
-Datei enthaelt folgende Funktionen:
+ Datei enthaelt folgende Funktionen:
 
-function OptionFields()										verwendet
-function getMonthName($month_number)						verwendet
-function createPreview($pic_id)								verwendet			Z. 423 - DEAKTIVIERT 05.10.2009
-function rotatePreviewPictures($Orientation, $FileNameV)	verwendet (Stapel-Erfassung)	Z. 472
-function rotateOriginalPictures($Orientation, $FileName)	verwendet (Stapel-Erfassung)	Z. 500
-function createQuickPreview($Orientation, $FileNameOri)		verwendet (Bearbeitung - Quick-Preview)
-function getPictureDetails($pic_id)							verwendet in edit_beschreibung	Z. 558 - DEAKTIVIERT 05.10.2009
-function createPreviewPicture($File, $dest_path, $max_len, $sr)	verwendet
-function resizeOriginalPicture($File, $dest_path, $max_len, $sr)	verwendet 			Z. 698
-function createFullScreenView($pic_id, $quality)			(nicht) verwendet
-function getDeltaLong($lat, $radius1);						verwendet
-function getNumberOfPictures($kat_id)						verwendet in kat_treeview.php	Z. 721
-function getAllChildIds($kat_id)							verwendet
-function fileExists($FileName, $c_username)					verwendet
-function createNavi(X)										verwendet in diversen		Z. 810
-function createContentFile()								verwendet in get_preveiw.php
-function showStars											verwendet in get_preview  	Z. 1345
-function showBewertung										verwendet in Kopfzeile der Such-Formulare
-function createStatement									verwendet in recherche2
-function savePicture										verwendet in erfassung_action	Z. 1481
-function getRecDays											verwendet in recherche2 (Zeit)	Z. 1737
-function checkSoftware										verwendet in admin/admin/check_software0.php Z 1825
-function generateHistogram()								verwendet in details, stapel1	Z. 1880
-function formatValues()										verwendet in generate_exifdata0, 
-function restoreOriFilename									verwendet in details, generate_exifdata0, 
-function extractExifData									verwendet 			Z 2060
-function directDownload										verwendet in get_previev	Z 1933
+ function OptionFields()										verwendet
+ function getMonthName($month_number)						verwendet
+ function createPreview($pic_id)								verwendet			Z. 423 - DEAKTIVIERT 05.10.2009
+ function rotatePreviewPictures($Orientation, $FileNameV)	verwendet (Stapel-Erfassung)	Z. 472
+ function rotateOriginalPictures($Orientation, $FileName)	verwendet (Stapel-Erfassung)	Z. 500
+ function createQuickPreview($Orientation, $FileNameOri)		verwendet (Bearbeitung - Quick-Preview)
+ function getPictureDetails($pic_id)							verwendet in edit_beschreibung	Z. 558 - DEAKTIVIERT 05.10.2009
+ function createPreviewPicture($File, $dest_path, $max_len, $sr)	verwendet
+ function resizeOriginalPicture($File, $dest_path, $max_len, $sr)	verwendet 			Z. 698
+ function createFullScreenView($pic_id, $quality)			(nicht) verwendet
+ function getDeltaLong($lat, $radius1);						verwendet
+ function getNumberOfPictures($kat_id)						verwendet in kat_treeview.php	Z. 721
+ function getAllChildIds($kat_id)							verwendet
+ function fileExists($FileName, $c_username)					verwendet
+ function createNavi(X)										verwendet in diversen		Z. 810
+ function createContentFile()								verwendet in get_preveiw.php
+ function showStars											verwendet in get_preview  	Z. 1345
+ function showBewertung										verwendet in Kopfzeile der Such-Formulare
+ function createStatement									verwendet in recherche2
+ function savePicture										verwendet in erfassung_action	Z. 1481
+ function getRecDays											verwendet in recherche2 (Zeit)	Z. 1737
+ function checkSoftware										verwendet in admin/admin/check_software0.php Z 1825
+ function generateHistogram()								verwendet in details, stapel1	Z. 1880
+ function formatValues()										verwendet in generate_exifdata0,
+ function restoreOriFilename									verwendet in details, generate_exifdata0,
+ function extractExifData									verwendet 			Z 2060
+ function directDownload										verwendet in get_previev	Z 1933
 
-*/
+ */
 
 function OptionFields()
 {
@@ -73,52 +73,52 @@ function getMonthName($month_number)
 	SWITCH ($month_number)
 	{
 		CASE '01':
-		$month_name = 'Januar';
-		break;
-		
+			$month_name = 'Januar';
+			break;
+
 		CASE '02':
-		$month_name = 'Februar';
-		break;
-		
+			$month_name = 'Februar';
+			break;
+
 		CASE '03':
-		$month_name = 'M&auml;rz';
-		break;
-		
+			$month_name = 'M&auml;rz';
+			break;
+
 		CASE '04':
-		$month_name = 'April';
-		break;
-		
+			$month_name = 'April';
+			break;
+
 		CASE '05':
-		$month_name = 'Mai';
-		break;
-		
+			$month_name = 'Mai';
+			break;
+
 		CASE '06':
-		$month_name = 'Juni';
-		break;
-		
+			$month_name = 'Juni';
+			break;
+
 		CASE '07':
-		$month_name = 'Juli';
-		break;
-		
+			$month_name = 'Juli';
+			break;
+
 		CASE '08':
-		$month_name = 'August';
-		break;
-		
+			$month_name = 'August';
+			break;
+
 		CASE '09':
-		$month_name = 'September';
-		break;
-		
+			$month_name = 'September';
+			break;
+
 		CASE '10':
-		$month_name = 'Oktober';
-		break;
-		
+			$month_name = 'Oktober';
+			break;
+
 		CASE '11':
-		$month_name = 'November';
-		break;
-		
+			$month_name = 'November';
+			break;
+
 		CASE '12':
-		$month_name = 'Dezember';
-		break;
+			$month_name = 'Dezember';
+			break;
 	}
 	RETURN $month_name;
 }
@@ -128,28 +128,28 @@ function getMonthName($month_number)
 function rotatePreviewPictures($Orientation, $FileNameV, $sr)
 {
 	include $sr.'/bin/share/global_config.php';
-	
+
 	$conv = buildConvertCommand($sr);
 	//@$parameter_v=getimagesize($pic_thumbs_path."/".$FileNameV);
 	SWITCH($Orientation)
 	{
 		case '3':
-		//Das Vorschaubild muss 180 gedreht werden:
-		$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 180 ".$pic_thumbs_path."/".$FileNameV."";
- 		$output = shell_exec($command);
-		break;
-		
+			//Das Vorschaubild muss 180 gedreht werden:
+			$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 180 ".$pic_thumbs_path."/".$FileNameV."";
+			$output = shell_exec($command);
+			break;
+
 		case '6':
-		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 90 ".$pic_thumbs_path."/".$FileNameV."";
- 		$output = shell_exec($command);
-		break;
-		
+			//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
+			$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 90 ".$pic_thumbs_path."/".$FileNameV."";
+			$output = shell_exec($command);
+			break;
+
 		case '8':
-		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 270 ".$pic_thumbs_path."/".$FileNameV."";
- 		$output = shell_exec($command);
-		break;
+			//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
+			$command = $conv." ".$pic_thumbs_path."/".$FileNameV." -rotate 270 ".$pic_thumbs_path."/".$FileNameV."";
+			$output = shell_exec($command);
+			break;
 	}
 	return $FileNameV;
 }
@@ -157,29 +157,29 @@ function rotatePreviewPictures($Orientation, $FileNameV, $sr)
 function rotateOriginalPictures($Orientation, $FileNameHQ, $sr)
 {
 	include $sr.'/bin/share/global_config.php';
-	
+
 	$conv = buildConvertCommand($sr);
 	//@$parameter_o=getimagesize($pic_hq_path."/".$FileNameHQ);
 	SWITCH($Orientation)
 	{
 		case '3':
-		//Das Vorschaubild muss 180 gedreht werden:
-		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 180 ".$pic_hq_path."/".$FileNameHQ."";
-		$output = shell_exec($command);
-		break;
-		
+			//Das Vorschaubild muss 180 gedreht werden:
+			$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 180 ".$pic_hq_path."/".$FileNameHQ."";
+			$output = shell_exec($command);
+			break;
+
 		case '6':
-		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_path."/".$FileNameHQ."";
-		$output = shell_exec($command);
-		break;
-		
+			//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
+			$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 90 ".$pic_hq_path."/".$FileNameHQ."";
+			$output = shell_exec($command);
+			break;
+
 		case '8':
-		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-		$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_path."/".$FileNameHQ."";
-		$output = shell_exec($command);
-		break;
-		
+			//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
+			$command = $conv." ".$pic_hq_path."/".$FileNameHQ." -rotate 270 ".$pic_hq_path."/".$FileNameHQ."";
+			$output = shell_exec($command);
+			break;
+
 	}
 	return $FileNameHQ;
 }
@@ -187,30 +187,30 @@ function rotateOriginalPictures($Orientation, $FileNameHQ, $sr)
 function createQuickPreview($Orientation,$FileName,$sr)
 {
 	include $sr.'/bin/share/global_config.php';
-	
+
 	$conv = buildConvertCommand($sr);
-	
+
 	@$parameter_o=getimagesize($pic_path."/".$FileName);
 	SWITCH($Orientation)
 	{
 		case '3':
-		//echo "Das Vorschaubild muss 180 gedreht werden<BR>";
-		$command = $conv." ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
- 		$output = shell_exec($command);
-		break;
-		
+			//echo "Das Vorschaubild muss 180 gedreht werden<BR>";
+			$command = $conv." ".$pic_path."/".$FileName." -rotate 180 ".$pic_rot_path."/".$FileName."";
+			$output = shell_exec($command);
+			break;
+
 		case '6':
-		//echo "Das Vorschaubild muss 90 CW gedreht werden<BR>";
-		$command = $conv." ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
- 		$output = shell_exec($command);
-		break;
-		
+			//echo "Das Vorschaubild muss 90 CW gedreht werden<BR>";
+			$command = $conv." ".$pic_path."/".$FileName." -rotate 90 ".$pic_rot_path."/".$FileName."";
+			$output = shell_exec($command);
+			break;
+
 		case '8':
-		//echo "Erzeuge Quick-Preview-Bild von ".$pic_path."/".$FileName."<BR> nach ".$pic_rot_path."/".$FileName."<BR>";
-		//echo "Das Vorschaubild muss 270 CW gedreht werden<BR>";
-		$command = $conv." ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
- 		$output = shell_exec($command);
-		break;
+			//echo "Erzeuge Quick-Preview-Bild von ".$pic_path."/".$FileName."<BR> nach ".$pic_rot_path."/".$FileName."<BR>";
+			//echo "Das Vorschaubild muss 270 CW gedreht werden<BR>";
+			$command = $conv." ".$pic_path."/".$FileName." -rotate 270 ".$pic_rot_path."/".$FileName."";
+			$output = shell_exec($command);
+			break;
 	}
 	return $FileName;
 }
@@ -218,30 +218,30 @@ function createQuickPreview($Orientation,$FileName,$sr)
 function createPreviewPicture($FILE, $dest_path, $max_len, $sr)
 {
 	include $sr.'/bin/share/global_config.php';
-	
+
 	$conv = buildConvertCommand($sr);
-	
-	//Wenn das Originalbild kein EXIF-Vorschaubild mitbringt, generiert diese Funktion aus der Quelle ein Vorschaubild, 
-	//dessen max. Ausdehnung max_len Pixel betraegt und speichert dieses unter dem Destination-Pfad ab. 
+
+	//Wenn das Originalbild kein EXIF-Vorschaubild mitbringt, generiert diese Funktion aus der Quelle ein Vorschaubild,
+	//dessen max. Ausdehnung max_len Pixel betraegt und speichert dieses unter dem Destination-Pfad ab.
 	//-wird bei der Erfassung von Bildern angewendet.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	$file_nameV = str_replace('_hq.jpg','_v.jpg',basename($FILE));	//Variante, bei der Vorschau aus HQ erzeugt wird
-    $command = $conv." -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameV."";
-    $output = shell_exec($command);
+	$command = $conv." -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameV."";
+	$output = shell_exec($command);
 	return $file_nameV;
 }
 
 function resizeOriginalPicture($FILE, $dest_path, $max_len, $sr)
 {
 	include $sr.'/bin/share/global_config.php';
-	
+
 	$conv = buildConvertCommand($sr);
-	
+
 	//Die Funktion generiert aus der Quelle ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel betraegt und speichert dieses unter dem Destination-Pfad ab.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	$file_nameT = str_replace('.jpg','_hq.jpg',basename($FILE));
-      	$command = $conv." -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
-      	$output = shell_exec($command);
+	$command = $conv." -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
+	$output = shell_exec($command);
 	return $file_nameT;
 }
 
@@ -259,7 +259,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 	$kat_arr[] = $kat_id;		//Kategorie-Nummern-Container
 	$result0 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username'");
 	$id = mysql_result($result0, isset($i0), 'id');
-	
+
 	$result1 = mysql_query("SELECT * FROM $table4 WHERE parent = '$kat_id'");
 	$num1 = mysql_num_rows($result1);
 	IF ($num1 > 0)
@@ -290,7 +290,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				IF($parent == '0')
 				{
 					//es handelt sich um die oberste Kategorie (Neuzugenge)
-					$result2 = mysql_query("SELECT * 
+					$result2 = mysql_query("SELECT *
 					FROM $table2 
 					WHERE has_kat = '0'");
 				}
@@ -298,7 +298,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				{
 					IF($treestatus == 'plus')
 					{
-						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id
 						FROM $table10 INNER JOIN $table2 
 						ON $table10.kat_id = '$kat_nr' 
 						AND $table10.pic_id = $table2.pic_id");
@@ -310,7 +310,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 						AND ($table10.pic_id <> ALL (SELECT pic_id 
 						FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) 
 						WHERE parent = '$kat_nr'))");
-						
+
 						echo mysql_error();
 						$num2 = mysql_num_rows($result2);
 					}
@@ -324,7 +324,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				IF($parent == '0')
 				{
 					//es handelt sich um die oberste Kategorie (Neuzugenge)
-					$result2 = mysql_query("SELECT * 
+					$result2 = mysql_query("SELECT *
 					FROM $table2 
 					WHERE has_kat = '0'
 					AND Owner = '$id'");
@@ -333,7 +333,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				{
 					IF($treestatus == 'plus')
 					{
-						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id
 						FROM $table10 INNER JOIN $table2 
 						ON $table10.kat_id = '$kat_nr' 
 						AND $table10.pic_id = $table2.pic_id 
@@ -341,7 +341,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 					}
 					ELSEIF($treestatus == 'minus')
 					{
-						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+						$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id
 						FROM $table10 INNER JOIN $table2
 						ON ($table10.kat_id = '$kat_nr')
 						AND $table10.pic_id = $table2.pic_id 
@@ -365,7 +365,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				IF($parent == '0')
 				{
 					//es handelt sich um die oberste Kategorie (Neuzugenge)
-					$result2 = mysql_query("SELECT * 
+					$result2 = mysql_query("SELECT *
 					FROM $table2 
 					WHERE has_kat = '0' 
 					AND $stat");
@@ -374,7 +374,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				}
 				ELSE
 				{
-					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
+					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id
 					FROM $table10 INNER JOIN $table2 
 					ON ($table10.kat_id = '$kat_nr' 
 					AND $table10.pic_id = $table2.pic_id 
@@ -391,7 +391,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				IF($parent == '0')
 				{
 					//es handelt sich um die oberste Kategorie (Neuzugenge)
-					$result2 = mysql_query("SELECT * 
+					$result2 = mysql_query("SELECT *
 					FROM $table2 
 					WHERE has_kat = '0' ");
 					//echo mysql_error();
@@ -409,16 +409,16 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 			$nop = mysql_num_rows($result2);
 		}
 	}
-	return $nop;	
+	return $nop;
 }
 
 function getAllChildIds($kat_id)
 {
 	global $table4;
-//echo $table4." ### ".$kat_id;
-//echo $kat_id." <-kat_id<br>";
+	//echo $table4." ### ".$kat_id;
+	//echo $kat_id." <-kat_id<br>";
 	$result1 = mysql_query("SELECT * FROM $table4 WHERE parent = '$kat_id'");
-//echo mysql_error();
+	//echo mysql_error();
 	$num1 = mysql_num_rows($result1);
 	IF ($num1 > 0)
 	{
@@ -458,7 +458,7 @@ function createNavi0($c_username)
 	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree'))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-		
+
 		//Pruefung, ob Rechte auf log, images und userdata korrekt gesetzt sind (700 oder 770 fuer Entwicklung):
 		$mod = decoct ( fileperms ( $p2b_path."pic2base/log/" ) );
 		//echo $mod."<BR>";
@@ -467,7 +467,7 @@ function createNavi0($c_username)
 		{
 			$text = '';
 		}
-		
+
 		IF(substr($mod,-3) !== '700' AND substr($mod,-3) !== '770')
 		{
 			$text .= "FEHLER! Recht auf /log falsch gesetzt! Soll: 700; Ist: ".substr($mod,-3);
@@ -521,7 +521,7 @@ function createNavi0($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 		$text = '';
 	}
-	
+
 	IF(hasPermission($c_username, 'editmyprofile')
 	OR hasPermission($c_username, 'editallprofiles'))
 	{
@@ -531,7 +531,7 @@ function createNavi0($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'addpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
@@ -540,7 +540,7 @@ function createNavi0($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmypics'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
@@ -549,7 +549,7 @@ function createNavi0($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'searchpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
@@ -558,7 +558,7 @@ function createNavi0($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi_blind'></a>";
 	IF($text !== '')
 	{
@@ -571,7 +571,7 @@ function createNavi0($c_username)
 	$navigation .= "	<a class='navi_blind' href='$inst_path/pic2base/bin/html/start.php'>Startseite</a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=0' title='Online-Hilfe aufrufen'>Hilfe</a>
 			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
-	
+
 	echo $navigation;
 }
 
@@ -625,7 +625,7 @@ function createNavi1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi_blind'></a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -639,7 +639,7 @@ function createNavi2($c_username)
 	//Navigationsstruktur der Recherche-Startseite (recherche0.php)
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-if(!isset($navigation))
+	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
@@ -683,7 +683,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi_blind'></a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -710,7 +710,7 @@ function createNavi2_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmyprofile'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
@@ -719,7 +719,7 @@ function createNavi2_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'addpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
@@ -728,7 +728,7 @@ function createNavi2_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmypics'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
@@ -737,7 +737,7 @@ function createNavi2_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'searchpic'))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
@@ -746,7 +746,7 @@ function createNavi2_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi' href='recherche0.php'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -755,56 +755,56 @@ function createNavi2_1($c_username)
 	echo $navigation;
 }
 /*
-function createNavi2_2($c_username, $mod)
-{
-	//Navigationsstruktur der Seite 'bearbeitung1.php' (Suche ueber EXIF-Daten)
-	include '../share/global_config.php';
-	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-	$user_id = mysql_result($result1, isset($i1), 'id');
-	$result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id DESC");
-	$num2 = mysql_num_rows($result2);
-	if(!isset($navigation))
-	{
-		$navigation = '';
-	}
-	FOR($i2=0; $i2<$num2; $i2++)
-	{
-		$perm_id = mysql_result($result2, $i2, 'permission_id');
-		SWITCH($perm_id)
-		{
-			CASE '999':
-			$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
-			break;
-			
-			CASE '799':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
-			break;
-			
-			CASE '629':
-			$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
-			break;
-			
-			CASE '100':
-			$navigation .= "<a class='navi_blind'>Suche</a>";
-			break;
-		}
-	}
-	$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche2.php?mod=$mod'>Zur&uuml;ck</a>
-			<a class='navi_blind'></a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
-			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
-	echo $navigation;
-}
-*/
+ function createNavi2_2($c_username, $mod)
+ {
+ //Navigationsstruktur der Seite 'bearbeitung1.php' (Suche ueber EXIF-Daten)
+ include '../share/global_config.php';
+ include $sr.'/bin/share/db_connect1.php';
+ $result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+ $user_id = mysql_result($result1, isset($i1), 'id');
+ $result2 = mysql_query("SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' ORDER BY permission_id DESC");
+ $num2 = mysql_num_rows($result2);
+ if(!isset($navigation))
+ {
+ $navigation = '';
+ }
+ FOR($i2=0; $i2<$num2; $i2++)
+ {
+ $perm_id = mysql_result($result2, $i2, 'permission_id');
+ SWITCH($perm_id)
+ {
+ CASE '999':
+ $navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
+ break;
+ 	
+ CASE '799':
+ $navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'>Erfassung</a>";
+ break;
+ 	
+ CASE '629':
+ $navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php'>Bearbeitung</a>";
+ break;
+ 	
+ CASE '100':
+ $navigation .= "<a class='navi_blind'>Suche</a>";
+ break;
+ }
+ }
+ $navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche2.php?mod=$mod'>Zur&uuml;ck</a>
+ <a class='navi_blind'></a>
+ <a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+ <a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2'>Hilfe</a>
+ <a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
+ echo $navigation;
+ }
+ */
 function createNavi3($c_username)
 {
 	//Navigationsstruktur der Edit-Startseite
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
-if(!isset($navigation))
+	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
@@ -848,7 +848,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi_blind'></a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -875,7 +875,7 @@ function createNavi3_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmyprofile'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
@@ -884,7 +884,7 @@ function createNavi3_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'addpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
@@ -893,7 +893,7 @@ function createNavi3_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmypics'))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
@@ -902,7 +902,7 @@ function createNavi3_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'searchpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
@@ -911,7 +911,7 @@ function createNavi3_1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi' href='edit_start.php'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -926,7 +926,7 @@ function createNavi4_1($c_username)
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
-if(!isset($navigation))
+	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
@@ -938,7 +938,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmyprofile'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
@@ -947,7 +947,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'addpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
@@ -956,7 +956,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmypics'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
@@ -965,7 +965,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'searchpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
@@ -974,7 +974,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -1001,7 +1001,7 @@ function createNavi5($c_username)
 	{
 		$navigation .= "<a class='navi_dummy'>Administration</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmyprofile') OR hasPermission($c_username, 'editallprofiles'))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
@@ -1010,7 +1010,7 @@ function createNavi5($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'addpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
@@ -1019,7 +1019,7 @@ function createNavi5($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmypics'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
@@ -1028,7 +1028,7 @@ function createNavi5($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'searchpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
@@ -1037,7 +1037,7 @@ function createNavi5($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -1051,7 +1051,7 @@ function createNavi6($c_username)
 	//Navigationsstruktur der Log-Datei-Seite
 	include '../bin/share/global_config.php';
 	//include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/permissions.php';
+	include $sr.'/bin/share/functions/permissions.php';
 	if(!isset($navigation))
 	{
 		$navigation = '';
@@ -1064,7 +1064,7 @@ include $sr.'/bin/share/functions/permissions.php';
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmyprofile'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
@@ -1073,7 +1073,7 @@ include $sr.'/bin/share/functions/permissions.php';
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'addpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
@@ -1082,7 +1082,7 @@ include $sr.'/bin/share/functions/permissions.php';
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'editmypics'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
@@ -1091,7 +1091,7 @@ include $sr.'/bin/share/functions/permissions.php';
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	
+
 	IF(hasPermission($c_username, 'searchpic'))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
@@ -1100,7 +1100,7 @@ include $sr.'/bin/share/functions/permissions.php';
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
-	
+
 	$navigation .= "<a class='navi' href='javascript:history.back()'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
@@ -1119,15 +1119,15 @@ function createContentFile($mod, $statement, $c_username, $bild)
 	SWITCH($mod)
 	{
 		CASE 'geo':
-		$num100 = count($statement);
-		break;
-		
+			$num100 = count($statement);
+			break;
+
 		default:
-		$result100 = mysql_query("$statement");
-		@$num100 = mysql_num_rows($result100);
-		break;
+			$result100 = mysql_query("$statement");
+			@$num100 = mysql_num_rows($result100);
+			break;
 	}
-	
+
 	IF($statement !=='')
 	{
 		//echo $statement;
@@ -1158,42 +1158,42 @@ function createContentFile($mod, $statement, $c_username, $bild)
 						SWITCH($mod)
 						{
 							CASE 'geo':
-							SWITCH($bild)
-							{
-								CASE '0':
-								$result102 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$statement[$zaehler]'");
-								$FileNameV = mysql_result($result102, 0, 'FileNameV');
-								//$FileNameHQ = mysql_result($result102, $zaehler, 'FileNameHQ');
-								@$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
+								SWITCH($bild)
+								{
+									CASE '0':
+										$result102 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$statement[$zaehler]'");
+										$FileNameV = mysql_result($result102, 0, 'FileNameV');
+										//$FileNameHQ = mysql_result($result102, $zaehler, 'FileNameHQ');
+										@$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
+										break;
+
+									CASE '1':
+										$result102 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$statement[$zaehler]'");
+										$FileNameHQ = mysql_result($result102, 0, 'FileNameHQ');
+										@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
+										break;
+								}
+								$FileName = mysql_result($result102, 0, 'FileName');
 								break;
-								
-								CASE '1':
-								$result102 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$statement[$zaehler]'");
-								$FileNameHQ = mysql_result($result102, 0, 'FileNameHQ');
-								@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
-								break;
-							}
-							$FileName = mysql_result($result102, 0, 'FileName');
-							break;
-							
+									
 							default:
-							SWITCH($bild)
-							{
-								CASE '0':
-								$FileNameV = mysql_result($result100, $zaehler, 'FileNameV');
-								$FileNameHQ = mysql_result($result100, $zaehler, 'FileNameHQ');
-								@$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
+								SWITCH($bild)
+								{
+									CASE '0':
+										$FileNameV = mysql_result($result100, $zaehler, 'FileNameV');
+										$FileNameHQ = mysql_result($result100, $zaehler, 'FileNameHQ');
+										@$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
+										break;
+
+									CASE '1':
+										$FileNameHQ = mysql_result($result100, $zaehler, 'FileNameHQ');
+										@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
+										break;
+								}
+								$FileName = mysql_result($result100, $zaehler, 'FileName');
 								break;
-								
-								CASE '1':
-								$FileNameHQ = mysql_result($result100, $zaehler, 'FileNameHQ');
-								@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
-								break;
-							}
-							$FileName = mysql_result($result100, $zaehler, 'FileName');
-							break;
 						}
-						
+
 						$breite = $parameter_v[0];
 						$hoehe = $parameter_v[1];
 						$ratio = $breite / $hoehe;
@@ -1214,12 +1214,12 @@ function createContentFile($mod, $statement, $c_username, $bild)
 						SWITCH($bild)
 						{
 							CASE '0':
-							$pdf->Image($sr.'/images/vorschau/thumbs/'.$FileNameV,$x0, $y0, $Breite, $Hoehe, 'jpg');
-							break;
-							
+								$pdf->Image($sr.'/images/vorschau/thumbs/'.$FileNameV,$x0, $y0, $Breite, $Hoehe, 'jpg');
+								break;
+									
 							CASE '1':
-							$pdf->Image($sr.'/images/vorschau/hq-preview/'.$FileNameHQ,$x0, $y0, $Breite, $Hoehe, 'jpg');
-							break;
+								$pdf->Image($sr.'/images/vorschau/hq-preview/'.$FileNameHQ,$x0, $y0, $Breite, $Hoehe, 'jpg');
+								break;
 						}
 						//Ausgabe des Dateinamens:
 						$x1 = $x_mitte - 15;
@@ -1250,48 +1250,48 @@ function showStars($pic_id)
 	SWITCH($note)
 	{
 		CASE '1':
-		//Note 1: beste Bewertung, d.h. 5 Sterne gelb!
-		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+			//Note 1: beste Bewertung, d.h. 5 Sterne gelb!
+			$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
-		break;
-		
+			break;
+
 		CASE '2':
-		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" 	height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 					OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+			$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" 	height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 					OnClick='saveNewNote(\"$pic_id\", \"5\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
-		break;
-		
+			break;
+
 		CASE '3':
-		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+			$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
-		break;
-		
+			break;
+
 		CASE '4':
-		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+			$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
-		break;
-		
+			break;
+
 		CASE '5':
-		//Note 5: schlechteste Bewertung: 1 Stern gelb!
-		$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
+			//Note 5: schlechteste Bewertung: 1 Stern gelb!
+			$stars = 	"<span style='Cursor:pointer';><img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" 			width=\"10\" height=\"10\" / title='Note \"Ungen&uuml;gend\" zuweisen' 						OnClick='saveNewNote(\"$pic_id\", \"5\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gen&uuml;gend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"4\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Befriedigend\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"3\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"2\")'>
 				<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"10\" height=\"10\" / title='Note \"Sehr gut\" zuweisen' OnClick='saveNewNote(\"$pic_id\", \"1\")'></span>";
-		break;
+			break;
 	}
-	
+
 	echo $stars;
 }
 
@@ -1301,59 +1301,59 @@ function showBewertung($bewertung)
 	include '../../share/global_config.php';
 	$g_s = "<img src=\"$inst_path/pic2base/bin/share/images/g_star.gif\" width=\"15\" height=\"15\">";
 	$y_s = "<img src=\"$inst_path/pic2base/bin/share/images/y_star.gif\" width=\"15\" height=\"15\">";
-	
+
 	SWITCH($bewertung)
 	{
 		CASE '=1':
-		//Gr��er-Zeichen bedeutet: Der Notenwert ist h�her, d.h die Note ist schlechter!
-		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$g_s$y_s</SPAN>";
-		break;
-		
+			//Gr��er-Zeichen bedeutet: Der Notenwert ist h�her, d.h die Note ist schlechter!
+			$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$g_s$y_s</SPAN>";
+			break;
+
 		CASE '>=2':
-		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$y_s$y_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$y_s$y_s</SPAN>";
+			break;
+
 		CASE '=2':
-		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$y_s$g_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$y_s$g_s</SPAN>";
+			break;
+
 		CASE '<=2':
-		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$y_s$g_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$y_s$g_s</SPAN>";
+			break;
+
 		CASE '>=3':
-		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$y_s$y_s$y_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$g_s$g_s$y_s$y_s$y_s</SPAN>";
+			break;
+
 		CASE '=3':
-		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$y_s$g_s$g_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$g_s$g_s$y_s$g_s$g_s</SPAN>";
+			break;
+
 		CASE '<=3':
-		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$g_s$g_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$g_s$g_s</SPAN>";
+			break;
+
 		CASE '>=4':
-		$bew = "<span style='position:relative; top:3px';>$g_s$y_s$y_s$y_s$y_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$g_s$y_s$y_s$y_s$y_s</SPAN>";
+			break;
+
 		CASE '=4':
-		$bew = "<span style='position:relative; top:3px';>$g_s$y_s$g_s$g_s$g_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$g_s$y_s$g_s$g_s$g_s</SPAN>";
+			break;
+
 		CASE '<=4':
-		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$g_s$g_s$g_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$y_s$y_s$g_s$g_s$g_s</SPAN>";
+			break;
+
 		CASE '=5':
-		$bew = "<span style='position:relative; top:3px';>$y_s$g_s$g_s$g_s$g_s</SPAN>";
-		break;
-		
+			$bew = "<span style='position:relative; top:3px';>$y_s$g_s$g_s$g_s$g_s</SPAN>";
+			break;
+
 		CASE '6':
 		CASE '':
-		$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$y_s$y_s</SPAN>";
-		//$bewertung = '6';
-		break;
+			$bew = "<span style='position:relative; top:3px';>$y_s$y_s$y_s$y_s$y_s</SPAN>";
+			//$bewertung = '6';
+			break;
 	}
 	return $bew;
 }
@@ -1364,57 +1364,57 @@ function createStatement($bewertung)
 	SWITCH($bewertung)
 	{
 		CASE '=1':
-		$stat = "note = '1'";
-		break;
-		
+			$stat = "note = '1'";
+			break;
+
 		CASE ">=2":
-		$stat = "note <= '2'";
-		break;
-		
+			$stat = "note <= '2'";
+			break;
+
 		CASE "=2":
-		$stat = "note = '2'";
-		break;
-		
+			$stat = "note = '2'";
+			break;
+
 		CASE "<=2":
-		$stat = "note >= '2'";
-		break;
-		
+			$stat = "note >= '2'";
+			break;
+
 		CASE ">=3":
-		$stat = "note <= '3'";
-		break;
-		
+			$stat = "note <= '3'";
+			break;
+
 		CASE "=3":
-		$stat = "note = '3'";
-		break;
-		
+			$stat = "note = '3'";
+			break;
+
 		CASE "<=3":
-		$stat = "note >= '3'";
-		break;
-		
+			$stat = "note >= '3'";
+			break;
+
 		CASE ">=4":
-		$stat = "note <= '4'";
-		break;
-		
+			$stat = "note <= '4'";
+			break;
+
 		CASE "=4":
-		$stat = "note = '4'";
-		break;
-		
+			$stat = "note = '4'";
+			break;
+
 		CASE "<=4":
-		$stat = "note >= '4'";
-		break;
-		
+			$stat = "note >= '4'";
+			break;
+
 		CASE "=5":
-		$stat = "note = '5'";
-		break;
-		
+			$stat = "note = '5'";
+			break;
+
 		CASE "6":
 		CASE "":
-		$stat = "note >= '0'";
-		//$bewertung = '6';
-		break;
-		
+			$stat = "note >= '0'";
+			//$bewertung = '6';
+			break;
+
 		default:
-		$stat = "note >= '0'";
+			$stat = "note >= '0'";
 	}
 	return $stat;
 }
@@ -1423,9 +1423,9 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	
+
 	$md5 = buildMd5sumCommand($sr);
-	
+
 	IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 	{
 		//echo "Es liegt ein gedrehtes Bild vor!<BR>";
@@ -1440,28 +1440,28 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	$command = $md5." $FILE";
 	$sum = explode(' ',shell_exec($command));
 	//echo "Pr&uuml;fsumme: ".$sum[0]."<BR>";
-	
+
 	// 1) anlegen des hq-Bildes: (resamplen, speichern unter /vorschau/hq-preview)
 	//HQ aus Original erzeugen
-	$max_len = '800';				
+	$max_len = '800';
 	$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_path, $max_len, $sr);
-	$FILEHQ = $pic_hq_path."/".$FileNameHQ;	
+	$FILEHQ = $pic_hq_path."/".$FileNameHQ;
 	//Thumb aus HQ erzeugen
 	// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
 	$max_len = '160';
 	$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs_path, $max_len, $sr);
-	
+
 	$result1 = mysql_query("UPDATE $table2 SET FileNameHQ = '$FileNameHQ', FileNameV = '$FileNameV', md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
-	
+
 	//die Datei-Attribute werden fuer alle hochgeladenen bzw. erzeugten Bilddateien auf 0700 gesetzt:
 	//HQ-Datei:
 	$fileHQ = $pic_hq_path."/".$FileNameHQ;
-	clearstatcache();  
+	clearstatcache();
 	chmod ($fileHQ, 0700);
 	clearstatcache();
 	//Vorschaubild:
 	$fileV = $pic_thumbs_path."/".$FileNameV;
-	clearstatcache();  
+	clearstatcache();
 	chmod ($fileV, 0700);
 	clearstatcache();
 }
@@ -1471,11 +1471,11 @@ function getRecDays($y,$m,$stat)
 {
 	include 'global_config.php';
 	include 'db_connect1.php';
-	//Bestimmung der Tage in dem Jahr $y und Monat $m, an welchem Aufnahmen angefertigt wurden: (abh�ngig von der Bewertung!
+	//Bestimmung der Tage in dem Jahr $y und Monat $m, an welchem Aufnahmen angefertigt wurden: (abhaengig von der Bewertung!
 	$dat_arr = array();
-	
+
 	$result11 = mysql_query("SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '%".$y."-".$m."%' AND $table2.$stat) ORDER BY $table14.DateTimeOriginal");
-	
+
 	echo mysql_error();
 	$num11 = mysql_num_rows($result11);
 	FOR($i11='0'; $i11<$num11; $i11++)
@@ -1505,26 +1505,26 @@ function generateHistogram($pic_id,$FileName,$sr)
 		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
 		$file = $pic_hq_path."/".$FileName; //<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
 		shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
-		
+
 		shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
-		
+
 		$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
 		shell_exec($conv." ".$file_mono." histogram:".$hist_path."/".$pic_id."_hist.gif");
-		
+
 		$hist_file_r = $pic_id.'_hist_0.gif';
 		shell_exec($conv." ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
 
 		$hist_file_g = $pic_id.'_hist_1.gif';
 		shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
-		
+
 		$hist_file_b = $pic_id.'_hist_2.gif';
 		shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
-		
+
 		$hist_file = $pic_id.'_hist.gif';
 		$mono_file = $pic_id."_mono.jpg";
 		$result2 = mysql_query("UPDATE $table2 SET FileNameMono = '$mono_file', FileNameHist = '$hist_file', FileNameHist_r = '$hist_file_r', FileNameHist_g = '$hist_file_g', FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
 		echo mysql_error();
-		
+
 		clearstatcache();
 		chmod ($file_mono, 0700);
 		chmod ($hist, 0700);
@@ -1553,64 +1553,64 @@ function formatValues($fieldname,$FN,$et_path)
 	SWITCH($fieldname)
 	{
 		CASE 'DateTimeOriginal':
-		$value = shell_exec($exiftool." -d '%Y-%m-%d %H:%M:%S' -DateTimeOriginal ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -d '%Y-%m-%d %H:%M:%S' -DateTimeOriginal ".$FN);
+			break;
+
 		CASE 'GPSLatitude':
-		$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n ".$FN);
+			break;
+
 		CASE 'GPSLongitude':
-		$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n ".$FN);
+			break;
+
 		CASE 'GPSAltitude':
-		$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n ".$FN);
+			break;
+
 		CASE 'XResolution':
-		$value = shell_exec($exiftool." -c '%.11f' -XResolution -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.11f' -XResolution -n ".$FN);
+			break;
+
 		CASE 'YResolution':
-		$value = shell_exec($exiftool." -c '%.11f' -YResolution -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.11f' -YResolution -n ".$FN);
+			break;
+
 		CASE 'FNumber':
-		$value = shell_exec($exiftool." -c '%.11f' -FNumber -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.11f' -FNumber -n ".$FN);
+			break;
+
 		CASE 'ExposureTime':
-		$value = shell_exec($exiftool." -c '%.5f' -ExposureTime -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.5f' -ExposureTime -n ".$FN);
+			break;
+
 		CASE 'SensorPixelSize':
-		$value = shell_exec($exiftool." -c '%.5f' -SensorPixelSize -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.5f' -SensorPixelSize -n ".$FN);
+			break;
+
 		CASE 'SerialNumber':
-		$value = shell_exec($exiftool." -c '%.5f' -SerialNumber -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.5f' -SerialNumber -n ".$FN);
+			break;
+
 		CASE 'Lens':
-		$value = shell_exec($exiftool." -c '%.11f' -Lens ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -c '%.11f' -Lens ".$FN);
+			break;
+
 		CASE 'UserComment':
-		$value = shell_exec($exiftool." -UserComment ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -UserComment ".$FN);
+			break;
+
 		CASE 'Orientation':
-		$value = shell_exec($exiftool." -Orientation -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -Orientation -n ".$FN);
+			break;
+
 		CASE 'FileSize':
-		$value = shell_exec($exiftool." -FileSize -n ".$FN);
-		break;
-		
+			$value = shell_exec($exiftool." -FileSize -n ".$FN);
+			break;
+
 		default:
-		$value = shell_exec($exiftool." -".$fieldname." ".$FN);
-		break;
+			$value = shell_exec($exiftool." -".$fieldname." ".$FN);
+			break;
 	}
 	$info_arr = explode(' : ', $value);
 	$value = trim($info_arr[1]);
@@ -1636,9 +1636,9 @@ function extractExifData($pic_id, $sr)
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	
+
 	$exiftool = buildExiftoolCommand($sr);
-	
+
 	$result6 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 	IF(mysql_num_rows($result6) == 0)
 	{
@@ -1647,7 +1647,7 @@ function extractExifData($pic_id, $sr)
 		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
 		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 		//echo "Original-Datei-Name: ".$FN."<BR>";
-		
+
 		$result8 = mysql_query("SHOW COLUMNS FROM $table14");
 		$i = 0;
 		if($result8 != false)
@@ -1660,11 +1660,11 @@ function extractExifData($pic_id, $sr)
 		}
 		else die('Fehler bei der Datenbankabfrage');
 		//Fuer jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
-		
+
 		$text = shell_exec($exiftool." ".$FN);
 		$inf_arr = explode(chr(10), $text);	//Zerlegung des Textes am Zeilenumbruch
 		//echo count($inf_arr)." Meta-Angaben im Bild ".$FN."<BR><BR>";;
-		
+
 		FOREACH($inf_arr AS $IA)
 		{
 			$F_W = explode(' : ', $IA);	//Zerlegung der Zeilen in Feld und Wert
@@ -1681,7 +1681,7 @@ function extractExifData($pic_id, $sr)
 			{
 				$value = '';
 			}
-			
+				
 			IF(in_array($fieldname,$tab_fieldname))
 			{
 				//$value = formatValues($fieldname,$FN,$et_path);
@@ -1699,18 +1699,18 @@ function extractExifData($pic_id, $sr)
 				SWITCH($fieldname)
 				{
 					CASE 'GPSLatitude':
-					$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);
-					break;
-					
+						$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);
+						break;
+							
 					CASE 'GPSLongitude':
-					$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n -s -s -s ".$FN);
-					break;
-					
+						$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n -s -s -s ".$FN);
+						break;
+							
 					CASE 'GPSAltitude':
-					$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n -s -s -s ".$FN);
-					break;
+						$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n -s -s -s ".$FN);
+						break;
 				}
-				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";	
+				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";
 				//Bildbreite- und Hoehe werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
 				IF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight') AND ($value !== '0' AND $value !== ''))
 				{
@@ -1736,7 +1736,7 @@ function extractExifData($pic_id, $sr)
 				}
 				ELSE
 				{
-					//echo $statement."<BR>";	
+					//echo $statement."<BR>";
 				}
 			}
 		}
@@ -1747,34 +1747,34 @@ function extractExifData($pic_id, $sr)
 		$ImageHeight = $row['ImageHeight'];
 		$FileSize = $row['FileSize'];
 		$Orientation = $row['Orientation'];
-		
+
 		// $ImageWidth = mysql_result($result9, $i9, 'ImageWidth');
 		// $ImageHeight = mysql_result($result9, $i9, 'ImageHeight');
 		// $FileSize = mysql_result($result9, $i9, 'FileSize');
 		// $Orientation = mysql_result($result9, $i9, 'Orientation');
-		
+
 		@$params=getimagesize($FN);
 		$breite = $params[0];
 		$hoehe = $params[1];
 		clearstatcache();
 		$FileSize = filesize($FN);	//Dateigroesse in Byte
-		
+
 		IF($ImageWidth == '0' OR $ImageWidth == '')
 		{
 			$result10 = mysql_query("UPDATE $table14 SET ImageWidth = '$breite' WHERE pic_id = '$pic_id'");
 		}
-		
+
 		IF($ImageHeight == '0' OR $ImageHeight == '')
 		{
 			$result11 = mysql_query("UPDATE $table14 SET ImageHeight = '$hoehe' WHERE pic_id = '$pic_id'");
 		}
-		
+
 		IF($FileSize == '0' OR $FileSize == '')
 		{
 			$result12 = mysql_query("UPDATE $table14 SET FileSize = '$FileSize' WHERE pic_id = '$pic_id'");
 		}
 		//Ausrichtung wird intern immer als '1' angesehen!
-		$result13 = mysql_query("UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$pic_id'");	
+		$result13 = mysql_query("UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$pic_id'");
 	}
 	//Wenn alle Meta-Daten in table14 uebernommen wurden, wird geprueft, ob Geo-Koordinaten dabei waren.
 	//Wenn ja, wird eine neue location angelegt (in table12) und diese mit dem Bild referenziert:
@@ -1810,36 +1810,36 @@ function convertOrientationTextToNumber($value)
 	SWITCH($value)
 	{
 		CASE 'Horizontal (normal)':
-		$value = '1';
-		break;
-		
+			$value = '1';
+			break;
+
 		CASE 'Mirror horizontal':
-		$value = '2';
-		break;
-		
+			$value = '2';
+			break;
+
 		CASE 'Rotate 180':
-		$value = '3';
-		break;
-		
+			$value = '3';
+			break;
+
 		CASE 'Mirror vertical':
-		$value = '4';
-		break;
-		
+			$value = '4';
+			break;
+
 		CASE 'Mirror horizontal and rotate 270 CW':
-		$value = '5';
-		break;
-		
+			$value = '5';
+			break;
+
 		CASE 'Rotate 90 CW':
-		$value = '6';
-		break;
-		
+			$value = '6';
+			break;
+
 		CASE 'Mirror horizontal and rotate 90 CW':
-		$value = '7';
-		break;
-		
+			$value = '7';
+			break;
+
 		CASE 'Rotate 270 CW':
-		$value = '8';
-		break;
+			$value = '8';
+			break;
 	}
 	return $value;
 }
@@ -1853,7 +1853,7 @@ function checkSoftware($sr)
 	$dc = shell_exec("which dcraw");
 	$gb = shell_exec("which gpsbabel");
 	$md = shell_exec("which md5sum");
-	
+
 	echo "	<TABLE class='tablenormal' border='0'>
 		<TR>
 		<TD colspan='2'>Ergebnis der Software-Kontrolle:</TD>
@@ -1864,12 +1864,12 @@ function checkSoftware($sr)
 		</TR>";
 	flush();
 	sleep(1);
-	
+
 	IF($et == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ExifTool</TD>
-		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>ist nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1882,12 +1882,12 @@ function checkSoftware($sr)
 	}
 	flush();
 	sleep(1);
-	
+
 	IF($conv == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ImageMagick</TD>
-		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>ist nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1900,12 +1900,12 @@ function checkSoftware($sr)
 	}
 	flush();
 	sleep(1);
-	
+
 	IF($dc == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>dcraw</TD>
-		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>ist nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1915,15 +1915,23 @@ function checkSoftware($sr)
 		<TD class='tdleft'>dcraw</TD>
 		<TD class='tdright'><FONT COLOR='green'>ist in ".$dc." installiert (Ver. ".substr($v_dc,28,4).")</FONT></TD>
 		</TR>";
+
+		//Die von ImageMagick unterstuetzten Dateiformate werden ermittelt und in die DB geschrieben:
+		$conv = buildConvertCommand($sr);
+		$identify = str_replace('convert', 'identify', $conv);
+
+		$sup_ft_arr = explode(chr(10),shell_exec($identify." -list format"));//Array der unterstuetzten Dateiformate, Zeilentrennung
+		//print_r($sup_ft_arr);
+
 	}
 	flush();
 	sleep(1);
-	
+
 	IF($gb == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>GPSBabel</TD>
-		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>ist nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1936,12 +1944,12 @@ function checkSoftware($sr)
 	}
 	flush();
 	sleep(1);
-	
+
 	IF($md == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>md5sum</TD>
-		<TD class='tdright'><a href='http://www.gnu.org/software/coreutils/'>ist nicht installiert</a></TD>
+		<TD class='tdright'><a href='http://www.gnu.org/software/coreutils/'>wurde nicht gefunden</a></TD>
 		</TR>";
 	}
 	ELSE
@@ -1954,14 +1962,14 @@ function checkSoftware($sr)
 	}
 	flush();
 	sleep(1);
-	
+
 	//Speicherung der Software-Pfade in der Tabelle 'pfade':
 	$result1 = mysql_query("DELETE FROM $table16");
 	echo mysql_error();
-	$result2 = mysql_query("INSERT INTO $table16 (dcraw_path, conv_path, et_path, gpsb_path, md5sum_path) 
+	$result2 = mysql_query("INSERT INTO $table16 (dcraw_path, conv_path, et_path, gpsb_path, md5sum_path)
 	VALUES ('$dc', '$conv', '$et', '$gb', '$md')");
 	echo mysql_error();
-	
+
 	echo "	<TR class='trflach'>
 		<TD colspan='2'></TD>
 		</TR>
@@ -2034,5 +2042,15 @@ function buildMd5sumCommand($sr)
 	$result1 = mysql_query("SELECT md5sum_path FROM $table16");
 	$md5sum_path = trim(mysql_result($result1, isset($i1), 'md5sum_path'));		//trim beseitigt Fehler verursachende Leerzeichen!!!
 	RETURN $md5sum_path;
+}
+
+function isSupportedFiletype()
+{
+
+}
+
+function hasSupportedExtension()
+{
+
 }
 ?>

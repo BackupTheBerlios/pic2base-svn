@@ -9,29 +9,29 @@ IF (!$_COOKIE['login'])
 	header('Location: ../../../index.php');
 }
 include $sr.'/bin/share/functions/ajax_functions.php';
-$user_id = $_GET['id']; 
+$user_id = $_GET['id'];
 $del = $_GET['del'];
 
 
 if (hasPermission($c_username, 'adminlogin'))
 {
-   	$content = '';
+	$content = '';
 	mysql_connect ($db_server, $user, $PWD);
 	$result = mysql_query("select * from $table1 WHERE id=".$user_id);
-    $vorname = mysql_result ($result, 0, "vorname");
-    $name = mysql_result ($result, 0, "name");
-    IF($del == '1')
-    {
-    	$warnung = "<FONT color='red'><b><blink>L&Ouml;SCHE</blink></b></FONT>";
-    }
-    ELSE
-    {
-    	$warnung = '';
-    }
-    if (mysql_num_rows($result) == 1)
-    {
+	$vorname = mysql_result ($result, 0, "vorname");
+	$name = mysql_result ($result, 0, "name");
+	IF($del == '1')
+	{
+		$warnung = "<FONT color='red'><b><blink>L&Ouml;SCHE</blink></b></FONT>";
+	}
+	ELSE
+	{
+		$warnung = '';
+	}
+	if (mysql_num_rows($result) == 1)
+	{
 		//$user_id = $id;
-    	$groupid = mysql_result ($result, 0, "group_id");
+		$groupid = mysql_result ($result, 0, "group_id");
 		$username = mysql_result ($result, 0, "username");
 		echo "
 		<style type='text/css'>
@@ -72,7 +72,7 @@ if (hasPermission($c_username, 'adminlogin'))
 		<tr>
 		<td align=left>Gruppe:</td>
 		<td align=left colspan='3'>";
-		
+
 		$result2 = mysql_query("select * from usergroups WHERE id=".$groupid);
 		if (mysql_num_rows($result2) == 1)
 		{
@@ -82,8 +82,8 @@ if (hasPermission($c_username, 'adminlogin'))
 		{
 			echo "[keine Gruppe gew&auml;hlt]";
 		}
-    }
-    echo "</td>
+	}
+	echo "</td>
     </tr>
     
     <tr>
@@ -104,8 +104,8 @@ if (hasPermission($c_username, 'adminlogin'))
 	<tr style='height:3px;'>
 	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
 	</TR>";
-    
-   
+
+	 
 }
 if (hasPermission($c_username, 'adminlogin'))
 {
@@ -121,7 +121,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	<tr>
 	<td colspan='4'>&nbsp;</td>
 	</tr>";
-	
+
 	$result = mysql_query("select * from permissions ORDER BY perm_id DESC");
 	$num = mysql_num_rows($result);
 	$rows = ceil($num/2);
@@ -138,7 +138,7 @@ if (hasPermission($c_username, 'adminlogin'))
 			IF ($description !== '')
 			{
 				$content = $content."<td class='tdbreit'>".$description."</td>";
-				
+
 				IF (hasPermission($username, $shortdescription))
 				{
 					$checked = 'checked';
@@ -147,9 +147,9 @@ if (hasPermission($c_username, 'adminlogin'))
 				ELSE
 				{
 					$checked = '';
-					$text = 'keine Berechtigung';	
+					$text = 'keine Berechtigung';
 				}
-				
+
 				$content = $content."<TD class='tdschmal'>
 				<div id = '$perm_id'>
 				<input type=checkbox name='cb' '$checked' title= '$text' onClick='changeUserpermission(\"$user_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
@@ -174,7 +174,7 @@ if (hasPermission($c_username, 'adminlogin'))
 }
 IF($del == '1')
 {
-  	echo "
+	echo "
   	
 	<TR style='height:3px;'>
 	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
@@ -193,16 +193,16 @@ IF($del == '1')
   	<TD align='left' style='padding-left:10px; padding-bottom:10px' colspan='3'>
   	<SELECT name='users' style='width:200px;'>
   	<OPTION Value = '' selected>--- neuen User ausw&auml;hlen ---</OPTION>";
-  	$result3 = mysql_query( "SELECT * FROM $table1 WHERE id <> '$user_id'");
-  	$num3 = mysql_num_rows($result3);
-  	FOR($i3='0'; $i3<$num3; $i3++)
-  	{
-	  	$Vorname = mysql_result($result3, $i3, 'vorname');
-	  	$Name = mysql_result($result3, $i3, 'Name');
-	  	$ID = mysql_result($result3, $i3, 'id');
-	  	echo "<OPTION value='$ID'>".$Vorname." ".$Name."</OPTION>";
-  	}
-  	echo "
+	$result3 = mysql_query( "SELECT * FROM $table1 WHERE id <> '$user_id'");
+	$num3 = mysql_num_rows($result3);
+	FOR($i3='0'; $i3<$num3; $i3++)
+	{
+		$Vorname = mysql_result($result3, $i3, 'vorname');
+		$Name = mysql_result($result3, $i3, 'Name');
+		$ID = mysql_result($result3, $i3, 'id');
+		echo "<OPTION value='$ID'>".$Vorname." ".$Name."</OPTION>";
+	}
+	echo "
   	</SELECT>
   	</TD>
   	</TR>

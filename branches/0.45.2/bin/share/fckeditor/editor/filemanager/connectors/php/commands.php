@@ -35,7 +35,7 @@ function GetFolders( $resourceType, $currentFolder )
 	while ( $sFile = readdir( $oCurrentFolder ) )
 	{
 		if ( $sFile != '.' && $sFile != '..' && is_dir( $sServerDir . $sFile ) )
-			$aFolders[] = '<Folder name="' . ConvertToXmlAttribute( $sFile ) . '" />' ;
+		$aFolders[] = '<Folder name="' . ConvertToXmlAttribute( $sFile ) . '" />' ;
 	}
 
 	closedir( $oCurrentFolder ) ;
@@ -45,7 +45,7 @@ function GetFolders( $resourceType, $currentFolder )
 
 	natcasesort( $aFolders ) ;
 	foreach ( $aFolders as $sFolder )
-		echo $sFolder ;
+	echo $sFolder ;
 
 	// Close the "Folders" node.
 	echo "</Folders>" ;
@@ -67,7 +67,7 @@ function GetFoldersAndFiles( $resourceType, $currentFolder )
 		if ( $sFile != '.' && $sFile != '..' )
 		{
 			if ( is_dir( $sServerDir . $sFile ) )
-				$aFolders[] = '<Folder name="' . ConvertToXmlAttribute( $sFile ) . '" />' ;
+			$aFolders[] = '<Folder name="' . ConvertToXmlAttribute( $sFile ) . '" />' ;
 			else
 			{
 				$iFileSize = @filesize( $sServerDir . $sFile ) ;
@@ -90,7 +90,7 @@ function GetFoldersAndFiles( $resourceType, $currentFolder )
 	echo '<Folders>' ;
 
 	foreach ( $aFolders as $sFolder )
-		echo $sFolder ;
+	echo $sFolder ;
 
 	echo '</Folders>' ;
 
@@ -99,7 +99,7 @@ function GetFoldersAndFiles( $resourceType, $currentFolder )
 	echo '<Files>' ;
 
 	foreach ( $aFiles as $sFiles )
-		echo $sFiles ;
+	echo $sFiles ;
 
 	echo '</Files>' ;
 }
@@ -118,7 +118,7 @@ function CreateFolder( $resourceType, $currentFolder )
 		$sNewFolderName = SanitizeFolderName( $sNewFolderName ) ;
 
 		if ( strpos( $sNewFolderName, '..' ) !== FALSE )
-			$sErrorNumber = '102' ;		// Invalid folder name.
+		$sErrorNumber = '102' ;		// Invalid folder name.
 		else
 		{
 			// Map the virtual path to the local server path of the current folder.
@@ -145,11 +145,11 @@ function CreateFolder( $resourceType, $currentFolder )
 				}
 			}
 			else
-				$sErrorNumber = '103' ;
+			$sErrorNumber = '103' ;
 		}
 	}
 	else
-		$sErrorNumber = '102' ;
+	$sErrorNumber = '102' ;
 
 	// Create the "Error" node.
 	echo '<Error number="' . $sErrorNumber . '" originalDescription="' . ConvertToXmlAttribute( $sErrorMsg ) . '" />' ;
@@ -193,7 +193,7 @@ function FileUpload( $resourceType, $currentFolder, $sCommand )
 		if ( isset( $Config['HtmlExtensions'] ) )
 		{
 			if ( !IsHtmlExtension( $sExtension, $Config['HtmlExtensions'] ) &&
-				( $detectHtml = DetectHtml( $oFile['tmp_name'] ) ) === true )
+			( $detectHtml = DetectHtml( $oFile['tmp_name'] ) ) === true )
 			{
 				$sErrorNumber = '202' ;
 			}
@@ -257,10 +257,10 @@ function FileUpload( $resourceType, $currentFolder, $sCommand )
 			}
 		}
 		else
-			$sErrorNumber = '202' ;
+		$sErrorNumber = '202' ;
 	}
 	else
-		$sErrorNumber = '202' ;
+	$sErrorNumber = '202' ;
 
 
 	$sFileUrl = CombinePaths( GetResourceTypePath( $resourceType, $sCommand ) , $currentFolder ) ;

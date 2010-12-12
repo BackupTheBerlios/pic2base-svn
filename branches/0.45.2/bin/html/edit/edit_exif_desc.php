@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 
 /*  PEL: PHP Exif Library.  A library with support for reading and
@@ -34,17 +34,17 @@ require_once '../share/classes/pel-0.9.1/PelTiff.php';
 
 $data = new PelDataWindow(file_get_contents($input));
 
-if (PelJpeg::isValid($data)) 
+if (PelJpeg::isValid($data))
 {
 	$jpeg = $file = new PelJpeg();
 	$jpeg->load($data);
 	$exif = $jpeg->getExif();
-	
-	if ($exif == null) 
+
+	if ($exif == null)
 	{
 		$exif = new PelExif();
 		$jpeg->setExif($exif);
-	
+
 		$tiff = new PelTiff();
 		$exif->setTiff($tiff);
 	}
@@ -54,7 +54,7 @@ if (PelJpeg::isValid($data))
 	}
 }
 elseif
-(PelTiff::isValid($data)) 
+(PelTiff::isValid($data))
 {
 	$tiff = $file = new PelTiff();
 	/* Now load the data. */
@@ -62,13 +62,13 @@ elseif
 }
 else
 {
-	PelConvert::bytesToDump($data->getBytes(0, 16)); 
+	PelConvert::bytesToDump($data->getBytes(0, 16));
 	exit(1);
 }
 
 $ifd0 = $tiff->getIfd();
 
-if ($ifd0 == null) 
+if ($ifd0 == null)
 {
 	$ifd0 = new PelIfd(PelIfd::IFD0);
 	$tiff->setIfd($ifd0);
@@ -76,7 +76,7 @@ if ($ifd0 == null)
 
 $desc = $ifd0->getEntry(PelTag::IMAGE_DESCRIPTION);
 
-if ($desc == null) 
+if ($desc == null)
 {
 	$desc = new PelEntryAscii(PelTag::IMAGE_DESCRIPTION, $description);
 	$ifd0->addEntry($desc);

@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
@@ -11,16 +11,16 @@ include '../../share/global_config.php';
 <html>
 
 <head>
-  <title>Neune Eigent&uuml;mer festlegen</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../../css/format1.css'>
-  <link rel="shortcut icon" href="../../share/images/favicon.ico">
-  <script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<title>Neune Eigent&uuml;mer festlegen</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </head>
 
-<body style='background-color:#DDDDDD'>
+<body style='background-color: #DDDDDD'>
 
 <?php
 include '../../share/global_config.php';

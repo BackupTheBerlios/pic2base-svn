@@ -1,13 +1,15 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 ?>
 
-<script language="javascript" type="text/javascript" src="functions/ShowPicture.js"></script>
+<script
+	language="javascript" type="text/javascript"
+	src="functions/ShowPicture.js"></script>
 <?php
 include 'global_config.php';
 
@@ -36,23 +38,23 @@ IF(array_key_exists('fs_hoehe', $_REQUEST))
 SWITCH($Orientation)
 {
 	case '3':
-	//Das Vorschaubild muss 180 gedreht werden:
-	$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 180 ".$pic_thumbs_path."/".$FileNameV."";
+		//Das Vorschaubild muss 180 gedreht werden:
+		$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 180 ".$pic_thumbs_path."/".$FileNameV."";
 		$output = shell_exec($command);
-	break;
-	
+		break;
+
 	case '6':
-	//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
-	$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 90 ".$pic_thumbs_path."/".$FileNameV."";
+		//Das Vorschaubild muss 90 im Uhrzeigersinn gedreht werden:
+		$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 90 ".$pic_thumbs_path."/".$FileNameV."";
 		$output = shell_exec($command);
-	break;
-	
+		break;
+
 	case '8':
-	//echo "drehe Thumb-Bild ".$pic_thumbs_path."/".$FileNameV."<BR>";
-	//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
-	$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 270 ".$pic_thumbs_path."/".$FileNameV."";
+		//echo "drehe Thumb-Bild ".$pic_thumbs_path."/".$FileNameV."<BR>";
+		//Das Vorschaubild muss 90 entgegen dem Uhrzeigersinn gedreht werden:
+		$command = "/usr/bin/convert ".$pic_thumbs_path."/".$FileNameV." -rotate 270 ".$pic_thumbs_path."/".$FileNameV."";
 		$output = shell_exec($command);
-	break;
+		break;
 }
 $time = time();
 

@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 ?>
 
@@ -11,14 +11,14 @@ IF (!$_COOKIE['login'])
 <html>
 
 <head>
-  <title>Tagebuch-Eintrag bearbeiten</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../css/format1.css'>
-  <link rel="shortcut icon" href="images/favicon.ico">
+<title>Tagebuch-Eintrag bearbeiten</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="images/favicon.ico">
 </head>
-<body style='background-color:#999999'>
+<body style='background-color: #999999'>
 <?php
 // verwendet als Popup-Fenster mit dem Tagebuch-Eintrag
 
@@ -44,8 +44,8 @@ $info = $row['info'];
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 $result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
@@ -81,15 +81,15 @@ echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat&AD=$aufn_DAT' meth
 	
 	<TR class='normal'>
 		<TD class='normal' colspan = '2' align='left'>";
-		
-		$oFCKeditor = new FCKeditor('FCKeditor1') ;
-		$oFCKeditor->BasePath = 'fckeditor/' ;
-		$oFCKeditor->Value = $info ;
-		$oFCKeditor->ToolbarSet = $view ;	//legt fest, ob editierbar oder nur lesbar
-		$oFCKeditor->Height = 685;
-		$oFCKeditor->Create() ;
-		
-		echo "
+
+$oFCKeditor = new FCKeditor('FCKeditor1') ;
+$oFCKeditor->BasePath = 'fckeditor/' ;
+$oFCKeditor->Value = $info ;
+$oFCKeditor->ToolbarSet = $view ;	//legt fest, ob editierbar oder nur lesbar
+$oFCKeditor->Height = 685;
+$oFCKeditor->Create() ;
+
+echo "
 		</TD>
 	</TR>
 
@@ -98,24 +98,24 @@ echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat&AD=$aufn_DAT' meth
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>
 	</TR>";
-	
-	IF( isset($editable) and $editable == '1' ) 
-	{
-		echo "
+
+IF( isset($editable) and $editable == '1' )
+{
+	echo "
 		<TR class='normal'>
 			<TD class='normal'><INPUT type='submit' value='Speichern' style='width:150px;'></TD>
 			<TD class='normal'><INPUT type='button' value='Fenster schlie&szlig;en' onClick='javascript:window.close()' style='width:150px;'></TD>
 		</TR>";
-	}
-	ELSE
-	{
-		echo "
+}
+ELSE
+{
+	echo "
 		<TR class='normal'>
 			<TD class='normal'></TD>
 			<TD class='normal'><INPUT type='button' value='Fenster schlie&szlig;en' onClick='javascript:window.close()' style='width:150px;'></TD>
 		</TR>";
-	}
-	echo "
+}
+echo "
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>

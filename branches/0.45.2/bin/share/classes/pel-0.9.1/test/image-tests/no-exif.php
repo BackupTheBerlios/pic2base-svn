@@ -28,22 +28,22 @@
 
 class no_exif extends UnitTestCase {
 
-  function __construct() {
-    require_once('../PelJpeg.php');
-    parent::__construct('PEL no-exif.jpg Tests');
-  }
+	function __construct() {
+		require_once('../PelJpeg.php');
+		parent::__construct('PEL no-exif.jpg Tests');
+	}
 
-  function testRead() {
-    Pel::clearExceptions();
-    Pel::setStrictParsing(false);
-    $jpeg = new PelJpeg(dirname(__FILE__) . '/no-exif.jpg');
+	function testRead() {
+		Pel::clearExceptions();
+		Pel::setStrictParsing(false);
+		$jpeg = new PelJpeg(dirname(__FILE__) . '/no-exif.jpg');
 
-    $exif = $jpeg->getExif();
-    $this->assertNull($exif);
-    
-    $this->assertTrue(count(Pel::getExceptions()) == 0);
-    
-  }
+		$exif = $jpeg->getExif();
+		$this->assertNull($exif);
+
+		$this->assertTrue(count(Pel::getExceptions()) == 0);
+
+	}
 }
 
 ?>

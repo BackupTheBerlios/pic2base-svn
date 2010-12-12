@@ -1,55 +1,53 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Meta-Daten-Freigabe</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<meta http-equiv="Refresh" Content="3600; URL=generate_exifdata0.php">-->
-	<style type="text/css">
-	<!--
-	.tablenormal	{
-			width:720px;
-			margin-left:40px;
-			}
-			
-	.trflach	{
-			height:3px;
-			background-color:#FF9900
-			}
-			
-	.tdbreit	{
-			width:200px;
-			text-align:right;
-			}
-			
-	.tdschmal	{
-			width:40px;
-			text-align:center;
-			}
-	-->
-	</style>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Meta-Daten-Freigabe</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<!--<meta http-equiv="Refresh" Content="3600; URL=generate_exifdata0.php">-->
+<style type="text/css">
+<!--
+.tablenormal {
+	width: 720px;
+	margin-left: 40px;
+}
+
+.trflach {
+	height: 3px;
+	background-color: #FF9900
+}
+
+.tdbreit {
+	width: 200px;
+	text-align: right;
+}
+
+.tdschmal {
+	width: 40px;
+	text-align: center;
+}
+-->
+</style>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -74,8 +72,8 @@ include '../../share/global_config.php';
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 include '../../share/global_config.php';
@@ -103,18 +101,18 @@ if($result1 != false)
 		SWITCH($treffer)
 		{
 			CASE 0:
-			//echo "<FONT COLOR='red'>Das Feld ".$EDFN." ist nicht in der exif_protect-Tabelle.</FONT><BR>";
-			//exif_protect-Tabelle wird aktualisiert:
-			$result3 = mysql_query( "INSERT INTO $table5 (field_name, writable) VALUES ('$EDFN', '0')");
-			break;
-			
+				//echo "<FONT COLOR='red'>Das Feld ".$EDFN." ist nicht in der exif_protect-Tabelle.</FONT><BR>";
+				//exif_protect-Tabelle wird aktualisiert:
+				$result3 = mysql_query( "INSERT INTO $table5 (field_name, writable) VALUES ('$EDFN', '0')");
+				break;
+					
 			CASE 1:
-			//echo "<FONT COLOR='green'>Das Feld ".$EDFN." ist in der exif_protect-Tabelle.</FONT><BR>";
-			break;
-			
+				//echo "<FONT COLOR='green'>Das Feld ".$EDFN." ist in der exif_protect-Tabelle.</FONT><BR>";
+				break;
+					
 			CASE ($treffer > 1):
-			echo "<FONT COLOR='red'>Das Feld ".$EDFN." ist MEHRFACH in der exif_protect-Tabelle enthalten!</FONT><BR>";
-			break;
+				echo "<FONT COLOR='red'>Das Feld ".$EDFN." ist MEHRFACH in der exif_protect-Tabelle enthalten!</FONT><BR>";
+				break;
 		}
 	}
 }
@@ -183,15 +181,15 @@ echo "
 		
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			include '../../html/admin/adminnavigation.php';
-			echo "
+include '../../html/admin/adminnavigation.php';
+echo "
 			</div>
 		</div>
 		
 		<div class='content'>
 		<p style='margin-top:20px; margin-left:10px; text-align:center'>";
-		echo $content;
-		echo "</p>
+echo $content;
+echo "</p>
 		</div>
 		<br style='clear:both;' />
 	

@@ -6,23 +6,23 @@ function getFileError($NUM)
 	SWITCH($NUM)
 	{
 		CASE UPLOAD_ERR_OK:
-		break;
-		
+			break;
+
 		CASE UPLOAD_ERR_INI_SIZE:
-		$err = "<font color='red'>Es wurde die in der php-ini festgelegte Dateigr&ouml;&szlig;e &uuml;berschritten!</font>";
-		break;
-		
+			$err = "<font color='red'>Es wurde die in der php-ini festgelegte Dateigr&ouml;&szlig;e &uuml;berschritten!</font>";
+			break;
+
 		CASE UPLOAD_ERR_FORM_SIZE:
-		$err = "<font color='red'>Es wurde die im Formular festgelegte Dateigr&ouml;&szlig;e &uuml;berschritten!</font>";
-		break;
-		
+			$err = "<font color='red'>Es wurde die im Formular festgelegte Dateigr&ouml;&szlig;e &uuml;berschritten!</font>";
+			break;
+
 		CASE UPLOAD_ERR_PARTIAL:
-		$err = "<font color='red'>Es wurde nur ein Teil der Datei hochgeladen (Abbruch)!</font>";
-		break;
-		
+			$err = "<font color='red'>Es wurde nur ein Teil der Datei hochgeladen (Abbruch)!</font>";
+			break;
+
 		CASE UPLOAD_ERR_NO_FILE:
-		$err = "<font color='red'>Es wurde keine Datei hochgeladen!</font>";
-		break;
+			$err = "<font color='red'>Es wurde keine Datei hochgeladen!</font>";
+			break;
 	}
 	return $err;
 }
@@ -57,9 +57,9 @@ function findTrackData($delta,$pic_time,$datum,$pic_id)
 	$result8 = mysql_query( "SELECT * FROM $table13 WHERE date = '$datum' AND (time = '$start_time' OR time = '$end_time')");
 	$num8 = mysql_num_rows($result8);
 	//Wenn mehrere Trackpunkte gefunden werden, werden willkuerlich die Daten des ersten verwendet:
-	$longitude = mysql_result($result8,0,'longitude'); 
-	$latitude = mysql_result($result8,0,'latitude'); 
-	$altitude = mysql_result($result8,0,'altitude'); 
+	$longitude = mysql_result($result8,0,'longitude');
+	$latitude = mysql_result($result8,0,'latitude');
+	$altitude = mysql_result($result8,0,'altitude');
 	//in der 'locations' gespeichert und mit dem Bild 'pic_id' verknuepft:
 	$result9 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude) VALUES ('$longitude', '$latitude', '$altitude')");
 	echo mysql_error();
@@ -96,11 +96,11 @@ function isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius)
 {
 	//Entfernung pro Breitengrad: 111111,111 m
 	$y_abst = pow((($latitude - $lat_mittel) * 111111.111),2); // in qm
-	
+
 	//Entfernung je Laengengrad ist von der Erhebung ueber Aequator (Breitengrad) abhaengig:
 	$x_abst = pow(($longitude - $long_mittel) * (40000000 * cos(deg2rad($latitude)) / 360),2); //in qm
 	//echo $x_abst."<BR>";
-	
+
 	IF (pow($radius , 2) < ($x_abst + $y_abst))
 	{
 		$inside = 'false';
@@ -115,7 +115,7 @@ function isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius)
 function deg2dec($value)
 {
 	//Fkt konvertiert die Geo-Koordinaten von Grad/Minite/sekunde nach dezimaler Schreibweise
-	
+
 	return $value;
 }
 
@@ -124,9 +124,9 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	//include $sr.'/bin/share/functions/main_functions.php';
-	
+
 	$gpsbabel = buildGpsbabelCommand($sr);
-	
+
 	$error = 0;
 	//var_dump($info);
 	//Sony-CS1-log-Dateien werden von GPSBabel als nmea verarbeitet!
@@ -134,78 +134,78 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 	{
 		// Bsp: gpsbabel -t -i nmea -f "Pfad/Datei.log" -o kml -F "Pfad/Datei.kml"
 		CASE '1':
-		//Routine fuer Sony CS1 (log)
-		IF(strtolower($info['extension']) !== 'log')
-		{
-			echo "Es handelt sich nicht um eine SONY-CS1-Datei!<BR>";
-			$error = '1';
-		}
-		ELSE
-		{
+			//Routine fuer Sony CS1 (log)
+			IF(strtolower($info['extension']) !== 'log')
+			{
+				echo "Es handelt sich nicht um eine SONY-CS1-Datei!<BR>";
+				$error = '1';
+			}
+			ELSE
+			{
 
-			$file_format = 'nmea';
-		}
-		break;
-		
+				$file_format = 'nmea';
+			}
+			break;
+
 		CASE '2':
-		//Routine fuer Garmin GPSmap 60CS(x) tracklogs (.gpx)
-		IF(strtolower($info['extension']) !== 'gpx')
-		{
-			echo "Es handelt sich nicht um eine Garmin GPSmap 60CS(x)-Datei!<BR>";
-			$error = '1';
-		}
-		ELSE
-		{
+			//Routine fuer Garmin GPSmap 60CS(x) tracklogs (.gpx)
+			IF(strtolower($info['extension']) !== 'gpx')
+			{
+				echo "Es handelt sich nicht um eine Garmin GPSmap 60CS(x)-Datei!<BR>";
+				$error = '1';
+			}
+			ELSE
+			{
 
-			$file_format = 'gpx';
-			//echo $file_format."<br>";
-		}
-		break;
-		
+				$file_format = 'gpx';
+				//echo $file_format."<br>";
+			}
+			break;
+
 		CASE '5':
-		//Routine fuer Alan Map500 tracklogs (.trl)
-		
-		break;
-		
+			//Routine fuer Alan Map500 tracklogs (.trl)
+
+			break;
+
 		CASE '6':
-		//Routine fuer CarteSurTable data file
-		
-		break;
-		
+			//Routine fuer CarteSurTable data file
+
+			break;
+
 		CASE '17':
-		//Routine fuer Garmin MapSource (gdb)
-		IF(strtolower($info['extension']) !== 'gdb')
-		{
-			echo "Es handelt sich nicht um eine Garmin MapSource-Datei!<BR>";
-			$error = '1';
-		}
-		ELSE
-		{
-			$file_format = 'gdb';
-		}
-		break;
-		
+			//Routine fuer Garmin MapSource (gdb)
+			IF(strtolower($info['extension']) !== 'gdb')
+			{
+				echo "Es handelt sich nicht um eine Garmin MapSource-Datei!<BR>";
+				$error = '1';
+			}
+			ELSE
+			{
+				$file_format = 'gdb';
+			}
+			break;
+
 		CASE '22':
-		//Routine fuer Google Earth (Keyhole) Markup Language (kml)
-		IF(strtolower($info['extension']) !== 'kml')
-		{
-			echo "Es handelt sich nicht um eine Google Earth (Keyhole) Markup Language-Datei!<BR>";
-			$error = '1';
-		}
-		ELSE
-		{
-			$file_format = 'kml';
-		}
-		break;
+			//Routine fuer Google Earth (Keyhole) Markup Language (kml)
+			IF(strtolower($info['extension']) !== 'kml')
+			{
+				echo "Es handelt sich nicht um eine Google Earth (Keyhole) Markup Language-Datei!<BR>";
+				$error = '1';
+			}
+			ELSE
+			{
+				$file_format = 'kml';
+			}
+			break;
 	}
-	
+
 	IF($error !== '1')
 	{
 		// ######################
 		//Die p2b-trackfile.kml wird nur als strukturierte Zwischenablage verwendet,aus
 		//der die Geo-Daten in die Datenbank ueberfuehrt werden!
 		// ######################
-		
+
 		$kml_file = shell_exec($gpsbabel." -t -i ".$file_format." -f ".$geo_file_name." -o kml -F ".$user_dir."/kml_files/p2b-trackfile.kml");
 		@$fh1 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
 		@$fh0 = fopen($user_dir."/kml_files/p2b-trackfile.kml", 'r');
@@ -223,12 +223,12 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 			//$data_arr = array();
 			$data_arr = array('0.00', '0.00', '0.00', '0000-00-00T00:00:00Z');
 			$z = 0; //Indexzaehler des Geoarrays (0 - Anz. Datensaetz in der Log-Datei)
-			
+				
 			WHILE(!feof($fh1))
 			{
 				//Zeilenweise wird der Datei-Inhalt in ein Array ueberfuehrt:
 				$line = strip_tags(fgets($fh1, 1024));
-				
+
 
 				IF(stristr($line, 'Longitude:'))
 				{
@@ -247,21 +247,21 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 						$data_arr[0] = $lon_value[17];
 					}
 				}
-								
+
 				IF(stristr($line, 'Latitude:'))
 				{
 					$lat_value = preg_split('# #',$line);
 					//print_r($lat_value)."<BR>";
 					$data_arr[1] = $lat_value[17];
 				}
-				
+
 				IF(stristr($line, 'Altitude:'))
 				{
 					$alt_value = preg_split('# #',$line);
 					//print_r($alt_value)."<BR>";
 					$data_arr[2] = $alt_value[17];
 				}
-				
+
 				IF(stristr($line, 'Time:'))
 				{
 					$time_value = preg_split('# #',$line);
@@ -269,7 +269,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 					$data_arr[3] = $time_value[17];
 				}
 			}
-			
+				
 			//Was steht in dem Array?
 			//##################################################################
 			//waehrend der Testphase:
@@ -290,7 +290,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 				{
 					$date = '0000-00-00';
 				}
-				
+
 				$time = substr($data_arr[3],11,8);
 				IF($time == '')
 				{
@@ -302,7 +302,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 
 				$result1 = mysql_query( "INSERT INTO $table13 (longitude, latitude, altitude, date, time, user_id) VALUES ('$data_arr[0]', '$data_arr[1]', '$altitude', '$date_new', '$time_new', '$user_id')");
 				echo mysql_error();
-				
+
 			}
 		}
 	}

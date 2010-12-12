@@ -32,9 +32,9 @@ error_reporting(E_ALL);
 
 /* a printf() variant that appends a newline to the output. */
 function println(/* fmt, args... */) {
-    $args = func_get_args();
-    $fmt = array_shift($args);
-    vprintf($fmt . "\n", $args);
+	$args = func_get_args();
+	$fmt = array_shift($args);
+	vprintf($fmt . "\n", $args);
 }
 
 
@@ -60,23 +60,23 @@ function writeExif()
 	$input = array_shift($argv);
 	$output = array_shift($argv);
 	/*if (isset($input))
-	{
-	  echo "Input file: ".$input."<br>";
-	} else
-	{
-	  $error = true;
-	}
+	 {
+	 echo "Input file: ".$input."<br>";
+	 } else
+	 {
+	 $error = true;
+	 }
 
-	if (isset($output)) {
-	  echo "Output file: ".$output."<br>";
-	} else {
-	  $error = true;
-	}*/
+	 if (isset($output)) {
+	 echo "Output file: ".$output."<br>";
+	 } else {
+	 $error = true;
+	 }*/
 
 	/*if ($error) {
-	  echo "Error: Input or Output file not set.";
-	  exit(1);
-	}*/
+	 echo "Error: Input or Output file not set.";
+	 exit(1);
+	 }*/
 
 	/* We typically need lots of RAM to parse TIFF images since they tend
 	 * to be big and uncompressed. */
@@ -144,7 +144,7 @@ function writeExif()
 		/* The data was not recognized as either JPEG or TIFF data.
 		 * Complain loudly, dump the first 16 bytes, and exit. */
 		println('Unrecognized image format! The first 16 bytes follow:');
-		PelConvert::bytesToDump($data->getBytes(0, 16)); 
+		PelConvert::bytesToDump($data->getBytes(0, 16));
 		exit(1);
 	}
 
@@ -192,59 +192,59 @@ function writeExif()
 		{
 			/* An old description was found in the image. */
 			println('Updating IMAGE_DESCRIPTION entry from "%s" to "%s<br>".',
-				$desc->getValue(), $description);
+			$desc->getValue(), $description);
 
 			/* The description is simply updated with the new description. */
 			$desc->setValue($description);
 		}
 	}
 
-//$ifd1 = new PelIfd(PelIfd::IFD0);
-$ifd1 = $ifd0->getSubIfd(PelIfd::GPS);
-if ($ifd1 == null) {
-  /* No IFD in the TIFF data?  This probably means that the image
-   * didn't have any Exif information to start with, and so an empty
-   * PelTiff object was inserted by the code above.  But this is no
-   * problem, we just create and inserts an empty PelIfd object. */
-  echo 'No GPS found, adding new.<br>';
-  $ifd1 = new PelIfd(PelIfd::GPS);
-  //getEntries
-  $ifd0->addSubIfd($ifd1);
-  //$ifd0->setNextIfd($ifd1);
-}
-//echo "ifd1: ".$ifd1."<br>";
-$lat = $ifd1->getEntry(PelTag::GPS_LATITUDE);
-//echo $lat."<br>";
-$gps_arr1[0] = 10;
-$gps_arr1[1] = 1;
-$gps_arr2[0] = 5;
-$gps_arr2[1] = 1;
-$gps_arr3[0] = 12;
-$gps_arr3[1] = 1;
-//$gps_arr[3] = 1;
-//$gps_arr[4] = 1;
-//$gps_arr[5] = 1;
-if ($lat == null) {
-  $lat = new PelEntryRational(PelTag::GPS_LATITUDE, $gps_arr1, $gps_arr2, $gps_arr3);
-  //$lat = new PelEntryRational(PelTag::GPS_LATITUDE, 10, 5, 12);
-  echo "Creating latitude entry... ";
-  $ifd1->addEntry($lat);
-  echo "Created.<br>";
-} else {
-  $lat->setValue($gps_arr1, $gps_arr2, $gps_arr3);
-  //$lat->setValue(10, 5, 12);
-}
+	//$ifd1 = new PelIfd(PelIfd::IFD0);
+	$ifd1 = $ifd0->getSubIfd(PelIfd::GPS);
+	if ($ifd1 == null) {
+		/* No IFD in the TIFF data?  This probably means that the image
+		 * didn't have any Exif information to start with, and so an empty
+		 * PelTiff object was inserted by the code above.  But this is no
+		 * problem, we just create and inserts an empty PelIfd object. */
+		echo 'No GPS found, adding new.<br>';
+		$ifd1 = new PelIfd(PelIfd::GPS);
+		//getEntries
+		$ifd0->addSubIfd($ifd1);
+		//$ifd0->setNextIfd($ifd1);
+	}
+	//echo "ifd1: ".$ifd1."<br>";
+	$lat = $ifd1->getEntry(PelTag::GPS_LATITUDE);
+	//echo $lat."<br>";
+	$gps_arr1[0] = 10;
+	$gps_arr1[1] = 1;
+	$gps_arr2[0] = 5;
+	$gps_arr2[1] = 1;
+	$gps_arr3[0] = 12;
+	$gps_arr3[1] = 1;
+	//$gps_arr[3] = 1;
+	//$gps_arr[4] = 1;
+	//$gps_arr[5] = 1;
+	if ($lat == null) {
+		$lat = new PelEntryRational(PelTag::GPS_LATITUDE, $gps_arr1, $gps_arr2, $gps_arr3);
+		//$lat = new PelEntryRational(PelTag::GPS_LATITUDE, 10, 5, 12);
+		echo "Creating latitude entry... ";
+		$ifd1->addEntry($lat);
+		echo "Created.<br>";
+	} else {
+		$lat->setValue($gps_arr1, $gps_arr2, $gps_arr3);
+		//$lat->setValue(10, 5, 12);
+	}
 
-/* At this point the image on disk has not been changed, it is only
- * the object structure in memory which represent the image which has
- * been altered.  This structure can be converted into a string of
- * bytes with the getBytes method, and saving this in the output file
- * completes the script. */
-println('Writing file "%s".<br>', $output);
-file_put_contents($output, $file->getBytes());
+	/* At this point the image on disk has not been changed, it is only
+	 * the object structure in memory which represent the image which has
+	 * been altered.  This structure can be converted into a string of
+	 * bytes with the getBytes method, and saving this in the output file
+	 * completes the script. */
+	println('Writing file "%s".<br>', $output);
+	file_put_contents($output, $file->getBytes());
 
-$exifdata=exif_read_data($output,"",true,false);
-echo "Latitude: ".$exifdata["GPS"]["GPSLatitude"][0]." ".$exifdata["GPS"]["GPSLatitude"][1]." ".$exifdata["GPS"]["GPSLatitude"][2]."<br>";
+	$exifdata=exif_read_data($output,"",true,false);
+	echo "Latitude: ".$exifdata["GPS"]["GPSLatitude"][0]." ".$exifdata["GPS"]["GPSLatitude"][1]." ".$exifdata["GPS"]["GPSLatitude"][2]."<br>";
 }
 /* The End. */
 ?>

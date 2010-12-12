@@ -64,83 +64,83 @@ require_once('PelEntry.php');
  */
 class PelEntryAscii extends PelEntry {
 
-  /**
-   * The string hold by this entry.
-   *
-   * This is the string that was given to the {@link __construct
-   * constructor} or later to {@link setValue}, without any final NULL
-   * character.
-   *
-   * @var string
-   */
-  private $str;
+	/**
+	 * The string hold by this entry.
+	 *
+	 * This is the string that was given to the {@link __construct
+	 * constructor} or later to {@link setValue}, without any final NULL
+	 * character.
+	 *
+	 * @var string
+	 */
+	private $str;
 
 
-  /**
-   * Make a new PelEntry that can hold an ASCII string.
-   *
-   * @param int the tag which this entry represents.  This should be
-   * one of the constants defined in {@link PelTag}, e.g., {@link
-   * PelTag::IMAGE_DESCRIPTION}, {@link PelTag::MODEL}, or any other
-   * tag with format {@link PelFormat::ASCII}.
-   *
-   * @param string the string that this entry will represent.  The
-   * string must obey the same rules as the string argument to {@link
-   * setValue}, namely that it should be given without any trailing
-   * NULL character and that it must be plain 7-bit ASCII.
-   */
-  function __construct($tag, $str = '') {
-    $this->tag    = $tag;
-    $this->format = PelFormat::ASCII;
-    $this->setValue($str);
-  }
+	/**
+	 * Make a new PelEntry that can hold an ASCII string.
+	 *
+	 * @param int the tag which this entry represents.  This should be
+	 * one of the constants defined in {@link PelTag}, e.g., {@link
+	 * PelTag::IMAGE_DESCRIPTION}, {@link PelTag::MODEL}, or any other
+	 * tag with format {@link PelFormat::ASCII}.
+	 *
+	 * @param string the string that this entry will represent.  The
+	 * string must obey the same rules as the string argument to {@link
+	 * setValue}, namely that it should be given without any trailing
+	 * NULL character and that it must be plain 7-bit ASCII.
+	 */
+	function __construct($tag, $str = '') {
+		$this->tag    = $tag;
+		$this->format = PelFormat::ASCII;
+		$this->setValue($str);
+	}
 
 
-  /**
-   * Give the entry a new ASCII value.
-   *
-   * This will overwrite the previous value.  The value can be
-   * retrieved later with the {@link getValue} method.
-   *
-   * @param string the new value of the entry.  This should be given
-   * without any trailing NULL character.  The string must be plain
-   * 7-bit ASCII, the string should contain no high bytes.
-   *
-   * @todo Implement check for high bytes?
-   */
-  function setValue($str) {
-    $this->components = strlen($str)+1;
-    $this->str        = $str;
-    $this->bytes      = $str . chr(0x00);
-  }
+	/**
+	 * Give the entry a new ASCII value.
+	 *
+	 * This will overwrite the previous value.  The value can be
+	 * retrieved later with the {@link getValue} method.
+	 *
+	 * @param string the new value of the entry.  This should be given
+	 * without any trailing NULL character.  The string must be plain
+	 * 7-bit ASCII, the string should contain no high bytes.
+	 *
+	 * @todo Implement check for high bytes?
+	 */
+	function setValue($str) {
+		$this->components = strlen($str)+1;
+		$this->str        = $str;
+		$this->bytes      = $str . chr(0x00);
+	}
 
 
-  /**
-   * Return the ASCII string of the entry.
-   *
-   * @return string the string held, without any final NULL character.
-   * The string will be the same as the one given to {@link setValue}
-   * or to the {@link __construct constructor}.
-   */
-  function getValue() {
-    return $this->str;
-  }
+	/**
+	 * Return the ASCII string of the entry.
+	 *
+	 * @return string the string held, without any final NULL character.
+	 * The string will be the same as the one given to {@link setValue}
+	 * or to the {@link __construct constructor}.
+	 */
+	function getValue() {
+		return $this->str;
+	}
 
 
-  /**
-   * Return the ASCII string of the entry.
-   *
-   * This methods returns the same as {@link getValue}.
-   *
-   * @param boolean not used with ASCII entries.
-   *
-   * @return string the string held, without any final NULL character.
-   * The string will be the same as the one given to {@link setValue}
-   * or to the {@link __construct constructor}.
-   */
-  function getText($brief = false) {
-    return $this->str;      
-  }
+	/**
+	 * Return the ASCII string of the entry.
+	 *
+	 * This methods returns the same as {@link getValue}.
+	 *
+	 * @param boolean not used with ASCII entries.
+	 *
+	 * @return string the string held, without any final NULL character.
+	 * The string will be the same as the one given to {@link setValue}
+	 * or to the {@link __construct constructor}.
+	 */
+	function getText($brief = false) {
+		return $this->str;
+	}
 
 }
 
@@ -171,177 +171,177 @@ class PelEntryAscii extends PelEntry {
  */
 class PelEntryTime extends PelEntryAscii {
 
-  /**
-   * Constant denoting a UNIX timestamp.
-   */
-  const UNIX_TIMESTAMP   = 1;
-  /**
-   * Constant denoting a Exif string.
-   */
-  const EXIF_STRING      = 2;
-  /**
-   * Constant denoting a Julian Day Count.
-   */
-  const JULIAN_DAY_COUNT = 3;
+	/**
+	 * Constant denoting a UNIX timestamp.
+	 */
+	const UNIX_TIMESTAMP   = 1;
+	/**
+	 * Constant denoting a Exif string.
+	 */
+	const EXIF_STRING      = 2;
+	/**
+	 * Constant denoting a Julian Day Count.
+	 */
+	const JULIAN_DAY_COUNT = 3;
 
-  /**
-   * The Julian Day Count of the timestamp held by this entry.
-   *
-   * This is an integer counting the number of whole days since
-   * January 1st, 4713 B.C. The fractional part of the timestamp held
-   * by this entry is stored in {@link $seconds}.
-   *
-   * @var int
-   */
-  private $day_count;
+	/**
+	 * The Julian Day Count of the timestamp held by this entry.
+	 *
+	 * This is an integer counting the number of whole days since
+	 * January 1st, 4713 B.C. The fractional part of the timestamp held
+	 * by this entry is stored in {@link $seconds}.
+	 *
+	 * @var int
+	 */
+	private $day_count;
 
-  /**
-   * The number of seconds into the day of the timestamp held by this
-   * entry.
-   *
-   * The number of whole days is stored in {@link $day_count} and the
-   * number of seconds left-over is stored here.
-   *
-   * @var int
-   */
-  private $seconds;
+	/**
+	 * The number of seconds into the day of the timestamp held by this
+	 * entry.
+	 *
+	 * The number of whole days is stored in {@link $day_count} and the
+	 * number of seconds left-over is stored here.
+	 *
+	 * @var int
+	 */
+	private $seconds;
 
 
-  /**
-   * Make a new entry for holding a timestamp.
-   *
-   * @param int the Exif tag which this entry represents.  There are
-   * only three standard tags which hold timestamp, so this should be
-   * one of the constants {@link PelTag::DATE_TIME}, {@link
-   * PelTag::DATE_TIME_ORIGINAL}, or {@link
-   * PelTag::DATE_TIME_DIGITIZED}.
-   *
-   * @param int the timestamp held by this entry in the correct form
-   * as indicated by the third argument. For {@link UNIX_TIMESTAMP}
-   * this is an integer counting the number of seconds since January
-   * 1st 1970, for {@link EXIF_STRING} this is a string of the form
-   * 'YYYY:MM:DD hh:mm:ss', and for {@link JULIAN_DAY_COUNT} this is a
-   * floating point number where the integer part denotes the day
-   * count and the fractional part denotes the time of day (0.25 means
-   * 6:00, 0.75 means 18:00).
-   *
-   * @param int the type of the timestamp. This must be one of
-   * {@link UNIX_TIMESTAMP}, {@link EXIF_STRING}, or
-   * {@link JULIAN_DAY_COUNT}.
-   */
-  function __construct($tag, $timestamp, $type = self::UNIX_TIMESTAMP) {
-    parent::__construct($tag);
-    $this->setValue($timestamp, $type);
-  }
+	/**
+	 * Make a new entry for holding a timestamp.
+	 *
+	 * @param int the Exif tag which this entry represents.  There are
+	 * only three standard tags which hold timestamp, so this should be
+	 * one of the constants {@link PelTag::DATE_TIME}, {@link
+	 * PelTag::DATE_TIME_ORIGINAL}, or {@link
+	 * PelTag::DATE_TIME_DIGITIZED}.
+	 *
+	 * @param int the timestamp held by this entry in the correct form
+	 * as indicated by the third argument. For {@link UNIX_TIMESTAMP}
+	 * this is an integer counting the number of seconds since January
+	 * 1st 1970, for {@link EXIF_STRING} this is a string of the form
+	 * 'YYYY:MM:DD hh:mm:ss', and for {@link JULIAN_DAY_COUNT} this is a
+	 * floating point number where the integer part denotes the day
+	 * count and the fractional part denotes the time of day (0.25 means
+	 * 6:00, 0.75 means 18:00).
+	 *
+	 * @param int the type of the timestamp. This must be one of
+	 * {@link UNIX_TIMESTAMP}, {@link EXIF_STRING}, or
+	 * {@link JULIAN_DAY_COUNT}.
+	 */
+	function __construct($tag, $timestamp, $type = self::UNIX_TIMESTAMP) {
+		parent::__construct($tag);
+		$this->setValue($timestamp, $type);
+	}
 
-  
-  /**
-   * Return the timestamp of the entry.
-   *
-   * The timestamp held by this entry is returned in one of three
-   * formats: as a standard UNIX timestamp (default), as a fractional
-   * Julian Day Count, or as a string.
-   *
-   * @param int the type of the timestamp. This must be one of
-   * {@link UNIX_TIMESTAMP}, {@link EXIF_STRING}, or
-   * {@link JULIAN_DAY_COUNT}.
-   *
-   * @return int the timestamp held by this entry in the correct form
-   * as indicated by the type argument. For {@link UNIX_TIMESTAMP}
-   * this is an integer counting the number of seconds since January
-   * 1st 1970, for {@link EXIF_STRING} this is a string of the form
-   * 'YYYY:MM:DD hh:mm:ss', and for {@link JULIAN_DAY_COUNT} this is a
-   * floating point number where the integer part denotes the day
-   * count and the fractional part denotes the time of day (0.25 means
-   * 6:00, 0.75 means 18:00).
-   */
-  function getValue($type = self::UNIX_TIMESTAMP) {
-    switch ($type) {
-    case self::UNIX_TIMESTAMP:
-      $seconds = jdtounix($this->day_count);
-      if ($seconds === false)
-        /* jdtounix() return false if the Julian Day Count is outside
-         * the range of a UNIX timestamp. */ 
-        return false;
-      else
-        return $seconds + $this->seconds;
 
-    case self::EXIF_STRING:
-      list($month, $day, $year) = explode('/', jdtogregorian($this->day_count));
-      $hours   = (int)($this->seconds / 3600);
-      $minutes = (int)($this->seconds % 3600 / 60);
-      $seconds = $this->seconds % 60;
-      return sprintf('%04d:%02d:%02d %02d:%02d:%02d',
-                     $year, $month, $day, $hours, $minutes, $seconds);
-    case self::JULIAN_DAY_COUNT:
-      return $this->day_count + $this->seconds / 86400;
-    default:
-      throw new PelInvalidArgumentException('Expected UNIX_TIMESTAMP (%d), ' .
+	/**
+	 * Return the timestamp of the entry.
+	 *
+	 * The timestamp held by this entry is returned in one of three
+	 * formats: as a standard UNIX timestamp (default), as a fractional
+	 * Julian Day Count, or as a string.
+	 *
+	 * @param int the type of the timestamp. This must be one of
+	 * {@link UNIX_TIMESTAMP}, {@link EXIF_STRING}, or
+	 * {@link JULIAN_DAY_COUNT}.
+	 *
+	 * @return int the timestamp held by this entry in the correct form
+	 * as indicated by the type argument. For {@link UNIX_TIMESTAMP}
+	 * this is an integer counting the number of seconds since January
+	 * 1st 1970, for {@link EXIF_STRING} this is a string of the form
+	 * 'YYYY:MM:DD hh:mm:ss', and for {@link JULIAN_DAY_COUNT} this is a
+	 * floating point number where the integer part denotes the day
+	 * count and the fractional part denotes the time of day (0.25 means
+	 * 6:00, 0.75 means 18:00).
+	 */
+	function getValue($type = self::UNIX_TIMESTAMP) {
+		switch ($type) {
+			case self::UNIX_TIMESTAMP:
+				$seconds = jdtounix($this->day_count);
+				if ($seconds === false)
+				/* jdtounix() return false if the Julian Day Count is outside
+				 * the range of a UNIX timestamp. */
+				return false;
+				else
+				return $seconds + $this->seconds;
+
+			case self::EXIF_STRING:
+				list($month, $day, $year) = explode('/', jdtogregorian($this->day_count));
+				$hours   = (int)($this->seconds / 3600);
+				$minutes = (int)($this->seconds % 3600 / 60);
+				$seconds = $this->seconds % 60;
+				return sprintf('%04d:%02d:%02d %02d:%02d:%02d',
+				$year, $month, $day, $hours, $minutes, $seconds);
+			case self::JULIAN_DAY_COUNT:
+				return $this->day_count + $this->seconds / 86400;
+			default:
+				throw new PelInvalidArgumentException('Expected UNIX_TIMESTAMP (%d), ' .
                                             'EXIF_STRING (%d), or ' .
                                             'JULIAN_DAY_COUNT (%d) for $type, '.
                                             'got %d.',
-                                            self::UNIX_TIMESTAMP,
-                                            self::EXIF_STRING,
-                                            self::JULIAN_DAY_COUNT,
-                                            $type);
-        }
-  }
+				self::UNIX_TIMESTAMP,
+				self::EXIF_STRING,
+				self::JULIAN_DAY_COUNT,
+				$type);
+		}
+	}
 
 
-  /**
-   * Update the timestamp held by this entry.
-   *
-   * @param int the timestamp held by this entry in the correct form
-   * as indicated by the third argument. For {@link UNIX_TIMESTAMP}
-   * this is an integer counting the number of seconds since January
-   * 1st 1970, for {@link EXIF_STRING} this is a string of the form
-   * 'YYYY:MM:DD hh:mm:ss', and for {@link JULIAN_DAY_COUNT} this is a
-   * floating point number where the integer part denotes the day
-   * count and the fractional part denotes the time of day (0.25 means
-   * 6:00, 0.75 means 18:00).
-   *
-   * @param int the type of the timestamp. This must be one of
-   * {@link UNIX_TIMESTAMP}, {@link EXIF_STRING}, or
-   * {@link JULIAN_DAY_COUNT}.
-   *
-   * @todo How to deal with timezones? Use the TimeZoneOffset tag
-   * 0x882A?
-   */
-  function setValue($timestamp, $type = self::UNIX_TIMESTAMP) {
-    switch ($type) {
-    case self::UNIX_TIMESTAMP:
-      $this->day_count = unixtojd($timestamp);
-      $this->seconds   = $timestamp % 86400;
-      break;
+	/**
+	 * Update the timestamp held by this entry.
+	 *
+	 * @param int the timestamp held by this entry in the correct form
+	 * as indicated by the third argument. For {@link UNIX_TIMESTAMP}
+	 * this is an integer counting the number of seconds since January
+	 * 1st 1970, for {@link EXIF_STRING} this is a string of the form
+	 * 'YYYY:MM:DD hh:mm:ss', and for {@link JULIAN_DAY_COUNT} this is a
+	 * floating point number where the integer part denotes the day
+	 * count and the fractional part denotes the time of day (0.25 means
+	 * 6:00, 0.75 means 18:00).
+	 *
+	 * @param int the type of the timestamp. This must be one of
+	 * {@link UNIX_TIMESTAMP}, {@link EXIF_STRING}, or
+	 * {@link JULIAN_DAY_COUNT}.
+	 *
+	 * @todo How to deal with timezones? Use the TimeZoneOffset tag
+	 * 0x882A?
+	 */
+	function setValue($timestamp, $type = self::UNIX_TIMESTAMP) {
+		switch ($type) {
+			case self::UNIX_TIMESTAMP:
+				$this->day_count = unixtojd($timestamp);
+				$this->seconds   = $timestamp % 86400;
+				break;
 
-    case self::EXIF_STRING:
-      /* Clean the timestamp: some timestamps are broken other
-       * separators than ':' and ' '. */
-      $d = split('[^0-9]+', $timestamp);
-      $this->day_count = gregoriantojd($d[1], $d[2], $d[0]);
-      $this->seconds   = $d[3]*3600 + $d[4]*60 + $d[5];
-      break;
+			case self::EXIF_STRING:
+				/* Clean the timestamp: some timestamps are broken other
+				 * separators than ':' and ' '. */
+				$d = split('[^0-9]+', $timestamp);
+				$this->day_count = gregoriantojd($d[1], $d[2], $d[0]);
+				$this->seconds   = $d[3]*3600 + $d[4]*60 + $d[5];
+				break;
 
-    case self::JULIAN_DAY_COUNT:
-      $this->day_count = (int)floor($timestamp);
-      $this->seconds = (int)(86400 * ($timestamp - floor($timestamp)));
-      break;
+			case self::JULIAN_DAY_COUNT:
+				$this->day_count = (int)floor($timestamp);
+				$this->seconds = (int)(86400 * ($timestamp - floor($timestamp)));
+				break;
 
-    default:
-      throw new PelInvalidArgumentException('Expected UNIX_TIMESTAMP (%d), ' .
+			default:
+				throw new PelInvalidArgumentException('Expected UNIX_TIMESTAMP (%d), ' .
                                             'EXIF_STRING (%d), or ' .
                                             'JULIAN_DAY_COUNT (%d) for $type, '.
                                             'got %d.',
-                                            self::UNIX_TIMESTAMP,
-                                            self::EXIF_STRING,
-                                            self::JULIAN_DAY_COUNT,
-                                            $type);
-    }
+				self::UNIX_TIMESTAMP,
+				self::EXIF_STRING,
+				self::JULIAN_DAY_COUNT,
+				$type);
+		}
 
-    /* Now finally update the string which will be used when this is
-     * turned into bytes. */
-    parent::setValue($this->getValue(self::EXIF_STRING));
-  }
+		/* Now finally update the string which will be used when this is
+		 * turned into bytes. */
+		parent::setValue($this->getValue(self::EXIF_STRING));
+	}
 }
 
 
@@ -373,110 +373,110 @@ class PelEntryTime extends PelEntryAscii {
  */
 class PelEntryCopyright extends PelEntryAscii {
 
-  /**
-   * The photographer copyright.
-   *
-   * @var string
-   */
-  private $photographer;
+	/**
+	 * The photographer copyright.
+	 *
+	 * @var string
+	 */
+	private $photographer;
 
-  /**
-   * The editor copyright.
-   *
-   * @var string
-   */
-  private $editor;
-
-
-  /**
-   * Make a new entry for holding copyright information.
-   *
-   * @param string the photographer copyright.  Use the empty string
-   * if there is no photographer copyright.
-   *
-   * @param string the editor copyright.  Use the empty string if
-   * there is no editor copyright.
-   */
-  function __construct($photographer = '', $editor = '') {
-    parent::__construct(PelTag::COPYRIGHT);
-    $this->setValue($photographer, $editor);
-  }
-  
-
-  /**
-   * Update the copyright information.
-   *
-   * @param string the photographer copyright.  Use the empty string
-   * if there is no photographer copyright.
-   *
-   * @param string the editor copyright.  Use the empty string if
-   * there is no editor copyright.
-   */
-  function setValue($photographer = '', $editor = '') {
-    $this->photographer = $photographer;
-    $this->editor       = $editor;
-
-    if ($photographer == '' && $editor != '')
-      $photographer = ' ';
-
-    if ($editor == '')
-      parent::setValue($photographer);
-    else
-      parent::setValue($photographer . chr(0x00) . $editor);
-  }
+	/**
+	 * The editor copyright.
+	 *
+	 * @var string
+	 */
+	private $editor;
 
 
-  /**
-   * Retrive the copyright information.
-   *
-   * The strings returned will be the same as the one used previously
-   * with either {@link __construct the constructor} or with {@link
-   * setValue}.
-   *
-   * @return array an array with two strings, the photographer and
-   * editor copyrights.  The two fields will be returned in that
-   * order, so that the first array index will be the photographer
-   * copyright, and the second will be the editor copyright.
-   */
-  function getValue() {
-    return array($this->photographer, $this->editor);
-  }
+	/**
+	 * Make a new entry for holding copyright information.
+	 *
+	 * @param string the photographer copyright.  Use the empty string
+	 * if there is no photographer copyright.
+	 *
+	 * @param string the editor copyright.  Use the empty string if
+	 * there is no editor copyright.
+	 */
+	function __construct($photographer = '', $editor = '') {
+		parent::__construct(PelTag::COPYRIGHT);
+		$this->setValue($photographer, $editor);
+	}
 
 
-  /**
-   * Return a text string with the copyright information.
-   *
-   * The photographer and editor copyright fields will be returned
-   * with a '-' in between if both copyright fields are present,
-   * otherwise only one of them will be returned.
-   *
-   * @param boolean if false, then the strings '(Photographer)' and
-   * '(Editor)' will be appended to the photographer and editor
-   * copyright fields (if present), otherwise the fields will be
-   * returned as is.
-   *
-   * @return string the copyright information in a string.
-   */
-  function getText($brief = false) {
-    if ($brief) {
-      $p = '';
-      $e = '';
-    } else {
-      $p = ' ' . Pel::tra('(Photographer)');
-      $e = ' ' . Pel::tra('(Editor)');
-    }
+	/**
+	 * Update the copyright information.
+	 *
+	 * @param string the photographer copyright.  Use the empty string
+	 * if there is no photographer copyright.
+	 *
+	 * @param string the editor copyright.  Use the empty string if
+	 * there is no editor copyright.
+	 */
+	function setValue($photographer = '', $editor = '') {
+		$this->photographer = $photographer;
+		$this->editor       = $editor;
 
-    if ($this->photographer != '' && $this->editor != '')
-      return $this->photographer . $p . ' - ' . $this->editor . $e;
-    
-    if ($this->photographer != '')
-      return $this->photographer . $p;
+		if ($photographer == '' && $editor != '')
+		$photographer = ' ';
 
-    if ($this->editor != '')
-      return $this->editor . $e;
+		if ($editor == '')
+		parent::setValue($photographer);
+		else
+		parent::setValue($photographer . chr(0x00) . $editor);
+	}
 
-    return '';
-  }
+
+	/**
+	 * Retrive the copyright information.
+	 *
+	 * The strings returned will be the same as the one used previously
+	 * with either {@link __construct the constructor} or with {@link
+	 * setValue}.
+	 *
+	 * @return array an array with two strings, the photographer and
+	 * editor copyrights.  The two fields will be returned in that
+	 * order, so that the first array index will be the photographer
+	 * copyright, and the second will be the editor copyright.
+	 */
+	function getValue() {
+		return array($this->photographer, $this->editor);
+	}
+
+
+	/**
+	 * Return a text string with the copyright information.
+	 *
+	 * The photographer and editor copyright fields will be returned
+	 * with a '-' in between if both copyright fields are present,
+	 * otherwise only one of them will be returned.
+	 *
+	 * @param boolean if false, then the strings '(Photographer)' and
+	 * '(Editor)' will be appended to the photographer and editor
+	 * copyright fields (if present), otherwise the fields will be
+	 * returned as is.
+	 *
+	 * @return string the copyright information in a string.
+	 */
+	function getText($brief = false) {
+		if ($brief) {
+			$p = '';
+			$e = '';
+		} else {
+			$p = ' ' . Pel::tra('(Photographer)');
+			$e = ' ' . Pel::tra('(Editor)');
+		}
+
+		if ($this->photographer != '' && $this->editor != '')
+		return $this->photographer . $p . ' - ' . $this->editor . $e;
+
+		if ($this->photographer != '')
+		return $this->photographer . $p;
+
+		if ($this->editor != '')
+		return $this->editor . $e;
+
+		return '';
+	}
 }
 
 ?>

@@ -1,21 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -39,8 +37,8 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('/,/',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('/,/',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 include '../../share/global_config.php';
@@ -62,7 +60,7 @@ IF(hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, '
 	$tel = mysql_result($result1, isset($i1), 'tel');
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
-	
+
 	echo "
 	<div class='page'>
 	
@@ -70,8 +68,8 @@ IF(hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, '
 			
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			createNavi5($c_username);
-			echo "</div>
+	createNavi5($c_username);
+	echo "</div>
 		</div>
 		
 		<div id='spalte1'>
@@ -182,7 +180,7 @@ ELSEIF(hasPermission($c_username, 'editallprofiles'))
 	$result2 = mysql_query("SELECT * FROM $table1");
 	echo mysql_error();
 	$num2 = mysql_num_rows($result2);
-	
+
 	echo "
 	<div class='page'>
 	
@@ -190,8 +188,8 @@ ELSEIF(hasPermission($c_username, 'editallprofiles'))
 			
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			createNavi5($c_username);
-			echo "</div>
+	createNavi5($c_username);
+	echo "</div>
 		</div>
 		
 		<div id='spalte1'>
@@ -205,28 +203,28 @@ ELSEIF(hasPermission($c_username, 'editallprofiles'))
 		<TR id='normal' style='height:10px;>
 			<TD id='normal' colspan='3'></TD>
 		</TR>";
-		
-		FOR($i2='0'; $i2<$num2; $i2++)
+
+	FOR($i2='0'; $i2<$num2; $i2++)
+	{
+		$user_id = mysql_result($result2, $i2, 'id');
+		$username = mysql_result($result2, $i2, 'username');
+		$titel = mysql_result($result2, $i2, 'titel');
+		$vorname = mysql_result($result2, $i2, 'vorname');
+		$name = mysql_result($result2, $i2, 'name');
+		//IF($username !== 'pb')
+		IF($username !== 'pb' AND ($username !== $c_username OR hasPermission($username, 'editmyprofile')))
 		{
-			$user_id = mysql_result($result2, $i2, 'id');
-			$username = mysql_result($result2, $i2, 'username');
-			$titel = mysql_result($result2, $i2, 'titel');
-			$vorname = mysql_result($result2, $i2, 'vorname');
-			$name = mysql_result($result2, $i2, 'name');
-			//IF($username !== 'pb')
-			IF($username !== 'pb' AND ($username !== $c_username OR hasPermission($username, 'editmyprofile')))
-			{
-				echo "
+			echo "
 				<TR id='kat'>
 				<TD id='kat1'>".$titel."</TD>
 				<TD id='kat1'>".$vorname."</TD>
 				<TD id='kat1'>".$name."</TD>
 				<TD id='kat1'><center><span style='cursor:pointer'><img src='../../share/images/edit.gif' style='border:none' onClick=\"location.href='einstellungen2.php?id=$user_id'\" title='Pers&ouml;nliche Daten bearbeiten' /></span></center></TD>
 				</TR>";
-			}
 		}
-	
-		echo "
+	}
+
+	echo "
 		<TR id='normal' style='height:10px;>
 			<TD id='normal' colspan='3'></TD>
 		</TR>
@@ -254,8 +252,7 @@ ELSEIF(!hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_userna
 }
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

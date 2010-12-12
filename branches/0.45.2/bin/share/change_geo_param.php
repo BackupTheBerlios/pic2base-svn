@@ -3,12 +3,13 @@ IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:v="urn:schemas-microsoft-com:vml">
 <?php
 include 'global_config.php';
 if ( array_key_exists('pic_id',$_REQUEST) )
@@ -37,16 +38,26 @@ IF(array_key_exists('height',$_REQUEST))
 }
 ?>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<title>Geo-Daten bearbeiten...(Bild <?php echo $pic_id; ?>)</title> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Geo-Daten bearbeiten...(Bild <?php echo $pic_id; ?>)</title>
 
 <style type="text/css">
 /*v\:*{behavior:url(#default#VML)}*/
-BODY{font-family:Arial;font-size:small;background-color:#FFFFFF}
-A:hover{color:red;text-decoration:underline}
-</style> 
+BODY {
+	font-family: Arial;
+	font-size: small;
+	background-color: #FFFFFF
+}
 
-<script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $gm_key; ?>" type="text/javascript"></script>
+A:hover {
+	color: red;
+	text-decoration: underline
+}
+</style>
+
+<script
+	src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $gm_key; ?>"
+	type="text/javascript"></script>
 
 <script language="JavaScript">
 function saveNewParam(newlocation, ort, loc_id, pic_id)
@@ -111,17 +122,20 @@ ELSE
 	//echo "Parameter: ".htmlentities($parameter).", Breite: ".$lat.", Laenge: ".$long.", Ort: ".$ort."<BR>";
 }
 ?>
- 
-<div id="map" style="position: absolute; top:10px;left:10px;width:530px; height:370px"></div>
-<div id="loc" style="position: absolute; top:390px;left:10px;">
-<form name = 'lok' method = 'post' action = 'save_param.php'>
-<input type='button' value='Position u. Ort speichern' OnClick='saveNewParam(lok.location.value, lok.ort.value, lok.loc_id.value, lok.pic_id.value)' style='width:160px;'>
-&#160;&#160;
-<input type="text" name = "location" id="location" style="width:140px;" value = "<?php echo $loc; ?>">
-&#160;&#160;
-<input type="text" name = 'ort' style="width:170px;" value = "<?php echo "$ort"; ?>">
-<input type = "hidden" name = "loc_id" value = "<?php echo $loc_id; ?>">
-<input type = "hidden" name = "pic_id" value = "<?php echo $pic_id; ?>">
+
+<div id="map"
+	style="position: absolute; top: 10px; left: 10px; width: 530px; height: 370px"></div>
+<div id="loc" style="position: absolute; top: 390px; left: 10px;">
+<form name='lok' method='post' action='save_param.php'>
+<input type='button' value='Position u. Ort speichern'
+	OnClick='saveNewParam(lok.location.value, lok.ort.value, lok.loc_id.value, lok.pic_id.value)'
+	style='width: 160px;'> &#160;&#160; <input type="text" name="location"
+	id="location" style="width: 140px;" value="<?php echo $loc; ?>">
+&#160;&#160; <input type="text" name='ort' style="width: 170px;"
+	value="<?php echo "$ort"; ?>"> <input type="hidden" name="loc_id"
+	value="<?php echo $loc_id; ?>"> <input type="hidden" name="pic_id"
+	value="<?php echo $pic_id; ?>">
+
 </div>
 
 <script type="text/javascript">

@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>phatfusion : slider</title>
 
-<link rel="stylesheet" href="../_common/css/main.css" type="text/css" media="all">
+<link rel="stylesheet" href="../_common/css/main.css" type="text/css"
+	media="all">
 <link href="slider.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="../_common/js/mootools.js"></script>
@@ -12,18 +13,16 @@
 
 </head>
 <body>
-	<div id="container">
-		
-		<h3 class="example">example</h3>
-		<div id="example">
-			<div id="slideContainer1">
-				<div id="slideHandle1">
-				</div>
-			</div>
-		  	<div id="pos1">
-		  	</div>
-		  	
-		<script type="text/javascript">
+<div id="container">
+
+<h3 class="example">example</h3>
+<div id="example">
+<div id="slideContainer1">
+<div id="slideHandle1"></div>
+</div>
+<div id="pos1"></div>
+
+<script type="text/javascript">
 			
 			window.addEvent('domready', function()
 			{
@@ -38,8 +37,7 @@
 				);
 			}
 			);
-		</script>
-		</div>
-	</div>
+		</script></div>
+</div>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 ?>
 
@@ -11,14 +11,14 @@ include '../share/global_config.php';
 <html>
 
 <head>
-  <title>Bild-Details</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../css/format1.css'>
-  <link rel="shortcut icon" href="images/favicon.ico">
+<title>Bild-Details</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="images/favicon.ico">
 </head>
-<body style='background-color:#999999'>
+<body style='background-color: #999999'>
 
 <?php
 //skript speichert die geaenderten Meta-Daten in die exif_data-Tabelle und in das betreffende Bild
@@ -49,18 +49,18 @@ FOREACH($_POST AS $key => $value)
 		SWITCH($key)
 		{
 			CASE 'Orientation':
-			$VALUE = convertOrientationTextToNumber($value);
-			$KEY = 'Orientation';
-			break;
-			
+				$VALUE = convertOrientationTextToNumber($value);
+				$KEY = 'Orientation';
+				break;
+					
 			default:
-			$VALUE = utf8_decode($value);
-			$KEY = str_replace("-","_",$key);
-			break;
+				$VALUE = utf8_decode($value);
+				$KEY = str_replace("-","_",$key);
+				break;
 		}
 		//echo $KEY." / ".$VALUE."<BR>";
 	}
-	
+
 	$result1 = mysql_query( "UPDATE $table14 SET $KEY = '$VALUE' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Aktualisierung der Meta-Daten des Bildes:

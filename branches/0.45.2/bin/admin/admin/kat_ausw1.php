@@ -1,22 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Startseite</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -39,7 +37,7 @@ IF ($_COOKIE['login'])
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
- 
+
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
@@ -63,8 +61,8 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>".
-		$navigation
-		."<INPUT type='submit' class='button3' value = 'Speichern' style='margin-top:520px;'><BR>
+$navigation
+."<INPUT type='submit' class='button3' value = 'Speichern' style='margin-top:520px;'><BR>
 		<INPUT type='button' class='button3' style='margin-top:5px;' value='Abbrechen' OnClick='location.href=\"$inst_path/pic2base/bin/html/admin/adminframe.php\"'>
 		</div>
 	</div>
@@ -74,13 +72,13 @@ echo "
 		<TR>
 		<TD>Quell-Kategorie</TD>
 		</TR>";
-	
-	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
-	$kategorie = mysql_result($result10, isset($i10), 'kategorie');
-	$kat_id_s = mysql_result($result10, isset($i10), 'kat_id');
-		
-	$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-	echo "<TR id='kat'>
+
+$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
+$kategorie = mysql_result($result10, isset($i10), 'kategorie');
+$kat_id_s = mysql_result($result10, isset($i10), 'kat_id');
+
+$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+echo "<TR id='kat'>
 	
 		<TD id='kat1'>
 		<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
@@ -92,8 +90,8 @@ echo "
 	</TABLE>
 	</div>";
 //############################################################################################################################
-	
-	echo "
+
+echo "
 	<DIV id='spalte2'>
 	<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;'>Hinweis:<BR><BR>
 	W&auml;hlen Sie hier zun&auml;chst in der linken Spalte die Quell-Kategorie aus.<BR><BR>
@@ -113,6 +111,7 @@ echo "
 mysql_close($conn);
 ?>
 <p class="klein"></P>
-</DIV></CENTER>
+</DIV>
+</CENTER>
 </BODY>
 </HTML>

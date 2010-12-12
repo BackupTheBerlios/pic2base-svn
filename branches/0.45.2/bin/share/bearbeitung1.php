@@ -1,29 +1,27 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base :: Datensatz-Bearbeitung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../css/format1.css'>
-	<link rel="shortcut icon" href="../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base :: Datensatz-Bearbeitung</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  ##########################  DIESE DATEI WIRD M�GLICHERWEISE N I C H T GENUTZT ########################################
@@ -51,21 +49,21 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 	$Width = mysql_result($res0, $i1, 'Width');
 	$Height = mysql_result($res0, $i1, 'Height');
 	$Orientation = mysql_result($res0, $i1, 'Orientation');	// 1: normal; 8: 90 Grad nach rechts gedreht
-	
+
 	//abgeleitete Groessen:
-	
+
 	SWITCH($Orientation)
 	{
 		CASE '1':
-		
-		break;
-		
+
+			break;
+
 		CASE '8':
-		$Height = mysql_result($res0, $i1, 'Width');
-		$Width = mysql_result($res0, $i1, 'Height');
-		break;
+			$Height = mysql_result($res0, $i1, 'Width');
+			$Width = mysql_result($res0, $i1, 'Height');
+			break;
 	}
-	
+
 	IF ($FileNameV == '')
 	{
 		$FileNameV = 'no_preview.jpg';
@@ -80,7 +78,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 	{
 		$datum = date('d.m.Y', strtotime($DateTime));
 	}
-	
+
 	$parameter_v=getimagesize('../../images/vorschau/thumbs/'.$FileNameV);
 	$breite = $parameter_v[0] * 5;
 	$hoehe = $parameter_v[1] * 5;
@@ -91,26 +89,26 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 		$hoehe = 600;
 	}
 	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
-      	$width_height=$parameter_v[3];
-      	//F�r die Darstellung des Vollbildes wird eine mittlete Groesse unter Beachtung des Seitenverhaeltnisses errechnet:
-      	//max. Ausdehnung: 800px
-      	$max = '1000';
-      	IF ($Width >= $Height)
-      	{
-      		$breite = $max;
-      		$hoehe = $breite * $Height / $Width;
-      	}
-      	ELSE
-      	{
-      		$hoehe = $max;
-      		$breite = number_format(($hoehe * $Width / $Height),0,',','.');
-      	}
-      	$ratio_pic = $breite / $hoehe;
-      	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
-      	$bild = '../../images/vorschau/hq-preview/'.$FileNameHQ;
+	$width_height=$parameter_v[3];
+	//F�r die Darstellung des Vollbildes wird eine mittlete Groesse unter Beachtung des Seitenverhaeltnisses errechnet:
+	//max. Ausdehnung: 800px
+	$max = '1000';
+	IF ($Width >= $Height)
+	{
+		$breite = $max;
+		$hoehe = $breite * $Height / $Width;
+	}
+	ELSE
+	{
+		$hoehe = $max;
+		$breite = number_format(($hoehe * $Width / $Height),0,',','.');
+	}
+	$ratio_pic = $breite / $hoehe;
+	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
+	$bild = '../../images/vorschau/hq-preview/'.$FileNameHQ;
 	echo "<a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='../../images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu'></a>";?>
-	
-	<SCRIPT language="javascript">
+
+<SCRIPT language="javascript">
 	function ZeigeBild(bildname,breite,hoehe,ratio_pic)
 	{
 	anotherWindow = window.open("", "bildfenster", "");
@@ -158,9 +156,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu)
 	ref.document.close();
 	ref.focus();
 	}
-	</Script>
-	
-	<?php
+	</Script> <?php
 }
 //echo $bewertung;
 unset($username);
@@ -197,12 +193,12 @@ $berechtigung = mysql_result($result000, $i000, 'berechtigung');
 SWITCH($bedingung1)
 {
 	CASE 'LIKE':
-	$string1 = '%'.$zusatzwert1.'%';
-	break;
-	
+		$string1 = '%'.$zusatzwert1.'%';
+		break;
+
 	DEFAULT:
-	$string1 = $zusatzwert1;
-	BREAK;
+		$string1 = $zusatzwert1;
+		BREAK;
 }
 
 if ($kriterium == "")
@@ -218,30 +214,30 @@ else
 SWITCH($bew)
 {
 	CASE '1':
-	$bewert = "Recherche &uuml;ber sehr gute Bilder";
-	break;
-	
+		$bewert = "Recherche &uuml;ber sehr gute Bilder";
+		break;
+
 	CASE '2':
-	$bewert = "Recherche &uuml;ber gute Bilder";
-	break;
-	
+		$bewert = "Recherche &uuml;ber gute Bilder";
+		break;
+
 	CASE '3':
-	$bewert = "Recherche &uuml;ber m&auml;ssige Bilder";
-	break;
-	
+		$bewert = "Recherche &uuml;ber m&auml;ssige Bilder";
+		break;
+
 	CASE '4':
-	$bewert = "Recherche &uuml;ber mangelhafte Bilder";
-	break;
-	
+		$bewert = "Recherche &uuml;ber mangelhafte Bilder";
+		break;
+
 	CASE '5':
-	$bewert = "Recherche &uuml;ber nicht bewertete Bilder";
-	break;
-	
+		$bewert = "Recherche &uuml;ber nicht bewertete Bilder";
+		break;
+
 	CASE '6':
 	CASE '':
-	$bewert = "Recherche &uuml;ber alle Bilder";
-	$bewertung = '6';
-	break;
+		$bewert = "Recherche &uuml;ber alle Bilder";
+		$bewertung = '6';
+		break;
 }
 
 IF($bew < '6')
@@ -284,31 +280,31 @@ ELSE
 @$num1 = mysql_num_rows($result1);
 echo "
 <div class='page'>";
-	IF($num0 == '')
-	{
-		$num0 = '0';
-	}
-	SWITCH ($mod)
-	{
-		CASE 'edit':
+IF($num0 == '')
+{
+	$num0 = '0';
+}
+SWITCH ($mod)
+{
+	CASE 'edit':
 		echo "<p id='kopf'>pic2base :: Datensatz-Bearbeitung <span class='klein'>(".$num0." Treffer".$anzeigebereich.")</span></p>";
 		break;
-		
-		CASE 'exif':
+
+	CASE 'exif':
 		echo "<p id='kopf'>pic2base :: Datensatz-Recherche <span class='klein'>(eingestellte Bewertung: ".$bewert.", ".$num0." Treffer".$anzeigebereich.")</span></p>";
 		break;
-	}
-	
-	echo "	
+}
+
+echo "
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi2_2($c_username, $mod);
-		echo "</div>
+createNavi2_2($c_username, $mod);
+echo "</div>
 	</div>
 	
 	<div class='content'>";
-	IF ($num0 == '0')
-	{
+IF ($num0 == '0')
+{
 	echo "
 	<p style='margin:100px 0px; text-align:center'>
 	<TABLE border = '0' class='liste1' align = 'center'>
@@ -320,13 +316,13 @@ echo "
 	</p>
 	<p style='margin:100px 0px; text-align:center'></p>
 	</div>";
-	}
-	ELSE
-	{
+}
+ELSE
+{
 	echo "
 	<p style='margin:0px 0px; text-align:center'>
 	<TABLE border = '0' class='liste1' align = 'center'>";
-	
+
 	$fs_hoehe = 90;
 	$bgcolor = '#DDDDDD';
 	FOR ($i1=0; $i1<$num1; $i1++)
@@ -356,7 +352,7 @@ echo "
 		{
 			$datum = date('d.m.Y', strtotime($DateTime));
 		}
-		
+
 		IF ($bgcolor == '#FFFFFF')
 		{
 			$bgcolor = '#DDDDDD';
@@ -378,33 +374,33 @@ echo "
 			$hoehe_neu = $fs_hoehe;
 			$breite_neu = number_format(($fs_hoehe * $breite / $hoehe),0,',','.');
 		}
-      		$width_height=$parameter_v[3];
-      		$bild = '../../images/vorschau/hq-preview/'.$FileNameHQ;
+		$width_height=$parameter_v[3];
+		$bild = '../../images/vorschau/hq-preview/'.$FileNameHQ;
 		echo "
 		<TR bgcolor = '$bgcolor'>
 			<TR  class='liste2' bgcolor = '$bgcolor'>
 				<TD class='liste2' width = '33%'>Original-Name</TD>
 				<TD class='liste2' width = '33%'>$filenameori</TD>
 				";
-				SWITCH ($mod)
-				{
-					CASE 'edit':
-					echo "<TD class='normal'rowspan='6' align='center'>
+		SWITCH ($mod)
+		{
+			CASE 'edit':
+				echo "<TD class='normal'rowspan='6' align='center'>
 					<a href='bearbeiten2.php?mod=$mod&pic_id=$pic_id' title='Bilddaten bearbeiten'><img src='../share/images/edit.gif' style='border:none;'></a>
 					</TD>";
-					break;
+				break;
 					
-					CASE 'exif':
-					echo "<TD class='normal'rowspan='6' align='center'>
+			CASE 'exif':
+				echo "<TD class='normal'rowspan='6' align='center'>
 					<a href='../html/recherche/recherche1.php?mod=$mod&pic_id=$pic_id' title='Detaillierte Informationen zum Bild'><img src='../share/images/info.gif' style='border:none;'></a>
 					</TD>";
-					break;
-				}
-				
-				echo "
+				break;
+		}
+
+		echo "
 				<TD class='normal' rowspan='6' align='center'>";
-				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu);
-				echo "
+		getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu);
+		echo "
 				</TD>
 			</TR>
 			<TR  class='liste2' bgcolor = '$bgcolor'>
@@ -429,19 +425,19 @@ echo "
 			</TR>
 		</TR>";
 	}
-	
+
 	echo "
 	<TR class='liste2'>
 	<TD class='normal' align='center' colspan='4'>";
 
 	IF ($num0 > $N)
-	{	
+	{
 		$crit = "";
 		for ($i = 0; $i < strlen($kriterium); $i++)
 		{
 			$crit .= "%".bin2hex($kriterium[$i]);
 		}
-		
+
 		function Ergebnisbereich($div, $num0, $N, $kriterium, $mod, $bew)
 		{
 			IF ($div !== '0')
@@ -453,14 +449,14 @@ echo "
 				}
 				ELSE
 				{
-				
+
 				}
 			}
 			ELSE
 			{
 				$div1 = '0';
 			}
-			
+
 			IF ($div < $num0 - $N)
 			{
 				$div2 = $div + $N;
@@ -469,9 +465,9 @@ echo "
 			{
 				$div2 = $num0 - $N;
 			}
-			
+
 			$div3 = $num0 - $N;
-			
+
 			echo "
 			<A HREF='bearbeitung1.php?div=0&mod=$mod&kriterium=$kriterium&bew=$bew' title='zu den ersten $N Datens&auml;tzen'>
 			<IMG src='../share/images/anfang.gif' width='15' height='15' border='0'>
@@ -491,21 +487,20 @@ echo "
 		}
 		echo Ergebnisbereich($div, $num0, $N, $crit, $mod, $bew);
 	}
-	
-echo"	</TD>
+
+	echo"	</TD>
 	</TR>
 	</TABLE></p>
 	</div>";
-	}
-	echo "
+}
+echo "
 	<br style='clear:both;' />
 	<p id='fuss'>".$cr."</p>
 </div>";
 
 mysql_close($conn);
 
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

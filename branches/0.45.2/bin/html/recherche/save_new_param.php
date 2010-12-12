@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 
 //var_dump($_REQUEST);
@@ -133,10 +133,10 @@ IF (mysql_error() == '')
 {
 	//fuer Testzwecke haelt der Parameter das Karten-Fenster offen...
 	echo "<p><center>Die Bilddaten wurden aktualisiert</center></p>";
-	
+
 	flush(0);
-	sleep(0);	
-	
+	sleep(0);
+
 	echo "<script language='JavaScript'>
 	anotherWindow = window.open('', 'Karte', '');
 	if (anotherWindow != null)
@@ -145,7 +145,7 @@ IF (mysql_error() == '')
 	}
 	window.close('Speicherung2');
 	</script>";
-	
+
 }
 ELSE
 {

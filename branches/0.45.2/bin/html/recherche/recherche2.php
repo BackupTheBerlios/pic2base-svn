@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 
 unset($parameter);
@@ -14,7 +14,7 @@ IF(array_key_exists('parameter', $_COOKIE))
 }
 ELSE
 {
-		$param = '';
+	$param = '';
 }
 IF(count($param) == '3')
 {
@@ -34,16 +34,16 @@ ELSE
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
-	<TITLE>pic2base - Datensatz-Recherche</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>pic2base - Datensatz-Recherche</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </HEAD>
 
 <!--
@@ -62,8 +62,10 @@ ELSE
  ***********************************************************************************/
  -->
 
-<script language="javascript" type="text/javascript" src="../../share/calendar.js"></script>
-<script language="javascript" type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
+<script language="javascript" type="text/javascript"
+	src="../../share/calendar.js"></script>
+<script language="javascript" type="text/javascript"
+	src="../../share/functions/ShowPicture.js"></script>
 
 <script language="JavaScript">
 <!--
@@ -147,13 +149,11 @@ function showDiary(aufn_dat)
 -->
 </script>
 
-<BODY LANG="de-DE" scroll = "auto" onload="javascript:CloseWindow()">
+<BODY LANG="de-DE" scroll="auto" onload="javascript:CloseWindow()">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php 
+<DIV Class="klein"><?php 
 //var_dump($_REQUEST);
 
 unset($username);
@@ -216,13 +216,13 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi2_1($c_username);
-		echo "</div>
+createNavi2_1($c_username);
+echo "</div>
 	</div>";
 //################################################################################################################
 SWITCH ($mod)
-	{
-		CASE 'zeit':
+{
+	CASE 'zeit':
 		//include $sr.'/bin/share/functions/ajax_functions.php';
 		echo "
 		<div id='spalte1F'>";
@@ -231,12 +231,12 @@ SWITCH ($mod)
 		$mod='zeit';
 		$modus='recherche';
 		include '../../share/time_treeview.php';
-		
+
 		echo "
 		</div>";
 		break;
-	//#####################################################################################################################	
-		CASE 'kat':
+		//#####################################################################################################################
+	CASE 'kat':
 		echo "
 		<div id='spalte1F'>
 		
@@ -246,12 +246,12 @@ SWITCH ($mod)
 		$mod='kat';
 		$modus='recherche';
 		include '../../share/kat_treeview.php';
-		
+
 		echo "
 		</div>";
 		break;
-	//#####################################################################################################################		
-		CASE 'desc':
+		//#####################################################################################################################
+	CASE 'desc':
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		echo "
 		<div id='spalte1F'>
@@ -260,7 +260,7 @@ SWITCH ($mod)
 		$base_file = 'recherche2';
 		$modus='recherche';
 		$mod='desc';
-		
+
 		echo "<FORM name=\"descr1\" method=\"POST\">
 		<TABLE id='desc'>
 		<TR id='desc'>
@@ -333,12 +333,12 @@ SWITCH ($mod)
 		</TR>
 		 </FORM>
 		 </TABLE>";
-		
+
 		echo "
 		</div>";
 		break;
-	//#####################################################################################################################
-		CASE 'geo':
+		//#####################################################################################################################
+	CASE 'geo':
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		echo "
 		<div id='spalte1F'>
@@ -347,7 +347,7 @@ SWITCH ($mod)
 		$base_file = 'recherche2';
 		$mod='geo';
 		$modus='recherche';
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		echo "<FORM name=\"geo_rech1\" method=\"POST\">
 		<TABLE id='geo'>
 		<TR id='geo'>
@@ -370,11 +370,11 @@ SWITCH ($mod)
 		
 		<TR id='geo'>
 			<TD id='geo1'>Ort liegt h&ouml;her als (m .NN)</TD>";
-			IF( !(isset($alt)) OR $alt == '')
-			{
-				$alt = '0';
-			}
-			echo "
+		IF( !(isset($alt)) OR $alt == '')
+		{
+			$alt = '0';
+		}
+		echo "
 			<TD id='geo2'><INPUT type=\"text\" name=\"alt\" maxlength=\"4\" value = '$alt' class='Feld175'></TD>
 		</TR>
 		
@@ -399,10 +399,10 @@ SWITCH ($mod)
 		</TR>
 		</TABLE>
 		 </FORM>";
-		 
-		 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		 
-		 echo "
+			
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			
+		echo "
 		 <TABLE id='geo'>
 		 <TR id='geo'>
 			<TD id='geo' colspan='2' style='border-style:none; height:30px;'>&nbsp;</TD>
@@ -421,18 +421,18 @@ SWITCH ($mod)
 			<TD id='geo1' style='width:60px;'>Ortsname</TD>
 			<TD id='geo2'>
 				<SELECT name=\"ort\" class='Auswahl270'>";
-				$result9 = mysql_query( "SELECT DISTINCT location FROM $table12 WHERE location <>'Ortsbezeichnung' order by location");
-				echo mysql_error();
-				$num9 = mysql_num_rows($result9);
-				FOR ($i9=0; $i9<$num9; $i9++)
-				{
-					$location = mysql_result($result9, $i9, 'location');
-					$result11 = mysql_query( "SELECT * FROM $table12 WHERE location='$location'");
-					$loc_id = mysql_result($result11, $i11, 'loc_id');
-					echo "<option value='$location'>$location</option>";
-				}
-				
-                                echo "</SELECT>
+		$result9 = mysql_query( "SELECT DISTINCT location FROM $table12 WHERE location <>'Ortsbezeichnung' order by location");
+		echo mysql_error();
+		$num9 = mysql_num_rows($result9);
+		FOR ($i9=0; $i9<$num9; $i9++)
+		{
+			$location = mysql_result($result9, $i9, 'location');
+			$result11 = mysql_query( "SELECT * FROM $table12 WHERE location='$location'");
+			$loc_id = mysql_result($result11, $i11, 'loc_id');
+			echo "<option value='$location'>$location</option>";
+		}
+
+		echo "</SELECT>
 			</TD>
 		</TR>
 		
@@ -456,12 +456,12 @@ SWITCH ($mod)
 		</TR>
 		 </FORM>
 		</TABLE>";
-	//~~~~~~~~~~~~~~~~~~~~~~~
+		//~~~~~~~~~~~~~~~~~~~~~~~
 		echo "
 		</div>";
 		break;
-	//#####################################################################################################################
-		CASE 'exif':
+		//#####################################################################################################################
+	CASE 'exif':
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		$base_file = 'recherche2';
 		$mod='exif';
@@ -489,8 +489,8 @@ SWITCH ($mod)
 				</TD>
 				<TD align = 'right'>
 				<SELECT name='zusatz1' class='Auswahl200' OnChange='getZusatzwert(document.exif_param.zusatz1.value, \"$bewertung\")'>";
-				OptionFields();
-				echo "</SELECT>
+		OptionFields();
+		echo "</SELECT>
 				</TD>
 			</TR>
 			
@@ -550,8 +550,8 @@ SWITCH ($mod)
 		</FORM>
 		</div>";
 		break;
-	//#####################################################################################################################
-		CASE 'kette':
+		//#####################################################################################################################
+	CASE 'kette':
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		$base_file = 'recherche2';
 		$mod='kette';
@@ -658,9 +658,9 @@ SWITCH ($mod)
 		
 		</div>";
 		break;
-	}
+}
 //###############################################################################################################
-	echo "
+echo "
 	<div id='spalte2F'>
 		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'>
 		<b>Hinweis zur Anzeige der Bilder:</b>
@@ -678,38 +678,38 @@ SWITCH ($mod)
 		Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
 	  	</p>
 	  </div>";
-//###############################################################################################################	
-	echo "
+//###############################################################################################################
+echo "
 	<div id='filmstreifen'>";
-	
-	SWITCH($mod)
-	{
-		CASE 'zeit':
+
+SWITCH($mod)
+{
+	CASE 'zeit':
 		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend angepasst wird
 		$mod='zeit';
 		break;
-		
-		CASE 'kat':
+
+	CASE 'kat':
 		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
 		$base_file = 'recherche2';
 		$mod='kat';
 		break;
-		
-		CASE 'desc':
+
+	CASE 'desc':
 		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
-		$mod='desc';		
+		$mod='desc';
 		break;
-		
-		CASE 'geo':
+
+	CASE 'geo':
 		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
-		$mod='geo';		
+		$mod='geo';
 		break;
-	}
-	
-	echo "
+}
+
+echo "
 	</div>";
-//###############################################################################################################	
-	echo "
+//###############################################################################################################
+echo "
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 	
 </div>
@@ -723,6 +723,7 @@ mysql_close($conn);
 
 echo "</DIV>";
 ?>
+
 </CENTER>
 </BODY>
 </HTML>

@@ -72,7 +72,7 @@ function addGPSdata($infile,$outfile,$GPS_lat,$GPS_lon,$GPS_alt)
 			$gpslonref = new PelEntryAscii(PelTag::GPS_LONGITUDE_REF, $GPS_lonref);
 			$gpsaltref = new PelEntryByte(PelTag::GPS_ALTITUDE_REF, $GPS_altref);
 			$gpsversion = new PelEntryByte(PelTag::GPS_VERSION_ID, 2, 2, 0, 0);
-			
+				
 			/* Daten eintragen.*/
 			$subifd->addEntry($gpsversion);
 			$subifd->addEntry($gpslat);

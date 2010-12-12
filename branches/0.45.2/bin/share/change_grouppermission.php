@@ -57,7 +57,7 @@ if (hasPermission($c_username, 'adminlogin'))
 	{
 		$en = '1';
 	}
-	
+
 	$result = mysql_query("UPDATE $table6 SET enabled='$en' WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
 	//Es werden die Benutzer der Gruppe ermittelt:
 	$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
@@ -81,9 +81,9 @@ ELSE
 }
 
 /*
-$result1 = mysql_query( "UPDATE $table7 SET enabled = '$new_status' WHERE permission_id = '$perm_id' AND user_id = '$user_id'");
-echo mysql_error();
-mysql_close($conn);
-*/
+ $result1 = mysql_query( "UPDATE $table7 SET enabled = '$new_status' WHERE permission_id = '$perm_id' AND user_id = '$user_id'");
+ echo mysql_error();
+ mysql_close($conn);
+ */
 
 ?>

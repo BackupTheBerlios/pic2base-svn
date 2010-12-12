@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 
 //File-Owner: K. Henneberg
@@ -97,7 +97,7 @@ IF($modus == 'tmp')
 		//echo $command_a;
 		$output = shell_exec($command_a);
 	}
-	
+
 	$x = time();
 	//das Anhaengsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
 	echo "<img src=\"$inst_path/pic2base/images/originale/tmp/$new_filename?var=$x\">";
@@ -112,13 +112,13 @@ ELSEIF($modus == 'new')
 	//	4) jpg-Thumbnail neu erzeugen
 	//	5) Graustufenbild neu erzeugen
 	//	6) Datei-Attribute aller neu erzeugten Dateien auf 700 setzen
-	
+
 	//Schritt 1)
 	$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi;
 	$new_filename = substr($file_name_raw,0,-4).".jpg";
 	$command1 = $dcraw." ".$parameter." ".$pic_path."/".$file_name_raw." | ".$conv." -quality 100 - ".$pic_path."/".$new_filename."";
 	$output = shell_exec($command1);
-	
+
 	IF($contrast !== '0')
 	{
 		$c = '0';
@@ -141,7 +141,7 @@ ELSEIF($modus == 'new')
 		$command1_a = $im_path."/convert ".$pic_path."/".$new_filename." ".$contr." ".$pic_path."/".$new_filename;
 		$output = shell_exec($command1_a);
 	}
-	
+
 	//Schritt 2)
 	//echo "Ausrichtung: ".$Orientation."<BR>";
 	$file_info = pathinfo($file_name_raw);
@@ -160,16 +160,16 @@ ELSEIF($modus == 'new')
 			$rot_filename = createQuickPreview($Orientation,$new_filename);
 		}
 	}
-	
+
 	// Schritt 3)
 	$source = $pic_path."/".$new_filename;
 	$FileNameHQ = substr($file_name_raw,0,-4)."_hq.jpg";
 	$max_len = '800';
 	//$command2 = $im_path."/convert -quality 80 -size ".$max_len."x0 ".$source." -resize ".$max_len."x0 ".$pic_hq_path."/".$FileNameHQ."";
 	$command2 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_hq_path."/".$FileNameHQ."";
- 	//echo $command;
- 	$output = shell_exec($command2);
- 	
+	//echo $command;
+	$output = shell_exec($command2);
+
 	IF($contrast !== '0')
 	{
 		$c = '0';
@@ -192,15 +192,15 @@ ELSEIF($modus == 'new')
 		$command2_a = $im_path."/convert ".$pic_hq_path."/".$FileNameHQ." ".$contr." ".$pic_hq_path."/".$FileNameHQ;
 		$output = shell_exec($command2_a);
 	}
- 	
- 	// Schritt 4)
- 	$FileNameV = substr($file_name_raw,0,-4)."_v.jpg";
- 	//echo $FileNameV."<BR>";
- 	$max_len = '160';
- 	$command3 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs_path."/".$FileNameV;
-      	//echo $command."<BR>";
-      	$output = shell_exec($command3);
-      	
+
+	// Schritt 4)
+	$FileNameV = substr($file_name_raw,0,-4)."_v.jpg";
+	//echo $FileNameV."<BR>";
+	$max_len = '160';
+	$command3 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs_path."/".$FileNameV;
+	//echo $command."<BR>";
+	$output = shell_exec($command3);
+	 
 	IF($contrast !== '0')
 	{
 		$c = '0';
@@ -223,16 +223,16 @@ ELSEIF($modus == 'new')
 		$command3_a = $im_path."/convert ".$pic_thumbs_path."/".$FileNameV." ".$contr." ".$pic_thumbs_path."/".$FileNameV;
 		$output = shell_exec($command3_a);
 	}
-	
+
 	// Schritt 5) Graustufenbild neu erzeugen
 	$FileNameMono = substr($file_name_raw,0,-4)."_mono.jpg";
 	$command5 = $conv." ".$pic_hq_path."/".$FileNameHQ." -colorspace Gray -quality 80% ".$monochrome_path."/".$FileNameMono;
 	$output = shell_exec($command5);
-	
-    // Schritt 6) Erzeugung des Anzeige-Bildes:
-    $command4 = $conv." -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename;
+
+	// Schritt 6) Erzeugung des Anzeige-Bildes:
+	$command4 = $conv." -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename;
 	$output = shell_exec($command4);
-	
+
 	IF($contrast !== '0')
 	{
 		$c = '0';
@@ -255,7 +255,7 @@ ELSEIF($modus == 'new')
 		$command4_a = $conv." ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
 		$output = shell_exec($command4_a);
 	}
-	
+
 	$x = time();
 	//das Anhaengsel "?var=$x" dient dazu, den Browser zu zwingen, das Bild NICHT aus dem Cache zu laden:
 	echo "<img src=\"$inst_path/pic2base/images/originale/tmp/$new_filename?var=$x\"><BR><BR>

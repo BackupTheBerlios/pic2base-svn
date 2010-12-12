@@ -3,28 +3,26 @@ IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Startseite</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -45,38 +43,43 @@ IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
- 
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$page = $_GET['page'];
+
 $conv = buildConvertCommand($sr);
 $identify = str_replace('convert', 'identify', $conv);
-
-$sup_ft_arr = explode(chr(10),shell_exec($identify." -list format"));
-//$sup_ft_arr = explode(chr(10),$sup_ft);
+$sup_ft_arr = explode(chr(10),shell_exec($identify." -list format")); //Zeilen-Trennung
 //print_r($sup_ft_arr);
 
-$page = $_GET['page']; 
-
-FOREACH($sup_ft_arr AS $SFT)
-{
-	$SFT = str_replace("  ","",$SFT);
-	$zeil_arr = explode(chr(32),$SFT);
-	if(isset($zeil_arr[2]))
-	{
-		$mod = $zeil_arr[2];
-	}
-	else
-	{
-		$mod = ' ';
-	}
-	IF($mod !== ' ')
-	{
-		$file_format = strtolower(str_replace('*','',$zeil_arr[0]));
-	}
-}
-
+/*
+ //+++++++++++++  in Bearbeitung  +++++++++++++++++++++++++++
+ FOREACH($sup_ft_arr AS $SFT)
+ {
+ $SFT = str_replace("  ","",$SFT);
+ //$zeil_arr = explode(chr(32),$SFT);	//Leerzeichen-Trennung
+ //$zeil_arr = explode(chr(9),$SFT); 	//Tabulator-Trennung
+ $zeil_arr = explode(chr(32),$SFT);
+ print_r($zeil_arr);
+ if(isset($zeil_arr[2]))
+ {
+ $mod = $zeil_arr[2];
+ }
+ else
+ {
+ $mod = ' ';
+ }
+ IF($mod !== ' ')
+ {
+ $file_format = strtolower(str_replace('*','',$zeil_arr[0]));
+ //echo $file_format."<BR>";
+ echo $mod."<BR>";
+ }
+ }
+ */
 
 echo "
 
@@ -86,15 +89,15 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi4_1($c_username);
-		echo "
+createNavi4_1($c_username);
+echo "
 		</div>
 	</div>
 	
 	<div class='content'>";
-	SWITCH($page)
-	{
-		CASE '0':
+SWITCH($page)
+{
+	CASE '0':
 		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>Hinweise zur Startseite:</b><BR>
 		Das pic2base-Fenster unterteilt sich im wesentlichen in 3 Bereiche:<BR><BR>
@@ -164,11 +167,12 @@ echo "
 		</TABLE>
 		</p>";
 		break;
-		
-		CASE '1':
+
+	CASE '1':
 		echo "<p style='margin:80px 150px; text-align:justify; width:400px;'>
 		<b>Hinweise zum Bild-Upload per FTP (Batch-Prozess):</b><BR><BR>
 		Derzeit (Software-Version ".$version.") werden die folgenden Datei-Typen von pic2base unterst&uuml;tzt:<BR>";
+		//Array aus der global_config wird hier analysiert:
 		$i='0';
 		FOREACH($supported_filetypes AS $sft)
 		{
@@ -183,9 +187,9 @@ echo "
 			}
 			$i++;
 		}
-		
-		
-		
+
+
+
 		echo "
 		<BR><BR>
 		Unter Windows verwenden Sie einen geeigneten FTP-Client (z.B. WS-FTP) um Ihre Bilder auf den pic2base-Server hochzuladen. 
@@ -200,8 +204,8 @@ echo "
 		allen Bildern Kategorien zuzuweisen. Dies ist f&uuml;r die sp&auml;tere Recherche wichtig.
 		</p>";
 		break;
-		
-		CASE '2':
+
+	CASE '2':
 		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>Hilfe zu den Suchm&ouml;glichkeiten</b><BR><BR>
 		
@@ -310,8 +314,8 @@ echo "
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		</p>";
 		break;
-		
-		CASE '3':
+
+	CASE '3':
 		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>&Uuml;bersicht &uuml;ber die Bearbeitungsm&ouml;glichkeiten</b><BR><BR>
 		
@@ -355,8 +359,8 @@ echo "
 		Weiterf&uuml;hrende Informationen erhalten Sie auf den entsprechenden Bearbeitungs-Seiten.<BR>
 		</p>";
 		break;
-		
-		CASE '4':
+
+	CASE '4':
 		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>Hilfe zu den Bearbeitungsm&ouml;glichkeiten</b><BR><BR>
 		
@@ -436,8 +440,8 @@ echo "
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		</p>";
 		break;
-		
-		CASE '5':
+
+	CASE '5':
 		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>Hilfe zum Administrations-Bereich:</b><BR><BR>
 		
@@ -555,8 +559,8 @@ echo "
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		</p>";
 		break;
-		
-		CASE '6':
+
+	CASE '6':
 		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		<b>Hilfe zu den pers&ouml;nlichen Einstellungen</b><BR><BR>
 		Auf dieser Seite haben Sie die M&ouml;glichkeit, pers&ouml;nliche Einstellungen anzupassen sowie Passworte zu &auml;ndern.<BR>
@@ -565,8 +569,8 @@ echo "
 		Weitere Hinweise finden Sie auf der Einstellungen-Seite.
 		</p>";
 		break;
-	}
-	echo "
+}
+echo "
 	</div>
 	<br style='clear:both;' />
 
@@ -575,8 +579,7 @@ echo "
 </div>";
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

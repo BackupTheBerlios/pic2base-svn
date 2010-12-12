@@ -7,8 +7,8 @@ include $sr.'/bin/share/functions/permissions.php';
 //Zugriffskontrolle ######################################################
 IF (!$_COOKIE['login'])
 {
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ELSE
 {
@@ -30,14 +30,14 @@ IF( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )
 	setcookie('bewertung',$_POST['bewertung']);
 }
 else if ( array_key_exists('bewertung',$_COOKIE) )
-	{
-		$bewertung = $_COOKIE['bewertung'];
-	}
-	else
-	{
-		$bewertung = '';
-		setcookie('bewertung',$bewertung);
-	}
+{
+	$bewertung = $_COOKIE['bewertung'];
+}
+else
+{
+	$bewertung = '';
+	setcookie('bewertung',$bewertung);
+}
 ?>
 
 <script language="JavaScript">
@@ -50,21 +50,19 @@ function switchBewertung(bewertung)
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Recherche</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Recherche</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -94,84 +92,81 @@ $num2 = mysql_num_rows($result2);
 ?>
 <div class="page">
 
-	<p id="kopf">pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
-		createNavi2($c_username);
-		//echo $navigation;
-		?>
-		</div>
-	</div>
-	<div id="spalte1">
-	
-	<?php
-	IF( array_key_exists('bewertung',$_COOKIE) )
+<p id="kopf">pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User:
+<?php echo $c_username;?>)</span></p>
+<div class="navi" style="clear: right;">
+<div class="menucontainer"><?php
+createNavi2($c_username);
+//echo $navigation;
+?></div>
+</div>
+<div id="spalte1"><?php
+IF( array_key_exists('bewertung',$_COOKIE) )
+{
+	$bewertung = $_COOKIE['bewertung'];
+}
+if ( empty($bewertung) OR !isset($bewertung) )
+{
+	$bewertung = '';
+}
+IF ($num2 > 0)
+{
+	$action = $_SERVER['PHP_SELF'];
+	$sel1 = $sel2 = $sel3 = $sel4 = $sel5 = $sel6 = '';
+	$sel21 = $sel22 =$sel31 = $sel32 = $sel41 = $sel42 = '';
+	$bew = $bewertung;
+	SWITCH($bew)
 	{
-		$bewertung = $_COOKIE['bewertung'];
-	}
-	if ( empty($bewertung) OR !isset($bewertung) )
-	{
-		$bewertung = '';
-	}
-	IF ($num2 > 0)
-	{
-		$action = $_SERVER['PHP_SELF'];
-		$sel1 = $sel2 = $sel3 = $sel4 = $sel5 = $sel6 = '';
-		$sel21 = $sel22 =$sel31 = $sel32 = $sel41 = $sel42 = '';
-		$bew = $bewertung;
-		SWITCH($bew)
-		{
-			CASE '=1':
+		CASE '=1':
 			$sel1 = 'selected';
 			break;
-			
-			CASE '>=2':
+
+		CASE '>=2':
 			$sel21 = 'selected';
 			break;
-			
-			CASE '=2':
+
+		CASE '=2':
 			$sel2 = 'selected';
 			break;
-			
-			CASE '<=2':
+
+		CASE '<=2':
 			$sel22 = 'selected';
 			break;
-			
-			CASE '>=3':
+
+		CASE '>=3':
 			$sel31 = 'selected';
 			break;
-			
-			CASE '=3':
+
+		CASE '=3':
 			$sel3 = 'selected';
 			break;
-			
-			CASE '<=3':
+
+		CASE '<=3':
 			$sel32 = 'selected';
 			break;
-			
-			CASE '>=4':
+
+		CASE '>=4':
 			$sel41 = 'selected';
 			break;
-			
-			CASE '=4':
+
+		CASE '=4':
 			$sel4 = 'selected';
 			break;
-			
-			CASE '<=4':
+
+		CASE '<=4':
 			$sel42 = 'selected';
 			break;
-			
-			CASE '=5':
+
+		CASE '=5':
 			$sel5 = 'selected';
 			break;
-			
-			CASE '6':
-			CASE '':
+
+		CASE '6':
+		CASE '':
 			$sel6 = 'selected';
 			break;
-		}
-		echo "
+	}
+	echo "
 		<TABLE border='0'>
 		<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900'>
@@ -231,13 +226,13 @@ $num2 = mysql_num_rows($result2);
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=desc'>Suche nach Beschreibungstext</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=geo'>Suche nach Geo-Daten</a>
 		<!--<a class='subnavi' href='recherche2.php?pic_id=0&mod=kette'>Experten-Suche: Verkettete Recherche</a><BR></center>-->";
-	}
-	ELSE
-	{
-		echo "<p style='color:red; text-align:center; font-weight:bold;'>Es gibt zur Zeit keine Eintr&auml;ge in der Datenbank!</P>";
-	}
-		
-	echo "
+}
+ELSE
+{
+	echo "<p style='color:red; text-align:center; font-weight:bold;'>Es gibt zur Zeit keine Eintr&auml;ge in der Datenbank!</P>";
+}
+
+echo "
 	</div>
 	
 	<div id='spalte2'><p id='elf' style='background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;'><b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
@@ -249,8 +244,8 @@ $num2 = mysql_num_rows($result2);
 </div>";
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
+
 </CENTER>
 </BODY>
 </HTML>

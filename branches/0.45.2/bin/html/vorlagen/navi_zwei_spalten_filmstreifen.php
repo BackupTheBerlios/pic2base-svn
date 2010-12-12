@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../css/format1.css'>
-	<link rel="shortcut icon" href="../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="../share/images/favicon.ico">
 </HEAD>
 
 <script language="JavaScript" type="text/javascript">
@@ -35,13 +35,11 @@ function ZeigeBild(bildname,breite,hoehe)
 //-->
 </script>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?
+<DIV Class="klein"><?
 
 /*
  * Project: pic2base
@@ -65,10 +63,10 @@ function ZeigeBild(bildname,breite,hoehe)
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
- 
+
 include '../share/db_connect1.php';
 
 $result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
@@ -77,29 +75,29 @@ SWITCH ($berechtigung)
 {
 	//Admin
 	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='adminframe.php'>Administration</a>
+		$navigation = 	"<a class='navi' href='adminframe.php'>Administration</a>
 			<a class='navi' href='erfassung0.php'>Erfassung</a>
 			<a class='navi' href='auswahl0.php?mod=rech'>Recherche</a>
 			<a class='navi' href='start.php'>Zur�ck</a>
 			<a class='navi' href='hilfe1.php'>Hilfe</a>
 			<a class='navi' href='../../index.php'>Logout</a>";
-	break;
-	
-	//Owner
+		break;
+
+		//Owner
 	CASE $berechtigung == '5':
-	$navigation = 	"<a class='navi' href='erfassung0.php'>Erfassung</a>
+		$navigation = 	"<a class='navi' href='erfassung0.php'>Erfassung</a>
 			<a class='navi' href='recherche1.php'>Recherche</a>
 			<a class='navi' href='vorschau.php'>Bearbeitung</a>
 			<a class='navi' href='hilfe1.php'>Hilfe</a>
 			<a class='navi' href='../../index.php'>Logout</a>";
-	break;
-	
-	//Web-User
+		break;
+
+		//Web-User
 	CASE $berechtigung == '9':
-	$navigation = 	"<a class='navi' href='recherche1.php'>Recherche</a>
+		$navigation = 	"<a class='navi' href='recherche1.php'>Recherche</a>
 			<a class='navi' href='hilfe1.php'>Hilfe</a>
 			<a class='navi' href='../../index.php'>Logout</a>";
-	break;
+		break;
 }
 
 echo "
@@ -122,17 +120,17 @@ echo "
 	</div>
 	
 	<div id='filmstreifen'>";
-	include '../share/get_preview.php';
-	echo"
+include '../share/get_preview.php';
+echo"
 	</div>";
-	IF ($button_view !=='0')
-	{
-		echo "<p align='right' style='margin-right:20px;'><INPUT type='submit'>&#160;&#160;&#160;<INPUT type='button' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'></p>";
-	}
-	ELSE
-	{
-		echo "<p align='right' style='margin-right:20px;'><INPUT type='submit' disabled>&#160;&#160;&#160;<INPUT type='button' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'></p>";
-	}
+IF ($button_view !=='0')
+{
+	echo "<p align='right' style='margin-right:20px;'><INPUT type='submit'>&#160;&#160;&#160;<INPUT type='button' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'></p>";
+}
+ELSE
+{
+	echo "<p align='right' style='margin-right:20px;'><INPUT type='submit' disabled>&#160;&#160;&#160;<INPUT type='button' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'></p>";
+}
 echo "
 </FORM>
 	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
@@ -140,8 +138,7 @@ echo "
 </div>";
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

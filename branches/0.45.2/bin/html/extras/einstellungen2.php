@@ -1,21 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -39,8 +37,8 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('/,/',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('/,/',$_COOKIE['login']);
+	//echo $c_username;
 }
 
 $id = $_REQUEST['id'];
@@ -66,7 +64,7 @@ IF(hasPermission($c_username, 'editallprofiles'))
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
 	$direkt_download = mysql_result($result1, isset($i1), 'direkt_download');
-	
+
 	echo "
 	<div class='page'>
 	
@@ -74,8 +72,8 @@ IF(hasPermission($c_username, 'editallprofiles'))
 			
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			createNavi5($c_username);
-			echo "</div>
+	createNavi5($c_username);
+	echo "</div>
 		</div>
 		
 		<div id='spalte1'>
@@ -137,20 +135,20 @@ IF(hasPermission($c_username, 'editallprofiles'))
 			<TD id='kat1' colspan='2'>
 			<!--<input type='text' name='direkt_download' value = '$direkt_download' style='width:200px;'>-->
 			<SELECT name='direkt_download' style='width:200px;'>";
-			IF($direkt_download == '0')
-			{
-				echo "
+	IF($direkt_download == '0')
+	{
+		echo "
 				<option value='0' selected>per FTP</option>
 				<option value='1'>Direkt-Download</option>";
-			}
-			ELSEIF($direkt_download == '1')
-			{
-				echo "
+	}
+	ELSEIF($direkt_download == '1')
+	{
+		echo "
 				<option value='0'>per FTP</option>
 				<option value='1' selected>Direkt-Download</option>";
-			}
-			
-			echo "
+	}
+
+	echo "
 			</TD>
 		</TR>
 		
@@ -211,8 +209,7 @@ ELSEIF(!hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_userna
 }
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

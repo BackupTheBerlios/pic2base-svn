@@ -20,37 +20,30 @@
  *
  * Styles used in the samples pages.
  */
-
-body, td, th, input, select, textarea
-{
+body,td,th,input,select,textarea {
 	font-size: 12px;
 	font-family: Arial, Verdana, Sans-Serif;
 }
 
-h1
-{
+h1 {
 	font-weight: bold;
 	font-size: 180%;
 	margin-bottom: 10px;
 }
 
-form
-{
+form {
 	margin: 0;
 	padding: 0;
 }
 
-#outputSample
-{
+#outputSample {
 	table-layout: fixed;
 	width: 100%;
 }
 
-pre
-{
+pre {
 	margin: 0;
 	padding: 0;
-
 	white-space: pre; /* CSS2 */
 	white-space: -moz-pre-wrap; /* Mozilla*/
 	white-space: -o-pre-wrap; /* Opera 7 */
@@ -59,16 +52,14 @@ pre
 	word-wrap: break-word; /* IE */
 }
 
-#outputSample thead th
-{
+#outputSample thead th {
 	color: #dddddd;
 	background-color: #999999;
 	padding: 4px;
 	white-space: nowrap;
 }
 
-#outputSample tbody th
-{
+#outputSample tbody th {
 	vertical-align: top;
 	text-align: left;
 }

@@ -1,13 +1,13 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 
 //###############################################################
-//wird beim löschen von Bildern aus dem Download-Ordner verwendet
+//wird beim lï¿½schen von Bildern aus dem Download-Ordner verwendet
 //###############################################################
 include 'global_config.php';
 include 'db_connect1.php';
@@ -48,8 +48,8 @@ else
 }
 
 //es wird ermittelt, ob im Download-Ordner weitere Dateien mit dem Stamm-Namen existieren (z.B. 1234567676)
-//Wenn ja, wird geprüft, wieviel hiervon Scene-Dateien sind (z.B. 1234567676-1.jpg) und wieviele Nicht-JPG-Bilder sind (z.B. 1234567676.bmp)
-//nur wenn keine scene-Dateien mehr im Download-Ordner sind, wird auch die Nicht-JPG-Datei gelöscht
+//Wenn ja, wird geprï¿½ft, wieviel hiervon Scene-Dateien sind (z.B. 1234567676-1.jpg) und wieviele Nicht-JPG-Bilder sind (z.B. 1234567676.bmp)
+//nur wenn keine scene-Dateien mehr im Download-Ordner sind, wird auch die Nicht-JPG-Datei gelï¿½scht
 
 $file_info = pathinfo($datei);
 $base_name = substr($file_info['basename'],0,-4);
@@ -70,7 +70,7 @@ FOR($i2='0'; $i2<$num2; $i2++)
 //echo "davon ".$k." noch im Download-Ordner.";
 IF($k == '0')
 {
-	//wenn keine Stamm-Datei mehr im Download-Ordner mehr ist wird eine evtl. vorh. Nicht-JPG-Datei gelöscht:
+	//wenn keine Stamm-Datei mehr im Download-Ordner mehr ist wird eine evtl. vorh. Nicht-JPG-Datei gelï¿½scht:
 	FOREACH($supported_filetypes AS $sft)
 	{
 		IF(file_exists($ftp_path."/".$c_username."/downloads/".$base_name.".".$sft))

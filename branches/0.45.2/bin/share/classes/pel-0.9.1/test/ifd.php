@@ -26,53 +26,53 @@
 
 class IFDTestCase extends UnitTestCase {
 
-  function __construct() {
-    require_once('../PelIfd.php');
-    require_once('../PelTag.php');
-    require_once('../PelEntryAscii.php');
-    parent::__construct('PEL IFD Tests');
-  }
+	function __construct() {
+		require_once('../PelIfd.php');
+		require_once('../PelTag.php');
+		require_once('../PelEntryAscii.php');
+		parent::__construct('PEL IFD Tests');
+	}
 
-  function testIteratorAggretate() {
-    $ifd = new PelIfd(PelIfd::IFD0);
-    
-    $this->assertEqual(sizeof($ifd->getIterator()), 0);
+	function testIteratorAggretate() {
+		$ifd = new PelIfd(PelIfd::IFD0);
 
-    $desc = new PelEntryAscii(PelTag::IMAGE_DESCRIPTION, 'Hello?');
-    $date = new PelEntryTime(PelTag::DATE_TIME, 12345678);
+		$this->assertEqual(sizeof($ifd->getIterator()), 0);
 
-    $ifd->addEntry($desc);
-    $ifd->addEntry($date);
+		$desc = new PelEntryAscii(PelTag::IMAGE_DESCRIPTION, 'Hello?');
+		$date = new PelEntryTime(PelTag::DATE_TIME, 12345678);
 
-    $this->assertEqual(sizeof($ifd->getIterator()), 2);
+		$ifd->addEntry($desc);
+		$ifd->addEntry($date);
 
-    $entries = array();
-    foreach ($ifd as $tag => $entry) {
-      $entries[$tag] = $entry;
-    }
+		$this->assertEqual(sizeof($ifd->getIterator()), 2);
 
-    $this->assertIdentical($entries[PelTag::IMAGE_DESCRIPTION], $desc);
-    $this->assertIdentical($entries[PelTag::DATE_TIME], $date);
-  }
+		$entries = array();
+		foreach ($ifd as $tag => $entry) {
+			$entries[$tag] = $entry;
+		}
 
-  function testArrayAccess() {
-    $ifd = new PelIfd(PelIfd::IFD0);
-    
-    $this->assertEqual(sizeof($ifd->getIterator()), 0);
+		$this->assertIdentical($entries[PelTag::IMAGE_DESCRIPTION], $desc);
+		$this->assertIdentical($entries[PelTag::DATE_TIME], $date);
+	}
 
-    $desc = new PelEntryAscii(PelTag::IMAGE_DESCRIPTION, 'Hello?');
-    $date = new PelEntryTime(PelTag::DATE_TIME, 12345678);
+	function testArrayAccess() {
+		$ifd = new PelIfd(PelIfd::IFD0);
 
-    $ifd[] = $desc;
-    $ifd[] = $date;
+		$this->assertEqual(sizeof($ifd->getIterator()), 0);
 
-    $this->assertIdentical($ifd[PelTag::IMAGE_DESCRIPTION], $desc);
-    $this->assertIdentical($ifd[PelTag::DATE_TIME], $date);
+		$desc = new PelEntryAscii(PelTag::IMAGE_DESCRIPTION, 'Hello?');
+		$date = new PelEntryTime(PelTag::DATE_TIME, 12345678);
 
-    unset($ifd[PelTag::DATE_TIME]);
-    
-    $this->assertFalse(isset($ifd[PelTag::DATE_TIME]));
-  }
+		$ifd[] = $desc;
+		$ifd[] = $date;
+
+		$this->assertIdentical($ifd[PelTag::IMAGE_DESCRIPTION], $desc);
+		$this->assertIdentical($ifd[PelTag::DATE_TIME], $date);
+
+		unset($ifd[PelTag::DATE_TIME]);
+
+		$this->assertFalse(isset($ifd[PelTag::DATE_TIME]));
+	}
 
 }
 

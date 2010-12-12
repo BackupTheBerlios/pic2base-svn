@@ -4,7 +4,7 @@ include '../../share/global_config.php';
 //Zugriffskontrolle ######################################################
 IF (!$_COOKIE['login'])
 {
-  header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 ELSE
 {
@@ -25,7 +25,7 @@ if(array_key_exists('item',$_GET))
 {
 	if(array_key_exists('item',$_GET))
 	{
-		$item = $_GET['item']; 
+		$item = $_GET['item'];
 	}
 }
 else

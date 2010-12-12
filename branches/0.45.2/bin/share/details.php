@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 ?>
 
@@ -11,14 +11,14 @@ IF (!$_COOKIE['login'])
 <html>
 
 <head>
-  <title>Bild-Details</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../css/format1.css'>
-  <link rel="shortcut icon" href="images/favicon.ico">
+<title>Bild-Details</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="images/favicon.ico">
 </head>
-<body style='background-color:#999999'>
+<body style='background-color: #999999'>
 <?php
 // verwendet als Popup-Fenster mit den Detail-Infos zum Bild
 
@@ -75,7 +75,7 @@ IF ($_COOKIE['login'])
 }
 
 //############   Erstellung der Histogramme, falls nicht bereits vorhanden:   #######################
-// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt, 
+// Histogramme werden im Ordner /images/histogramme als XXXXX_hist_f.jpg abgelegt,
 //wobei XXXXX fuer pic_id steht und f fuer die Farbe (rot, gruen, blau oder weiss -> rgbw)
 generateHistogram($pic_id,$FileNameHQ,$sr);
 
@@ -95,35 +95,35 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>
 	</TR>";
-	
-	IF($view == 'kompact')
+
+IF($view == 'kompact')
+{
+	IF($ed !== '')
 	{
-		IF($ed !== '')
-		{
-			$link_text = " >>> <a href=\"details.php?pic_id=$pic_id&view=all\">alle</a> Details";
-		}
-		ELSE
-		{
-			$link_text = "";
-		}
-		echo "
+		$link_text = " >>> <a href=\"details.php?pic_id=$pic_id&view=all\">alle</a> Details";
+	}
+	ELSE
+	{
+		$link_text = "";
+	}
+	echo "
 		<TR class='normal'>
 			<TD class='normal' colspan = '2'>
 			Ausgew&auml;hlte Details zum Bild ".$pic_id.$link_text."
 			</TD>
 		</TR>";
-	}
-	ELSEIF($view == 'all')
-	{
-		echo "
+}
+ELSEIF($view == 'all')
+{
+	echo "
 		<TR class='normal'>
 			<TD class='normal' colspan = '2'>
 			Alle Details zum Bild ".$pic_id." >>> <a href=\"details.php?pic_id=$pic_id&view=kompact\">zur Kompaktansicht</a>
 			</TD>
 		</TR>";
-	}
-	
-	echo "
+}
+
+echo "
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>
@@ -251,23 +251,23 @@ FOREACH($info_arr AS $IA)
 	SWITCH($tag)
 	{
 		CASE 'GPSAltitude':
-		$val_arr = explode(' ',$value);
-		$value = $val_arr[0];
-		break;
-		
+			$val_arr = explode(' ',$value);
+			$value = $val_arr[0];
+			break;
+
 		CASE 'GPSLongitude':
-		$val_arr = explode(' ',$value);
-		$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
-		break;
-		
+			$val_arr = explode(' ',$value);
+			$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
+			break;
+
 		CASE 'GPSLatitude':
-		$val_arr = explode(' ',$value);
-		$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
-		break;
-		
+			$val_arr = explode(' ',$value);
+			$value = $val_arr[0] + ($val_arr[2] / 60) + ($val_arr[3] / 3600);
+			break;
+
 		CASE 'GPSPosition':
-		$value = $location;
-		break;
+			$value = $location;
+			break;
 	}
 	//tag-Gruppen-Ueberschriften (werden nur in der vollst. Ansicht dargestellt):
 	IF($tag == '' AND $value !== '' AND $view == 'all')
@@ -298,25 +298,25 @@ FOREACH($info_arr AS $IA)
 				$color = 'black';
 			}
 		}
-		
+
 		SWITCH($view)
 		{
 			case 'kompact':
-			IF(in_array($tag,$viewable_fields))
-			{
-				echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
-				echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
+				IF(in_array($tag,$viewable_fields))
+				{
+					echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
+					echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
 				<TD class='liste2' style='width:225px;'>".$value."</TD>
 				</TR>";
-			}
-			break;
-			
+				}
+				break;
+					
 			case 'all':
-			echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
-			echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
+				echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
+				echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
 			<TD class='liste2' style='width:225px;'>".$value."</TD>
 			</TR>";
-			break;
+				break;
 		}
 	}
 	$n++;
@@ -324,7 +324,7 @@ FOREACH($info_arr AS $IA)
 IF($view == 'all')
 {
 	//liegen Kategorielexikon-Eintraege zu diesem Bild vor?
-	$result4 = mysql_query("SELECT $table4.kat_id, $table4.kategorie, $table10.pic_id, $table10.kat_id, $table11.lfdnr, $table11.kat_id, $table11.info 
+	$result4 = mysql_query("SELECT $table4.kat_id, $table4.kategorie, $table10.pic_id, $table10.kat_id, $table11.lfdnr, $table11.kat_id, $table11.info
 	FROM $table4, $table10, $table11 
 	WHERE $table10.pic_id = '$pic_id' 
 	AND $table10.kat_id = $table11.kat_id 
@@ -350,7 +350,7 @@ IF($view == 'all')
 			</TR>";
 		}
 	}
-	
+
 	//liegen Tagebucheintraege zu diesem Bild vor?
 	//echo mysql_get_server_info();
 	IF(mysql_get_server_info() <= 5.1)
@@ -367,7 +367,7 @@ IF($view == 'all')
 	{
 		//echo "Version > 5.1";
 		//Abfrage-Syntax ist erst ab mysql-Version 5.1 ferfuegbar:
-		$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table14.pic_id, $table14.DateTimeOriginal 
+		$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table14.pic_id, $table14.DateTimeOriginal
 		FROM $table14, $table3 
 		WHERE (year($table14.DateTimeOriginal) = year($table3.datum) 
 		AND month($table14.DateTimeOriginal) = month($table3.datum) 
@@ -377,7 +377,7 @@ IF($view == 'all')
 		@$diary_info = mysql_result($result5, isset($i5), 'info');
 		@$datum = date('d.m.Y', strtotime(mysql_result($result5, isset($i5), 'datum')));
 	}
-	
+
 	IF($diary_info != '')
 	{
 		echo "
@@ -406,16 +406,16 @@ echo "
 	<TR style='background-color:white;'>
 		<TD class='liste2' style='width:450px;text-align:center;' colspan='2' ><img src=\"../../images/monochrome/".$pic_id."_mono.jpg\" width='400px' alt='Monochrome-Ansicht' title='Monochrome-Ansicht' border='0' /></TD>
 	</TR>";
-	IF($ed == '')
-	{
-		echo "
+IF($ed == '')
+{
+	echo "
 		<TR style='background-color:white; color:red;'>
 			<TD class='liste2' style='width:450px;text-align:center; border-right-style:solid; border-right-width:3px; border-left-style:solid; border-left-width:3px; border-color:red;' colspan='2'>
 			<b>Das Dateiformat des Originalbildes kann keine Meta-Daten speichern.</B>
 			</TD>
 		</TR>";
-	}
-	echo "
+}
+echo "
 	<!--
 	<TR style='background-color:white;'>
 		<TD class='liste2' style='width:450px;' colspan='2' >Link zum <a href=http://".$_SERVER['SERVER_NAME'].$inst_path."/pic2base/images/originale/".restoreOriFilename($pic_id, $sr).">Originalbild</a></TD>
@@ -426,14 +426,14 @@ echo "
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>
 	</TR>";
-	//echo count($writable_fields);
-	//IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username AND $ed !== '')
-	IF(($editable == '1' OR count(isset($writable_fields)) > 0) 
-	AND (($u_name == $c_username AND hasPermission($c_username, 'editmypics'))
-	OR ($u_name !== $c_username AND hasPermission($c_username, 'editallpics'))) 
-	AND $ed !== '')
-	{
-		echo "
+//echo count($writable_fields);
+//IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username AND $ed !== '')
+IF(($editable == '1' OR count(isset($writable_fields)) > 0)
+AND (($u_name == $c_username AND hasPermission($c_username, 'editmypics'))
+OR ($u_name !== $c_username AND hasPermission($c_username, 'editallpics')))
+AND $ed !== '')
+{
+	echo "
 		<TR class='normal'>
 			<TD class='normal'>Meta-Daten editieren&#160;&#160;
 			<A HREF='edit_details.php?pic_id=$pic_id'><img src=\"images/edit.gif\" width=\"15\" height=\"15\" border='none' title='Meta-Daten editieren' style='vertical-align:sub;' /></A>
@@ -442,17 +442,17 @@ echo "
 			<A HREF='javascript:window.close()'><img src=\"images/close.gif\" width=\"15\" height=\"15\" border='none' title='Fenster schliessen' style='vertical-align:sub;' /></A>
 			</TD>
 		</TR>";
-	}
-	ELSE
-	{
-		echo "
+}
+ELSE
+{
+	echo "
 		<TR class='normal'>
 			<TD class='normal' colspan = '2' align='right'>Fenster schliessen&#160;&#160;
 			<A HREF='javascript:window.close()'><img src=\"images/close.gif\" width=\"15\" height=\"15\" border='none' title='Fenster schliessen' style='vertical-align:sub; margin-right:10px;' /></A>
 			</TD>
 		</TR>";
-	}
-	echo "
+}
+echo "
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>

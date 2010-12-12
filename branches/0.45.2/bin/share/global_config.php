@@ -20,8 +20,8 @@ $up_dir = $ftp_path.'/'.$benutzername.'/uploads';
 $down_dir = $ftp_path.'/'.$benutzername.'/downloads';
 $kml_dir = $ftp_path.'/'.$benutzername.'/kml_files';
 //#####################################################################################
-//[Datei-Ablagepfade]				
-$pic_path = $sr."/images/originale";						//Ablage der Originale	
+//[Datei-Ablagepfade]
+$pic_path = $sr."/images/originale";						//Ablage der Originale
 $pic_rot_path = $sr."/images/originale/rotated";			//Ablage der rotierten Vorschaubilder
 $pic_hq_path = $sr."/images/vorschau/hq-preview";			//Ablage der HQ-Vorschaubilder
 $pic_thumbs_path = $sr."/images/vorschau/thumbs";			//Ablage der kleinen Vorschaubilder
@@ -41,35 +41,35 @@ $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','h
 SWITCH($_SERVER['SERVER_NAME'])
 {
 	CASE '192.168.2.1':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxSduOkDu6uk_blu4bAZehFc8UgIFRT8JXVB4Qo8Z7BeN-oy10_YBkCEFA';
-	break;
-	
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxSduOkDu6uk_blu4bAZehFc8UgIFRT8JXVB4Qo8Z7BeN-oy10_YBkCEFA';
+		break;
+
 	CASE '192.168.2.10':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxRdSLoRo6ahUq86u7GTF2QlyFPI7xRoeJelplUqg4Hoq9YI6gI7sblgsA';
-	break;
-	
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxRdSLoRo6ahUq86u7GTF2QlyFPI7xRoeJelplUqg4Hoq9YI6gI7sblgsA';
+		break;
+
 	CASE '192.168.2.99':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxQzFTxXOsBYwafEKKcNomHI0QeIexQlwWPECOTW_QzuVlJa5lHsWk9-QA';
-	break;
-	
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxQzFTxXOsBYwafEKKcNomHI0QeIexQlwWPECOTW_QzuVlJa5lHsWk9-QA';
+		break;
+
 	CASE '192.168.1.42':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxTL1ycLECCulbociEzhtBQzqRCr-xRH6X16UDh4zV-IrM-ju-_dEeZovw';
-	break;
-	
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxTL1ycLECCulbociEzhtBQzqRCr-xRH6X16UDh4zV-IrM-ju-_dEeZovw';
+		break;
+
 	CASE '192.168.1.115':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxTriDCjuNilgxJNDvlkgyYpou4gKRTxHyyfoBFcwA06zZ_T1tbyjwrTLg';
-	break;
-	
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxTriDCjuNilgxJNDvlkgyYpou4gKRTxHyyfoBFcwA06zZ_T1tbyjwrTLg';
+		break;
+
 	CASE '192.168.2.20':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxSuWditJXxW9FLuhokEclMC9S8ZkRRqV3gp37rBxwtpvj3XamxOWAhcxw';
-	break;
-	
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxSuWditJXxW9FLuhokEclMC9S8ZkRRqV3gp37rBxwtpvj3XamxOWAhcxw';
+		break;
+
 	CASE '192.168.171.199':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxRzMcqr4P0Ekez4k72Qu7OM5_F2AxR0urMtZW3iDwHbzkSMKS-R8fYN7w';
-	break;
-	
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxRzMcqr4P0Ekez4k72Qu7OM5_F2AxR0urMtZW3iDwHbzkSMKS-R8fYN7w';
+		break;
+
 	CASE '192.168.2.30':
-	$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxS8hLyd-_GDUlLQgu8j9skYQOSoIhS7kdDlVVPS_Uz2FnyXl57IHuq-0w';
-	break;
+		$gm_key = 'ABQIAAAAfok8Y2--ffLXF31zAx_DvxS8hLyd-_GDUlLQgu8j9skYQOSoIhS7kdDlVVPS_Uz2FnyXl57IHuq-0w';
+		break;
 }
 ?>

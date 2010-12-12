@@ -10,15 +10,15 @@ IF (!$_COOKIE['login'])
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
-	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>pic2base - Startseite</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <?php
 setlocale(LC_CTYPE, 'de_DE');
@@ -29,7 +29,7 @@ INCLUDE 'global_config.php';
 // fuer register_globals = off
 if(array_key_exists('kat_id_s',$_GET))
 {
-	$kat_id_s = $_GET['kat_id_s']; 
+	$kat_id_s = $_GET['kat_id_s'];
 }
 else
 {
@@ -75,7 +75,7 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 		{
 			$space .="&#160;&#160;&#160;";
 		}
-		
+
 		$kat_id_s_pos = array_search($kat_id_s, $knoten_arr_s);
 		if($kat_id_s_pos > 0 )
 		{
@@ -89,19 +89,19 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 				<TD id='kat1'>
 				".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s_back\")'>".$img."</span>&#160;".$kategorie."
 				</TD>";
-				
-				IF($kat_id_s !== '1')
-				{
-					echo "
+
+			IF($kat_id_s !== '1')
+			{
+				echo "
 					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 					</TD>";
-				}
-				ELSE
-				{
-					echo "<TD id='kat2'><BR></TD>";
-				}
-				
-				echo "</TR>";
+			}
+			ELSE
+			{
+				echo "<TD id='kat2'><BR></TD>";
+			}
+
+			echo "</TR>";
 			getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S);
 		}
 		ELSE
@@ -111,19 +111,19 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 				<TD id='kat1'>
 				".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
 				</TD>";
-				
-				IF($kat_id_s !== '1')
-				{
-					echo "
+
+			IF($kat_id_s !== '1')
+			{
+				echo "
 					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 					</TD>";
-				}
-				ELSE
-				{
-					echo "<TD id='kat2'><BR></TD>";
-				}
-				
-				echo "</TR>";
+			}
+			ELSE
+			{
+				echo "<TD id='kat2'><BR></TD>";
+			}
+
+			echo "</TR>";
 		}
 	}
 }
@@ -142,12 +142,12 @@ FOR ($i10=0; $i10<$num10; $i10++)
 	{
 		$space .="&#160;&#160;&#160;";
 	}
-	
+
 	//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
 	$kat_id_s_back = array_search($kat_id_s, $knoten_arr_s);
 	IF (in_array($kat_id_s, $knoten_arr_s))
 	{
-		
+
 		//echo "Space: ".$space."<BR>";
 		//echo $kat_id_s_back;
 		$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
@@ -155,19 +155,19 @@ FOR ($i10=0; $i10<$num10; $i10++)
 			<TD id='kat1'>
 			".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s_back\")'>".$img."</span>&#160;".$kategorie."
 			</TD>";
-				
-			IF($kat_id_s !== '1')
-			{
-				echo "
+
+		IF($kat_id_s !== '1')
+		{
+			echo "
 				<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 				</TD>";
-			}
-			ELSE
-			{
-				echo "<TD id='kat2'><BR></TD>";
-			}
+		}
+		ELSE
+		{
+			echo "<TD id='kat2'><BR></TD>";
+		}
 			
-			echo "</TR>";
+		echo "</TR>";
 		getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S);
 	}
 	ELSE
@@ -178,18 +178,18 @@ FOR ($i10=0; $i10<$num10; $i10++)
 			<TD id='kat1'>
 			".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
 			</TD>";
-				
-			IF($kat_id_s !== '1')
-			{
-				echo "
+
+		IF($kat_id_s !== '1')
+		{
+			echo "
 				<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 				</TD>";
-			}
-			ELSE
-			{
-				echo "<TD id='kat2'><BR></TD>";
-			}
-			echo "</TR>";
+		}
+		ELSE
+		{
+			echo "<TD id='kat2'><BR></TD>";
+		}
+		echo "</TR>";
 	}
 }
 

@@ -1,21 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Kategorie-Sortierung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Kategorie-Sortierung</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY LANG="de-DE" scroll="auto">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 
 /*
  * Project: pic2base
@@ -56,7 +54,7 @@ IF(hasPermission($c_username, 'editkattree'))
 IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND $kat_dest !== '' AND $kat_dest !== NULL)
 {
 	//Wenn ein Kategoriezweig umgehaengt wird, wird dem Wurzelelement des Zweiges das neue Parent-Elemenz zugewiesen und bei allen Elementen dez Zweiges muss der level aktualisiert werden.
-	
+
 	$result1 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_source'");
 	$source_name = mysql_result($result1, isset($i1), 'kategorie');
 	$source_parent = mysql_result($result1, isset($i1), 'parent');
@@ -65,18 +63,18 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	$dest_name = mysql_result($result2, isset($i2), 'kategorie');
 	$dest_level = mysql_result($result2, isset($i2), 'level');
 	echo "Quell-Kategorie: ".$kat_source." (".$source_name."), Ziel-Kategorie: ".$kat_dest." (".$dest_name.")<BR><BR>";
-	
+
 	//Ermittlung aller Unterkategorien unter der Quell-Kategorie:
 	//zur Sicherheit Bereinigung der tmp_tree-Tabelle:
 	$result3 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$user_id'");
 	//Parameter der Quell-Kat. werden in die Tabelle tmp_tree geschrieben:
 	$result4 = mysql_query( "INSERT INTO $table15 (kat_id, old_level, kat_name, user_id, new_level, new_parent) VALUES ('$kat_source', '0', '$source_name', '$user_id', '0', '0')");
 	echo mysql_error();
-	
+
 	//Bestimmung der Unterkategorieen ausgehend von der Quell-Kategorie
 	$res1 = mysql_query( "SELECT max(level) FROM $table4");
 	$max_level = mysql_result($res1, isset($i1), 'max(level)');
-//	echo "max. Level: ".$max_level."<BR>";
+	//	echo "max. Level: ".$max_level."<BR>";
 	$result5 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$kat_source'");
 	$num5 = mysql_num_rows($result5);
 	$child_arr[] = $kat_source;
@@ -108,15 +106,15 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	//Bestimmung, ueber wieviele Ebenen sich der zu uebertragende Kategoriezweig erstreckt:
 	$result8 = mysql_query( "SELECT * FROM $table15 GROUP BY 'old_level' ORDER BY 'old_level'");
 	$num8 = mysql_num_rows($result8);
-//	echo $num8." Ebenen<BR>";
-	
+	//	echo $num8." Ebenen<BR>";
+
 	//das Wurzelelement des Kategoriezweigs wird neu eingehaengt und das neue parent- und level-Element in die tmp-Tabelle eingetragen:
 	$result9 = mysql_query( "SELECT * FROM $table15 WHERE old_level = '0'");
 	$kat_id = mysql_result($result9, isset($i9), 'kat_id');
 	$new_level = $dest_level + 1;
 	$result12 = mysql_query( "UPDATE $table15 SET new_parent = '$kat_dest', new_level = '$new_level' WHERE kat_id = '$kat_id' AND user_id = '$user_id'");
 	echo mysql_error();
-	
+
 	//die Levelzuordnung aller Zweig-Elemente muss korrigiert werden
 	FOR($i8='0'; $i8<$num8; $i8++)
 	{
@@ -127,7 +125,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		}
 		$new_level++;
 	}
-	
+
 	//Uebertragung der Daten aus der tmp-Tabelle in die Kategorie-Tabelle:
 	$result11 = mysql_query( "SELECT * FROM $table15 WHERE user_id = '$user_id'");
 	$num11 = mysql_num_rows($result11);
@@ -145,8 +143,8 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 			$result13 = mysql_query( "UPDATE $table4 SET level = '$new_level' WHERE kat_id = '$kat_id'");
 		}
 	}
-	
-//###########################   Umstrukturierung des Kategoriebaumes abgeschlossen   #######################################	
+
+	//###########################   Umstrukturierung des Kategoriebaumes abgeschlossen   #######################################
 
 	//Aktualisierung der Meta-Daten (im Bild und in der meta_data-Tabelle:
 	//Ermittlung aller Bilder, die von der Umstrukturierung betroffen sind:
@@ -157,7 +155,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	{
 		$pic_id = mysql_result($result14, $i14, 'pic_id');
 		echo "Bild ".$pic_id."<BR>";
-		//es werden aus der pic_kat-Tabelle alle Verweise zwischen dem betr. Bild und der ehemalig ueber der Source-Kat stehenden Kategorie entfernt: 
+		//es werden aus der pic_kat-Tabelle alle Verweise zwischen dem betr. Bild und der ehemalig ueber der Source-Kat stehenden Kategorie entfernt:
 		$result20 = mysql_query( "DELETE FROM $table10 WHERE (kat_id = '$source_parent' AND pic_id = '$pic_id')");
 		//es wird ermittelt welches die tiefste zugewiesene Kategorie ist (die mit dem groessten level):
 		$result15 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
@@ -172,10 +170,10 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 			echo mysql_error();
 			$row = mysql_fetch_array($result16);
 			$level = $row['level'];
-			$kat_name = $row['kategorie'];			
+			$kat_name = $row['kategorie'];
 			$level = $row['level'];
-	//		$kat_name = mysql_result($result16, $i16, 'kategorie');
-//			echo "Kategorie: ".$kat_id.", Level: ".$level."<BR>";
+			//		$kat_name = mysql_result($result16, $i16, 'kategorie');
+			//			echo "Kategorie: ".$kat_id.", Level: ".$level."<BR>";
 			IF($level > $max_level)
 			{
 				$max_level = $level;
@@ -183,8 +181,8 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 				$max_kat_name = $kat_name;
 			}
 		}
-//		echo "Bild: ".$pic_id.", tiefste Kategorie: ".$max_kat.", (".$max_kat_name.") max. Level: ".$max_level."<BR>";
-		
+		//		echo "Bild: ".$pic_id.", tiefste Kategorie: ".$max_kat.", (".$max_kat_name.") max. Level: ".$max_level."<BR>";
+
 		//Bestimmung aller Eltern-Elemente zu der tiefsten Kategorie; gleichzeitig Entfernung der pic_kat-Eintraege aus der pic_kat-Tabelle:
 		$kat_id = $max_kat;
 		$KAT_ID = array();	//Array leeren
@@ -193,7 +191,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		{
 			$result17 = mysql_query( "DELETE FROM $table10 WHERE (pic_id = '$pic_id' AND kat_id = '$kat_id')");
 			echo mysql_error();
-//			echo "Zuordnung zwischen Bild ".$pic_id." und Kategorie ".$kat_id." wurde geloescht.<BR>";
+			//			echo "Zuordnung zwischen Bild ".$pic_id." und Kategorie ".$kat_id." wurde geloescht.<BR>";
 			$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 			echo mysql_error();
 			$row = mysql_fetch_array($res0);
@@ -219,14 +217,14 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 				}
 			}
 		}
-		
+
 		//Kategorien werden ins Bild geschrieben:
 		//Ermittlung des Dateinamens des Originalbildes:
 		$FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 		//echo $FN."<BR>";
 		//eintragen der Kategorien in IPTC:Keywords
 		shell_exec($et_path."/exiftool -IPTC:Keywords='$kategorie' -overwrite_original ".$FN);
-		
+
 		//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
 		$result3 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$pic_id'");
 		$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$pic_id'");
@@ -246,8 +244,7 @@ ELSE
 //#####   Ende   ##########################################################################################################
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

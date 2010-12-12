@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 
 /*
@@ -35,7 +35,7 @@ FOR ($i1=0; $i1<$num1; $i1++)
 $antwort = "<entries>";
 FOREACH ($content AS $inh)
 {
-$antwort .= "	<data>
+	$antwort .= "	<data>
 		<name>$inh</name>
 		</data>";
 }

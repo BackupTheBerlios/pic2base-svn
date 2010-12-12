@@ -1,18 +1,15 @@
-
-
 /**************************************************************
 
 	Slider
 	v 1.0
 
 **************************************************************/
-
-#slideContainer1, #slideContainer2 {
+#slideContainer1,#slideContainer2 {
 	border: 1px solid #ccc;
 	height: 20px;
 }
 
-#slideHandle1, #slideHandle2 {
+#slideHandle1,#slideHandle2 {
 	background-color: orange;
 	width: 10px;
 	height: 20px;
@@ -24,12 +21,11 @@
 	background-image: url(bg.gif);
 }
 
-#pos1, #pos2 {
+#pos1,#pos2 {
 	border: 1px solid #ccc;
 	height: 20px;
 	width: 30px;
 	margin-top: 5px;
 	padding-left: 2px;
 }
-
 /*************************************************************/

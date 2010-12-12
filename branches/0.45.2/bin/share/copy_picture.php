@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-  	header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 
 include 'global_config.php';
@@ -58,6 +58,6 @@ FOREACH($supported_filetypes AS $sft)
 }
 IF($k == '0')
 {
- //echo "keine weiteren Dateien.";
+	//echo "keine weiteren Dateien.";
 }
 ?>

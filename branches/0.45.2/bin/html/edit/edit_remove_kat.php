@@ -1,26 +1,28 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
-	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
-	<script language="javascript" type="text/javascript" src="../../share/calendar.js"></script>
-	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
+<script language="javascript" type="text/javascript"
+	src="../../share/calendar.js"></script>
+<script type="text/javascript"
+	src="../../share/functions/ShowPicture.js"></script>
 </HEAD>
 
 
@@ -39,13 +41,11 @@ Fenster1 = window.open('../../share/save_changes.php?pic_id='+pic_id + '&descrip
 //-->
 </script>
 
-<BODY LANG="de-DE" scroll = "auto" onload="javascript:CloseWindow()">
+<BODY LANG="de-DE" scroll="auto" onload="javascript:CloseWindow()">
 
 <CENTER>
 
-<DIV Class="klein">
-
-<?php
+<DIV Class="klein"><?php
 /***********************************************************************************
  * Project: pic2base
  * File: edit_remove_kat.php
@@ -63,10 +63,10 @@ Fenster1 = window.open('../../share/save_changes.php?pic_id='+pic_id + '&descrip
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//echo $c_username;
 }
- 
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
@@ -85,13 +85,13 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi3_1($c_username);
-		echo "</div>
+createNavi3_1($c_username);
+echo "</div>
 	</div>";
 //################################################################################################################
 SWITCH ($mod)
-	{
-		CASE 'kat':
+{
+	CASE 'kat':
 		echo "
 		<div id='spalte1F'>
 		
@@ -101,44 +101,44 @@ SWITCH ($mod)
 		$mod='kat';
 		$modus='edit';
 		include $sr.'/bin/share/kat_treeview.php';
-		
+
 		echo "
 		</div>";
 		break;
-		
-		CASE 'desc':
+
+	CASE 'desc':
 		echo "
 		<div id='spalte1F'>";
-			$mod='desc';
+		$mod='desc';
 		echo "
 		</div>";
 		break;
-	}
+}
 //###############################################################################################################
-	echo "	
+echo "
 	<div id='spalte2F'>
 	</div>";
-//###############################################################################################################	
-	echo "
+//###############################################################################################################
+echo "
 	<div id='filmstreifen'>";
-	
-	SWITCH($mod)
-	{		
-		CASE 'kat':
+
+SWITCH($mod)
+{
+	CASE 'kat':
 		$modus='edit';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
 		$mod='kat';
 		break;
-		
-		CASE 'desc':
+
+	CASE 'desc':
 		$modus='edit';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
-		$mod='desc';		
+		$mod='desc';
 		break;
-	}
-	
-	echo "
+}
+
+echo "
 	</div>";
-//###############################################################################################################	
-	echo "
+//###############################################################################################################
+echo "
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 	
 </div>
@@ -149,8 +149,7 @@ SWITCH ($mod)
 </div>";
 
 mysql_close($conn);
-?>
-</DIV>
+?></DIV>
 </CENTER>
 </BODY>
 </HTML>

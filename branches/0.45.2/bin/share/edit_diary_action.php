@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 ?>
 
@@ -11,17 +11,17 @@ include '../share/global_config.php';
 <html>
 
 <head>
-  <title>Tagebuch-Eintrag</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../css/format1.css'>
-  <link rel="shortcut icon" href="images/favicon.ico">
+<title>Tagebuch-Eintrag</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../css/format1.css'>
+<link rel="shortcut icon" href="images/favicon.ico">
 </head>
-<body style='background-color:#999999'>
+<body style='background-color: #999999'>
 
 <?php
-//skript speichert den geänderten Tagebuch-Eintrag in die diary-Tabelle
+//skript speichert den geï¿½nderten Tagebuch-Eintrag in die diary-Tabelle
 echo "&Auml;nderungen werden gespeichert...<BR>";
 include_once 'global_config.php';
 include_once 'db_connect1.php';

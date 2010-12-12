@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../index.php');
 }
 
 include 'global_config.php';
@@ -28,15 +28,15 @@ $result1 = mysql_query( "SELECT * FROM $table2 WHERE FileName = '$FileName'");
 //echo $num1."<BR>";
 IF($num1 == '1')
 {
-  $row = mysql_fetch_array($result1);
-//  $pic_id = $row['pic_id'];
-  $FileNameOri = $row['FileNameOri'];
+	$row = mysql_fetch_array($result1);
+	//  $pic_id = $row['pic_id'];
+	$FileNameOri = $row['FileNameOri'];
 }
 ELSE
 {
-  echo "<p style='color:red; font-wight:bold;'>ES LIEGT EIN PROBLEM VOR!<BR>
+	echo "<p style='color:red; font-wight:bold;'>ES LIEGT EIN PROBLEM VOR!<BR>
   ES EXISTIERT KEIN oder MEHR ALS EIN DATENSATZ F&Uuml;R DAS GEW&Auml;HLTE BILD!!</p>";
-  return;
+	return;
 }
 //echo $FileNameOri."<br>";
 
@@ -51,11 +51,11 @@ $datei = $pic_path."/".$base_name.strtolower($ext);
 
 // Passenden Datentyp erzeugen.
 header("Content-Type: application/octet-stream");
- 
+
 // Dateinamen im Download-Requester vorgeben
 $save_as = $FileNameOri;
 header("Content-Disposition: attachment; filename=\"$save_as\"");
- 
+
 // Datei ausgeben.
 readfile($datei);
 

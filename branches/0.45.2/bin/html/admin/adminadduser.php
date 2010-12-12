@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 
 unset($username);
@@ -13,8 +13,8 @@ IF ($_COOKIE['login'])
 	//echo $c_username;
 }
 include '../../share/global_config.php';
-	include $sr.'/bin/share/db_connect1.php';
-	include_once $sr.'/bin/share/functions/permissions.php';
+include $sr.'/bin/share/db_connect1.php';
+include_once $sr.'/bin/share/functions/permissions.php';
 if (hasPermission($c_username, 'adminlogin'))
 {
 	echo "

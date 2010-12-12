@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
 ?>
 
@@ -11,16 +11,16 @@ include '../../share/global_config.php';
 <html>
 
 <head>
-  <title>Neuen Eigent&uuml;mer festlegen</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../../css/format1.css'>
-  <link rel="shortcut icon" href="../../share/images/favicon.ico">
-  <script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+<title>Neuen Eigent&uuml;mer festlegen</title>
+<meta name="GENERATOR" content="Quanta Plus">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+<link rel="shortcut icon" href="../../share/images/favicon.ico">
+<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </head>
 
-<body style='background-color:#999999'>
+<body style='background-color: #999999'>
 <?php
 // verwendet als Popup-Fenster zur Festlegung Bild-Eigentuemers
 
@@ -54,7 +54,7 @@ $username = $row['username'];
 IF($c_username === $username)
 {
 	//welche User gibt es noch im System, der Bilder erfassen darf (permission 799)?
-	$result2 = mysql_query("SELECT $table1.id, $table1.username, $table1.vorname, $table1.name, $table1.ort, $table1.aktiv, 
+	$result2 = mysql_query("SELECT $table1.id, $table1.username, $table1.vorname, $table1.name, $table1.ort, $table1.aktiv,
 	$table7.user_id, $table7.permission_id, $table7.enabled
 	FROM $table1 INNER JOIN $table7
 	ON $table1.id = $table7.user_id
@@ -96,7 +96,7 @@ IF($c_username === $username)
 		<TD class='normal' bgcolor='#FFFFFF' colspan='2'>
 		<img src=\"$inst_path/pic2base/images/vorschau/thumbs/$FileNameV\">
 		<BR>Derzeitiger Eigent&uuml;mer:<BR>".
-		$vorname." ".$name."<BR>".$ort."</TD>
+	$vorname." ".$name."<BR>".$ort."</TD>
 		<TD style='; background-color:#99FF99;'>
 		<div id='other_user' style='width:430px; height:450px; overflow:auto; margin-left:30px;'>
 		<fieldset style='margin-top:20px;'>
@@ -104,29 +104,29 @@ IF($c_username === $username)
 		<TABLE style='width:400px; border-style:none;'>
 		<TR class='normal' >
 		<TD class='normal' style='width:310px; text-align:left; padding-left:50px;'>";
-		FOR($i2='0'; $i2<$num2; $i2++)
+	FOR($i2='0'; $i2<$num2; $i2++)
+	{
+		$id = mysql_result($result2, $i2, 'id');
+		$name= mysql_result($result2, $i2, 'name');
+		$vorname = mysql_result($result2, $i2, 'vorname');
+		$ort = mysql_result($result2, $i2, 'ort');
+		$username = mysql_result($result2, $i2, 'username');
+		//echo $id;
+		IF($username === $c_username)
 		{
-			$id = mysql_result($result2, $i2, 'id');
-			$name= mysql_result($result2, $i2, 'name');
-			$vorname = mysql_result($result2, $i2, 'vorname');
-			$ort = mysql_result($result2, $i2, 'ort');
-			$username = mysql_result($result2, $i2, 'username');
-			//echo $id;
-			IF($username === $c_username)
-			{
-				$sel = 'disabled';
-			}
-			ELSE
-			{
-				$sel = '';
-			}
+			$sel = 'disabled';
+		}
+		ELSE
+		{
+			$sel = '';
+		}
 			
-			echo "
+		echo "
 			<INPUT type=\"radio\" name=\"new_owner\" value=\"$id\" \"$sel\" style='margin-right:20px;'>".$vorname." ".$name.", ".$ort."<BR>
 			<input type='hidden' name ='pic_id' value='$pic_id'>";
-		}
-		
-		echo "</TD>
+	}
+
+	echo "</TD>
 		</TR>
 		</TABLE>
 		</fieldset>

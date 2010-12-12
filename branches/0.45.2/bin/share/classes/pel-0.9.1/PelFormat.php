@@ -51,175 +51,175 @@
  */
 class PelFormat {
 
-  /**
-   * Unsigned byte.
-   *
-   * Each component will be an unsigned 8-bit integer with a value
-   * between 0 and 255.
-   *
-   * Modelled with the {@link PelEntryByte} class.
-   */
-  const BYTE       =  1;
-  
-  /**
-   * ASCII string.
-   *
-   * Each component will be an ASCII character.
-   *
-   * Modelled with the {@link PelEntryAscii} class.
-   */
-  const ASCII      =  2;
-  
-  /**
-   * Unsigned short.
-   *
-   * Each component will be an unsigned 16-bit integer with a value
-   * between 0 and 65535.
-   *
-   * Modelled with the {@link PelEntryShort} class.
-   */
-  const SHORT      =  3;
+	/**
+	 * Unsigned byte.
+	 *
+	 * Each component will be an unsigned 8-bit integer with a value
+	 * between 0 and 255.
+	 *
+	 * Modelled with the {@link PelEntryByte} class.
+	 */
+	const BYTE       =  1;
 
-  /**
-   * Unsigned long.
-   *
-   * Each component will be an unsigned 32-bit integer with a value
-   * between 0 and 4294967295.
-   *
-   * Modelled with the {@link PelEntryLong} class.
-   */
-  const LONG       =  4;
+	/**
+	 * ASCII string.
+	 *
+	 * Each component will be an ASCII character.
+	 *
+	 * Modelled with the {@link PelEntryAscii} class.
+	 */
+	const ASCII      =  2;
 
-  /**
-   * Unsigned rational number.
-   *
-   * Each component will consist of two unsigned 32-bit integers
-   * denoting the enumerator and denominator.  Each integer will have
-   * a value between 0 and 4294967295.
-   *
-   * Modelled with the {@link PelEntryRational} class.
-   */
-  const RATIONAL   =  5;
+	/**
+	 * Unsigned short.
+	 *
+	 * Each component will be an unsigned 16-bit integer with a value
+	 * between 0 and 65535.
+	 *
+	 * Modelled with the {@link PelEntryShort} class.
+	 */
+	const SHORT      =  3;
 
-  /**
-   * Signed byte.
-   *
-   * Each component will be a signed 8-bit integer with a value
-   * between -128 and 127.
-   *
-   * Modelled with the {@link PelEntrySByte} class.
-   */
-  const SBYTE      =  6;
+	/**
+	 * Unsigned long.
+	 *
+	 * Each component will be an unsigned 32-bit integer with a value
+	 * between 0 and 4294967295.
+	 *
+	 * Modelled with the {@link PelEntryLong} class.
+	 */
+	const LONG       =  4;
 
-  /**
-   * Undefined byte.
-   *
-   * Each component will be a byte with no associated interpretation.
-   *
-   * Modelled with the {@link PelEntryUndefined} class.
-   */
-  const UNDEFINED  =  7;
+	/**
+	 * Unsigned rational number.
+	 *
+	 * Each component will consist of two unsigned 32-bit integers
+	 * denoting the enumerator and denominator.  Each integer will have
+	 * a value between 0 and 4294967295.
+	 *
+	 * Modelled with the {@link PelEntryRational} class.
+	 */
+	const RATIONAL   =  5;
 
-  /**
-   * Signed short.
-   *
-   * Each component will be a signed 16-bit integer with a value
-   * between -32768 and 32767.
-   *
-   * Modelled with the {@link PelEntrySShort} class.
-   */
-  const SSHORT     =  8;
+	/**
+	 * Signed byte.
+	 *
+	 * Each component will be a signed 8-bit integer with a value
+	 * between -128 and 127.
+	 *
+	 * Modelled with the {@link PelEntrySByte} class.
+	 */
+	const SBYTE      =  6;
 
-  /**
-   * Signed long.
-   *
-   * Each component will be a signed 32-bit integer with a value
-   * between -2147483648 and 2147483647.
-   *
-   * Modelled with the {@link PelEntrySLong} class.
-   */
-  const SLONG      =  9;
+	/**
+	 * Undefined byte.
+	 *
+	 * Each component will be a byte with no associated interpretation.
+	 *
+	 * Modelled with the {@link PelEntryUndefined} class.
+	 */
+	const UNDEFINED  =  7;
 
-  /**
-   * Signed rational number.
-   *
-   * Each component will consist of two signed 32-bit integers
-   * denoting the enumerator and denominator.  Each integer will have
-   * a value between -2147483648 and 2147483647.
-   *
-   * Modelled with the {@link PelEntrySRational} class.
-   */
-  const SRATIONAL  = 10;
+	/**
+	 * Signed short.
+	 *
+	 * Each component will be a signed 16-bit integer with a value
+	 * between -32768 and 32767.
+	 *
+	 * Modelled with the {@link PelEntrySShort} class.
+	 */
+	const SSHORT     =  8;
 
-  /**
-   * Floating point number.
-   *
-   * Entries with this format are not currently implemented.
-   */
-  const FLOAT      = 11;
+	/**
+	 * Signed long.
+	 *
+	 * Each component will be a signed 32-bit integer with a value
+	 * between -2147483648 and 2147483647.
+	 *
+	 * Modelled with the {@link PelEntrySLong} class.
+	 */
+	const SLONG      =  9;
 
-  /**
-   * Double precision floating point number.
-   *
-   * Entries with this format are not currently implemented.
-   */
-  const DOUBLE     = 12;
+	/**
+	 * Signed rational number.
+	 *
+	 * Each component will consist of two signed 32-bit integers
+	 * denoting the enumerator and denominator.  Each integer will have
+	 * a value between -2147483648 and 2147483647.
+	 *
+	 * Modelled with the {@link PelEntrySRational} class.
+	 */
+	const SRATIONAL  = 10;
 
+	/**
+	 * Floating point number.
+	 *
+	 * Entries with this format are not currently implemented.
+	 */
+	const FLOAT      = 11;
 
-  /**
-   * Returns the name of a format.
-   *
-   * @param PelFormat the format.
-   *
-   * @return string the name of the format, e.g., 'Ascii' for the
-   * {@link ASCII} format etc.
-   */
-  static function getName($type) {
-    switch ($type) {
-    case self::ASCII:     return 'Ascii';
-    case self::BYTE:      return 'Byte';
-    case self::SHORT:     return 'Short';
-    case self::LONG:      return 'Long';
-    case self::RATIONAL:  return 'Rational';
-    case self::SBYTE:     return 'SByte';
-    case self::SSHORT:    return 'SShort';
-    case self::SLONG:     return 'SLong';
-    case self::SRATIONAL: return 'SRational';
-    case self::FLOAT:     return 'Float';
-    case self::DOUBLE:    return 'Double';
-    case self::UNDEFINED: return 'Undefined';
-    default:
-      return Pel::fmt('Unknown format: 0x%X', $type);
-    }
-  }
+	/**
+	 * Double precision floating point number.
+	 *
+	 * Entries with this format are not currently implemented.
+	 */
+	const DOUBLE     = 12;
 
 
-  /**
-   * Return the size of components in a given format.
-   *
-   * @param PelFormat the format.
-   *
-   * @return the size in bytes needed to store one component with the
-   * given format.
-   */
-  static function getSize($type) {
-    switch ($type) {
-    case self::ASCII:     return 1;
-    case self::BYTE:      return 1;
-    case self::SHORT:     return 2;
-    case self::LONG:      return 4;
-    case self::RATIONAL:  return 8;
-    case self::SBYTE:     return 1;
-    case self::SSHORT:    return 2;
-    case self::SLONG:     return 4;
-    case self::SRATIONAL: return 8;
-    case self::FLOAT:     return 4;
-    case self::DOUBLE:    return 8;
-    case self::UNDEFINED: return 1;
-    default:
-      return Pel::fmt('Unknown format: 0x%X', $type);
-    }
-  }
+	/**
+	 * Returns the name of a format.
+	 *
+	 * @param PelFormat the format.
+	 *
+	 * @return string the name of the format, e.g., 'Ascii' for the
+	 * {@link ASCII} format etc.
+	 */
+	static function getName($type) {
+		switch ($type) {
+			case self::ASCII:     return 'Ascii';
+			case self::BYTE:      return 'Byte';
+			case self::SHORT:     return 'Short';
+			case self::LONG:      return 'Long';
+			case self::RATIONAL:  return 'Rational';
+			case self::SBYTE:     return 'SByte';
+			case self::SSHORT:    return 'SShort';
+			case self::SLONG:     return 'SLong';
+			case self::SRATIONAL: return 'SRational';
+			case self::FLOAT:     return 'Float';
+			case self::DOUBLE:    return 'Double';
+			case self::UNDEFINED: return 'Undefined';
+			default:
+				return Pel::fmt('Unknown format: 0x%X', $type);
+		}
+	}
+
+
+	/**
+	 * Return the size of components in a given format.
+	 *
+	 * @param PelFormat the format.
+	 *
+	 * @return the size in bytes needed to store one component with the
+	 * given format.
+	 */
+	static function getSize($type) {
+		switch ($type) {
+			case self::ASCII:     return 1;
+			case self::BYTE:      return 1;
+			case self::SHORT:     return 2;
+			case self::LONG:      return 4;
+			case self::RATIONAL:  return 8;
+			case self::SBYTE:     return 1;
+			case self::SSHORT:    return 2;
+			case self::SLONG:     return 4;
+			case self::SRATIONAL: return 8;
+			case self::FLOAT:     return 4;
+			case self::DOUBLE:    return 8;
+			case self::UNDEFINED: return 1;
+			default:
+				return Pel::fmt('Unknown format: 0x%X', $type);
+		}
+	}
 
 }
 ?>

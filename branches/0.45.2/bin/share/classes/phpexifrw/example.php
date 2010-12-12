@@ -10,27 +10,27 @@
  *
  */
 
- $filename = "02280003.jpg";
+$filename = "02280003.jpg";
 
- require("exif.inc");
+require("exif.inc");
 
- $er = new phpExifRW($filename);
+$er = new phpExifRW($filename);
 
- /*
-  * Process the JPEG image
-  */
- $er->processFile();
- 
- /**
-  * Generate a Link to view thumbnail. 
-  * showThumbnail.php files need to be in the same directory.
-  */
- if($er->ThumbnailSize > 0) {
-        echo "<br><img src='".$er->showThumbnail()."'>";
- }
- /**
-  * Show the image details along with Exif information.
-  */
- $er->showImageInfo();
+/*
+ * Process the JPEG image
+ */
+$er->processFile();
+
+/**
+ * Generate a Link to view thumbnail.
+ * showThumbnail.php files need to be in the same directory.
+ */
+if($er->ThumbnailSize > 0) {
+	echo "<br><img src='".$er->showThumbnail()."'>";
+}
+/**
+ * Show the image details along with Exif information.
+ */
+$er->showImageInfo();
 
 ?>
