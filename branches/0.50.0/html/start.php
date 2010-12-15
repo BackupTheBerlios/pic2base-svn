@@ -80,6 +80,7 @@ unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
+$benutzername = $c_username;
 //echo $c_username;
 }
  
@@ -203,8 +204,8 @@ ELSE
 	}
 	//Pruefung, ob Dateien im FTP-Upload-Ordner vorliegen:
 	$n = 0;
-	@$verz=opendir($ftp_path."/".$c_username."/uploads");
-	//echo "Verzeichnis: ".$verz;
+	//@$verz=opendir($ftp_path."/".$c_username."/uploads");
+	$verz=opendir($up_dir);
 	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
 	IF($verz)
 	{
