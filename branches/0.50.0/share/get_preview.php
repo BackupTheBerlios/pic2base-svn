@@ -1657,7 +1657,7 @@ SWITCH ($modus)
 			IF($check > '0')
 			{
 				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-				$icon[$j] = "<TD align='center'>
+				$icon[$j] = "<TD align='center' width='43'>
 				<div id='box$pic_id'>
 				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
 				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/>
@@ -1675,7 +1675,7 @@ SWITCH ($modus)
 					//IF($direkt_download > '0')
 					{
 						$icon[$j] = "
-						<TD align='center'width='43'>
+						<TD align='center' width='43'>
 						<div id='box$pic_id'>
 						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
 						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/>
@@ -1686,7 +1686,7 @@ SWITCH ($modus)
 					ELSE
 					{
 						$icon[$j] = "
-						<TD align='center'width='43'>
+						<TD align='center' width='43'>
 						<div id='box$pic_id'>
 						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
 						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/>
@@ -1798,7 +1798,7 @@ SWITCH ($modus)
 
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6, $i6, 'Owner');
-			//Pruefung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur L�sch-Routine:
+			//Pruefung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur Loesch-Routine:
 			$check = fileExists($FileName, $c_username);
 			IF($check > '0')
 			{
@@ -1807,8 +1807,7 @@ SWITCH ($modus)
 				<TD align='center' width='43'>
 				<div id='box$pic_id'>
 				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
-				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/>
-				</SPAN>	
+				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus dem FTP-Download-Ordner entfernen' /></SPAN>	
 				</div>
 				</TD>";
 			}
@@ -1816,14 +1815,13 @@ SWITCH ($modus)
 			{
 				//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				//IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'downloadpic'))
 				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
 				{
 					IF(directDownload($c_username, $sr))
 					//IF($direkt_download > '0')
 					{
 						$icon[$i6] = "
-						<TD align='center'width='43'>
+						<TD align='center' width='43'>
 						<div id='box$pic_id'>
 						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
 						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
@@ -1833,7 +1831,7 @@ SWITCH ($modus)
 					ELSE
 					{
 						$icon[$i6] = "
-						<TD align='center'width='43'>
+						<TD align='center' width='43'>
 						<div id='box$pic_id'>
 						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
 						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>

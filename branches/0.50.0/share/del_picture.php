@@ -6,9 +6,9 @@ include '../share/global_config.php';
   header('Location: ../../index.php');
 }
 
-//###############################################################
-//wird beim löschen von Bildern aus dem Download-Ordner verwendet
-//###############################################################
+//##################################################################
+//wird beim loeschen von Bildern aus dem Download-Ordner verwendet #
+//##################################################################
 include 'global_config.php';
 include 'db_connect1.php';
 
@@ -38,9 +38,8 @@ $datei = $ftp_path."/".$c_username."/downloads/".$FileName;
 if(@unlink($datei))
 {
 	$result1 = mysql_query( "UPDATE $table2 SET ranking = ranking - 1 WHERE pic_id = '$pic_id'");
-	echo "	<TD align='center'>
-	<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' /></SPAN>	
-	</TD>";
+	echo "
+	<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren' /></SPAN>";
 }
 else
 {
@@ -48,8 +47,8 @@ else
 }
 
 //es wird ermittelt, ob im Download-Ordner weitere Dateien mit dem Stamm-Namen existieren (z.B. 1234567676)
-//Wenn ja, wird geprüft, wieviel hiervon Scene-Dateien sind (z.B. 1234567676-1.jpg) und wieviele Nicht-JPG-Bilder sind (z.B. 1234567676.bmp)
-//nur wenn keine scene-Dateien mehr im Download-Ordner sind, wird auch die Nicht-JPG-Datei gelöscht
+//Wenn ja, wird geprueft, wieviel hiervon Scene-Dateien sind (z.B. 1234567676-1.jpg) und wieviele Nicht-JPG-Bilder sind (z.B. 1234567676.bmp)
+//nur wenn keine scene-Dateien mehr im Download-Ordner sind, wird auch die Nicht-JPG-Datei geloescht
 
 $file_info = pathinfo($datei);
 $base_name = substr($file_info['basename'],0,-4);
@@ -70,7 +69,7 @@ FOR($i2='0'; $i2<$num2; $i2++)
 //echo "davon ".$k." noch im Download-Ordner.";
 IF($k == '0')
 {
-	//wenn keine Stamm-Datei mehr im Download-Ordner mehr ist wird eine evtl. vorh. Nicht-JPG-Datei gelöscht:
+	//wenn keine Stamm-Datei mehr im Download-Ordner mehr ist wird eine evtl. vorh. Nicht-JPG-Datei geloescht:
 	FOREACH($supported_filetypes AS $sft)
 	{
 		IF(file_exists($ftp_path."/".$c_username."/downloads/".$base_name.".".$sft))

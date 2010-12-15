@@ -30,15 +30,14 @@ $target = $ftp_path."/".$c_username."/downloads/".$FileName;
 if(@copy($datei,$target))
 {
 	$result1 = mysql_query( "UPDATE $table2 SET ranking = ranking + 1 WHERE pic_id = '$pic_id'");
-	echo "	<TD align='center'>
-	<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/></SPAN>	
-	</TD>";
+	echo "
+	<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus dem FTP-Download-Ordner entfernen' /></SPAN>";
 }
 else
 {
 	echo "Konnte die Datei $FileName nicht kopieren!<BR>";
 }
-//es wird gepr�ft, ob ggf. ein Originalbild als NICHT-JPG vorliegt
+//es wird geprueft, ob ggf. ein Originalbild als NICHT-JPG vorliegt
 $file_info = pathinfo($datei);
 $base_name = substr($file_info['basename'],0,-4);
 //echo $base_name;
@@ -47,7 +46,6 @@ FOREACH($supported_filetypes AS $sft)
 {
 	IF(file_exists($pic_path."/".$base_name.".".$sft) AND $sft !== 'jpg')
 	{
-		//echo "Es gibt eine ".$sft."-Datei";
 		copy($pic_path."/".$base_name.".".$sft, $ftp_path."/".$c_username."/downloads/".$base_name.".".$sft);
 		//die Meta-Daten dieses nicht-jpg-Bildes werden in das bereits herauskopierte jpg-Bild uebertragen:
 		$command = $exiftool." -tagsFromFile ".$ftp_path."/".$c_username."/downloads/".$base_name.".".$sft." ".$ftp_path."/".$c_username."/downloads/".$FileName." -overwrite_original";
@@ -55,9 +53,5 @@ FOREACH($supported_filetypes AS $sft)
 		shell_exec($command);
 		$k++;
 	}
-}
-IF($k == '0')
-{
- //echo "keine weiteren Dateien.";
 }
 ?>
