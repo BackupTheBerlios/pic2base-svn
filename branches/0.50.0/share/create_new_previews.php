@@ -93,7 +93,7 @@ IF($modus == 'tmp')
 				$c++;
 			}
 		}
-		$command_a = $im_path."/convert ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
+		$command_a = $conv." ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
 		//echo $command_a;
 		$output = shell_exec($command_a);
 	}
