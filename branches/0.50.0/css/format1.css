@@ -25,13 +25,6 @@ h2 {
     text-align:center;
   }
 
-h3 {
-  }
-
-h4 {
-  }
-
-
 hr {
     background-color: #0000FF;
     font-size:10pt;
@@ -703,6 +696,7 @@ div.fuss {
     border-bottom:1px solid #000; text-align:right;
   }
   */
+ 
 div#spalte1 {
   	margin-left: 0px;
   	padding: 1px;
