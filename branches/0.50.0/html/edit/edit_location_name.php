@@ -17,7 +17,6 @@ include '../../share/global_config.php';
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
 	<script language="JavaScript" type="text/javascript">
 	function chkOrt()
 	{
@@ -69,7 +68,6 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $row = mysql_fetch_array($result1);
-//$berechtigung = $row['berechtigung'];
 $user_id = $row['id'];
 //echo "User-ID: ".$user_id."<BR>";
 $num2 = '0';
@@ -134,13 +132,14 @@ echo "
 					$bildinfo = getimagesize($pic_thumbs_path."/".$FileNameV);
 					$breite = $bildinfo[0];
 					$hoehe = $bildinfo[1];
+					$img_string = "http://".$_SERVER['SERVER_NAME'].$inst_path."/pic2base/images/vorschau/thumbs/".$FileNameV;
 					IF($breite > $hoehe)
 					{
-						$imgsrc = "<img src=\"$pic_thumbs_path/$FileNameV\" width= \"300\" />";
+						$imgsrc = "<img src='$img_string' width=\"300\" />";
 					}
 					ELSE
 					{
-						$imgsrc = "<img src=\"$pic_thumbs_path/$FileNameV\" height= \"270\" />";
+						$imgsrc = "<img src='$img_string' width=\"270\" />";
 					}
 					
 					//Bestimmung der Geo-Koordinaten am Aufnahmeort:
