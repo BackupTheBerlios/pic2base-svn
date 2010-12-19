@@ -418,7 +418,7 @@ echo "<br>++++ #### ++++<br>";
 			$res21 = mysql_query("CREATE TABLE IF NOT EXISTS `pfade` (
 			`path_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 			`dcraw_path` VARCHAR( 50 ) NOT NULL ,
-			`im_path` VARCHAR( 50 ) NOT NULL ,
+			`conv_path` VARCHAR( 50 ) NOT NULL ,
 			`et_path` VARCHAR( 50 ) NOT NULL ,
 			`gpsb_path` VARCHAR( 50 ) NOT NULL ,
 			`md5sum_path` VARCHAR( 50 ) NOT NULL
