@@ -82,6 +82,7 @@ echo "<br>++++ #### ++++<br>";
 	}
 	ELSE
 	{
+		$err_count = 0;
 		//Wenn die Verbindung auf den DB-Server erfolgreich hergestellt werden konnte, wird versucht auf die Datenbank zuzugreifen:
 		if (!mysql_select_db($db)) 
 		{
@@ -101,7 +102,16 @@ echo "<br>++++ #### ++++<br>";
 			`aktion` tinytext collate latin1_german1_ci,
 			`dauer` tinytext collate latin1_german1_ci,
 			`lokale_zeit` datetime default NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;");			
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"ftp_transfer\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"ftp_transfer\" wurde angelegt.<BR>";
+			}			
 			
 			$res3 = mysql_query( "CREATE TABLE IF NOT EXISTS `geo_tmp` (
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
@@ -113,6 +123,15 @@ echo "<br>++++ #### ++++<br>";
 			`user_id` int(11) NOT NULL,
 			PRIMARY KEY  (`loc_id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"geo_tmp\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"geo_tmp\" wurde angelegt.<BR>";
+			}		
 			
 			
 			$res4 = mysql_query( "CREATE TABLE IF NOT EXISTS `grouppermissions` (
@@ -121,7 +140,16 @@ echo "<br>++++ #### ++++<br>";
 			`permission_id` int(11) NOT NULL default '0',
 			`enabled` smallint(1) NOT NULL default '0',
 			PRIMARY KEY  (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=42 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			) ENGINE=MyISAM AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"grouppermissions\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"grouppermissions\" wurde angelegt.<BR>";
+			}
 			$res4_1 = mysql_query( "INSERT INTO `grouppermissions` (`id`, `group_id`, `permission_id`, `enabled`) VALUES 
 			(1, 1, 999, 1),
 			(2, 1, 799, 1),
@@ -195,6 +223,15 @@ echo "<br>++++ #### ++++<br>";
 			(70, 4, 549, 0),
 			(71, 4, 639, 0),
 			(72, 4, 649, 0);");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Bef&uuml;llung der Tabelle \"grouppermissions\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"grouppermissions\" wurde mit Daten vorbelegt.<BR>";
+			}
 			
 			
 			$res5 = mysql_query( "CREATE TABLE IF NOT EXISTS `kategorien` (
@@ -207,9 +244,26 @@ echo "<br>++++ #### ++++<br>";
 			KEY `parent` (`parent`),
 			KEY `level` (`level`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"kategorien\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"kategorien\" wurde angelegt.<BR>";
+			}
 			
 			$res5_1 = mysql_query( "INSERT INTO `kategorien` (`kategorie`, `parent`, `level`) VALUES ('Neuzugaenge','0','0');");
-			
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Bef&uuml;llung der Tabelle \"kategorien\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"kategorien\" wurde mit Daten vorbelegt.<BR>";
+			}
 			
 			$res7 = mysql_query( "CREATE TABLE IF NOT EXISTS `kat_lex` (
 			`lfdnr` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -217,6 +271,15 @@ echo "<br>++++ #### ++++<br>";
 			`info` TEXT NOT NULL ,
 			UNIQUE (`kat_id`)
 			) ENGINE = MYISAM ;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"kat_lex\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"kat_lex\" wurde angelegt.<BR>";
+			}		
 			
 			
 			$res6 = mysql_query( "CREATE TABLE IF NOT EXISTS `locations` (
@@ -228,6 +291,15 @@ echo "<br>++++ #### ++++<br>";
 			PRIMARY KEY  (`loc_id`),
 			KEY `location` (`location`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"locations\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"locations\" wurde angelegt.<BR>";
+			}		
 			
 			
 			$res16 = mysql_query( "CREATE TABLE IF NOT EXISTS `meta_data` (
@@ -298,6 +370,15 @@ echo "<br>++++ #### ++++<br>";
 			KEY `FNumber` (`FNumber`),
 			KEY `DateTimeOriginal` (`DateTimeOriginal`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"meta_data\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"meta_data\" wurde angelegt.<BR>";
+			}		
 			
 			
 			$res2 = mysql_query( "CREATE TABLE IF NOT EXISTS `meta_protect` (
@@ -307,6 +388,15 @@ echo "<br>++++ #### ++++<br>";
 			`viewable` BOOL NOT NULL DEFAULT '0',
 			PRIMARY KEY  (`lfdnr`)
 			) ENGINE=MyISAM COMMENT='Sperr-Tabelle fuer EXIF-Daten' AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"meta_protect\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"meta_protect\" wurde angelegt.<BR>";
+			}		
 			
 			
 			$res8 = mysql_query( "CREATE TABLE IF NOT EXISTS `permissions` (
@@ -316,6 +406,15 @@ echo "<br>++++ #### ++++<br>";
 			  `shortdescription` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=36 ;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"permissions\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"permissions\" wurde angelegt.<BR>";
+			}		
 			
 			$res8_1 = mysql_query( "INSERT INTO `permissions` (`id`, `perm_id`, `description`, `shortdescription`) VALUES
 			(1, 999, 'Admin-Login', 'adminlogin'),
@@ -336,6 +435,15 @@ echo "<br>++++ #### ++++<br>";
 			(16, 549, 'alle Bilder geo-referenzieren', 'georefallpics'),
 			(17, 639, 'Tagebuch bearbeiten', 'editdiary'),
 			(18, 649, 'Kategorielexikon bearbeiten', 'editkatlex');");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Bef&uuml;llung der Tabelle \"permissions\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"permissions\" wurde mit Daten vorbelegt.<BR>";
+			}
 			
 			
 			$res10 = mysql_query( "CREATE TABLE IF NOT EXISTS `pictures` (
@@ -365,6 +473,15 @@ echo "<br>++++ #### ++++<br>";
 			KEY `ranking` (`ranking`),
 			KEY `md5sum` (`md5sum`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Bilddaten' AUTO_INCREMENT=1;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"pictures\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"pictures\" wurde angelegt.<BR>";
+			}		
 			
 			
 			$res9 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic_kat` (
@@ -373,6 +490,15 @@ echo "<br>++++ #### ++++<br>";
 			`kat_id` int(11) NOT NULL,
 			KEY `lfdnr` (`lfdnr`)
 			) ENGINE=MyISAM AUTO_INCREMENT=0 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"pic_kat\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"pic_kat\" wurde angelegt.<BR>";
+			}		
 			
 			$res9 = mysql_query( "CREATE TABLE IF NOT EXISTS `tmp_tree` (
 			`lfdnr` int(11) NOT NULL auto_increment,
@@ -384,6 +510,15 @@ echo "<br>++++ #### ++++<br>";
 			`new_parent` int(11) NOT NULL,
 			PRIMARY KEY  (`lfdnr`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=306;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"tmp_tree\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"tmp_tree\" wurde angelegt.<BR>";
+			}		
 			
 			
 			$res12 = mysql_query( "CREATE TABLE IF NOT EXISTS `usergroups` (
@@ -391,11 +526,30 @@ echo "<br>++++ #### ++++<br>";
 			`description` varchar(200) NOT NULL default '',
 			PRIMARY KEY  (`id`,`description`)
 			) ENGINE=MyISAM AUTO_INCREMENT=4 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"usergroups\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"usergroups\" wurde angelegt.<BR>";
+			}		
+			
 			$res12_1 = mysql_query( "INSERT INTO `usergroups` (`id`, `description`) VALUES 
 			(1, 'Admin'),
 			(2, 'WebUsers'),
 			(3, 'Fotograf'),
 			(4, 'Gast');");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Bef&uuml;llung der Tabelle \"usergroups\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"usergroups\" wurde mit Daten vorbelegt.<BR>";
+			}
 			
 			
 			$res13 = mysql_query( "CREATE TABLE IF NOT EXISTS `userpermissions` (
@@ -405,6 +559,16 @@ echo "<br>++++ #### ++++<br>";
 			`enabled` smallint(1) NOT NULL default '0',
 			PRIMARY KEY  (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=2 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"userpermissions\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"userpermissions\" wurde angelegt.<BR>";
+			}		
+			
 			$res13_1 = mysql_query( "INSERT INTO `userpermissions` (`id`, `user_id`, `permission_id`, `enabled`) VALUES 
 			(1, 1, 999, 1),
 			(2, 1, 799, 1),
@@ -424,6 +588,15 @@ echo "<br>++++ #### ++++<br>";
 			(16, 1, 549, 1),
 			(17, 1, 639, 1),
 			(18, 1, 649, 1);");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Bef&uuml;llung der Tabelle \"userpermissions\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"userpermissions\" wurde mit Daten vorbelegt.<BR>";
+			}
 			
 			$res14 = mysql_query( "CREATE TABLE IF NOT EXISTS `users` (
 			`id` int(11) NOT NULL auto_increment,
@@ -460,6 +633,15 @@ echo "<br>++++ #### ++++<br>";
 			KEY `id` (`id`),
 			KEY `username` (`username`)
 			) ENGINE=MyISAM COMMENT='Benutzeraccounts' AUTO_INCREMENT=1 CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"users\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"users\" wurde angelegt.<BR>";
+			}	
 			
 			$res20 = mysql_query( "CREATE TABLE IF NOT EXISTS `diary` (
 			`diary_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -467,6 +649,15 @@ echo "<br>++++ #### ++++<br>";
 			`datum` DATE NOT NULL ,
 			`info` TEXT NOT NULL
 			) ENGINE = MYISAM COMMENT = 'p2b-Tagebuch' CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"diary\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"diary\" wurde angelegt.<BR>";
+			}	
 			
 			// Ablage der Pfade zu den benoetigten Hilfsprogrammen, wird nach der Installation oder dem Softwarecheck neu befuellt
 			$res21 = mysql_query("CREATE TABLE IF NOT EXISTS `pfade` (
@@ -477,6 +668,15 @@ echo "<br>++++ #### ++++<br>";
 			`gpsb_path` VARCHAR( 50 ) NOT NULL ,
 			`md5sum_path` VARCHAR( 50 ) NOT NULL
 			) ENGINE = MYISAM COMMENT = 'Pfade zur Hilfssoftware';");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"pfade\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"pfade\" wurde angelegt.<BR>";
+			}	
 			
 			//Ablage der von dcraw unterstuetzten Dateiformate
 			$res22 = mysql_query("CREATE TABLE IF NOT EXISTS `fileformats` (
@@ -486,6 +686,15 @@ echo "<br>++++ #### ++++<br>";
 			PRIMARY KEY (`format_id`), 
 			INDEX (`format`)
 			) ENGINE = MyISAM COMMENT = 'von ImageMagick unterstützte Dateiformate';");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"fileformats\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"fileformats\" wurde angelegt.<BR>";
+			}	
 			
 			if(!isset($titel))
 			{
@@ -536,7 +745,16 @@ echo "<br>++++ #### ++++<br>";
 			clearstatcache();
 			
 			$text .= "...fertig!";
-			echo "<meta http-equiv='Refresh' Content=3; URL=index.php'>";
+			IF($err_count == 0)
+			{
+				echo "<meta http-equiv='Refresh' Content=3; URL=index.php'>";
+			}
+			ELSE
+			{
+				echo "Es traten ".$err_count." Fehler bei der Einrichtung der Datenbank auf!<BR>
+				Bitte informieren Sie Ihren Administrator.<BR>
+				<meta http-equiv='Refresh' Content=60; URL=index.php'>";
+			}
 			return;
 		}
 		ELSE
