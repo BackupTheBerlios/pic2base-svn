@@ -74,7 +74,7 @@ IF($loc_id == '' AND $ort == '' AND $location == '')
 //es gab bereits eine Referenzierung, dann wird diese aktualisiert:  ############################################
 ELSEIF(($loc_id !== '' AND $loc_id !== '0') AND $ort !== '' AND $location !== '')
 {
-	echo "<p><center>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</center></p>";
+	echo "<p style='font-family:Helvitica,Arial; color:red; text-align:center;'>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</p>";
 	flush();
 	$result01 = mysql_query( "SELECT location FROM $table12 WHERE loc_id = '$loc_id'");
 	$ort_alt = mysql_result($result01,0, 'location');
@@ -89,7 +89,7 @@ ELSEIF(($loc_id !== '' AND $loc_id !== '0') AND $ort !== '' AND $location !== ''
 //es gab bisher KEINE Referenzierung und es wird eine neue hinzugefuegt;  #########################################
 ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 {
-	echo "<p><center>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</center></p>";
+	echo "<p style='font-family:Helvitica,Arial; color:red; text-align:center;'>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</p>";
 	flush();
 	$ort_alt = '';
 	$result1 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude, location) VALUES ('$long', '$lat', '$ele', '$ort')");
@@ -111,7 +111,7 @@ IF($ort_alt !== $ort)
 	IF($ort_alt !== '')
 	{
 		$description_neu = str_replace($ort_alt, $ort, $description);
-		//wenn bisher keine Ortsbezeichnung in der Beschreibung gespeichert war, wird sie hier erstmalig zugef�gt:
+		//wenn bisher keine Ortsbezeichnung in der Beschreibung gespeichert war, wird sie hier erstmalig zugefuegt:
 		IF($description_neu == $description)
 		{
 			$description_neu = $description.", ".$ort;
@@ -132,7 +132,7 @@ IF($ort_alt !== $ort)
 IF (mysql_error() == '')
 {
 	//fuer Testzwecke haelt der Parameter das Karten-Fenster offen...
-	echo "<p><center>Die Bilddaten wurden aktualisiert</center></p>";
+	echo "<p style='font-family:Helvitica,Arial; color:green; text-align:center;'>Fertig...</p>";
 	
 	flush(0);
 	sleep(0);	
