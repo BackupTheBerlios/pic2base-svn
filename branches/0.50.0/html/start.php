@@ -548,7 +548,7 @@ echo "<div class='page'>
 		//so lange keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
 		echo "<div class='content'>
 		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
-		checkSoftware();
+		checkSoftware($sr);
 		echo "</p></div><br style='clear:both;' />";
 	}
 	
