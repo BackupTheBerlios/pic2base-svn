@@ -204,8 +204,7 @@ ELSE
 	}
 	//Pruefung, ob Dateien im FTP-Upload-Ordner vorliegen:
 	$n = 0;
-	//@$verz=opendir($ftp_path."/".$c_username."/uploads");
-	$verz=opendir($up_dir);
+	@$verz=opendir($up_dir);
 	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
 	IF($verz)
 	{
