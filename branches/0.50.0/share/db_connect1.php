@@ -1,7 +1,7 @@
 <?php
 //[Programm-Version]
 $version = "0.50.0";
-$vom = "(22.11.2010)";
+$vom = "(19.12.2010)";
 
 //[copyright-Vermerk in der Fusszeile]
 $cr = "2006 - 2010 Logiqu";
