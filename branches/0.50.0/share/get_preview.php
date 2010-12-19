@@ -1769,7 +1769,7 @@ SWITCH ($modus)
 				$breite_neu = number_format(($fs_hoehe * $breite / $hoehe),0,',','.');
 			}
 			//echo "Breite: ".$breite_neu.", H&ouml;he: ".$hoehe_neu;
-			
+			/*
 			IF($breite_neu < $hoehe_neu)
 			{
 				//falls die Ausrichtung falsch in den EXIF-Daten gespeichert wurde, kann das Vorschau-Bild nachtraeglich gedreht werden:
@@ -1795,6 +1795,14 @@ SWITCH ($modus)
 				</div>
 				</TD>";
 			}
+			*/
+			
+			echo "<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
+			<div id='pic$pic_id'>";
+			getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
+			echo "
+			</div>
+			</TD>";
 
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6, $i6, 'Owner');
@@ -1850,8 +1858,7 @@ SWITCH ($modus)
 		{
 			FOR($i_r = '0'; $i_r<$rest; $i_r++)
 			{
-				echo "<TD align='center' colspan='1'>
-				<img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='10' /></TD>";
+				echo "<TD align='center' colspan='1'><img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='10' /></TD>";
 			}
 		}
 		
@@ -1867,7 +1874,7 @@ SWITCH ($modus)
 			}
 			FOR($i_re = '0'; $i_re < $rest; $i_re++)
 			{
-				echo "<TD align='left' width='43'><BR></TD>";
+				echo "<TD align='left' width='43'></TD>";
 			}
 		}
 		echo "
