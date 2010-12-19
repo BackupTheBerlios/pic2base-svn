@@ -96,7 +96,7 @@ echo "
 	{
 		CASE '0':
 		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>Hinweise zur Startseite:</b><BR>
+		<b>Hinweise zur Startseite:</b><BR><BR>
 		Das pic2base-Fenster unterteilt sich im wesentlichen in 3 Bereiche:<BR><BR>
 		<u>Kopfzeile</u><BR>
 		Hier findet der Benutzer Hinweise zur gerade aufgerufenen Seite, unter wessen Namen er arbeitet und ggf. welche Suchkriterien ausgew&auml;hlt wurden.<BR><BR>
@@ -107,7 +107,7 @@ echo "
 		Weitere themenbezogene Hilfe erhalten Sie direkt in dem gew&auml;hlten Programm-Fenster.
 		</p>
 		<p style='margin:20px 150px; text-align:left; width:400px;'>
-		<b>Hilfreiche Tipps zur Arbeit mit pic2base:</b><BR>
+		<b>Hilfreiche Tipps zur Arbeit mit pic2base:</b><BR><BR>
 		Die folgende Reihenfolge der Arbeitsschritte hat sich f&uuml;r eine effektive Daten-Erfassung als zweckm&auml;&szlig;ig erwiesen:<BR>
 		1) Bilder auf den Server laden,<BR>
     		   (Alle neuen Bilder liegen nun in der Kategorie \"Neuzug&auml;nge\")<BR>
@@ -121,12 +121,12 @@ echo "
 		Damit werden die Ladezeiten der einzelnen Bearbeitungsseiten kurz gehalten und die Arbeit geht insgesamt fl&uuml;ssiger vonstatten.
 		</p>
 		<p style='margin:20px 150px; text-align:left'>
-		<b>Aktuelle Informationen</B><BR>
+		<b>Aktuelle Informationen</B><BR><BR>
 		Weitere Informationen zu pic2base erhalten Sie auf unserer <A HREF='http://www.pic2base.de'>Homepage</A>.<BR>
 		<p style='margin:20px 150px; text-align:left'>
-		<b>&Uuml;ber pic2base</B><BR>
+		<b>&Uuml;ber pic2base</B><BR><BR>
 		installierte Version: ".$version." ".$vom."<BR><BR>
-		<b>Entwickler:</b><BR>
+		<b>Entwickler:</b><BR><BR>
 		Klaus Henneberg, <a href='mailto:info@pic2base.de?subject=Supportanfrage zur Version .$version.'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
 		Holger R&ouml;mer, <a href='mailto:hr@roemix.eu'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
 		Jens Henneberg<BR>
@@ -214,7 +214,7 @@ echo "
 		<a href='#2_geo'>Suche nach Geo-Daten</a><BR>
 		<a href='#2_edit'>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse</a><BR><BR>
 		
-		<a name = '2_bewertung'></a>Auswahl der Bild-Bewertung<BR>
+		<a name = '2_bewertung'></a><B>Auswahl der Bild-Bewertung</B><BR><BR>
 		Um die Anzahl der dargestellten Bilder einzuschr&auml;nken ist es m&ouml;glich, diese mit einer \"Benotung\" zu versehen. (siehe Bearbeitung | Bilder bewerten / Bewertung &auml;ndern)<BR>
 		Die Note 1 (\"Sehr gut\"; 5 Sterne) stellt hierbei das h&ouml;chste Qualit&auml;tsniveau dar und die Note 5 (\"Ungen&uuml;gend\"; 1 Stern) das niedrigste.<BR>
 		Wurde ein Bild noch nicht bewertet, erh&auml;lt es automatisch w&auml;hrend der Daten-Erfassung die Note 6 (kein Stern).<BR>
@@ -230,7 +230,7 @@ echo "
 		Hinweis:<BR>F&uuml;r diese Funktion m&uuml;ssen Cookies zugelassen sein!<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '2_zeit'></a>Auflistung nach Jahrg&auml;ngen sortiert<BR>
+		<a name = '2_zeit'></a><B>Auflistung nach Jahrg&auml;ngen sortiert</B><BR><BR>
 		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum der Bilder unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den Meta-Daten ausgelesen.
 		Handelt es sich um Bilddateien ohne Meta-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefasst. Diesen Bildern kann - die entsprechenden Berechtigung vorausgesetzt - sp&auml;ter manuell das Aufnahmedatum zugewiesen werden.<BR>
 		Die zeitliche Darstellung kann bis auf die Tages-Ebene heruntergebrochen werden, indem zun&auml;chst das Aufnahmejahr mit einem Klick auf die betreffende Jahreszahl gew&auml;hlt wird,
@@ -242,7 +242,7 @@ echo "
 		Ein Datum, dem bereits Informationen zugewiesen wurden, wird in der Ansicht blau hervorgehoben.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '2_kat'></a>Suche nach Kategorien<BR>
+		<a name = '2_kat'></a><B>Suche nach Kategorien</B><BR><BR>
 		In dieser Ansicht besteht die M&ouml;glichkeit, Bilder anhand der zugewiesenen Kategorie zu recherchieren.<BR>
 		Die oberste Ebene (Neuzug&auml;nge) beinhaltet alle Bilder, welchen noch keine Kategorie zugewiesen wurden.<BR>
 		Die Ebenen darunter beinhalten Bilder der jeweiligen Kategorien.<BR>
@@ -255,7 +255,7 @@ echo "
 		Dies sollte der Normalfall sein, da die Kategorie \"Neuzug&auml;nge\" nur ein vorl&auml;ufiger Ablageort f&uuml;r gerade in das System aufgenommene Bilder ist.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '2_meta'></a>Suche nach ausgew&auml;hlten Meta-Daten<BR>
+		<a name = '2_meta'></a><b>Suche nach ausgew&auml;hlten Meta-Daten</b><BR><BR>
 		Was sind Meta-Daten?<BR>
 		Meta-Daten sind zus&auml;tzliche, meist nicht sichtbare Informationen zu einem Bild. Dies k&ouml;nnen z.B. sein:<BR> Kamera-Modell, Aufnahme-Datum, Blende, Belichtungszeit, aber auch Angaben zum Copyright, Stichworte oder Bildbeschreibungen.<BR>
 		Um &uuml;ber die Meta-Daten recherchieren zu k&ouml;nnen, m&uuml;ssen Sie zuerst das entsprechende Meta-Daten-Feld in der ersten Zeile des Suchformulars ausw&auml;hlen.<BR>
@@ -266,7 +266,7 @@ echo "
 		Auch hier wird &uuml;ber all diejenigen Bilder recherchiert, welche der evtl. gew&auml;hlten Bewertung entsprechen. Einen entsprechenden Hinweis zur eingestellten Bewertung finden Sie in der pic2base-Kopfzeile.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '2_desc'></a>Suche nach Beschreibungstext<BR>
+		<a name = '2_desc'></a><b>Suche nach Beschreibungstext</b><BR><BR>
 		Innerhalb der Beschreibungstexte der einzelnen Bilder k&ouml;nnen Sie nach Vorkommen bestimmter Begriffe suchen.<BR>
 		Insgesamt steht eine Suche &uuml;ber 5 Begriffe zur Verfgung, welche mit den Booleschen Operatoren UND und OR verkn&uuml;pft werden k&ouml;nnen.<BR>
 		Die Suche bezieht sich immer auf das Vorhandensein des Begriffs an einer beliebigen Stelle im Beschreibungstext. So liefert die Suche nach dem Wort \"Haus\" alle Bilder, in deren Beschreibungen \"Haus\" aber auch \"Hausmeister\" oder \"Bauhaus\" vorkommt.<BR>
@@ -275,7 +275,7 @@ echo "
 		Die Verwendung von Platzhaltern ist (noch) nicht m&ouml;glich.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '2_geo'></a>Suche nach Geo-Daten<BR>
+		<a name = '2_geo'></a><b>Suche nach Geo-Daten</b><BR><BR>
 		Bei der Suche nach Geo-Daten haben Sie zwei M&ouml;glichkeiten:<BR>
 		- Die Suche anhand konkreter geografischer Koordinaten:<BR>
 		Hier tragen Sie in die entsprechenden Felder die Angaben f&uuml;r L&auml;nge, Breite und ggf. H&ouml;he sowie den Umkreis, innerhalb dessen rund um den angegebenen Punkt gesucht werden soll, ein.<BR>
@@ -286,7 +286,7 @@ echo "
 		In beiden Suchm&ouml;glichkeiten kann als maximaler Umkreis eine Entfernung von 50 km angegeben werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '2_edit'></a>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse<BR>
+		<a name = '2_edit'></a><b>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse</b><BR><BR>
 		
 		Wenn der angemeldete Benutzer berechtigt ist, Eigenschaften der gefundenen Bilder zu bearbeiten, stehen ihm die folgenden M&ouml;glichkeiten zur Verf&uuml;gung:<BR></p>
 		<ul style='margin:20px 150px; text-align:justify; width:350px;'>
@@ -323,32 +323,32 @@ echo "
 		<a href='#3_del_kat'>Kategorie-Zuweisungen aufheben</a><BR>
 		<a href='#3_qp'>Quick-Preview hochformatiger Bilder erstellen</a><BR><BR>
 		
-		<a name = '3_georef'>Geo-Referenzierung</a><BR>
+		<a name = '3_georef'><b>Geo-Referenzierung</b></a><BR><BR>
 		Wenn Sie im Besitz von Geo-Daten sind, k&ouml;nnen Sie &uuml;ber diesen Menpunkt Ihren Bildern die geografischen Koordinaten des Aufnahme-Standortes zuweisen.<BR>
 		Die derzeit unterst&uuml;tzten Datenlogger sind in dem entsprechenden Auswahlfeld schwarz dargestellt, vorbereitete, aber noch nicht getestete Modelle sind inaktiv dargestellt.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '3_bewertung'>Bilder bewerten</a><BR>
+		<a name = '3_bewertung'><b>Bilder bewerten</b></a><BR><BR>
 		pic2base bietet die M&ouml;glichkeit, jedes Bild hinsichtlich bestimmter, pers&ouml;nlicher Ma&#223;st&auml;be zu bewerten und hierf&uuml;r \"Noten\" von 1 - 5 zu vergeben, wobei die 1 ein besonders gelungenes Bild kennzeichnet und die Note 5 Bilder der untersten Qualit&auml;tsstufe repr&auml;sentiert.<BR>
 		Bei der Aufnahme der Bilder in der Datenbank wird allen Bildern zun&auml;chst keine Note vergeben. Besser einzustufende Bilder m&uuml;ssen also im Nachhinein h&ouml;her bewertet werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '3_desc'>Beschreibungen zuweisen</a><BR>
+		<a name = '3_desc'><b>Beschreibungen zuweisen</b></a><BR><BR>
 		Jedem Bild kann in pic2base ein ausf&uuml;hrlicher Beschreibungstext zugef&uuml;gt werden.<BR>
 		&Uuml;ber diesen Men&uuml;punkt haben Sie die M&ouml;glichkeit, mehreren Bildern in einem Durchgang den gleichen Beschreibungstext zuzuweisen,
 		aber auch einzelne Bilder detailliert zu beschreiben.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '3_kat'>Kategorie zuweisen</a><BR>
+		<a name = '3_kat'><b>Kategorie zuweisen</b></a><BR><BR>
 		&Uuml;ber diesen Men&uuml;punkt k&ouml;nnen Sie den Bildern Kategorien zuweisen.<BR>
 		Die Kategorien m&uuml;ssen im Vorfeld durch den Administrator oder einem Benutzer mit entsprechenden Rechten angelegt worden seien.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '3_del_kat'>Kategorie-Zuweisung aufheben</a><BR>
+		<a name = '3_del_kat'><b>Kategorie-Zuweisung aufheben</b></a><BR><BR>
 		Sollte versehentlich einem Bild eine falsche Kategorie zugewiesen worden sein, kann &uuml;ber diesen Men&uuml;punkt diese Zuweisung wieder r&uuml;ckg&auml;ngig gemacht werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '3_qp'>Quick-Preview hochformatiger Bilder erzeugen</a><BR>
+		<a name = '3_qp'><b>Quick-Preview hochformatiger Bilder erzeugen</b></a><BR><BR>
 		Zur schnelleren Darstellung hochformatiger Bilder m&uuml;ssen diese einmalig vor der ersten Betrachtung in pic2base gedreht und als Kopie angelegt werden. Dies geschieht normalerweise beim ersten &Uuml;berfahren des entsprechenden Bildes mit dem Mauszeiger in der Filmstreifen-Ansicht, kostet aber entsprechend Rechenzeit auf dem Server. Dieser Vorgang kann aber auch f&uuml;r alle Bilder, f&uuml;r welche es noch kein entsprechend gedrehtes Vorschau-Bild gibt, auf einmal durchgef&uuml;hrt werden.<BR>
 		Hinweis: Dieser Vorgang kann - je nach Anzahl der zu drehenden Bilder - erheblichen Rechenaufwand erfordern!<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
@@ -368,7 +368,7 @@ echo "
 		<a href='#4_del_kat'>Kategorie-Zuweisungen aufheben</a><BR>
 		<a href='#4_qp'>Quick-Preview hochformatiger Bilder erstellen</a><BR><BR>
 		
-		<a name = '4_georef'>Geo-Referenzierung</a><BR>
+		<a name = '4_georef'><b>Geo-Referenzierung</b></a><BR><BR>
 		Welchen Vorteil bietet die Georeferenzierung?<BR>
 		Bei der Geo-Referenzierung wird zu jedem Bild der Kamerastandort zum jeweiligen Aufnahmezeitpunkt vermerkt. Sp&auml;ter kann man dann nach Bildern suchen,
 		die an einem bestimmten Standort entstanden, oder innerhalb eines bestimmten Umkreises um diesen Standort herum.<BR>
@@ -389,14 +389,14 @@ echo "
 		Hier k&ouml;nnen die automatisch zugewiesenen Referenzierungen manuell korrigiert werden, oder Bildern, zu denen keine Trackdaten vorlagen, kann eine manuelle Referenzierung zugewiesen werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '4_bewertung'>Bild-Bewertung</a><BR>
+		<a name = '4_bewertung'><b>Bild-Bewertung</b></a><BR><BR>
 		Um die gezielte Suche nach Bildern mit bestimmten Qualit&auml;tsanforderungen zu erm&ouml;glichen, kann jedes Bild qualitativ bewertet werden. Die Bewertung reicht von \"1 Stern\" (ungen&uuml;gend) bis \"5 Sterne\" (sehr gut).<BR>
 		Die eigentliche Vergabe der Sterne erfolgt durch anklicken des betreffenden Sterns unter dem jeweiligen Bild in der Vorschauansicht, wobei der linke Stern f&uuml;r \"1 Stern\" steht und der reche f&uuml;r \"5 Sterne\".<BR>
 		Wenn ein Bild mit dem Mauszeiger &uuml;berfahren wird, wird dessen vergr&ouml;&szlig;erte Ansicht in der rechten Fensterh&auml;lfte dargestellt. Wird das Bild in der Vorschauansicht hingegen angeklickt, erh&auml;lt man eine nochmals vergr&ouml;&szlig;erte Ansicht.<BR>
 		Bei der Erfassung erhalten die Bilder noch keinen Stern - also keine Qualit&auml;tsbewertung. Dennoch kann auch nach diesen Bildern gesucht werden, indem man in der Qualit&auml;tsauswahl den Punkt \"alle Bilder\" anklickt.<BR><BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '4_desc'>Beschreibungen zuweisen</a><BR>
+		<a name = '4_desc'><b>Beschreibungen zuweisen</b></a><BR><BR>
 		pic2base bietet die M&ouml;glichkeit, einzelnen Bildern, als auch Gruppen von Bildern, Beschreibungstexte zuzuweisen.<BR>
 		Dies erfolgt &uuml;ber den Punkt \"Beschreibungen zuweisen\" in dem Bearbeiten-Bereich.<BR>
 		Zun&auml;chst sind die gew&uuml;nschten Bilder aus der entsprechenden Kategorie auszuw&auml;hlen. Es ist also die Kategorie zu w&auml;hlen und dann &uuml;ber die rechts daneben befindlichen
@@ -407,7 +407,7 @@ echo "
 		Die Beschreibung wird den selektierten Bildern zugewiesen, indem der Button \"Speichern\" angeklickt wird. Alternativ kann der Vorgang &uuml;ber den Button \"Abbrechen\" ohne &Auml;nderungen beendet werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '4_kat'>Kategorien zuweisen</a><BR>
+		<a name = '4_kat'><b>Kategorien zuweisen</b></a><BR><BR>
 		pic2base bietet die M&ouml;glichkeit, einzelne Bildern, als auch Gruppen von Bildern in Kategorien einzuordnen.<BR>
 		Dies erfolgt &uuml;ber den Punkt \"Kategorien zuweisen\" in dem Bearbeiten-Bereich.<BR>
 		Zun&auml;chst sind die gew&uuml;nschten Bilder aus der entsprechenden Kategorie auszuw&auml;hlen. Es ist also die Kategorie zu w&auml;hlen und &uuml;ber die rechts daneben befindlichen
@@ -422,7 +422,7 @@ echo "
 		Die neuen Kategorien werden den selektierten Bildern zugewiesen, indem der Button \"Speichern\" angeklickt wird. Alternativ kann der Vorgang &uuml;ber den Button \"Abbrechen\" ohne &Auml;nderungen beendet werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '4_del_kat'>Kategorie-Zuweisung aufheben</a><BR>
+		<a name = '4_del_kat'><b>Kategorie-Zuweisung aufheben</b></a><BR><BR>
 		Sollte einmal einem Bild versehentlich eine falsche Kategorie zugewiesen worden sein, hat man hier die M&ouml;glichkeit diese Zuweisung wieder r&uuml;ckg&auml;ngig zu machen.<BR>
 		Dazu navigiert man zun&auml;chst im Kategoriebaum bis zu der Kategorie, in welcher ich das falsch eingeordnete Bild befindet, und l&auml;&szlig;t sich dann diese Bilder mit einem Klick auf das gr&uuml;ne H&auml;kchen anzeigen.<BR>
 		In der unteren Filmstreifenansicht scrollt man nun bis zu dem betreffenden Bild und &uuml;berf&auml;ht dieses mit dem Mauszeiger. Daraufhin werden dessen Bilddetails in der rechten Fensterh&auml;lfte angezeigt.<BR>
@@ -430,7 +430,7 @@ echo "
 		Vor der Ausf&uuml;hrung dieser Aktion erfolgt eine Sicherheitsabfrage, ob diese Bearbeitung gewollt ist.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '4_qp'>Quick-Preview hochformatiger Bilder erstellen</a><BR>
+		<a name = '4_qp'><b>Quick-Preview hochformatiger Bilder erstellen</b></a><BR><BR>
 		Zur schnelleren Darstellung hochformatiger Bilder m&uuml;ssen diese einmalig vor der ersten Betrachtung in pic2base gedreht und als Kopie angelegt werden. Dies geschieht normalerweise beim ersten &Uuml;berfahren des entsprechenden Bildes mit dem Mauszeiger in der Filmstreifen-Ansicht, kostet aber entsprechend Rechenzeit auf dem Server. Dieser Vorgang kann aber auch f&uuml;r alle Bilder, f&uuml;r welche es noch kein entsprechend gedrehtes Vorschau-Bild gibt, auf einmal durchgef&uuml;hrt werden.<BR>
 		Hinweis: Dieser Vorgang kann - je nach Anzahl der zu drehenden Bilder - erheblichen Rechenaufwand erfordern und sollte deshalb in einer lastarmen Zeit erfolgen!<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
@@ -455,7 +455,7 @@ echo "
 		<a href='#5_mv'>Meta-View</a><BR>
 		<a href='#5_sw'>Software-Check</a><BR><BR>
 		
-		<a name = '5_kat'>Kategorien</a><BR>
+		<a name = '5_kat'><b>Kategorien</b></a><BR><BR>
 
 		Im Arbeitsbereich Kategorien kann der Kategoriebaum gepflegt werden:
 		Es k&ouml;nnen Kategorien</p>
@@ -469,7 +469,7 @@ echo "
 		Weiterf&uuml;hrende Informationen stehen direkt auf den jeweiligen Seiten zur Verf&uuml;gung.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_user'>Benutzer</a><BR><BR>
+		<a name='5_user'><b>Benutzer</b></a><BR><BR>
 		
 		Im Arbeitsbereich Benutzer kann der Benutzerkreis f&uuml;r diese pic2base-Datenbank gepflegt werden.
 		Es k&ouml;nnen Benutzer
@@ -478,13 +478,13 @@ echo "
 		die Gruppenzugeh&ouml;rigkeit der Benutzer ver&auml;ndert werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_groups'>Gruppen</a><BR><BR>
+		<a name='5_groups'><b>Gruppen</b></a><BR><BR>
 		
 		Im Arbeitsbereich Gruppen k&ouml;nnen Benutzergruppen und deren Zugriffsrechte definiert werden.
 		Nach der Installation sind einige Gruppen bereits angelegt, wobei aber zun&auml;chst lediglich der Gruppe Admin alle Rechte zugeteilt wurden. Die Rechte der anderen Gruppen k&ouml;nnen entsprechend der Erfordernisse im jeweiligen Anwendungsfall individuell festgelegt werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_rights'>Berechtigungen</a><BR><BR>
+		<a name='5_rights'><b>Berechtigungen</b></a><BR><BR>
 		
 		Im Arbeitsbereich Berechtigungen kann man sich informieren, welche Aktionen in pic2base durch Zugriffsbeschr&auml;nkungen reglementiert werden k&ouml;nnen.
 		Die eigentliche Rechtevergabe erfolgt &uuml;ber die Erteilung der Gruppen- und Benutzerrechte.<BR>
@@ -494,34 +494,34 @@ echo "
 		Dies geschieht dann &uuml;ber die Vergabe der entsprechenden Benutzerrechte.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_ftp'>FTP-Statistik</a><BR><BR>
+		<a name='5_ftp'><b>FTP-Statistik</b></a><BR><BR>
 		
 		&uuml;ber den Link FTP-Statistik gelangt man zu einem Tool, mit dessen Hilfe der Zugriff via FTP auf diesen pic2base-Server kontrolliert werden kann. Hier kann in die Protokolldatei eingesehen werden und der verursachte Traffic ausgelesen werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_log'>P2b-Log</a><BR><BR>
+		<a name='5_log'><b>P2b-Log</b></a><BR><BR>
 		
 		In der p2b-Logdatei werden Aktivit&auml;ten protokolliert, die dem Administrator Auskunft &uuml;ber die Zugriffe auf die pic2base-Datenbank geben.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_md5'>md5-Check</a><BR><BR>
+		<a name='5_md5'><b>md5-Check</b></a><BR><BR>
 		
 		Mit Hilfe des md5-Checks kann kontrolliert werden, ob zu jeder Bilddatei eine Pr&uuml;fsumme erzeugt wurde. Diese kann sp&auml;ter zur Identifikation von Duplikaten herangezogen werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_hist'>Histogramme</a><BR><BR>
+		<a name='5_hist'><b>Histogramme</b></a><BR><BR>
 		
 		Der Arbeitsbereich Histogramme bietet die M&ouml;glichkeit zu pr&uuml;fen, ob zu jedem in der Datenbank befindlichen Bild die entsprechenden Histogramme (R,G,B,Grey) existieren. Wenn nicht, werden diese &uuml;ber den Aufruf des Men&uuml;punktes Histogramme erzeugt. Normalerweise ist diese Kontrolle nicht erforderlich, da die Histogramme von pic2base (ab Version 0.40) bereits bei der Bild-Erfassung automatisch erzeugt werden bzw. beim Aufruf der Bilddetail-Infoseite diese Kontrolle nochmals erfolgt. Existieren die Histogramme f&uuml;r das betrachtete Bild nicht (z.B. wenn Bilder mit einer &auml;lteren Version von pic2base erfa&#223;t wurden), w&uuml;rden sie nun nachtr&auml;glich erzeugt werden. Dies erfordert jedoch zus&auml;tzlichen Rechenaufwand, der die Darstellung der Detail-Informationen verz&ouml;gert. Mit diesem Werkzeug ist der Administrator in der Lage, die Histogramm-Erzeugung in einer lastarmen Zeit durchzuf&uuml;hren.
 		HINWEIS: Dieser Vorgang kann je nach Rechner-Leistung und Bildbestand erhebliche Zeit beanspruchen!<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_md'>Meta-Daten</a><BR><BR>
+		<a name='5_md'><b>Meta-Daten</b></a><BR><BR>
 		
 		Im Arbeitsbereich Meta-Daten hat der Administrator die M&ouml;glichkeit zu kontrollieren, ob aus allen Fotos die vorhandenen Meta-Daten ausgelesen und in die Datenbank &uuml;bertragen wurden.<BR>
 		HINWEIS: Hier treffen die selben Einschr&auml;nkungen wie beim Punkt 'Histogramme' zu.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_mp'>Meta-Protect</a></a><BR><BR>
+		<a name='5_mp'><b>Meta-Protect</b></a><BR><BR>
 		
 		Im Arbeitsbereich Meta-Protect kann eingestellt werden, welche Meta-Daten von berechtigten Usern nachtr&auml;glich manuell modifiziert werden d&uuml;rfen.
 		Diese Einstellungen sollten mit gr&ouml;&#223;ter Sorgfalt erfolgen.
@@ -538,7 +538,7 @@ echo "
 		Hilfreich kann die Editier-Freigabe jedoch sein, wenn z.B. die interne Kamera-Uhr falsch gestellt war und das Aufnahme-Datum korrigiert werden soll. Aber auch die nachtr&auml;gliche Vergabe von Copyright-Vermerken l&auml;&#223;t sich &uuml;ber gezielte Freigabe-Einstellungen erm&ouml;glichen.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_mv'>Meta-View</a></a><BR><BR>
+		<a name='5_mv'><b>Meta-View</b></a></a><BR><BR>
 		
 		Im Arbeitsbereich Meta-View kann eingestellt werden, welche Meta-Daten in der Kompakt-Ansicht der Bilddetails angezeigt werden.<BR>
 		Sollte es sich also f&uuml;r zweckm&auml;&szlig;ig erweisen, f&uuml;r bestimmte Recherche-Arbeiten immer sofort zu wissen, mit welcher Brennweite das Bild aufgenommen wurde,
@@ -547,7 +547,7 @@ echo "
 		In der vollst&auml;ndigen Ansicht werden hingegen immer alle verf&uuml;gbaren Informationen zu dem betreffenden Bild angezeigt.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_sw'>Software-Check</a></a><BR><BR>
+		<a name='5_sw'><b>Software-Check</b></a></a><BR><BR>
 		
 		Mit dem Software-Check kontrolliert pic2base, ob alle ben&ouml;tigten externen Hilfsprogramme auf dem Server vorhanden sind. In der Regel wird dieses Tool nur w&auml;hrend der Erstinstallation von pic2base oder nach Konfigurationsarbeiten (Software-Installationen / Deinstallationen) auf dem Server ben&ouml;tigt.<BR>
 		Ab Version 0.41 startet das Tool automatisch beim ersten Start von pic2base nach der Installation und dann so lange, bis mindestens ein Bild in die Datenbank gestellt wurde.<BR>
