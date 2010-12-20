@@ -86,7 +86,8 @@ include '../share/functions/permissions.php';
 		}
 		IF(mysql_error() == '')
 		{
-			mysql_set_charset('utf8', $conn);
+			mysql_set_charset('utf8', $conn); // (PHP 5 >= 5.2.3); Diese Funktion benoetigt MySQL 5.0.7 oder speter.
+			//$res30 = mysql_query("SET NAMES 'utf8'"); //fuer aeltere PHP / MySQL-Versionen 
 			$res3 = mysql_query( "INSERT INTO `pic2base`.`permissions` (`id`, `perm_id`, `description`, `shortdescription`) VALUES
 				(1, 999, 'Admin-Login', 'adminlogin'),
 				(2, 799, 'Bilder erfassen', 'addpic'),
