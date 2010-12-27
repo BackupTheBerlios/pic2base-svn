@@ -1428,12 +1428,10 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	
 	IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 	{
-		//echo "Es liegt ein gedrehtes Bild vor!<BR>";
 		$FILE = $pic_rot_path."/".$pic_id.".jpg";
 	}
 	ELSE
 	{
-		//echo "Es liegt KEIN gedrehtes Bild vor!<BR>";
 		$FILE = $pic_path."/".$pic_id.".jpg";
 	}
 	//vom Original-JPG-Bild wird die Pruefsumme gebildet:
@@ -1632,7 +1630,7 @@ function restoreOriFilename($pic_id, $sr)
 	return $FN;
 }
 
-function extractExifData($pic_id, $sr)
+function extractExifData($pic_id, $sr, $Orientation)
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
@@ -1685,19 +1683,19 @@ function extractExifData($pic_id, $sr)
 			IF(in_array($fieldname,$tab_fieldname))
 			{
 				//$value = formatValues($fieldname,$FN,$et_path);
-				IF($fieldname == 'DateTimeOriginal')
-				{
-					$tmp_value = explode(" ",$value);
-					$value = str_replace(':','-',$tmp_value[0])." ".$tmp_value[1];
-				}
-				IF($fieldname == 'FileSize')
-				{
-					$value = shell_exec($exiftool." -FileSize -n ".$FN);
-					$fs_arr = explode(' : ', $value);
-					$value = trim($fs_arr[1]);
-				}
 				SWITCH($fieldname)
 				{
+					CASE 'DateTimeOriginal':
+					$tmp_value = explode(" ",$value);
+					$value = str_replace(':','-',$tmp_value[0])." ".$tmp_value[1];
+					break;
+					
+					CASE 'FileSize':
+					$value = shell_exec($exiftool." -FileSize -n ".$FN);
+					$fs_arr = explode(' : ', $value);
+					$value = trim($fs_arr[1]);	
+					break;
+					
 					CASE 'GPSLatitude':
 					$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);
 					break;
@@ -1734,24 +1732,14 @@ function extractExifData($pic_id, $sr)
 				{
 					echo "Fehler beim speichern der Meta-Daten (".$fieldname.", ".$value.", ".$statement."): ".mysql_error()."<BR>~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR>";
 				}
-				ELSE
-				{
-					//echo $statement."<BR>";	
-				}
 			}
 		}
-		//Wenn Breite, Hoehe, Dateigroesse oder Ausrichtung nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
+		//Wenn Breite, Hoehe oder Dateigroesse nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
 		$result9 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 		$row = mysql_fetch_array($result9);
 		$ImageWidth = $row['ImageWidth'];
 		$ImageHeight = $row['ImageHeight'];
 		$FileSize = $row['FileSize'];
-		$Orientation = $row['Orientation'];
-		
-		// $ImageWidth = mysql_result($result9, $i9, 'ImageWidth');
-		// $ImageHeight = mysql_result($result9, $i9, 'ImageHeight');
-		// $FileSize = mysql_result($result9, $i9, 'FileSize');
-		// $Orientation = mysql_result($result9, $i9, 'Orientation');
 		
 		@$params=getimagesize($FN);
 		$breite = $params[0];
@@ -1773,8 +1761,8 @@ function extractExifData($pic_id, $sr)
 		{
 			$result12 = mysql_query("UPDATE $table14 SET FileSize = '$FileSize' WHERE pic_id = '$pic_id'");
 		}
-		//Ausrichtung wird intern immer als '1' angesehen!
-		$result13 = mysql_query("UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$pic_id'");	
+		$result13 = mysql_query("UPDATE $table14 SET Orientation = '$Orientation' WHERE pic_id = '$pic_id'");
+		//echo mysql_error();	
 	}
 	//Wenn alle Meta-Daten in table14 uebernommen wurden, wird geprueft, ob Geo-Koordinaten dabei waren.
 	//Wenn ja, wird eine neue location angelegt (in table12) und diese mit dem Bild referenziert:

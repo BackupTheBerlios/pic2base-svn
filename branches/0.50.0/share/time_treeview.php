@@ -65,17 +65,17 @@ echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; 
 	<TD id='kat2'>Anz.</TD>
 	</TR>";
 $runtime_sum = 0;
-//Bestimmung der Jahrg�nge, in denen Bilder entstanden sind:
+//Bestimmung der Jahrgaenge, in denen Bilder entstanden sind:
 $result1 = mysql_query( "SELECT DISTINCT YEAR(DateTimeOriginal) AS DTO 
 FROM $table14 
 WHERE YEAR(DateTimeOriginal) <> '0000' 
-ORDER BY YEAR(DateTimeOriginal)");
+ORDER BY YEAR(DateTimeOriginal) DESC");
 $num1 = mysql_num_rows($result1);
 FOR($i1 = '0'; $i1<$num1; $i1++)
 {
 	$D = mysql_result($result1, $i1, 'DTO');
-	//Die einzelnen "Jahrg�nge" werden ermittelt:
-	//Zur Laufzeitoptimierung wird kontrolliert, ob in dem betreffenden Jahr �berhaupt Bilder vorhanden sind:
+	//Die einzelnen "Jahrgaenge" werden ermittelt:
+	//Zur Laufzeitoptimierung wird kontrolliert, ob in dem betreffenden Jahr ueberhaupt Bilder vorhanden sind:
 	$start2 = microtime();
 	//$result3a = mysql_query( "EXPLAIN SELECT * FROM $table2 WHERE note = '2'");
 	$result3 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '$D-%' AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' AND $table2.$stat)");

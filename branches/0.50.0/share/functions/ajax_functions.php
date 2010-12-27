@@ -231,7 +231,7 @@ function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, posit
 	var params ='j=' + j + '&m=' + m + '&t=' + t + '&pic_id=' + pic_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
 	//alert("Parameter: "+params);
 	var target = 'filmstreifen';
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 	
 }
 
@@ -479,6 +479,22 @@ function blende_aus()
 {
 	//alert("fertig");
 	document.getElementById("blend").style.display="none";
+}
+
+function filmstreifen_geladen(response)
+{
+	$("filmstreifen").innerHTML = response.responseText;
+	var ob = $("filmstreifen").getElementsByTagName("script");
+	//alert(ob.length);
+	for (var i = 0; i < ob.length; i++)
+	{
+		if (ob[i].innerHTML != null)
+		{
+			//alert(ob[i].innerHTML);
+			eval(ob[i].innerHTML);
+		}
+	}
+	blende_aus();
 }
 
 function blende_ein()

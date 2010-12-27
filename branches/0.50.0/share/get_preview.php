@@ -203,6 +203,7 @@ $server_url = "http://{$_SERVER['SERVER_NAME']}$inst_path";
 
 $hoehe_neu = '';
 $breite_neu = '';
+$previewLayerHtml = '';
 
 if (!isset($zusatz))
 {
@@ -559,13 +560,41 @@ SWITCH ($modus)
 		$statement = "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.note, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 		//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie benoetigt	
 		
-		$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.Owner, $table2.note FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+		$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table14.ExifImageWidth, $table14.ExifImageHeight, $table14.Orientation, $table2.pic_id, $table2.Owner, $table2.note, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 		echo mysql_error();
 		
 		$result8 = mysql_query( "SELECT $table2.pic_id, $table2.loc_id, $table2.note, $table2.FileNameHQ, $table14.Caption_Abstract, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount FROM $table2 LEFT JOIN $table14 ON $table2.pic_id = $table14.pic_id $krit1 $krit2 AND $table2.loc_id <>'0' ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 		echo mysql_error();
 
 		$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
+		
+		$previewLayerHtml .= '
+		<script language="javascript">
+		
+		var imageArray = new Array();
+		
+		self.getImageArray = function getImageArray()
+		{
+		  imageArray = [];
+		';
+		for ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
+		{
+			
+			$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, 'FileName'));
+			$ratio = (mysql_result($result6_1, $imageArrayIndex, 'ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, 'ExifImageHeight'));
+			if (mysql_result($result6_1, $imageArrayIndex, 'Orientation') >= '5')
+			{
+				$ratio = 1.0 / $ratio;
+			}
+			$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
+			';
+		}
+		$previewLayerHtml .= '
+		  return imageArray;
+		}
+		</script>
+		';
+		
 		$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
 		SWITCH ($num6_1)
 		{
@@ -1151,7 +1180,7 @@ SWITCH ($modus)
 		{
 			$statement = '';
 		}	
-		createContentFile($mod,$statement,$c_username,$bild);
+	//	createContentFile($mod,$statement,$c_username,$bild);
 	}
 	
 //###########    Bestimmung der Position innerhalb des Filmstreifens und Erzeugung des Textes 'Bilder X bis Y':    ###############
@@ -2058,8 +2087,14 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		
 		CASE 'recherche2':
 		CASE 'edit_remove_kat':
-		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
+		/*echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
 		<a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
+		<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
+		</a>
+		<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");'>Preview</a>
+		</span>";*/
+		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
+		<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");'>
 		<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
 		</a>
 		</span>";
@@ -2094,5 +2129,8 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		break;
 	}
 }
+
+include "preview_layer.php";
+echo $previewLayerHtml;
 
 ?>
