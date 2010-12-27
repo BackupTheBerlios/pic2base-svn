@@ -65,7 +65,7 @@ if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
 }
-/*
+
 if(array_key_exists('art',$_GET))
 {
 	$art = $_GET['art'];
@@ -77,7 +77,7 @@ else
 		$art = '';
 	}
 }
-*/
+
 if(array_key_exists('kat_id',$_GET))
 {
 	$kat_id = $_GET['kat_id'];

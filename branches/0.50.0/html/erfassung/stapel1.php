@@ -362,8 +362,8 @@ $runtime3 = ($end3sec + $end3msec) - ($start1sec + $start1msec);
 echo "Zeit bis Histogrammerstellung: ".$runtime3."<BR>";		
 */
 	//Meta-Daten aus dem Bild auslesen und in die Tabelle meta_data schreiben:
-	//Parameter: Bild-ID, Server-Root
-	extractExifData($pic_id,$sr);
+	//Parameter: Bild-ID, Server-Root, ermittelte Bildausrichtung
+	extractExifData($pic_id,$sr,$Orientation);
 /*
 $end4 = microtime();
 list($end4msec, $end4sec) = explode(" ",$end4);

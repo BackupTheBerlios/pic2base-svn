@@ -114,7 +114,7 @@ IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 	}
 	ELSE
 	{
-		$html = join('',file($file1));
+		@$html = join('',file($file1));
 		$needle_1 = "aktuelle Version:<BR>";
 		$var1 = stristr($html,$needle_1);
 		$var2 = substr($var1,21,6);
