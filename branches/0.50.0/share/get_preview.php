@@ -2094,7 +2094,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");'>Preview</a>
 		</span>";*/
 		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
-		<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");'>
+		<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");' title='zur vergr&ouml;sserten Vorschau'>
 		<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
 		</a>
 		</span>";
