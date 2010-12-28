@@ -363,7 +363,8 @@ echo "
 											}
 											IF(($i100 +1) == $num100)
 											{
-												echo "<BR><b>Neuerfassung der Bild-Ausrichtungen wurde erfolgreich abgeschlossen.</b>";
+												echo "<BR><b>Neuerfassung der Bild-Ausrichtungen wurde erfolgreich abgeschlossen.<BR>
+												Damit ist das Update beendet.</b>";
 											}
 										}
 									}
