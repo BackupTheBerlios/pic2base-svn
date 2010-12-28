@@ -621,9 +621,36 @@ SWITCH ($modus)
 			CASE '1':
 			//Wenn die Wurzel-Kategorie gewaehlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
 			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.Owner, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table14.ExifImageWidth, $table14.ExifImageHeight, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
-			$num6_1 = mysql_num_rows($result6_1);
+			
+//#########################################################
+			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder (hier: ohne Kategorie-Zuweisung
+			$previewLayerHtml .= '
+			<script language="javascript">
+			var imageArray = new Array();
+			self.getImageArray = function getImageArray()
+			{
+			  imageArray = [];
+			';
+			FOR ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
+			{
+				$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, $table2.'.FileName'));
+				$ratio = (mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageHeight'));
+				IF (mysql_result($result6_1, $imageArrayIndex, $table14.'.Orientation') >= '5')
+				{
+					$ratio = 1.0 / $ratio;
+				}
+				//echo $fileNamePrefix." ".$ratio."<BR>";
+				$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
+				';
+			}
+			$previewLayerHtml .= '
+			  return imageArray;
+			}
+			</script>
+			';
+//########################################################
+			
 			$N = $num6_1;
-		
 			SWITCH ($N)
 			{
 				CASE '0':
@@ -654,16 +681,13 @@ SWITCH ($modus)
 			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
 			$previewLayerHtml .= '
 			<script language="javascript">
-			
 			var imageArray = new Array();
-			
 			self.getImageArray = function getImageArray()
 			{
 			  imageArray = [];
 			';
 			FOR ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
 			{
-				
 				$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, $table2.'.FileName'));
 				$ratio = (mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageHeight'));
 				IF (mysql_result($result6_1, $imageArrayIndex, $table14.'.Orientation') >= '5')
