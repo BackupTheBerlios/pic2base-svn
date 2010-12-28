@@ -11,6 +11,9 @@ echo "<CENTER>
 Wenn Sie sicher sind, tragen Sie hier den Benutzernamen und das Passwort<BR>
 eines Benutzers mit Admin-Rechten auf Ihrer MySQL-Datenbank ein<BR>
 und klicken dann auf \"Update starten\":<BR><BR>
+<b>Das Update kann - je nach Datenbestand - mehrere Stunden in Anspruch nehmen<BR>
+und darf nicht unterbrochen werden!<BR><BR>
+<b>Legen Sie vor dem Update unbedingt eine Sicherung Ihres Datenbestandes an!</b><BR><BR>
 <FORM name='zugang' method='post' action='db_update_to_050_action.php'>
 <TABLE>
 <TR>
