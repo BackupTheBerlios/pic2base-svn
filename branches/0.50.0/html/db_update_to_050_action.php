@@ -352,7 +352,19 @@ echo "
 											echo $FN." / ".$Ori."<BR>";
 											//Ausrichtung in Tabelle meta_data speichern:
 											$res101 = mysql_query("UPDATE $table14 SET Orientation = '$Ori' WHERE pic_id = '$pic_id'");
-											//echo mysql_error();
+											IF(mysql_error() == '')
+											{
+												echo "Datensatz ".($i100 + 1)." von ".$num100."; Datei ".$FN." / Ausrichtung: ".$Ori."<BR>";
+											}
+											ELSE
+											{
+												echo "Es ist ein Fehler bei Datensatz ".($i100 + 1)." aufgetreten!:<BR>";
+												echo mysql_error();
+											}
+											IF(($i100 +1) == $num100)
+											{
+												echo "<BR><b>Neuerfassung der Bild-Ausrichtungen wurde erfolgreich abgeschlossen.</b>";
+											}
 										}
 									}
 									ELSE
