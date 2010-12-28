@@ -6,7 +6,7 @@ include '../share/global_config.php';
   header('Location: ../../index.php');
 }
 
-INCLUDE 'global_config.php';
+include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
@@ -97,7 +97,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 		}
 		ELSE
 		{
-			$s_m = $jahr;		//Anzeige-Modus: Jahres�bersicht
+			$s_m = $jahr;		//Anzeige-Modus: Jahresuebersicht
 			$info_nr = '1';
 		}
 		
@@ -116,7 +116,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 		IF(substr($show_mod,0,4) == $jahr)
 		{
 			
-			//Die einzelnen Monate im gew�hlten Jahr werden ermittelt:
+			//Die einzelnen Monate im gewaehlten Jahr werden ermittelt:
 			FOR($i_M='1'; $i_M<='12'; $i_M++)
 			{
 				IF($i_M < '10')
@@ -162,7 +162,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 					IF(substr($show_mod,0,4) == $jahr AND substr($show_mod,5,2) !== $month_number)
 					{
 						//echo "normale Monats-Darstellung: ";
-						$s_m = $jahr."_".$month_number;	//$show_mod: Anzeige-Modus f�r Tages-Anzeige
+						$s_m = $jahr."_".$month_number;	//$show_mod: Anzeige-Modus fuer Tages-Anzeige
 						echo "<SPAN style='cursor:pointer;' onClick='getTimeTreeview(\"$pic_id\",\"$mod\",\"$s_m\",\"$bewertung\")'  title='Tagesauswahl f&uuml;r ".getMonthName($month_number)." &ouml;ffnen'>".getMonthName($month_number)."</SPAN>
 						</TD>
 						<TD id='kat2'>

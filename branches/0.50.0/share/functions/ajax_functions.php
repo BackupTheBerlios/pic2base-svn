@@ -224,7 +224,7 @@ function getPreview(kat_id, ID, mod, pic_id, modus, base_file, bewertung, auswah
 function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, position, jump)
 {
 	//position: Welcher Ausschnitt des Filmstreifens dargestellt wird
-	//jump: in welche Richtung navigiert wird: 1: 6 Bilder weiter; 2: zum Ende; -1: 6 Bilder zur�ck; -2: zum Anfang
+	//jump: in welche Richtung navigiert wird: 1: 6 Bilder weiter; 2: zum Ende; -1: 6 Bilder zurueck; -2: zum Anfang
 	//confirm("Jahr: " + j + ", Monat: "+ m +", Tag: "+ t +", mod: " + mod + ", pic_id: " + pic_id+", modus: "+modus+", base_file: "+base_file +", bewertung: "+bewertung +", Position: "+position +", Sprung-Richtung: "+jump);
 	
 	var url = '../../share/get_preview.php';
@@ -539,6 +539,16 @@ function changeGrouppermission(group_id, perm_id, checked, sr)
 	var params = 'group_id=' + group_id + '&perm_id=' + perm_id + '&checked=' + checked + '&sr=' + sr;
 	//alert("Parameter: "+params);
 	var target = perm_id;
+	//alert(target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
+function createKmlFile(kml_cod_statement,sr,mod)
+{
+	var url = '../../share/createKmlFile.php';
+	var params = 'kml_cod_statement=' + kml_cod_statement + '&sr=' + sr + '&mod=' + mod;
+	//alert("Parameter: "+params);
+	var target = 'ge_icon';
 	//alert(target);
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 }

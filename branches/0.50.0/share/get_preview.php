@@ -563,38 +563,35 @@ SWITCH ($modus)
 		$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table14.ExifImageWidth, $table14.ExifImageHeight, $table14.Orientation, $table2.pic_id, $table2.Owner, $table2.note, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 		echo mysql_error();
 		
-		$result8 = mysql_query( "SELECT $table2.pic_id, $table2.loc_id, $table2.note, $table2.FileNameHQ, $table14.Caption_Abstract, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount FROM $table2 LEFT JOIN $table14 ON $table2.pic_id = $table14.pic_id $krit1 $krit2 AND $table2.loc_id <>'0' ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+		$kml_statement = "SELECT $table2.pic_id, $table2.loc_id, $table2.note, $table2.FileNameHQ, $table14.Caption_Abstract, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount FROM $table2 LEFT JOIN $table14 ON $table2.pic_id = $table14.pic_id $krit1 $krit2 AND $table2.loc_id <>'0' ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+		$kml_cod_statement = urlencode($kml_statement);
+		$result8 = mysql_query( "$kml_statement");
 		echo mysql_error();
-
+//#########################################################################
 		$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
 		
 		$previewLayerHtml .= '
 		<script language="javascript">
-		
 		var imageArray = new Array();
-		
 		self.getImageArray = function getImageArray()
 		{
-		  imageArray = [];
-		';
-		for ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
-		{
-			
-			$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, 'FileName'));
-			$ratio = (mysql_result($result6_1, $imageArrayIndex, 'ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, 'ExifImageHeight'));
-			if (mysql_result($result6_1, $imageArrayIndex, 'Orientation') >= '5')
+			  imageArray = [];';
+			for ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
 			{
-				$ratio = 1.0 / $ratio;
+				$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, 'FileName'));
+				$ratio = (mysql_result($result6_1, $imageArrayIndex, 'ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, 'ExifImageHeight'));
+				if (mysql_result($result6_1, $imageArrayIndex, 'Orientation') >= '5')
+				{
+					$ratio = 1.0 / $ratio;
+				}
+				$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
+				';
 			}
-			$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
-			';
+			$previewLayerHtml .= '
+			  return imageArray;
 		}
-		$previewLayerHtml .= '
-		  return imageArray;
-		}
-		</script>
-		';
-		
+		</script>';
+//##########################################################################		
 		$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
 		SWITCH ($num6_1)
 		{
@@ -611,7 +608,6 @@ SWITCH ($modus)
 			$text1 = "<div id='tooltip1'>Es wurden ".$num6_1." Bilder gefunden.";
 			break;
 		}
-	//echo "Es wurden ".$num6_1." Bilder gefunden, davon ".$num8." referenzierte.&#160;&#160;";
 	break;
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	CASE 'kat':
@@ -624,7 +620,7 @@ SWITCH ($modus)
 
 			CASE '1':
 			//Wenn die Wurzel-Kategorie gewaehlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
-			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.Owner, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.Owner, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table14.ExifImageWidth, $table14.ExifImageHeight, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 			$num6_1 = mysql_num_rows($result6_1);
 			$N = $num6_1;
 		
@@ -654,9 +650,40 @@ SWITCH ($modus)
 			
 			//Ermittlung aller Bilder der Kategorie:
 			$result6_1 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
-	
+//#########################################################
+			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
+			$previewLayerHtml .= '
+			<script language="javascript">
+			
+			var imageArray = new Array();
+			
+			self.getImageArray = function getImageArray()
+			{
+			  imageArray = [];
+			';
+			FOR ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
+			{
+				
+				$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, $table2.'.FileName'));
+				$ratio = (mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageHeight'));
+				IF (mysql_result($result6_1, $imageArrayIndex, $table14.'.Orientation') >= '5')
+				{
+					$ratio = 1.0 / $ratio;
+				}
+				//echo $fileNamePrefix." ".$ratio."<BR>";
+				$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
+				';
+			}
+			$previewLayerHtml .= '
+			  return imageArray;
+			}
+			</script>
+			';
+//########################################################
 			//davon Ermittlung aller Bilder mit Geo-Referenzierung:
-			$result8 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table2, $table10, $table14 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND loc_id <>'0' $krit2)");
+			$kml_statement = "SELECT $table2.*, $table10.*, $table14.* FROM $table2, $table10, $table14 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND loc_id <>'0' $krit2)";
+			$kml_cod_statement = urlencode($kml_statement);
+			$result8 = mysql_query( "$kml_statement");
 		
 			$result4 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id='$ID'");
 			$kategorie = mysql_result($result4, isset($i4), 'kategorie');
@@ -937,6 +964,12 @@ SWITCH ($modus)
 			
 		}
 		$statement = $pic_id_arr;
+		$kml_statement = '';
+		FOR($x=0; $x<count($pic_id_arr); $x++)
+		{
+			$kml_statement .= " ".$pic_id_arr[$x];
+		}
+		$kml_cod_statement = urlencode(substr($kml_statement, 1));
 		$num6_1 = count($pic_id_arr);
 		echo "<div id='tooltip1'>Es wurde(n) ".$num6_1." Bild(er) gefunden.";
 		break;
@@ -1067,10 +1100,35 @@ SWITCH ($modus)
 			
 			//echo $bewertung.", ".$stat_all.")<BR>";
 			$result6_1 = mysql_query( $stat_all.") ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
-			$num6_1 = mysql_num_rows($result6_1);
-			//echo "Gesamtanzahl der gefundenen Bilder: ".$num6_1." Treffer<BR>";
+			
+//#########################################################################
+			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
+			
+			$previewLayerHtml .= '
+			<script language="javascript">
+			var imageArray = new Array();
+			self.getImageArray = function getImageArray()
+			{
+				  imageArray = [];';
+				for ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
+				{
+					$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, 'FileName'));
+					$ratio = (mysql_result($result6_1, $imageArrayIndex, 'ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, 'ExifImageHeight'));
+					if (mysql_result($result6_1, $imageArrayIndex, 'Orientation') >= '5')
+					{
+						$ratio = 1.0 / $ratio;
+					}
+					$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
+					';
+				}
+				$previewLayerHtml .= '
+				  return imageArray;
+			}
+			</script>';
+//##########################################################################		
 			
 			//echo $stat_ref.")<BR>";
+			$kml_cod_statement = urlencode($stat_ref);
 			$result8 = mysql_query( $stat_ref);
 			$num8 = mysql_num_rows($result8);
 			//echo "Gesamtanzahl der georeferenzierten Bilder: ".$num8." Treffer<BR>";
@@ -1114,14 +1172,15 @@ SWITCH ($modus)
 			//echo $krit1." / ".$krit2."<BR>";
 			//echo "Zusatz1: ".$zusatz1."<BR>";
 			
-			$statement = "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+			$statement = "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 			
-			$result6_1 = mysql_query( "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.Owner, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.Owner, $table2.FileName, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 			echo mysql_error();
 			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
-			$result8 = mysql_query( "SELECT * FROM $table2 $krit1 AND $table2.loc_id <>'0' $krit2");
+			$kml_statement = "SELECT * FROM $table2 $krit1 AND $table2.loc_id <>'0' $krit2";
+			$kml_cod_statement = urlencode($kml_statement);
+			$result8 = mysql_query( "$kml_statement");
 		}
-		
 		ELSE
 		{
 			//Recherche nach Meta-Daten, NICHT Geo-Daten! (in meta_data)
@@ -1134,15 +1193,48 @@ SWITCH ($modus)
 				$krit1 = "WHERE ".$table14.".".$zusatz1." ".$bedingung1." '".$zw1."'";
 			}
 			//echo $krit1;
-			$statement = "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+			$statement = "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 			
-			$result6_1 = mysql_query( "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table2.pic_id, $table2.Owner FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.Owner, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
 			echo mysql_error();
-			
-			$result8 = mysql_query( "SELECT $table2.pic_id, $table2.loc_id, $table2.FileNameHQ, $table14.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.loc_id <>'0' AND $table2.pic_id = $table14.pic_id $krit2");
+			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
+			$kml_statement = "SELECT $table2.pic_id, $table2.loc_id, $table2.FileNameHQ, $table14.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.loc_id <>'0' AND $table2.pic_id = $table14.pic_id $krit2";
+			$kml_cod_statement = urlencode($kml_statement);
+			$result8 = mysql_query( "$kml_statement");
+			//$result8 = mysql_query( "SELECT $table2.pic_id, $table2.loc_id, $table2.FileNameHQ, $table14.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.loc_id <>'0' AND $table2.pic_id = $table14.pic_id $krit2");
 		}
 		
-		$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
+//#########################################################
+			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
+			$previewLayerHtml .= '
+			<script language="javascript">
+			
+			var imageArray = new Array();
+			
+			self.getImageArray = function getImageArray()
+			{
+			  imageArray = [];
+			';
+			FOR ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
+			{
+				
+				$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, 'FileName'));
+				$ratio = (mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, $table14.'.ExifImageHeight'));
+				IF (mysql_result($result6_1, $imageArrayIndex, $table14.'.Orientation') >= '5')
+				{
+					$ratio = 1.0 / $ratio;
+				}
+				//echo $fileNamePrefix." ".$ratio."<BR>";
+				$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
+				';
+			}
+			$previewLayerHtml .= '
+			  return imageArray;
+			}
+			</script>
+			';
+//########################################################		
+		
 		$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
 		SWITCH ($num6_1)
 		{
@@ -1180,7 +1272,7 @@ SWITCH ($modus)
 		{
 			$statement = '';
 		}	
-	//	createContentFile($mod,$statement,$c_username,$bild);
+		createContentFile($mod,$statement,$c_username,$bild);
 	}
 	
 //###########    Bestimmung der Position innerhalb des Filmstreifens und Erzeugung des Textes 'Bilder X bis Y':    ###############
@@ -1281,7 +1373,7 @@ SWITCH ($modus)
 	//echo $bereich."<BR>";
 	
 //###########    Erzeugung der kml-Datei:    #############################################################################
-
+/*
 	IF($mod <> 'geo')
 	{
 		IF(isset($num8) AND $num8 > '0')
@@ -1356,7 +1448,7 @@ SWITCH ($modus)
 			}
 			$content .= '</Document>
 			</kml>';
-			//kml-Datei erzeugen und mit Inhalt ($content) f�llen
+			//kml-Datei erzeugen und mit Inhalt ($content) fuellen
 			$file = time().'.kml';
 			$file_name = $kml_dir.'/'.$file;
 			//echo $file_name;
@@ -1385,7 +1477,7 @@ SWITCH ($modus)
 					$latitude = mysql_result($result7,isset($i7), 'latitude');
 					$altitude = mysql_result($result7,isset($i7), 'altitude');
 					$location = mysql_result($result7,isset($i7), 'location');
-					//Skalierung der Bilder auf max. Seitenl�nge 300px:
+					//Skalierung der Bilder auf max. Seitenlaenge 300px:
 					$max_size = '400';
 					@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 					$breite = $parameter_v[0];
@@ -1434,7 +1526,7 @@ SWITCH ($modus)
 			}
 			$content .= '</Document>
 			</kml>';
-			//kml-Datei erzeugen und mit Inhalt ($content) f�llen
+			//kml-Datei erzeugen und mit Inhalt ($content) fuellen
 			$file = time().'.kml';
 			$file_name = $kml_dir.'/'.$file;
 			//echo $file_name;
@@ -1443,7 +1535,7 @@ SWITCH ($modus)
 			fclose($fh);
 		}
 	}
-			
+*/			
 #########    Erzeugung der vollst. 'Filmstreifen-&Uuml;berschrift'     #####################################################
 
 	SWITCH($mod)
@@ -1512,9 +1604,7 @@ SWITCH ($modus)
 		$action2 = "getExifPreview(exif_param.zusatz1.value, exif_param.bedingung1.value, exif_param.zusatzwert1.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",\"$position\",2)";
 		break;
 	}
-	//echo $action1;
 	//Link zum pdf-Druck (Ausdruck bis max. 1000 Bilder!)
-	//IF($num6_1 < '1001' AND $mod !== 'geo')
 	
 	IF($num6_1 < '1001')
 	{
@@ -1528,6 +1618,7 @@ SWITCH ($modus)
 	
 	IF(isset($num8) AND $num8 > '0')
 	{
+		/*
 		$zusatz = "
 			(davon ".$num8." geo-ref.; Diese in <a href='$inst_path/pic2base/userdata/$c_username/kml_files/$file'>
 			<img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\" /><span>
@@ -1536,7 +1627,14 @@ SWITCH ($modus)
 			Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
 			</a></span>
 			 darstellen)";
-		
+		*/
+		$zusatz = "
+			(davon ".$num8." geo-ref.; <span id='ge_icon'>Darstellung vorbereiten: <a href='#' style='cursor:pointer;' onClick='createKmlFile(\"$kml_cod_statement\",\"$sr\",\"$mod\")'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon_grey.png\" width=\"12\" height=\"12\" border=\"0\"  title='kml-Datei erzeugen'/><span>
+			<strong>Zur Anzeige der Fotos in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
+			<br />
+			Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
+			</a></SPAN> )</span>";
+
 		IF($num6_1 > $step)
 		{
 			$zusatz .= "&#0160;&#0160;&#0160;
@@ -2055,49 +2153,49 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	SWITCH ($base_file)
 	{
 		CASE 'edit_beschreibung':
-		$result15 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-		$description = mysql_result($result15, isset($i15), 'Caption_Abstract');
-		IF($description == '')
-		{
-			$description = 'keine';
-		}
-		//echo "<div id='tooltip1'><a href=edit_beschreibung.php?kat_id=$kat_id&pic_id=$pic_id&art=single_desc_edit&ID=$ID title='Nur Beschreibung dieses einen Bildes &auml;ndern'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
-		echo "<div id='tooltip1'>
-		<a href='#'>
-		<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'>
-		<span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span>
-		</a>
-		</div>";
+			$result15 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+			$description = mysql_result($result15, isset($i15), 'Caption_Abstract');
+			IF($description == '')
+			{
+				$description = 'keine';
+			}
+			//echo "<div id='tooltip1'><a href=edit_beschreibung.php?kat_id=$kat_id&pic_id=$pic_id&art=single_desc_edit&ID=$ID title='Nur Beschreibung dieses einen Bildes &auml;ndern'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
+			echo "<div id='tooltip1'>
+			<a href='#'>
+			<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'>
+			<span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span>
+			</a>
+			</div>";
 		break;
 		
 		CASE 'edit_bewertung':
-		$result15 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-		$note = mysql_result($result15, isset($i15), 'note');
-		IF($note == '')
-		{
-			$note = '0';
-		}
-				
-		echo "<SPAN style='cursor:pointer;'>
-		<a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
-		<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'>
-		</a>
-		</span>";
+			$result15 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+			$note = mysql_result($result15, isset($i15), 'note');
+			IF($note == '')
+			{
+				$note = '0';
+			}
+					
+			echo "<SPAN style='cursor:pointer;'>
+			<a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
+			<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'>
+			</a>
+			</span>";
 		break;
 		
 		CASE 'recherche2':
 		CASE 'edit_remove_kat':
-		/*echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
-		<a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
-		<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
-		</a>
-		<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");'>Preview</a>
-		</span>";*/
-		echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
-		<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");' title='zur vergr&ouml;sserten Vorschau'>
-		<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
-		</a>
-		</span>";
+			/*echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
+			<a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
+			<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
+			</a>
+			<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");'>Preview</a>
+			</span>";*/
+			echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'>
+			<a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.");' title='zur vergr&ouml;sserten Vorschau'>
+			<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'>
+			</a>
+			</span>";
 		break;
 		
 		CASE 'edit_kat_daten':
