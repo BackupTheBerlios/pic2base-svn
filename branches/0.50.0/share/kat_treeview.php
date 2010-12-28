@@ -82,9 +82,9 @@ include '../share/global_config.php';
 				$space .="&#160;&#160;";
 			}
 			
+			//zu welchen Kategorien gibt es Lexikon-Eintraege?
 			$result13 = mysql_query("SELECT * FROM $table11 WHERE kat_id = '$kat_id' AND info <> ''");
 			$num13 = mysql_num_rows($result13);
-			
 			IF($num13 !== 0)
 			{
 				$font_color = 'blue';
@@ -118,8 +118,7 @@ include '../share/global_config.php';
 					<TD>
 					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
 					<TD>
-					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN>
-					</TD>
+					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN></TD>
 					<TD></TD>
 					</TR>";
 				getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
@@ -155,8 +154,7 @@ include '../share/global_config.php';
 					<TD>
 					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
 					<TD>
-					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN>
-					</TD>
+					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN></TD>
 					<TD style='font-size:12px;text-align:right;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>
 					</TR>";
 			}
@@ -178,7 +176,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 		$kat_id = mysql_result($result10, $i10, 'kat_id');
 		IF($level > '0')
 		{
-			$space="<a href='$ziel?kat_id=1&mod=$mod&pic_id=0' title='Top'><img src='$inst_path/pic2base/bin/share/images/up.gif' width='11' height='11' border='0'></a>:";
+			$space="<a href='$ziel?kat_id=1&mod=$mod&pic_id=0' title='nach ganz oben'><img src='$inst_path/pic2base/bin/share/images/up.gif' width='11' height='11' border='0'></a>:";
 		}
 		//echo $level;
 		FOR ($N=1; $N<$level; $N++)
@@ -186,17 +184,17 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			$space .=":";
 		}
 		
+		// zu welchen Kategorien gibt es Lexikon-Eintraege?
 		$result13 = mysql_query("SELECT * FROM $table11 WHERE kat_id = '$kat_id' AND info <> ''");
-			$num13 = mysql_num_rows($result13);
-			
-			IF($num13 !== 0)
-			{
-				$font_color = 'blue';
-			}
-			ELSE
-			{
-				$font_color = 'black';
-			}
+		$num13 = mysql_num_rows($result13);
+		IF($num13 !== 0)
+		{
+			$font_color = 'blue';
+		}
+		ELSE
+		{
+			$font_color = 'black';
+		}
 		
 		//echo $base_file;
 		//Link fuer den Ruecksprung erzeugen, d.h. noechst hoeheren Knoten aufrufen:
