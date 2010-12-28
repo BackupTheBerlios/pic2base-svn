@@ -223,7 +223,6 @@ echo "
 SWITCH ($mod)
 	{
 		CASE 'zeit':
-		//include $sr.'/bin/share/functions/ajax_functions.php';
 		echo "
 		<div id='spalte1F'>";
 		$ziel = "../../html/recherche/recherche2.php";
@@ -231,7 +230,6 @@ SWITCH ($mod)
 		$mod='zeit';
 		$modus='recherche';
 		include '../../share/time_treeview.php';
-		
 		echo "
 		</div>";
 		break;
@@ -239,14 +237,12 @@ SWITCH ($mod)
 		CASE 'kat':
 		echo "
 		<div id='spalte1F'>
-		
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach Kategorien<BR>";
 		$ziel = "../../html/recherche/recherche2.php";
 		$base_file = 'recherche2';
 		$mod='kat';
 		$modus='recherche';
 		include '../../share/kat_treeview.php';
-		
 		echo "
 		</div>";
 		break;
