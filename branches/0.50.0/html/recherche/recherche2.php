@@ -465,7 +465,6 @@ SWITCH ($mod)
 		echo "
 		<div id='spalte1F'>
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach Meta-Daten<BR>
-		<!--<FORM name= \"exif_param\" action='../../share/bearbeitung1.php?div=0&mod=$mod&bew=$bewertung' method='POST'>-->
 		<FORM name= \"exif_param\" method='POST'>
 
 		<TABLE id='geo' align='center' border = '0'>

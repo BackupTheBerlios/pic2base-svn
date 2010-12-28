@@ -963,6 +963,34 @@ SWITCH ($modus)
 			}
 			
 		}
+		
+//#########################################################################  	
+		$num_pic = count($pic_id_arr);	//Gesamtzahl der gefundenen Bilder
+		$previewLayerHtml .= '
+		<script language="javascript">
+		var imageArray = new Array();
+		self.getImageArray = function getImageArray()
+		{
+			  imageArray = [];';
+			for ($imageArrayIndex = 0; $imageArrayIndex < $num_pic; $imageArrayIndex++)
+			{
+				$res1 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
+				$res2 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
+				$fileNamePrefix = str_replace('.jpg', '', mysql_result($res1, 0, 'FileName'));
+				$ratio = (mysql_result($res2, 0, 'ExifImageWidth') / mysql_result($res2, 0, 'ExifImageHeight'));
+			if (mysql_result($res2, 0, 'Orientation') >= '5')
+				{
+					$ratio = 1.0 / $ratio;
+				}
+				$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
+				';
+			}
+			$previewLayerHtml .= '
+			  return imageArray;
+		}
+		</script>';
+//##########################################################################	
+		
 		$statement = $pic_id_arr;
 		$kml_statement = '';
 		FOR($x=0; $x<count($pic_id_arr); $x++)

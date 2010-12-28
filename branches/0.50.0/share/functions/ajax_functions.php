@@ -217,7 +217,7 @@ function getPreview(kat_id, ID, mod, pic_id, modus, base_file, bewertung, auswah
 	var url = '../../share/get_preview.php';
 	var params ='kat_id=' + kat_id + '&ID=' + ID + '&mod=' + mod + '&pic_id=' + pic_id + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&auswahl=' + auswahl + '&position=' + position + '&jump=' + jump + '&treestatus=' + treestatus;
 	var target = 'filmstreifen';
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 	
 }
 
@@ -277,7 +277,7 @@ function getGeoPreview1(long, lat, alt, radius1, einheit1, mod, modus, base_file
 	var params ='long=' + long + '&lat=' + lat + '&alt=' + alt + '&radius1=' + radius1 + '&einheit1=' + einheit1 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&form_name=' + form_name + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
 	//alert("Parameter: "+params);
 	var target = 'filmstreifen';
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 }
 
 function getGeoPreview2(ort, radius2, einheit2, mod, modus, base_file, form_name, bewertung, position, jump)
@@ -286,7 +286,7 @@ function getGeoPreview2(ort, radius2, einheit2, mod, modus, base_file, form_name
 	var params = 'ort=' + ort + '&radius2=' + radius2 + '&einheit2=' + einheit2 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&form_name=' + form_name + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
 	//alert("Parameter in GetGeoPreview2: "+params);
 	var target = 'filmstreifen';
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 }
 
 function getDescPreview1(desc1, bed1, desc2, bed2, desc3, bed3, desc4, bed4, desc5, mod, modus, base_file, bewertung, position, jump)
@@ -295,7 +295,7 @@ function getDescPreview1(desc1, bed1, desc2, bed2, desc3, bed3, desc4, bed4, des
 	var params ='desc1=' + desc1 + '&bed1=' + bed1 + '&desc2=' + desc2 + '&bed2=' + bed2 + '&desc3=' + desc3 + '&bed3=' + bed3 + '&desc4=' + desc4 + '&bed4=' + bed4 + '&desc5=' + desc5 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
 	//alert("Parameter: "+params);
 	var target = 'filmstreifen';
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 }
 
 function getExifPreview(zusatz1, bedingung1, zw1, mod, modus, base_file, bewertung, position, jump)
@@ -304,7 +304,7 @@ function getExifPreview(zusatz1, bedingung1, zw1, mod, modus, base_file, bewertu
 	var params ='zusatz1=' + zusatz1 + '&bedingung1=' + bedingung1 + '&zw1=' + zw1 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
 	//alert("Parameter: "+params);
 	var target = 'filmstreifen';
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 }
 
 function delPicture(FileName, c_username, pic_id)
