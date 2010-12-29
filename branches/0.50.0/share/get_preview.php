@@ -1897,8 +1897,6 @@ SWITCH ($modus)
 		</TR>
 		</div>
 		</TABLE>";
-//		<TR><TD colspan = '6' align=center>Slider -1</TD></TR>
-//		</TABLE>";
 	}
 	ELSE
 	{
