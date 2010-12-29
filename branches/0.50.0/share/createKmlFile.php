@@ -21,7 +21,7 @@ $server_url = "http://{$_SERVER['SERVER_NAME']}$inst_path";
 
 IF($mod <> 'geo')
 {
-	$statement = urldecode($kml_cod_statement);
+	$statement = str_replace('\\', '', urldecode($kml_cod_statement));
 	$result8 = mysql_query("$statement");
 	echo mysql_error();
 	$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder lt. mitgegebenem Statement
