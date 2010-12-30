@@ -133,13 +133,14 @@ echo "
 					$breite = $bildinfo[0];
 					$hoehe = $bildinfo[1];
 					$img_string = "http://".$_SERVER['SERVER_NAME'].$inst_path."/pic2base/images/vorschau/thumbs/".$FileNameV;
+					//Datenzelle ist 300x300px gross; hier einpassen entsprechend der Ausrichtung des Vorschaubildes:
 					IF($breite > $hoehe)
 					{
 						$imgsrc = "<img src='$img_string' width=\"300\" />";
 					}
 					ELSE
 					{
-						$imgsrc = "<img src='$img_string' width=\"270\" />";
+						$imgsrc = "<img src='$img_string' height=\"270\" />";
 					}
 					
 					//Bestimmung der Geo-Koordinaten am Aufnahmeort:
