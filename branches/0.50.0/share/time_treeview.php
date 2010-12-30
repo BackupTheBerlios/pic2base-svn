@@ -41,8 +41,6 @@ else
 	}
 }
 	
-
-
 //echo $bewertung;
 $stat = createStatement($bewertung);
 //echo $stat;
@@ -77,7 +75,6 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 	//Die einzelnen "Jahrgaenge" werden ermittelt:
 	//Zur Laufzeitoptimierung wird kontrolliert, ob in dem betreffenden Jahr ueberhaupt Bilder vorhanden sind:
 	$start2 = microtime();
-	//$result3a = mysql_query( "EXPLAIN SELECT * FROM $table2 WHERE note = '2'");
 	$result3 = mysql_query( "SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '$D-%' AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' AND $table2.$stat)");
 	echo mysql_error();
 	/*$end2 = microtime();
@@ -117,7 +114,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 		{
 			
 			//Die einzelnen Monate im gewaehlten Jahr werden ermittelt:
-			FOR($i_M='1'; $i_M<='12'; $i_M++)
+			FOR($i_M='12'; $i_M>='1'; $i_M--)
 			{
 				IF($i_M < '10')
 				{
@@ -133,7 +130,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 					AND $table14.DateTimeOriginal LIKE '$jahr-$i_M%' 
 					AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' 
 					AND $table2.$stat) 
-					ORDER BY $table14.DateTimeOriginal");
+					ORDER BY $table14.DateTimeOriginal DESC");
 					$num4 = mysql_num_rows($result4);
 				}
 				ELSE
@@ -149,7 +146,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 					AND $table14.DateTimeOriginal LIKE '%$jahr-$i_M%' 
 					AND $table14.DateTimeOriginal <> '0000-00-00 00:00:00' 
 					AND $table2.$stat) 
-					ORDER BY $table14.DateTimeOriginal");
+					ORDER BY $table14.DateTimeOriginal DESC");
 					$num5 = mysql_num_rows($result5);
 					//echo $num5." Bilder im Monat ".$i_M." im Jahr ".$jahr."<BR>";
 					
@@ -187,7 +184,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 							<TD id='kat2' colspan='2'></TD>
 							</TR>";
 							//Ermittlung der Tage, an welchen in diesem Monat/Jahr Aufnahmen gemacht wurden:
-							$dat_arr = getRecDays($y,$m,$stat);	//rec_days - Tage, an denen Fotos gemacht wurden
+							$dat_arr = array_reverse(getRecDays($y,$m,$stat));	//rec_days - Tage, an denen Fotos gemacht wurden (absteigende Reihenfolge)
 							FOREACH($dat_arr AS $datum)
 							{
 								$T = date('d',strtotime($datum));
