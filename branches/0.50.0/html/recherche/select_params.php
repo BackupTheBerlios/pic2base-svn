@@ -511,8 +511,8 @@ echo "
 </TABLE>
 </FORM>
 <div id='blend' style='display:none; z-index:99;'>
-<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:99%;' />
-<img src=\"../../share/images/loading.gif\" style='position:absolute; top:200px; width:40px; z-index:101;' />
+<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:100%;' />
+<img src=\"../../share/images/loading.gif\" style='position:absolute; top:200px; width:20px; z-index:101;' />
 </div>";
 ?>
 </body>
