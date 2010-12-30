@@ -87,6 +87,7 @@ IF(array_key_exists('params', $_COOKIE))
 	}
 	ELSE
 	{
+		$hl_mode = ' ';
 		$hl_text = 'Highlight-Clipping';
 	}
 	
@@ -100,7 +101,6 @@ IF(array_key_exists('params', $_COOKIE))
 	ELSE
 	{
 		$gamma_mode = 'automatisch';
-		//echo $gamma_mode."<BR>";
 	}
 	
 	$pos3 = array_search('-o',$param_arr);
@@ -108,7 +108,6 @@ IF(array_key_exists('params', $_COOKIE))
 	{
 		$next_pos3 = $pos3 + 1;
 		$targ_color = "-o ".$param_arr[$next_pos3];
-		//echo $targ_color."<BR>";
 	}
 	
 	$pos4 = array_search('-q',$param_arr);
@@ -116,7 +115,6 @@ IF(array_key_exists('params', $_COOKIE))
 	{
 		$next_pos4 = $pos4 + 1;
 		$col_inter = "-q ".$param_arr[$next_pos4];
-		//echo $col_inter."<BR>";
 	}
 	
 	$pos5 = array_search('-t',$param_arr);
@@ -124,44 +122,37 @@ IF(array_key_exists('params', $_COOKIE))
 	{
 		$next_pos5 = $pos5 + 1;
 		$rota = $param_arr[$next_pos5];
-		//echo $rota."<BR>";
 		$rota_text = $rota;
 	}
 	ELSE
 	{
+		$rota = ' ';
 		$rota_text = 'lt. Kamera';
 	}
 	
 	IF(in_array('-w',$param_arr))
 	{
 		$wb_mode = '-w';
-		//echo $wb_mode."<BR>";
 	}
 	ELSEIF(in_array('-a',$param_arr))
 	{
 		$wb_mode = '-a';
-		//echo $wb_mode."<BR>";
 	}
 	
 	IF(in_array('-h',$param_arr))
 	{
 		$konv_mode = '-h';
-		//echo $konv_mode."<BR>";
 	}
 	ELSE
 	{
 		$konv_mode = '';
-		//echo $konv_mode."<BR>";
 	}
 	
 	$pos8 = array_search('-cont',$param_arr);
-	//echo $pos8;
 	IF($pos8 !== false)
 	{
 		$next_pos8 = $pos8 + 1;
-		//echo "; ".$next_pos8;
 		$contrast = $param_arr[$next_pos8];
-		//echo $contrast."<BR>";
 		$contrast_val = $contrast;
 	}
 	ELSE
@@ -188,7 +179,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:25px;'>
-		<TD class='normal' bgcolor='#EEEEAA' colspan='2' style='width:250px;'></TD>
+		<TD class='normal' bgcolor='#EEEEAA' colspan='2' style='width:250px;'>Gespeicherte Parameter</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='width:500px;'>Vorschau f&uuml;r Bild ".$pic_id." (".$FileNameOri." / ".$FileName.")</TD>
 	</TR>	
 	
@@ -198,12 +189,8 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
-		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center; width:130px'>
-		Highlight-Mode:
-		</TD>
-		<TD class='normal' bgcolor='#EEEEAA'  style='text-align:left; vertical-align:center; width:120px'>
-		".$hl_text."
-		</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center; width:130px'>Highlight-Mode:</TD>
+		<TD class='normal' bgcolor='#EEEEAA'  style='text-align:left; vertical-align:center; width:120px'>".$hl_text."</TD>
 		<TD class='normal' rowspan='16' style='width:500px; height:450px; background-color:#DDDDDD; text-align:center; vertical-align:middle'><div id='new_preview'>Die Erstellung der Vorschaubilder ist ein sehr aufw&auml;ndiger Prozess,<BR>welcher je nach Rechenleistung des Servers einige Zeit in Anspruch nimmt.<BR>Die Berechnung ist abgeschlossen, wenn Sie hier<BR>in der rechten Fensterh&auml;lfte das neu berechnete Bild sehen.<BR><BR>Haben Sie bitte ein wenig Geduld.</div></TD>
 	</TR>
 	
@@ -212,11 +199,8 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
-		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>
-		Gamma-Korrektur:
-		</TD>
-		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$gamma_mode."
-		</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>Gamma-Korrektur:</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$gamma_mode."</TD>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
@@ -224,11 +208,8 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
-		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>
-		Ziel-Farbraum:
-		</TD>
-		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$targ_color."
-		</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>Ziel-Farbraum:</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$targ_color."</TD>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
@@ -236,11 +217,8 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
-		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>
-		Farb-Interpolation:
-		</TD>
-		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$col_inter."
-		</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>Farb-Interpolation:</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$col_inter."</TD>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
@@ -340,7 +318,7 @@ ELSE
 		Highlight-Mode:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA'  style='text-align:left; vertical-align:center; width:120px'>
-		<SELECT name='highlight' STYLE='WIDTH:120px;height:20px'>
+		<SELECT name='highlight' STYLE='WIDTH:120px;height:22px'>
 		<option selected value=''>(0) Spitzlicht-Clipping</option>
 		<option value='-H 1'>(1) Spitzlicht-Restaurierung</option>
 		<option value='-H 2'>(2) Spitzlicht-Restaurierung</option>
@@ -365,7 +343,7 @@ ELSE
 		Gamma-Korrektur:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>
-		<SELECT name=\"gamma\" STYLE='WIDTH:120px;height:20px'>
+		<SELECT name=\"gamma\" STYLE='WIDTH:120px;height:22px'>
 		<OPTION VALUE='' selected>automatisch</OPTION>";
 		FOR($k=1; $k<=50; $k++)
 		{
@@ -386,7 +364,7 @@ ELSE
 		Ziel-Farbraum:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>
-		<SELECT name=\"color_space\" STYLE='WIDTH:120px;height:20px'>
+		<SELECT name=\"color_space\" STYLE='WIDTH:120px;height:22px'>
 		<OPTION VALUE='-o 0'>RAW</OPTION>
 		<OPTION selected VALUE='-o 1'>sRGB</OPTION>
 		<OPTION VALUE='-o 2'>AdobeRGB</OPTION>
@@ -406,7 +384,7 @@ ELSE
 		Farb-Interpolation:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>
-		<SELECT name=\"color_interpol\" STYLE='WIDTH:120px;height:20px'>
+		<SELECT name=\"color_interpol\" STYLE='WIDTH:120px;height:22px'>
 		<OPTION VALUE='-q 0'>Bilineare Interpolation</OPTION>
 		<OPTION VALUE='-q 1'>Reverse</OPTION>
 		<OPTION VALUE='-q 2'>VNG (Variable Number of Gradients)</OPTION>
@@ -424,7 +402,7 @@ ELSE
 		Drehung/Spiegel.:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>
-		<SELECT name=\"rota\" STYLE='WIDTH:120px;height:20px'>
+		<SELECT name=\"rota\" STYLE='WIDTH:120px;height:22px'>
 		<OPTION selected value=''>lt. Kamera</OPTION>
 		<OPTION VALUE='-t 0'>keine</OPTION>
 		<OPTION VALUE='-t 1'>Spiegelung an der vert. Bildachse</OPTION>
@@ -447,7 +425,7 @@ ELSE
 		Wei&szlig;abgleich:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='width:120px; text-align:left;  vertical-align:center'>
-		<SELECT name='wb' STYLE='WIDTH:120px;height:20px'>
+		<SELECT name='wb' STYLE='WIDTH:120px;height:22px'>
 		<option value='-a'>automatisch</option>
 		<option selected value='-w'>von Kamera</option>
 		</select>
@@ -463,7 +441,7 @@ ELSE
 		Schnell-Konvertierung:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='width:120px; text-align:left;  vertical-align:center'>
-		<SELECT name='hsi' STYLE='WIDTH:120px;height:20px'>
+		<SELECT name='hsi' STYLE='WIDTH:120px;height:22px'>
 		<option selected value='-h'>ja</option>
 		<option value=''>nein</option>
 		</select>
@@ -479,7 +457,7 @@ ELSE
 		Kontrast:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='width:120px; text-align:left;  vertical-align:center'>
-		<SELECT name='contrast' STYLE='WIDTH:120px;height:20px'>
+		<SELECT name='contrast' STYLE='WIDTH:120px;height:22px'>
 		<option value='-cont 5'>+5</option>
 		<option value='-cont 4'>+4</option>
 		<option value='-cont 3'>+3</option>
