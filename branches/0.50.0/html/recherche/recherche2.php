@@ -660,12 +660,16 @@ SWITCH ($mod)
 		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'>
 		<b>Hinweis zur Anzeige der Bilder:</b>
 		<BR><BR>Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, 
-		indem Sie auf das gr&uuml;ne H&auml;kchen neben dem entsprechenden Suchkriterium klicken.<BR>
+		indem Sie auf das Datum (Jahr, Monat oder Tag) oder den Kategorienamen klicken.<BR>
 		Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
-		Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie hier in der rechten 
-		Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf dieses Bild in dem Filmstreifen, erhalten 
-		Sie eine Vorschau in mittlerer Qualit&auml;t.<BR>Klicken Sie hingegen auf das Bild in der Detail-Ansicht, 
-		erhalten Sie eine Darstellung in Original-Qualit&auml;t.</p>
+		Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie in der rechten oberen 
+		Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf ein Bild in dem Filmstreifen, gelangen 
+		Sie in den \"Bl&auml;tter\"-Modus.<BR>
+		In diesem Modus haben Sie die M&ouml;glichkeit, sehr schnell alle gefundenen Bilder zu betrachten, sich das entsprechenden Bild in Originalqualit&auml;t
+		anzusehen, oder - die entsprechende Berechtigung vorausgesetzt - das gesuchte Bild herunterzuladen.<BR> 
+		Wenn Sie den \"Bl&auml;tter\"-Modus verlassen, gelangen Sie innerhalb der Filmstreifen-Ansicht an die Stelle,
+		an der sich das zuletzt betrachtete Bild befindet.<BR>Dieses wird dann auch in der Detailansicht dargestellt.
+		</p>
 		
 		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'>
 		<b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
