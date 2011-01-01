@@ -27,6 +27,16 @@ include '../../share/global_config.php';
 
 <DIV Class="klein">
 
+<script language="JavaScript">
+<!--
+function showKatInfo(kat_id)
+{
+	Fenster1 = window.open('../../share/edit_kat_info.php?kat_id='+kat_id, 'Kategorie-Informationen', "width=675,height=768,scrollbars,resizable=no,");
+	Fenster1.focus();
+}
+-->
+</script>
+
 <?php
 
 /*
