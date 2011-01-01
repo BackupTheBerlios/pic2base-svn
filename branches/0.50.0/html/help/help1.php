@@ -207,7 +207,7 @@ echo "
 		
 		Inhalt:<BR>
 		<a href='#2_bewertung'>Auswahl der Bild-Bewertung</a><BR>
-		<a href='#2_zeit'>Auflistung nach Jahrg&auml;ngen sortiert</a><BR>
+		<a href='#2_zeit'>Suche nach Aufnahmedatum</a><BR>
 		<a href='#2_kat'>Suche nach Kategorien</a><BR>
 		<a href='#2_meta'>Suche nach ausgew&auml;hlten Meta-Daten</a><BR>
 		<a href='#2_desc'>Suche nach Beschreibungstext</a><BR>
@@ -230,7 +230,7 @@ echo "
 		Hinweis:<BR>F&uuml;r diese Funktion m&uuml;ssen Cookies zugelassen sein!<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '2_zeit'></a><B>Auflistung nach Jahrg&auml;ngen sortiert</B><BR><BR>
+		<a name = '2_zeit'></a><B>Suche nach Aufnahmedatum</B><BR><BR>
 		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum der Bilder unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den Meta-Daten ausgelesen.
 		Handelt es sich um Bilddateien ohne Meta-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefasst. Diesen Bildern kann - die entsprechenden Berechtigung vorausgesetzt - sp&auml;ter manuell das Aufnahmedatum zugewiesen werden.<BR>
 		Die zeitliche Darstellung kann bis auf die Tages-Ebene heruntergebrochen werden, indem zun&auml;chst das Aufnahmejahr mit einem Klick auf die betreffende Jahreszahl gew&auml;hlt wird,
