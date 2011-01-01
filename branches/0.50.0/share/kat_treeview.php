@@ -246,10 +246,17 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			{
 				//auf Kategorienamen liegt der Link zu den Bildern, auf dem Icon die Info zum Kat-Lexikon:
 				echo "<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")' title='Hier klicken, um alle Bilder der Kategorie $kategorie anzuzeigen'>".$kategorie."</span></TD>";
-				$sel_one = $book;
+				IF($kat_id == '1')
+				{
+					$kat_info_link = "<IMG src='$inst_path/pic2base/bin/share/images/platzhalter.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+				}
+				ELSE
+				{
+					$kat_info_link = "<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$book."</SPAN>";
+				}
 				echo "
 				<TD>
-				<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
+				<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$kat_info_link."</SPAN></TD>
 				<TD></TD>
 				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>";
 			}
@@ -281,10 +288,17 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
 			{
 				echo	$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;"."<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")' title='Hier klicken, um alle Bilder der Kategorie $kategorie anzuzeigen'>".$kategorie."</span></TD>";
-				$sel_one = $book;
+				IF($kat_id == '1')
+				{
+					$kat_info_link = "<IMG src='$inst_path/pic2base/bin/share/images/platzhalter.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+				}
+				ELSE
+				{
+					$kat_info_link = "<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$book."</SPAN>";
+				}
 				echo "
 				<TD>
-				<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
+				<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$kat_info_link."</SPAN></TD>
 				<TD></TD>
 				<TD style='font-size:12px;text-align:right;'></TD>
 				</TR>";
