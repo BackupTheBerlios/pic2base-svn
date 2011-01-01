@@ -21,7 +21,7 @@ include '../share/global_config.php';
 <body style='background-color:#999999'>
 
 <?php
-//skript speichert den geänderten Tagebuch-Eintrag in die diary-Tabelle
+//skript speichert den geaenderten Tagebuch-Eintrag in die diary-Tabelle
 echo "&Auml;nderungen werden gespeichert...<BR>";
 include_once 'global_config.php';
 include_once 'db_connect1.php';
