@@ -6,42 +6,51 @@ include '../share/global_config.php';
   header('Location: ../../index.php');
 }
 
-	INCLUDE 'global_config.php';
-	include $sr.'/bin/share/db_connect1.php';
-	include $sr.'/bin/share/functions/ajax_functions.php';
-	
-	$sel_one = "<IMG src='$inst_path/pic2base/bin/share/images/one.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='einzelne Bilder dieser Kategorie ausw&auml;hlen'>";
-	$sel_all = "<IMG src='$inst_path/pic2base/bin/share/images/all.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='alle Bilder dieser Kategorie ausw&auml;hlen'>";
-			
-	//Datei wird zur Navigation durch die Kategorien mit Hilfe einer Baumstruktur verwendet
-	//$ziel = $target_url;
-	//echo $base_file;
-	//echo $modus;
-	//Erzeugung der Baumstruktur:
-	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
-	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INCLUDE 'global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
+
+$sel_one = "<IMG src='$inst_path/pic2base/bin/share/images/one.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='einzelne Bilder dieser Kategorie ausw&auml;hlen'>";
+$sel_all = "<IMG src='$inst_path/pic2base/bin/share/images/all.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='alle Bilder dieser Kategorie ausw&auml;hlen'>";
+		
+//Datei wird zur Navigation durch die Kategorien mit Hilfe einer Baumstruktur verwendet
+//$ziel = $target_url;
+//echo $base_file;
+//echo $modus;
+//Erzeugung der Baumstruktur:
+//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
+//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //var_dump($_REQUEST);
-	if(array_key_exists('mod',$_GET))
+
+if(array_key_exists('mod',$_GET))
+{
+	$mod = $_GET['mod']; // fuer register_globals = off
+}
+
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id']; // fuer register_globals = off
+}
+else
+{
+	if(!isset($kat_id))
 	{
-		$mod = $_GET['mod']; // fuer register_globals = off
+		$kat_id = '';
 	}
-	if(array_key_exists('kat_id',$_GET))
-	{
-		$kat_id = $_GET['kat_id']; // fuer register_globals = off
-	}
-	else
-	{
-		if(!isset($kat_id))
-		{
-			$kat_id = '';
-		}
-	}
-	$KAT_ID = $kat_id;		//$KAT_ID: uebergeordnete Kat., $kat_id: Unterkategorien
-	
-	if(!isset($ID))
-	{
-		$ID = '';
-	}
+}
+
+$KAT_ID = $kat_id;		//$KAT_ID: uebergeordnete Kat., $kat_id: Unterkategorien
+
+if(!isset($ID))
+{
+	$ID = '';
+}
+
+if(!isset($bewertung))
+{
+	$bewertung = '';
+}
+
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
 	$knoten_arr[]=$kat_id;
@@ -87,11 +96,11 @@ include '../share/global_config.php';
 			$num13 = mysql_num_rows($result13);
 			IF($num13 !== 0)
 			{
-				$font_color = 'blue';
+				$book = "<img src='$inst_path/pic2base/bin/share/images/book_green.gif' width='15' height='15' title='Kategorie-Informationen lesen / bearbeiten' />";
 			}
 			ELSE
 			{
-				$font_color = 'black';
+				$book = "<img src='$inst_path/pic2base/bin/share/images/book_grey.gif' width='15' height='15' title='Kategorie-Informationen hinzuf&uuml;gen' />";
 			}
 			
 			$kat_id_pos = array_search($kat_id, $knoten_arr);
@@ -107,13 +116,22 @@ include '../share/global_config.php';
 				echo 	"<TR id='kat'>
 					<TD id='kat1'>
 					".$space."<a href='$ziel?kat_id=$parent&mod=$mod&pic_id=0'>".$img."</a>&#160;";
-					
-					echo "<span style='cursor:pointer; color:$font_color' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
-					IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
-					{
-						$sel_one = "<img src='$inst_path/pic2base/bin/share/images/ok.gif' width='15' height='15' />";
-						$sel_all = '&#160;';
-					}
+				
+				
+				IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
+				{
+					echo "<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")' title='Hier klicken, um alle Bilder der Kategorie $kategorie anzuzeigen'>".$kategorie."</span></TD>";
+					$sel_one = $book;
+					echo "
+					<TD>
+					<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
+					<TD></TD>
+					<TD></TD>
+					</TR>";
+				}
+				ELSE
+				{
+					echo "<span style='cursor:pointer;' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
 					echo "
 					<TD>
 					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
@@ -121,6 +139,9 @@ include '../share/global_config.php';
 					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN></TD>
 					<TD></TD>
 					</TR>";
+				}
+				
+					
 				getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
 			}
 			ELSE
@@ -138,18 +159,26 @@ include '../share/global_config.php';
 				}
 				ELSE
 				{
-					//$img = "&#160;&#160;&#160;";
 					$img = "<IMG src='$inst_path/pic2base/bin/share/images/platzhalter.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 					echo 	"<TR id='kat'>
 					<TD id='kat1'>
 					".$space."".$img."&#160;";
 				}
-					echo "<span style='cursor:pointer; color:$font_color' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
-					IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
-					{
-						$sel_one = "<img src='$inst_path/pic2base/bin/share/images/ok.gif' width='15' height='15' />";
-						$sel_all = '&#160;';
-					}
+				
+				IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
+				{
+					echo "<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")' title='Hier klicken, um alle Bilder der Kategorie $kategorie anzuzeigen'>".$kategorie."</span></TD>";
+					$sel_one = $book;
+					echo "
+					<TD>
+					<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
+					<TD></TD>
+					<TD style='font-size:12px;text-align:right;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>
+					</TR>";
+				}
+				ELSE
+				{
+					echo "<span style='cursor:pointer;' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
 					echo "
 					<TD>
 					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
@@ -157,6 +186,8 @@ include '../share/global_config.php';
 					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN></TD>
 					<TD style='font-size:12px;text-align:right;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>
 					</TR>";
+				}
+				
 			}
 		}
 	}
@@ -189,14 +220,13 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 		$num13 = mysql_num_rows($result13);
 		IF($num13 !== 0)
 		{
-			$font_color = 'blue';
+			$book = "<img src='$inst_path/pic2base/bin/share/images/book_green.gif' width='15' height='15' title='Kategorie-Informationen lesen / bearbeiten' />";
 		}
 		ELSE
 		{
-			$font_color = 'black';
+			$book = "<img src='$inst_path/pic2base/bin/share/images/book_grey.gif' width='15' height='15' title='Kategorie-Informationen hinzuf&uuml;gen' />";
 		}
 		
-		//echo $base_file;
 		//Link fuer den Ruecksprung erzeugen, d.h. noechst hoeheren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
@@ -210,16 +240,22 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				$space = '';
 			}
 			echo	$space."<a href='$ziel?kat_id=$parent&mod=$mod&pic_id=0'>".$img."</a>&#160;";
-				echo "<span style='cursor:pointer; color:$font_color' onClick=\"showKatInfo('$kat_id')\" title='Imformationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
-				IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
-				{
-					$sel_one = "<img src='$inst_path/pic2base/bin/share/images/ok.gif' width='15' height='15' />";
-					$sel_all = '&#160;';
-				}
-				if(!isset($bewertung))
-				{
-					$bewertung = '';
-				}
+			
+			
+			IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
+			{
+				//auf Kategorienamen liegt der Link zu den Bildern, auf dem Icon die Info zum Kat-Lexikon:
+				echo "<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")' title='Hier klicken, um alle Bilder der Kategorie $kategorie anzuzeigen'>".$kategorie."</span></TD>";
+				$sel_one = $book;
+				echo "
+				<TD>
+				<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
+				<TD></TD>
+				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>";
+			}
+			ELSE
+			{
+				echo "<span style='cursor:pointer;' onClick=\"showKatInfo('$kat_id')\">".$kategorie."</span></TD>";
 				echo "
 				<TD>
 				<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
@@ -227,7 +263,9 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN>
 				</TD>
 				<TD style='font-size:12px;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>";
-				getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
+			}			
+			
+			getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
 		}
 		ELSE
 		{
@@ -239,16 +277,21 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 			{
 				$space = '';
 			}
-			echo	$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;"."<span style='cursor:pointer; color:$font_color' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
-				IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
-				{
-					$sel_one = "<img src='$inst_path/pic2base/bin/share/images/ok.gif' width='15' height='15' />";
-					$sel_all = '&#160;';
-				}
-				if(!isset($bewertung))
-				{
-					$bewertung = '';
-				}
+			
+			IF($base_file == 'edit_remove_kat' OR $base_file == 'recherche2' OR $base_file == 'edit_bewertung')
+			{
+				echo	$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;"."<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")' title='Hier klicken, um alle Bilder der Kategorie $kategorie anzuzeigen'>".$kategorie."</span></TD>";
+				$sel_one = $book;
+				echo "
+				<TD>
+				<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
+				<TD></TD>
+				<TD style='font-size:12px;text-align:right;'></TD>
+				</TR>";
+			}
+			ELSE
+			{
+				echo	$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;"."<span style='cursor:pointer;' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
 				echo "
 				<TD>
 				<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
@@ -257,6 +300,12 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				</TD>
 				<TD style='font-size:12px;text-align:right;'></TD>
 				</TR>";
+			}
+			
+			if(!isset($bewertung))
+			{
+				$bewertung = '';
+			}
 		}
 	}
 	echo "</TABLE>";
