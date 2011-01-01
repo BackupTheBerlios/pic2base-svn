@@ -38,8 +38,10 @@ echo mysql_error();
 $num0 = mysql_num_rows($result0);
 $row = mysql_fetch_array($result0);
 //var_dump($row);
-$aufn_DAT = date('d.m.Y',strtotime(($row['datum']))); //lesbare Formatierung
+$aufn_DAT = explode('-', $aufn_dat); //lesbare Formatierung
+$AD = $aufn_DAT[2].".".$aufn_DAT[1].".".$aufn_DAT[0];
 $info = $row['info'];
+//echo $AD;
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -61,7 +63,7 @@ ELSE
 	$view = 'Readonly';
 }
 
-echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat&AD=$aufn_DAT' method='post'>
+echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat' method='post'>
 	<TABLE border = '0' style='width:650px;background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
@@ -70,7 +72,7 @@ echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat&AD=$aufn_DAT' meth
 	
 	<TR class='normal'>
 		<TD class='normal' colspan = '2'>
-		Vorhandener Tagebucheintrag zum ".$aufn_dat."
+		Vorhandener Tagebucheintrag zum ".$AD."
 		</TD>
 	</TR>
 	
