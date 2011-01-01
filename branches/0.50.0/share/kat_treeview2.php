@@ -12,6 +12,7 @@ include '../share/global_config.php';
 ---------------------------------------------------------------------------------
 |																				|
 |	Datei wird zur Darstellung des kompletten Kategorien-Baumes verwendet		|
+|	(bei der Kategorie-Zuweisung)												|
 |																				|
 ---------------------------------------------------------------------------------
 */
