@@ -225,7 +225,7 @@ $num2 = mysql_num_rows($result2);
 		</TABLE>
 		
 		<center>
-		<a class='subnavi' href='recherche2.php?pic_id=0&mod=zeit&s_m=J'>Auflistung nach Jahrg&auml;ngen sortiert</a>
+		<a class='subnavi' href='recherche2.php?pic_id=0&mod=zeit&s_m=J'>Suche nach Aufnahmedatum</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=kat'>Suche nach Kategorien</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=exif'>Suche nach Meta-Daten</a>
 		<a class='subnavi' href='recherche2.php?pic_id=0&mod=desc'>Suche nach Beschreibungstext</a>
