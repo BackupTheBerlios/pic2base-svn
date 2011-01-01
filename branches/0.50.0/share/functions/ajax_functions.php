@@ -307,23 +307,31 @@ function getExifPreview(zusatz1, bedingung1, zw1, mod, modus, base_file, bewertu
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 }
 
-function delPicture(FileName, c_username, pic_id)
+function delPicture(FileName, c_username, pic_id, waitUntilDeleted)
 {
 	//loescht Bild-Datei aus dem DOWNLOAD-Ordner
 	var url = '../../share/del_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id;
 	//alert("Parameter: "+params);
 	var target = 'box' + pic_id;
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+	if( waitUntilDeleted == null )
+	{
+		waitUntilDeleted = false;
+	}
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, asynchronous: !waitUntilDeleted});
 }
 
-function copyPicture(FileName, c_username, pic_id)
+function copyPicture(FileName, c_username, pic_id, waitUntilCopyed)
 {
 	var url = '../../share/copy_picture.php';
 	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id;
 	//alert("Parameter: "+params);
 	var target = 'box' + pic_id;
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+	if( waitUntilCopyed == null )
+	{
+		waitUntilCopyed = false;
+	}
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, asynchronous: !waitUntilCopyed});
 }
 
 function rotPrevPic(Orientation, FileNameV, pic_id, fs_hoehe)
