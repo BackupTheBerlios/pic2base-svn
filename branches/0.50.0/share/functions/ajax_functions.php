@@ -558,7 +558,7 @@ function createKmlFile(kml_cod_statement,sr,mod)
 	//alert("Parameter: "+params);
 	var target = 'ge_icon';
 	//alert(target);
-	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
 -->
