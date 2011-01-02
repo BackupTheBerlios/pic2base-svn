@@ -5,24 +5,8 @@ include '../share/global_config.php';
 //var_dump($sr);
   header('Location: ../../index.php');
 }
-?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-
-<head>
-  <title>Tagebuch-Eintrag</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <link rel=stylesheet type="text/css" href='../css/format1.css'>
-  <link rel="shortcut icon" href="images/favicon.ico">
-</head>
-<body style='background-color:#999999'>
-
-<?php
 //skript speichert den geaenderten Tagebuch-Eintrag in die diary-Tabelle
-echo "&Auml;nderungen werden gespeichert...<BR>";
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
@@ -56,5 +40,3 @@ ELSE
 history.back();
 </script>
 
-</body>
-</html>
