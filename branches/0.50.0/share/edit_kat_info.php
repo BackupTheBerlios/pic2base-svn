@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	 header('Location: ../../index.php');
 }
 ?>
 
@@ -66,7 +66,7 @@ ELSE
 	$view = 'Readonly';
 }
 
-echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post' target='_blank'>
+echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post'>
 	<TABLE border = '0' style='width:650px;background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
