@@ -226,24 +226,24 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<td width=27 valign=top>&nbsp;</td>'+
       '<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;"><label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label></font></td>'+
       //'<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;"><label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label></font></td>'+
-      '<td width=27 valign=top><div id="divPreviewDownloadButton"></div></td>'+
+      '<td width=27 valign=top><!--<div id="divPreviewDownloadButton"></div>--></td>'+
       '</tr></table>'+
       '</center></div>'+
       '<div style="position:absolute; bottom:0px; width:100%; z-index:1000;"><center>'+
       '<table border=0 width=548px height=68px style="background-image:url(../../share/images/navbg.png)" cellpadding=0 cellspacing=0><tr>'+
-      '<td align=center valign=middle width=70><a href="javascript:showFullscreenImage(' + "'" + imagePath + "'" + ');"><img src="../../share/images/fullscreen.png" border=0></a></td>'+
+      '<td align=center valign=middle width=70><a href="javascript:showFullscreenImage(' + "'" + imagePath + "'" + ');" title="zur Vollbild-Ansicht"><img src="../../share/images/fullscreen.png" border=0></a></td>'+
       '<td align=center valign=middle></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:firstImage(' + "'" + imagePath + "'" + ');"><img id="imgNavFirst" src="../../share/images/first.png" border=0></a></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:prevStepImage(' + "'" + imagePath + "'" + ');"><img id="imgNavPrevStep" src="../../share/images/prevstep.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:firstImage(' + "'" + imagePath + "'" + ');" title="zum ersten Bild"><img id="imgNavFirst" src="../../share/images/first.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:prevStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder zur&uuml;ck"><img id="imgNavPrevStep" src="../../share/images/prevstep.png" border=0></a></td>'+
       '<td align=center valign=middle width=20></td>'+
-      '<td align=center valign=middle width=60><a href="javascript:prevImage(' + "'" + imagePath + "'" + ');"><img id="imgNavPrev" src="../../share/images/prev.png" border=0></a></td>'+
+      '<td align=center valign=middle width=60><a href="javascript:prevImage(' + "'" + imagePath + "'" + ');" title="zum vorigen Bild"><img id="imgNavPrev" src="../../share/images/prev.png" border=0></a></td>'+
       '<td align=center valign=middle width=10></td>'+
-      '<td align=center valign=middle width=60><a href="javascript:nextImage(' + "'" + imagePath + "'" + ');"><img id="imgNavNext" src="../../share/images/next.png" border=0></a></td>'+
+      '<td align=center valign=middle width=60><a href="javascript:nextImage(' + "'" + imagePath + "'" + ');" title="zum n&auml;chsten Bild"><img id="imgNavNext" src="../../share/images/next.png" border=0></a></td>'+
       '<td align=center valign=middle width=20></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:nextStepImage(' + "'" + imagePath + "'" + ');"><img id="imgNavNextStep" src="../../share/images/nextstep.png" border=0></a></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:lastImage(' + "'" + imagePath + "'" + ');"><img id="imgNavLast" src="../../share/images/last.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:nextStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder vor"><img id="imgNavNextStep" src="../../share/images/nextstep.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:lastImage(' + "'" + imagePath + "'" + ');" title="zum letzten Bild"><img id="imgNavLast" src="../../share/images/last.png" border=0></a></td>'+
       '<td align=center valign=middle></td>'+
-      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);"><img src="../../share/images/close.png" border=0></a></td>'+
+      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);" title="Vorschau schlie&szlig;en"><img src="../../share/images/close.png" border=0></a></td>'+
       '</tr></table>'+
       '</center></div>'+
       //'</div>'+
