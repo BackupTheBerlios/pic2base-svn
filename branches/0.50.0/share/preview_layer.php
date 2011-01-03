@@ -34,11 +34,12 @@ self.updateNavImages = function updateNavImages()
     $('imgNavNext').src = '../../share/images/next.png';
   }
 }
-
+//alert(currentPreviewImageIndex);
 self.loadCurrentPreviewImage = function loadCurrentPreviewImage(imagePath)
 {
   $('imgPreview').src = imagePath + "vorschau/hq-preview/" + imageArray[currentPreviewImageIndex].fileName + "_hq.jpg";
   $('labelPreviewFileName').innerHTML = imageArray[currentPreviewImageIndex].fileName + ".jpg";
+  $('labelPreviewFileNumber').innerHTML = currentPreviewImageIndex + 1;
   /*switch (imageArray[currentPreviewImageIndex].downloadStatus)
   {
     case 0:
@@ -224,7 +225,7 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<div style="position:absolute; top:0px; width:100%; z-index:1000;"><center>'+
       '<table border=0 width=270px height=27px style="background-image:url(../../share/images/navtop.png)" cellpadding=0 cellspacing=0><tr>'+
       '<td width=27 valign=top>&nbsp;</td>'+
-      '<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;"><label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label></font></td>'+
+      '<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;">Datei <label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label> - Bild <label id="labelPreviewFileNumber">' + currentPreviewImageIndex + '</label> von ' + imageArray.length + '</font></td>'+
       //'<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;"><label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label></font></td>'+
       '<td width=27 valign=top><!--<div id="divPreviewDownloadButton"></div>--></td>'+
       '</tr></table>'+
