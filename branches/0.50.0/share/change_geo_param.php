@@ -47,13 +47,6 @@ A:hover{color:red;text-decoration:underline}
 </style> 
 
 <script src="http://maps.google.com/maps?file=api&v=2&key=<?php echo $gm_key; ?>" type="text/javascript"></script>
-
-<script language="JavaScript">
-function saveNewParam(newlocation, ort, loc_id, pic_id)
-{
-	Fenster2 = window.open('../html/recherche/save_new_param.php?location='+newlocation+'&ort='+ort+'&loc_id='+loc_id+'&pic_id='+pic_id, 'Speicherung2', "width=300,height=100,scrollbars,resizable=no,");
-}
-</script>
 </head>
 
 <body>
@@ -114,14 +107,12 @@ ELSE
  
 <div id="map" style="position: absolute; top:10px;left:10px;width:530px; height:370px"></div>
 <div id="loc" style="position: absolute; top:390px;left:10px;">
-<form name = 'lok' method = 'post' action = 'save_param.php'>
-<input type='button' value='Position u. Ort speichern' OnClick='saveNewParam(lok.location.value, lok.ort.value, lok.loc_id.value, lok.pic_id.value)' style='width:160px;'>
-&#160;&#160;
-<input type="text" name = "location" id="location" style="width:140px;" value = "<?php echo $loc; ?>">
-&#160;&#160;
-<input type="text" name = 'ort' style="width:170px;" value = "<?php echo "$ort"; ?>">
+<form name = "lok" method = "post" action = "../html/recherche/save_new_param.php">
+<input type="text" name = "location" id="location" style="width:140px; margin-right:10px;" value = "<?php echo $loc; ?>">
+<input type="text" name = 'ort' style="width:180px; margin-right:10px;" value = "<?php echo "$ort"; ?>">
 <input type = "hidden" name = "loc_id" value = "<?php echo $loc_id; ?>">
 <input type = "hidden" name = "pic_id" value = "<?php echo $pic_id; ?>">
+<input type="submit" value="Position und Ort speichern" style="width:175px;">
 </div>
 
 <script type="text/javascript">
