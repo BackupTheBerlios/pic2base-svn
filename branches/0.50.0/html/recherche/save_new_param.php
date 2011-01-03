@@ -19,7 +19,7 @@ IF(array_key_exists('location', $_REQUEST))
 }
 IF(array_key_exists('ort', $_REQUEST))
 {
-	$ort = $_REQUEST['ort'];
+	$ort = utf8_decode($_REQUEST['ort']);
 }
 IF(array_key_exists('pic_id', $_REQUEST))
 {
@@ -29,6 +29,10 @@ IF(array_key_exists('loc_id', $_REQUEST))
 {
 	$loc_id = $_REQUEST['loc_id'];
 }
+echo "Lokation: ".$location."<BR>
+Ort: ".$ort."<BR>
+Bild-ID: ".$pic_id."<BR>
+Lok-ID: ".$loc_id;
 $location = strip_tags($location);	//Breite u. Laenge in einem String
 $loc_arr = explode(",",$location);
 $lat = $loc_arr[0];			//Breite
@@ -143,13 +147,12 @@ IF (mysql_error() == '')
 	{
 		anotherWindow.close();
 	}
-	window.close('Speicherung2');
 	</script>";
-	
 }
 ELSE
 {
 	echo "Fehler";
 	echo mysql_error();
 }
+
 ?>

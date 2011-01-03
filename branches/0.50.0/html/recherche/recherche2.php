@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 
 unset($parameter);
@@ -14,7 +14,7 @@ IF(array_key_exists('parameter', $_COOKIE))
 }
 ELSE
 {
-		$param = '';
+	$param = '';
 }
 IF(count($param) == '3')
 {
