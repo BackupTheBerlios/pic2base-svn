@@ -3,6 +3,8 @@
 var divLargeImageElement;
 var divFullscreenImageElement;
 var currentPreviewImageIndex;
+var imagePath;
+var user_id = 0;
 
 self.updateNavImages = function updateNavImages()
 {
@@ -36,6 +38,52 @@ self.updateNavImages = function updateNavImages()
 self.loadCurrentPreviewImage = function loadCurrentPreviewImage(imagePath)
 {
   $('imgPreview').src = imagePath + "vorschau/hq-preview/" + imageArray[currentPreviewImageIndex].fileName + "_hq.jpg";
+  $('labelPreviewFileName').innerHTML = imageArray[currentPreviewImageIndex].fileName + ".jpg";
+  /*switch (imageArray[currentPreviewImageIndex].downloadStatus)
+  {
+    case 0:
+	{
+	  $('imagePreviewDownload').src = '../../share/images/download_disabled.png';
+    }
+    break;
+    case 1:
+	{
+	  $('imagePreviewDownload').src = '../../share/images/download.png';
+    }
+    break;
+    case 2:
+	{
+	  $('imagePreviewDownload').src = '../../share/images/download.png';
+    }
+    break;
+    case 100:
+	{
+	  $('imagePreviewDownload').src = '../../share/images/downloaded.png';
+    }
+    break;
+  }*/
+  //$('divPreviewDownloadButton');
+  var url = '../../share/picture_info.php';
+  var params = 'FileName=' + imageArray[currentPreviewImageIndex].fileName + '.jpg' + '&c_username=' + c_username + '&pic_id=' + imageArray[currentPreviewImageIndex].id + '&inforequest=DownloadStatusIconPreview&Owner=' + imageArray[currentPreviewImageIndex].Owner + '&user_id=' + user_id;
+  var myAjax = new Ajax.Updater('divPreviewDownloadButton', url,{method:'get', parameters: params});
+}
+
+self.downloadButtonPressed = function downloadButtonPressed(FileName, c_username, pic_id, downloadStatus)
+{
+	switch (downloadStatus)
+	{
+		case 1:
+		{
+			copyPicture(FileName, c_username, pic_id, true);
+		}
+		break;
+		case 100:
+		{
+			delPicture(FileName, c_username, pic_id, true);
+		}
+		break;
+	}
+	loadCurrentPreviewImage(imagePath);
 }
 
 self.firstImage = function firstImage(imagePath)
@@ -138,8 +186,9 @@ self.showFullscreenImage = function showFullscreenImage(imagePath)
   document.body.appendChild(divFullscreenImageElement);
 }
 
-self.hideFullscreenOverlay = function hideFullscreenOverlay()
+self.hideFullscreenOverlay = function hideFullscreenOverlay(updateFilmstreifenCallback)
 {
+  updateFilmstreifenCallback(currentPreviewImageIndex, imageArray[currentPreviewImageIndex].id);
   document.body.removeChild(divLargeImageElement);
 }
 
@@ -172,6 +221,14 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '</td></tr></table>'+
       '</td></tr>'+
       '</table>'+
+      '<div style="position:absolute; top:0px; width:100%; z-index:1000;"><center>'+
+      '<table border=0 width=270px height=27px style="background-image:url(../../share/images/navtop.png)" cellpadding=0 cellspacing=0><tr>'+
+      '<td width=27 valign=top>&nbsp;</td>'+
+      '<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;"><label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label></font></td>'+
+      //'<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;"><label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label></font></td>'+
+      '<td width=27 valign=top><div id="divPreviewDownloadButton"></div></td>'+
+      '</tr></table>'+
+      '</center></div>'+
       '<div style="position:absolute; bottom:0px; width:100%; z-index:1000;"><center>'+
       '<table border=0 width=548px height=68px style="background-image:url(../../share/images/navbg.png)" cellpadding=0 cellspacing=0><tr>'+
       '<td align=center valign=middle width=70><a href="javascript:showFullscreenImage(' + "'" + imagePath + "'" + ');"><img src="../../share/images/fullscreen.png" border=0></a></td>'+
@@ -186,7 +243,7 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<td align=center valign=middle width=40><a href="javascript:nextStepImage(' + "'" + imagePath + "'" + ');"><img id="imgNavNextStep" src="../../share/images/nextstep.png" border=0></a></td>'+
       '<td align=center valign=middle width=40><a href="javascript:lastImage(' + "'" + imagePath + "'" + ');"><img id="imgNavLast" src="../../share/images/last.png" border=0></a></td>'+
       '<td align=center valign=middle></td>'+
-      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay();"><img src="../../share/images/close.png" border=0></a></td>'+
+      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);"><img src="../../share/images/close.png" border=0></a></td>'+
       '</tr></table>'+
       '</center></div>'+
       //'</div>'+
@@ -196,8 +253,10 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
   //new Ajax.Updater($("divOverlayContent"), filename, {method: "get"});
 }
 
-self.openPreview = function openPreview(imagePath, getImageArrayCallback, initialFileName)
+self.openPreview = function openPreview(newImagePath, getImageArrayCallback, initialFileName)
 {
+  //user_id = newUser_id;
+  imagePath = newImagePath;
   imageArray = getImageArrayCallback();
   if (imageArray.length > 0)
   {
@@ -214,6 +273,7 @@ self.openPreview = function openPreview(imagePath, getImageArrayCallback, initia
         }
     }
     showFullscreenOverlay(imagePath, imageArray);
+    loadCurrentPreviewImage(imagePath);
     updateNavImages();
 	}
 }

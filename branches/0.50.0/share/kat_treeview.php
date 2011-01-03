@@ -112,7 +112,7 @@ if(!isset($bewertung))
 			IF (in_array($kat_id, $knoten_arr))
 			{
 				$treestatus = 'minus';
-				$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+				$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='eine Ebene nach oben gehen'>";
 				echo 	"<TR id='kat'>
 					<TD id='kat1'>
 					".$space."<a href='$ziel?kat_id=$parent&mod=$mod&pic_id=0'>".$img."</a>&#160;";
@@ -152,7 +152,7 @@ if(!isset($bewertung))
 				$num11 = mysql_num_rows($result11);
 				IF($num11 > 0)
 				{
-					$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+					$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='Unterkategorien anzeigen'>";
 					echo 	"<TR id='kat'>
 					<TD id='kat1'>
 					".$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;";
@@ -232,7 +232,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 		IF (in_array($kat_id, $knoten_arr))
 		{
 			$treestatus = 'minus';
-			$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+			$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='eine Ebene nach oben gehen'>";
 			echo 	"<TR id='kat'>
 					<TD id='kat1'>";
 			IF(!isset($space))
@@ -277,7 +277,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 		ELSE
 		{
 			$treestatus = 'plus';
-			$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+			$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='Unterkategorien anzeigen'>";
 			echo 	"<TR id='kat'>
 				<TD id='kat1'>";
 			IF(!isset($space))
