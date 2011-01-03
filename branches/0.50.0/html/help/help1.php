@@ -233,24 +233,26 @@ echo "
 		<a name = '2_zeit'></a><B>Suche nach Aufnahmedatum</B><BR><BR>
 		Der gesamte Bild-Bestand wird nach dem Erstellungsdatum der Bilder unterteilt und Jahrgangsweise dargestellt. Das Erstellungsdatum wird bei der Bilderfassung aus den Meta-Daten ausgelesen.
 		Handelt es sich um Bilddateien ohne Meta-Daten, werden diese Bilder in einem gesonderten Ordner (Bilder ohne zeitliche Zuordnung) zusammengefasst. Diesen Bildern kann - die entsprechenden Berechtigung vorausgesetzt - sp&auml;ter manuell das Aufnahmedatum zugewiesen werden.<BR>
-		Die zeitliche Darstellung kann bis auf die Tages-Ebene heruntergebrochen werden, indem zun&auml;chst das Aufnahmejahr mit einem Klick auf die betreffende Jahreszahl gew&auml;hlt wird,
-		und dann der Monat analog mit einem Klick auf den Monatsnamen gew&auml;hlt wird.
-		Unter dem Monat finden sich alle Tage, an welchen Aufnahmen angefertigt wurden. Mit einem Klick auf das gr&uuml;ne H&auml;kchen hinter dem Datum erh&auml;lt man in der Filmstreifenansicht die gesuchten Bilder.<BR>
+		Die zeitliche Darstellung kann bis auf die Tages-Ebene heruntergebrochen werden, indem man durch Klicks auf das Plus-Icon die jeweils tiefere Ebene aufruft.<BR>
+		So gelangt man vom Jahr zum Monat und weiter zum Tag. Mit einem Klick auf das Minus-Icon gelangt man jeweils eine Ebene zur&uuml;ck.<BR>
+		Klickt man hinhegen auf den Zeitraum (angezeigtes Jahr, Monat oder Tag), werden alle Bilder dieses Zeitraumes dargestellt.<BR>
+		Wenn man sich auf der Tages-Ebene befindet, ist hinter dem Datum ein graues oder gr&uuml;nes Buch-Icon zu sehen.<BR>
+		&Uuml;ber das graue Buch-Icon kann zu dem betreffenden Tag ein neuer Tagebucheintrag angelegt werden. Ist das Buch-Icon gr&uuml;n, gibt es bereits einen Tagebucheintrag. Dieser kann mit einem Klick auf das gr&uuml;ne Icon bearbeitet werden.<BR>
 		Hinweis:<BR>
-		Wenn man auf das Datum klickt, kann man - je nach erteiltem Recht - einen Tagebucheintrag hinzuf&uuml;gen oder einsehen. Auf diese Weise kann auf bequeme Art ein sogenanntes Foto-Tagebuch gef&uuml;hrt werden.
-		Der Inhalt des Fototagebuchs wird in der Detailansicht zu den entsprechenden Bildern mit angezeigt.<BR>
-		Ein Datum, dem bereits Informationen zugewiesen wurden, wird in der Ansicht blau hervorgehoben.<BR>
+		Der Inhalt des Fototagebuchs wird in der Detailansicht zu dem entsprechenden Bild mit angezeigt.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name = '2_kat'></a><B>Suche nach Kategorien</B><BR><BR>
 		In dieser Ansicht besteht die M&ouml;glichkeit, Bilder anhand der zugewiesenen Kategorie zu recherchieren.<BR>
 		Die oberste Ebene (Neuzug&auml;nge) beinhaltet alle Bilder, welchen noch keine Kategorie zugewiesen wurden.<BR>
 		Die Ebenen darunter beinhalten Bilder der jeweiligen Kategorien.<BR>
-		Mit einem Klick auf das Plus-Zeichen vor einem Kategorienamen klappt man den Kategoriebaum an dieser Stelle auf. In der folgenden Ansicht beginnt die Teilansicht des Kategoriebaumes nun auf der Ebene der ausgew&auml;hlten Kategorie. In dieser Ebene folgt weiter rechts in der Zeile ein gr&uuml;nes H&auml;kchen und dann eine Zahl, die die Summe aller Bilder in dieser Kategorie und aller Unterkategorien angibt.<BR>
-		Klickt man nun auf das gr&uuml;ne H&auml;kchen, werden in der Filmstreifenansicht alle Bilder der gew&auml;hlten Kategorie und aller Unterkategorien (sofern vorhanden) angezeigt. Die Anzahl entspricht der Zahl hinter dem gr&uuml;nen H&auml;kchen.<BR>
-		Eine Ausnahme bildet die Kategorie \"Neuzug&auml;nge\":<BR>
-		Hier wird mit der Zahl hinter dem gr&uuml;nen H&auml;kchen nur die Anzahl aller Bilder <u>unterhalb</u> der Kategorie \"Neuzug&auml;nge\" angezeigt.<BR>
-		Trotzdem kann bei einem Klick auf das gr&uuml;ne H&auml;kchen hinter der Kategorie \"Neuzug&auml;nge\" die Meldung erscheinen \"Jedem Bild wurde mind. eine Kategorie zugewiesen.\".<BR>
+		Mit einem Klick auf das Plus-Zeichen vor einem Kategorienamen klappt man den Kategoriebaum an dieser Stelle auf. In der folgenden Ansicht beginnt die Teilansicht des Kategoriebaumes nun auf der Ebene der ausgew&auml;hlten Kategorie. In dieser Ebene folgt weiter rechts in der Zeile ein graues oder gr&uuml;nes Buch-Icon und dann eine Zahl, die die Summe aller Bilder in dieser Kategorie und aller Unterkategorien angibt.<BR>
+		Klickt man nun auf den Kategorie-Namen, werden in der Filmstreifenansicht alle Bilder der gew&auml;hlten Kategorie und aller Unterkategorien (sofern vorhanden) angezeigt. Die Anzahl entspricht der Zahl hinter dem Buch-Icon.<BR>
+		Mit einem Klick auf ein graues Buch-Icon hinter einem Kategorie-Namen k&ouml;nnen zu dieser Kategorie n&uuml;tzliche Informationen in dem sog. Kategorie-Lexikon abgelegt werden.<BR>
+		Ist dieses Buch-Icon gr&uuml;n, wurden zu dieser Kategorie bereits zus&auml;tzliche Informationen gespeichert. Ein Klick auf das Symbol erm&ouml;glicht die Bearbeitung des vorhandenen Eintrags, sofern man das entsprechende Recht dazu hat.<BR><BR>
+		Hinweis zur Kategorie \"Neuzug&auml;nge\":<BR>
+		Hier wird mit der Zahl am Ende der Zeile nur die Anzahl aller Bilder <u>unterhalb</u> der Kategorie \"Neuzug&auml;nge\" angezeigt.<BR>
+		Trotzdem kann bei einem Klick auf die Kategorie \"Neuzug&auml;nge\" die Meldung erscheinen \"Jedem Bild wurde mind. eine Kategorie zugewiesen.\".<BR>
 		Das bedeutet, die Kategorie \"Neuzug&auml;nge\" selbst ist leer. Alle Bilder sind einer entsprechenden Kategorie zugeordnet worden.<BR>
 		Dies sollte der Normalfall sein, da die Kategorie \"Neuzug&auml;nge\" nur ein vorl&auml;ufiger Ablageort f&uuml;r gerade in das System aufgenommene Bilder ist.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
@@ -301,10 +303,8 @@ echo "
 		<img src='img/recherche1.png'></img><BR><BR>
 		Weiterhin besteht bei entsprechender Berechtigung die M&ouml;glichkeit, die Bildbeschreibung zu &auml;ndern. Hierzu Nehmen Sie die &Auml;nderung direkt in dem angezeigten Textfeld vor und speichern diese dann durch einen Klick auf den Button \"&Auml;nderungen speichern\".<BR><BR>
 		Zus&auml;tzlich haben Sie die M&ouml;glichkeit, ein sogenanntes Kategorie-Lexikon anzulegen. Hiermit besteht die Option, zu jeder Kategorie zus&auml;tzliche Informationen in der Datenbank zu hinterlegen. So k&ouml;nnte man z.B. der Kategorie \"Blankenburg (Harz)\" Informationen zur geografischen Lage, der Einwohnerzahl, der Erreichbarkeit mit Bus / Bahn / Auto usw. zuweisen.<BR>
-		Die Zuweisung erfolgt, indem Sie in der Ansicht \"Suche nach Kategorien\" auf den gew&uuml;nschten Kategorienamen klicken und dann die Informationen in dem sich &ouml;ffnenden Dialogfenster eintragen. Diese zus&auml;tzlichen Informationen werden formatiert abgespeichert und k&ouml;nnen neben Links auch Verweise auf externe Bilder beinhalten.<BR>
-		Kategorien, denen bereits Informationen zugewiesen wurden, werden im Kategoriebaum blau hervorgehoben.<BR><BR>
-		Analog kann ein Fototagebuch angelegt werden, indem man sich in der Ansicht \"Auflistung nach Jahrg&auml;ngen sortiert\" den betreffenden Tag heraussucht, anklickt und die gew&uuml;nschte Information hinterlegt.<BR>
-		Auch hier wird ein Tag, zu dem bereits zus&auml;tzliche Informationen existieren, farblich hervorgehoben.<BR><BR>
+		Die Zuweisung erfolgt durch Klick auf das Buch-Icon hinter dem Kategorienamen.<BR><BR>
+		Analog kann ein Fototagebuch angelegt werden, indem man sich in der Ansicht \"Suche nach Aufnahmedatum\" den betreffenden Tag heraussucht, das Buch-Icon anklickt und die gew&uuml;nschte Information hinterlegt.<BR><BR>
 		Der Inhalt des Kategorielexikons und des Fototagebuchs werden bei den betreffenden Bildern jeweils mit in der Komplett-Ansicht der Detailinformationen ausgegeben. (siehe Abb.)<BR><BR>
 		<img src='img/recherche2.png' width='400px'></img><BR><BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
