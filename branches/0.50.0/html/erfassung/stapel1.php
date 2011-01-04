@@ -235,9 +235,12 @@ FOR ($x='0';$x<$n;$x++)
 			//das Original(jpg-)Bild wird ggf als rotierte Kopie abgelegt
 			IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 			{
-				IF($ext == 'nef')
+				$command2 = $exiftool." -Quality ".$pic_path."/".$tmp_filename;
+				$output2 = shell_exec($command2);
+				$output2_array = explode(' : ', $output2);
+				IF(trim($output2_array[0]) == 'Quality' AND strtolower(trim($output2_array[1])) == 'raw')
 				{
-					//aus nef erzeugte jpg sind bereits lagerichtig:
+					//aus raw erzeugte jpg sind bereits lagerichtig:
 					copy("$pic_path/$new_filename", "$pic_rot_path/$new_filename");
 					clearstatcache();
 					chmod ($pic_rot_path."/".$new_filename, 0700);
