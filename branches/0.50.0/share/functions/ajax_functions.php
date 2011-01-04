@@ -1,5 +1,4 @@
 <?php
-//setlocale(LC_CTYPE, 'de_DE');
 //var_dump($_GET);
 function createPreviewAjax($pic_id, $max_size, $quality)
 {
@@ -29,20 +28,8 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	$result1 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 	$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
 	$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
+	$Orientation = mysql_result($result1, isset($i1), 'Orientation');
 
-	$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
-	$Ori_arr = preg_split('# : #',shell_exec($exiftool." -Orientation -n ".$bild)); //numerischer Wert der Ausrichtung des Originalbildes
-//	echo $bild."<br>";
-	if ( $Ori_arr[0] != '')
-	{
-		$Orientation = $Ori_arr[1];
-	}
-	else
-	{
-		$Orientation = '';
-	}
-	//echo $Orientation;
-	$FileQuality = mysql_result($result1, isset($i1), 'Quality');
 	//abgeleitete Groessen:
 	$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
 	$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
@@ -74,7 +61,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 			break;
 			
 			default:
-			//wenn das bild nicht landscape ist wird gepr�ft, ob es dieses Bild schon in gedrehter Form gibt:
+			//wenn das bild nicht landscape ist wird geprueft, ob es dieses Bild schon in gedrehter Form gibt:
 			$verz=opendir($sr.'/images/originale/rotated');
 			$n = 0;
 			while($bilddatei=readdir($verz))
@@ -142,8 +129,6 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	}
 	
 	$ratio_pic = $breite / $hoehe;
-	//echo $breite." - ".$hoehe;
-	//echo $FileQuality;
 	
 	SWITCH($Orientation)
 	{
@@ -157,15 +142,14 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 		
 		CASE '6':
 		CASE '8':
-		$Height = mysql_result($result1, $i1, 'ExifImageWidth');
-		$Width = mysql_result($result1, $i1, 'ExifImageHeight');
+		$Height = mysql_result($result1, isset($i1), 'ExifImageWidth');
+		$Width = mysql_result($result1, isset($i1), 'ExifImageHeight');
 		break;
 	}
 	
 	$breite_v = $parameter_v[0];
 	$hoehe_v = $parameter_v[1];
 	IF ($breite_v >= $hoehe_v)
-	//IF ($Width >= $Height)
       	{
       		$Breite = $max_size;
       		$Hoehe = number_format(($Breite * $hoehe_v / $breite_v),0,',','.');
@@ -175,12 +159,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
       		$Hoehe = $max_size;
       		$Breite = number_format(($Hoehe * $breite_v / $hoehe_v),0,',','.');
       	}
-	
-	//echo "O: ".$Orientation.", B: ".$breite_v.", H: ".$hoehe_v."<BR>";
-	echo "<a href='' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori');return false\"  title='Ansicht in optimaler Qualit&auml;t'>
-	<img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5'>
-	</a>
-	<img src='$bildname' width=1 height=1 border=0 z='-99'>";
+	echo "<a href='' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori');return false\"  title='Ansicht in optimaler Qualit&auml;t'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5' border='0'></a>";
 }
 
 function getShortFS($FileSize)
@@ -340,8 +319,8 @@ function rotPrevPic(Orientation, FileNameV, pic_id, fs_hoehe)
 	{
 		var url = '../../share/rot_prev_pic.php';
 		var params = 'FileNameV=' + FileNameV + '&Orientation=' + Orientation + '&pic_id=' + pic_id + '&fs_hoehe=' + fs_hoehe;
-		alert("Parameter: "+params);
-		var target = 'pic' + pic_id;
+		//alert("Parameter: "+params);
+		var target = 'box' + pic_id;
 		var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 	}
 }
