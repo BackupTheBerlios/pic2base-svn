@@ -25,22 +25,21 @@ include $sr.'/bin/share/functions/permissions.php';
 //var_dump($_REQUEST);
 if(array_key_exists('pic_id',$_GET))
 {
-	$pic_id = $_GET['pic_id']; // fuer register_globals = off
+	$pic_id = $_GET['pic_id']; 
 }
 if(array_key_exists('mod',$_GET))
 {
-	$mod = $_GET['mod']; // fuer register_globals = off
+	$mod = $_GET['mod']; 
 }
 if(array_key_exists('base_file',$_GET))
 {
-	$base_file = $_GET['base_file']; // fuer register_globals = off
+	$base_file = $_GET['base_file']; 
 }
 
 //Darstellung der Detailangaben zum gewaehlten Bild:
 //echo "Bild-ID: ".$pic_id."<BR>BaseFile: ".$base_file."<BR>";
 IF ($pic_id !=='0')
 {
-	//$result8 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 	$result8 = mysql_query( "SELECT $table2.pic_id, FileName, FileNameOri, Owner, note, $table14.pic_id, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.FileSize, $table14.Orientation, $table14.DateTimeOriginal, $table14.Caption_Abstract FROM $table2 LEFT JOIN $table14 ON $table14.pic_id = $table2.pic_id WHERE $table14.pic_id = '$pic_id'");
 	echo mysql_error();
 	IF(mysql_num_rows($result8) > '0')
