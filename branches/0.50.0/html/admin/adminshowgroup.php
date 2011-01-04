@@ -72,12 +72,15 @@ if (hasPermission($c_username, 'adminlogin'))
 		$content = $content."<TR>";
 		FOR($cg='0'; $cg<$col_groups; $cg++)
 		{
+			$perm_id = '';
 			$i = ($r * 2) + $cg;
-			$description = mysql_result($result, $i, "description");
-			$shortdescription = mysql_result($result, $i, "shortdescription");
-			$perm_id = mysql_result($result, $i, "perm_id");
+			@$description = trim(mysql_result($result, $i, "description"));
+			@$shortdescription = mysql_result($result, $i, "shortdescription");
+			@$perm_id = mysql_result($result, $i, "perm_id");
+			
 			IF ($description !== '')
 			{
+				
 				$content = $content."<td class='tdbreit'>".$description."</td>";
 				
 				IF (hasGroupPermission($group_id, $shortdescription))
@@ -90,12 +93,15 @@ if (hasPermission($c_username, 'adminlogin'))
 					$checked = '';
 					$text = 'keine Berechtigung';	
 				}
-				
-				$content = $content."<TD class='tdschmal'>
-				<div id = '$perm_id'>
-				<input type=checkbox name='cb' '$checked' title= '$text' onClick='changeGrouppermission(\"$group_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
-				</div>
-				</td>";
+					$content = $content."<TD class='tdschmal'>
+					<div id = '$perm_id'>
+					<input type=checkbox name='cb' '$checked' title= '$text' onClick='changeGrouppermission(\"$group_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
+					</div>
+					</td>";
+			}
+			ELSE
+			{
+				$content = $content."<td class='tdbreit'></td><TD class='tdschmal'></td>";
 			}
 		}
 		$content = $content."</TR>";

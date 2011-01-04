@@ -132,9 +132,9 @@ if (hasPermission($c_username, 'adminlogin'))
 		FOR($cg='0'; $cg<$col_groups; $cg++)
 		{
 			$i = ($r * 2) + $cg;
-			$description = mysql_result($result, $i, "description");
-			$shortdescription = mysql_result($result, $i, "shortdescription");
-			$perm_id = mysql_result($result, $i, "perm_id");
+			@$description = trim(mysql_result($result, $i, "description"));
+			@$shortdescription = mysql_result($result, $i, "shortdescription");
+			@$perm_id = mysql_result($result, $i, "perm_id");
 			IF ($description !== '')
 			{
 				$content = $content."<td class='tdbreit'>".$description."</td>";
@@ -155,6 +155,10 @@ if (hasPermission($c_username, 'adminlogin'))
 				<input type=checkbox name='cb' '$checked' title= '$text' onClick='changeUserpermission(\"$user_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
 				</div>
 				</td>";
+			}
+			ELSE
+			{
+				$content = $content."<td class='tdbreit'></td><TD class='tdschmal'></td>";
 			}
 		}
 		$content = $content."</TR>";
