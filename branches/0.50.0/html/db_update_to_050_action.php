@@ -142,23 +142,24 @@ echo "
 		}
 		$res3 = mysql_query( "INSERT INTO `pic2base`.`permissions` (`id`, `perm_id`, `description`, `shortdescription`) VALUES
 			(1, 999, 'Admin-Login', 'adminlogin'),
-			(2, 799, 'Bilder erfassen', 'addpic'),
-			(3, 519, 'eigene Bilder löschen', 'deletemypics'),
-			(4, 219, 'eigene Bilder downloaden', 'downloadmypics'),
-			(5, 100, 'Bilder suchen', 'searchpic'),
-			(6, 629, 'alle Bilder bearbeiten', 'editallpics'),
-			(7, 989, 'Rechte hinzufügen', 'addpermission'),
-			(8, 859, 'eigenes Benutzer-Profil bearbeiten', 'editmyprofile'),
-			(9, 619, 'eigene Bilder bearbeiten', 'editmypics'),
-			(10, 529, 'alle Bilder löschen', 'deleteallpics'),
-			(11, 229, 'alle Bilder downloaden', 'downloadallpics'),
-			(12, 899, 'Kategoriebaum bearbeiten', 'editkattree'),
-			(13, 869, 'alle Benutzer-Profile bearbeiten', 'editallprofiles'),
-			(14, 849, 'Benutzer anzeigen', 'showusers'),
-			(15, 539, 'eigene Bilder geo-referenzieren', 'georefmypics'),
-			(16, 549, 'alle Bilder geo-referenzieren', 'georefallpics'),
-			(17, 639, 'Tagebuch bearbeiten', 'editdiary'),
-			(18, 649, 'Kategorielexikon bearbeiten', 'editkatlex');");
+			(2, 929, 'Vorschaubilder drehen', 'rotatepicture'),
+			(3, 799, 'Bilder erfassen', 'addpic'),
+			(4, 519, 'eigene Bilder löschen', 'deletemypics'),
+			(5, 219, 'eigene Bilder downloaden', 'downloadmypics'),
+			(6, 100, 'Bilder suchen', 'searchpic'),
+			(7, 629, 'alle Bilder bearbeiten', 'editallpics'),
+			(8, 989, 'Rechte hinzufügen', 'addpermission'),
+			(9, 859, 'eigenes Benutzer-Profil bearbeiten', 'editmyprofile'),
+			(10, 619, 'eigene Bilder bearbeiten', 'editmypics'),
+			(11, 529, 'alle Bilder löschen', 'deleteallpics'),
+			(12, 229, 'alle Bilder downloaden', 'downloadallpics'),
+			(13, 899, 'Kategoriebaum bearbeiten', 'editkattree'),
+			(14, 869, 'alle Benutzer-Profile bearbeiten', 'editallprofiles'),
+			(15, 849, 'Benutzer anzeigen', 'showusers'),
+			(16, 539, 'eigene Bilder geo-referenzieren', 'georefmypics'),
+			(17, 549, 'alle Bilder geo-referenzieren', 'georefallpics'),
+			(18, 639, 'Tagebuch bearbeiten', 'editdiary'),
+			(19, 649, 'Kategorielexikon bearbeiten', 'editkatlex');");
 		echo mysql_error()."<BR>";
 		IF(mysql_error() == '')
 		{
