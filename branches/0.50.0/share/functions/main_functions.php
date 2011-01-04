@@ -1305,7 +1305,7 @@ function showBewertung($bewertung)
 	SWITCH($bewertung)
 	{
 		CASE '=1':
-		//Gr��er-Zeichen bedeutet: Der Notenwert ist h�her, d.h die Note ist schlechter!
+		//Groesser-Zeichen bedeutet: Der Notenwert ist hoeher, d.h die Note ist schlechter!
 		$bew = "<span style='position:relative; top:3px';>$g_s$g_s$g_s$g_s$y_s</SPAN>";
 		break;
 		
