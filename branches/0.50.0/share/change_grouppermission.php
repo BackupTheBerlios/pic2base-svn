@@ -43,41 +43,47 @@ ELSEIF($checked == 'checked')
 	$checked = '';
 }
 
-
-if (hasPermission($c_username, 'adminlogin'))
+IF ($grup_id !== '' AND $perm_id !== '')
 {
-	mysql_connect ($db_server, $user, $PWD);
-	$result = mysql_query("SELECT * FROM $table6 WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
-	$enabled = mysql_result($result, 0, 'enabled');
-	IF($enabled == '1')
+	if (hasPermission($c_username, 'adminlogin'))
 	{
-		$en = '0';
+		mysql_connect ($db_server, $user, $PWD);
+		$result = mysql_query("SELECT * FROM $table6 WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
+		$enabled = mysql_result($result, 0, 'enabled');
+		IF($enabled == '1')
+		{
+			$en = '0';
+		}
+		ELSE
+		{
+			$en = '1';
+		}
+		
+		$result = mysql_query("UPDATE $table6 SET enabled='$en' WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
+		//Es werden die Benutzer der Gruppe ermittelt:
+		$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
+		$num2 = mysql_num_rows($result2);
+		//echo "Anzahl User in der Gruppe: ".$num2."<BR>";
+		//Fuer alle User dieser Gruppe wird das gewaehlte Recht neu gesetzt
+		FOR($i2=0; $i2<$num2; $i2++)
+		{
+			$user_id = mysql_result($result2, $i2, 'id');
+			//echo "User-ID: ".$user_id."<BR>";
+			//echo "Recht-ID: ".$permission_id."<BR>";
+			$result3 = mysql_query( "UPDATE $table7 SET enabled='$en' WHERE user_id = '$user_id' AND permission_id='$perm_id'");
+			//echo mysql_error();
+		}
+		//echo mysql_error();
+		echo "<INPUT TYPE=CHECKBOX '$checked' value='$new_status' onClick='changeGrouppermission(\"$group_id\",\"$perm_id\",\"$checked\",\"$sr\")'>";
 	}
 	ELSE
 	{
-		$en = '1';
+		echo "Sie haben nicht gen&uuml;gend Berechtigungen!";
 	}
-	
-	$result = mysql_query("UPDATE $table6 SET enabled='$en' WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
-	//Es werden die Benutzer der Gruppe ermittelt:
-	$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
-	$num2 = mysql_num_rows($result2);
-	//echo "Anzahl User in der Gruppe: ".$num2."<BR>";
-	//Fuer alle User dieser Gruppe wird das gewaehlte Recht neu gesetzt
-	FOR($i2=0; $i2<$num2; $i2++)
-	{
-		$user_id = mysql_result($result2, $i2, 'id');
-		//echo "User-ID: ".$user_id."<BR>";
-		//echo "Recht-ID: ".$permission_id."<BR>";
-		$result3 = mysql_query( "UPDATE $table7 SET enabled='$en' WHERE user_id = '$user_id' AND permission_id='$perm_id'");
-		//echo mysql_error();
-	}
-	//echo mysql_error();
-	echo "<INPUT TYPE=CHECKBOX '$checked' value='$new_status' onClick='changeGrouppermission(\"$group_id\",\"$perm_id\",\"$checked\",\"$sr\")'>";
 }
 ELSE
 {
-	echo "Sie haben nicht gen&uuml;gend Berechtigungen!";
+	echo "Es liegt ein Fehler vor!";
 }
 
 /*
