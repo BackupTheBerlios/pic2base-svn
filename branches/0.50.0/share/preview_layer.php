@@ -159,11 +159,13 @@ self.showFullscreenImage = function showFullscreenImage(imagePath)
 	{
 	  h = window.innerHeight;
 	  w = window.innerWidth;
-	} else if (document.documentElement && document.documentElement.clientHeight)
+	} 
+	else if (document.documentElement && document.documentElement.clientHeight)
 	{
 	  h = document.documentElement.clientHeight;
 	  w = document.documentElement.clientWidth;
-	} else if (document.body)
+	} 
+	else if (document.body)
 	{
 	  h = document.body.clientHeight;
 	  w = document.body.clientWidth;
