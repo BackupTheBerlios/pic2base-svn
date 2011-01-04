@@ -1425,11 +1425,12 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	include $sr.'/bin/share/db_connect1.php';
 	
 	$md5 = buildMd5sumCommand($sr);
-	
+	// wenn eine lagerichtige Kopie angelegt wurde, wird diese weiter verwendet
 	IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 	{
 		$FILE = $pic_rot_path."/".$pic_id.".jpg";
 	}
+	//anderenfalls das Original-jpg:
 	ELSE
 	{
 		$FILE = $pic_path."/".$pic_id.".jpg";
@@ -1444,7 +1445,7 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	$max_len = '800';				
 	$FileNameHQ = resizeOriginalPicture($FILE, $pic_hq_path, $max_len, $sr);
 	$FILEHQ = $pic_hq_path."/".$FileNameHQ;	
-	//Thumb aus HQ erzeugen
+	//Thumb aus Performace-Gruenden aus HQ erzeugen
 	// 2) Vorschaubild anlegen und im Ordner </vorschau/thumbs> speichern:
 	$max_len = '160';
 	$FileNameV = createPreviewPicture($FILEHQ, $pic_thumbs_path, $max_len, $sr);
@@ -1462,6 +1463,8 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	clearstatcache();  
 	chmod ($fileV, 0700);
 	clearstatcache();
+	// damit wurden alle Vorschaubilder (ob mit oder ohne Ausrichtungsinformation) lagerichtig, 
+	// also aufrecht abgespeichert
 }
 
 
@@ -1644,7 +1647,6 @@ function extractExifData($pic_id, $sr, $Orientation)
 		$result7 = mysql_query("INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
 		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
 		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
-		//echo "Original-Datei-Name: ".$FN."<BR>";
 		
 		$result8 = mysql_query("SHOW COLUMNS FROM $table14");
 		$i = 0;
@@ -1657,7 +1659,8 @@ function extractExifData($pic_id, $sr, $Orientation)
 			}
 		}
 		else die('Fehler bei der Datenbankabfrage');
-		//Fuer jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert augelesen und in die Tabelle geschrieben:
+		// Fuer jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert aus dem Bild 
+		// ausgelesen und in die Tabelle geschrieben:
 		
 		$text = shell_exec($exiftool." ".$FN);
 		$inf_arr = explode(chr(10), $text);	//Zerlegung des Textes am Zeilenumbruch
@@ -1734,7 +1737,8 @@ function extractExifData($pic_id, $sr, $Orientation)
 				}
 			}
 		}
-		//Wenn Breite, Hoehe oder Dateigroesse nicht ermittelt werden konnte, wird versucht, dies per PHP-Routinen zu erledigen:
+		// Wenn Breite, Hoehe oder Dateigroesse nicht aus den EXIF-Daten ermittelt werden konnte, 
+		// wird versucht, dies per PHP-Routinen zu erledigen:
 		$result9 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
 		$row = mysql_fetch_array($result9);
 		$ImageWidth = $row['ImageWidth'];
@@ -1745,7 +1749,7 @@ function extractExifData($pic_id, $sr, $Orientation)
 		$breite = $params[0];
 		$hoehe = $params[1];
 		clearstatcache();
-		$FileSize = filesize($FN);	//Dateigroesse in Byte
+		$FileSize = filesize($FN);	//Dateigroesse der Originaldatei in Byte
 		
 		IF($ImageWidth == '0' OR $ImageWidth == '')
 		{
