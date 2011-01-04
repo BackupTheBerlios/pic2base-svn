@@ -61,11 +61,11 @@ fclose($fh);
 //var_dump($_POST);
 if (array_key_exists('ordner',$_POST))
 {
-	$ordner = $_POST['ordner']; // fuer register_globals = off
+	$ordner = $_POST['ordner'];
 }
 if (array_key_exists('ordner',$_GET))
 {
-	$ordner = $_GET['ordner']; // fuer register_globals = off
+	$ordner = $_GET['ordner'];
 }
 
 $x = 0;
@@ -142,9 +142,10 @@ pic_id ermitteln
 Bild unter neuem Namen im Originalformat speichern (dsc_123.nef ? 12345.nef)
 Kontrolle, ob Upload erfolgreich war
 pruefen, ob hochgeladenes Bild als jpg vorliegt
-wenn nicht: jpg-File erzeugen (neben dem 12345.nef wird das 12345.jpg angelegt; Dieses Bild wird fuer alle weiteren Verarbeitungen innerhalb von pic2base verwendet!)
+wenn nicht: jpg-File erzeugen (neben dem 12345.nef wird das 12345.jpg angelegt;
+Dieses Bild wird fuer alle weiteren Verarbeitungen innerhalb von pic2base verwendet, falls die Ausrichtung = 1 ist!)
 
-Wenn Ausrichtung nicht 'Horizontal' ist: lagerichtige Kopie des 12345.jpg im Ordner /rotated ablegen
+Wenn Ausrichtung nicht 'Horizontal' ist (<>1): lagerichtige Kopie des 12345.jpg im Ordner /rotated ablegen
 
 Pruefsumme / Vorschaubilder / Histogramme erzeugen
 
@@ -155,11 +156,16 @@ Histogramme aus 12345.jpg erstellen
 
 Bild-Eigenschaften ermitteln (Meta-Daten auslesen)
 
-mittels exiftool alle verfuegbaren Metadaten auslesen und, wenn fuer die einzelnen Parameter Felder in der Tabelle meta_data existieren, die ermittelten Werte dort speichern
-Kontrolle, ob mindestens die Parameter Width, Height und ImageSize ausgelesen wurden. Wenn nicht, diese Parameter mit PHP-Routinen ermitteln und in der DB speichern
+mittels exiftool alle verfuegbaren Metadaten auslesen und, wenn fuer die einzelnen Parameter Felder in der Tabelle 
+meta_data existieren, die ermittelten Werte dort speichern
+Kontrolle, ob mindestens die Parameter Width, Height und ImageSize ausgelesen wurden. Wenn nicht, diese Parameter 
+mit PHP-Routinen ermitteln und in der DB speichern
 Bringt ein Bild Geo-Daten mit, werden diese in der location-Tabelle hinterlegt
-Die Ausrichtung wird intern immer mit '1' verwendet.
-Formatvorgaben der Popup-Vorschaufenster werden aus den tatsaechlichen Bild-Abmessungen mittel getimagesize() ermittelt!
+Bringt ein Bild keine Ausrichtungsinformationen mit (Orientation = ' '): Ausrichtung wird mit '1' festgelegt.
+Formatvorgaben der Popup-Vorschaufenster werden aus den tatsaechlichen Bild-Abmessungen 
+ - OHNE Beruecksichtigung der Ausrichtung - mittels getimagesize() ermittelt!
+Die Ausrichtung (Orientation) wird spaeter nur noch verwendet, um zu entscheiden, ob bei der Anzeige eines Originals
+ggf. die rotierte Kopie verwendet wird.
 
 Erfassung eines Bildes abgeschlossen    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
@@ -200,7 +206,6 @@ FOR ($x='0';$x<$n;$x++)
 	$pic_id = mysql_insert_id();			//echo "User-ID: ".$user_id."; Rec-ID: ".$pic_id."<BR>";
 	$info2 = pathinfo($datei_name);
 	$tmp_filename = $pic_id.".".strtolower($info2['extension']);		//Dateiname z.B.: 112233.nef
-	//echo "tempor&auml;rer Dateiname: ".$tmp_filename."<BR>";
 	
 	//  Kontrolle, ob Upload erfolgreich war  +++++
 	@copy("$bild","$pic_path/$tmp_filename")	// Bild wird nach (z.B.) ....images/originale/12345.nef kopiert
@@ -232,6 +237,7 @@ FOR ($x='0';$x<$n;$x++)
 			{
 				IF($ext == 'nef')
 				{
+					//aus nef erzeugte jpg sind bereits lagerichtig:
 					copy("$pic_path/$new_filename", "$pic_rot_path/$new_filename");
 					clearstatcache();
 					chmod ($pic_rot_path."/".$new_filename, 0700);
@@ -239,6 +245,7 @@ FOR ($x='0';$x<$n;$x++)
 				}
 				ELSE
 				{
+					//aus anderen raw erzeugte jpg muessen noch gedreht werden:
 					$rot_filename = createQuickPreview($Orientation,$new_filename,$sr);
 				}
 			}
@@ -319,21 +326,21 @@ FOR ($x='0';$x<$n;$x++)
 		//hier werden *.jpg-s bearbeitet:
 		$z = '1';
 		$new_filename = $tmp_filename;	//jpg-Dateien behalten ihren eindeutigen Dateinamen
-		
+		//2, 4, 5 und 7 sind Spiegelungen, nur 3, 6 und 8 sind reine Rotationen:
+		//Erzeugung der lagerichtigen Kopie in /rotated:
 		IF($Orientation == '3' OR $Orientation == '6' OR $Orientation == '8')
 		{
 			$rot_filename = createQuickPreview($Orientation,$new_filename,$sr);
 		}
 		
 		$result4 = mysql_query( "UPDATE $table2 SET FileName = '$new_filename' WHERE pic_id = '$pic_id'");
-		
 		//die Datei-Attribute werden fuer die hochgeladene Original-(jpg)Bilddatei auf 0700 gesetzt:
 		$fileOri = $pic_path."/".$new_filename;
 		clearstatcache();
 		chmod ($fileOri, 0700);
 		clearstatcache();
 	}
-
+//Ausrichtungsinformationen lagen vor: jpg's und ggf gedrehte Kopien der Originale wurden bis hierher erzeugt.
 /*
 $end1 = microtime();
 list($start1msec, $start1sec) = explode(" ",$start1);
