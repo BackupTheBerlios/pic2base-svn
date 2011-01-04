@@ -1,9 +1,9 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 
 //var_dump($_REQUEST);
@@ -268,12 +268,10 @@ SWITCH ($modus)
 				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
 				$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
-				$Orientation = mysql_result($result2, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
-				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
+//				$Orientation = mysql_result($result2, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
-					//@$parameter_v=getimagesize('../../images/originale/'.$FileName);
 					$FileNameV = 'no_preview.jpg';
 				}
 				ELSE
@@ -311,37 +309,37 @@ SWITCH ($modus)
 			SWITCH($base_file)
 			{
 				CASE 'edit_remove_kat':
-				//keine Anzeige der Checkboxen!
+					//keine Anzeige der Checkboxen!
 				break;
 				
 				CASE 'edit_beschreibung':
 				Case 'edit_kat_daten':
-				IF ($auswahl == '0')
-				{
-					$checked = '';
-				}
-				ELSE
-				{
-					$checked = 'checked';
-				}
-				
-				echo "<TR>";
-				FOREACH ($PIC_ID AS $pic_id)
-				{
-					echo "	<TD align='center'>
-						<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
-						</TD>";
-				}
+					IF ($auswahl == '0')
+					{
+						$checked = '';
+					}
+					ELSE
+					{
+						$checked = 'checked';
+					}
+					
+					echo "<TR>";
+					FOREACH ($PIC_ID AS $pic_id)
+					{
+						echo "	<TD align='center'>
+							<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
+							</TD>";
+					}
 				break;
 				
 				CASE 'edit_bewertung':
-				echo "<TR>";
-				FOREACH ($PIC_ID AS $pic_id)
-				{
-					echo "	<TD align='center'><div id = 'star_set$pic_id'>";
-						showStars($pic_id);
-					echo "</div></TD>";
-				}
+					echo "<TR>";
+					FOREACH ($PIC_ID AS $pic_id)
+					{
+						echo "	<TD align='center'><div id = 'star_set$pic_id'>";
+							showStars($pic_id);
+						echo "</div></TD>";
+					}
 				break;
 			}
 		}
@@ -424,8 +422,7 @@ SWITCH ($modus)
 				$FileNameV = mysql_result($res2_1, isset($i2_1), 'FileNameV');
 				$result24 = mysql_query( "SELECT FileSize, Orientation FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
-				$Orientation = mysql_result($result24, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
-				//$Orientation = mysql_result($result2, isset($i2), 'Orientation');	// 1: normal; 8: 90 CW
+//				$Orientation = mysql_result($result24, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
@@ -470,35 +467,35 @@ SWITCH ($modus)
 				
 				CASE 'edit_beschreibung':
 				Case 'edit_kat_daten':
-				IF ($auswahl == '0')
-				{
-					$checked = '';
-				}
-				ELSE
-				{
-					$checked = 'checked';
-				}
-				echo "<TR>";
-				FOR ($i2=0; $i2<$num2; $i2++)
-				{
-					$pic_id = mysql_result($result2, $i2, 'pic_id');
-					echo "	<TD align='center'>
-							<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
-							</TD>";
-				}
+					IF ($auswahl == '0')
+					{
+						$checked = '';
+					}
+					ELSE
+					{
+						$checked = 'checked';
+					}
+					echo "<TR>";
+					FOR ($i2=0; $i2<$num2; $i2++)
+					{
+						$pic_id = mysql_result($result2, $i2, 'pic_id');
+						echo "	<TD align='center'>
+								<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
+								</TD>";
+					}
 				break;
 				
 				CASE 'edit_bewertung':
-				echo "<TR>";
-				FOR ($i2=0; $i2<$num2; $i2++)
-				{
-					$pic_id = mysql_result($result2, $i2, 'pic_id');
-					echo "	<TD align='center'>
-							<div id = 'star_set$pic_id'>";
-							showStars($pic_id);
-					echo "	</div>
-							</TD>";
-				}
+					echo "<TR>";
+					FOR ($i2=0; $i2<$num2; $i2++)
+					{
+						$pic_id = mysql_result($result2, $i2, 'pic_id');
+						echo "	<TD align='center'>
+								<div id = 'star_set$pic_id'>";
+								showStars($pic_id);
+						echo "	</div>
+								</TD>";
+					}
 				break;
 			}
 			
@@ -1889,7 +1886,7 @@ SWITCH ($modus)
 			$FileNameHQ = mysql_result($result4, isset($i4), 'FileNameHQ');
 			$FileNameV = mysql_result($result4, isset($i4), 'FileNameV');
 			$result23 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-			$Orientation = mysql_result($result23, isset($i23), 'Orientation');	// 1: normal; 8: 90� nach rechts gedreht
+//			$Orientation = mysql_result($result23, isset($i23), 'Orientation');	// 1: normal; 8: 90� nach rechts gedreht
 			$FileSize = mysql_result($result23, isset($i23), 'FileSize');
 			//abgeleitete Groessen:
 			IF ($FileNameV == '')
@@ -2037,41 +2034,13 @@ SWITCH ($modus)
 				$breite_neu = number_format(($fs_hoehe * $breite / $hoehe),0,',','.');
 			}
 			//echo "Breite: ".$breite_neu.", H&ouml;he: ".$hoehe_neu;
-			/*
-			IF($breite_neu < $hoehe_neu)
-			{
-				//falls die Ausrichtung falsch in den EXIF-Daten gespeichert wurde, kann das Vorschau-Bild nachtraeglich gedreht werden:
-				echo "
-				<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
-				<img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='0' />
-				<div id='pic$pic_id'>
-				<!-- <SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-				<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span> -->";
-				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
-				echo "
-				<!-- <SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-				<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span> -->
-				</div>
-				</TD>";
-			}
-			else
-			{
-				echo "<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
-				<div id='pic$pic_id'>";
-				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
-				echo "
-				</div>
-				</TD>";
-			}
-			*/
-			
 			echo "<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
 			<div id='pic$pic_id'>";
 			getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
 			echo "
 			</div>
 			</TD>";
-
+			
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6, $i6, 'Owner');
 			//Pruefung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur Loesch-Routine:
@@ -2096,23 +2065,69 @@ SWITCH ($modus)
 					IF(directDownload($c_username, $sr))
 					//IF($direkt_download > '0')
 					{
-						$icon[$i6] = "
-						<TD align='center' width='43'>
-						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
-						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
-						</div>	
-						</TD>";
+						IF(hasPermission($c_username, 'rotatepicture'))
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+							
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+							<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
+							
+							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
+							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+							
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+							<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+							
+							</div>
+							</TD>";
+						}
+						ELSE
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+
+							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
+							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+							
+							</div>
+							</TD>";
+						}
 					}
 					ELSE
 					{
-						$icon[$i6] = "
-						<TD align='center' width='43'>
-						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
-						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
-						</div>	
-						</TD>";
+						IF(hasPermission($c_username, 'rotatepicture'))
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+							
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+							<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
+							
+							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+							
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+							<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+							
+							</div>	
+							</TD>";
+						}
+						ELSE
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+							
+							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+							
+							</div>	
+							</TD>";
+						}
 					}
 				}
 				ELSE
@@ -2149,12 +2164,11 @@ SWITCH ($modus)
 		</TR>
 		</div>";
 		//Wenn mehr als 18 Bilder gefunden wurden, wird der Slider angezeigt:
-		IF($num6_1 > 18 AND $num6_1 < 700)
+		IF($num6_1 > 18 AND $num6_1 < 600)
 		{
 			echo "<TR><TD colspan = '6' align=center>";
 			//Anzahl der Steps ist Anzahl der Bilder / 6:
 			$steps = $num6_1/6;
-			//echo $steps;
 			//es werden $steps Elemente zur Slider-bar zusammengefuegt, deren Gesamtbreite rund 500 Pixel betraegt:
 			//Breite eines Slider-Elements:
 			$sl_width = 600 / $steps;
@@ -2222,7 +2236,6 @@ SWITCH ($modus)
 					}
 					break;
 				}
-				
 			}
 			echo "</TD></TR>";
 		}
@@ -2241,17 +2254,18 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	global $ID;
 	include 'db_connect1.php';
 	include 'global_config.php';
-	//$res0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id='$pic_id'");
 	$res0 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table14.pic_id, $table14.ExifImageWidth, $table14.ExifImageHeight, $table14.ImageWidth, $table14.ImageHeight, $table14.Orientation FROM $table2, $table14 WHERE $table2.pic_id = '$pic_id' AND $table2.pic_id = $table14.pic_id");
 	echo mysql_error();
 	$FileName = mysql_result($res0, isset($i1), 'FileName');
 	$FileNameHQ = mysql_result($res0, isset($i1), 'FileNameHQ');
 	$FileNameV = mysql_result($res0, isset($i1), 'FileNameV');
+	
 	$Width = mysql_result($res0, isset($i1), 'ExifImageWidth');
 	IF($Width == '0')
 	{
 		$Width = mysql_result($res0, isset($i1), 'ImageWidth');
 	}
+	
 	$Height = mysql_result($res0, isset($i1), 'ExifImageHeight');
 	IF($Height == '0')
 	{
@@ -2286,7 +2300,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
       	$width_height=$parameter_v[3];
       	//Fuer die Darstellung des Vollbildes wird eine mittlete Groesse unter Beachtung des Seitenverhaeltnisses errechnet:
-      	//max. Ausdehnung: 800px
+      	//max. Ausdehnung: 1000px
       	$max = '1000';
       	$bild = $inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ;
 	$ratio_pic = $breite / $hoehe;
@@ -2299,13 +2313,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			{
 				$description = 'keine';
 			}
-			//echo "<div id='tooltip1'><a href=edit_beschreibung.php?kat_id=$kat_id&pic_id=$pic_id&art=single_desc_edit&ID=$ID title='Nur Beschreibung dieses einen Bildes &auml;ndern'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
-			echo "<div id='tooltip1'>
-			<a href='#'>
-			<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu'>
-			<span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span>
-			</a>
-			</div>";
+			echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
 		break;
 		
 		CASE 'edit_bewertung':
@@ -2315,12 +2323,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			{
 				$note = '0';
 			}
-					
-			echo "<SPAN style='cursor:pointer;'>
-			<a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'>
-			<IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'>
-			</a>
-			</span>";
+			echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
 		break;
 		
 		CASE 'recherche2':
@@ -2329,23 +2332,21 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		break;
 		
 		CASE 'edit_kat_daten':
-		
-		//Bestimmung der bereits zugewiesenen Kategorien:
-		
-		$zugew_kat = '';
-		$result16 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
-		$num16 = mysql_num_rows($result16);
-		FOR($i16 = '0'; $i16<$num16; $i16++)
-		{
-			$kat_id = mysql_result($result16, $i16, 'kat_id');
-			$result17 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_id'");
-			$kategorie = htmlentities(mysql_result($result17, isset($i17), 'kategorie'));
-			IF($kat_id !== '1')
+			//Bestimmung der bereits zugewiesenen Kategorien:
+			$zugew_kat = '';
+			$result16 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
+			$num16 = mysql_num_rows($result16);
+			FOR($i16 = '0'; $i16<$num16; $i16++)
 			{
-			$zugew_kat .= $kategorie."<BR>";
+				$kat_id = mysql_result($result16, $i16, 'kat_id');
+				$result17 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_id'");
+				$kategorie = htmlentities(mysql_result($result17, isset($i17), 'kategorie'));
+				IF($kat_id !== '1')
+				{
+				$zugew_kat .= $kategorie."<BR>";
+				}
 			}
-		}
-		echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
+			echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
 		break;
 	}
 }
