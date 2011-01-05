@@ -177,7 +177,7 @@ if( array_key_exists('treestatus',$_GET))
 //Auslesen der Vorschau-Bilder aus den EXIF-Daten
 //verwendet in edit_kat_daten.php, recherche2.php, edit_beschreibung.php
 //Festlegung der Hoehe der Bilder auf dem Filmstreifen:
-$fs_hoehe = '80';
+$fs_hoehe = '76';
 //echo "&Uuml;bergebene Parameter: kat_id: ".$kat_id.", ID: ".$ID.", mod: ".$mod.", pic_id: ".$pic_id.", modus: ".$modus;
 //echo $base_file;
 //echo $bewertung;
@@ -2323,12 +2323,12 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			{
 				$note = '0';
 			}
-			echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
+			echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><div class='shadow_2'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'></div></a></span>";
 		break;
 		
 		CASE 'recherche2':
 		CASE 'edit_remove_kat':
-			echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'><a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.", gotoFilmstreifenPosition);' title='zur vergr&ouml;sserten Vorschau'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'></a></span>";
+			echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'><a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.", gotoFilmstreifenPosition);' title='zur vergr&ouml;sserten Vorschau'><div class='shadow_2'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' border='0'></div></a></span>";
 		break;
 		
 		CASE 'edit_kat_daten':
