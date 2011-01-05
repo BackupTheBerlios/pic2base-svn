@@ -8,7 +8,7 @@ IF($fh)
 {
 	IF(fclose($fh) AND @unlink($install_file))
 	{
-		echo "Installations-Hilfsskript wurde entfernt.";
+		echo "<center>Installations-Hilfsskript wurde entfernt.</center>";
 	}
 }
 
