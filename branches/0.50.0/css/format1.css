@@ -1012,7 +1012,7 @@ P 	{
 	   -moz-opacity:1;
 	   }
 
-/*Schattengestaltung fuer Filmstreifen, Detailfenster*/
+/*Schattengestaltung fuer Detailfenster*/
 
 
 DIV.shadow_1 IMG {
@@ -1036,6 +1036,26 @@ DIV.shadow_1:hover IMG {
 	    margin: -1px;
 	    top: 0px;
 	    left: 0px;
+	    -moz-opacity:1;
+	    }
+	    
+/*Schattengestaltung fuer Filmstreifen*/	    
+	      
+DIV.shadow_2 IMG {
+		border-right: 1px solid #999;
+		border-bottom: 1px solid #999;
+		border-top: 1px solid #ccc;
+		border-left: 1px solid #ccc;
+	    display:inline;
+	    position: relative;
+	    -moz-opacity:0.67;
+		}
+	
+DIV.shadow_2:hover IMG {
+	    border-right: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		border-top: 1px solid #999;
+		border-left: 1px solid #999;
 	    -moz-opacity:1;
 	    }
 
