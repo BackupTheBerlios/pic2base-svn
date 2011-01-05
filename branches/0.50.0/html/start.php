@@ -37,6 +37,70 @@ IF (!$_COOKIE['login'])
 			width:280px;
 			text-align:left;
 			}
+			
+	P 		{
+   margin: 0.7em 1em;
+   			}
+
+	DIV.shadow, DIV.shadow2, DIV.shadow3, DIV.shadow4, DIV.shadow5 {
+	   padding: 1px;
+	   border-radius: 5px;
+	   -moz-border-radius: 5px;
+	   }
+	DIV.shadow5:hover DIV.shadow,
+	DIV.shadow5:hover DIV.shadow2,
+	DIV.shadow5:hover DIV.shadow3,
+	DIV.shadow5:hover DIV.shadow4,
+	DIV.shadow5:hover {
+	   padding: 0;
+	   border-radius: 5px;
+	   -moz-border-radius: 5px;
+	   }
+	DIV.shadow {
+	   background-color: #8e8e8e;
+	   border: 1px solid #959595;
+	   margin: 0px;
+	   }
+	DIV.shadow2 {
+	   background-color: #aaa;
+	   border: 1px solid #bebebe;
+	   margin: 0;
+	   }
+	DIV.shadow3 {
+	   background-color: #d1d1d1;
+	   border: 1px solid #e1e1e1;
+	   margin: 0;
+	   }
+	DIV.shadow4 {
+	   background-color: #ededed;
+	   border: 1px solid #f6f6f6;
+	   margin: 0;
+	   }
+	DIV.shadow5 {
+	   float: left;
+	   background-color: #f0f0f7;
+	   border: 1px solid transparent;
+	   margin: 0px 0px;
+	   }
+	DIV.shadow5:hover {
+	   border-width: 5px;
+	   }
+	
+	DIV.shadow5 IMG {
+	   border: 0px solid #666;
+	   margin: -2px;
+	   display:block;
+	   position: relative;
+	   top: -3px;
+	   left: -3px;
+	   -moz-opacity:0.67;
+	   }
+	DIV.shadow5:hover IMG {
+	   margin: -1px;
+	   top: -1px;
+	   left: -1px;
+	   -moz-opacity:1;
+	   }
 	-->
 	</style>
 </HEAD>
@@ -518,7 +582,7 @@ echo "<div class='page'>
 				$hoehe = 40;
 				$breite = $hoehe / $height * $width;
 				
-				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0'></a></TD></span>";
+				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><div class='shadow5'><div class='shadow4'><div class='shadow3'><div class='shadow2'><div class='shadow'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0'></div></div></div></div></div></a></TD></span>";
 			}
 			//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
 			FOR($x='0'; $x<(10-$num4); $x++)
