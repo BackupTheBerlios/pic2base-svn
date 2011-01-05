@@ -29,10 +29,7 @@ IF(array_key_exists('loc_id', $_REQUEST))
 {
 	$loc_id = $_REQUEST['loc_id'];
 }
-echo "Lokation: ".$location."<BR>
-Ort: ".$ort."<BR>
-Bild-ID: ".$pic_id."<BR>
-Lok-ID: ".$loc_id;
+
 $location = strip_tags($location);	//Breite u. Laenge in einem String
 $loc_arr = explode(",",$location);
 $lat = $loc_arr[0];			//Breite
@@ -58,8 +55,6 @@ $parameter = $location.",".$ort;
 setcookie("parameter", $parameter, time()+3600, "/");
 
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-//echo $FN."<BR>";
-//echo "Bild-Nr: ".$pic_id."<BR>Beschreibung (Ort): ".$ort."<BR>L&auml;nge: ".$long."<BR>Breite: ".$lat."<BR>";
 //Fallunterscheidungen:
 //Es ist nur eine der erforderlichen Angaben vorhanden (Koordinaten oder Ortsbezeichnung):
 IF(($location == '' AND $ort !== '') OR ($location !== '' AND $ort == ''))
