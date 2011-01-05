@@ -1025,7 +1025,7 @@ DIV.shadow_1 IMG {
 	    position: relative;
 	    top: -2px;
 	    left: -2px;
-	    -moz-opacity:0.67;
+	    -moz-opacity:0.95;
 		}
 	
 DIV.shadow_1:hover IMG {
@@ -1048,7 +1048,7 @@ DIV.shadow_2 IMG {
 		border-left: 1px solid #ccc;
 	    display:inline;
 	    position: relative;
-	    -moz-opacity:0.67;
+	    -moz-opacity:0.85;
 		}
 	
 DIV.shadow_2:hover IMG {
