@@ -16,7 +16,7 @@
  * Project: pic2base
  * File: pwd_check.php
  *
- * Copyright (c) 2005 - 2006 Klaus Henneberg
+ * Copyright (c) 2005 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -54,7 +54,6 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //var_dump($_POST);
-//register_globels =  off - Variante:
 	if( isset($_POST['username']) )
 	{
 		if( !empty($_POST['username']) )
@@ -71,7 +70,7 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	{
 		echo "<CENTER>
 		<p class='mittel'>Zugangspr&uuml;fung l&auml;uft...</p>
-		<img src='share/images/loading.gif' width='32' height='32' />
+		<img src='share/images/loading.gif' width='20' height='20' />
 		</CENTER>
 		<meta http-equiv='refresh' content = '0; URL=html/start.php?check=1'>";
 	}
