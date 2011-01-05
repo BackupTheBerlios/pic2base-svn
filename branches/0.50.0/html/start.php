@@ -518,7 +518,7 @@ echo "<div class='page'>
 				$hoehe = 40;
 				$breite = $hoehe / $height * $width;
 				
-				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe'></a></TD></span>";
+				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0'></a></TD></span>";
 			}
 			//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
 			FOR($x='0'; $x<(10-$num4); $x++)
