@@ -35,6 +35,12 @@ IF(array_key_exists('wb', $_REQUEST))
 {
 	$wb = $_REQUEST['wb'];
 }
+
+IF(array_key_exists('color_temp', $_REQUEST))
+{
+	$color_temp = $_REQUEST['color_temp'];
+}
+
 IF(array_key_exists('rota', $_REQUEST))
 {
 	$rota = $_REQUEST['rota'];
@@ -94,7 +100,6 @@ IF($modus == 'tmp')
 			}
 		}
 		$command_a = $conv." ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
-		//echo $command_a;
 		$output = shell_exec($command_a);
 	}
 	
