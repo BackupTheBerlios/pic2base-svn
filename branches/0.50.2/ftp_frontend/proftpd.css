@@ -1,0 +1,95 @@
+/* Copyright 2005 by Michael Kremsier, webmaster@dj-dhg.de, GPL-licensed */
+a:link { font-size:12px;color:#000000;} 
+a:visited { font-size:12px;color:#000000;} 
+a:active { font-size:12px;color:#000000;}
+
+
+.rbroundbox	{
+		background: url(img/nt.gif) repeat; 
+		}
+		
+.rbtop div 	{
+		background: url(img/tl.gif) no-repeat top left;
+		}
+		
+.rbtop 		{
+		background: url(img/tr.gif) no-repeat top right;
+		}
+		
+.rbbot div 	{
+		background: url(img/bl.gif) no-repeat bottom left;
+		}
+		
+.rbbot 		{
+		background: url(img/br.gif) no-repeat bottom right;
+		}
+
+.rbtop div, .rbtop, .rbbot div, .rbbot {
+					width: 100%;
+					height: 7px;
+					font-size: 1px;
+					}
+.rbcontent 	{
+		margin: 0 7px;
+		}
+		
+.rbroundbox 	{
+		width: 50%; margin: 1em auto;
+		}
+
+
+.body 	{
+	/*background-color:#E8E8E8;*/
+	background-color:#E8E8E8;
+	
+	}
+
+#root	{
+	width:100%;
+	height:100%;
+	border-spacing:5px;
+	font-size:12px;
+	
+	}
+	
+
+#navi	{
+	width:150px;
+	height:100%;
+	border:1px solid #000000;
+	background-color:#ffc002;
+	
+	}
+
+#main	{
+	width:100%;
+	border:1px solid #000000;
+	background-color:#ffc002;
+	}
+	
+#menu	{
+	text-align:center;
+	}
+#text	{
+	font-size:12px;
+	}
+
+	
+#tab1 td{
+	background:#eeeeee;
+	font-size:12px;
+	border:1px solid #000000;
+	padding:1px;
+	}
+
+#tab1 tr.blau td	{
+			background:#0099cc;
+			}
+
+
+#user-php a:link    { text-decoration: none; font-weight: bold; color:#000000; }
+#user-php a:visited { text-decoration: none; font-weight: bold; color:#000000; }
+#user-php a:hover   { text-decoration: none; font-weight: bold; color:#000000; background-color:#ffffff; }
+#user-php a:active  { text-decoration: none; font-weight: bold; color:#000000; background-color:#ffc002; }
+
+
