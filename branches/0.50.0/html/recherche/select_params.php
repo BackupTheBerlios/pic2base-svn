@@ -68,8 +68,12 @@ $file = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 $Orientation = trim(shell_exec($exiftool." -n -s -S '-Orientation' ".$file));
 
 //Erzeugung des RAW-Dateinamens:
-$FileNameRaw = substr($FileName,0,-4).".".substr($FileNameOri,-3,3);
-//echo $FileNameRaw;
+$FileNameArray = explode('.', $FileName);
+$FileNamePrefix = $FileNameArray[0];	//der Teil des internen Dateinamens vor dem Punkt
+$FileNameOriArray = explode('.', $FileNameOri);
+$FileNameExtension = $FileNameOriArray[count($FileNameOriArray)-1]; //alles, was hinter dem letzten Punkt des Original-Dateinamens steht
+$FileNameRaw = $FileNamePrefix.".".$FileNameExtension;
+//echo "Raw-Dateiname: ".$FileNameRaw;
 
 //wenn ein Cookie mit gespeicherten Parametern existiert, werden diese vor-ausgewaehlt:
 //IF ($_COOKIE['params'])
@@ -161,7 +165,7 @@ IF(array_key_exists('params', $_COOKIE))
 	}
 
 	echo "<FORM name='params'>
-	<TABLE border = '0' style='width:750px; background-color:#FFFFFF' align = 'center'>
+	<TABLE border = '1' style='width:750px; background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
 		</TD>
@@ -242,6 +246,14 @@ IF(array_key_exists('params', $_COOKIE))
 		Wei&szlig;abgleich:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='width:120px; text-align:left;  vertical-align:center'>".$wb_mode."
+		</TD>
+	</TR>
+	
+	<TR class='normal' style='height:22px;'>
+		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>
+		Farbtemperatur:
+		</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='width:120px; text-align:left;  vertical-align:center'>".$color_temp."
 		</TD>
 	</TR>
 	
@@ -331,7 +343,14 @@ ELSE
 		<option value='-H 9'>(9) Spitzlicht-Restaurierung</option>
 		</select>
 		</TD>
-		<TD class='normal' rowspan='16' style='width:500px; height:450px; background-color:#DDDDDD; text-align:center; vertical-align:middle'><div id='new_preview'>Die Erstellung der Vorschaubilder ist ein sehr aufw&auml;ndiger Prozess,<BR>welcher je nach Rechenleistung des Servers einige Zeit in Anspruch nimmt.<BR>Die Berechnung ist abgeschlossen, wenn Sie hier<BR> das neu berechnete Bild sehen.<BR><BR>Haben Sie bitte ein wenig Geduld.</div></TD>
+		<TD class='normal' rowspan='16' style='width:500px; height:450px; background-color:#DDDDDD; text-align:center; vertical-align:middle'>
+		<div id='new_preview'>
+		Die Erstellung der Vorschaubilder ist ein sehr aufw&auml;ndiger Prozess,<BR>
+		der je nach Rechenleistung des Servers einige Zeit in Anspruch nimmt.<BR>
+		Die Berechnung ist abgeschlossen, wenn Sie hier<BR> das neu berechnete Bild sehen.<BR><BR>
+		Haben Sie bitte ein wenig Geduld.
+		</div>
+		</TD>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>

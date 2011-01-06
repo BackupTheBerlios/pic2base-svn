@@ -2,7 +2,6 @@
 IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
-	//var_dump($sr);
   	header('Location: ../../../index.php');
 }
 
@@ -51,7 +50,7 @@ ELSE
  * Project: pic2base
  * File: recherche2.php
  *
- * Copyright (c) 2006 - 2010 Klaus Henneberg
+ * Copyright (c) 2006 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -124,7 +123,7 @@ function rotatePictureSet(orientation, pic_id)
 //alert("Bildhoehe: "+screen.height);
 function CloseWindow()
 {
-   anotherWindow = window.open("", "bildfenster", "");
+   //anotherWindow = window.open("", "bildfenster", "");
    // Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
    if (anotherWindow != null)
    {
