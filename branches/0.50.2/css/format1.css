@@ -986,7 +986,7 @@ P 	{
 	   margin: 0;
 	   }
 	DIV.shadow5 {
-	   float: none;
+	   float: left;
 	   background-color: #f0f0f7;
 	   border: 1px solid transparent;
 	   margin-top: 0px; 
