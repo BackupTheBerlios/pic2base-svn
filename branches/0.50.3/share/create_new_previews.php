@@ -162,7 +162,7 @@ ELSEIF($modus == 'new')
 		}
 		ELSE
 		{
-			$rot_filename = createQuickPreview($Orientation,$new_filename);
+			$rot_filename = createQuickPreview($Orientation,$new_filename,$sr);
 		}
 	}
 	
