@@ -1856,13 +1856,14 @@ function checkSoftware($sr)
 		</TR>";
 	flush();
 	sleep(1);
-	
+	$error_count = 0;
 	IF($et == NULL)
 	{
 		echo "<TR>
 		<TD class='tdleft'>ExifTool</TD>
 		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
+		$error_count++;
 	}
 	ELSE
 	{
@@ -1881,6 +1882,7 @@ function checkSoftware($sr)
 		<TD class='tdleft'>ImageMagick</TD>
 		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
+		$error_count++;
 	}
 	ELSE
 	{
@@ -1899,6 +1901,7 @@ function checkSoftware($sr)
 		<TD class='tdleft'>dcraw</TD>
 		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
+		$error_count++;
 	}
 	ELSE
 	{
@@ -1917,6 +1920,7 @@ function checkSoftware($sr)
 		<TD class='tdleft'>GPSBabel</TD>
 		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
+		$error_count++;
 	}
 	ELSE
 	{
@@ -1935,6 +1939,7 @@ function checkSoftware($sr)
 		<TD class='tdleft'>md5sum</TD>
 		<TD class='tdright'><a href='http://www.gnu.org/software/coreutils/' target='_blank'>wurde nicht gefunden</a></TD>
 		</TR>";
+		$error_count++;
 	}
 	ELSE
 	{
@@ -1957,18 +1962,36 @@ function checkSoftware($sr)
 	echo "	<TR class='trflach'>
 		<TD colspan='2'></TD>
 		</TR>
-		</TABLE>
-		
-		<CENTER>
+		</TABLE>";
+	IF($error_count !== 0)
+	{
+		echo "<CENTER>
 		<TABLE style='width:500px; text-align:center;'>
 		<TR>
 		<TD><BR><u>WICHTIGER HINWEIS:</u><BR>Sollte eine der gelisteten Software-Komponenten nicht installiert sein, 
 		holen Sie dies bitte <b>VOR</b> der ersten Benutzung von pic2base nach.<BR>
-		Anderenfalls werden einige Funktionen fehlen oder fehlerhaft sein!<BR>
+		Anderenfalls werden einige Funktionen fehlen oder fehlerhaft sein!<BR><BR>
+		Sollte eine Software-Komponente hier als \"nicht installiert\" angezeigt werden,<BR>obwohl Sie sicher sind, da&szlig; sie vorhanden ist,<BR>
+		kann es in wenigen Ausnahmef&auml;llen erforderlich sein,<BR>den pic2base-Server neu zu starten.<BR>
+		Dies kann vor allem dann auftreten,<BR>wenn erforderliche Software-Komponenten nicht &uuml;ber den <BR>
+		Paketmanager hinzugef&uuml;gt wurden.
 		</TD>
 		</TR>
 		</TABLE>
 		</CENTER>";
+	}
+	ELSE
+	{
+		echo "<CENTER>
+		<TABLE style='width:500px; text-align:center;'>
+		<TR>
+		<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR><BR>
+		<input type='button' value='Zur Startseite' onClick=\"location.href='../../html/start.php'\"> 
+		</TD>
+		</TR>
+		</TABLE>
+		</CENTER>";
+	}
 }
 
 function directDownload($c_username, $sr)
