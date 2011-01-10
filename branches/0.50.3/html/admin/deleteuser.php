@@ -7,19 +7,17 @@ IF (!$_COOKIE['login'])
 }
 
 // abzuarbeitende Schritte:
-// aus Tabelle pictures alle bilder des alten Users auf neuen User uebertragen
+// aus Tabelle pictures alle Bilder des alten Users auf neuen User uebertragen
 // aus Tabelle users den entsprechenden User loeschen
 // aus Tabelle userpermissions alle Eintraege des betreffenden Users loeschen
 // Userverzeichnis loeschen
-//
+// kontrollieren, ob mind. noch ein Admin im System ist, anderenfalls pb wieder aktiv setzen
 $users = $_POST['users'];
 $id = $_GET['id'];
 
 //echo "User-ID: ".$users;
 if (hasPermission($c_username, 'adminlogin') AND $users !== '')
 {
-	
-	
 	mysql_connect ($db_server, $user, $PWD);
 	$result0 = mysql_query( "SELECT username FROM $table1 WHERE id = '$id'");
 	$benutzername = mysql_result($result0, isset($i0), 'username');
@@ -36,11 +34,24 @@ if (hasPermission($c_username, 'adminlogin') AND $users !== '')
 	$command = "rm -r ".$user_dir;
 	shell_exec($command);
 
+	$result3 = mysql_query("SELECT $table9.id, $table9.description, $table1.group_id 
+	FROM $table9, $table1  
+	WHERE $table9.description = 'Admin'
+	AND $table9.id = $table1.group_id");
+	$num3 = mysql_num_rows($result3);
+	IF($num3 == 0)
+	{
+		$result4 = mysql_query("UPDATE $table1 SET aktiv = '1' WHERE username = 'pb'");
+	}
+	
 	IF(mysql_error() == '')
 	{
 		echo "<meta http-equiv='Refresh' content='2; URL=adminframe.php?item=adminshowusers'>";
 	}
-	
+	ELSE
+	{
+		echo "Es trat ein Fehler auf: ".mysql_error();
+	}
 }
 ELSE
 {

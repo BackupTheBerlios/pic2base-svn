@@ -76,7 +76,7 @@ include $sr.'/bin/share/db_connect1.php';
 			$ben_name = stripcslashes($ben_name);
 			//echo $ben_name."<BR>";
 			
-			$array_1 = array('�', '�', '�', '�', '�', '�', '�', '/', ' ');	//moegliche Vorkommen
+			$array_1 = array('utf8_decode(ä)', 'utf8_decode(ö)', 'utf8_decode(ü)', 'utf8_decode(Ä)', 'utf8_decode(Ö)', 'utf8_decode(Ü)', 'utf8_decode(ß)', '/', ' ');	//moegliche Vorkommen
 			$array_2 = array('?', '?', '?', '?', '?', '?', '?', '?', '?');	//deren Ersetzungen
 			
 			for($x = 0; $x < count($array_1); $x++)
@@ -97,7 +97,6 @@ include $sr.'/bin/share/db_connect1.php';
 				$user_id = mysql_result($result4, isset($i4), 'id');
 				//Benutzerrechte eintragen:
 				$result2 = mysql_query( "SELECT * FROM $table6 WHERE group_id = '$group' AND enabled = '1'");
-				
 				$num2 = mysql_num_rows($result2);
 				//echo $num2."<BR>";
 				FOR($i2=0; $i2<$num2; $i2++)
@@ -169,10 +168,22 @@ include $sr.'/bin/share/db_connect1.php';
 			ELSE
 			{
 				echo "Der Benutzername ist ung&uuml;ltig.<BR>Hinweis:<BR>Der Benutzername darf keine Leerzeichen oder Sonderzeichen enthalten<BR>
-und darf h&uuml;chstens 15 Zeichen lang sein.!<BR><BR>
+				und darf h&uuml;chstens 15 Zeichen lang sein.!<BR><BR>
 				<input type='button' value='Zur&uuml;ck' OnClick='javasript:history.back()'>";
 				return;
 			}
+			//wenn der neue User erfolgreich angelegt wurde wird kontrolliert, ob mind. ein User mit Admin-Rechten existiert.
+			//Wenn ja, wird der User pb inaktiv gesetzt (Sicherheit!)
+			$result3 = mysql_query("SELECT $table9.id, $table9.description, $table1.group_id 
+			FROM $table9, $table1  
+			WHERE $table9.description = 'Admin'
+			AND $table9.id = $table1.group_id");
+			$num3 = mysql_num_rows($result3);
+			IF($num3 > 0)
+			{
+				$result4 = mysql_query("UPDATE $table1 SET aktiv = '0' WHERE username = 'pb'");
+			}
+			//echo "Es gibt derzeit ".$num3." Benutzer mit Admin-Rechten.<BR>";
 			echo "Benutzer wurde erfolgreich angelegt.<BR><BR>
 			<input type='button' value='Zur&uuml;ck' OnClick='location.href=\"adminframe.php?item=adminadduser\"'>";
 		}

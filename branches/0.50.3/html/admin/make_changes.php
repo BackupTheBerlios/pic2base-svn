@@ -30,7 +30,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: make_changes.php
  *
- * Copyright (c) 2003 - 2010 Klaus Henneberg
+ * Copyright (c) 2003 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -55,21 +55,14 @@ include $sr.'/bin/share/functions/permissions.php';
 $mod = $_GET['mod'];
 $id = $_GET['id'];
 $gruppe = $_POST['gruppe'];
-/*
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result1, isset($i1), 'id');
-$result2 = mysql_query( "SELECT * FROM $table7 WHERE user_id = '$user_id' AND enabled = '1' AND permission_id = '999'");
-$num2 = mysql_num_rows($result2);
 
-IF($num2 == '1')
-*/
 IF(hasPermission($c_username, 'adminlogin'))
 {
 	SWITCH($mod)
 	{
 		CASE 'user':
 		//echo $gruppe."<BR>";
-		//Dem benutzer wird die neue Gruppe zugewiesen:
+		//Dem Benutzer wird die neue Gruppe zugewiesen:
 		$result3 = mysql_query( "UPDATE $table1 SET group_id = '$gruppe' WHERE id='$id'");
 		//die alten Benutzer-Rechte werden geloescht:
 		$result4 = mysql_query( "DELETE FROM $table7 WHERE user_id = '$id'");
@@ -83,6 +76,21 @@ IF(hasPermission($c_username, 'adminlogin'))
 			$result6 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$id', '$perm_id', '$enabled')");
 		}
 		echo mysql_error();
+		//wenn der User erfolgreich geaendert wurde wird kontrolliert, ob mind. noch ein User mit Admin-Rechten existiert.
+		//Wenn ja, wird der User pb inaktiv gesetzt (Sicherheit!), wenn nein, wird pb aktiviert
+		$result6 = mysql_query("SELECT $table9.id, $table9.description, $table1.group_id 
+		FROM $table9, $table1  
+		WHERE $table9.description = 'Admin'
+		AND $table9.id = $table1.group_id");
+		$num6 = mysql_num_rows($result3);
+		IF($num6 > 0)
+		{
+			$result7 = mysql_query("UPDATE $table1 SET aktiv = '0' WHERE username = 'pb'");
+		}
+		ELSEIF($num6 == 0)
+		{
+			$result7 = mysql_query("UPDATE $table1 SET aktiv = '1' WHERE username = 'pb'");
+		}
 		echo "
 		<div class='page'>
 
