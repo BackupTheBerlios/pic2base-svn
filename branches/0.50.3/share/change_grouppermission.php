@@ -43,7 +43,7 @@ ELSEIF($checked == 'checked')
 	$checked = '';
 }
 
-IF ($grup_id !== '' AND $perm_id !== '')
+IF ($group_id !== '' AND $perm_id !== '')
 {
 	if (hasPermission($c_username, 'adminlogin'))
 	{
