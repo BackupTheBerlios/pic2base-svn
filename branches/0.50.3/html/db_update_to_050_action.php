@@ -29,14 +29,7 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
-*/
+
 include '../share/db_connect1.php';
 include '../share/functions/permissions.php';
 include '../share/functions/main_functions.php';
@@ -115,7 +108,7 @@ echo "
 	$res1 = mysql_query("RENAME TABLE `pic2base`.`permissions` TO `pic2base`.`permissions_bak`");
 	IF(mysql_error() == '')
 	{
-		echo "Sicherheitskopie \"permissions_bak\" wurde angelegt<BR>";
+		//echo "Sicherheitskopie \"permissions_bak\" wurde angelegt<BR>";
 		$res2 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic2base`.`permissions` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `perm_id` int(11) NOT NULL,
@@ -132,12 +125,12 @@ echo "
 		$mysql_version = mysql_result($res1, isset($i), 'VERSION()');
 		IF((substr($php_version,0,3) > 5.1) AND (substr($mysql_version,0,3) > 5.0))
 		{
-			echo "PHP-Version ist h&ouml;her als 5.2.3. und MySQL-Version ist h&ouml;her als 5.0.7";
+			//echo "PHP-Version ist h&ouml;her als 5.2.3. und MySQL-Version ist h&ouml;her als 5.0.7";
 			mysql_set_charset('utf8', $conn);// (verwendbar, wenn PHP 5 >= 5.2.3 und MySQL >= 5.0.7
 		}
 		ELSE
 		{
-			echo "Version ist niedriger oder gleich 5.2.3. oder / und MySQL-Version ist niedriger als 5.0.7";
+			//echo "Version ist niedriger oder gleich 5.2.3. oder / und MySQL-Version ist niedriger als 5.0.7";
 			$res30 = mysql_query("SET NAMES 'utf8'");//fuer aeltere PHP / MySQL-Versionen 
 		}
 		$res3 = mysql_query( "INSERT INTO `pic2base`.`permissions` (`id`, `perm_id`, `description`, `shortdescription`) VALUES
@@ -163,7 +156,7 @@ echo "
 		echo mysql_error()."<BR>";
 		IF(mysql_error() == '')
 		{
-			echo "Neue Tabelle \"permissions\" wurde angelegt<BR><BR>";
+			//echo "Neue Tabelle \"permissions\" wurde angelegt<BR><BR>";
 			//Tabelle userpermissions neu befuellen: hierzu
 			// 1)Sicherheitskopie userpermissions_bak erzeugen
 			// 2)userpermissions leeren
@@ -224,7 +217,7 @@ echo "
 			
 			IF(mysql_error() == '')
 			{
-				echo "Tabelle \"userpermissions\" wurde neu aufgebaut.<BR><BR>";
+				//echo "Tabelle \"userpermissions\" wurde neu aufgebaut.<BR><BR>";
 				//#############################################################
 				//Tabelle grouppermissions neu befuellen: hierzu
 				// 1)Sicherheitskopie grouppermissions_bak erzeugen
@@ -274,27 +267,27 @@ echo "
 				//###############################################################
 				IF(mysql_error() == '')
 				{
-					echo "Tabelle \"grouppermissions\" wurde neu aufgebaut.<BR><BR>";
+					//echo "Tabelle \"grouppermissions\" wurde neu aufgebaut.<BR><BR>";
 					//Aenderung der Felder locations.longitude, locations.latitude, locations.altitude in DOUBLE:
 					$res17 = mysql_query("ALTER TABLE `pic2base`.`locations` CHANGE `longitude` `longitude` DOUBLE NOT NULL COMMENT 'geo-Laenge',
 					CHANGE `latitude` `latitude` DOUBLE NOT NULL COMMENT 'geo-Breite',
 					CHANGE `altitude` `altitude` DOUBLE NOT NULL COMMENT 'Hoehe'");
 					IF(mysql_error() == '')
 					{
-						echo "Die Tabelle \"locations\"wurde aktualisiert.<BR><BR>";
+						//echo "Die Tabelle \"locations\"wurde aktualisiert.<BR><BR>";
 						//Tabelle rights loeschen, da sie nicht mehr verwendet wird:
 						$res18 = mysql_query("DROP TABLE IF EXISTS `pic2base`.`rights`");
 						//echo mysql_error()."<BR>";
 						IF(mysql_error() == '')
 						{
-							echo "Die nicht mehr genutzte Tabelle \"rights\" wurde entfernt.<BR><BR>";
+							//echo "Die nicht mehr genutzte Tabelle \"rights\" wurde entfernt.<BR><BR>";
 							$res19 = mysql_query("ALTER TABLE `pic2base`.`users`
 							ADD `direkt_download` TINYINT( 4 ) NOT NULL DEFAULT '0' 
 							COMMENT '0-FTP-Download, 1-direkter Download' ");
 							//echo mysql_error()."<BR>";
 							IF(mysql_error() == '')
 							{
-								echo "Die Tabelle \"users\" wurde erfolgreich angepasst.<BR><BR>";
+								//echo "Die Tabelle \"users\" wurde erfolgreich angepasst.<BR><BR>";
 								$res20 = mysql_query( "CREATE TABLE IF NOT EXISTS `pic2base`.`pfade` (
 								  `path_id` int(11) NOT NULL AUTO_INCREMENT,
 								  `dcraw_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -308,7 +301,7 @@ echo "
 								//echo mysql_error()."<BR>";
 								IF(mysql_error() == '')
 								{
-									echo "Die Tabelle \"pfade\" wurde erfolgreich angelegt.<BR><BR>";
+									//echo "Die Tabelle \"pfade\" wurde erfolgreich angelegt.<BR><BR>";
 									$res21 = mysql_query("CREATE TABLE IF NOT EXISTS `pic2base`.`fileformats` (
 									`format_id` INT NOT NULL AUTO_INCREMENT, 
 									`format` VARCHAR(10) NOT NULL, 
@@ -318,8 +311,8 @@ echo "
 									) ENGINE = MyISAM COMMENT = 'von ImageMagick unterstützte Dateiformate';");
 									IF(mysql_error() == '')
 									{
-										echo "Die Tabelle \"fileformats\" wurde erfolgreich angelegt.<BR><BR>
-										Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
+										//echo "Die Tabelle \"fileformats\" wurde erfolgreich angelegt.<BR><BR>
+										echo "Die Datenbank-Reorganisation wurde erfolgreich abgeschlossen.";
 										//abschliessender Software-Check:
 										checkSoftware($sr);
 										
@@ -350,12 +343,12 @@ echo "
 											{
 												$Ori = 0;
 											}
-											echo $FN." / ".$Ori."<BR>";
+											//echo $FN." / ".$Ori."<BR>";
 											//Ausrichtung in Tabelle meta_data speichern:
 											$res101 = mysql_query("UPDATE $table14 SET Orientation = '$Ori' WHERE pic_id = '$pic_id'");
 											IF(mysql_error() == '')
 											{
-												echo "Datensatz ".($i100 + 1)." von ".$num100."; Datei ".$FN." / Ausrichtung: ".$Ori."<BR>";
+												//echo "Datensatz ".($i100 + 1)." von ".$num100."; Datei ".$FN." / Ausrichtung: ".$Ori."<BR>";
 											}
 											ELSE
 											{
