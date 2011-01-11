@@ -82,7 +82,7 @@ IF(hasPermission($c_username, 'adminlogin'))
 		FROM $table9, $table1  
 		WHERE $table9.description = 'Admin'
 		AND $table9.id = $table1.group_id");
-		$num6 = mysql_num_rows($result3);
+		$num6 = mysql_num_rows($result6);
 		IF($num6 > 0)
 		{
 			$result7 = mysql_query("UPDATE $table1 SET aktiv = '0' WHERE username = 'pb'");

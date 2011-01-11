@@ -34,14 +34,14 @@ if (hasPermission($c_username, 'adminlogin') AND $users !== '')
 	$command = "rm -r ".$user_dir;
 	shell_exec($command);
 
-	$result3 = mysql_query("SELECT $table9.id, $table9.description, $table1.group_id 
+	$result4 = mysql_query("SELECT $table9.id, $table9.description, $table1.group_id 
 	FROM $table9, $table1  
 	WHERE $table9.description = 'Admin'
 	AND $table9.id = $table1.group_id");
-	$num3 = mysql_num_rows($result3);
-	IF($num3 == 0)
+	$num4 = mysql_num_rows($result4);
+	IF($num4 == 0)
 	{
-		$result4 = mysql_query("UPDATE $table1 SET aktiv = '1' WHERE username = 'pb'");
+		$result5 = mysql_query("UPDATE $table1 SET aktiv = '1' WHERE username = 'pb'");
 	}
 	
 	IF(mysql_error() == '')
