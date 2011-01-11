@@ -30,9 +30,10 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-include '../share/db_connect1.php';
-include '../share/functions/permissions.php';
-include '../share/functions/main_functions.php';
+include '../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
+include $sr.'/bin/share/functions/main_functions.php';
 
 IF($_POST['user'] !== '')
 {
@@ -54,12 +55,17 @@ ELSE
 
 IF($user == '' OR $pwd == '')
 {
-	echo "<H1 STYLE='color:red; margin-top:100px;'>Sie m&uuml;ssen die Zugangsdaten eines Datenbank-Administrators eingeben,<BR><BR>
-	sonst kann das Update nicht ausgef&uuml;hrt werden!</H1><BR><BR>
-	<input type='button' value='Zur vorherigen Seite' onClick='javaScript:history.back()'>";
+	echo "<CENTER><fieldset style='width:700px; background-color:yellow; margin-top:50px;'>
+	<legend style='color:blue; font-weight:bold;'>FEHLER</legend>
+	<p style='font-size:14px; font-weight:bold; margin-top:20px; margin-bottom:20px; color:red;'>Sie m&uuml;ssen die Zugangsdaten eines Datenbank-Administrators eingeben,<BR><BR>
+	sonst kann das Update nicht ausgef&uuml;hrt werden!<BR><BR>
+	<input type='button' value='Zur vorherigen Seite' onClick='javaScript:history.back()'>
+	</p>
+	</fieldset>
+	</CENTER>";
 	return;
 }
-
+/*
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 // Welche Schritte werden ausgefuehrt?
@@ -417,7 +423,7 @@ echo "
 	</div>
 
 </div>";
-
+*/
 mysql_close($conn);
 
 ?>
