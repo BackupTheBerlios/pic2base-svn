@@ -8,7 +8,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
   <link rel=stylesheet type='text/css' href='../css/format1.css'>
   <link rel="stylesheet" href="../css/lightbox.css" type="text/css" media="screen" />
-  <link rel="shortcut icon" href="bin/share/images/favicon.ico">
+  <link rel="shortcut icon" href="../share/images/favicon.ico">
   	<script type="text/javascript" src="../ajax/inc/prototype.js"></script>
 	<script type="text/javascript" src="../ajax/inc/scriptaculous.js?load=effects,builder"></script>
 	<script type="text/javascript" src="../ajax/inc/lightbox.js"></script>
@@ -32,6 +32,7 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  */
  -->
+<body>
 <DIV Class="klein">
  
 <?php
@@ -54,7 +55,7 @@ include $sr.'/bin/share/db_connect1.php';
 	<div class="content">
 	<p style="margin:70px 0px; text-align:center">
 
-	<form action='../pwd_check.php' method='POST' name='pwd'>
+	<FORM action='../pwd_check.php' method='POST' name='pwd'>
 	<p class="mittel" align='left'>Bitte geben Sie hier Ihren Benutzernamen und Ihr Passwort ein:</p>
 	<table class="schmal" border='0' align='center'>
 	<tbody>
@@ -78,7 +79,7 @@ include $sr.'/bin/share/db_connect1.php';
 	</table>
 	<BR>
 	&#160;&#160;
-	</form>
+	</FORM>
 	</p>
 	</div>
 	<br style="clear:both;" />
@@ -88,7 +89,7 @@ include $sr.'/bin/share/db_connect1.php';
 </div>
 </DIV>
 </body>
-</html>
 <script language="javascript">
 document.pwd.username.focus();
 </script>
+</html>
