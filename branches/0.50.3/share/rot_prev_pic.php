@@ -103,9 +103,4 @@ $result1 = mysql_query("UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$p
 $time = time();
 
 echo "Bitte Ansicht<BR> neu laden";
-/*
-<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"10\" height=\"10\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
-
-<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"10\" height=\"10\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>";
-*/
 ?>
