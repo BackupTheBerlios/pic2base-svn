@@ -878,121 +878,121 @@ SWITCH ($modus)
 	//echo "Ort: ".$ort.", Radius2: ".$radius2.", Einheit2: ".$einheit2.", Mod: ".$mod.", Modus: ".$modus.", BaseFile: ".$base_file.", FormName: ".$form_name.", Bewertung: ".$bewertung."<BR>";
 	SWITCH($form_name)
 	{
-			CASE 'geo_rech1':
-			//Suche nach geogr. Koordinaten und Umkreis
-			//Pruefung auf Plausibilitaet der eingegebenen Daten:
-			
-			$LONG = $long; //die unveraenderten Werte werden weiter unten benoetigt!
-			$long = str_replace(',','.',$long);
-			IF(!preg_match('/^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$/',$long) OR ($long > abs(180)))
-			{
-				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der geogr. L&auml;nge ist falsch!<BR>(Erlaubte Werte liegen zwischen -180&#176; und +180&#176;)</P>";
-				return;
-			}
-			
-			$LAT = $lat; //die unveraenderten Werte werden weiter unten benoetigt!
-			$lat = str_replace(',','.',$lat);
-			IF(!preg_match('/^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$/',$lat) OR ($lat > abs(90)))
-			{
-				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der geogr. Breite ist falsch!<BR>(Erlaubte Werte liegen zwischen -90&#176; und +90&#176;)</P>";
-				return;
-			}
-			
-			$ALT = $alt; //die unveraenderten Werte werden weiter unten benoetigt!
-			$alt = round(str_replace(',','.',$alt),0);
-			IF(!preg_match('/^([0-9]{1,4})$/',$alt) OR ($alt >8850))
-			{
-				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der H&ouml;he ist falsch!<BR>(Erlaubte Werte sind kleiner als die H&ouml;he des Mount Everest)</P>";
-				return;
-			}
-			
-			$RADIUS1 = $radius1; //die unveraenderten Werte werden weiter unten benoetigt!
-			$radius = round(($einheit1 * str_replace(',','.',$radius1)),0);
-			IF(!preg_match('/^([0-9]{1,5})$/',$radius1) OR ($radius >50000))
-			{
-				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe des Umkreises ist falsch! (Erlaubte Werte sind bis max. 50 km)</P>";
-				return;
-			}
-			ELSE
-			{
-			//echo htmlentities("uebergebene Werte: Breite: ".$lat.", Laenge: ".$long.", Hoehe: ".$alt.", Umkreis: ".$radius." m, Ort. ".$ort.", Umkreis: ".$radius2." ".$einheit2)."<BR>";
-			}
-			
-			//annaehernde Berechnung des Toleranzfeldes aus dem Radius:
-			//geogr. Breite: WInkeldifferenz je m Abweichung: 0,000008999280058�
-			$diff_lat = 0.000008999280058;
-			$delta_lat = $radius * $diff_lat;
-			$lat_min = $lat - $delta_lat;
-			$lat_max = $lat + $delta_lat;
-			//echo "Breite: ".$lat.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
-			
-			//geogr. Laenge: hier ist dei Winkelaenderung / Entfernun von der geogr. Breite abhaengig:
-			$delta_long = getDeltaLong($lat, $radius);
-			$long_min = $long - $delta_long;
-			$long_max = $long + $delta_long;
-			//echo htmlentities("Laenge: ".$long.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
-			
-			//qudratischer Auswahlbereich:
-			$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max') AND (altitude > '$alt')");
-			//echo mysql_error();
-			//Festlegung fuer Pruefung, ob Punkt im KREIS liegt:
-			$long_mittel = $long;
-			$lat_mittel = $lat;
-			break;
-			//###############################################################################################
-			CASE 'geo_rech2':
-			//Suche nach Ortsbezeichnung und Umkreis
-			//Bestimmun, welche Koordinaten dem gewaehlten Ort entsprechen und Ermittlung des arithmetischen Mittelwertes als 'gemeinsamer Mittelpunkt':
-			//echo "an get_preview &uuml;bergebene Ortsbezeichnung: ".htmlentities($ort)."<BR>";
-			$ORT = $ort;
-			$ort = utf8_decode($ort);
-			$result10 = mysql_query( "SELECT * FROM $table12 WHERE location = '$ort'");
-			$num10 = mysql_num_rows($result10);
-			IF($num10 == '0')
-			{
-				echo "<p class='gross' style='color:red; text-align:center;'>Es wurden keine Bilder gefunden.<BR>Bitte pr&uuml;fen Sie Ihre Eingaben.</P>";
-				return;
-			}
-			$lat = '';
-			$long = '';
-			FOR ($i10='0'; $i10<$num10; $i10++)
-			{
-				$lat = $lat + mysql_result($result10, $i10, 'latitude');
-				$long = $long + mysql_result($result10, $i10, 'longitude');
-			}
-			//echo "Summe Breite: ".$lat.", Summe Laenge: ".$long."<BR>";
-			$lat_mittel = $lat / $num10;
-			$long_mittel = $long / $num10;
-			//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere Laenge: ".$long_mittel)."<BR>";
-			
-			//Plausibilitaetspruefung:
-			$RADIUS2 = $radius2;
-			$radius = round(($einheit2 * str_replace(',','.',$radius2)),0);
-			IF(!preg_match('/^([0-9]{1,5})$/',$radius2) OR ($radius >50000))
-			{
-				echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe des Umkreises ist falsch! (Erlaubte Werte sind bis max. 50 km)</P>";
-				return;
-			}
-			//annaehernde Berechnung des Toleranzfeldes aus dem Radius:
-			//geogr. Breite: WInkeldifferenz je m Abweichung: 0,000008999280058�
-			$diff_lat = 0.000008999280058;
-			$delta_lat = $radius * $diff_lat;
-			$lat_min = $lat_mittel - $delta_lat;
-			$lat_max = $lat_mittel + $delta_lat;
-			//echo "Breite: ".$lat_mittel.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
-			
-			//geogr. Laenge: hier ist dei Winkelaenderung / Entfernun von der geogr. Breite abhaengig:
-			//include 'functions/main_functions.php';
-			$delta_long = getDeltaLong($lat_mittel, $radius);
-			$long_min = $long_mittel - $delta_long;
-			$long_max = $long_mittel + $delta_long;
-			//echo htmlentities("Laenge: ".$long_mittel.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
-			
-			//qudratischer Auswahlbereich:
-			$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max')");
-			//echo mysql_error();
-			break;
+		CASE 'geo_rech1':
+		//Suche nach geogr. Koordinaten und Umkreis
+		//Pruefung auf Plausibilitaet der eingegebenen Daten:
+		
+		$LONG = $long; //die unveraenderten Werte werden weiter unten benoetigt!
+		$long = str_replace(',','.',$long);
+		IF(!preg_match('/^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$/',$long) OR ($long > abs(180)))
+		{
+			echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der geogr. L&auml;nge ist falsch!<BR>(Erlaubte Werte liegen zwischen -180&#176; und +180&#176;)</P>";
+			return;
 		}
+		
+		$LAT = $lat; //die unveraenderten Werte werden weiter unten benoetigt!
+		$lat = str_replace(',','.',$lat);
+		IF(!preg_match('/^([0-9]{1,3})([\.]{0,1})([0-9]{0,9})$/',$lat) OR ($lat > abs(90)))
+		{
+			echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der geogr. Breite ist falsch!<BR>(Erlaubte Werte liegen zwischen -90&#176; und +90&#176;)</P>";
+			return;
+		}
+		
+		$ALT = $alt; //die unveraenderten Werte werden weiter unten benoetigt!
+		$alt = round(str_replace(',','.',$alt),0);
+		IF(!preg_match('/^([0-9]{1,4})$/',$alt) OR ($alt >8850))
+		{
+			echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe der H&ouml;he ist falsch!<BR>(Erlaubte Werte sind kleiner als die H&ouml;he des Mount Everest)</P>";
+			return;
+		}
+		
+		$RADIUS1 = $radius1; //die unveraenderten Werte werden weiter unten benoetigt!
+		$radius = round(($einheit1 * str_replace(',','.',$radius1)),0);
+		IF(!preg_match('/^([0-9]{1,5})$/',$radius1) OR ($radius >50000))
+		{
+			echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe des Umkreises ist falsch! (Erlaubte Werte sind bis max. 50 km)</P>";
+			return;
+		}
+		ELSE
+		{
+		//echo htmlentities("uebergebene Werte: Breite: ".$lat.", Laenge: ".$long.", Hoehe: ".$alt.", Umkreis: ".$radius." m, Ort. ".$ort.", Umkreis: ".$radius2." ".$einheit2)."<BR>";
+		}
+		
+		//annaehernde Berechnung des Toleranzfeldes aus dem Radius:
+		//geogr. Breite: WInkeldifferenz je m Abweichung: 0,000008999280058�
+		$diff_lat = 0.000008999280058;
+		$delta_lat = $radius * $diff_lat;
+		$lat_min = $lat - $delta_lat;
+		$lat_max = $lat + $delta_lat;
+		//echo "Breite: ".$lat.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
+		
+		//geogr. Laenge: hier ist dei Winkelaenderung / Entfernun von der geogr. Breite abhaengig:
+		$delta_long = getDeltaLong($lat, $radius);
+		$long_min = $long - $delta_long;
+		$long_max = $long + $delta_long;
+		//echo htmlentities("Laenge: ".$long.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
+		
+		//qudratischer Auswahlbereich:
+		$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max') AND (altitude > '$alt')");
+		//echo mysql_error();
+		//Festlegung fuer Pruefung, ob Punkt im KREIS liegt:
+		$long_mittel = $long;
+		$lat_mittel = $lat;
+		break;
+		//###############################################################################################
+		CASE 'geo_rech2':
+		//Suche nach Ortsbezeichnung und Umkreis
+		//Bestimmun, welche Koordinaten dem gewaehlten Ort entsprechen und Ermittlung des arithmetischen Mittelwertes als 'gemeinsamer Mittelpunkt':
+		//echo "an get_preview &uuml;bergebene Ortsbezeichnung: ".htmlentities($ort)."<BR>";
+		$ORT = $ort;
+		$ort = utf8_decode($ort);
+		$result10 = mysql_query( "SELECT * FROM $table12 WHERE location = '$ort'");
+		$num10 = mysql_num_rows($result10);
+		IF($num10 == '0')
+		{
+			echo "<p class='gross' style='color:red; text-align:center;'>Es wurden keine Bilder gefunden.<BR>Bitte pr&uuml;fen Sie Ihre Eingaben.</P>";
+			return;
+		}
+		$lat = '';
+		$long = '';
+		FOR ($i10='0'; $i10<$num10; $i10++)
+		{
+			$lat = $lat + mysql_result($result10, $i10, 'latitude');
+			$long = $long + mysql_result($result10, $i10, 'longitude');
+		}
+		//echo "Summe Breite: ".$lat.", Summe Laenge: ".$long."<BR>";
+		$lat_mittel = $lat / $num10;
+		$long_mittel = $long / $num10;
+		//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere Laenge: ".$long_mittel)."<BR>";
+		
+		//Plausibilitaetspruefung:
+		$RADIUS2 = $radius2;
+		$radius = round(($einheit2 * str_replace(',','.',$radius2)),0);
+		IF(!preg_match('/^([0-9]{1,5})$/',$radius2) OR ($radius >50000))
+		{
+			echo "<p class='gross' style='color:red; text-align:center;'>Die Angabe des Umkreises ist falsch! (Erlaubte Werte sind bis max. 50 km)</P>";
+			return;
+		}
+		//annaehernde Berechnung des Toleranzfeldes aus dem Radius:
+		//geogr. Breite: WInkeldifferenz je m Abweichung: 0,000008999280058�
+		$diff_lat = 0.000008999280058;
+		$delta_lat = $radius * $diff_lat;
+		$lat_min = $lat_mittel - $delta_lat;
+		$lat_max = $lat_mittel + $delta_lat;
+		//echo "Breite: ".$lat_mittel.", min. Breite: ".$lat_min.", max. Breite: ".$lat_max."<BR>";
+		
+		//geogr. Laenge: hier ist dei Winkelaenderung / Entfernun von der geogr. Breite abhaengig:
+		//include 'functions/main_functions.php';
+		$delta_long = getDeltaLong($lat_mittel, $radius);
+		$long_min = $long_mittel - $delta_long;
+		$long_max = $long_mittel + $delta_long;
+		//echo htmlentities("Laenge: ".$long_mittel.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
+		
+		//qudratischer Auswahlbereich:
+		$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max')");
+		//echo mysql_error();
+		break;
+	}
 		
 		//Erzeugung des 'Mittlpunkt-Icons' fuer die Darstellung in GoogleEarth:
 		$mp = '
@@ -1096,35 +1096,82 @@ SWITCH ($modus)
 					SWITCH($bewertung)
 					{
 						CASE '6':
-						$result9 = mysql_query( "SELECT * FROM $table2 WHERE loc_id = '$loc_id'");
+							$result9 = mysql_query( "SELECT * FROM $table2 WHERE loc_id = '$loc_id'");
 						break;
 						
 						default:
-						$result9 = mysql_query( "SELECT * FROM $table2 WHERE loc_id = '$loc_id' $krit2");
+							$result9 = mysql_query( "SELECT * FROM $table2 WHERE loc_id = '$loc_id' $krit2");
 						break;
 					}
 					$num9 = mysql_num_rows($result9);
-					
-					FOR ($i9=0; $i9<$num9; $i9++)
+					IF($num9 > 0)
 					{
 						//die pic_id's werden zur weiteren Verwendung in ein Array geschrieben:
-						$pic_id_arr[] = mysql_result($result9, $i9, 'pic_id');
+						$p_i_arr[] = mysql_result($result9, isset($i9), 'pic_id');
 					}
 				}
 			}
+			//zeitl. Sortierung der pic_id's:
+			$arr_werte = count($p_i_arr);
+			IF($arr_werte == 1)
+			{
+				$bed = "pic_id = $p_i_arr[0]";
+			}
+			ELSE
+			{
+				FOR($k=0; $k<$arr_werte; $k++)
+				{
+					IF($k==0)
+					{
+						$bed = "pic_id = $p_i_arr[$k]";
+					}
+					ELSE
+					{
+						$bed .= " OR pic_id = $p_i_arr[$k]";
+					}
+				}
+			}
+			$result99 = mysql_query("SELECT * FROM $table14 WHERE ($bed) ORDER BY DateTimeOriginal, ShutterCount");
+			$num99 = mysql_num_rows($result99);
+			FOR($i99=0; $i99<$num99; $i99++)
+			{
+				$pic_id_arr[] = mysql_result($result99, $i99, 'pic_id');
+			}
 		}
-		
 //######################################################################### 
 		
 		function generateImageArray($pic_id_arr, $userName, $userId, $softwareRoot)
 		{
+			//$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
+			//flush();
 			include $softwareRoot.'/bin/share/db_connect1.php';
 			$res = "";
 			$num_pic = count($pic_id_arr);	//Gesamtzahl der gefundenen Bilder
 			for ($imageArrayIndex = 0; $imageArrayIndex < $num_pic; $imageArrayIndex++)
 			{
+				/*
+				$resultX = mysql_query("SELECT $table2.pic_id, $table2.FileName, $table2.Owner, $table14.pic_id, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.Orientation
+				FROM $table2 INNER JOIN $table14
+				ON $table2.pic_id = $table14.pic_id
+				AND $table2.pic_id = '$pic_id_arr[$imageArrayIndex]'
+				ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+				
+				$fileName = mysql_result($resultX, 0, 'FileName');
+				$fileNamePrefix = str_replace('.jpg', '', $fileName);
+				$ratio = (mysql_result($resultX, 0, 'ExifImageWidth') / mysql_result($resultX, 0, 'ExifImageHeight'));
+				if (mysql_result($resultX, 0, 'Orientation') >= '5')
+				{
+					$ratio = 1.0 / $ratio;
+				}
+				$downloadStatus = 0;
+				//Erzeugung der Download-Icons:
+				$Owner = mysql_result($resultX, 0, 'Owner');
+				*/
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
+				
 				$res1 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
 				$res2 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
+				
 				$fileName = mysql_result($res1, 0, 'FileName');
 				$fileNamePrefix = str_replace('.jpg', '', $fileName);
 				$ratio = (mysql_result($res2, 0, 'ExifImageWidth') / mysql_result($res2, 0, 'ExifImageHeight'));
@@ -1135,6 +1182,9 @@ SWITCH ($modus)
 				$downloadStatus = 0;
 				//Erzeugung der Download-Icons:
 				$Owner = mysql_result($res1, 0, 'Owner');
+				
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
+				
 				$check = fileExists($fileNamePrefix, $userName);
 				IF($check > 0)
 				{
@@ -1143,12 +1193,10 @@ SWITCH ($modus)
 				}
 				ELSE
 				{
-				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
 					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
 					{
 						IF(directDownload($userName, $softwareRoot))
-						//IF($direkt_download > '0')
 						{
 							$downloadStatus = 1;
 						}
@@ -1165,6 +1213,13 @@ SWITCH ($modus)
 				$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.$fileNamePrefix.'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
 				';
 			}
+			/*
+			$end1 = microtime();
+			list($start1msec, $start1sec) = explode(" ",$start1);
+			list($end1msec, $end1sec) = explode(" ",$end1);
+			$runtime1 = ($end1sec + $end1msec) - ($start1sec + $start1msec);
+			echo "Zeit f&uuml;r Bildsuche: ".$runtime1." Sekunden<BR>";
+			*/
 			return $res;
 		}			
 			
