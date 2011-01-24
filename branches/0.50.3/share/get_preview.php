@@ -176,28 +176,26 @@ if( array_key_exists('treestatus',$_GET))
 //echo $mod;
 //Auslesen der Vorschau-Bilder aus den EXIF-Daten
 //verwendet in edit_kat_daten.php, recherche2.php, edit_beschreibung.php
-//Festlegung der Hoehe der Bilder auf dem Filmstreifen:
-$fs_hoehe = '76';
 //echo "&Uuml;bergebene Parameter: kat_id: ".$kat_id.", ID: ".$ID.", mod: ".$mod.", pic_id: ".$pic_id.", modus: ".$modus;
 //echo $base_file;
 //echo $bewertung;
 //echo "Server-URL: ".$server_url;
 //########################################################################################################################
 //Darstellung der zu einer Kategorie zugehoerigen Bilder:
-include 'db_connect1.php';
+//include 'db_connect1.php';
+include 'global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/permissions.php';
 
 unset($c_username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 $benutzername = $c_username;
 $result15 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $user_id = mysql_result($result15, isset($i15), 'id');
-
-include 'global_config.php';
-include $sr.'/bin/share/functions/main_functions.php';
-include $sr.'/bin/share/functions/permissions.php';
 
 $server_url = "http://{$_SERVER['SERVER_NAME']}$inst_path";
 
@@ -268,7 +266,6 @@ SWITCH ($modus)
 				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
 				$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
-//				$Orientation = mysql_result($result2, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
@@ -277,8 +274,7 @@ SWITCH ($modus)
 				ELSE
 				{
 					@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
-				}
-				//$size = round($FileSize / 1024);		
+				}	
 				$breite = $parameter_v[0];
 				$hoehe = $parameter_v[1];
 				$breite_v = $breite * 5;
@@ -422,18 +418,15 @@ SWITCH ($modus)
 				$FileNameV = mysql_result($res2_1, isset($i2_1), 'FileNameV');
 				$result24 = mysql_query( "SELECT FileSize, Orientation FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
-//				$Orientation = mysql_result($result24, isset($i24), 'Orientation');	// 1: normal; 8: 90 CW
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
-					//@$parameter_v=getimagesize('../../images/originale/'.$FileName);
 					$FileNameV = 'no_preview.jpg';
 				}
 				ELSE
 				{
 					@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 				}
-				//$size = round($FileSize / 1024);		
 				$breite = $parameter_v[0];
 				$hoehe = $parameter_v[1];
 				$breite_v = $breite * 5;
@@ -559,7 +552,6 @@ SWITCH ($modus)
 			}
 			break;
 		}
-		//echo $krit1;
 		$statement = "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.note, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 		//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie benoetigt	
 		
@@ -596,12 +588,10 @@ SWITCH ($modus)
 				}
 				ELSE
 				{
-				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
 					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
 					{
 						IF(directDownload($userName, $softwareRoot))
-						//IF($direkt_download > '0')
 						{
 							$downloadStatus = 1;
 						}
@@ -639,16 +629,15 @@ SWITCH ($modus)
 		SWITCH ($num6_1)
 		{
 			CASE '0':
-			$text1 = "Es wurde kein Bild gefunden.";
-			//echo "Pos.: ".$position."Jahr: ".$jahr.", Monat: ".$month_number.", mod: ".$mod.". Modus: ".$modus."BaseFile: ".$base_file.", Bewertung: ".$bewertung;
+				$text1 = "Es wurde kein Bild gefunden.";
 			break;
 			
 			CASE '1':
-			$text1 = "<div id='tooltip1'>Es wurde ein Bild gefunden.";
+				$text1 = "<div id='tooltip1'>Es wurde ein Bild gefunden.";
 			break;
 			
 			default:
-			$text1 = "<div id='tooltip1'>Es wurden ".$num6_1." Bilder gefunden.";
+				$text1 = "<div id='tooltip1'>Es wurden ".$num6_1." Bilder gefunden.";
 			break;
 		}
 	break;
@@ -690,12 +679,10 @@ SWITCH ($modus)
 				}
 				ELSE
 				{
-				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
 					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
 					{
 						IF(directDownload($userName, $softwareRoot))
-						//IF($direkt_download > '0')
 						{
 							$downloadStatus = 1;
 						}
@@ -784,12 +771,10 @@ SWITCH ($modus)
 				}
 				ELSE
 				{
-				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
 					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
 					{
 						IF(directDownload($userName, $softwareRoot))
-						//IF($direkt_download > '0')
 						{
 							$downloadStatus = 1;
 						}
@@ -857,7 +842,6 @@ SWITCH ($modus)
 			{
 				$num8 = 0;
 			}
-			//echo "Num 8: ".$num8."<BR>";
 			IF ($num6_1 == '0')
 			{
 				echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die den gew&auml;hlten Kategorie zugewiesen wurden!</p>";
@@ -2159,14 +2143,9 @@ SWITCH ($modus)
 							<TD align='center' width='43'>
 							<div id='box$pic_id'>
 							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-							<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
-							
-							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
-							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
-							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-							<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
+							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
 							
 							</div>	
 							</TD>";
