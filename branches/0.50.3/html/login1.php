@@ -40,6 +40,18 @@ $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+
+IF($cr == NULL OR $inst_path == '/')
+{
+	//wenn der Installationspfad falsch deklariert wurde, kann die db_connect1.php nicht eingebunden werden und damit das Copyright nicht gefunden werden...
+	echo "<center><fieldset style='width:800px; background-color:black; margin-top:50px;'><legend style='color:red; margin-left:30px; font-size:16px;'>Hinweis</legend><h1 style='color:red; margin-top:50px; margin-bottom:30px;'>Es liegt ein Problem vor!<BR><BR>Bitte passen Sie die Einstellung des Installationspfades<BR>
+	in der Datei pic2base/bin/share/global_config.php in Zeile 8 korrekt an!</h1>
+	<p style='font-size:14px; color:red; font-weight:bold;'>Derzeitiger Wert: \$inst_path=\"$inst_path\";</p>
+	<BR>
+	<input type='button' style='margin-bottom:20px;' value='Zur&uuml;ck'onClick='javascript:history.back()'>
+	</fieldset></center>";
+	break;
+}
 ?>
 
 <div class="page">
@@ -77,8 +89,6 @@ include $sr.'/bin/share/db_connect1.php';
 	</tr>
 	</tbody>
 	</table>
-	<BR>
-	&#160;&#160;
 	</FORM>
 	</p>
 	</div>
