@@ -2,10 +2,10 @@
 
 function hasPermission($username, $permissionString)
 {
-	//dirty trick:
-	@include '../../share/global_config.php';
-	@include '../share/global_config.php';
-	@include '../bin/share/global_config.php';
+	error_reporting($_SERVER["SERVER_NAME"] == "localhost" ? E_ALL : 0);
+	include '../../share/global_config.php';
+	error_reporting($_SERVER["SERVER_NAME"] == "localhost" ? E_ALL : 0);
+	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	mysql_connect($db_server, $user, $PWD);
 	mysql_select_db ($db);
