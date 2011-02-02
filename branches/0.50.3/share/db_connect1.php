@@ -1,12 +1,12 @@
 <?php
 //[Programm-Version]
-$version = "0.50.3";
-$vom = "(06.01.2011)";
+$version = "0.50.2"; // rel. 02022011.1
+$vom = "(03.01.2011)";
 
 //[copyright-Vermerk in der Fusszeile]
 $cr = "2006 - 2011 Logiqu";
 
-//Zugangsdaten fuer den Datenbankzugriff (normaler User mit teilwesen Zugriffsbeschraenkungen auf DB pic2base)
+//Zugangsdaten fuer den Datenbankzugriff (normaler User mit teilweisen Zugriffsbeschraenkungen auf DB pic2base)
 $db_server = 'localhost';
 $user = 'pb';
 $PWD = 'pic_base';
