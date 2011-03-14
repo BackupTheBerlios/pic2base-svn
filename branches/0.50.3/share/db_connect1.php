@@ -1,6 +1,6 @@
 <?php
 //[Programm-Version]
-$version = "0.50.2"; // rel. 02022011.1
+$version = "0.50.2"; // rel. 14032011.1
 $vom = "(03.01.2011)";
 
 //[copyright-Vermerk in der Fusszeile]
