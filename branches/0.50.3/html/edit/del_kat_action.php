@@ -10,7 +10,7 @@ IF (!$_COOKIE['login'])
  * Project: pic2base
  * File: del_kat_action.php
  *
- * Copyright (c) 2006 - 2007 Klaus Henneberg
+ * Copyright (c) 2006 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -114,7 +114,7 @@ FOR($i7='0'; $i7<$num7; $i7++)
 		$result8 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 		$keywords = mysql_result($result8, isset($i8), 'kategorie');
 		$kw .= $keywords.", ";
-		shell_exec($et_path."/exiftool -IPTC:Keywords+='$keywords' ".$FN);
+		shell_exec($exiftool." -IPTC:Keywords+='$keywords' ".$FN);
 	}
 }
 //echo $kw;
