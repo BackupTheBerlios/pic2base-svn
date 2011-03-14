@@ -28,9 +28,9 @@ IF (!$_COOKIE['login'])
 
 /*
  * Project: pic2base
- * File: start.php
+ * File: del_kat1.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
