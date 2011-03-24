@@ -626,7 +626,7 @@ function createNavi1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
 	
-	$navigation .= "<a class='navi_blind'></a>
+	$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/start.php' title='zur Startseite'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=1' title='Online-Hilfe aufrufen'>Hilfe</a>
@@ -684,7 +684,7 @@ if(!isset($navigation))
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
 	
-	$navigation .= "<a class='navi_blind'></a>
+	$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/start.php' title='zur Startseite'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2' title='Online-Hilfe aufrufen'>Hilfe</a>
@@ -849,7 +849,7 @@ if(!isset($navigation))
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
 	}
 	
-	$navigation .= "<a class='navi_blind'></a>
+	$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/start.php' title='zur Startseite'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
 			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=3' title='Online-Hilfe aufrufen'>Hilfe</a>
