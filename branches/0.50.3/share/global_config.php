@@ -1,7 +1,7 @@
 <?php
 // alle oder keine Meldungen ausgeben:
-//error_reporting(E_ALL);
-error_reporting(0);
+error_reporting(E_ALL);
+//error_reporting(0);
 //#####################################################################################
 //[Pfade] Globale Konfigurationseinstellungen
 $doc_root = $_SERVER['DOCUMENT_ROOT'];						//DocumentRoot des Web-Servers

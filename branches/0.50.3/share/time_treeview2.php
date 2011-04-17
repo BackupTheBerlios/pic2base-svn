@@ -28,6 +28,10 @@ if(array_key_exists('pic_id',$_GET))
 {
 	$pic_id = $_GET['pic_id'];
 }
+ELSE
+{
+	$pic_id = 0;
+}
 if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
@@ -39,6 +43,10 @@ if(array_key_exists('s_m',$_GET))
 if(array_key_exists('bewertung',$_GET))
 {
 	$bewertung = $_GET['bewertung'];
+}
+ELSE
+{
+	$bewertung = '';
 }
 if(array_key_exists('show_mod',$_GET))
 {
@@ -233,8 +241,8 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 								echo "<TR id='kat'>
 								<TD id='kat1'> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<SPAN style='margin-left:2px;'>".$aufn_dat."</span></TD>";
 								echo "
-								<TD id='kat2'><SPAN style='cursor:pointer;' onClick='getTimePreview2(\"$jahr\",\"$month_number\",\"$T\",0,\"$mod\",\"$modus\",\"$base_file\")'>".$sel_one."</span></TD>
-								<TD id='kat2'><SPAN style='cursor:pointer;' onClick='getTimePreview2(\"$jahr\",\"$month_number\",\"$T\",1,\"$mod\",\"$modus\",\"$base_file\")'>".$sel_all."</span></TD>
+								<TD id='kat2'><SPAN style='cursor:pointer;' onClick='getTimePreview2(\"$jahr\",\"$month_number\",\"$T\",0,\"$mod\",\"$modus\",\"$base_file\",\"$sr\")'>".$sel_one."</span></TD>
+								<TD id='kat2'><SPAN style='cursor:pointer;' onClick='getTimePreview2(\"$jahr\",\"$month_number\",\"$T\",1,\"$mod\",\"$modus\",\"$base_file\",\"$sr\")'>".$sel_all."</span></TD>
 								<TD id='kat2'>".$num12."</TD>
 								</TR>";
 							}

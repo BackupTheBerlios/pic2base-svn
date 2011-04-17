@@ -429,6 +429,7 @@ SWITCH ($modus)
 	CASE 'zeit':
 	// Bildbearbeitung ueber Bildauswahl nach Aufnahmedatum
 	$auswahl = $pic_id;  //hier wird die uebergebene pic_id zweckentfremdet verwendet!!!
+	$kat_id = 0;
 	SWITCH ($m)
 	{
 		CASE '0':
@@ -524,7 +525,7 @@ SWITCH ($modus)
 		}
 		echo "	</TR>";
 		//nicht in alle Faellen werden die Checkboxen dargestellt:
-		showCheckboxes($base_file, $auswahl, $result2, $num2);
+		showCheckboxes($base_file, $auswahl, $result2, $num2, $sr);
 	}
 	echo "	</TR>
 		</TABLE>";

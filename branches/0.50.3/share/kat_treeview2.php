@@ -19,6 +19,19 @@ include '../share/global_config.php';
 
 $bg_color = 0;
 
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id']; // fuer register_globals = off
+}
+else
+{
+	if(!isset($kat_id))
+	{
+		$kat_id = '';
+	}
+}
+
+$KAT_ID = $kat_id;
 
 	SWITCH ($modus)
 	{
@@ -26,7 +39,7 @@ $bg_color = 0;
 			//Erzeugung der Baumstruktur:
 			//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 			//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			$KAT_ID = $kat_id;
+			//$KAT_ID = $kat_id;
 			//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
 			$knoten_arr[]=$kat_id;
@@ -43,7 +56,7 @@ $bg_color = 0;
 		break;
 		
 		CASE 'complete_view':
-			//zun�chst werden alle Knotenelemente des Baumes ermittelt:
+			//zunaechst werden alle Knotenelemente des Baumes ermittelt:
 			$res1 = mysql_query("SELECT * FROM $table4");
 			$num1 = mysql_num_rows($res1);
 			FOR ($i1=0; $i1<$num1; $i1++)
@@ -185,7 +198,7 @@ $bg_color = 0;
 			break;
 		}
 		
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+		//Link fuer den Ruecksprung erzeugen, d.h. naechst hoeheren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		IF (in_array($kat_id, $knoten_arr))
 		{
