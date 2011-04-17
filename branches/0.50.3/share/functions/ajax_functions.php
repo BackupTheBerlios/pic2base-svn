@@ -184,9 +184,6 @@ function getShortFS($FileSize)
 }
 ?>
 
-
-
-
 <SCRIPT language="javascript">
 <!--
 function getPreview(kat_id, ID, mod, pic_id, modus, base_file, bewertung, auswahl, position, jump, treestatus)
@@ -208,6 +205,18 @@ function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, posit
 	
 	var url = '../../share/get_preview.php';
 	var params ='j=' + j + '&m=' + m + '&t=' + t + '&pic_id=' + pic_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
+	//alert("Parameter: "+params);
+	var target = 'filmstreifen';
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
+	
+}
+
+function getTimePreview2(j, m, t, pic_id, mod, modus, base_file)
+{
+	//confirm("Jahr: " + j + ", Monat: "+ m +", Tag: "+ t +", mod: " + mod + ", pic_id: " + pic_id+", modus: "+modus+", base_file: "+base_file);
+	
+	var url = '../../share/get_preview.php';
+	var params ='j=' + j + '&m=' + m + '&t=' + t + '&pic_id=' + pic_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file;
 	//alert("Parameter: "+params);
 	var target = 'filmstreifen';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
@@ -416,6 +425,16 @@ function getTimeTreeview(pic_id, mod, s_m, bewertung)
 {
 	var url = '../../share/time_treeview.php';
 	var params = 'pic_id=' + pic_id + '&mod=' + mod + '&show_mod=' + s_m + '&bewertung=' + bewertung;
+	//alert("Parameter: "+params);
+	var target = 'spalte1F';
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+}
+
+function getTimeTreeview2(pic_id, mod, s_m)
+{
+	//wird verwendet, wenn Bilder bearbeitet werden sollen und die Auswahl nach Aufnahmedatum erfolgt
+	var url = '../../share/time_treeview2.php';
+	var params = 'pic_id=' + pic_id + '&mod=' + mod + '&show_mod=' + s_m;
 	//alert("Parameter: "+params);
 	var target = 'spalte1F';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});

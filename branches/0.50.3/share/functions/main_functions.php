@@ -30,6 +30,7 @@ function formatValues()										verwendet in generate_exifdata0,
 function restoreOriFilename									verwendet in details, generate_exifdata0, 
 function extractExifData									verwendet 			Z 2060
 function directDownload										verwendet in get_previev	Z 1933
+function showCheckboxes										verwendet in get_preview	
 
 */
 
@@ -2049,5 +2050,49 @@ function buildMd5sumCommand($sr)
 	$result1 = mysql_query("SELECT md5sum_path FROM $table16");
 	$md5sum_path = trim(mysql_result($result1, isset($i1), 'md5sum_path'));		//trim beseitigt Fehler verursachende Leerzeichen!!!
 	RETURN $md5sum_path;
+}
+
+function showCheckboxes($base_file, $auswahl, $result2, $num2)
+{
+	include $sr.'/bin/share/db_connect1.php';
+	SWITCH($base_file)
+	{
+		CASE 'edit_remove_kat':
+		//keine Anzeige der Checkboxen!
+		break;
+		
+		CASE 'edit_beschreibung':
+		Case 'edit_kat_daten':
+			IF ($auswahl == '0')
+			{
+				$checked = '';
+			}
+			ELSE
+			{
+				$checked = 'checked';
+			}
+			echo "<TR>";
+			FOR ($i2=0; $i2<$num2; $i2++)
+			{
+				$pic_id = mysql_result($result2, $i2, 'pic_id');
+				echo "	<TD align='center'>
+						<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
+						</TD>";
+			}
+		break;
+		
+		CASE 'edit_bewertung':
+			echo "<TR>";
+			FOR ($i2=0; $i2<$num2; $i2++)
+			{
+				$pic_id = mysql_result($result2, $i2, 'pic_id');
+				echo "	<TD align='center'>
+						<div id = 'star_set$pic_id'>";
+						showStars($pic_id);
+				echo "	</div>
+						</TD>";
+			}
+		break;
+	}
 }
 ?>
