@@ -35,6 +35,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 $ID = $_GET['ID']; 
 $kat_id = $_GET['kat_id']; 
 $kategorie = $_POST['kategorie']; 
+$exiftool = buildExiftoolCommand($sr);
 
 // *#*  echo "kategorie: ".$kategorie."<br>";
 // zuerst wird der Kategoriename in der DB aktualisiert
@@ -68,9 +69,9 @@ FOR($i2='0'; $i2<mysql_num_rows($res2); $i2++)
 	//echo $kategorie."<BR>";
 	// und in die Meta-Daten des jpg- und Originalbildes geschrieben:
 	$FN = $pic_path."/".$row2[3];
-	shell_exec($et_path."/exiftool -IPTC:Keywords='$kategorie' -overwrite_original ".$FN);
+	shell_exec($exiftool." -IPTC:Keywords='$kategorie' -overwrite_original ".$FN);
 	$FNO = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-	shell_exec($et_path."/exiftool -IPTC:Keywords='$kategorie' -overwrite_original ".$FNO);
+	shell_exec($exiftool." -IPTC:Keywords='$kategorie' -overwrite_original ".$FNO);
 	
 	//abschliessend wird die meta_data-Tabelle aktualisiert:
 	$res4 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$pic_id'");
