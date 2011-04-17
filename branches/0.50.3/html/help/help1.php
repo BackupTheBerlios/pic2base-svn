@@ -335,12 +335,12 @@ echo "
 		<a href='#3_georef'>Geo-Referenzierung</a><BR>
 		<a href='#3_bewertung'>Bild-Bewertung</a><BR>
 		<a href='#3_desc'>Beschreibungen zuweisen</a><BR>
-		<a href='#3_kat'>Kategorien zuweisen</a><BR>
+		<a href='#3_kat'>Kategorie-Zuweisung</a><BR>
 		<a href='#3_del_kat'>Kategorie-Zuweisungen aufheben</a><BR>
 		<a href='#3_qp'>Quick-Preview hochformatiger Bilder erstellen</a><BR><BR>
 		
 		<a name = '3_georef'><b>Geo-Referenzierung</b></a><BR><BR>
-		Wenn Sie im Besitz von Geo-Daten sind, k&ouml;nnen Sie &uuml;ber diesen Menpunkt Ihren Bildern die geografischen Koordinaten des Aufnahme-Standortes zuweisen.<BR>
+		Wenn Sie im Besitz von Geo-Daten sind, k&ouml;nnen Sie &uuml;ber diesen Men&uuml;punkt Ihren Bildern die geografischen Koordinaten des Aufnahme-Standortes zuweisen.<BR>
 		Die derzeit unterst&uuml;tzten Datenlogger sind in dem entsprechenden Auswahlfeld schwarz dargestellt, vorbereitete, aber noch nicht getestete Modelle sind inaktiv dargestellt.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
@@ -355,9 +355,13 @@ echo "
 		aber auch einzelne Bilder detailliert zu beschreiben.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name = '3_kat'><b>Kategorie zuweisen</b></a><BR><BR>
+		<a name = '3_kat'><b>Kategorie-Zuweisung - Auswahl nach Kategorien</b></a><BR><BR>
 		&Uuml;ber diesen Men&uuml;punkt k&ouml;nnen Sie den Bildern Kategorien zuweisen.<BR>
-		Die Kategorien m&uuml;ssen im Vorfeld durch den Administrator oder einem Benutzer mit entsprechenden Rechten angelegt worden seien.<BR>
+		Die Auswahl der zu bearbeitenden Bilder erfolgt dabei &uuml;ber die Suche nach Kategorien.<BR><BR>
+		<b>Kategorie-Zuweisung - Auswahl nach Aufnahmedatum</b></a><BR><BR>
+		Auch &uuml;ber diesen Men&uuml;punkt k&ouml;nnen Sie den Bildern Kategorien zuweisen.<BR>
+		Die Auswahl der zu bearbeitenden Bilder erfolgt hier aber &uuml;ber die Suche nach dem Aufnahmedatum.<BR><BR>
+		Die zu vergebenden Kategorien m&uuml;ssen in jedem Fall im Vorfeld durch den Administrator oder einem Benutzer mit entsprechenden Rechten angelegt worden seien.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name = '3_del_kat'><b>Kategorie-Zuweisung aufheben</b></a><BR><BR>
