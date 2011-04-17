@@ -1,9 +1,8 @@
 <?php
 IF (!$_COOKIE['login'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+  	header('Location: ../../../index.php');
 }
 ?>
 
@@ -30,7 +29,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: edit_kat_daten_action.php
  *
- * Copyright (c) 2005 - 2009 Klaus Henneberg
+ * Copyright (c) 2005 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -57,13 +56,21 @@ else
 {
 	$kat_id = 0;
 }
-if(array_key_exists('ID',$_POST))
+if(array_key_exists('ID',$_GET))
 {
-	$ID = $_POST['ID'];
+	$ID = $_GET['ID'];
 }
 else
 {
 	$ID = 0;
+}
+if(array_key_exists('mod',$_GET))
+{
+	$mod = $_GET['mod'];
+}
+else
+{
+	$mod = 0;
 }
 
 include '../../share/global_config.php';
@@ -178,7 +185,7 @@ flush();
 		IF (mysql_errno() == '0')
 		{
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
-			<meta http-equiv='refresh' content='0; url=edit_kat_daten.php?kat_id=$kat_back&ID=$ID_back'>";
+			<meta http-equiv='refresh' content='0; url=edit_kat_daten.php?kat_id=$kat_back&mod=$mod&ID=$ID_back'>";
 			
 		}
 		ELSE
@@ -190,7 +197,7 @@ flush();
 	{
 		echo "<p class='zwoelfred' align='center'>Es wurde kein Bild oder keine Kategorie ausgew&auml;hlt!<BR><BR>
 		Bitte w&auml;hlen Sie mindestens ein Bild aus<BR>oder verlassen Sie den vorhergehenden Dialog<BR>mit \"Abbrechen\"!</p>
-		<meta http-equiv='refresh' content='5; url=edit_kat_daten.php?kat_id=$kat_back&ID=$ID_back'>";
+		<meta http-equiv='refresh' content='10; url=edit_kat_daten.php?kat_id=$kat_back&mod=$mod&ID=$ID_back'>";
 	}
 	
 	echo "

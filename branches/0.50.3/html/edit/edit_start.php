@@ -69,19 +69,24 @@ echo "
 	<div id='spalte1'>
 		<!--<a class='subnavi' href='#'>EXIF-Daten bearbeiten</a>-->
 		<center>
-		<a class='subnavi' href='edit_geo_daten.php?pic_id=0&mod=kat'>Geo-Referenzierung</a>
-		<a class='subnavi' href='edit_bewertung.php?pic_id=0&mod=kat'>Bilder bewerten / Bewertung &auml;ndern</a>
-		<a class='subnavi' href='edit_beschreibung.php?pic_id=0&mod=kat'>Beschreibungen zuweisen</a>
-		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=edit'>Kategorien zuweisen</a>
-		<a class='subnavi' href='edit_remove_kat.php?pic_id=0&mod=kat'>Kategorie-Zuweisungen aufheben</a>
+		<a class='subnavi' href='edit_geo_daten.php?pic_id=0&mod=kat' title='Standortbestimmung mittels aufgezeichneter Trackdaten'>Geo-Referenzierung</a>
+		<!--<a class='subnavi_blind'></a>-->
+		<a class='subnavi' href='edit_bewertung.php?pic_id=0&mod=kat' title='Bilder qualitativ bewerten, Noten vergeben'>Bilder bewerten / Bewertung &auml;ndern</a>
+		<!--<a class='subnavi_blind'></a>-->
+		<a class='subnavi' href='edit_beschreibung.php?pic_id=0&mod=kat' title='mehreren Bildern eine gemeinsame Beschreibung zuweisen'>Beschreibungen zuweisen</a>
+		<!--<a class='subnavi_blind'></a>-->
+		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=edit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Kategorien'>Kategorie-Zuweisung - Auswahl nach Kategorien</a>
+		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=zeit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Aufnahmedatum'>Kategorie-Zuweisung - Auswahl nach Datum</a>
+		<!--<a class='subnavi_blind'></a>-->
+		<a class='subnavi' href='edit_remove_kat.php?pic_id=0&mod=kat' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>
 		<a class='subnavi_blind'></a>
 		<!--<a class='subnavi' href='double_check0.php'>Doubletten-Pr&uuml;fung</a>-->
-		<a class='subnavi' href='generate_quickpreview0.php?num=X'>Quick-Preview hochformatiger Bilder erzeugen</a>
+		<a class='subnavi' href='generate_quickpreview0.php?num=X' title='Service-Funktion'>Quick-Preview hochformatiger Bilder erzeugen</a>
 		</center>
 	</div>
 	
 	<div id='spalte2'><p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'><b>Hinweise zu den Bearbeitungsm&ouml;glichkeiten:</b><BR><BR>
-	Ausf&uuml;hrliche Hilfe zu den Bearbeitungsm&ouml;glichkeiten finden Sie &uuml;ber die Navigationsleiste in der <a href='../help/help1.php?page=3'>Online-Hilfes</a>.
+	Ausf&uuml;hrliche Hilfe zu den Bearbeitungsm&ouml;glichkeiten finden Sie &uuml;ber die Navigationsleiste in der <a href='../help/help1.php?page=3'>Online-Hilfe</a>.
 	</p>
 	</div>
 
