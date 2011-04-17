@@ -580,6 +580,7 @@ a.subnavi {
     /*background-color:#737994;*/
     background-color:RGB(120,120,120);
     text-align:center;
+    padding-left:10px;
     font-size:12px;
     font-weight:bold;
     color:#eeeeee;
@@ -598,8 +599,9 @@ a.subnavi_blind {
     display:block;
     padding:2px;
     /*background-color:#737994;*/
-    background-color:RGB(120,120,120);
+    background-color:#eeeeee;
     text-align:center;
+    padding-left:10px;
     font-size:12px;
     font-weight:normal;
     color:#00ff00;
