@@ -218,6 +218,7 @@ SWITCH ($modus)
 {
 	CASE 'edit':
 	//echo "ID: ".$ID.", kat_id: ".$kat_id;
+	// Bildbearbeitung ueber Bildauswahl nach Kategorie
 	SWITCH ($ID)
 	{
 		CASE '':
@@ -301,45 +302,8 @@ SWITCH ($modus)
 			</TR>
 			<TR>";
 			//nicht in alle Faellen werden die Checkboxen dargestellt:
-			
-			SWITCH($base_file)
-			{
-				CASE 'edit_remove_kat':
-					//keine Anzeige der Checkboxen!
-				break;
-				
-				CASE 'edit_beschreibung':
-				Case 'edit_kat_daten':
-					IF ($auswahl == '0')
-					{
-						$checked = '';
-					}
-					ELSE
-					{
-						$checked = 'checked';
-					}
-					
-					echo "<TR>";
-					FOREACH ($PIC_ID AS $pic_id)
-					{
-						echo "	<TD align='center'>
-							<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
-							</TD>";
-					}
-				break;
-				
-				CASE 'edit_bewertung':
-					echo "<TR>";
-					FOREACH ($PIC_ID AS $pic_id)
-					{
-						echo "	<TD align='center'><div id = 'star_set$pic_id'>";
-							showStars($pic_id);
-						echo "</div></TD>";
-					}
-				break;
-			}
+			showCheckboxes($base_file, $auswahl, $result2, $num2);
 		}
-		
 		echo "	</TR>
 			</TABLE>";
 		break;
@@ -452,51 +416,119 @@ SWITCH ($modus)
 			echo "	</TR>";
 			
 			//nicht in alle Faellen werden die Checkboxen dargestellt:
-			SWITCH($base_file)
-			{
-				CASE 'edit_remove_kat':
-				//keine Anzeige der Checkboxen!
-				break;
-				
-				CASE 'edit_beschreibung':
-				Case 'edit_kat_daten':
-					IF ($auswahl == '0')
-					{
-						$checked = '';
-					}
-					ELSE
-					{
-						$checked = 'checked';
-					}
-					echo "<TR>";
-					FOR ($i2=0; $i2<$num2; $i2++)
-					{
-						$pic_id = mysql_result($result2, $i2, 'pic_id');
-						echo "	<TD align='center'>
-								<INPUT type='checkbox' name='pic_sel$pic_id' $checked>
-								</TD>";
-					}
-				break;
-				
-				CASE 'edit_bewertung':
-					echo "<TR>";
-					FOR ($i2=0; $i2<$num2; $i2++)
-					{
-						$pic_id = mysql_result($result2, $i2, 'pic_id');
-						echo "	<TD align='center'>
-								<div id = 'star_set$pic_id'>";
-								showStars($pic_id);
-						echo "	</div>
-								</TD>";
-					}
-				break;
-			}
-			
+			showCheckboxes($base_file, $auswahl, $result2, $num2);
 		}
 		echo "	</TR>
 			</TABLE>";
 		break;
 	}
+	break;
+	
+//###############################################################################################################################
+
+	CASE 'zeit':
+	// Bildbearbeitung ueber Bildauswahl nach Aufnahmedatum
+	$auswahl = $pic_id;  //hier wird die uebergebene pic_id zweckentfremdet verwendet!!!
+	SWITCH ($m)
+	{
+		CASE '0':
+		//Anzeige der Jahrgaenge
+		$krit1 = "$table14.DateTimeOriginal LIKE '$j%'";
+		break;
+		
+		Case '00':
+		$krit1 = "$table14.DateTimeOriginal = '0000-00-00 00:00:00'";
+		break;
+		
+		default:
+		IF($t == '0')
+		{
+			$krit1 = "$table14.DateTimeOriginal LIKE '$j-$m%'";
+		}
+		ELSE
+		{
+			$krit1 = "$table14.DateTimeOriginal LIKE '$j-$m-$t%'";
+		}
+		break;
+	}
+	//echo "Kriterium 1: ".$krit1;
+	
+	IF(hasPermission($c_username, 'editallpics'))
+	{
+		$result2 = mysql_query( "SELECT $table2.*, $table14.* FROM $table14, $table2
+		WHERE ($table14.pic_id = $table2.pic_id 
+		AND $krit1) 
+		ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+	}
+	ELSEIF(hasPermission($c_username, 'editmypics'))
+	{
+		echo "V2";
+		$result2 = mysql_query( "SELECT $table2.*, $table14.* FROM $table14, $table2 
+		WHERE ($table14.pic_id = $table2.pic_id
+		AND $table2.Owner = '$user_id' 
+		AND $krit1) 
+		ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");	
+	}
+	echo mysql_error();
+	$num2 = mysql_num_rows($result2);
+	IF ($num2 == '0')
+	{
+		echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder...?</p>";
+		return;
+	}
+	ELSE
+	{
+		//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, 
+		//in der unteren die jeweils dazugehoerigen Auswahlboxen:
+		//der Normalfall - Es werden alle Bilder angezeigt, welche der gewaehlten Kategorie angehoeren
+		echo "	<TABLE border='0' align='center'>
+		<TR>";
+		FOR ($i2=0; $i2<$num2; $i2++)
+		{
+			$pic_id = mysql_result($result2, $i2, 'pic_id');
+			$res2_1 = mysql_query("SELECT FileName, FileNameHQ, FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
+			$FileName = mysql_result($res2_1, isset($i2_1), 'FileName');
+			$FileNameHQ = mysql_result($res2_1, isset($i2_1), 'FileNameHQ');
+			$FileNameV = mysql_result($res2_1, isset($i2_1), 'FileNameV');
+			$result24 = mysql_query( "SELECT FileSize, Orientation FROM $table14 WHERE pic_id = '$pic_id'");
+			$FileSize = mysql_result($result24, isset($i24), 'FileSize');
+			//abgeleitete Groessen:
+			IF ($FileNameV == '')
+			{
+				$FileNameV = 'no_preview.jpg';
+			}
+			ELSE
+			{
+				@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
+			}
+			$breite = $parameter_v[0];
+			$hoehe = $parameter_v[1];
+			$breite_v = $breite * 5;
+			$hoehe_v = $hoehe * 5;
+			IF ($breite == 0 OR $hoehe == 0)
+			{
+				//echo "Keine Groessenangaben!";
+				$breite_v = 800;
+				$hoehe_v = 600;
+			}
+			ELSE
+			{
+				$hoehe_neu = $fs_hoehe;
+				$breite_neu = number_format(($fs_hoehe * $breite / $hoehe),0,',','.');
+			}
+				
+			echo mysql_error();
+				
+			echo "<TD align='center'>";
+			getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, $mod, $form_name);
+		}
+		echo "	</TR>";
+		//nicht in alle Faellen werden die Checkboxen dargestellt:
+		showCheckboxes($base_file, $auswahl, $result2, $num2);
+	}
+	echo "	</TR>
+		</TABLE>";
+	
 	break;
 
 //###############################################################################################################################
