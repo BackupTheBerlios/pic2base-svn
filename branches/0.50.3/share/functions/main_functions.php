@@ -2052,7 +2052,7 @@ function buildMd5sumCommand($sr)
 	RETURN $md5sum_path;
 }
 
-function showCheckboxes($base_file, $auswahl, $result2, $num2)
+function showCheckboxes($base_file, $auswahl, $result2, $num2, $sr)
 {
 	include $sr.'/bin/share/db_connect1.php';
 	SWITCH($base_file)

@@ -211,9 +211,9 @@ function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, posit
 	
 }
 
-function getTimePreview2(j, m, t, pic_id, mod, modus, base_file)
+function getTimePreview2(j, m, t, pic_id, mod, modus, base_file, sr)
 {
-	//confirm("Jahr: " + j + ", Monat: "+ m +", Tag: "+ t +", mod: " + mod + ", pic_id: " + pic_id+", modus: "+modus+", base_file: "+base_file);
+	//confirm("Jahr: " + j + ", Monat: "+ m +", Tag: "+ t +", mod: " + mod + ", pic_id: " + pic_id+", modus: "+modus+", base_file: "+base_file+", Software-root: "+sr);
 	
 	var url = '../../share/get_preview.php';
 	var params ='j=' + j + '&m=' + m + '&t=' + t + '&pic_id=' + pic_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file;
