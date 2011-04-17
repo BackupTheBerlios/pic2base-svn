@@ -3,7 +3,7 @@ IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
-	 header('Location: ../../../index.php');
+	header('Location: ../../../index.php');
 }
 //soll verhindern, dass nachtraeglich installierte Software immer noch nicht gefunden wird: 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Datum aus Vergangenheit
@@ -15,7 +15,7 @@ header("Pragma: no-cache"); // HTTP/1.0
  * Project: pic2base
  * File: check_software0.php
  *
- * Copyright (c) 2006 - 2010 Klaus Henneberg
+ * Copyright (c) 2006 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
