@@ -302,7 +302,7 @@ SWITCH ($modus)
 			</TR>
 			<TR>";
 			//nicht in alle Faellen werden die Checkboxen dargestellt:
-			showCheckboxes($base_file, $auswahl, $result2, $num2);
+			showCheckboxes($base_file, $auswahl, $result2, $num2, $sr);
 		}
 		echo "	</TR>
 			</TABLE>";
@@ -416,7 +416,7 @@ SWITCH ($modus)
 			echo "	</TR>";
 			
 			//nicht in alle Faellen werden die Checkboxen dargestellt:
-			showCheckboxes($base_file, $auswahl, $result2, $num2);
+			showCheckboxes($base_file, $auswahl, $result2, $num2, $sr);
 		}
 		echo "	</TR>
 			</TABLE>";
