@@ -73,7 +73,7 @@ sleep(1);
 ?>
 
 <script language="JavaScript">
-//window.close();
+window.close();
 </script>
 
 </body>
