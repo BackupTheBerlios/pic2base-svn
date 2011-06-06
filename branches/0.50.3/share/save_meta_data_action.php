@@ -30,6 +30,7 @@ echo "&Auml;nderungen zum Bild-ID: ".$pic_id." werden gespeichert...<BR>";
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
+$exiftool = buildExiftoolCommand($sr);
 $FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 
 FOREACH($_POST AS $key => $value)
@@ -64,14 +65,15 @@ FOREACH($_POST AS $key => $value)
 	$result1 = mysql_query( "UPDATE $table14 SET $KEY = '$VALUE' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Aktualisierung der Meta-Daten des Bildes:
-	shell_exec($et_path."/exiftool -".$key."='$value' ".$FN." -overwrite_original");
+	shell_exec($exiftool. "-".$key."='$value' ".$FN." -overwrite_original");
 }
 
 flush();
 sleep(1);
 ?>
+
 <script language="JavaScript">
-window.close();
+//window.close();
 </script>
 
 </body>
