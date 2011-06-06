@@ -131,7 +131,7 @@ FOREACH($info_arr AS $IA)
 $n=0;
 if ( isset($writable_tags) )
 {
-	FOREACH($writable_tags AS $WT)	//�ber alle in der Tabelle freigegebenen Tags wird gepr�ft, welche davon im Bild enthalten sind:
+	FOREACH($writable_tags AS $WT)	//ueber alle in der Tabelle freigegebenen Tags wird geprueft, welche davon im Bild enthalten sind:
 	{
 		//Steuerung der Zeilen-Hintergrundfarbe
 		IF(bcmod($n,2) == 0)
