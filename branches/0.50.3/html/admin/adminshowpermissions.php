@@ -13,7 +13,7 @@ IF (!$_COOKIE['login'])
 	<center>
 	<table class='normal' border='0'>
 	<tr>
-	<td colspan='4' style='font-size:12pt; text-align:center;'>Berechtigungen</td>
+	<td colspan='4' style='font-size:12pt; text-align:center;'>Berechtigungen - informative Auflistung </td>
 	</tr>
 	
 	<tr style='height:3px;'>
@@ -25,7 +25,7 @@ IF (!$_COOKIE['login'])
 	</tr>
 	
 	<tr>
-	<td align=left colspan='2' width='50%'><b>Bezeichnung</b></td>
+	<td align=left colspan='2' width='50%'><b>Recht-Bezeichnung</b></td>
 	<td align=left colspan='2' width='50%'><b>Kurzbezeichnung</b></td>
 	</tr>";
 	for ($i = 0; $i < $num; $i++)
