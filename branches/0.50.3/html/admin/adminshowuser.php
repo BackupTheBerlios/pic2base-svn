@@ -55,7 +55,7 @@ if (hasPermission($c_username, 'adminlogin'))
 		
 		<center>
 		<FORM name = 'del_user' method='post' action='adminframe.php?item=deleteuser&id=$user_id'>
-		<table class='tablenormal' border='1'>
+		<table class='tablenormal' border='0'>
 		
 		<tr style='height:3px;'>
 		<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
