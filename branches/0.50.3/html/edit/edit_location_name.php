@@ -273,7 +273,7 @@ echo "
 
 				<TR id='kat'>
 					<TD id='kat1'>
-					<p align='center'><INPUT id='button1' type='submit' value='Weiter'></p>
+					<p align='center'><INPUT id='button0' type='button' value='Abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?user=$c_username\"'><INPUT id='button1' type='submit' value='Weiter'></p>
 					</TD>
 				</TR>";
 			}
