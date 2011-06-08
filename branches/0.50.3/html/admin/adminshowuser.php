@@ -55,7 +55,7 @@ if (hasPermission($c_username, 'adminlogin'))
 		
 		<center>
 		<FORM name = 'del_user' method='post' action='adminframe.php?item=deleteuser&id=$user_id'>
-		<table class='tablenormal' border='0'>
+		<table class='tablenormal' border='1'>
 		
 		<tr style='height:3px;'>
 		<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
@@ -110,7 +110,8 @@ if (hasPermission($c_username, 'adminlogin'))
 if (hasPermission($c_username, 'adminlogin'))
 {
 	$col_groups = 2;	//2 Spaltengruppen ; je Gruppe eine Spalte Parameter und eine Spalte Erlaubnis
-	echo "<tr>
+	echo "
+	<tr>
 	<td colspan='4' style='font-size:12pt; text-align:center;'>Erteilte Berechtigungen</td>
 	</tr>
 	
@@ -152,7 +153,7 @@ if (hasPermission($c_username, 'adminlogin'))
 				
 				$content = $content."<TD class='tdschmal'>
 				<div id = '$perm_id'>
-				<input type=checkbox name='cb' '$checked' title= '$text' onClick='changeUserpermission(\"$user_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
+				<input type=checkbox name='cb' $checked title= '$text' onClick='changeUserpermission(\"$user_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
 				</div>
 				</td>";
 			}
