@@ -1012,7 +1012,8 @@ SWITCH ($modus)
 	}
 		
 		//Erzeugung des 'Mittlpunkt-Icons' fuer die Darstellung in GoogleEarth:
-		$mp = '
+	/*	
+	$mp = '
 		<Placemark>
 		<name>Mittelpunkt</name>
 		<description>pic2base-Praesentation</description>
@@ -1039,7 +1040,8 @@ SWITCH ($modus)
 		<Document>
 		<name>PB Foto-Tour</name>
 		<open>1</open>';
-		
+		*/
+		/*
 		IF($lat_mittel !=='' AND $long_mittel !=='')
 		{
 			$content .=$mp;		//Bezugspunkt einfuegen
@@ -1090,6 +1092,7 @@ SWITCH ($modus)
 			</Placemark>";
 			$content .= $circle;
 		}
+		*/
 		//echo $content;
 		$num5 = mysql_num_rows($result5);
 		IF ($num5 == '0')
@@ -1834,7 +1837,7 @@ SWITCH ($modus)
 	IF(isset($num8) AND $num8 > '0')
 	{
 		$zusatz = "
-			(davon ".$num8." geo-ref.; <span id='ge_icon'>Darstellung vorbereiten: <a href='#' style='cursor:pointer;' onClick='createKmlFile(\"$kml_cod_statement\",\"$sr\",\"$mod\")'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon_grey.png\" width=\"12\" height=\"12\" border=\"0\"  title='kml-Datei erzeugen'/><span>
+			(davon ".$num8." geo-ref.; <span id='ge_icon'>Darstellung vorbereiten: <a href='#' style='cursor:pointer;' onClick='createKmlFile(\"$kml_cod_statement\",\"$sr\",\"$mod\",\"$long_mittel\",\"$lat_mittel\",\"$radius\")'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon_grey.png\" width=\"12\" height=\"12\" border=\"0\"  title='kml-Datei erzeugen'/><span>
 			<strong>Zur Anzeige der Fotos in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
 			<br />
 			Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
