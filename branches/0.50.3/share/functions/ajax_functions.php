@@ -549,10 +549,10 @@ function changeGrouppermission(group_id, perm_id, checked, sr)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 }
 
-function createKmlFile(kml_cod_statement,sr,mod)
+function createKmlFile(kml_cod_statement,sr,mod,long_mittel,lat_mittel,radius)
 {
 	var url = '../../share/createKmlFile.php';
-	var params = 'kml_cod_statement=' + kml_cod_statement + '&sr=' + sr + '&mod=' + mod;
+	var params = 'kml_cod_statement=' + kml_cod_statement + '&sr=' + sr + '&mod=' + mod + '&long_mittel=' + long_mittel + '&lat_mittel=' + lat_mittel + '&radius=' + radius;
 	//alert("Parameter: "+params);
 	var target = 'ge_icon';
 	//alert(target);
