@@ -77,6 +77,8 @@ FOREACH($sup_ft_arr AS $SFT)
 	}
 }
 
+$needle = array("(", ")");
+$datum = str_replace($needle, "", $vom);
 
 echo "
 
@@ -125,7 +127,7 @@ echo "
 		Weitere Informationen zu pic2base erhalten Sie auf unserer <A HREF='http://www.pic2base.de'>Homepage</A>.<BR>
 		<p style='margin:20px 150px; text-align:left'>
 		<b>&Uuml;ber pic2base</B><BR><BR>
-		installierte Version: ".$version." ".$vom."<BR><BR>
+		installierte Version: ".$version." (Release ".$rel.") vom ".$datum."<BR><BR>
 		<b>Entwickler:</b><BR><BR>
 		Klaus Henneberg, <a href='mailto:info@pic2base.de?subject=Supportanfrage zur Version .$version.'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
 		Holger R&ouml;mer, <a href='mailto:hr@roemix.eu'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
