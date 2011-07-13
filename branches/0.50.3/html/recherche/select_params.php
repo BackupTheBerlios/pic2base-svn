@@ -249,14 +249,6 @@ IF(array_key_exists('params', $_COOKIE))
 		</TD>
 	</TR>
 	
-	<TR class='normal' style='height:22px;'>
-		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>
-		Farbtemperatur:
-		</TD>
-		<TD class='normal' bgcolor='#EEEEAA' style='width:120px; text-align:left;  vertical-align:center'>".$color_temp."
-		</TD>
-	</TR>
-	
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
 	</TR>
