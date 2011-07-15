@@ -165,7 +165,7 @@ IF(array_key_exists('params', $_COOKIE))
 	}
 
 	echo "<FORM name='params'>
-	<TABLE border = '1' style='width:750px; background-color:#FFFFFF' align = 'center'>
+	<TABLE border = '0' style='width:750px; background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
 		</TD>
@@ -188,14 +188,18 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>	
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#EEEEAA' colspan = '2'></TD>
+		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
 		<TD class='normal' bgcolor='#FF9900'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center; width:130px'>Highlight-Mode:</TD>
 		<TD class='normal' bgcolor='#EEEEAA'  style='text-align:left; vertical-align:center; width:120px'>".$hl_text."</TD>
-		<TD class='normal' rowspan='16' style='width:500px; height:450px; background-color:#DDDDDD; text-align:center; vertical-align:middle'><div id='new_preview'>Die Erstellung der Vorschaubilder ist ein sehr aufw&auml;ndiger Prozess,<BR>welcher je nach Rechenleistung des Servers einige Zeit in Anspruch nimmt.<BR>Die Berechnung ist abgeschlossen, wenn Sie hier<BR>in der rechten Fensterh&auml;lfte das neu berechnete Bild sehen.<BR><BR>Haben Sie bitte ein wenig Geduld.</div></TD>
+		<TD class='normal' rowspan='16' style='width:500px; height:450px; background-color:#DDDDDD; text-align:center; vertical-align:middle'><div id='new_preview'>
+		Die Erstellung der Vorschaubilder ist ein sehr aufw&auml;ndiger Prozess,<BR>
+		der je nach Rechenleistung des Servers einige Zeit in Anspruch nimmt.<BR>
+		Die Berechnung ist abgeschlossen, wenn Sie hier<BR> das neu berechnete Bild sehen.<BR><BR>
+		Haben Sie bitte ein wenig Geduld.</div></TD>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
