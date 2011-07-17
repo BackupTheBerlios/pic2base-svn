@@ -95,11 +95,11 @@ IF(array_key_exists('params', $_COOKIE))
 		$hl_text = 'Highlight-Clipping';
 	}
 	
-	$pos2 = array_search('-b',$param_arr);
+	$pos2 = array_search('-g',$param_arr);
 	IF($pos2 !== false)
 	{
 		$next_pos2 = $pos2 + 1;
-		$gamma_mode = "-b ".$param_arr[$next_pos2];
+		$gamma_mode = "-g ".$param_arr[$next_pos2]." 0";
 		//echo $gamma_mode."<BR>";
 	}
 	ELSE
@@ -207,7 +207,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
-		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>Helligkeit:</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>Gamma-Korrektur:</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$gamma_mode."</TD>
 	</TR>
 	
@@ -355,14 +355,14 @@ ELSE
 	
 	<TR class='normal'>
 		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>
-		Helligkeit:
+		Gamma-Korrektur:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>
 		<SELECT name=\"gamma\" STYLE='WIDTH:120px;height:22px'>
 		<OPTION VALUE='' selected>automatisch</OPTION>";
 		FOR($k=1; $k<=50; $k++)
 		{
-			$val = '-b '.number_format(($k/10),1,'.','.');
+			$val = '-g '.number_format(($k/10),1,'.','.')." 0";
 			echo "<OPTION VALUE='$val'>".substr($val,3,3)."</OPTION>";
 		}
 		echo "
