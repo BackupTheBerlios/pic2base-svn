@@ -72,13 +72,10 @@ IF(array_key_exists('Orientation', $_REQUEST))
 
 IF($modus == 'tmp')
 {
-	//$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi." -r 2.648 1 1.2556 1";
 	$parameter = $wb." ".$rota." ".$col_inter." ".$targ_color." ".$gamma." ".$hl." -c ".$hsi;
 	$new_filename = substr($file_name_raw,0,-4).".jpg";
 	$command = $dcraw." ".$parameter." ".$pic_path."/".$file_name_raw." | ".$conv." -quality 90 -resize 450x450 - ".$pic_path."/tmp/".$new_filename."";
-	//echo $command;
 	$output = shell_exec($command);
-	echo $output;
 	//echo $contrast;
 	IF($contrast !== '0')
 	{
@@ -170,7 +167,6 @@ ELSEIF($modus == 'new')
 	$source = $pic_path."/".$new_filename;
 	$FileNameHQ = substr($file_name_raw,0,-4)."_hq.jpg";
 	$max_len = '800';
-	//$command2 = $im_path."/convert -quality 80 -size ".$max_len."x0 ".$source." -resize ".$max_len."x0 ".$pic_hq_path."/".$FileNameHQ."";
 	$command2 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_hq_path."/".$FileNameHQ."";
  	//echo $command;
  	$output = shell_exec($command2);
