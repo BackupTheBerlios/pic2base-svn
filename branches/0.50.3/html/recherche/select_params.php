@@ -99,7 +99,7 @@ IF(array_key_exists('params', $_COOKIE))
 	IF($pos2 !== false)
 	{
 		$next_pos2 = $pos2 + 1;
-		$gamma_mode = $param_arr[$next_pos2];
+		$gamma_mode = "-b ".$param_arr[$next_pos2];
 		//echo $gamma_mode."<BR>";
 	}
 	ELSE
@@ -207,7 +207,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
-		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>Gamma-Korrektur:</TD>
+		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>Helligkeit:</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>".$gamma_mode."</TD>
 	</TR>
 	
@@ -355,7 +355,7 @@ ELSE
 	
 	<TR class='normal'>
 		<TD class='normal' bgcolor='#EEEEAA' style='width:130px;text-align:left; vertical-align:center'>
-		Gamma-Korrektur:
+		Helligkeit:
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:left; vertical-align:center'>
 		<SELECT name=\"gamma\" STYLE='WIDTH:120px;height:22px'>
@@ -493,9 +493,9 @@ echo "	<TR class='normal' style='height:180px;'>
 		<TD class='normal' bgcolor='#EEEEAA' colspan = '2' style='vertical-align:top'>
 		<input type='button' value='Lade Standard-Parameter' onClick=\"eraseCookie('params','',''); location.href='select_params.php?pic_id=$pic_id'\" style='margin-top:30px; width:250px'>
 		
-		<input type='button' value='Speichere Parameter f&uuml;r diese Sitzung' onClick=\"document.cookie='params=' + ' ' + document.params.highlight.value + ' ' + document.params.gamma.value + ' ' + document.params.color_space.value + ' ' + document.params.color_interpol.value + ' ' + document.params.rota.value + ' ' + document.params.wb.value + ' ' + document.params.hsi.value + ' ' + document.params.contrast.value; location.reload ();\" style='margin-top:10px; width:250px'>
+		<input type='button' value='Speichere Parameter f&uuml;r diese Sitzung' onClick=\"document.cookie='params=' + ' ' + document.params.highlight.value + ' ' + document.params.gamma.value + ' ' + document.params.color_space.value + ' ' + document.params.color_interpol.value + ' ' + document.params.rota.value + ' ' + document.params.wb.value + ' ' + document.params.hsi.value + ' ' + document.params.contrast.value; location.reload();\" style='margin-top:10px; width:250px'>
 		
-		<!--<input type='button' value='Zeige gespeicherte Parameter' onClick='alert(document.cookie)' style='margin-top:10px; width:250px'>-->
+		<input type='button' value='Zeige gespeicherte Parameter' onClick='alert(document.cookie)' style='margin-top:10px; width:250px'>
 		
 		<input type='button' value='L&ouml;sche gespeicherte Parameter' onClick=\"eraseCookie('params','','')\" style='margin-top:10px; width:250px'>
 		
