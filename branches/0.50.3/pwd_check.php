@@ -11,6 +11,7 @@
   <link rel="shortcut icon" href="share/images/favicon.ico">
 </head>
 
+<body>
 <!--
 /*
  * Project: pic2base
@@ -32,7 +33,6 @@
 <?php 
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
-
 ?>
 
 <div class="page">
@@ -48,7 +48,6 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	<p style="margin:170px 0px; text-align:center">
 	
 	<?php 
-	//include 'share/db_connect1.php';
 	include 'share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 
