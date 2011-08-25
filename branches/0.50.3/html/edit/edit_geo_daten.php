@@ -92,36 +92,34 @@ echo "
 			<tr>
 				<td align='center' colspan = '2'><p style='text-align:left; margin-left:12px;'>
 					In welcher Zeitzone wurden die Bilder aufgenommen?</p>
-					<SELECT name='timezone' style='width:328px; margin-bottom:20px;'>
-					<OPTION VALUE='-12'>Bakerinsel (UTC - 12h)</OPTION>
-					<OPTION VALUE='-11'>Midway-Inseln, Samoa (UTC - 11h)</OPTION>
-					<OPTION VALUE='-10'>Alaska Hawaii (UTC - 10h)</OPTION>
-					<OPTION VALUE='-9'>Franz. Polynesien, USA (AKST / UTC - 9h)</OPTION>
-					<OPTION VALUE='-8'>Kanada, Mexico, USA (PST / UTC - 8h)</OPTION>
-					<OPTION VALUE='-7'>Kanada, Mexico, USA (MST / UTC - 7h)</OPTION>
-					<OPTION VALUE='-6'>Chile, Costa Rica, Honduras (CST / UTC - 6h)</OPTION>
-					<OPTION VALUE='-5'>Bahamas, Haiti, USA (EST / UTC - 5h)</OPTION>
-					<OPTION VALUE='-4'>Barbados, Grenada, Gr&ouml;nland (AST / UTC - 4h)</OPTION>
-					<OPTION VALUE='-3'>Argentinien, Brasilien, Uruguay (UTC - 3h)</OPTION>
-					<OPTION VALUE='-2'>Brasilien (UTC - 2h)</OPTION>
-					<OPTION VALUE='-1'>Gr&ouml;nland, Kap Verde (UTC - 1h)</OPTION>
-					<OPTION VALUE='0'>London, Lissabon, Reykjavik (GMT / WET / UTC)</OPTION>
-					<OPTION VALUE='1' SELECTED>Berlin, Prag, Rom (CET / MEZ)</OPTION>
-					<OPTION VALUE='2'>Helsinki, Kairo, Sofia (CESZ / EET)</OPTION>
-					<OPTION VALUE='3'>Baghdad, Moskau, Sankt Petersburg (MSK, BT)</OPTION>
-					<OPTION VALUE='4'>Armenien, Georgien, VAR (UTC + 4h)</OPTION>
-					<OPTION VALUE='5'>Pakistan (UTC + 5h)</OPTION>
-					<OPTION VALUE='6'>Bangladesh (UTC + 6h)</OPTION>
-					<OPTION VALUE='7'>Pnom Phen, Saigon, Hanoi (UTC + 7h)</OPTION>
-					<OPTION VALUE='8'>Peking (UTC + 8h)</OPTION>
-					<OPTION VALUE='9'>Seoul, Tokio (UTC + 9h)</OPTION>
-					<OPTION VALUE='10'>Sidney (UTC + 10h)</OPTION>
-					<OPTION VALUE='11'>Neukaledonien(UTC + 11h)</OPTION>
-					<OPTION VALUE='12'>Fidschi, Kiribati, Neuseeland (IDLE / UTC + 12h)</OPTION>
-					
+					<SELECT name='timezone' style='width:328px; margin-bottom:20px;'>";
+					//Ermittlung aller Zeitzonen:
+					$result1 = mysql_query("SELECT * FROM $table19");
+					//Welche Zeitzone hat der User ggf. bereits gespeichert?
+					$result2 = mysql_query("SELECT * FROM $table1
+					WHERE username = '$c_username'");
+					echo mysql_error();
+					$timezone = mysql_result($result2, isset($i2), 'timezone');
+					$num1 = mysql_num_rows($result1);
+					FOR($i1=0; $i1<$num1; $i1++)
+					{
+						$zone_number = mysql_result($result1, $i1, 'zone_number');
+						$zone_name = mysql_result($result1, $i1, 'zone_name');
+						IF($zone_number == $timezone)
+						{
+							$sel = 'selected';
+						}
+						ELSE
+						{
+							$sel = '';
+						}
+						echo "<OPTION VALUE='$zone_number' $sel>".$zone_name."</OPTION>";
+					}
+					echo "
 					</SELECT>
 					
-					<SELECT name='data_logger' style='width:328px;'>
+					<SELECT name='data_logger' style='width:328px;'>";
+					/*
 					<OPTION VALUE='' SELECT>----- W&auml;hlen Sie hier Ihren Daten-Logger aus -----</OPTION>
 					<OPTION VALUE='1'>Sony CS1 oder kompatible (nmea-Format)</OPTION>
 					<OPTION VALUE='2'>Garmin GPSmap 60CS(x) - gpx-Datei</OPTION>
@@ -179,6 +177,40 @@ echo "
 					<OPTION VALUE='54' disabled>Wintec WBT-100/200 Binary File Format</OPTION>
 					<OPTION VALUE='55' disabled>Wintec WBT-201/G-Rays 2 Binary File Format</OPTION>
 					<OPTION VALUE='56' disabled>##########  Testbereich  ##########</OPTION>
+					*/
+					//Ermittlung aller Logger-Typen:
+					$result3 = mysql_query("SELECT * FROM $table18 ORDER BY logger_number");
+					//Welchen Datenlogger hat der User ggf. bereits gespeichert?
+					$result4 = mysql_query("SELECT * FROM $table1
+					WHERE username = '$c_username'");
+					echo mysql_error();
+					$logger_type = mysql_result($result4, isset($i4), 'logger_type');
+					$num3 = mysql_num_rows($result3);
+					FOR($i3=0; $i3<$num3; $i3++)
+					{
+						$logger_number = mysql_result($result3, $i3, 'logger_number');
+						$logger_name = mysql_result($result3, $i3, 'logger_name');
+						$enabled = mysql_result($result3, $i3, 'enabled');
+						IF($logger_number == $logger_type)
+						{
+							$sel = 'selected';
+						}
+						ELSE
+						{
+							$sel = '';
+						}
+						
+						IF($enabled == 0)
+						{
+							$enabled = 'disabled';
+						}
+						ELSE
+						{
+							$enabled = '';
+						}
+						echo "<OPTION VALUE='$logger_number' $sel $enabled>".$logger_name."</OPTION>";
+					}
+					echo "
 					</SELECT>
 				</td>
 			</tr>
