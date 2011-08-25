@@ -72,6 +72,7 @@ if ( array_key_exists('ge',$_POST) )
 	$ge = $_POST['ge'];
 }
 
+$result0 = mysql_query("UPDATE $table1 SET timezone = '$timezone', logger_type = '$data_logger' WHERE username = '$c_username'");
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $row = mysql_fetch_array($result1);
 $user_id = $row['id'];
@@ -81,6 +82,7 @@ $geo_file_name = $track_path."/".$geo_file;
 
 IF($geo_file == '')
 {
+	echo mysql_error();
 	echo "<H3 style='color:red; margin-top:150px;'>Fehler!<BR><BR>Sie m&uuml;ssen eine g&uuml;ltige Track-Datei ausw&auml;hlen!</H3>";
 	echo "<meta http-equiv='Refresh', content='2; url=edit_geo_daten.php'>";
 	return;
