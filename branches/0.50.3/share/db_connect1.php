@@ -31,6 +31,8 @@ $table14 = 'meta_data';			//Metadaten der Bilder
 $table15 = 'tmp_tree';			//wird bei der Kategoriebaum-Umstrukturierung verwendet
 $table16 = 'pfade';				//speichert die Pfade zu den Hilfsprogrammen
 $table17 = 'fileformats';		//enthaelt die von ImageMagick unterstuetzten Dateiformate
+$table18 = 'data_logger';		//speichert unterstuetzte Logger-Typen
+$table19 = 'timezone';			//Tabelle der Zeitzonen
 
 $myhost=$db_server;
 $myuser=$user;
