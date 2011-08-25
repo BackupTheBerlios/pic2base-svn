@@ -226,7 +226,8 @@ echo "<br>++++ #### ++++<br>";
 			(73, 4, 539, 0),
 			(74, 4, 549, 0),
 			(75, 4, 639, 0),
-			(76, 4, 649, 0);");
+			(76, 4, 649, 0),
+			(77, 1, 889, 1);");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Bef&uuml;llung der Tabelle \"grouppermissions\"<BR>";
@@ -439,7 +440,8 @@ echo "<br>++++ #### ++++<br>";
 			(16, 539, 'eigene Bilder geo-referenzieren', 'georefmypics'),
 			(17, 549, 'alle Bilder geo-referenzieren', 'georefallpics'),
 			(18, 639, 'Tagebuch bearbeiten', 'editdiary'),
-			(19, 649, 'Kategorielexikon bearbeiten', 'editkatlex');");
+			(19, 649, 'Kategorielexikon bearbeiten', 'editkatlex'),
+			(20, 889, 'Ortsnamen bearbeiten', 'editlocationname');");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Bef&uuml;llung der Tabelle \"permissions\"<BR>";
@@ -593,7 +595,8 @@ echo "<br>++++ #### ++++<br>";
 			(16, 1, 539, 1),
 			(17, 1, 549, 1),
 			(18, 1, 639, 1),
-			(19, 1, 649, 1);");
+			(19, 1, 649, 1),
+			(20, 1, 889, 1);");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Bef&uuml;llung der Tabelle \"userpermissions\"<BR>";
