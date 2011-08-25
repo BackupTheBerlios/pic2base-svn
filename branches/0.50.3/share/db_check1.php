@@ -700,7 +700,98 @@ echo "<br>++++ #### ++++<br>";
 			ELSE
 			{
 				echo "Tabelle \"fileformats\" wurde angelegt.<BR>";
-			}	
+			}
+			
+			//Tabelle der Datenlogger
+			$res23 = mysql_query("CREATE TABLE IF NOT EXISTS `data_logger` (
+			`logger_id` int(11) NOT NULL AUTO_INCREMENT,
+			`logger_number` int(11) NOT NULL,
+			`logger_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+			`enabled` int(11) NOT NULL,
+			PRIMARY KEY (`logger_id`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"data_logger\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"data_logger\" wurde angelegt.<BR>";
+			}
+			
+			$res23_1 = mysql_query("INSERT INTO `data_logger` (`logger_id`, `logger_number`, `logger_name`, `enabled`) VALUES
+			(1, 1, 'Sony CS1 oder kompatible (nmea-Format)', 1),
+			(2, 2, 'Garmin GPSmap 60CS(x) - gpx-Datei', 1),
+			(3, 17, 'Garmin MapSource - gdb', 1),
+			(4, 3, 'Garmin GPSmap 60CS(x) - txt-Datei', 0),
+			(5, 5, 'Alan Map500 tracklogs (.trl)', 0),
+			(6, 8, 'CompeGPS data files (.wpt/.trk/.rte)', 0),
+			(7, 9, 'cotoGPS for Palm/OS', 0);");
+			
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Bef&uuml;llung der Tabelle \"data_logger\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"data_logger\" wurde mit Daten vorbelegt.<BR>";
+			}
+			
+			//Tabelle der Zeitzonen
+			$res24 = mysql_query("CREATE TABLE IF NOT EXISTS `timezone` (
+			`zone_id` int(11) NOT NULL AUTO_INCREMENT,
+			`zone_number` int(11) NOT NULL,
+			`zone_name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+			PRIMARY KEY (`zone_id`),
+			KEY `zone_number` (`zone_number`,`zone_name`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Tabelle der Zeitzonen' AUTO_INCREMENT=26;");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"timezone\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"timezone\" wurde angelegt.<BR>";
+			}
+			
+			$res24_1 = mysql_query( "INSERT INTO `timezone` (`zone_id`, `zone_number`, `zone_name`) VALUES
+			(1, -12, 'Bakerinsel (UTC - 12h)'),
+			(2, -11, 'Midway-Inseln, Samoa (UTC - 11h)'),
+			(3, -10, 'Alaska Hawaii (UTC - 10h)'),
+			(4, -9, 'Franz. Polynesien, USA (AKST / UTC - 9h)'),
+			(5, -8, 'Kanada, Mexico, USA (PST / UTC - 8h)'),
+			(6, -7, 'Kanada, Mexico, USA (PST / UTC - 7h)'),
+			(7, -6, 'Chile, Costa Rica, Honduras (CST / UTC - 6h)'),
+			(8, -5, 'Bahamas, Haiti, USA (EST / UTC - 5h)'),
+			(9, -4, 'Barbados, Grenada, Gr&ouml;nland (AST / UTC - 4h)'),
+			(10, -3, 'Argentinien, Brasilien, Uruguay (UTC - 3h)'),
+			(11, -2, 'Brasilien (UTC - 2h)'),
+			(12, -1, 'Gr&ouml;nland, Kap Verde (UTC - 1h)'),
+			(13, 0, 'London, Lissabon, Reykjavik (GMT / WET / UTC)'),
+			(14, 1, 'Berlin, Prag, Rom (CET / MEZ)'),
+			(15, 2, 'Helsinki, Kairo, Sofia (CESZ / EET)'),
+			(16, 3, 'Baghdad, Moskau, Sankt Petersburg (MSK, BT)'),
+			(17, 4, 'Armenien, Georgien, VAR (UTC + 4h)'),
+			(18, 5, 'Pakistan (UTC + 5h)'),
+			(19, 6, 'Bangladesh (UTC + 6h)'),
+			(20, 7, 'Pnom Phen, Saigon, Hanoi (UTC + 7h)'),
+			(21, 8, 'Peking (UTC + 8h)'),
+			(22, 9, 'Seoul, Tokio (UTC + 9h)'),
+			(23, 10, 'Sidney (UTC + 10h)'),
+			(24, 11, 'Neukaledonien(UTC + 11h)'),
+			(25, 12, 'Fidschi, Kiribati, Neuseeland (IDLE / UTC + 12h)');");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Bef&uuml;llung der Tabelle \"timezone\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				echo "Tabelle \"timezone\" wurde mit Daten vorbelegt.<BR>";
+			}
 			
 			if(!isset($titel))
 			{
