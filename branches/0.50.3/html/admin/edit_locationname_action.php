@@ -57,13 +57,7 @@ IF($locationname_new !== $locationname)
 	Dieser soll in ".$locationname_new." ge&auml;ndert werden.<BR><BR>
   	Dieser Vorgang wird eine Weile dauern und ist abgeschlossen,<BR>
   	wenn hier wieder die Startseite des Administrationsbereichs zu sehen ist.<BR><BR>
-  	<FONT color='red'>Bitte unterbrechen Sie den Vorgang NICHT</FONT><BR><BR>
-  	* Navigationsleiste ausblenden!!<BR><BR>
-  	locations.location aendern<BR>
-  	meta_data.city aendern<BR>
-  	meta_data.Caption_Abstract aendern<BR>
-  	IPTC.City der Bilder aendern<BR>
-  	Sprung zur Admin-Startseite
+  	<FONT color='red'>Bitte unterbrechen Sie den Vorgang NICHT</FONT><BR>
 	</TD>
 	</TR>
 	
