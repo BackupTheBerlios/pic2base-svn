@@ -36,10 +36,9 @@ $ID = $_GET['ID'];
 $kat_id = $_GET['kat_id']; 
 $kategorie = $_POST['kategorie']; 
 $exiftool = buildExiftoolCommand($sr);
-
 // *#*  echo "kategorie: ".$kategorie."<br>";
 // zuerst wird der Kategoriename in der DB aktualisiert
-$res = mysql_query( "UPDATE $table4 SET kategorie='$kategorie' WHERE kat_id='$ID'");
+$res = mysql_query( "UPDATE $table4 SET kategorie=\"$kategorie\" WHERE kat_id='$ID'");
 echo mysql_error();
 
 //dann wird in allen Bildern, denen die Kategorie ($ID) zugewiesen wurde, der Meta-Daten-Eintrag aktualisiert:
