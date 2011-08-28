@@ -239,7 +239,7 @@ function setFontColor($ID, $kat_id)
        </FORM>
 	</center></div>
 	
-	<p id='fuss'>(C)2006 Logiqu</p>
+	<p id='fuss'>".$cr."</p>
 
 </div>";
 
