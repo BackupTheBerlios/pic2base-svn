@@ -295,6 +295,15 @@ function getExifPreview(zusatz1, bedingung1, zw1, mod, modus, base_file, bewertu
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 }
 
+function getExpSearchPreview(kat, op, kat1, op1, kat2, op2, kat3, op3, kat4, op4, mod, modus, base_file, bewertung, position, jump)
+{
+	var url = '../../share/get_preview.php';
+	var params ='kat=' + kat + '&op=' + op + '&kat1=' + kat1 + '&op1=' + op1 + '&kat2=' + kat2 + '&op2=' + op2 + '&kat3=' + kat3 + '&op3=' + op3 + '&kat4=' + kat4 + '&op4=' + op4 + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
+	//alert("Parameter: "+params);
+	var target = 'filmstreifen';
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
+}
+
 function delPicture(FileName, c_username, pic_id, waitUntilDeleted)
 {
 	//loescht Bild-Datei aus dem DOWNLOAD-Ordner
@@ -555,6 +564,16 @@ function createKmlFile(kml_cod_statement,sr,mod,long_mittel,lat_mittel,radius)
 	var params = 'kml_cod_statement=' + kml_cod_statement + '&sr=' + sr + '&mod=' + mod + '&long_mittel=' + long_mittel + '&lat_mittel=' + lat_mittel + '&radius=' + radius;
 	//alert("Parameter: "+params);
 	var target = 'ge_icon';
+	//alert(target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+}
+
+function createNextKrit(number,kat,op,number1,kat1,op1,number2,kat2,op2,number3,kat3,op3,number4,kat4,op4,bewertung)
+{
+	var url = '../../share/createNextKrit.php';
+	var params = 'number=' + number + '&kat=' + kat +'&op=' + op + '&number1=' + number1 + '&kat1=' + kat1 +'&op1=' + op1 + '&number2=' + number2 + '&kat2=' + kat2 +'&op2=' + op2 + '&number3=' + number3 + '&kat3=' + kat3 +'&op3=' + op3 + '&number4=' + number4 + '&kat4=' + kat4 +'&op4=' + op4 + '&bewertung=' + bewertung;
+	//alert("Parameter: "+params);
+	var target = 'parameter';
 	//alert(target);
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
