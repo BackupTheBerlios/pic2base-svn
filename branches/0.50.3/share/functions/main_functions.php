@@ -1047,16 +1047,18 @@ function createNavi5($c_username)
 	echo $navigation;
 }
 
-function createNavi6($c_username)
+function createNavi6($c_username,$sr)
 {
 	//Navigationsstruktur der Log-Datei-Seite
-	include '../bin/share/global_config.php';
-	//include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/permissions.php';
+	include $sr.'/bin/share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	include $sr.'/bin/share/functions/permissions.php';
+	
 	if(!isset($navigation))
 	{
 		$navigation = '';
 	}
+	
 	IF(hasPermission($c_username, 'adminlogin'))
 	{
 		$navigation = "<a class='navi_blind' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
