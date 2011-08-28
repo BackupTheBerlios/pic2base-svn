@@ -20,13 +20,9 @@ ELSE
 }
 //########################################################################
 
-// fuer register_globals = off
 if(array_key_exists('item',$_GET))
 {
-	if(array_key_exists('item',$_GET))
-	{
-		$item = $_GET['item']; 
-	}
+	$item = $_GET['item']; 
 }
 else
 {
@@ -47,5 +43,8 @@ switch ($item)
 	case "deleteuser": include "deleteuser.php"; break;
 	CASE "del_group": include "del_group.php"; break;
 	CASE "del_group_exe": include "del_group_exe.php"; break;
+	CASE "editlocationname": include "show_locationname.php"; break;
+	CASE "admineditlocation": include "edit_locationname.php"; break;
+	CASE "admineditlocationnameaction": include "edit_locationname_action.php"; break;
 }
 ?>
