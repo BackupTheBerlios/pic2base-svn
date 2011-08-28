@@ -235,7 +235,7 @@ function setFontColor($ID, $kat_id)
          <p style='margin:20px;'><BR><u>Bitte beachten Sie:</u><BR><BR>
          Nachdem die Bezeichnung der Kategorie ge&auml;ndert wurde, werden auch alle Eintr&auml;ge in den Meta-Daten der betreffenden Bilder aktualisiert.<BR>
          Dies kann - je nach Rechenleistung und Anzahl der Bilder - eine Weile dauern.<BR><BR>
-         Der Vorgang ist abgeschlossen, wenn in der linken Spalte der ge&auml;nderte Kategoriename angezeigt wird.</p>
+         Der Vorgang ist abgeschlossen, wenn in der linken Spalte<BR>der ge&auml;nderte Kategoriename angezeigt wird.</p>
        </FORM>
 	</center></div>
 	
