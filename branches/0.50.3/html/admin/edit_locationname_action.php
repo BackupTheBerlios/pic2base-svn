@@ -107,7 +107,7 @@ IF($locationname_new !== $locationname)
   		shell_exec($exiftool." -IPTC:city='$locationname_new' ".$FN." -overwrite_original -execute -Caption-Abstract='$CA_new' ".$FN." -overwrite_original");
   	};
   	
-  	echo "<meta http-equiv='Refresh' Content='10; URL=adminframe.php'>";
+  	echo "<meta http-equiv='Refresh' Content='1; URL=adminframe.php'>";
   	
 ?>
 <script language="javascript">
