@@ -226,15 +226,16 @@ function setFontColor($ID, $kat_id)
 	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
 	$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
 	echo "<p id='elf' style='padding: 5px; width: 400px; margin-top: 40px;'>
-	Nehmen Sie hier bitte die &Auml;nderungen f&uuml;r die ausgew&auml;hlte Kategorie vor:<BR><BR></P>";
+	Nehmen Sie hier bitte die &Auml;nderungen<BR>f&uuml;r die ausgew&auml;hlte Kategorie vor:<BR><BR></P>";
 	
 	echo "<FORM action='kat_edit_action1.php?kat_id=$KAT_ID&ID=$ID' method='POST'>
-         <INPUT type='text' name='kategorie' value='$kategorie_alt' size='30' maxlength='30'>&#160;
+         <INPUT type='text' name='kategorie' value=\"$kategorie_alt\" size='30' maxlength='30'>&#160;
          <INPUT type='submit' value='&Auml;ndern'>&#160;
          <INPUT TYPE = 'button' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
          <p style='margin:20px;'><BR><u>Bitte beachten Sie:</u><BR><BR>
          Nachdem die Bezeichnung der Kategorie ge&auml;ndert wurde, werden auch alle Eintr&auml;ge in den Meta-Daten der betreffenden Bilder aktualisiert.<BR>
-         Dies kann - je nach Rechenleistung und Anzahl der Bilder - eine Weile dauern.</p>
+         Dies kann - je nach Rechenleistung und Anzahl der Bilder - eine Weile dauern.<BR><BR>
+         Der Vorgang ist abgeschlossen, wenn in der linken Spalte der ge&auml;nderte Kategoriename angezeigt wird.</p>
        </FORM>
 	</center></div>
 	
