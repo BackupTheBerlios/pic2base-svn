@@ -39,30 +39,31 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
+IF(hasPermission($c_username, 'editkattree'))
 {
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='kategorie0.php'>Kategorien</a>
+	$navigation = "
+			<a class='navi' href='kat_sort1.php'>Sortierung</a>
+			<a class='navi' href='kat_repair1.php'>Wartung</a>
+			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
-			<a class='navi' href='hilfe1.php'>Hilfe</a>";
-	break;
-	
-	//alle anderen
-	CASE $berechtigung > '1':
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-	break;
+			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
 }
-
+ELSE
+{
+	
+}
 function setFontColor($ID, $kat_id)
 {
 	IF ($ID == $kat_id)
@@ -95,8 +96,8 @@ function setFontColor($ID, $kat_id)
 		//Erzeugung der Baumstruktur:
 		//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 		//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		$kat_id = $_GET['kat_id']; // f�r register_globals = off
-		$ID = $_GET['ID']; // f�r register_globals = off
+		$kat_id = $_GET['kat_id'];
+		$ID = $_GET['ID'];
 		$KAT_ID = $kat_id;
 		//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
@@ -104,8 +105,6 @@ function setFontColor($ID, $kat_id)
 		
 		WHILE ($kat_id > '1')
 		{
-			//include '../../share/db_connect1.php';
-			//INCLUDE '../../share/global_config.php';
 			$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 			echo mysql_error();
 			$kat_id = mysql_result($res0, isset($i0), 'parent');
@@ -179,7 +178,7 @@ function setFontColor($ID, $kat_id)
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
+		//Link fuer den Ruecksprung erzeugen, d.h. naechst hoeheren Knoten aufrufen:
 		$kat_id_back = array_search($kat_id, $knoten_arr);
 		
 		IF (in_array($kat_id, $knoten_arr))
@@ -213,15 +212,20 @@ function setFontColor($ID, $kat_id)
 	//das eigentliche Bearbeitungs-Formular:
 	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
 	$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
-	echo "<p class='zwoelfred' style='padding: 5px; width: 400px; margin-top: 40px;'><b>
-	Wollen Sie wirklich die Kategorie \"".$kategorie_alt."\" l&ouml;schen?<BR><BR>
-	Es werden dann auch ALLE Unterkategorien zu \"".$kategorie_alt."\" gel&ouml;scht!<BR><BR></b></P>";
+	echo "<p style='width: 400px; margin-top: 40px;'>
+	Wollen Sie wirklich die Kategorie</p>
+	<p  class='zwoelfred'>\"".$kategorie_alt."\"</p>
+	<p style='width: 400px; margin-top: 10px;'>l&ouml;schen?</p>
+	<p style='width: 400px; margin-top: 40px;'>
+	Es werden dann auch ALLE Unterkategorien zu</p>
+	<p  class='zwoelfred'>\"".$kategorie_alt."\"</p>
+	<p style='width: 400px; margin-top: 10px; margin-bottom:50px;'>gel&ouml;scht!</p>";
 	
 	echo "	<INPUT type='button' class='button1' value='L&ouml;schen' onClick='location.href=\"kat_delete_action.php?ID=$ID\"'>&#160;
          	<INPUT TYPE = 'button' class='button1' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
 	</center></div>
 	
-	<p id='fuss'>".$cr."</p>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
 </div>";
 
