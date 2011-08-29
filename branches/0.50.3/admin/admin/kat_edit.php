@@ -54,7 +54,7 @@ IF(hasPermission($c_username, 'editkattree'))
 			<a class='navi_blind'></a>
 			<a class='navi' href='../../html/start.php'>zur Startseite</a>
 			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-			<a class='navi_blind'></a>";
+			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
 }
 ELSE
 {
