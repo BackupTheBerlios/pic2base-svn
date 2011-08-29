@@ -10,33 +10,66 @@
 </HEAD>
 
 <BODY>
+<DIV Class="klein">
 <?PHP
 
 /*
  * Project: pic2base
  * File: kat_edit_action1.php
  *
- * Copyright (c) 2003 - 2006 Klaus Henneberg
+ * Copyright (c) 2003 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
  *
- * This file is licensed under the terms of the Open Software License
- * http://www.opensource.org/licenses/osl-2.1.php
- *
  */
+
+unset($username);
+IF ($_COOKIE['login'])
+{
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+}
 
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+echo "
+<div class='page'>
+	<p id='kopf'>pic2base :: Stapelverarbeitung Kategorie-Umbenennung <span class='klein'>(User: ".$c_username.")</span></p>
+		
+	<div class='navi' style='clear:right;'>
+		<div class='menucontainer'>
+		</div>
+	</div>
+		
+	<div class='content'>
+		<span style='font-size:12px;'>
+		<p style='margin:120px 0px; text-align:center'>
+		
+		<center>
+			Status der Kategorie-Umbenennung:
+			<div id='prog_bar' style='border:solid; border-color:red; width:500px; height:12px; margin-top:50px; text-align:left; vertical-align:middle'>
+				<img src='../../share/images/green.gif' name='bar' />
+			</div>
+			<p id='meldung'>".isset($meldung)."</p>
+		</center>
+		
+		</p>
+		</span>
+	</div>
+	<br style='clear:both;' />
+	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+</div>";
+
+ob_flush();
 //var_dump($_POST);
 $ID = $_GET['ID']; 
 $kat_id = $_GET['kat_id']; 
 $kategorie = $_POST['kategorie']; 
 $exiftool = buildExiftoolCommand($sr);
-// *#*  echo "kategorie: ".$kategorie."<br>";
+
 // zuerst wird der Kategoriename in der DB aktualisiert
 $res = mysql_query( "UPDATE $table4 SET kategorie=\"$kategorie\" WHERE kat_id='$ID'");
 echo mysql_error();
@@ -46,7 +79,8 @@ echo mysql_error();
 $res2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.pic_id, $table2.FileName 
 FROM $table10, $table2 
 WHERE $table10.kat_id = '$ID' AND ($table10.pic_id = $table2.pic_id)");
-FOR($i2='0'; $i2<mysql_num_rows($res2); $i2++)
+$num2 = mysql_num_rows($res2);
+FOR($i2='0'; $i2<$num2; $i2++)
 {
 	$row2 = mysql_fetch_row($res2);
 	$pic_id = $row2[0];
@@ -74,11 +108,32 @@ FOR($i2='0'; $i2<mysql_num_rows($res2); $i2++)
 	
 	//abschliessend wird die meta_data-Tabelle aktualisiert:
 	$res4 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$pic_id'");
+	//Die Balkenlaenge wird errechnet:
+	$width=round(500 * ($i2 + 1)/$num2);
+	?>
+	
+	<SCRIPT language="JavaScript">
+	document.bar.src='../../share/images/green.gif';
+	document.bar.width=<?php echo $width?>;
+	document.bar.height='11';
+	</SCRIPT>
+	
+	<?php
+	flush();
 }
 
-echo "<meta http-equiv='Refresh' content='0, URL=kat_edit.php?kat_id=$kat_id&ID=$ID'>";
+?>
 
+	<SCRIPT language="JavaScript">
+	document.getElementById('meldung').innerHTML='<?php echo "Fertig...";?>';
+	</SCRIPT>
+	
+<?php 
+		//Am Ende derfolgt der automatische Ruecksprung zur Kat.-Bearbeitungsseite:
+echo "<meta http-equiv='Refresh' content='1, URL=kat_edit.php?kat_id=$kat_id&ID=$ID'>";
 mysql_close($conn);
 ?>
+
+</DIV>
 </BODY>
 </HTML>
