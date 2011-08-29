@@ -7,6 +7,7 @@
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<!-- <script type="text/javascript" src="../../ajax/inc/prototype.js"></script>-->
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
@@ -35,13 +36,13 @@
 unset($username);
 IF ($_COOKIE['login'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
 IF(hasPermission($c_username, 'editkattree'))
 {
 	$navigation = "
@@ -60,24 +61,7 @@ ELSE
 {
 	
 }
-/*
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
-{
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='kategorie0.php'>Kategorien</a>
-			<a class='navi' href='../../html/start.php'>zur Startseite</a>
-			<a class='navi' href='hilfe1.php'>Hilfe</a>";
-	break;
-	
-	//alle anderen
-	CASE $berechtigung > '1':
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-	break;
-}
-*/
+
 $kat_id = $_GET['kat_id'];
 $ID = $_GET['ID'];
 
@@ -225,19 +209,27 @@ function setFontColor($ID, $kat_id)
 	//das eigentliche Bearbeitungs-Formular:
 	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
 	$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
-	echo "<p id='elf' style='padding: 5px; width: 400px; margin-top: 40px;'>
-	Nehmen Sie hier bitte die &Auml;nderungen<BR>f&uuml;r die ausgew&auml;hlte Kategorie vor:<BR><BR></P>";
+	echo "<div id='bar_1'>
+	<p id='elf' style='padding: 5px; width: 350px; margin-top: 40px; margin-bottom:50px;'>
+	Nehmen Sie hier bitte die &Auml;nderungen<BR>f&uuml;r die ausgew&auml;hlte Kategorie vor:</P>";
 	
-	echo "<FORM action='kat_edit_action1.php?kat_id=$KAT_ID&ID=$ID' method='POST'>
+	echo "<FORM name='kat_neu' action='kat_edit_action1.php?kat_id=$KAT_ID&ID=$ID' method='POST'>
          <INPUT type='text' name='kategorie' value=\"$kategorie_alt\" size='30' maxlength='30'>&#160;
          <INPUT type='submit' value='&Auml;ndern'>&#160;
+         <!--<INPUT TYPE='button' VALUE='&Auml;ndern 2' onClick='changeLocationName($KAT_ID, $ID, document.kat_neu.kategorie.value)'>-->
          <INPUT TYPE = 'button' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
-         <p style='margin:20px;'><BR><u>Bitte beachten Sie:</u><BR><BR>
-         Nachdem die Bezeichnung der Kategorie ge&auml;ndert wurde, werden auch alle Eintr&auml;ge in den Meta-Daten der betreffenden Bilder aktualisiert.<BR>
-         Dies kann - je nach Rechenleistung und Anzahl der Bilder - eine Weile dauern.<BR><BR>
+         <p style='margin-top:60px; width:350px;'>
+         <u>Bitte beachten Sie:</u></p>
+         <p style='margin-top:20px; width:350px;'>
+         Nachdem die Bezeichnung der Kategorie ge&auml;ndert wurde, werden auch alle Eintr&auml;ge in den Meta-Daten der betreffenden Bilder aktualisiert.</p>
+         <p style='margin-top:20px; width:350px;'>
+         Dies kann - je nach Rechenleistung und Anzahl der Bilder - eine Weile dauern.</p>
+         <p style='margin-top:20px; width:350px;'>
          Der Vorgang ist abgeschlossen, wenn in der linken Spalte<BR>der ge&auml;nderte Kategoriename angezeigt wird.</p>
        </FORM>
-	</center></div>
+       
+	</center>
+	</div>
 	
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 
@@ -245,6 +237,7 @@ function setFontColor($ID, $kat_id)
 
 mysql_close($conn);
 ?>
+
 </DIV></CENTER>
 </BODY>
 </HTML>
