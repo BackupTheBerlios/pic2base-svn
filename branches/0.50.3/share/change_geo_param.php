@@ -2,7 +2,6 @@
 IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
-	//var_dump($sr);
   	header('Location: ../../index.php');
 }
 ?>
@@ -72,7 +71,8 @@ IF($loc_id !== '0' AND $loc_id !== '')
 ELSE
 {
 	unset($parameter);
-	$parameter = $_COOKIE['parameter'];
+
+	@$parameter = $_COOKIE['parameter'];
 	$param = preg_split("/,/", $parameter);
 	IF(count($param) > '2')
 	{
@@ -92,6 +92,10 @@ ELSE
 			}
 		}
 		$loc = round($lat,6).",".round($long,6);
+	}
+	ELSE
+	{
+		$loc = '';
 	}
 
 	IF($lat == '' OR $long == '' OR $loc == '')	//wenn der Cookie noch nichts mitbringt...
