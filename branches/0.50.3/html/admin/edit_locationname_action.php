@@ -76,7 +76,7 @@ IF($locationname_new !== $locationname)
 </center>";
   	
   	//Aktualisierung der Tabelle locations:
-  	$result2 = mysql_query("UPDATE $table12 SET location = '$locationname_new' WHERE location = '$locationname'");
+  	$result2 = mysql_query("UPDATE $table12 SET location = \"$locationname_new\" WHERE location = \"$locationname\"");
   	
   	FOR($i1=0; $i1<$num1; $i1++)
   	{
@@ -107,7 +107,7 @@ IF($locationname_new !== $locationname)
   		shell_exec($exiftool." -IPTC:city='$locationname_new' ".$FN." -overwrite_original -execute -Caption-Abstract='$CA_new' ".$FN." -overwrite_original");
   	};
   	
-  	echo "<meta http-equiv='Refresh' Content='1; URL=adminframe.php'>";
+  	echo "<meta http-equiv='Refresh' Content='10; URL=adminframe.php'>";
   	
 ?>
 <script language="javascript">
