@@ -38,8 +38,8 @@ else
 	
   	<TR>
 	<TD align='CENTER' colspan='4' style='padding-left:20px;'>
-	<INPUT TYPE='text' name='locationname_new' VALUE='$location' style='width:400px;'></INPUT>
-	<INPUT TYPE='hidden' name='locationname' VALUE='$location' style='width:400px;'></INPUT>
+	<INPUT TYPE='text' name='locationname_new' VALUE=\"$location\" style='width:400px;'></INPUT>
+	<INPUT TYPE='hidden' name='locationname' VALUE=\"$location\" style='width:400px;'></INPUT>
 	</TD>
 	</TR>
 	
