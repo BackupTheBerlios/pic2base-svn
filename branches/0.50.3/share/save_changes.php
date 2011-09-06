@@ -40,7 +40,7 @@ $description = substr(utf8_decode(strip_tags($description)),'0','1990');
 
 IF($aufn_dat == '')
 {
-	$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description' WHERE pic_id = '$pic_id'");
+	$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = \"$description\" WHERE pic_id = '$pic_id'");
 	$desc = htmlentities($description);
 	//Aenderungen in Original-Datei speichern, wenn moeglich:
 	shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
@@ -60,7 +60,7 @@ ELSE
 		$dto = $year.":".$month.":".$day." 00:00:00";
 		//echo $aufndat."<BR>";
 		//echo $dto."<BR>";
-		$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description', DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
+		$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = \"$description\", DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
 		$desc = htmlentities($description);
 		//Aenderungen in Original-Datei speichern, wenn moeglich:
 		shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
