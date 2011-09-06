@@ -81,7 +81,7 @@ IF($locationname_new !== $locationname)
   	FOR($i1=0; $i1<$num1; $i1++)
   	{
   		$pic_id = mysql_result($result1, $i1, 'pic_id');
-//  		echo $pic_id.",  ";
+//  	echo $pic_id.",  ";
   		$FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 // 		echo $FN;
   		
@@ -117,6 +117,6 @@ document.location.locationname.focus();
 }
 ELSE
 {
-	echo "Es gibt nichts zu tun.<BR><BR>
+	echo "Die alte Ortsbezeichnung wurde nicht ge&auml;ndert.<BR><BR>Also gibt es nichts zu tun.<BR><BR>
 	<INPUT TYPE='button' VALUE='Zur&uuml;ck' onClick='javascript:history.back()'>";
 }
