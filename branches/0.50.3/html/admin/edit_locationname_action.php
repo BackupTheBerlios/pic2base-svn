@@ -32,7 +32,7 @@ IF($locationname_new !== $locationname)
   $result1 = mysql_query("SELECT $table12.location, $table12.loc_id, $table2.loc_id, $table2.pic_id
   FROM $table2 LEFT JOIN $table12
   ON $table2.loc_id = $table12.loc_id
-  WHERE $table12.location = '$locationname'");
+  WHERE $table12.location = \"$locationname\"");
   $num1 = mysql_num_rows($result1);
 
   echo "
@@ -86,7 +86,7 @@ IF($locationname_new !== $locationname)
 // 		echo $FN;
   		
   		//Aktualisierung der Tabelle meta_data.City:
-  		$result3 = mysql_query("UPDATE $table14 SET City = '$locationname_new' WHERE pic_id = '$pic_id'");
+  		$result3 = mysql_query("UPDATE $table14 SET City = \"$locationname_new\" WHERE pic_id = '$pic_id'");
   		
   		//Aktualisierung der Tabelle meta_data.Caption_Abstract:
   		$result4 = mysql_query("SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$pic_id'");
@@ -100,14 +100,14 @@ IF($locationname_new !== $locationname)
   			$CA_new = $CA.", Kamerastandort: ".$locationname_new;
   		}
 // 		echo $CA."<BR>".$CA_new."<BR><BR>";
-  		$result3 = mysql_query("UPDATE $table14 SET Caption_Abstract = '$CA_new' WHERE pic_id = '$pic_id'");
+  		$result3 = mysql_query("UPDATE $table14 SET Caption_Abstract = \"$CA_new\" WHERE pic_id = '$pic_id'");
   		
   		//IPTC.City aendern:
   		$CA_new = htmlentities($CA_new);
-  		shell_exec($exiftool." -IPTC:city='$locationname_new' ".$FN." -overwrite_original -execute -Caption-Abstract='$CA_new' ".$FN." -overwrite_original");
+  		shell_exec($exiftool." -IPTC:city=\"$locationname_new\" ".$FN." -overwrite_original -execute -Caption-Abstract=\"$CA_new\" ".$FN." -overwrite_original");
   	};
   	
-  	echo "<meta http-equiv='Refresh' Content='10; URL=adminframe.php'>";
+  	echo "<meta http-equiv='Refresh' Content='1; URL=adminframe.php'>";
   	
 ?>
 <script language="javascript">
