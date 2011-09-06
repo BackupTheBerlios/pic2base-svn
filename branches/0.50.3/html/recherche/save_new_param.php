@@ -29,6 +29,7 @@ IF(array_key_exists('loc_id', $_REQUEST))
 {
 	$loc_id = $_REQUEST['loc_id'];
 }
+echo $ort."<BR>";
 
 $location = strip_tags($location);	//Breite u. Laenge in einem String
 $loc_arr = explode(",",$location);
@@ -78,9 +79,9 @@ ELSEIF(($loc_id !== '' AND $loc_id !== '0') AND $ort !== '' AND $location !== ''
 	$result01 = mysql_query( "SELECT location FROM $table12 WHERE loc_id = '$loc_id'");
 	$ort_alt = mysql_result($result01,0, 'location');
 	//echo "alte Ortsbezeichnung: ".$ort_alt."<BR>";
-	$result1 = mysql_query( "UPDATE $table12 SET longitude = '$long', latitude = '$lat', altitude = '$ele', location = '$ort' WHERE loc_id = '$loc_id'");
+	$result1 = mysql_query( "UPDATE $table12 SET longitude = '$long', latitude = '$lat', altitude = '$ele', location = \"$ort\" WHERE loc_id = '$loc_id'");
 	//echo "Tabelle locations aktualisiert".mysql_error()."<BR>";
-	$result2 = mysql_query( "UPDATE $table14 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = '$ort' WHERE pic_id = '$pic_id'");
+	$result2 = mysql_query( "UPDATE $table14 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = \"$ort\" WHERE pic_id = '$pic_id'");
 	//echo "Tabelle meta_data aktualisiert".mysql_error()."<BR>";
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
 	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$FN." -overwrite_original");
@@ -91,14 +92,14 @@ ELSEIF(($loc_id == '' OR $loc_id == '0') AND $ort !== '' AND $location !== '')
 	echo "<p style='font-family:Helvitica,Arial; color:red; text-align:center;'>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</p>";
 	flush();
 	$ort_alt = '';
-	$result1 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude, location) VALUES ('$long', '$lat', '$ele', '$ort')");
+	$result1 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude, location) VALUES ('$long', '$lat', '$ele', \"$ort\")");
 	echo mysql_error();
 	$result2 = mysql_query( "SELECT max(loc_id) FROM $table12");
 	echo mysql_error();
 	$loc_id = mysql_result($result2, 0, 'max(loc_id)');
 	$result3 = mysql_query( "UPDATE $table2 SET loc_id = '$loc_id' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
-	$result4 = mysql_query( "INSERT INTO $table14 (GPSLongitude, GPSLatitude, GPSAltitude, City) VALUES ('$long', '$lat', '$ele', '$ort')");
+	$result4 = mysql_query( "INSERT INTO $table14 (GPSLongitude, GPSLatitude, GPSAltitude, City) VALUES ('$long', '$lat', '$ele', \"$ort\")");
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
 	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$FN." -overwrite_original");
 }
@@ -113,16 +114,16 @@ IF($ort_alt !== $ort)
 		//wenn bisher keine Ortsbezeichnung in der Beschreibung gespeichert war, wird sie hier erstmalig zugefuegt:
 		IF($description_neu == $description)
 		{
-			$description_neu = $description.", ".$ort;
+			$description_neu = $description.", Kamerastandort: ".$ort;
 		}
 	}
 	ELSE
 	{
 		$description_neu = $description.", Kamerastandort: ".$ort;
 	}
-	//echo "alter Ort: ".$ort_alt."<BR>alte Beschreibung: ".$description."<BR>neuer Ort: ".$ort."<BR>neue Beschreibung: ".$desc_neu."<BR>";
+	echo "alter Ort: ".$ort_alt."<BR>alte Beschreibung: ".$description."<BR>neuer Ort: ".$ort."<BR>neue Beschreibung: ".$desc_neu."<BR>";
 	//$result5 = mysql_query( "UPDATE $table2 SET description = '$description_neu' WHERE pic_id = '$pic_id'");
-	$result5 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description_neu' WHERE pic_id = '$pic_id'");
+	$result5 = mysql_query( "UPDATE $table14 SET Caption_Abstract = \"$description_neu\" WHERE pic_id = '$pic_id'");
 	//Vermerk im IPTC:Caption-Abstract-Tag:
 	$desc_neu = htmlentities($description_neu);
 	shell_exec($exiftool." -IPTC:Caption-Abstract='$desc_neu' ".$FN." -overwrite_original")."<BR>";
@@ -133,8 +134,8 @@ IF (mysql_error() == '')
 	//fuer Testzwecke haelt der Parameter das Karten-Fenster offen...
 	echo "<p style='font-family:Helvitica,Arial; color:green; text-align:center;'>Fertig...</p>";
 	
-	flush(0);
-	sleep(0);	
+	flush(1);
+	sleep(1);	
 	
 	echo "<script language='JavaScript'>
 	anotherWindow = window.open('', 'Karte', '');
