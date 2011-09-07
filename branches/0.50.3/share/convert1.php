@@ -11,7 +11,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
-// #####     Übernahme der Beschreibungstexte     ######################################################################
+// #####     Uebernahme der Beschreibungstexte     ######################################################################
 /*
 echo "Daten-&Uuml;bernahme-Routine<BR><BR>";
 echo "&Uuml;bernahme der pictures.Description nach exif_data.Caption_Abstract, wenn in exif_data keine Beschreibung vorhanden ist, in pictures aber doch.<BR>
@@ -79,7 +79,7 @@ FOR($i1='0'; $i1<$num1; $i1++)
 	$num9 = mysql_num_rows($result9);
 		
 	$kat_info='';
-	FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewählt, da die Wurzel uninteressant ist!
+	FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewï¿½hlt, da die Wurzel uninteressant ist!
 	{
 		//echo $num5."<BR>";
 		$kategorie = htmlentities(mysql_result($result9, $i9, 'kategorie'));
@@ -107,7 +107,7 @@ FOR($i1='0'; $i1<$num1; $i1++)
 */
 //  ######################################################################################################################
 /*
-//  #####   Vervollständigung der Bildgrößenangaben (ImageDataSize, ExifImageWidth, ExifImageHeight, Orientation)   ######
+//  #####   Vervollstï¿½ndigung der Bildgrï¿½ï¿½enangaben (ImageDataSize, ExifImageWidth, ExifImageHeight, Orientation)   ######
 $result5 = mysql_query( "SELECT * FROM $table14 WHERE ImageDataSize = '0'");
 $num5 = mysql_num_rows($result5);
 echo $num5." betroffene Datens&auml;tze, bei denen keine Dateiattribute in der exif_data hinterlegt sind.<BR>";
@@ -148,7 +148,7 @@ FOR($i5='0'; $i5<$num5; $i5++)
 }
 */
 //  ######################################################################################################################
-//Korrektur der Orientation für hochformatige RAW-Bilder:
+//Korrektur der Orientation fï¿½r hochformatige RAW-Bilder:
 /*
 $result1 = mysql_query( "SELECT $table2.pic_id, $table2.FileNameOri, $table14.pic_id, $table14.Orientation FROM $table2, $table14 WHERE $table2.pic_id = $table14.pic_id AND $table2.FileNameOri LIKE '%.nef' AND $table14.Orientation <> '1'");
 $num1 = mysql_num_rows($result1);
@@ -164,7 +164,7 @@ For($i1='0'; $i1<$num1; $i1++)
 }
 */
 //  ######################################################################################################################
-//Ermittlung aller unterstützten RAW-Formate:
+//Ermittlung aller unterstï¿½tzten RAW-Formate:
 /*
 $arr_raw = array();
 $arr_raw = array_diff($supported_filetypes,$supported_extensions);
@@ -181,7 +181,7 @@ IF(in_array($ext,$arr_raw))
 }
 */
 //  ######################################################################################################################
-//Übernahme der Daten von ImageDataSize nach FileSize
+//ï¿½bernahme der Daten von ImageDataSize nach FileSize
 /*
 $result1 = mysql_query( "UPDATE $table14 SET FileSize = ImageDataSize0 WHERE ImageDataSize0 <> '0' AND FileSize = '0'");
 echo mysql_error();
@@ -244,7 +244,7 @@ FOREACH($inf_arr AS $IA)
 		echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";
 		//Daten in DB schreiben! ############################################################
 		
-		//Bildbreite- und Höhe werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
+		//Bildbreite- und Hï¿½he werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
 		IF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight') AND ($value !== '0' AND $value !== ''))
 		{
 			$result4 = mysql_query( "UPDATE $table14 SET ExifImageHeight = '$value', ImageHeight = '$value' WHERE pic_id = '$pic_id'");
@@ -318,7 +318,7 @@ FOR($i1='0'; $i1<$num1; $i1++)
 */
 
 //  ######################################################################################################################
-// Routine zur Übertragung der vorhandenen kat_id's von der kategorie-Tabelle zur kat_lex-Tabelle:
+// Routine zur ï¿½bertragung der vorhandenen kat_id's von der kategorie-Tabelle zur kat_lex-Tabelle:
 
 $result1 = mysql_query( "SELECT kat_id FROM $table4 ORDER BY 'kat_id'");
 $num1 = mysql_num_rows($result1);

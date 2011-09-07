@@ -258,7 +258,7 @@ echo "
 	</TR>
 	
 	<TR class='normal'>
-		<TD class='normal'><INPUT type='submit' value='Speichern' style='width:150px;'></TD>
+		<TD class='normal'><INPUT type='submit' value='Speichern und schlie&szlig;en' style='width:150px;'></TD>
 		<TD class='normal'><INPUT type='button' value='Bearbeitung abbrechen' onClick='window.close()' style='width:150px;'></TD>
 	</TR>
 	

@@ -119,9 +119,9 @@ FOR($note='1'; $note<'6'; $note++)
 				echo $tab_fieldname[$j0].", ".$tab_fieldtype[$j0]."<BR>";
 			}
 			*/
-			//Beginn der Tabellen-Pr�fung, Anpassung und Daten�bernahme:
+			//Beginn der Tabellen-Pruefung, Anpassung und Datenuebernahme:
 //			$et_path = '/usr/bin';
-			$text = shell_exec($et_path."/exiftool -v2 ".$FN);
+			$text = shell_exec($et_path."/exiftool -v2 ".$FN." > /dev/null &");
 			$inf_arr = explode(chr(10), $text);
 
 			FOREACH($inf_arr AS $IA)
@@ -136,7 +136,7 @@ FOR($note='1'; $note<'6'; $note++)
 						$fieldname = str_replace('-','_',trim(substr($IA, ($pos1 + 1), ($pos2 - $pos1 - 1))));
 						IF($fieldname !== '')
 						{	
-							//F�r einige Tags (Feldnamen) m�ssen die "Klartext-Werte" ausgelesen werden:
+							//Fuer einige Tags (Feldnamen) muessen die "Klartext-Werte" ausgelesen werden:
 							$value = formatValues($fieldname, $FN, $IA, $pos2);
 							//echo "Bild-Inhalt: Feldname: ".$fieldname.", Feld-Wert: ".$value."<BR>";
 						}
@@ -144,7 +144,7 @@ FOR($note='1'; $note<'6'; $note++)
 					$X = -1;
 				}
 				
-				// ##### Bestimmung von Feldtyp und L�nge: #####
+				// ##### Bestimmung von Feldtyp und Laenge: #####
 				$pos3 = strpos($IA, '- Tag ');
 				IF($pos3 != '' AND $X == -1)
 				{

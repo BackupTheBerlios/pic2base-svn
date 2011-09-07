@@ -137,7 +137,7 @@ echo "
 			$file = $sr."/images/originale/".$file_short;
 			$command = $md5sum_path."/md5sum $file";
 			//echo $command;
-			$sum = explode(' ',shell_exec($command));
+			$sum = explode(' ',shell_exec($command." > /dev/null &"));
 			//echo $file_short.", ".$sum[0]."<BR>";
 			$result3 = mysql_query( "UPDATE $table2 SET md5sum = '$sum[0]' WHERE pic_id = '$pic_id'");
 			echo mysql_error();

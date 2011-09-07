@@ -43,9 +43,9 @@ IF($aufn_dat == '')
 	$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = \"$description\" WHERE pic_id = '$pic_id'");
 	$desc = htmlentities($description);
 	//Aenderungen in Original-Datei speichern, wenn moeglich:
-	shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
+	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &");
 	//Aenderungen in jpg-Datei speichern:
-	shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$fn." -overwrite_original");
+	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$fn." -overwrite_original > /dev/null &");
 }
 ELSE
 {
@@ -63,11 +63,11 @@ ELSE
 		$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = \"$description\", DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
 		$desc = htmlentities($description);
 		//Aenderungen in Original-Datei speichern, wenn moeglich:
-		shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
-		shell_exec($exiftool." -EXIF:DateTimeOriginal='$dto' ".$FN." -overwrite_original");
+		shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &");
+		shell_exec($exiftool." -EXIF:DateTimeOriginal='$dto' ".$FN." -overwrite_original > /dev/null &");
 		//Aenderungen in jpg-Datei speichern:
-		shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$fn." -overwrite_original");
-		shell_exec($exiftool." -EXIF:DateTimeOriginal='$dto' ".$fn." -overwrite_original");
+		shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$fn." -overwrite_original > /dev/null &");
+		shell_exec($exiftool." -EXIF:DateTimeOriginal='$dto' ".$fn." -overwrite_original > /dev/null &");
 	}
 	ELSE
 	{

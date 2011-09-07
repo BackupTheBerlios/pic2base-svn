@@ -65,7 +65,9 @@ FOREACH($_POST AS $key => $value)
 	$result1 = mysql_query( "UPDATE $table14 SET $KEY = '$VALUE' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Aktualisierung der Meta-Daten des Bildes:
-	shell_exec($exiftool. "-".$key."='$value' ".$FN." -overwrite_original");
+	$command = $exiftool. " -".$KEY."='$VALUE' ".$FN." -overwrite_original";
+	//echo $command."<BR>";
+	shell_exec($command);
 }
 
 flush();

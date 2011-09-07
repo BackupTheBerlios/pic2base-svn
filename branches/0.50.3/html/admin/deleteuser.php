@@ -32,7 +32,7 @@ if (hasPermission($c_username, 'adminlogin') AND $users !== '')
 	
 	$user_dir = $ftp_path."/".$benutzername;
 	$command = "rm -r ".$user_dir;
-	shell_exec($command);
+	shell_exec($command." > /dev/null &");
 
 	$result4 = mysql_query("SELECT $table9.id, $table9.description, $table1.group_id 
 	FROM $table9, $table1  

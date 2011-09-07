@@ -225,7 +225,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		$FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 		//echo $FN."<BR>";
 		//eintragen der Kategorien in IPTC:Keywords
-		shell_exec($et_path."/exiftool -IPTC:Keywords='$kategorie' -overwrite_original ".$FN);
+		shell_exec($et_path."/exiftool -IPTC:Keywords='$kategorie' -overwrite_original ".$FN." > /dev/null &");
 		
 		//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
 		$result3 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$pic_id'");

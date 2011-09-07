@@ -135,7 +135,7 @@ flush();
 			$FN = $pic_path."/".restoreOriFilename($bild_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
-			shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
+			shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original > /dev/null &");
 		}
 		IF (mysql_errno() == '0')
 		{
@@ -157,7 +157,7 @@ flush();
 			$FN = $pic_path."/".restoreOriFilename($PIC_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
-			shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
+			shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original > /dev/null &");
 			
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
 			<meta http-equiv='refresh' content='1; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";

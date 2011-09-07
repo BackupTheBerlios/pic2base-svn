@@ -62,7 +62,7 @@ FOREACH($supported_filetypes AS $sft)
 		//die Meta-Daten dieses nicht-jpg-Bildes werden in das bereits herauskopierte jpg-Bild uebertragen:
 		$command = $exiftool." -tagsFromFile ".$ftp_path."/".$c_username."/downloads/".$base_name.".".$sft." ".$ftp_path."/".$c_username."/downloads/".$FileName." -overwrite_original";
 		//echo $command;
-		shell_exec($command);
+		shell_exec($command." > /dev/null &");
 		$k++;
 	}
 }

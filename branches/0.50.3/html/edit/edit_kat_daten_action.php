@@ -175,7 +175,7 @@ flush();
 			$FN = strtolower($pic_path."/".restoreOriFilename($bild_id, $sr));
 			//echo $FN."<BR>";
 			//eintragen der Kategorien in IPTC:Keywords
-			shell_exec($exiftool." -IPTC:Keywords+='$kategorie' -overwrite_original ".$FN);
+			shell_exec($exiftool." -IPTC:Keywords+='$kategorie' -overwrite_original ".$FN." > /dev/null &");
 			
 			//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
 			$result3 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$bild_id'");

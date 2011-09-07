@@ -55,12 +55,13 @@ $loc_id = $row['loc_id'];
 IF($loc_id !== '0' AND $loc_id !== '')
 {
 	$result1 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-	$location = mysql_result($result1, isset($i1), 'location');
+	$location = htmlentities(mysql_result($result1, isset($i1), 'location'));
 }
 ELSE
 {
 	$location = '';
 }
+//	echo $location;
 $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
 $vorname = $row['vorname'];
@@ -280,7 +281,7 @@ FOREACH($info_arr AS $IA)
 	ELSEIF($tag !== '')
 	{
 		$TAG = str_replace('-','_',$tag);
-		$result3 = mysql_query( "SELECT * FROM $table5 WHERE field_name = '$TAG'");
+		$result3 = mysql_query( "SELECT * FROM $table5 WHERE field_name = \"$TAG\"");
 		$num3 = mysql_num_rows($result3);
 		$color = 'black';
 		IF($num3 == '1')

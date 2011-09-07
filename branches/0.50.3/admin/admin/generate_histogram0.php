@@ -103,21 +103,21 @@ echo "<div class='page'>
 				//$file = $pic_path."/".$FileName;
 				$file = trim($pic_hq_path."/".$FileName);
 				echo $file."<BR>";
-				shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
+				shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif > /dev/null &");
 				
-				shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
+				shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg > /dev/null &");
 				$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
-				shell_exec($conv." ".$file_mono." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif");
+				shell_exec($conv." ".$file_mono." -colorspace Gray histogram:".$hist_path."/".$pic_id."_hist.gif > /dev/null &");
 				
 				$hist_file_r = $pic_id.'_hist_0.gif';
-				shell_exec($conv." ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
+				shell_exec($conv." ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r." > /dev/null &");
 				//shell_exec($conv." ".$hist_path."/".$hist_file_r." ".$hist_path."/".$hist_file_r);
 				
 				$hist_file_g = $pic_id.'_hist_1.gif';
-				shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
+				shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g." > /dev/null &");
 				
 				$hist_file_b = $pic_id.'_hist_2.gif';
-				shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
+				shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b." > /dev/null &");
 				
 				$hist_file = $pic_id.'_hist.gif';
 				$result2 = mysql_query( "UPDATE $table2 SET FileNameHist = '$hist_file', FileNameHist_r = '$hist_file_r', FileNameHist_g = '$hist_file_g', FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");

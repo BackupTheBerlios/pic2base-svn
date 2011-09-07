@@ -103,7 +103,7 @@ echo "
 			$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 			//Speicherung der Geo-Koordinaten, Ortsbezeichnung und Beschreibung in der Bild-Datei:
 			//schnelle Version ohne Sicherung der Original-Datei:
-			shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$alt." ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract='$desc_neu' ".$FN." -overwrite_original");
+			shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$alt." ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract='$desc_neu' ".$FN." -overwrite_original > /dev/null &");
 		}
 		
 		echo mysql_error();

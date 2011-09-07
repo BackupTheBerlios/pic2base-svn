@@ -62,37 +62,37 @@ SWITCH($Orientation)
 	case '3':
 		//die Bilder muessen 180 gedreht werden:
 		$command = buildConvertCommand($sr)." ".$pic_path."/".$fn_o." -rotate 180 ".$pic_path."/".$fn_o."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 		
 		$command = buildConvertCommand($sr)." ".$pic_thumbs_path."/".$fn_v." -rotate 180 ".$pic_thumbs_path."/".$fn_v."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 		
 		$command = buildConvertCommand($sr)." ".$pic_hq_path."/".$fn_hq." -rotate 180 ".$pic_hq_path."/".$fn_hq."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 	break;
 	
 	case '6':
 		//die Bilder muessen 90 im Uhrzeigersinn gedreht werden:		
 		$command = buildConvertCommand($sr)." ".$pic_path."/".$fn_o." -rotate 90 ".$pic_path."/".$fn_o."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 		
 		$command = buildConvertCommand($sr)." ".$pic_thumbs_path."/".$fn_v." -rotate 90 ".$pic_thumbs_path."/".$fn_v."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 		
 		$command = buildConvertCommand($sr)." ".$pic_hq_path."/".$fn_hq." -rotate 90 ".$pic_hq_path."/".$fn_hq."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 	break;
 	
 	case '8':
 		//die Bilder muessen 90 entgegen dem Uhrzeigersinn gedreht werden:		
 		$command = buildConvertCommand($sr)." ".$pic_path."/".$fn_o." -rotate 270 ".$pic_path."/".$fn_o."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 		
 		$command = buildConvertCommand($sr)." ".$pic_thumbs_path."/".$fn_v." -rotate 270 ".$pic_thumbs_path."/".$fn_v."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 		
 		$command = buildConvertCommand($sr)." ".$pic_hq_path."/".$fn_hq." -rotate 270 ".$pic_hq_path."/".$fn_hq."";
-		$output = shell_exec($command);
+		$output = shell_exec($command." > /dev/null &");
 	break;
 }
 //dann wird lt. Festlegung die Ausrichtung auf 1 gesetzt

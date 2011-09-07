@@ -97,7 +97,7 @@ IF($modus == 'tmp')
 			}
 		}
 		$command_a = $conv." ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
-		$output = shell_exec($command_a);
+		$output = shell_exec($command_a." > /dev/null &");
 	}
 	
 	$x = time();
@@ -141,7 +141,7 @@ ELSEIF($modus == 'new')
 			}
 		}
 		$command1_a = $im_path."/convert ".$pic_path."/".$new_filename." ".$contr." ".$pic_path."/".$new_filename;
-		$output = shell_exec($command1_a);
+		$output = shell_exec($command1_a." > /dev/null &");
 	}
 	
 	//Schritt 2)
@@ -191,7 +191,7 @@ ELSEIF($modus == 'new')
 			}
 		}
 		$command2_a = $im_path."/convert ".$pic_hq_path."/".$FileNameHQ." ".$contr." ".$pic_hq_path."/".$FileNameHQ;
-		$output = shell_exec($command2_a);
+		$output = shell_exec($command2_a." > /dev/null &");
 	}
  	
  	// Schritt 4)
@@ -200,7 +200,7 @@ ELSEIF($modus == 'new')
  	$max_len = '160';
  	$command3 = $conv." -quality 80 ".$source." -resize ".$max_len."x".$max_len." ".$pic_thumbs_path."/".$FileNameV;
       	//echo $command."<BR>";
-      	$output = shell_exec($command3);
+      	$output = shell_exec($command3." > /dev/null &");
       	
 	IF($contrast !== '0')
 	{
@@ -222,17 +222,17 @@ ELSEIF($modus == 'new')
 			}
 		}
 		$command3_a = $im_path."/convert ".$pic_thumbs_path."/".$FileNameV." ".$contr." ".$pic_thumbs_path."/".$FileNameV;
-		$output = shell_exec($command3_a);
+		$output = shell_exec($command3_a." > /dev/null &");
 	}
 	
 	// Schritt 5) Graustufenbild neu erzeugen
 	$FileNameMono = substr($file_name_raw,0,-4)."_mono.jpg";
 	$command5 = $conv." ".$pic_hq_path."/".$FileNameHQ." -colorspace Gray -quality 80% ".$monochrome_path."/".$FileNameMono;
-	$output = shell_exec($command5);
+	$output = shell_exec($command5." > /dev/null &");
 	
     // Schritt 6) Erzeugung des Anzeige-Bildes:
     $command4 = $conv." -quality 80 ".$source." -quality 90 -resize 350x350 - ".$pic_path."/tmp/".$new_filename;
-	$output = shell_exec($command4);
+	$output = shell_exec($command4." > /dev/null &");
 	
 	IF($contrast !== '0')
 	{
@@ -254,7 +254,7 @@ ELSEIF($modus == 'new')
 			}
 		}
 		$command4_a = $conv." ".$pic_path."/tmp/".$new_filename." ".$contr." ".$pic_path."/tmp/".$new_filename;
-		$output = shell_exec($command4_a);
+		$output = shell_exec($command4_a." > /dev/null &");
 	}
 	
 	$x = time();

@@ -17,9 +17,9 @@ $benutzername = $c_username;
  
 include 'global_config.php';
 echo "<p align='center'>l&ouml;sche Meta-Daten...</p>";
-shell_exec('exiftool -all= -comment="Meta-Daten wurden entfernt." '.$down_dir.'/*.* -overwrite_original');
+shell_exec('exiftool -all= -comment="Meta-Daten wurden entfernt." '.$down_dir.'/*.* -overwrite_original > /dev/null &');
 ?>
 
 <SCRIPT LANGUAGE='Javascript'>
-window.setTimeout("window.close()",3000);
+window.setTimeout("window.close()",2000);
 </SCRIPT>
