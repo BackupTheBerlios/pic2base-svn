@@ -102,7 +102,7 @@ if ( !isset($kw) )
 	$kw = '';
 }
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-shell_exec($exiftool." -IPTC:Keywords='' -overwrite_original ".$FN);
+shell_exec($exiftool." -IPTC:Keywords='' -overwrite_original ".$FN." > /dev/null &");
 $result7 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
 echo mysql_error();
 $num7 = mysql_num_rows($result7);
@@ -114,7 +114,7 @@ FOR($i7='0'; $i7<$num7; $i7++)
 		$result8 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 		$keywords = mysql_result($result8, isset($i8), 'kategorie');
 		$kw .= $keywords.", ";
-		shell_exec($exiftool." -IPTC:Keywords+='$keywords' ".$FN);
+		shell_exec($exiftool." -IPTC:Keywords+='$keywords' ".$FN." > /dev/null &");
 	}
 }
 //echo $kw;
