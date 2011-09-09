@@ -113,13 +113,19 @@ FOR($i7='0'; $i7<$num7; $i7++)
 	{
 		$result8 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 		$keywords = mysql_result($result8, isset($i8), 'kategorie');
-		$kw .= $keywords.", ";
-		shell_exec($exiftool." -IPTC:Keywords+='$keywords' ".$FN." > /dev/null &");
+		$kw .= $keywords." ";
+		
+		$command = $exiftool." -IPTC:Keywords=\"$keywords\" -overwrite_original ".$FN." > /dev/null &";
+		//Original: $exiftool." -IPTC:Keywords+='$keywords' ".$FN." > /dev/null &"
+		shell_exec($command);
 	}
 }
+$command = $exiftool." -IPTC:Keywords=\"$kw\" -overwrite_original ".$FN." > /dev/null &";
+echo $kw."  +++  ".$command;
+shell_exec($command);
 //echo $kw;
-$result9 = mysql_query( "UPDATE $table14 SET Keywords = '$kw' WHERE pic_id = '$pic_id'");
+$result9 = mysql_query( "UPDATE $table14 SET Keywords = \"$kw\" WHERE pic_id = '$pic_id'");
 //echo mysql_error();
-header("location: edit_remove_kat.php?pic_id=0&mod=kat&kat_id=$parent");
-exit();
+//	header("location: edit_remove_kat.php?pic_id=0&mod=kat&kat_id=$parent");
+//	exit();
 ?>

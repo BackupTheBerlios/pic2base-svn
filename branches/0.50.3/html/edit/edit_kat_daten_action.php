@@ -175,10 +175,11 @@ flush();
 			$FN = strtolower($pic_path."/".restoreOriFilename($bild_id, $sr));
 			//echo $FN."<BR>";
 			//eintragen der Kategorien in IPTC:Keywords
-			shell_exec($exiftool." -IPTC:Keywords+='$kategorie' -overwrite_original ".$FN." > /dev/null &");
+			$command = $exiftool." -IPTC:Keywords+=\"$kategorie\" -overwrite_original ".$FN." > /dev/null &";
+			shell_exec($command);
 			
 			//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
-			$result3 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$bild_id'");
+			$result3 = mysql_query( "UPDATE $table14 SET Keywords = \"$kategorie\" WHERE pic_id = '$bild_id'");
 			$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$bild_id'");
 		}
 		//echo mysql_errno();
