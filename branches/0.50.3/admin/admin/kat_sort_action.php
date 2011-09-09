@@ -52,16 +52,18 @@ IF(hasPermission($c_username, 'editkattree'))
 @$kat_source = $_POST['kat_source'];
 @$kat_dest = $_POST['kat_dest'];
 
+$exiftool = buildExiftoolCommand($sr);
+
 //##############  Kategorie-Neusortierung mit Mitnahme der Unterkategorien der Quellkategorie   ######################
 IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND $kat_dest !== '' AND $kat_dest !== NULL)
 {
-	//Wenn ein Kategoriezweig umgehaengt wird, wird dem Wurzelelement des Zweiges das neue Parent-Elemenz zugewiesen und bei allen Elementen dez Zweiges muss der level aktualisiert werden.
+	//Wenn ein Kategoriezweig umgehaengt wird, wird dem Wurzelelement des Zweiges das neue Parent-Element zugewiesen und bei allen Elementen dez Zweiges muss der level aktualisiert werden.
 	
-	$result1 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_source'");
+	$result1 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = \"$kat_source\"");
 	$source_name = mysql_result($result1, isset($i1), 'kategorie');
 	$source_parent = mysql_result($result1, isset($i1), 'parent');
 	//$source_level = mysql_result($result1, isset($i1), 'level');
-	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_dest'");
+	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = \"$kat_dest\"");
 	$dest_name = mysql_result($result2, isset($i2), 'kategorie');
 	$dest_level = mysql_result($result2, isset($i2), 'level');
 	echo "Quell-Kategorie: ".$kat_source." (".$source_name."), Ziel-Kategorie: ".$kat_dest." (".$dest_name.")<BR><BR>";
@@ -70,14 +72,14 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	//zur Sicherheit Bereinigung der tmp_tree-Tabelle:
 	$result3 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$user_id'");
 	//Parameter der Quell-Kat. werden in die Tabelle tmp_tree geschrieben:
-	$result4 = mysql_query( "INSERT INTO $table15 (kat_id, old_level, kat_name, user_id, new_level, new_parent) VALUES ('$kat_source', '0', '$source_name', '$user_id', '0', '0')");
+	$result4 = mysql_query( "INSERT INTO $table15 (kat_id, old_level, kat_name, user_id, new_level, new_parent) VALUES (\"$kat_source\", '0', \"$source_name\", '$user_id', '0', '0')");
 	echo mysql_error();
 	
 	//Bestimmung der Unterkategorieen ausgehend von der Quell-Kategorie
 	$res1 = mysql_query( "SELECT max(level) FROM $table4");
 	$max_level = mysql_result($res1, isset($i1), 'max(level)');
 //	echo "max. Level: ".$max_level."<BR>";
-	$result5 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$kat_source'");
+	$result5 = mysql_query( "SELECT * FROM $table4 WHERE parent = \"$kat_source\"");
 	$num5 = mysql_num_rows($result5);
 	$child_arr[] = $kat_source;
 	//$child_arr = array();
@@ -88,7 +90,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		{
 			FOREACH($child_arr AS $child)
 			{
-				$result6 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$child' AND level = '$curr_level'");
+				$result6 = mysql_query( "SELECT * FROM $table4 WHERE parent = \"$child\" AND level = '$curr_level'");
 				$num6 = mysql_num_rows($result6);
 				IF($num6 > '0')
 				{
@@ -96,7 +98,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 					{
 						$source_kat_id = mysql_result($result6, $i6, 'kat_id');
 						$source_kat_name = mysql_result($result6, $i6, 'kategorie');
-						$result7 = mysql_query( "INSERT INTO $table15 (kat_id, old_level, kat_name, user_id, new_level, new_parent) VALUES ('$source_kat_id', '$curr_level', '$source_kat_name', '$user_id', '0', '0')");
+						$result7 = mysql_query( "INSERT INTO $table15 (kat_id, old_level, kat_name, user_id, new_level, new_parent) VALUES ('$source_kat_id', '$curr_level', \"$source_kat_name\", '$user_id', '0', '0')");
 						$child_arr[] = $source_kat_id;
 					}
 				}
@@ -114,7 +116,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	$result9 = mysql_query( "SELECT * FROM $table15 WHERE old_level = '0'");
 	$kat_id = mysql_result($result9, isset($i9), 'kat_id');
 	$new_level = $dest_level + 1;
-	$result12 = mysql_query( "UPDATE $table15 SET new_parent = '$kat_dest', new_level = '$new_level' WHERE kat_id = '$kat_id' AND user_id = '$user_id'");
+	$result12 = mysql_query( "UPDATE $table15 SET new_parent = \"$kat_dest\", new_level = '$new_level' WHERE kat_id = '$kat_id' AND user_id = '$user_id'");
 	echo mysql_error();
 	
 	//die Levelzuordnung aller Zweig-Elemente muss korrigiert werden
@@ -225,16 +227,16 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		$FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 		//echo $FN."<BR>";
 		//eintragen der Kategorien in IPTC:Keywords
-		shell_exec($et_path."/exiftool -IPTC:Keywords='$kategorie' -overwrite_original ".$FN." > /dev/null &");
+		$command = $exiftool." -IPTC:Keywords=\"$kategorie\" -overwrite_original ".$FN." > /dev/null &";
+		//echo $command."<BR>";
+		shell_exec($command);
 		
 		//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
-		$result3 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$pic_id'");
+		$result3 = mysql_query( "UPDATE $table14 SET Keywords = \"$kategorie\" WHERE pic_id = '$pic_id'");
 		$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$pic_id'");
 	}
 	//abschliessend wird die tabelle tmp_tree gesaeubert:
 	$result18 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$user_id'");
-
-
 	echo "<BR><BR><input type='button' Value='Zur&uuml;ck' onClick='location.href=\"javascript:history.back()\"'>";
 }
 ELSE
