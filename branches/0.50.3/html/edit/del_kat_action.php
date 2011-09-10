@@ -102,10 +102,11 @@ if ( !isset($kw) )
 	$kw = '';
 }
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-shell_exec($exiftool." -IPTC:Keywords='' -overwrite_original ".$FN." > /dev/null &");
+shell_exec($exiftool." -IPTC:Keywords='' -overwrite_original ".$FN);
 $result7 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
 echo mysql_error();
 $num7 = mysql_num_rows($result7);
+
 FOR($i7='0'; $i7<$num7; $i7++)
 {
 	$kat_id = mysql_result($result7, $i7, 'kat_id');
@@ -114,18 +115,15 @@ FOR($i7='0'; $i7<$num7; $i7++)
 		$result8 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 		$keywords = mysql_result($result8, isset($i8), 'kategorie');
 		$kw .= $keywords." ";
-		
-		$command = $exiftool." -IPTC:Keywords=\"$keywords\" -overwrite_original ".$FN." > /dev/null &";
-		//Original: $exiftool." -IPTC:Keywords+='$keywords' ".$FN." > /dev/null &"
-		shell_exec($command);
 	}
 }
+
 $command = $exiftool." -IPTC:Keywords=\"$kw\" -overwrite_original ".$FN." > /dev/null &";
-echo $kw."  +++  ".$command;
+//echo $command;
 shell_exec($command);
-//echo $kw;
+
 $result9 = mysql_query( "UPDATE $table14 SET Keywords = \"$kw\" WHERE pic_id = '$pic_id'");
 //echo mysql_error();
-//	header("location: edit_remove_kat.php?pic_id=0&mod=kat&kat_id=$parent");
-//	exit();
+header("location: edit_remove_kat.php?pic_id=0&mod=kat&kat_id=$parent");
+exit();
 ?>
