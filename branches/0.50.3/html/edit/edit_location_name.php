@@ -72,15 +72,21 @@ $user_id = $row['id'];
 //echo "User-ID: ".$user_id."<BR>";
 $num2 = '0';
 $loc_id = '';
+/*
 IF(!isset($stat))
 {
 	$stat = '';
 }
+*/
+IF(array_key_exists('stat',$_REQUEST))
+{
+	$stat = $_REQUEST['stat'];
+}
+
 IF(!isset($i2))
 {
 	$i2 = 0;
 }
-
 echo "
 <div class='page'>
 	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Benennung der Ortsnamen)</p>
@@ -97,7 +103,6 @@ echo "
 		echo mysql_error();
 		$num2 = mysql_num_rows($result2);
 		//echo "Trefferzahl: ".$num2."<BR>";
-		
 		//echo "Dateiname: ".$FileNameV.", Location-ID: ".$loc_id.", Owner: ".$c_username.", Ort: ".$ort."<br>";
 		echo "
 		<FORM name = 'ortsbezeichnung' method='post' action='edit_location_name_action.php' onSubmit='return chkOrt()'> 
@@ -238,6 +243,7 @@ echo "
 					}
 					ELSE
 					{
+						
 						echo '
 						<SELECT name="ort" id="ort" SIZE="1" style = "width:203px;">
 						<OPTION VALUE = "">neuen Ort anlegen</OPTION>';
@@ -260,13 +266,14 @@ echo "
 							}
 						echo '	
 						</SELECT>';
+						
 					}
 				}
 				ELSE
 				{
 					//Variante, wenn ein euer Ort angelegt werden soll:
-					echo '
-					<INPUT TYPE = "text" name="ort" id="ort" maxlength="50" style = "width:200px;" />';
+					echo "
+					<INPUT TYPE = 'text' name='ort' id='ort' maxlength='50' style = 'width:200px;' />";
 				}
 				echo "</TD>
 				</TR>
