@@ -121,7 +121,11 @@ echo "
 	</div>
 	<br style='clear:both;' />
 	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
-</div>";
+</div>
+
+</DIV>
+</CENTER>
+</BODY>";
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -170,7 +174,9 @@ ggf. die rotierte Kopie verwendet wird.
 Erfassung eines Bildes abgeschlossen    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
 $start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
-flush();
+
+ob_start();
+
 FOR ($x='0';$x<$n;$x++)
 {
 //  +++  Datei-Upload  +++
@@ -395,6 +401,16 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 	}
 	//echo "gel&ouml;schte Dateien: ".$del." von ".$n."<BR>";
 	//Erzeugung des Fortschrittsbalkens und Hinweistextes:
+	//Bei neueren Browsern muessen mind. 256 Byte uebertragen werden, damit der Inhalt des OutputBuffers geliefert wird:
+	//Also wird ein wenig Muell erzeugt...
+	//#################################################################################################################
+	FOR($z=0; $z<300; $z++)
+	{
+		echo "                                                                                                              ";
+	}
+	usleep(10000);
+	ob_flush();
+	//######################################  genug Muell erzeugt  ####################################################
 	$laenge = (round(($X / $n) * 500));
 	$anteil = number_format((($X / $n)*100),2,',','.');
 	$text = "...erfasse Bild ".$new_filename." (Datensatz ".$X." von ".$n.")<BR>".$anteil."%";
@@ -433,9 +449,5 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 	flush();
 }
 mysql_close($conn);
-
 ?>
-</DIV>
-</CENTER>
-</BODY>
 </HTML>
