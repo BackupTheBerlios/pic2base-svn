@@ -54,6 +54,7 @@ $exiftool = buildExiftoolCommand($sr);
 $dcraw = buildDcrawCommand($sr);
 
 //log-file schreiben:
+$start_time = date('d.m.Y, H:i:s');
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
 fclose($fh);
@@ -173,6 +174,7 @@ ggf. die rotierte Kopie verwendet wird.
 
 Erfassung eines Bildes abgeschlossen    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
+$start = microtime();					//Startzeitvariable zur Ermittlung der Gesamtzeit
 $start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
 
 ob_start();
@@ -354,16 +356,17 @@ FOR ($x='0';$x<$n;$x++)
 $end1 = microtime();
 list($start1msec, $start1sec) = explode(" ",$start1);
 list($end1msec, $end1sec) = explode(" ",$end1);
-$runtime1 = ($end1sec + $end1msec) - ($start1sec + $start1msec);
-echo "Zeit f&uuml;r Bildupload: ".$runtime1."<BR>";
+$runtime1 = round(($end1sec + $end1msec) - ($start1sec + $start1msec),2);
+echo "Bildupload beendet nach : ".$runtime1." Sekunden, <b>Differenz: ".$runtime1." Sekunden</b><BR>";
 */
 	//Funktions-Parameter: Bild-ID, Anzahl der Szenen; User-ID; Ausrichtung
 	savePicture($pic_id,$z,$user_id,$Orientation,$sr);	//Parameter sollten reichen, da sich alles weitere erzeugen laesst
 /*
 $end2 = microtime();
 list($end2msec, $end2sec) = explode(" ",$end2);
-$runtime2 = ($end2sec + $end2msec) - ($start1sec + $start1msec);
-echo "Zeit bis Bilddatenspeicherung: ".$runtime2."<BR>";	
+$runtime2 = round(($end2sec + $end2msec) - ($start1sec + $start1msec),2);
+echo "Bilddatenspeicherung beendet nach : ".$runtime2." Sekunden, <b>Differenz: ".($runtime2 - $runtime1)." Sekunden</b><BR>
+(md5-Summe ermitteln, HQ/Thumnail erzeugen, Daten in die DB schreiben, Berechtigungen auf die Dateien setzen)<BR>";	
 */
 	//Aus Preformance-Gr&uuml;nden werden die Histogramme aus den HQ-Bildern gewonnen:
 	$result3 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
@@ -374,17 +377,19 @@ echo "Zeit bis Bilddatenspeicherung: ".$runtime2."<BR>";
 /*
 $end3 = microtime();
 list($end3msec, $end3sec) = explode(" ",$end3);
-$runtime3 = ($end3sec + $end3msec) - ($start1sec + $start1msec);
-echo "Zeit bis Histogrammerstellung: ".$runtime3."<BR>";		
+$runtime3 = round(($end3sec + $end3msec) - ($start1sec + $start1msec),2);
+echo "Histogrammerstellung beendet nach : ".$runtime3." Sekunden, <b>Differenz: ".($runtime3 - $runtime2)." Sekunden</b><BR>
+(R/G/B/G-Bilder, Datenbank-Update)<BR>";		
 */
 	//Meta-Daten aus dem Bild auslesen und in die Tabelle meta_data schreiben:
 	//Parameter: Bild-ID, Server-Root, ermittelte Bildausrichtung
 	extractExifData($pic_id,$sr,$Orientation);
 /*
 $end4 = microtime();
+list($start1msec, $start1sec) = explode(" ",$start1);
 list($end4msec, $end4sec) = explode(" ",$end4);
-$runtime4 = ($end4sec + $end4msec) - ($start1sec + $start1msec);
-echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";	
+$runtime4 = round(($end4sec + $end4msec) - ($start1sec + $start1msec),2);
+echo "Meta-Daten-Auslesen beendet nach : ".$runtime4." Sekunden, <b>Differenz: ".($runtime4 - $runtime3)." Sekunden</b><BR>(Meta-Daten auslesen und in die DB schreiben)<BR>";	
 */
 //  +++  loeschen der soeben in die DB aufgenommene Datei aus dem Upload-Ordner:  +++
 	IF($datei_name != "." && $datei_name != "..")
@@ -429,14 +434,15 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 		//Berechnung der Zeit bis zur vollstaendigen Erfassung aller Bilder:
 		$end5 = microtime();
 		list($end5msec, $end5sec) = explode(" ",$end5);
-		list($start1msec, $start1sec) = explode(" ",$start1);
-		$runtime5 = ($end5sec + $end5msec) - ($start1sec + $start1msec);
+		list($startmsec, $startsec) = explode(" ",$start);
+		$runtime5 = ($end5sec + $end5msec) - ($startsec + $startmsec);
 		$rt5 = number_format(($runtime5 / 60),2);
 		//echo "Zeit bis zur Fertigstellung: ".$rt5." Minuten<BR>";
 		//Berechnung der durchschnittlichen Zeit pro Bild:
 		$av_rt = number_format(($runtime5 / $n),2);
 
-		$meldung = "Erfassung abgeschlossen: ". date('d.m.Y, H:i:s')."<BR>";
+		$meldung = "Erfassung begonnen: ". $start_time."<BR>";
+		$meldung .= "Erfassung abgeschlossen: ". date('d.m.Y, H:i:s')."<BR>";
 		$meldung .= "Gesamtzeit: ".$rt5." Minuten (durchschnittliche Bearbeitungszeit: ".$av_rt." sek / Bild)<BR><BR>";
 		$meldung .= "<input type=\"button\" VALUE = \"Fertig - zur&uuml;ck zur Startseite\" onClick=\"location.href=\'../start.php\'\">";
 		//echo $meldung;
@@ -447,6 +453,15 @@ echo "Zeit bis Meta-Daten-Auslesen: ".$runtime4."<BR>";
 		<?php
 	}
 	flush();
+	/*
+	$end5 = microtime();
+	list($start1msec, $start1sec) = explode(" ",$start1);
+	list($end5msec, $end5sec) = explode(" ",$end5);
+	$runtime5 = round(($end5sec + $end5msec) - ($start1sec + $start1msec),2);
+	echo "Zeit bis zur vollst. Erfassung dieses Bildes: ".$runtime5." Sekunden, <b>Differenz: ".round(($runtime5 - $runtime4),2)." Sekunden</b><BR>
+	(Datei aus Upload-Ordner loeschen, Fortschrittsbalken aktualisieren)<BR><BR>";
+	$start1 = $end5;
+	*/	
 }
 mysql_close($conn);
 ?>
