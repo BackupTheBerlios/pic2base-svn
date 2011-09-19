@@ -1648,6 +1648,7 @@ function extractExifData($pic_id, $sr, $Orientation)
 	{
 		//nur wenn es noch keinen Eintrag in der meta_data-Tabelle fuer dieses Bild gibt, wird die Erfassung ausgefuehrt:
 		$result7 = mysql_query("INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
+		
 		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
 		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 		
@@ -1769,7 +1770,7 @@ function extractExifData($pic_id, $sr, $Orientation)
 			$result12 = mysql_query("UPDATE $table14 SET FileSize = '$FileSize' WHERE pic_id = '$pic_id'");
 		}
 		$result13 = mysql_query("UPDATE $table14 SET Orientation = '$Orientation' WHERE pic_id = '$pic_id'");
-		//echo mysql_error();	
+		//echo mysql_error();
 	}
 	//Wenn alle Meta-Daten in table14 uebernommen wurden, wird geprueft, ob Geo-Koordinaten dabei waren.
 	//Wenn ja, wird eine neue location angelegt (in table12) und diese mit dem Bild referenziert:
