@@ -40,7 +40,7 @@ if(array_key_exists('base_file',$_GET))
 //echo "Bild-ID: ".$pic_id."<BR>BaseFile: ".$base_file."<BR>";
 IF ($pic_id !=='0')
 {
-	$result8 = mysql_query( "SELECT $table2.pic_id, FileName, FileNameOri, Owner, note, $table14.pic_id, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.FileSize, $table14.Orientation, $table14.DateTimeOriginal, $table14.Caption_Abstract FROM $table2 LEFT JOIN $table14 ON $table14.pic_id = $table2.pic_id WHERE $table14.pic_id = '$pic_id'");
+	$result8 = mysql_query( "SELECT $table2.pic_id, FileName, FileNameOri, Owner, $table14.note, $table14.pic_id, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.FileSize, $table14.Orientation, $table14.DateTimeOriginal, $table14.Caption_Abstract FROM $table2 LEFT JOIN $table14 ON $table14.pic_id = $table2.pic_id WHERE $table14.pic_id = '$pic_id'");
 	echo mysql_error();
 	IF(mysql_num_rows($result8) > '0')
 	{
