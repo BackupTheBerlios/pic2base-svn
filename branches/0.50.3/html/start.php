@@ -196,9 +196,10 @@ IF(@mysql_num_rows($res))
 	`Caption_Abstract` text NOT NULL,
 	`GPSLatitudeRef` varchar(7) default NULL,
 	`GPSLongitudeRef` varchar(7) default NULL,
-	`GPSAltitudeRef` int(11) NOT NULL");
+	`GPSAltitudeRef` int(11) NOT NULL)");
 	IF(mysql_error() <> '')
 	{
+		echo mysql_error()."<BR><BR>";
 		echo "Fehler bei der Felderstellung in die Tabelle pictures<BR>";
 	}
 	
@@ -262,11 +263,12 @@ IF(@mysql_num_rows($res))
 	
 	IF(mysql_error() <> '')
 	{
+		echo mysql_error()."<BR><BR>";
 		echo "Fehler bei der Daten&uuml;bernahme von meta_data nach pictures<BR>";
 	}
 	
 	//alle in der Tabelle pictures nicht mehr verwendeten Felder erhalten den Zusatz _0:
-	$res6 = mysql_query("ALTER $table2 CHANGE `loc_id` `loc_id_0` INT( 11 ) NOT NULL DEFAULT \'0\' COMMENT \'location_id fuer geo-Referenzierung\'");
+	$res6 = mysql_query("ALTER TABLE $table2 CHANGE `loc_id` `loc_id_0` INT( 11 ) NOT NULL DEFAULT \'0\' COMMENT \'location_id fuer geo-Referenzierung\'");
 	
 	IF(mysql_error() <> '')
 	{
