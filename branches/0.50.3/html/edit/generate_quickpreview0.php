@@ -80,7 +80,10 @@ if(array_key_exists('z_0',$_REQUEST))
 $result0 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username'");
 $user_id = mysql_result($result0, isset($i0), 'id');
 
-$result4 = mysql_query( "SELECT $table2.pic_id, $table2.Owner, $table2.FileName, $table14.pic_id, $table14.Orientation FROM $table2, $table14 WHERE $table2.pic_id = $table14.pic_id AND $table2.Owner = '$user_id' AND ($table14.Orientation = '6' OR $table14.Orientation = '3' OR $table14.Orientation = '8')");
+$result4 = mysql_query( "SELECT pic_id, Owner, FileName, Orientation 
+FROM $table2
+WHERE Owner = '$user_id' 
+AND (Orientation = '6' OR Orientation = '3' OR Orientation = '8')");
 $num4 = mysql_num_rows($result4);
 //echo $num4." Bilder, welche nicht im Querformat aufgenommen wurden.<BR>";
 

@@ -60,13 +60,8 @@ function findTrackData($delta,$pic_time,$datum,$pic_id)
 	$longitude = mysql_result($result8,0,'longitude'); 
 	$latitude = mysql_result($result8,0,'latitude'); 
 	$altitude = mysql_result($result8,0,'altitude'); 
-	//in der 'locations' gespeichert und mit dem Bild 'pic_id' verknuepft:
-	$result9 = mysql_query( "INSERT INTO $table12 (longitude, latitude, altitude) VALUES ('$longitude', '$latitude', '$altitude')");
-	echo mysql_error();
-	$result10 = mysql_query( "SELECT max(loc_id) FROM $table12");
-	$loc_id = mysql_result($result10, $i10, 'max(loc_id)');
-	//echo "<".$loc_id." >";
-	$result11 = mysql_query( "UPDATE $table2 SET loc_id = '$loc_id' WHERE pic_id = '$pic_id'");
+	//Koordinaten werden in der 'pictures' gespeichert:
+	$result11 = mysql_query( "UPDATE $table2 SET GPSLongitude = '$longitude', GPSLatitude = '$latitude', GPSAltitude = '$altitude' WHERE pic_id = '$pic_id'");
 }
 
 function gmtToLocalTime($date,$time,$timezone)

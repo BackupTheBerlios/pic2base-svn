@@ -7,7 +7,7 @@ include '../../share/global_config.php';
 }
 
   mysql_connect ($db_server, $user, $PWD);
-  $result = mysql_query("select * from $table12 WHERE location <> 'Ortsbezeichnung' GROUP BY location ORDER BY location");
+  $result = mysql_query("select * from $table2 WHERE City <> 'Ortsbezeichnung' GROUP BY City ORDER BY City");
   $num = mysql_num_rows($result);
   echo "<center><table class='normal' border='0'>
 	<tr>
@@ -24,11 +24,11 @@ include '../../share/global_config.php';
 	
   FOR ($i = 0; $i < $num; $i++)
   {
-	$loc_id = mysql_result ($result, $i, "loc_id");
-	$location = mysql_result ($result, $i, "location");
+	$pic_id = mysql_result ($result, $i, "pic_id");
+	$city = mysql_result ($result, $i, "City");
 	
 	echo "<TR>
-	<TD align='left' colspan='4' style='padding-left:20px;'><a href=adminframe.php?item=admineditlocation&id=".$loc_id.">".$location."</a></TD>
+	<TD align='left' colspan='4' style='padding-left:20px;'><a href=adminframe.php?item=admineditlocation&id=".$pic_id.">".$city."</a></TD>
 	</TR>";
   }
   

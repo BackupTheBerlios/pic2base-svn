@@ -91,10 +91,8 @@ IF($geo_file == '')
 IF ($geo_file_name != "" && $geo_file_name !='.' && $geo_file_name != '..')
 {
 	move_uploaded_file($_FILES['geo_file']['tmp_name'],$geo_file_name)
-//	@copy("$geo_file","$track_path/$geo_file_name")
 	or die("Upload fehlgeschlagen!");
 	$error = getFileError($_FILES['geo_file']['error']);
-	//echo $error."<br>";
 }
 
 
@@ -146,7 +144,12 @@ SWITCH($ge)
 			$end_time = $datum." ".$max_time;
 			//echo "Startzeit: ".$start_time.", Endzeit: ".$end_time."<BR>";
 			//$result6 = mysql_query( "SELECT * FROM $table2 WHERE DateTime >= '$start_time' AND DateTime <= '$end_time' AND loc_id ='0' AND Owner = '$user_id'");
-			$result6 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.loc_id, $table2.Owner, $table14.pic_id, $table14.DateTimeOriginal FROM $table2, $table14 WHERE $table14.DateTimeOriginal >= '$start_time' AND $table14.DateTimeOriginal <= '$end_time' AND $table2.loc_id ='0' AND $table2.Owner = '$user_id' AND $table2.pic_id = $table14.pic_id");
+			$result6 = mysql_query( "SELECT pic_id, FileName, Owner, DateTimeOriginal, City, GPSLatitude, GPSLongitude
+			FROM $table2
+			WHERE DateTimeOriginal >= '$start_time' 
+			AND DateTimeOriginal <= '$end_time' 
+			AND (City ='Ortsbezeichnung' OR City = '' OR GPSLongitude = '0' OR GPSLatitude = '0')
+			AND Owner = '$user_id'");
 			$num6 = mysql_num_rows($result6);
 			//echo "<p style='color:white';>Treffer fuer User ".$user_id.": ".$num6."</p><BR>";
 			IF($num6 > '0')
@@ -237,7 +240,9 @@ SWITCH($ge)
 	//Wenn der Track nur in GE angezeigt werden soll:
 	//Da die gpx-Datei schrittweise vom Anfang an abgearbeitet wird, erfolgt der Eintrag in die Tabelle in zeitlicher Reihenfolge. Somit gen�gt eine Sortierung beim auslesen nach loc_id.
 	//$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' ORDER BY date, time");
-	$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id' AND longitude <> '' AND latitude <> '' ORDER BY loc_id");
+	$result2 = mysql_query( "SELECT * FROM $table13 
+	WHERE user_id = '$user_id' AND longitude <> '' AND latitude <> '' 
+	ORDER BY loc_id");
 	$num2 = mysql_num_rows($result2);
 	$date = mysql_result($result2, 0, 'date');
 	IF ($date !== '0000-00-00')

@@ -53,14 +53,11 @@ IF($mod <> 'geo')
 		{
 			$pic_id = mysql_result($result8, $i8, 'pic_id');
 			$FileNameHQ = mysql_result($result8, $i8, 'FileNameHQ');
-			$result21 = mysql_query( "SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$pic_id'");
-			$Description = utf8_encode(mysql_result($result21, '0', 'Caption_Abstract'));
-			$loc_id = mysql_result($result8, $i8, 'loc_id');
-			$result7 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-			$longitude = mysql_result($result7,isset($i7), 'longitude');
-			$latitude = mysql_result($result7,isset($i7), 'latitude');
-			$altitude = mysql_result($result7,isset($i7), 'altitude');
-			$location = mysql_result($result7,isset($i7), 'location');
+			$Description = utf8_encode(mysql_result($result8, $i8, 'Caption_Abstract'));
+			$longitude = mysql_result($result8,$i8,'GPSLongitude');
+			$latitude = mysql_result($result8,$i8,'GPSLatitude');
+			$altitude = mysql_result($result8,$i8,'GPSAltitude');
+			$city = mysql_result($result8,$i8,'City');
 			//Skalierung der Bilder auf max. Seitenlaenge 300px:
 			$max_size = '400';
 			@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
@@ -91,7 +88,7 @@ IF($mod <> 'geo')
 				</BalloonStyle>
 				</Style>
 				<Placemark>
-				<name>'.$location.'</name>
+				<name>'.$city.'</name>
 				<description>pic2base-Praesentation</description>
 				<styleUrl>#exampleBalloonStyle</styleUrl>
 				
@@ -222,14 +219,11 @@ ELSE
 			{
 				$pic_id = mysql_result($result8, $i8, 'pic_id');
 				$FileNameHQ = mysql_result($result8, $i8, 'FileNameHQ');
-				$result20 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-				$Description = mysql_result($result20, 0, 'Caption_Abstract');
-				$loc_id = mysql_result($result8, $i8, 'loc_id');
-				$result7 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-				$longitude = mysql_result($result7,isset($i7), 'longitude');
-				$latitude = mysql_result($result7,isset($i7), 'latitude');
-				$altitude = mysql_result($result7,isset($i7), 'altitude');
-				$location = mysql_result($result7,isset($i7), 'location');
+				$Description = mysql_result($result8, $i8, 'Caption_Abstract');
+				$longitude = mysql_result($result8,$i8, 'GPSLongitude');
+				$latitude = mysql_result($result8,$i8, 'GPSLatitude');
+				$altitude = mysql_result($result8,$i8, 'GPSAltitude');
+				$city = mysql_result($result8,$i8, 'City');
 				//Skalierung der Bilder auf max. Seitenlaenge 300px:
 				$max_size = '400';
 				@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
@@ -256,7 +250,7 @@ ELSE
 					</BalloonStyle>
 					</Style>
 					<Placemark>
-					<name>'.$location.'</name>
+					<name>'.$city.'</name>
 					<description>pic2base-Praesentation</description>
 					<styleUrl>#exampleBalloonStyle</styleUrl>
 					

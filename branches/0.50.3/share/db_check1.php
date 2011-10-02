@@ -289,9 +289,9 @@ echo "<br>++++ #### ++++<br>";
 			
 			$res6 = mysql_query( "CREATE TABLE IF NOT EXISTS `locations` (
 			`loc_id` int(11) NOT NULL auto_increment COMMENT 'location-ID',
-			`longitude` FLOAT NOT NULL COMMENT 'geo-Laenge',
-			`latitude` FLOAT NOT NULL COMMENT 'geo-Breite',
-			`altitude` FLOAT NOT NULL COMMENT 'Hoehe',
+			`longitude` DOUBLE NOT NULL COMMENT 'geo-Laenge',
+			`latitude` DOUBLE NOT NULL COMMENT 'geo-Breite',
+			`altitude` DOUBLE NOT NULL COMMENT 'Hoehe',
 			`location` varchar(50) NOT NULL default 'Ortsbezeichnung' COMMENT 'Ortname',
 			PRIMARY KEY  (`loc_id`),
 			KEY `location` (`location`)
@@ -373,7 +373,8 @@ echo "<br>++++ #### ++++<br>";
 			KEY `Make` (`Make`),
 			KEY `Model` (`CameraModelName`),
 			KEY `FNumber` (`FNumber`),
-			KEY `DateTimeOriginal` (`DateTimeOriginal`)
+			KEY `DateTimeOriginal` (`DateTimeOriginal`),
+			KEY `pic_id` (`pic_id`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0;");
 			IF(mysql_error() !== '')
 			{
@@ -825,7 +826,7 @@ echo "<br>++++ #### ++++<br>";
 			//diesem User Rechte erteilen:
 			$res116 = mysql_query( "GRANT USAGE ON * . * TO 'pb'@'localhost' IDENTIFIED BY 'pic_base' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;");
 			
-			$res117 = mysql_query( "GRANT SELECT , INSERT , UPDATE , DELETE , ALTER ON `pic2base` . * TO 'pb'@'localhost';");
+			$res117 = mysql_query( "GRANT SELECT , INSERT , UPDATE , DELETE , CREATE, DROP, ALTER ON `pic2base` . * TO 'pb'@'localhost';");
 			//fuer die Uebergangszeit, solange md5sum in pictures eingefuehrt wird:
 			$res118 = mysql_query( "GRANT ALTER ON `pic2base`.`pictures` TO 'pb'@'localhost';");
 			//User pb in der user-Tabelle erzeugen:

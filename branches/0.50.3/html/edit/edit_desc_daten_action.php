@@ -35,7 +35,6 @@ IF (!$_COOKIE['login'])
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
- *
  */
 
 unset($username);
@@ -50,9 +49,6 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 $exiftool = buildExiftoolCommand($sr);
-
-//var_dump($_POST);
-//var_dump($_GET);
 
 if ( array_key_exists('kat_id',$_GET) )
 {
@@ -76,7 +72,6 @@ if ( array_key_exists('pic_sel2',$_POST) )
 }
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-//$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 //Variablen-Umbenennung fuer die Ruecksprung-Adresse:
 $kat_back = $kat_id;
@@ -118,10 +113,9 @@ flush();
 		FOREACH ($pic_ID AS $bild_id)
 		{
 		//echo $bild_id." <-Bild_id<BR>";
-			$res1 = mysql_query( "SELECT Caption_Abstract FROM $table14 WHERE pic_id = '$bild_id'");
+			$res1 = mysql_query( "SELECT Caption_Abstract FROM $table2 WHERE pic_id = '$bild_id'");
 			$row = mysql_fetch_array($res1);
 			$desc = $row['Caption_Abstract'];
-			//$desc = mysql_result($res1, isset($i1), 'Caption_Abstract');
 			echo mysql_error();
 			IF ($desc == '')
 			{
@@ -131,7 +125,7 @@ flush();
 			{
 				$Description =$desc."\n".$description;
 			}
-			$res3 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$Description' WHERE pic_id = '$bild_id'");
+			$res3 = mysql_query( "UPDATE $table2 SET Caption_Abstract = '$Description' WHERE pic_id = '$bild_id'");
 			$FN = $pic_path."/".restoreOriFilename($bild_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
@@ -141,7 +135,6 @@ flush();
 		{
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
 			<meta http-equiv='refresh' content='1; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
-			
 		}
 		ELSE
 		{
@@ -153,14 +146,14 @@ flush();
 		IF ($art == 'single_desc_edit')
 		{
 			$description = strip_tags($description);
-			$res3 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description' WHERE pic_id = '$PIC_id'");
+			$res3 = mysql_query( "UPDATE $table2 SET Caption_Abstract = '$description' WHERE pic_id = '$PIC_id'");
 			$FN = $pic_path."/".restoreOriFilename($PIC_id, $sr);
 			$desc = htmlentities($Description);
 			//echo $FN.", ".$desc."<BR>";
 			shell_exec($exiftool." -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original > /dev/null &");
 			
 			echo "<p style='color:green; font-size:12px; font-family:Helvitica,Arial;'>Daten&uuml;bernahme...</p>
-			<meta http-equiv='refresh' content='1; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
+			<meta http-equiv='refresh' content='0; url=edit_beschreibung.php?kat_id=$kat_back&ID=$ID_back'>";
 		}
 		ELSE
 		{

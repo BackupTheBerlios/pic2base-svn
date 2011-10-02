@@ -40,7 +40,9 @@ if(array_key_exists('base_file',$_GET))
 //echo "Bild-ID: ".$pic_id."<BR>BaseFile: ".$base_file."<BR>";
 IF ($pic_id !=='0')
 {
-	$result8 = mysql_query( "SELECT $table2.pic_id, FileName, FileNameOri, Owner, $table14.note, $table14.pic_id, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.FileSize, $table14.Orientation, $table14.DateTimeOriginal, $table14.Caption_Abstract FROM $table2 LEFT JOIN $table14 ON $table14.pic_id = $table2.pic_id WHERE $table14.pic_id = '$pic_id'");
+	$result8 = mysql_query( "SELECT pic_id, FileName, FileNameOri, Owner, note, ExifImageHeight, ExifImageWidth, FileSize, Orientation, DateTimeOriginal, Caption_Abstract 
+	FROM $table2
+	WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	IF(mysql_num_rows($result8) > '0')
 	{
@@ -64,7 +66,7 @@ IF ($pic_id !=='0')
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
 		$note = mysql_result($result8, isset($i8), 'note');
 		$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
-		$Orientation = trim(shell_exec($exiftool." -s -S '-Orientation' ".$bild." > /dev/null &"));
+		$Orientation = trim(shell_exec($exiftool." -s -S '-Orientation' ".$bild));
 		//echo $Orientation;
 		if (isset($Orientation) AND ($Orientation !== ''))
 		{
@@ -75,7 +77,10 @@ IF ($pic_id !=='0')
 			$ausrichtung = "nicht vermerkt";
 		}
 		//Welche Kategorien wurden dem Bild zugewiesen?
-		$result9 = mysql_query( "SELECT DISTINCT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie, $table4.level FROM $table10 INNER JOIN $table4 ON ($table10.kat_id = $table4.kat_id AND $table10.pic_id = '$pic_id') ORDER BY $table4.level");
+		$result9 = mysql_query( "SELECT DISTINCT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie, $table4.level 
+		FROM $table10 INNER JOIN $table4 
+		ON ($table10.kat_id = $table4.kat_id AND $table10.pic_id = '$pic_id') 
+		ORDER BY $table4.level");
 		$num9 = mysql_num_rows($result9);
 			
 		$kat_info='';
@@ -275,7 +280,7 @@ IF ($pic_id !=='0')
 		<TD id='detail1'>Alle Bilddaten:</TD>
 		<TD id='detail5'><div id='tooltip1'><span style='cursor:pointer;'>
 		<img src=\"$inst_path/pic2base/bin/share/images/info.gif\" width=\"15\" height=\"15\" OnClick=\"showAllDetails('$mod', '$pic_id')\" title='Detaillierte Informationen zum Bild $pic_id' alt='Info' />";
-		$result13 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+		$result13 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 		$Copyright = htmlentities(mysql_result($result13, isset($i13), 'Copyright'));
 		IF($Copyright !== '')
 		{
@@ -295,13 +300,12 @@ IF ($pic_id !=='0')
 		</TD>";
 		
 		$result11 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-		$loc_id = mysql_result($result11, isset($i11), 'loc_id');
-		IF($loc_id !== '0' AND $loc_id !== '')
+		$location = mysql_result($result11, isset($i11), 'City');
+		IF($location !== 'Ortsbezeichnung' AND $location !== '')
 		{
-			$result12 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-			$longitude = mysql_result($result12,isset($i12), 'longitude');
-			$latitude = mysql_result($result12,isset($i12), 'latitude');
-			$altitude = mysql_result($result12,isset($i12), 'altitude');
+			$longitude = mysql_result($result11,isset($i11), 'GPSLongitude');
+			$latitude = mysql_result($result11,isset($i11), 'GPSLatitude');
+			$altitude = mysql_result($result11,isset($i11), 'GPSAltitude');
 			echo "<TD id='detail6'><span style='cursor:pointer;'>
 			<img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude, $longitude)\"/>
 			</span>";
@@ -311,7 +315,7 @@ IF ($pic_id !=='0')
 			@$longitude2 = mysql_result($result11,isset($i11), 'GPSLongitude');
 			@$latitude2 = mysql_result($result11,isset($i11), 'GPSLatitude');
 			@$altitude2 = mysql_result($result11,isset($i11), 'GPSAltitude');
-			IF(($longitude2 == "") OR ($latitude2 == ""))
+			IF(($longitude2 == "0") OR ($latitude2 == "0"))
 			{
 				echo "<TD id='detail6'><span style='cursor:pointer;'>
 				<img src='$inst_path/pic2base/bin/share/images/no_googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='keine Geo-Informationen' />

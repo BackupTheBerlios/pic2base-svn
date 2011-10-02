@@ -179,8 +179,8 @@ flush();
 			shell_exec($command);
 			
 			//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
-			$result3 = mysql_query( "UPDATE $table14 SET Keywords = \"$kategorie\" WHERE pic_id = '$bild_id'");
-			$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$bild_id'");
+			$result3 = mysql_query( "UPDATE $table2 SET Keywords = \"$kategorie\", has_kat = '1' WHERE pic_id = '$bild_id'");
+			//$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$bild_id'");
 		}
 		//echo mysql_errno();
 		IF (mysql_errno() == '0')

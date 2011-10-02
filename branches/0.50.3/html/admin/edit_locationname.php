@@ -14,15 +14,17 @@ else
 {
 	break;
 }
-
+//##################################################################################################
+//Datei wird im Admin-Bereich zur nachtraeglichen Aenderung von Ortsnamen verwendet#################
+//##################################################################################################
   mysql_connect ($db_server, $user, $PWD);
-  $result = mysql_query("select * from $table12 WHERE loc_id = $id");
+  $result = mysql_query("select * from $table2 WHERE pic_id = $id");
   $num = mysql_num_rows($result);
-  $loc_id = mysql_result ($result, $i, "loc_id");
-  $location = mysql_result ($result, $i, "location");
+  //$loc_id = mysql_result ($result, $i, "loc_id");
+  $city = mysql_result ($result, $i, "City");
   echo "
   <center>
-  <FORM name='location' method='post' action='adminframe.php?item=admineditlocationnameaction&loc_id=$id'>
+  <FORM name='location' method='post' action='adminframe.php?item=admineditlocationnameaction&pic_id=$id'>
   <table class='normal' border='0'>
 	<tr>
 	<td colspan='4' style='font-size:12pt; text-align:center;'>Ortsnamen bearbeiten</td>
@@ -38,8 +40,8 @@ else
 	
   	<TR>
 	<TD align='CENTER' colspan='4' style='padding-left:20px;'>
-	<INPUT TYPE='text' name='locationname_new' VALUE=\"$location\" style='width:400px;'></INPUT>
-	<INPUT TYPE='hidden' name='locationname' VALUE=\"$location\" style='width:400px;'></INPUT>
+	<INPUT TYPE='text' name='locationname_new' VALUE=\"$city\" style='width:400px;'></INPUT>
+	<INPUT TYPE='hidden' name='locationname' VALUE=\"$city\" style='width:400px;'></INPUT>
 	</TD>
 	</TR>
 	

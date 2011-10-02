@@ -96,7 +96,7 @@ SWITCH($Orientation)
 	break;
 }
 //dann wird lt. Festlegung die Ausrichtung auf 1 gesetzt
-$result1 = mysql_query("UPDATE $table14 SET Orientation = '1' WHERE pic_id = '$pic_id'");
+$result1 = mysql_query("UPDATE $table2 SET Orientation = '1' WHERE pic_id = '$pic_id'");
 
 
 

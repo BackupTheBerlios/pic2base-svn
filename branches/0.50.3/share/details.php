@@ -40,7 +40,8 @@ if( array_key_exists('view',$_REQUEST) )
 	$view = $_REQUEST['view'];
 }
 
-$result0 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+$result0 = mysql_query( "SELECT * FROM $table2 
+WHERE pic_id = '$pic_id'");
 $num0 = mysql_num_rows($result0);
 $row = mysql_fetch_array($result0);
 $FileNameHQ = $row['FileNameHQ'];
@@ -50,12 +51,12 @@ $Owner = $row['Owner'];
 $ranking = $row['ranking'];
 $note = $row['note'];
 $md5sum = $row['md5sum'];
-$loc_id = $row['loc_id'];
+$location = $row['City'];
 
-IF($loc_id !== '0' AND $loc_id !== '')
+
+IF($location !== 'Ortsbezeichnung' AND $location !== '')
 {
-	$result1 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-	$location = htmlentities(mysql_result($result1, isset($i1), 'location'));
+	$location = htmlentities($row['City']);
 }
 ELSE
 {
@@ -357,7 +358,7 @@ IF($view == 'all')
 	IF(mysql_get_server_info() <= 5.1)
 	{
 		//echo "Version < 5.1";
-		$result5 = mysql_query("SELECT DateTimeOriginal FROM $table14 WHERE pic_id = '$pic_id'");
+		$result5 = mysql_query("SELECT DateTimeOriginal FROM $table2 WHERE pic_id = '$pic_id'");
 		$dat = date('Y-m-d', strtotime(mysql_result($result5, 0, 'DateTimeOriginal')));
 		$res6 = mysql_query("SELECT * FROM $table3 WHERE datum = '$dat'");
 		//echo mysql_error();
@@ -368,12 +369,12 @@ IF($view == 'all')
 	{
 		//echo "Version > 5.1";
 		//Abfrage-Syntax ist erst ab mysql-Version 5.1 ferfuegbar:
-		$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table14.pic_id, $table14.DateTimeOriginal 
-		FROM $table14, $table3 
-		WHERE (year($table14.DateTimeOriginal) = year($table3.datum) 
-		AND month($table14.DateTimeOriginal) = month($table3.datum) 
-		AND day($table14.DateTimeOriginal) = day($table3.datum) 
-		AND $table14.pic_id = '$pic_id')");
+		$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table2.pic_id, $table2.DateTimeOriginal 
+		FROM $table2, $table3 
+		WHERE (year($table2.DateTimeOriginal) = year($table3.datum) 
+		AND month($table2.DateTimeOriginal) = month($table3.datum) 
+		AND day($table2.DateTimeOriginal) = day($table3.datum) 
+		AND $table2.pic_id = '$pic_id')");
 		echo mysql_error();
 		@$diary_info = mysql_result($result5, isset($i5), 'info');
 		@$datum = date('d.m.Y', strtotime(mysql_result($result5, isset($i5), 'datum')));

@@ -30,7 +30,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: edit_location_name_action.php
  *
- * Copyright (c) 2005 - 2009 Klaus Henneberg
+ * Copyright (c) 2005 - 20011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -44,18 +44,16 @@ unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
 }
 
-//var_dump($_POST);
 IF(array_key_exists('ort', $_POST))
 {
 	$ort = $_POST['ort'];
 }
 
-IF(array_key_exists('loc_id', $_POST))
+IF(array_key_exists('pic_id', $_POST))
 {
-	$loc_id = $_POST['loc_id'];
+	$pic_id = $_POST['pic_id'];
 }
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -63,8 +61,6 @@ include $sr.'/bin/share/functions/geo_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 $exiftool = buildExiftoolCommand($sr);
-
-//echo $track_path;
 
 echo "
 <div class='page'>
@@ -78,26 +74,25 @@ echo "
 	
 	<div id='spalte1F'>
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Speicherung l&auml;uft...<BR></p>";
-		$result2 = mysql_query( "UPDATE $table12 SET location='$ort' WHERE loc_id = '$loc_id'");
+		$result2 = mysql_query( "UPDATE $table2 SET City='$ort' WHERE pic_id = '$pic_id'");
 		
 		//Eintragung des Ortsnamens an den Anfang des Beschreibungstextes des zugehoerigen Bildes:
-		$result3 = mysql_query( "SELECT * FROM $table2 WHERE (loc_id = '$loc_id' AND loc_id <> '')");
+		$result3 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 		$num3 = mysql_num_rows($result3);
 		FOR ($i3=0; $i3<$num3; $i3++)
 		{
 			//zur vorhandenen Beschreibung wird die Ortsbezeichnung vorangestellt:
 			$pic_id = mysql_result($result3, $i3, 'pic_id');
-			$result6 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-			$description_alt = mysql_result($result6, 0, 'Caption_Abstract');
+			$description_alt = mysql_result($result3, $i3, 'Caption_Abstract');
 			$description_neu = "Kamerastandort: ".$ort."; ".$description_alt;
-			$result4 = mysql_query( "UPDATE $table14 SET Caption_Abstract = '$description_neu' WHERE pic_id = '$pic_id'");
+			$result4 = mysql_query( "UPDATE $table2 SET Caption_Abstract = '$description_neu' WHERE pic_id = '$pic_id'");
 			//Bestimmung der Geo-Koordinaten
-			$result5 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-			$long = mysql_result($result5, 0, 'longitude');
-			$lat = mysql_result($result5, 0, 'latitude');
-			$alt = mysql_result($result5, 0, 'altitude');
-			$location = mysql_result($result5, 0, 'location');
-			$ort_iptc = utf8_decode($location);
+			$long = mysql_result($result3, $i3, 'GPSLongitude');
+			$lat = mysql_result($result3, $i3, 'GPSLatitude');
+			$alt = mysql_result($result3, $i3, 'GPSAltitude');
+			$city = mysql_result($result3, $i3, 'City');
+			$ort_iptc = utf8_decode($city);
+			//$ort_iptc = htmlentities($city);
 			$desc_neu = htmlentities($description_neu);
 			//Bestimmung des Dateinamens der Original-Datei:
 			$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);

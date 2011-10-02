@@ -38,17 +38,12 @@ $num0 = mysql_num_rows($result0);
 $row = mysql_fetch_array($result0);
 $FileNameOri = $row['FileNameOri'];
 $Owner = $row['Owner'];
-//$FileNameOri = mysql_result($result0,isset($i0),'FileNameOri');
-//$Owner = mysql_result($result0,isset($i0),'Owner');
 
 $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
 $vorname = $row['vorname'];
 $name = $row['name'];
 $u_name = $row['username'];
-//$vorname = mysql_result($result2, $i2, 'vorname');
-//$name = mysql_result($result2, $i2, 'name');
-//$u_name = mysql_result($result2, $i2, 'username');
 
 unset($username);
 IF ($_COOKIE['login'])
@@ -115,7 +110,7 @@ $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
 $exif_daten = shell_exec($exiftool." -g -s -x 'Directory' ".$FN);
 //echo $exif_daten."<BR>";
 $info_arr = explode(chr(10), $exif_daten);
-//Umschreibung des Info-Arrays in die Form Schl�ssel=$tag / Wert=$value
+//Umschreibung des Info-Arrays in die Form Schluessel=$tag / Wert=$value
 $INFO_ARR = array();
 
 FOREACH($info_arr AS $IA)

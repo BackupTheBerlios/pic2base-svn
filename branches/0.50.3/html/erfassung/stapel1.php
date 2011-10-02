@@ -211,12 +211,12 @@ FOR ($x='0';$x<$n;$x++)
 	$DateInsert = date('Y-m-d H:i:s');
 	$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$datei_name', '$DateInsert')");
 	echo mysql_error();
-	$pic_id = mysql_insert_id();			//echo "User-ID: ".$user_id."; Rec-ID: ".$pic_id."<BR>";
+	$pic_id = mysql_insert_id();									//echo "User-ID: ".$user_id."; Rec-ID: ".$pic_id."<BR>";
 	$info2 = pathinfo($datei_name);
-	$tmp_filename = $pic_id.".".strtolower($info2['extension']);		//Dateiname z.B.: 112233.nef
+	$tmp_filename = $pic_id.".".strtolower($info2['extension']);	//Dateiname z.B.: 112233.nef
 	
 	//  Kontrolle, ob Upload erfolgreich war  +++++
-	@copy("$bild","$pic_path/$tmp_filename")	// Bild wird nach (z.B.) ....images/originale/12345.nef kopiert
+	@copy("$bild","$pic_path/$tmp_filename")						// Bild wird nach (z.B.) ....images/originale/12345.nef kopiert
 	or die("Upload fehlgeschlagen!");
 	$tmp_file = $sr."/images/originale/".$tmp_filename;
 	clearstatcache();  
@@ -230,7 +230,6 @@ FOR ($x='0';$x<$n;$x++)
 		$base_name = $file_info['basename'];
 		$ext = strtolower($file_info['extension']);		//echo "Ext: ".$ext."<BR>";
 		$new_filename = str_replace($ext,'',$base_name)."jpg";	//z.B: 122344.jpg
-		
 		//RAW-Dateien muessen mit dcraw gesondert behandelt werden!!:
 		//welche Dateitypen sind in supported_filetypes und nicht in supported_extensions?
 		$arr_raw = array();
@@ -381,7 +380,7 @@ $runtime3 = round(($end3sec + $end3msec) - ($start1sec + $start1msec),2);
 echo "Histogrammerstellung beendet nach : ".$runtime3." Sekunden, <b>Differenz: ".($runtime3 - $runtime2)." Sekunden</b><BR>
 (R/G/B/G-Bilder, Datenbank-Update)<BR>";		
 */
-	//Meta-Daten aus dem Bild auslesen und in die Tabelle meta_data schreiben:
+	//Meta-Daten aus dem Bild auslesen und in die Tabelle pictures schreiben:
 	//Parameter: Bild-ID, Server-Root, ermittelte Bildausrichtung
 	extractExifData($pic_id,$sr,$Orientation);
 /*

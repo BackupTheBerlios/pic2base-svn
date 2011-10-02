@@ -39,7 +39,10 @@ if ( array_key_exists('pic_id',$_GET) )
 	$pic_id = $_GET['pic_id'];
 }
 //Daten des derzeitugen Owners ermitteln:
-$result1 = mysql_query( "SELECT $table2.FileNameV, $table2.Owner, $table1.id, $table1.username, $table1.name, $table1.vorname, $table1.ort FROM $table2 INNER JOIN $table1 ON $table1.id = $table2.Owner AND $table2.pic_id = '$pic_id'");
+$result1 = mysql_query( "SELECT $table2.FileNameV, $table2.Owner, $table1.id, $table1.username, $table1.name, $table1.vorname, $table1.ort 
+FROM $table2 INNER JOIN $table1 
+ON $table1.id = $table2.Owner 
+AND $table2.pic_id = '$pic_id'");
 echo mysql_error();
 $num1 = mysql_num_rows($result1);
 $row = mysql_fetch_array($result1);

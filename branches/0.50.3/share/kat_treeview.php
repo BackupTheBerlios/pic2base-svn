@@ -12,8 +12,9 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 
 $sel_one = "<IMG src='$inst_path/pic2base/bin/share/images/one.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='einzelne Bilder dieser Kategorie ausw&auml;hlen'>";
 $sel_all = "<IMG src='$inst_path/pic2base/bin/share/images/all.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='alle Bilder dieser Kategorie ausw&auml;hlen'>";
-		
-//Datei wird zur Navigation durch die Kategorien mit Hilfe einer Baumstruktur verwendet
+//#################################################################################################		
+//#   Datei wird zur Navigation durch die Kategorien mit Hilfe einer Baumstruktur verwendet   #####
+//#################################################################################################
 //$ziel = $target_url;
 //echo $base_file;
 //echo $modus;
@@ -24,12 +25,12 @@ $sel_all = "<IMG src='$inst_path/pic2base/bin/share/images/all.gif' width='22' h
 
 if(array_key_exists('mod',$_GET))
 {
-	$mod = $_GET['mod']; // fuer register_globals = off
+	$mod = $_GET['mod'];
 }
 
 if(array_key_exists('kat_id',$_GET))
 {
-	$kat_id = $_GET['kat_id']; // fuer register_globals = off
+	$kat_id = $_GET['kat_id'];
 }
 else
 {
@@ -300,7 +301,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 				<TD>
 				<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$kat_info_link."</SPAN></TD>
 				<TD></TD>
-				<TD style='font-size:12px;text-align:right;'></TD>
+				<TD style='font-size:12px;text-align:right;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>
 				</TR>";
 			}
 			ELSE

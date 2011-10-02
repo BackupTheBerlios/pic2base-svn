@@ -51,6 +51,12 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 		$row = mysql_fetch_array($result1);
 		$pic_id = $row['pic_id'];
 		$FileNameOri = $row['FileNameOri'];
+		$datei_mono = $monochrome_path."/".$pic_id."_mono.jpg";
+		$datei_hist = $hist_path."/".$pic_id."_hist.gif";
+		$datei_hist_r = $hist_path."/".$pic_id."_hist_0.gif";
+		$datei_hist_g = $hist_path."/".$pic_id."_hist_1.gif";
+		$datei_hist_b = $hist_path."/".$pic_id."_hist_2.gif";
+		$datei_tmp = $pic_path."/tmp/".$pic_id.".jpg";
 	}
 	ELSE
 	{
@@ -67,10 +73,6 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 	//Das Bild wird aus der Tabelle pictures geloescht:
 	$result4 = mysql_query( "DELETE FROM $table2 WHERE pic_id = '$pic_id' AND FileName = '$FileName'");
 	echo mysql_affected_rows(). " Eintrag wurden aus der Bild-Tabelle gel&ouml;scht<BR>";
-	
-	//EXIF-Data-Taballe wird bereinigt;
-	$result6 = mysql_query( "DELETE FROM $table14 WHERE pic_id = '$pic_id'");
-	echo mysql_affected_rows(). " Eintrag wurden aus der Meta-Daten-Tabelle gel&ouml;scht<BR>";
 	
 	//alle Bilder werden aus der Verzeichnis-Struktur geloescht:
 	$l1 = unlink($datei_ori);
@@ -93,6 +95,44 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 	{
 		echo "Vorschau-Bild (Thumb) wurde gel&ouml;scht<BR>";
 	}
+	$l5 = unlink($datei_mono);
+	IF($l5)
+	{
+		echo "Monochrome-Vorschau wurde gel&ouml;scht<BR>";
+	}
+	$l6 = unlink($datei_hist);
+	IF($l6)
+	{
+		echo "Histogramm (gr) wurde gel&ouml;scht<BR>";
+	}
+	$l7 = unlink($datei_hist_r);
+	IF($l7)
+	{
+		echo "Histogramm (r) wurde gel&ouml;scht<BR>";
+	}
+	$l8 = unlink($datei_hist_g);
+	IF($l8)
+	{
+		echo "Histogramm (g) wurde gel&ouml;scht<BR>";
+	}
+	$l9 = unlink($datei_hist_b);
+	IF($l9)
+	{
+		echo "Histogramm (b) wurde gel&ouml;scht<BR>";
+	}
+	IF(@fopen($datei_tmp,'r'))
+	{
+		$l10 = unlink($datei_tmp);
+		IF($l10)
+		{
+			echo "tempor&auml;re Vorschaudatei wurde gel&ouml;scht<BR>";
+		}
+	}
+	ELSE
+	{
+		echo "Es war kein temp. Vorschaubild vorhanden.<BR>";
+	}
+	
 	//Behandlung eventuell vorhandener Nicht-JPG-Bilder:
 	//es wird ermittelt, ob im Originale-Ordner weitere Dateien mit dem Stamm-Namen existieren (z.B. 1234567676)
 	//Wenn ja, wird geprueft, wieviel hiervon Scene-Dateien sind (z.B. 1234567676-1.jpg) und wieviele Nicht-JPG-Bilder sind (z.B. 1234567676.bmp)
@@ -131,7 +171,7 @@ if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'de
 			}
 		}
 	}
-	echo "<BR>Das Bild im Original-Dateiformat wurde aus der Datenbank gel&ouml;scht.<BR><BR>
+	echo "<BR>Die Original-Datei wurde gel&ouml;scht.<BR><BR>
 	Schlie&szlig;en Sie nun bitte dieses Fenster und aktualisieren dann das pic2base-Fenster.<BR>
 	<BR><CENTER><FORM name='zu'><INPUT TYPE='button' name='close' VALUE='Fenster schlie&szlig;en' OnClick='javascript:window.close()' tabindex='1'></FORM></CENTER>";
 

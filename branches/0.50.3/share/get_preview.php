@@ -280,17 +280,18 @@ SWITCH ($modus)
 		//###########################################################################################################
 		CASE '1':
 		//Wenn die Wurzel-Kategorie gewaehlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
-		$result2 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table2.note 
-		FROM $table14, $table2 
-		WHERE ($table2.pic_id = $table14.pic_id 
-		AND $table2.Owner = '$user_id' 
-		AND $table2.has_kat = '0' $krit2) 
-		ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
-		$num2 = mysql_num_rows($result2);
+		$result2 = mysql_query("SELECT DateTimeOriginal, ShutterCount, pic_id, FileName, FileNameHQ, FileNameV, has_kat, FileSize, Orientation, note, Owner
+		FROM $table2 
+		WHERE Owner = '$user_id' 
+		AND has_kat = '0' $krit2 
+		ORDER BY DateTimeOriginal, ShutterCount");
+		echo mysql_error();
+		@$num2 = mysql_num_rows($result2);
 		$N = $num2;
 		SWITCH ($N)
 		{
 			CASE '0':
+			CASE '':
 			echo "<p class='gross' style='color:green; text-align:center;'>Jedem Bild wurde mind. eine Kategorie zugewiesen.</p>";
 			break;
 			
@@ -314,8 +315,8 @@ SWITCH ($modus)
 				$FileName = mysql_result($result2, $i2, 'FileName');
 				$FileNameHQ = mysql_result($result2, $i2, 'FileNameHQ');
 				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
-				$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
-				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
+				//$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
+				$FileSize = mysql_result($result2, $i2, 'FileSize');
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
@@ -365,18 +366,20 @@ SWITCH ($modus)
 		{
 			IF($treestatus == 'plus')
 			{
-				$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 
-				WHERE ($table2.pic_id = $table10.pic_id 
-				AND $table14.pic_id = $table2.pic_id 
-				AND $table10.kat_id = '$ID' $krit2) 
-				ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+				$result2 = mysql_query("SELECT $table2.*, $table10.* 
+				FROM $table2, $table10 
+				WHERE $table2.pic_id = $table10.pic_id 
+				AND $table10.kat_id = '$ID' 
+				$krit2 
+				ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount");
 			}
 			ELSEIF($treestatus == 'minus')
 			{
 				$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id FROM $table10
 				WHERE ($table10.kat_id = '$kat_id') 
 				AND ($table10.pic_id <> ALL (SELECT pic_id 
-				FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) 
+				FROM $table10 LEFT JOIN $table4 
+				ON ($table10.kat_id = $table4.kat_id) 
 				WHERE parent = '$kat_id'))");
 				echo mysql_error();
 			}
@@ -385,13 +388,12 @@ SWITCH ($modus)
 		{
 			IF($treestatus == 'plus')
 			{
-				$result2 = mysql_query( "SELECT $table2.*, $table10.*, $table14.* 
-				FROM $table14, $table2, $table10 
+				$result2 = mysql_query( "SELECT $table2.*, $table10.* 
+				FROM $table2, $table10 
 				WHERE ($table2.pic_id = $table10.pic_id 
-				AND $table14.pic_id = $table2.pic_id 
 				AND $table10.kat_id = '$ID' 
 				AND $table2.Owner = '$user_id' $krit2) 
-				ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+				ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount");
 			}
 			ELSEIF($treestatus == 'minus')
 			{
@@ -401,7 +403,8 @@ SWITCH ($modus)
 				AND $table10.pic_id = $table2.pic_id 
 				AND $table2.Owner = '$user_id' 
 				AND ($table10.pic_id <> ALL (SELECT pic_id 
-				FROM $table10 LEFT JOIN $table4 ON ($table10.kat_id = $table4.kat_id) WHERE parent = '$kat_id'))");
+				FROM $table10 LEFT JOIN $table4 
+				ON ($table10.kat_id = $table4.kat_id) WHERE parent = '$kat_id'))");
 			}
 		}
 		echo mysql_error();
@@ -424,12 +427,11 @@ SWITCH ($modus)
 			FOR ($i2=0; $i2<$num2; $i2++)
 			{
 				$pic_id = mysql_result($result2, $i2, 'pic_id');
-				$res2_1 = mysql_query("SELECT FileName, FileNameHQ, FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
+				$res2_1 = mysql_query("SELECT FileName, FileNameHQ, FileNameV, FileSize FROM $table2 WHERE pic_id = '$pic_id'");
 				$FileName = mysql_result($res2_1, isset($i2_1), 'FileName');
 				$FileNameHQ = mysql_result($res2_1, isset($i2_1), 'FileNameHQ');
 				$FileNameV = mysql_result($res2_1, isset($i2_1), 'FileNameV');
-				$result24 = mysql_query( "SELECT FileSize, Orientation FROM $table14 WHERE pic_id = '$pic_id'");
-				$FileSize = mysql_result($result24, isset($i24), 'FileSize');
+				$FileSize = mysql_result($res2_1, isset($i2_1), 'FileSize');
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
 				{
@@ -480,21 +482,21 @@ SWITCH ($modus)
 	{
 		CASE '0':
 		//Anzeige der Jahrgaenge
-		$krit1 = "$table14.DateTimeOriginal LIKE '$j%'";
+		$krit1 = "$table2.DateTimeOriginal LIKE '$j%'";
 		break;
 		
 		Case '00':
-		$krit1 = "$table14.DateTimeOriginal = '0000-00-00 00:00:00'";
+		$krit1 = "$table2.DateTimeOriginal = '0000-00-00 00:00:00'";
 		break;
 		
 		default:
 		IF($t == '0')
 		{
-			$krit1 = "$table14.DateTimeOriginal LIKE '$j-$m%'";
+			$krit1 = "$table2.DateTimeOriginal LIKE '$j-$m%'";
 		}
 		ELSE
 		{
-			$krit1 = "$table14.DateTimeOriginal LIKE '$j-$m-$t%'";
+			$krit1 = "$table2.DateTimeOriginal LIKE '$j-$m-$t%'";
 		}
 		break;
 	}
@@ -502,19 +504,17 @@ SWITCH ($modus)
 	
 	IF(hasPermission($c_username, 'editallpics'))
 	{
-		$result2 = mysql_query( "SELECT $table2.*, $table14.* FROM $table14, $table2
-		WHERE ($table14.pic_id = $table2.pic_id 
-		AND $krit1) 
-		ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+		$result2 = mysql_query( "SELECT * FROM $table2
+		WHERE $krit1 
+		ORDER BY DateTimeOriginal, ShutterCount");
 	}
 	ELSEIF(hasPermission($c_username, 'editmypics'))
 	{
 		echo "V2";
-		$result2 = mysql_query( "SELECT $table2.*, $table14.* FROM $table14, $table2 
-		WHERE ($table14.pic_id = $table2.pic_id
-		AND $table2.Owner = '$user_id' 
+		$result2 = mysql_query( "SELECT * FROM $table2 
+		WHERE (Owner = '$user_id' 
 		AND $krit1) 
-		ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");	
+		ORDER BY DateTimeOriginal, ShutterCount");	
 	}
 	echo mysql_error();
 	$num2 = mysql_num_rows($result2);
@@ -533,12 +533,13 @@ SWITCH ($modus)
 		FOR ($i2=0; $i2<$num2; $i2++)
 		{
 			$pic_id = mysql_result($result2, $i2, 'pic_id');
-			$res2_1 = mysql_query("SELECT FileName, FileNameHQ, FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
+			$res2_1 = mysql_query("SELECT FileName, FileNameHQ, FileNameV, FileSize, Orientation 
+			FROM $table2 
+			WHERE pic_id = '$pic_id'");
 			$FileName = mysql_result($res2_1, isset($i2_1), 'FileName');
 			$FileNameHQ = mysql_result($res2_1, isset($i2_1), 'FileNameHQ');
 			$FileNameV = mysql_result($res2_1, isset($i2_1), 'FileNameV');
-			$result24 = mysql_query( "SELECT FileSize, Orientation FROM $table14 WHERE pic_id = '$pic_id'");
-			$FileSize = mysql_result($result24, isset($i24), 'FileSize');
+			$FileSize = mysql_result($res2_1, isset($i2_1), 'FileSize');
 			//abgeleitete Groessen:
 			IF ($FileNameV == '')
 			{
@@ -610,31 +611,45 @@ SWITCH ($modus)
 			{
 				CASE '0':
 				//Anzeige der Jahrgaenge
-				$krit1 = "WHERE $table14.DateTimeOriginal LIKE '$j%'";
+				$krit1 = "WHERE $table2.DateTimeOriginal LIKE '$j%'";
 				break;
 				
 				Case '00':
-				$krit1 = "WHERE $table14.DateTimeOriginal = '0000-00-00 00:00:00'";
+				$krit1 = "WHERE $table2.DateTimeOriginal = '0000-00-00 00:00:00'";
 				break;
 				
 				default:
 				IF($t == '0')
 				{
-					$krit1 = "WHERE $table14.DateTimeOriginal LIKE '$j-$m%'";
+					$krit1 = "WHERE $table2.DateTimeOriginal LIKE '$j-$m%'";
 				}
 				ELSE
 				{
-					$krit1 = "WHERE $table14.DateTimeOriginal LIKE '$j-$m-$t%'";
+					$krit1 = "WHERE $table2.DateTimeOriginal LIKE '$j-$m-$t%'";
 				}
 				break;
 			}
-			$statement = "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.note, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+			$statement = "SELECT DateTimeOriginal, ShutterCount, pic_id, note, FileNameV, FileNameHQ, FileName 
+			FROM $table2 
+			$krit1 
+			$krit2 
+			ORDER BY DateTimeOriginal, ShutterCount";
 			//echo $statement; //$Statement wird zur Erzeugung der pdf-Galerie benoetigt	
 			
-			$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table14.ExifImageWidth, $table14.ExifImageHeight, $table14.Orientation, $table2.pic_id, $table2.Owner, $table2.note, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( "SELECT DateTimeOriginal, ShutterCount, pic_id, ExifImageWidth, ExifImageHeight, Orientation, Owner, note, FileName 
+			FROM $table2 
+			$krit1 
+			$krit2 ORDER BY DateTimeOriginal, ShutterCount");
 			echo mysql_error();
 			
-			$kml_statement = "SELECT $table2.pic_id, $table2.loc_id, $table2.note, $table2.FileNameHQ, $table14.Caption_Abstract, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount FROM $table2 LEFT JOIN $table14 ON $table2.pic_id = $table14.pic_id $krit1 $krit2 AND $table2.loc_id <>'0' ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+			$kml_statement = "SELECT pic_id, City, GPSLongitude, GPSLatitude, GPSAltitude, note, FileNameHQ, Caption_Abstract, DateTimeOriginal, ShutterCount 
+			FROM $table2 
+			$krit1 
+			$krit2 
+			AND City <> 'Ortsbezeichnung'
+			AND City <> '' 
+			ORDER BY DateTimeOriginal, ShutterCount";
+			//echo $kml_statement;
 			$kml_cod_statement = urlencode($kml_statement);
 			$result8 = mysql_query( "$kml_statement");
 			echo mysql_error();
@@ -728,9 +743,11 @@ SWITCH ($modus)
 	
 				CASE '1':
 				//Wenn die Wurzel-Kategorie gewaehlt wurde, werden alle Bilder angezeigt, denen noch keine Kategorie zugewiesen wurde:
-				$result6_1 = mysql_query( "SELECT $table14.DateTimeOriginal, $table14.ShutterCount, $table14.pic_id, $table2.pic_id, $table2.Owner, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.has_kat, $table14.FileSize, $table14.Orientation, $table14.ExifImageWidth, $table14.ExifImageHeight, $table2.note FROM $table14, $table2 WHERE ($table2.pic_id = $table14.pic_id AND $table2.has_kat = '0' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+				$result6_1 = mysql_query( "SELECT *	FROM $table2 
+				WHERE has_kat = '0' $krit2 
+				ORDER BY DateTimeOriginal, ShutterCount");
 					
-		//#########################################################	
+				//#########################################################	
 			
 				function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
 				{
@@ -780,6 +797,7 @@ SWITCH ($modus)
 				}			
 	
 				$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder (hier: ohne Kategorie-Zuweisung
+				echo "Bilder ohne Kat.-Zuw: ".$num6_1." - ";
 				$previewLayerHtml .= '
 				<script language="javascript">
 				var imageArray = new Array();
@@ -793,7 +811,7 @@ SWITCH ($modus)
 				}
 				</script>
 				';
-		//########################################################
+				//########################################################
 				
 				$N = $num6_1;
 				SWITCH ($N)
@@ -810,16 +828,19 @@ SWITCH ($modus)
 					echo $N." Bilder sind ohne Kategorie-Zuweisung.";
 					break;
 				}
-				
-				//echo "	<TABLE border='0' align='center'><TR></TABLE>";
 				break;
 			
 				default:
 				//bei allen Kategorien ausser der Wurzel:
 				//Ermittlung aller Bilder der Kategorie:
-				$statement = "SELECT $table2.*, $table10.*, $table14.* FROM $table14, $table2, $table10 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+				$statement = "SELECT $table2.*, $table10.*
+				FROM $table2, $table10 
+				WHERE ($table2.pic_id = $table10.pic_id 
+				AND $table10.kat_id = '$ID' 
+				$krit2) 
+				ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount";
 				$result6_1 = mysql_query("$statement");
-		//#########################################################				
+				//#########################################################				
 				function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
 				{
 					$res = "";
@@ -867,7 +888,8 @@ SWITCH ($modus)
 					return $res;
 				}			
 	
-				$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
+				$num6_1 = mysql_num_rows($result6_1);
+//#######		echo $num6_1;  	//Gesamtzahl der gefundenen Bilder
 				$previewLayerHtml .= '
 				<script language="javascript">
 				var imageArray = new Array();
@@ -883,7 +905,13 @@ SWITCH ($modus)
 				';
 		//########################################################
 				//davon Ermittlung aller Bilder mit Geo-Referenzierung:
-				$kml_statement = "SELECT $table2.*, $table10.*, $table14.* FROM $table2, $table10, $table14 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' AND loc_id <>'0' $krit2)";
+				$kml_statement = "SELECT $table2.*, $table10.* 
+				FROM $table2, $table10 
+				WHERE ($table2.pic_id = $table10.pic_id 
+				AND $table10.kat_id = '$ID' 
+				AND location <> 'Ortsbezeichnung'
+				AND location <> '' 
+				$krit2)";
 				$kml_cod_statement = urlencode($kml_statement);
 				$result8 = mysql_query( "$kml_statement");
 			
@@ -990,7 +1018,7 @@ SWITCH ($modus)
 			//echo htmlentities("Laenge: ".$long.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
 			
 			//qudratischer Auswahlbereich:
-			$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max') AND (altitude > '$alt')");
+			$result5 = mysql_query( "SELECT * FROM $table2 WHERE (GPSLongitude > '$long_min' AND GPSLongitude < '$long_max') AND (GPSLlatitude > '$lat_min' AND GPSLatitude < '$lat_max') AND (GPSAltitude > '$alt')");
 			//echo mysql_error();
 			//Festlegung fuer Pruefung, ob Punkt im KREIS liegt:
 			$long_mittel = $long;
@@ -1003,7 +1031,7 @@ SWITCH ($modus)
 			//echo "an get_preview &uuml;bergebene Ortsbezeichnung: ".htmlentities($ort)."<BR>";
 			$ORT = $ort;
 			$ort = utf8_decode($ort);
-			$result10 = mysql_query( "SELECT * FROM $table12 WHERE location = \"$ort\"");
+			$result10 = mysql_query( "SELECT * FROM $table2 WHERE City = \"$ort\"");
 			$num10 = mysql_num_rows($result10);
 			IF($num10 == '0')
 			{
@@ -1014,8 +1042,8 @@ SWITCH ($modus)
 			$long = '';
 			FOR ($i10='0'; $i10<$num10; $i10++)
 			{
-				$lat = $lat + mysql_result($result10, $i10, 'latitude');
-				$long = $long + mysql_result($result10, $i10, 'longitude');
+				$lat = $lat + mysql_result($result10, $i10, 'GPSLatitude');
+				$long = $long + mysql_result($result10, $i10, 'GPSLongitude');
 			}
 			//echo "Summe Breite: ".$lat.", Summe Laenge: ".$long."<BR>";
 			$lat_mittel = $lat / $num10;
@@ -1046,7 +1074,9 @@ SWITCH ($modus)
 			//echo htmlentities("Laenge: ".$long_mittel.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
 			
 			//qudratischer Auswahlbereich:
-			$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > '$long_min' AND longitude < '$long_max') AND (latitude > '$lat_min' AND latitude < '$lat_max')");
+			$result5 = mysql_query( "SELECT * FROM $table2 
+			WHERE (GPSLongitude > '$long_min' AND GPSLongitude < '$long_max') 
+			AND (GPSLatitude > '$lat_min' AND GPSLatitude < '$lat_max')");
 			//echo mysql_error();
 			break;
 		}
@@ -1058,28 +1088,35 @@ SWITCH ($modus)
 			}
 			ELSE
 			{
+				$p_i_arr = array();
 				FOR($i5=0; $i5<$num5; $i5++)
 				{
-					$longitude = mysql_result($result5, $i5, 'longitude');
-					$latitude = mysql_result($result5, $i5, 'latitude');
+					$longitude = mysql_result($result5, $i5, 'GPSLongitude');
+					$latitude = mysql_result($result5, $i5, 'GPSLatitude');
 					//Pruefung, ob der Punkt in einem KREIS-Bereich um das Zentrum herum liegt:
 					$inside = isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius);
 					IF($inside == 'true')
 					{
 						//echo "Punkt ist im Kreis ".$radius."<BR>";
-						$loc_id = mysql_result($result5, $i5, 'loc_id');
+						//$loc_id = mysql_result($result5, $i5, 'loc_id');
 						//echo "LOC_ID: ".$loc_id."<BR>";
 						SWITCH($bewertung)
 						{
 							CASE '6':
-								$result9 = mysql_query( "SELECT * FROM $table2 WHERE loc_id = '$loc_id'");
+								$result9 = mysql_query( "SELECT * FROM $table2
+								WHERE GPSLongitude = '$longitude' AND GPSLatitude = '$latitude'");
 							break;
 							
 							default:
-								$result9 = mysql_query( "SELECT * FROM $table2 WHERE loc_id = '$loc_id' $krit2");
+								//echo $krit2;
+								$result9 = mysql_query( "SELECT * FROM $table2
+								WHERE GPSLongitude = '$longitude' AND GPSLatitude = '$latitude'
+								$krit2");
+								echo mysql_error();
 							break;
 						}
 						$num9 = mysql_num_rows($result9);
+						
 						IF($num9 > 0)
 						{
 							//die pic_id's werden zur weiteren Verwendung in ein Array geschrieben:
@@ -1107,7 +1144,7 @@ SWITCH ($modus)
 						}
 					}
 				}
-				$result99 = mysql_query("SELECT * FROM $table14 WHERE ($bed) ORDER BY DateTimeOriginal, ShutterCount");
+				$result99 = mysql_query("SELECT * FROM $table2 WHERE ($bed) ORDER BY DateTimeOriginal, ShutterCount");
 				$num99 = mysql_num_rows($result99);
 				FOR($i99=0; $i99<$num99; $i99++)
 				{
@@ -1125,33 +1162,15 @@ SWITCH ($modus)
 				$num_pic = count($pic_id_arr);	//Gesamtzahl der gefundenen Bilder
 				for ($imageArrayIndex = 0; $imageArrayIndex < $num_pic; $imageArrayIndex++)
 				{
-					/*
-					$resultX = mysql_query("SELECT $table2.pic_id, $table2.FileName, $table2.Owner, $table14.pic_id, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.Orientation
-					FROM $table2 INNER JOIN $table14
-					ON $table2.pic_id = $table14.pic_id
-					AND $table2.pic_id = '$pic_id_arr[$imageArrayIndex]'
-					ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
-					
-					$fileName = mysql_result($resultX, 0, 'FileName');
-					$fileNamePrefix = str_replace('.jpg', '', $fileName);
-					$ratio = (mysql_result($resultX, 0, 'ExifImageWidth') / mysql_result($resultX, 0, 'ExifImageHeight'));
-					if (mysql_result($resultX, 0, 'Orientation') >= '5')
-					{
-						$ratio = 1.0 / $ratio;
-					}
-					$downloadStatus = 0;
-					//Erzeugung der Download-Icons:
-					$Owner = mysql_result($resultX, 0, 'Owner');
-					*/
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
 					
 					$res1 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
-					$res2 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
+					//$res2 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
 					
 					$fileName = mysql_result($res1, 0, 'FileName');
 					$fileNamePrefix = str_replace('.jpg', '', $fileName);
-					$ratio = (mysql_result($res2, 0, 'ExifImageWidth') / mysql_result($res2, 0, 'ExifImageHeight'));
-					if (mysql_result($res2, 0, 'Orientation') >= '5')
+					$ratio = (mysql_result($res1, 0, 'ExifImageWidth') / mysql_result($res1, 0, 'ExifImageHeight'));
+					if (mysql_result($res1, 0, 'Orientation') >= '5')
 					{
 						$ratio = 1.0 / $ratio;
 					}
@@ -1234,12 +1253,12 @@ SWITCH ($modus)
 		$desc5 = utf8_decode(strip_tags($desc5));
 		
 		//Montage des SQL-Statements:
-		$statement = 'SELECT '.$table2.'.*, '.$table14.'.* FROM '.$table2.', '.$table14.' WHERE '.$table2.'.pic_id = '.$table14.'.pic_id AND ('.$table14.'.Caption_Abstract LIKE ';
+		$statement = 'SELECT * FROM '.$table2.' WHERE (Caption_Abstract LIKE ';
 		
 		IF($desc1 !=='')
 		{
 			$statement .= '\'%'.$desc1.'%\'';
-		
+			//echo $statement;
 			SWITCH($bed1)
 			{
 				CASE '0':
@@ -1249,14 +1268,14 @@ SWITCH ($modus)
 				CASE '1':
 				IF($desc2 !=='')
 				{
-					$statement .= ' AND '.$table14.'.Caption_Abstract LIKE \'%'.$desc2.'%\'';
+					$statement .= ' AND Caption_Abstract LIKE \'%'.$desc2.'%\'';
 				}
 				break;
 				
 				CASE '2':
 				IF($desc2 !=='')
 				{
-					$statement .= ' OR '.$table14.'.Caption_Abstract LIKE \'%'.$desc2.'%\'';
+					$statement .= ' OR Caption_Abstract LIKE \'%'.$desc2.'%\'';
 				}
 				break;
 			}
@@ -1270,14 +1289,14 @@ SWITCH ($modus)
 				CASE '1':
 				IF($desc3 !=='')
 				{
-					$statement .= ' AND '.$table14.'.Caption_Abstract LIKE \'%'.$desc3.'%\'';
+					$statement .= ' AND Caption_Abstract LIKE \'%'.$desc3.'%\'';
 				}
 				break;
 				
 				CASE '2':
 				IF($desc3 !=='')
 				{
-					$statement .= ' OR '.$table14.'.Caption_Abstract LIKE \'%'.$desc3.'%\'';
+					$statement .= ' OR Caption_Abstract LIKE \'%'.$desc3.'%\'';
 				}
 				break;
 			}
@@ -1291,14 +1310,14 @@ SWITCH ($modus)
 				CASE '1':
 				IF($desc4 !=='')
 				{
-					$statement .= ' AND '.$table14.'.Caption_Abstract LIKE \'%'.$desc4.'%\'';
+					$statement .= ' AND Caption_Abstract LIKE \'%'.$desc4.'%\'';
 				}
 				break;
 				
 				CASE '2':
 				IF($desc4 !=='')
 				{
-					$statement .= ' OR '.$table14.'.Caption_Abstract LIKE \'%'.$desc4.'%\'';
+					$statement .= ' OR Caption_Abstract LIKE \'%'.$desc4.'%\'';
 				}
 				break;
 			}
@@ -1312,14 +1331,14 @@ SWITCH ($modus)
 				CASE '1':
 				IF($desc5 !=='')
 				{
-					$statement .= ' AND '.$table14.'.Caption_Abstract LIKE \'%'.$desc5.'%\'';
+					$statement .= ' AND Caption_Abstract LIKE \'%'.$desc5.'%\'';
 				}
 				break;
 				
 				CASE '2':
 				IF($desc5 !=='')
 				{
-					$statement .= ' OR '.$table14.'.Caption_Abstract LIKE \'%'.$desc5.'%\'';
+					$statement .= ' OR Caption_Abstract LIKE \'%'.$desc5.'%\'';
 				}
 				break;
 			}
@@ -1341,16 +1360,18 @@ SWITCH ($modus)
 				$wert = substr($bewertung,-1);
 				$krit2 = "AND $table2.note $vgl_op '$wert'";
 				$stat_all = $statement." ".$krit2;
-				$stat_ref = $stat_all.") AND ($table2.loc_id <>'0' OR $table2.loc_id <>'')$krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+//				echo "Zeile 1375, stat_all: ".$stat_all."<BR><BR>";
+				$stat_ref = $stat_all.") AND (location <>'Ortsbezeichnung' OR location <>'') $krit2 ORDER BY DateTimeOriginal, ShutterCount";
+//				echo "Zeile 1377: ".$stat_ref."<BR><BR>";
 			}
 			ELSE
 			{
 				$stat_all = $statement;
-				$stat_ref = $stat_all.") AND ($table2.loc_id <>'0' OR $table2.loc_id <>'') ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+				$stat_ref = $stat_all.") AND (location <>'Ortsbezeichnung' OR location <>'') ORDER BY DateTimeOriginal, ShutterCount";
 			}
 			
 			//echo $bewertung.", ".$stat_all.")<BR>";
-			$result6_1 = mysql_query( $stat_all.") ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$result6_1 = mysql_query( $stat_all.") ORDER BY DateTimeOriginal, ShutterCount");
 			
 //#########################################################################				
 		function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
@@ -1430,11 +1451,11 @@ SWITCH ($modus)
 			//echo $stat_ref.")<BR>";
 			$kml_cod_statement = urlencode($stat_ref);
 			$result8 = mysql_query( $stat_ref);
-			$num8 = mysql_num_rows($result8);
+			@$num8 = mysql_num_rows($result8);
 			//echo "Gesamtanzahl der georeferenzierten Bilder: ".$num8." Treffer<BR>";
 			//echo mysql_error();
-			$krit1 = substr($stat_all,56).")";
-			//echo $krit1."<BR>";
+			$krit1 = substr($stat_all,22).")";
+//			echo "Zeile 1470: ".$krit1."<BR>";
 			IF ($num6_1 == '0')
 			{
 				echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die den gew&auml;hlten Suchbegriffen entsprechen!</p>";
@@ -1451,17 +1472,14 @@ SWITCH ($modus)
 			$num6_1 = '-1';
 			return;
 		}
-		$statement = "$stat_all) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+		$statement = "$stat_all) ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount";
+//		echo "Zeile 1491: ".$statement."<BR><BR>";
 		break;
 //###################################################################################	
 		CASE 'exif':
-		//Unterscheidung, in welcher Tabelle gesucht werden soll:
-		IF(substr($zw1,'0','1') == '*')
-		{
-			//Recherche nach Nicht-Meta-Daten (in pictures)
 			//Statement: finde in pictures alles, bei dem in dem gewaehlten Feld der gewuenschte Wert vorkommt, die Qualitaet der gewaehlten Qualitaet entspricht , sortiert nach dem Aufnahmedatum. 
 			$zusatzwert1 = $zw1; //der nicht veraenderte Zusatzwert wird weiterhin benoetigt!
-			$zw1 = str_replace('*', '', $zw1);
+			//$zw1 = str_replace('*', '', $zw1);
 			IF($bedingung1 == 'LIKE')
 			{
 				$krit1 = "WHERE ".$table2.".".$zusatz1." LIKE '%".$zw1."%'";
@@ -1471,36 +1489,28 @@ SWITCH ($modus)
 				$krit1 = "WHERE ".$table2.".".$zusatz1." ".$bedingung1." '".$zw1."'";
 			}
 			
-			$statement = "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
-			$result6_1 = mysql_query( "SELECT $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.Owner, $table2.FileName, $table2.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
+			$statement = "SELECT DateTimeOriginal, ShutterCount, ExifImageHeight, ExifImageWidth, Orientation, note, pic_id, FileNameV, FileNameHQ, FileName, $zusatz1 
+			FROM $table2 
+			$krit1 
+			$krit2 
+			ORDER BY DateTimeOriginal, ShutterCount";
+			//echo $statement;
+			$result6_1 = mysql_query( "SELECT DateTimeOriginal, ShutterCount, ExifImageHeight, ExifImageWidth, Orientation, note, pic_id, Owner, FileName, $zusatz1 
+			FROM $table2 
+			$krit1 
+			$krit2 
+			ORDER BY DateTimeOriginal, ShutterCount");
 			echo mysql_error();
 			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
-			$kml_statement = "SELECT * FROM $table2 $krit1 AND $table2.loc_id <>'0' $krit2";
+			$kml_statement = "SELECT * FROM $table2 
+			$krit1 
+			AND location <> 'Ortsbezeichnung'
+			AND location <> '' 
+			$krit2";
 			$kml_cod_statement = urlencode($kml_statement);
 			$result8 = mysql_query( "$kml_statement");
-		}
-		ELSE
-		{
-			//Recherche nach Meta-Daten, NICHT Geo-Daten! (in meta_data)
-			IF($bedingung1 == 'LIKE')
-			{
-				$krit1 = "WHERE ".$table14.".".$zusatz1." LIKE '%".$zw1."%'";
-			}
-			ELSE
-			{
-				$krit1 = "WHERE ".$table14.".".$zusatz1." ".$bedingung1." '".$zw1."'";
-			}
-			//echo $krit1;
-			$statement = "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
-			
-			$result6_1 = mysql_query( "SELECT $table14.$zusatz1, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.ExifImageHeight, $table14.ExifImageWidth, $table14.Orientation, $table2.pic_id, $table2.Owner, $table2.FileName FROM $table14, $table2 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount");
-			echo mysql_error();
-			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
-			$kml_statement = "SELECT $table2.pic_id, $table2.loc_id, $table2.FileNameHQ, $table14.$zusatz1 FROM $table14, $table2 $krit1 AND $table2.loc_id <>'0' AND $table2.pic_id = $table14.pic_id $krit2";
-			$kml_cod_statement = urlencode($kml_statement);
-			$result8 = mysql_query( "$kml_statement");
-		}
-		$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
+		
+			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
 //#########################################################			
 		function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
 		{
@@ -1567,7 +1577,7 @@ SWITCH ($modus)
 		</script>
 		';
 		
-		$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
+		@$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
 		SWITCH ($num6_1)
 		{
 			CASE '0':
@@ -1684,8 +1694,7 @@ SWITCH ($modus)
 				$kriterium4 = '';
 			}
 			//Ermittlung aller Bilder lt. Kategorien und Bewertung:
-//			$statement = "SELECT $table2.*, $table10.*, $table14.* FROM $table2, $table10, $table14 WHERE $table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND ($kriterium1$kriterium2$kriterium3$kriterium4$kriterium) $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
-			$statement = "SELECT * from $table2 LEFT JOIN $table10 ON ($table2.pic_id=$table10.pic_id) LEFT JOIN $table14 ON ($table2.pic_id=$table14.pic_id) WHERE ($kriterium1$kriterium2$kriterium3$kriterium4$kriterium) $krit2 GROUP BY $table2.pic_id ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
+			$statement = "SELECT * FROM $table2 LEFT JOIN $table10 ON ($table2.pic_id=$table10.pic_id) LEFT JOIN $table14 ON ($table2.pic_id=$table14.pic_id) WHERE ($kriterium1$kriterium2$kriterium3$kriterium4$kriterium) $krit2 GROUP BY $table2.pic_id ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount";
 			//echo "alle Bilder: ".$statement."<BR>";
 			$Stat_ment =  urlencode($statement);
 			$result6_1 = mysql_query("$statement");
@@ -1755,8 +1764,14 @@ SWITCH ($modus)
 			';
 //########################################################
 			//davon Ermittlung aller Bilder mit Geo-Referenzierung:
-			$kml_statement = "SELECT $table2.*, $table10.*, $table14.* FROM $table2, $table10, $table14 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND ($kriterium1$kriterium2$kriterium3$kriterium4$kriterium) AND loc_id <>'0' $krit2)";
-			//echo $kml_statement."<BR>";
+			$kml_statement = "SELECT $table2.*, $table10.* 
+			FROM $table2, $table10
+			WHERE ($table2.pic_id = $table10.pic_id 
+			AND ($kriterium1$kriterium2$kriterium3$kriterium4$kriterium) 
+			AND $table2.City <>'Ortsbezeichnung' 
+			AND $table2.City <>''
+			$krit2)";
+			echo "Zeile 1871: ".$kml_statement."<BR>";
 			$kml_cod_statement = urlencode($kml_statement);
 			$result8 = mysql_query( "$kml_statement");
 	
@@ -2013,10 +2028,10 @@ SWITCH ($modus)
 		IF($num6_1 > $step)
 		{
 			$zusatz .= "&#0160;&#0160;&#0160;
-			<SPAN style='cursor:pointer;' onClick='$action_2'><img src=\"$inst_path/pic2base/bin/share/images/anfang.gif\" width=\"12\" height=\"12\" /></SPAN>
-			<SPAN style='cursor:pointer;' onClick='$action_1'><img src=\"$inst_path/pic2base/bin/share/images/zurueck.gif\" width=\"12\" height=\"12\" /></SPAN> $bereich 
-			<SPAN style='cursor:pointer;' onClick='$action1'><img src=\"$inst_path/pic2base/bin/share/images/vor.gif\" width=\"12\" height=\"12\" /></SPAN>
-			<SPAN style='cursor:pointer;' onClick='$action2'><img src=\"$inst_path/pic2base/bin/share/images/ende.gif\" width=\"12\" height=\"12\" /></SPAN>".$pdf_link."</div>";
+			<SPAN style='cursor:pointer;' title='Zum ersten Filmstreifen' onClick='$action_2'><img src=\"$inst_path/pic2base/bin/share/images/anfang.gif\" width=\"12\" height=\"12\" /></SPAN>
+			<SPAN style='cursor:pointer;' title='einen Filmstreifen zur&uuml;ck' onClick='$action_1'><img src=\"$inst_path/pic2base/bin/share/images/zurueck.gif\" width=\"12\" height=\"12\" /></SPAN> $bereich 
+			<SPAN style='cursor:pointer;' title='einen Filmstreifen vor' onClick='$action1'><img src=\"$inst_path/pic2base/bin/share/images/vor.gif\" width=\"12\" height=\"12\" /></SPAN>
+			<SPAN style='cursor:pointer;' title='zum letzten Filmstreifen' onClick='$action2'><img src=\"$inst_path/pic2base/bin/share/images/ende.gif\" width=\"12\" height=\"12\" /></SPAN>".$pdf_link."</div>";
 		}
 		ELSE
 		{
@@ -2027,10 +2042,10 @@ SWITCH ($modus)
 	{
 		IF($num6_1 > $step)
 		{
-			$zusatz = "&#0160;&#0160;&#0160<SPAN style='cursor:pointer;' onClick='$action_2'><img src=\"$inst_path/pic2base/bin/share/images/anfang.gif\" width=\"12\" height=\"12\" /></SPAN>
-			<SPAN style='cursor:pointer;' onClick='$action_1'><img src=\"$inst_path/pic2base/bin/share/images/zurueck.gif\" width=\"12\" height=\"12\" /></SPAN> $bereich 
-			<SPAN style='cursor:pointer;' onClick='$action1'><img src=\"$inst_path/pic2base/bin/share/images/vor.gif\" width=\"12\" height=\"12\" /></SPAN>
-			<SPAN style='cursor:pointer;' onClick='$action2'><img src=\"$inst_path/pic2base/bin/share/images/ende.gif\" width=\"12\" height=\"12\" /></SPAN>".$pdf_link."";
+			$zusatz = "&#0160;&#0160;&#0160<SPAN style='cursor:pointer;' title='Zum ersten Filmstreifen' onClick='$action_2'><img src=\"$inst_path/pic2base/bin/share/images/anfang.gif\" width=\"12\" height=\"12\" /></SPAN>
+			<SPAN style='cursor:pointer;' title='einen Filmstreifen zur&uuml;ck' onClick='$action_1'><img src=\"$inst_path/pic2base/bin/share/images/zurueck.gif\" width=\"12\" height=\"12\" /></SPAN> $bereich 
+			<SPAN style='cursor:pointer;' title='einen Filmstreifen vor' onClick='$action1'><img src=\"$inst_path/pic2base/bin/share/images/vor.gif\" width=\"12\" height=\"12\" /></SPAN>
+			<SPAN style='cursor:pointer;' title='zum letzten Filmstreifen' onClick='$action2'><img src=\"$inst_path/pic2base/bin/share/images/ende.gif\" width=\"12\" height=\"12\" /></SPAN>".$pdf_link."";
 		}
 		ELSEIF($num6_1 > '0')
 		{
@@ -2060,15 +2075,29 @@ SWITCH ($modus)
 	SWITCH($mod)
 	{
 		CASE 'zeit':
-		$result6 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.Owner, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.FileSize FROM $table2 LEFT JOIN $table14 ON $table2.pic_id = $table14.pic_id $krit1 $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount $krit3");
+		$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, DateTimeOriginal, ShutterCount, FileSize 
+		FROM $table2
+		$krit1 
+		$krit2 
+		ORDER BY DateTimeOriginal, ShutterCount $krit3");
 		break;
 		
 		CASE 'kat':
-		$result6 = mysql_query( "SELECT $table2.*, $table14.*, $table10.* FROM $table2, $table10, $table14 WHERE ($table2.pic_id = $table10.pic_id AND $table14.pic_id = $table2.pic_id AND $table10.kat_id = '$ID' $krit2) ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount $krit3");
+		$result6 = mysql_query( "SELECT $table2.*, $table10.* 
+		FROM $table2, $table10 
+		WHERE ($table2.pic_id = $table10.pic_id 
+		AND $table10.kat_id = '$ID' $krit2) 
+		ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount $krit3");
 		break;
 		
 		CASE 'desc':
-		$result6 = mysql_query( "SELECT $table2.*, $table14.* FROM $table2, $table14 $krit1 $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount $krit3");
+			$stat = "SELECT * FROM $table2 $krit1 $krit2 ORDER BY DateTimeOriginal, ShutterCount $krit3";
+//			echo "Zeile 2138: ".$stat."<BR>Krit.1: ".$krit1.", Krit2: ".$krit2.", Krit 3: ".$krit3."<BR>";
+		$result6 = mysql_query( "SELECT * FROM $table2 
+		$krit1 
+		$krit2 
+		ORDER BY DateTimeOriginal, ShutterCount 
+		$krit3");
 		break;
 		
 		CASE 'geo':
@@ -2092,12 +2121,22 @@ SWITCH ($modus)
 			$krit1 = "WHERE $table2.pic_id = '$pic_id_arr[0]'";
 		}
 		//echo $krit1."  -  ".$krit2."<BR>";
-		$result6 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.Owner, $table2.note, $table14.DateTimeOriginal, $table14.ShutterCount, $table14.FileSize FROM $table2 LEFT JOIN $table14 ON $table2.pic_id = $table14.pic_id $krit1 $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount $krit3");
+		$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, note, DateTimeOriginal, ShutterCount, FileSize 
+		FROM $table2
+		$krit1 
+		$krit2 
+		ORDER BY DateTimeOriginal, ShutterCount 
+		$krit3");
 		echo mysql_error();
 		break;
 		
 		CASE 'exif':
-		$result6 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.Owner, $table14.pic_id, $table14.DateTimeOriginal, $table14.ShutterCount FROM $table2, $table14 $krit1 AND $table2.pic_id = $table14.pic_id $krit2 ORDER BY $table14.DateTimeOriginal, $table14.ShutterCount $krit3");
+		$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, DateTimeOriginal, ShutterCount, FileSize 
+		FROM $table2 
+		$krit1 
+		$krit2 
+		ORDER BY DateTimeOriginal, ShutterCount 
+		$krit3");
 		echo mysql_error();
 		break;
 		
@@ -2132,9 +2171,7 @@ SWITCH ($modus)
 			$FileName = mysql_result($result4, isset($i4), 'FileName');
 			$FileNameHQ = mysql_result($result4, isset($i4), 'FileNameHQ');
 			$FileNameV = mysql_result($result4, isset($i4), 'FileNameV');
-			$result23 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-//			$Orientation = mysql_result($result23, isset($i23), 'Orientation');	// 1: normal; 8: 90� nach rechts gedreht
-			$FileSize = mysql_result($result23, isset($i23), 'FileSize');
+			$FileSize = mysql_result($result4, isset($i4), 'FileSize');
 			//abgeleitete Groessen:
 			IF ($FileNameV == '')
 			{
@@ -2253,8 +2290,7 @@ SWITCH ($modus)
 			$FileName = mysql_result($result6, $i6, 'FileName');
 			$FileNameHQ = mysql_result($result6, $i6, 'FileNameHQ');
 			$FileNameV = mysql_result($result6, $i6, 'FileNameV');
-			$result22 = mysql_query( "SELECT 'ImageDataSize' FROM $table14 WHERE pic_id = '$pic_id'");
-			$FileSize = mysql_result($result22, isset($i22), 'ImageDataSize');
+			$FileSize = mysql_result($result6, $i6, 'FileSize');
 			
 			//abgeleitete Groessen:
 			IF ($FileNameV == '')
@@ -2503,7 +2539,9 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	global $ID;
 	include 'db_connect1.php';
 	include 'global_config.php';
-	$res0 = mysql_query( "SELECT $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table14.pic_id, $table14.ExifImageWidth, $table14.ExifImageHeight, $table14.ImageWidth, $table14.ImageHeight, $table14.Orientation FROM $table2, $table14 WHERE $table2.pic_id = '$pic_id' AND $table2.pic_id = $table14.pic_id");
+	$res0 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, ExifImageWidth, ExifImageHeight, ImageWidth, ImageHeight, Orientation 
+	FROM $table2
+	WHERE pic_id = '$pic_id' ");
 	echo mysql_error();
 	$FileName = mysql_result($res0, isset($i1), 'FileName');
 	$FileNameHQ = mysql_result($res0, isset($i1), 'FileNameHQ');
@@ -2528,7 +2566,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 		$Width = $parameter_o[0];
 		$Height = $parameter_o[1];
 		//echo $Width." x ".$Height."<BR>";
-		$result25 = mysql_query( "UPDATE $table14 SET ExifImageHeight = '$Height', ImageHeight = '$Height', ExifImageWidth = '$Width', ImageWidth = '$Width' WHERE pic_id='$pic_id'");
+		$result25 = mysql_query( "UPDATE $table2 SET ExifImageHeight = '$Height', ImageHeight = '$Height', ExifImageWidth = '$Width', ImageWidth = '$Width' WHERE pic_id='$pic_id'");
 		echo mysql_error();
 	}
 	
@@ -2556,7 +2594,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	SWITCH ($base_file)
 	{
 		CASE 'edit_beschreibung':
-			$result15 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+			$result15 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 			$description = mysql_result($result15, isset($i15), 'Caption_Abstract');
 			IF($description == '')
 			{

@@ -65,7 +65,7 @@ function delAllMetadata(c_username)
  * Project: pic2base
  * File: start.php
  *
- * Copyright (c) 2006 - 2009 Klaus Henneberg
+ * Copyright (c) 2006 - 2011 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -101,6 +101,185 @@ if(!isset($hinweis))
 {
 	$hinweis = '';
 }
+
+//===================================================================================================
+// Zur Performance-Optimierung wird ab Version 0.60 eine neue DB-Struktur verwendet
+// In dieser befindet sich der Inhalt der bisherigen Tabellen pictures, meta_data und locations zusammen
+// in der Tabelle pictures ($table2)
+// Die Tabellen pictures ($table2), meta_data ($table14) und locations ($table12) werden zur Sicherheit als
+// pictures_0, meta_data_0 und locations_0 erhalten.
+
+$res = mysql_query("SHOW columns FROM $table14");
+IF(@mysql_num_rows($res))
+{
+	// Wenn es die Tabelle meta_data noch gibt, wird umstruturiert:
+	// 1) Umbenennung der Tabelle meta_data nach meta_data_0 und locations nach locations_0, 
+	echo "Alte Struktur wird in Version 0.60 &uuml;berf&uuml;hrt...<BR><BR>";
+	
+	$res1 = mysql_query("RENAME TABLE `$table14` TO `meta_data_0`");
+	IF(mysql_error() <> '')
+	{
+		echo "Fehler bei der Umbenennung der Tabelle meta_data<BR>";
+	}
+	
+	$res2 = mysql_query("RENAME TABLE `$table12` TO `locations_0`");
+	IF(mysql_error() <> '')
+	{
+		echo "Fehler bei der Umbenennung der Tabelle locations<BR>";
+	}
+
+	// 2) Sicherung (Kopie) der Tabelle pictures nach pictures_0:
+	$res3 = mysql_query("CREATE TABLE pictures_0 LIKE $table2");
+	IF(mysql_error() <> '')
+	{
+		echo "Fehler bei der Anlage der Tabelle pictures_0<BR>";
+	}
+	$res3 = mysql_query("INSERT INTO pictures_0 SELECT * FROM $table2");
+	IF(mysql_error() <> '')
+	{
+		echo "Fehler bei der Daten&uuml;bernahme in die Tabelle pictures_0<BR>";
+	}
+	
+	// 3) Tabelle pictures um die Felder der Tabellen locations und meta_data ergaenzen:
+	$res4 = mysql_query("ALTER TABLE `$table2` ADD 
+	(`Make` varchar(37) default NULL,
+	`Model` varchar(50) NOT NULL,
+	`CameraModelName` varchar(50) default NULL,
+	`Orientation` int(11) NOT NULL,
+	`XResolution` varchar(13) default NULL,
+	`YResolution` varchar(13) default NULL,
+	`ExposureTime` varchar(13) default NULL,
+	`FNumber` decimal(3,1) default NULL,
+	`ExposureProgram` int(11) NOT NULL,
+	`DateTimeOriginal` datetime default '0000-00-00 00:00:00',
+	`MaxApertureValue` varchar(13) default NULL,
+	`MeteringMode` varchar(25) NOT NULL,
+	`LightSource` varchar(17) default NULL,
+	`Flash` varchar(25) NOT NULL,
+	`FocalLength` varchar(13) default NULL,
+	`ISO` int(11) NOT NULL,
+	`Quality` varchar(13) default NULL,
+	`WhiteBalance` varchar(18) default NULL,
+	`Sharpness` varchar(12) default NULL,
+	`FocusMode` varchar(12) default NULL,
+	`ISOSetting` int(11) NOT NULL,
+	`Lens` varchar(37) default NULL,
+	`ShootingMode` int(11) NOT NULL,
+	`NoiseReduction` varchar(10) default NULL,
+	`SensorPixelSize` varchar(21) default NULL,
+	`SerialNumber` varchar(26) default NULL,
+	`FileSize` bigint(11) NOT NULL,
+	`ShutterCount` int(11) NOT NULL,
+	`UserComment` varchar(130) default NULL,
+	`ColorSpace` varchar(25) NOT NULL,
+	`ExifImageWidth` int(11) NOT NULL,
+	`ExifImageHeight` int(11) NOT NULL,
+	`FocalLengthIn35mmFormat` int(11) NOT NULL,
+	`ImageDescription` varchar(69) default NULL,
+	`ColorMode` varchar(11) default NULL,
+	`ImageWidth` int(11) NOT NULL,
+	`ImageHeight` int(11) NOT NULL,
+	`Copyright` varchar(250) default NULL,
+	`ShutterSpeedValue` varchar(13) default NULL,
+	`ApertureValue` varchar(13) default NULL,
+	`AFPointPosition` varchar(13) default NULL,
+	`SelfTimer` int(11) NOT NULL,
+	`ImageStabilization` int(11) NOT NULL,
+	`Keywords` varchar(250) NOT NULL,
+	`ActiveD_Lighting` int(11) NOT NULL,
+	`HighISONoiseReduction` int(11) NOT NULL,
+	`GPSVersionID` int(11) NOT NULL,
+	`GPSAltitude` double default NULL,
+	`GPSLatitude` double default NULL,
+	`GPSLongitude` double default NULL,
+	`City` varchar(50) NOT NULL,
+	`Caption_Abstract` text NOT NULL,
+	`GPSLatitudeRef` varchar(7) default NULL,
+	`GPSLongitudeRef` varchar(7) default NULL,
+	`GPSAltitudeRef` int(11) NOT NULL");
+	IF(mysql_error() <> '')
+	{
+		echo "Fehler bei der Felderstellung in die Tabelle pictures<BR>";
+	}
+	
+	// 4) Die Inhalte der Tabellen locations und meta_data uebernehmen:
+	$res5 = mysql_query("UPDATE $table2 
+	SET $table2.Make = (SELECT Make FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Model = (SELECT Model FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.CameraModelName = (SELECT CameraModelName FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Orientation = (SELECT Orientation FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.XResolution = (SELECT XResolution FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.YResolution = (SELECT YResolution FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ExposureTime = (SELECT ExposureTime FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.FNumber = (SELECT FNumber FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ExposureProgram = (SELECT ExposureProgram FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.DateTimeOriginal = (SELECT DateTimeOriginal FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.MaxApertureValue = (SELECT MaxApertureValue FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.MeteringMode = (SELECT MeteringMode FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.LightSource = (SELECT LightSource FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Flash = (SELECT Flash FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.FocalLength = (SELECT FocalLength FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ISO = (SELECT ISO FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Quality = (SELECT Quality FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.WhiteBalance = (SELECT WhiteBalance FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Sharpness = (SELECT Sharpness FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.FocusMode = (SELECT FocusMode FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ISOSetting = (SELECT ISOSetting FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Lens = (SELECT Lens FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ShootingMode = (SELECT ShootingMode FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.NoiseReduction = (SELECT NoiseReduction FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.SensorPixelSize = (SELECT SensorPixelSize FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.SerialNumber = (SELECT SerialNumber FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.FileSize = (SELECT FileSize FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ShutterCount = (SELECT ShutterCount FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.UserComment = (SELECT UserComment FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ColorSpace = (SELECT ColorSpace FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ExifImageWidth = (SELECT ExifImageWidth FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ExifImageHeight = (SELECT ExifImageHeight FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.FocalLengthIn35mmFormat = (SELECT FocalLengthIn35mmFormat FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ImageDescription = (SELECT ImageDescription FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ColorMode = (SELECT ColorMode FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ImageWidth = (SELECT ImageWidth FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ImageHeight = (SELECT ImageHeight FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Copyright = (SELECT Copyright FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ShutterSpeedValue = (SELECT ShutterSpeedValue FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ApertureValue = (SELECT ApertureValue FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.AFPointPosition = (SELECT AFPointPosition FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.SelfTimer = (SELECT SelfTimer FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ImageStabilization = (SELECT ImageStabilization FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Keywords = (SELECT Keywords FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.ActiveD_Lighting = (SELECT ActiveD_Lighting FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.HighISONoiseReduction = (SELECT HighISONoiseReduction FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.GPSVersionID = (SELECT GPSVersionID FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.GPSAltitude = (SELECT GPSAltitude FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.GPSLatitude = (SELECT GPSLatitude FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.GPSLongitude = (SELECT GPSLongitude FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.City = (SELECT City FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.Caption_Abstract = (SELECT Caption_Abstract FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.GPSLatitudeRef = (SELECT GPSLatitudeRef FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.GPSLongitudeRef = (SELECT GPSLongitudeRef FROM meta_data_0 WHERE $table2.pic_id = pic_id),
+	$table2.GPSAltitudeRef = (SELECT GPSAltitudeRef FROM meta_data_0 WHERE $table2.pic_id = pic_id)");
+	
+	IF(mysql_error() <> '')
+	{
+		echo "Fehler bei der Daten&uuml;bernahme von meta_data nach pictures<BR>";
+	}
+	
+	//alle in der Tabelle pictures nicht mehr verwendeten Felder erhalten den Zusatz _0:
+	$res6 = mysql_query("ALTER $table2 CHANGE `loc_id` `loc_id_0` INT( 11 ) NOT NULL DEFAULT \'0\' COMMENT \'location_id fuer geo-Referenzierung\'");
+	
+	IF(mysql_error() <> '')
+	{
+		echo "Alle Operationen wurden ausgef&uuml;hrt.<BR><BR>";
+	}
+}
+ELSE
+{
+	echo "Die neue DB-Struktur ist bereits vorhanden.<BR><BR>";
+} 
+
+
+//===================================================================================================
 
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist:
 IF(hasPermission($c_username, 'adminlogin') AND $check == '1')

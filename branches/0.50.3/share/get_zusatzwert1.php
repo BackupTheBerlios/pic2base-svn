@@ -28,48 +28,32 @@ IF($field !== '')
 	echo "<SELECT class='Auswahl200' NAME='zusatzwert1'>";
 	SWITCH($field)
 	{
-		//Behandlung der recherchierbaren Felder der pictures-Tabelle
-		// der Stern vor dem val identifiziert die Nicht-Mata-Daten
+		//Behandlung der recherchierbaren Felder der pictures-Tabelle		
 		CASE 'Owner':
-		$result3 = mysql_query( "SELECT DISTINCT $field FROM $table2 WHERE $stat ORDER BY $field");
-		$num3 = mysql_num_rows($result3);
-		FOR($i3='0'; $i3<$num3; $i3++)
-		{
-			$value = mysql_result($result3, $i3, 'Owner');
-			$result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$value'");
-			$wert = htmlentities(mysql_result($result2, $i2, 'vorname')." ".mysql_result($result2, $i2, 'name'));
-			$val = '*'.$value;
-			echo "<option value='$val'>".$wert."</option>";
-		}
+		
+			$result3 = mysql_query( "SELECT DISTINCT $field FROM $table2 WHERE $stat ORDER BY $field");
+			$result3 = mysql_query( "SELECT *
+			FROM $table2
+			WHERE $table2.$stat 
+			GROUP BY $table2.$field
+			ORDER BY $table2.$field");
+			$num3 = mysql_num_rows($result3);
+			FOR($i3='0'; $i3<$num3; $i3++)
+			{
+				$value = mysql_result($result3, $i3, 'Owner');
+				$result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$value'");
+				$wert = htmlentities(mysql_result($result2, $i2, 'vorname')." ".mysql_result($result2, $i2, 'name'));
+				$val = '*'.$value;
+				echo "<option value='$val'>".$wert."</option>";
+			}
 		break;
 		
-		CASE 'FileNameOri':
-		CASE 'ranking':
-		CASE 'pic_id':
-		$result4 = mysql_query( "SELECT DISTINCT $field FROM $table2 WHERE $stat ORDER BY $field");
-		$num4 = mysql_num_rows($result4);
-		FOR($i4='0'; $i4<$num4; $i4++)
-		{
-			$value = mysql_result($result4, $i4, $field);
-			$val = '*'.$value;
-			echo "<option value='$val'>".$value."</option>";
-		}
-		break;
-		
-		CASE 'note':
-		$result4 = mysql_query( "SELECT DISTINCT $field FROM $table2 ORDER BY $field");
-		$num4 = mysql_num_rows($result4);
-		FOR($i4='0'; $i4<$num4; $i4++)
-		{
-			$value = mysql_result($result4, $i4, $field);
-			$val = '*'.$value;
-			echo "<option value='$val'>".$value."</option>";
-		}	
-		break;
-		
-		//Behandlung der recherchierbaren Felder der meta-data-Tabelle
 		default:
-		$result1 = mysql_query("SELECT $table14.$field, $table14.pic_id, $table2.pic_id, $table2.note FROM $table14, $table2 WHERE $table2.$stat AND $table2.pic_id = $table14.pic_id ORDER BY $table14.$field");
+		$result1 = mysql_query("SELECT $field, pic_id, note 
+		FROM $table2
+		WHERE $stat 
+		GROUP BY $field
+		ORDER BY $field");
 		//echo mysql_error();
 		$num1 = mysql_num_rows($result1);
 		
@@ -324,7 +308,7 @@ IF($field !== '')
 				$val = $value;
 				break;
 			}
-			//Pr�fung, ob es schon einen Eintrak mit diesen Daten gab (bes. bei Datum interessant)
+			//Pruefung, ob es schon einen Eintrag mit diesen Daten gab (bes. bei Datum interessant)
 			IF($wert !== $wert_alt)
 			{
 				echo "<option value='$val'>".$wert."</option>";

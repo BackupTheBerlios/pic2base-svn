@@ -55,17 +55,17 @@ A:hover{color:red;text-decoration:underline}
 include 'db_connect1.php';
 $result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 echo mysql_error();
-$loc_id = mysql_result($result1,0,'loc_id');
-//echo "LocID: ".$loc_id."<BR>";
-IF($loc_id !== '0' AND $loc_id !== '')
+$vorh_location = mysql_result($result1,0,'City');
+//echo "City: ".$vorh_location."<BR>";
+IF($vorh_location !== 'Ortsbezeichnung' AND $vorh_location !== '')
 {
-	echo "Bild hat eine Loc_id.<BR>";
-	$result12 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-	$long = mysql_result($result12,0, 'longitude');
-	$lat = mysql_result($result12,0, 'latitude');
-	$alt = mysql_result($result12,0, 'altitude');
+	echo "Bild hat schon eine Ortsbezeichnung.<BR>";
+	//$result12 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+	$long = mysql_result($result1,0, 'GPSLongitude');
+	$lat = mysql_result($result1,0, 'GPSLatitude');
+	$alt = mysql_result($result1,0, 'GPSAltitude');
 	$loc = round($lat,6).",".round($long,6);
-	$ort = htmlentities(mysql_result($result12,0, 'location'));
+	$ort = htmlentities(mysql_result($result1,0, 'City'));
 	//echo "Ort: ".$ort;
 }
 ELSE
@@ -114,7 +114,7 @@ ELSE
 <form name = "lok" method = "post" action = "../html/recherche/save_new_param.php">
 <input type="text" name = "location" id="location" style="width:140px; margin-right:10px;" value = "<?php echo $loc; ?>">
 <input type="text" name = 'ort' style="width:180px; margin-right:10px;" value = "<?php echo "$ort"; ?>">
-<input type = "hidden" name = "loc_id" value = "<?php echo $loc_id; ?>">
+<input type = "hidden" name = "vorh_location" value = "<?php echo $vorh_location; ?>">
 <input type = "hidden" name = "pic_id" value = "<?php echo $pic_id; ?>">
 <input type="submit" value="Position und Ort speichern" style="width:175px;">
 </div>

@@ -35,7 +35,10 @@ include_once $sr.'/bin/share/functions/main_functions.php';
 include_once $sr.'/bin/share/functions/permissions.php';
 include_once("fckeditor/fckeditor.php");
 
-$result0 = mysql_query( "SELECT $table4.kat_id, $table4.kategorie, $table11.info, $table11.kat_id  FROM $table4 INNER JOIN $table11 ON $table4.kat_id = '$kat_id' AND $table4.kat_id = $table11.kat_id");
+$result0 = mysql_query( "SELECT $table4.kat_id, $table4.kategorie, $table11.info, $table11.kat_id  
+FROM $table4 INNER JOIN $table11 
+ON $table4.kat_id = '$kat_id' 
+AND $table4.kat_id = $table11.kat_id");
 echo mysql_error();
 $num0 = mysql_num_rows($result0);
 $row = mysql_fetch_array($result0);

@@ -15,23 +15,18 @@ include $sr.'/bin/share/db_connect1.php';
 //pictures-Tabelle die loc_id auf 0 zu setzen.
 //
 
-$result1 = mysql_query("SELECT $table1.id, $table1.username, $table2.owner, $table2.pic_id, $table2.loc_id, $table12.loc_id, $table12.location
-FROM $table1, $table2, $table12
+$result1 = mysql_query("SELECT $table1.id, $table1.username, $table2.owner, $table2.pic_id, $table2.City
+FROM $table1, $table2
 WHERE $table2.owner = $table1.id
 AND $table1.username = '$uname'
-AND $table2.loc_id = $table12.loc_id
-AND $table12.location = 'Ortsbezeichnung'");
+AND ($table2.City = 'Ortsbezeichnung' OR $table2.City = ''");
 echo mysql_error();
 $num1 = mysql_num_rows($result1);
 //echo $num1." Treffer.<BR>";
 FOR ($i1='0'; $i1<$num1; $i1++)
 {
 	$pic_id = mysql_result($result1, $i1, 'pic_id');
-	$loc_id = mysql_result($result1, $i1, 'loc_id');
-	//echo "Bild-ID: ".$pic_id." Loc-ID: ".$loc_id."<BR>";
-	$result2 = mysql_query("UPDATE $table2 SET loc_id = '0' WHERE pic_id = '$pic_id'");
-	echo mysql_error();
-	$result3 = mysql_query("DELETE FROM $table12 WHERE loc_id = '$loc_id'");
+	$result2 = mysql_query("UPDATE $table2 SET City = 'Ortsbezeichnung' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 }
 //dann zurueck zur Edit-Start-Seite:

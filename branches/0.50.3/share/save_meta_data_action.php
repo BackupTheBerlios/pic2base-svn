@@ -62,7 +62,7 @@ FOREACH($_POST AS $key => $value)
 		//echo $KEY." / ".$VALUE."<BR>";
 	}
 	
-	$result1 = mysql_query( "UPDATE $table14 SET $KEY = '$VALUE' WHERE pic_id = '$pic_id'");
+	$result1 = mysql_query( "UPDATE $table2 SET $KEY = '$VALUE' WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Aktualisierung der Meta-Daten des Bildes:
 	$command = $exiftool. " -".$KEY."='$VALUE' ".$FN." -overwrite_original";
@@ -71,7 +71,7 @@ FOREACH($_POST AS $key => $value)
 }
 
 flush();
-sleep(1);
+sleep(0);
 ?>
 
 <script language="JavaScript">

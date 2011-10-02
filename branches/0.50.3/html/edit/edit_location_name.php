@@ -52,7 +52,9 @@ include '../../share/global_config.php';
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
 */
-
+//####################################################################################
+//Datei wird bei der Bearbeitung / Geo-Referenzierung verwendet (Benennung der Orte)##
+//####################################################################################
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -99,7 +101,10 @@ echo "
 	
 	<div id='spalte1F'>
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ortsbezeichnung<BR></p>";
-		$result2 = mysql_query( "SELECT $table2.Owner, $table2.loc_id, $table2.FileNameV, $table12.loc_id, $table12.location FROM $table12 LEFT JOIN $table2 ON ($table2.loc_id = $table12.loc_id) WHERE ($table2.Owner = '$user_id' AND $table12.location = 'Ortsbezeichnung')");
+		$result2 = mysql_query("SELECT pic_id, Owner, FileNameV, City 
+		FROM $table2 
+		WHERE Owner = '$user_id' 
+		AND (City = 'Ortsbezeichnung' OR City = '')");
 		echo mysql_error();
 		$num2 = mysql_num_rows($result2);
 		//echo "Trefferzahl: ".$num2."<BR>";
@@ -119,15 +124,15 @@ echo "
 					
 					CASE '1':
 					$FileNameV = mysql_result($result2,$i2,$table2.'.FileNameV');
-					$loc_id = mysql_result($result2,$i2,$table12.'.loc_id');
-					$ort = mysql_result($result2,$i2,$table12.'.location');
+					$pic_id = mysql_result($result2,$i2,$table2.'.pic_id');
+					$ort = mysql_result($result2,$i2,$table2.'.City');
 					echo "Es gibt noch dieses Bild ohne GPS-Ortszuweisung.";
 					break;
 					
 					default:
 					$FileNameV = mysql_result($result2,$i2,$table2.'.FileNameV');
-					$loc_id = mysql_result($result2,$i2,$table12.'.loc_id');
-					$ort = mysql_result($result2,$i2,$table12.'.location');
+					$pic_id = mysql_result($result2,$i2,$table2.'.pic_id');
+					$ort = mysql_result($result2,$i2,$table2.'.City');
 					echo "Es gibt noch ".$num2." Bilder ohne GPS-Ortszuweisung.";
 					break;
 				}
@@ -149,9 +154,9 @@ echo "
 					}
 					
 					//Bestimmung der Geo-Koordinaten am Aufnahmeort:
-					$result3 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-					@$long = mysql_result($result3, $i3, 'longitude');
-					@$lat = mysql_result($result3, $i3, 'latitude');
+					$result3 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+					@$long = mysql_result($result3, $i3, 'GPSLongitude');
+					@$lat = mysql_result($result3, $i3, 'GPSLatitude');
 					//echo "Long: ".$long.", Lat: ".$lat."<BR>";
 					//Radius: 5 km, um welchen die vorhandenen Orte ermittelt werden:
 					$radius = 5000;
@@ -168,7 +173,7 @@ echo "
 					//echo "L&auml;nge: ".$long.", min. L&auml;nge: ".$long_min.", max. L&auml;nge: ".$long_max."<BR>";
 					
 					//qudratischer Auswahlbereich:
-					$result5 = mysql_query( "SELECT * FROM $table12 WHERE (longitude > $long_min AND longitude < $long_max) AND (latitude > $lat_min AND latitude < $lat_max)");
+					$result5 = mysql_query( "SELECT * FROM $table2 WHERE (GPSLongitude > $long_min AND GPSLongitude < $long_max) AND (GPSLatitude > $lat_min AND GPSLatitude < $lat_max)");
 					echo mysql_error();
 					$num5 = mysql_num_rows($result5);
 					//echo $num5." Orte in der Umgebung wurden gefunden.<BR>";
@@ -183,27 +188,27 @@ echo "
 					$it = 0;
 					FOR($i5='0'; $i5<$num5; $i5++)
 					{
-						$location_id = mysql_result($result5, $i5, 'loc_id');
-						$location = mysql_result($result5, $i5, 'location');
-						$longitude = mysql_result($result5, $i5, 'longitude');
-						$latitude = mysql_result($result5, $i5, 'latitude');
+						$picture_id = mysql_result($result5, $i5, 'pic_id');
+						$city = mysql_result($result5, $i5, 'City');
+						$longitude = mysql_result($result5, $i5, 'GPSLongitude');
+						$latitude = mysql_result($result5, $i5, 'GPSLatitude');
 						$delta = sqrt(pow(($long - $longitude),2) + pow(($lat - $latitude),2));
-						//echo $location_id.", ".$location.", ".$delta."<BR>";
-						IF (!in_array($location,$ort_arr) AND ($location !== 'Ortsbezeichnung'))
+						//echo $picture_id.", ".$City.", ".$delta."<BR>";
+						IF (!in_array($city,$ort_arr) AND ($city !== 'Ortsbezeichnung'))
 						{
-							$locid[$it] = $location_id;
-							$ort_arr[$it] = $location;
+							$locid[$it] = $picture_id;
+							$ort_arr[$it] = $city;
 							$abstand[$it] = $delta;
 							$it++;
 							//echo $location." wird im Array aufgenommen<BR>";
 						}
-						ELSEIF($location !== 'Ortsbezeichnung')
+						ELSEIF($city !== 'Ortsbezeichnung')
 						{
-							$position = array_search($location,$ort_arr);
+							$position = array_search($city,$ort_arr);
 							//echo $ort[$position].": bisheriger Abstand: ".$abstand[$position].", neuer Abstand: ".$delta."<BR>";
 							IF($abstand[$position] > $delta)
 							{
-								$locid[$position] = $location_id;
+								$locid[$position] = $picture_id;
 								$abstand[$position] = $delta;
 								//echo "neuer Abstand wurde uebernommen<BR>";
 							}
@@ -286,17 +291,17 @@ echo "
 			}
 			echo "
 		</TABLE>
-		<input type='hidden' name='loc_id' value='$loc_id'>
+		<input type='hidden' name='pic_id' value='$pic_id'>
 		</FORM>
 	</div>
 	
 	<div id='spalte2F'>
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hilfe zur Ortsbezeichnung<BR></p>";
-		IF($loc_id !== '0' AND $loc_id !== '')
+		IF($pic_id !== '0' AND $pic_id !== '')
 		{
-		$result12 = mysql_query( "SELECT * FROM $table12 WHERE loc_id = '$loc_id'");
-		@$longitude = mysql_result($result12, $i12, 'longitude');
-		@$latitude = mysql_result($result12, $i12, 'latitude');
+		$result12 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+		@$longitude = mysql_result($result12, $i12, 'GPSLongitude');
+		@$latitude = mysql_result($result12, $i12, 'GPSLatitude');
 		
 		echo "<iframe src='../recherche/show_map.php?lat=$latitude&long=$longitude&width=399&height=404' frameborder='0' style='width:405px; height:410px;'>Ihr Browser unterst&uuml;tzt leider keine eingebetteten Frames.</iframe>";
 		}

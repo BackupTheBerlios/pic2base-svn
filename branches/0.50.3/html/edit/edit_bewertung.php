@@ -100,8 +100,6 @@ echo "
 		$modus='edit';
 		$mod='kat';
 		$base_file = 'edit_bewertung';
-		//$modus='complete_view';
-		//echo $ID;
 		include $sr.'/bin/share/kat_treeview.php';
 	echo "
 	</div>

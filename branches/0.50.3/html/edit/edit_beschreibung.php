@@ -39,9 +39,6 @@ IF (!$_COOKIE['login'])
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
- *
- * This file is licensed under the terms of the Open Software License
- * http://www.opensource.org/licenses/osl-2.1.php
  */
 
 unset($username);
@@ -127,21 +124,6 @@ echo "
 	</div>
 	
 	<div id='spalte2F'>";
-	/*
-		IF ($art == 'single_desc_edit')
-		{
-			$edit_mod = 'desc';
-			getPictureDetails($pic_id,$edit_mod);
-			echo "<p align='right'><a href='edit_beschreibung.php?kat_id=$kat_id&ID=$ID&mod=kat&pic_id=0' title='Einzel-Beschreibungsmodus verlassen'><img src='../../share/images/back.gif' width='15' height='15' border='0' alt='zur&uuml;ck' style='margin-right:5px';></a></p>";
-		}
-		ELSE
-		{
-			echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>
-			Ordne Beschreibungstext den ausgew&auml;hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>
-			Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgew&auml;hlten Bildern hinzugef&uuml;gt!<BR><BR>
-			<textarea name='description' wordwrap style='width:380px; height:300px; background-color:#DFEFFf;'></textarea>";
-		}
-	*/	
 	echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>
 			Ordne Beschreibungstext den ausgew&auml;hlten Bildern zu:<BR></p><u>Hinweis:</u><BR>
 			Der hier eingetragene Text wird den vorhandenen Beschreibungen der ausgew&auml;hlten Bildern hinzugef&uuml;gt!<BR><BR>

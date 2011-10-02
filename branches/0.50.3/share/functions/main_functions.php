@@ -38,9 +38,9 @@ function OptionFields()
 {
 	include '../../share/db_connect1.php';
 	//Welche Felder beinhaltet die Tabelle meta_data?
-	$result2 = mysql_query("SHOW FIELDS FROM $table14");
+	$result2 = mysql_query("SHOW FIELDS FROM $table2");
 	$num2 = mysql_num_rows($result2);
-	$result3 = mysql_query("SELECT * FROM $table14");
+	$result3 = mysql_query("SELECT * FROM $table2");
 	$num3 = mysql_num_rows($result3);
 	$CN = array();
 	echo "<option selected value=''>  ~ Bitte Datenfeld ausw&auml;hlen ~</option>";
@@ -49,6 +49,7 @@ function OptionFields()
 		$CN[] = mysql_field_name($result3,$i2);
 	}
 	//nach dem Leerfeld werden standardmaessig einige recherchierbare Felder der Pictures-Tabelle angeboten:
+	/*
 	echo "
 	<optgroup label='Nicht-Meta-Daten'>
 	<option VALUE = 'pic_id'>interne Bild-Nr.</option>
@@ -58,11 +59,12 @@ function OptionFields()
 	<option VALUE = 'ranking'>Anzahl der Downloads</option>
 	</optgroup>
 	<optgroup label='Meta-Daten'>";
+	*/
 	//dann folgen Felder der Meta-Daten-Tabelle (alle ausser der locations-Felder):
 	asort($CN);
 	FOREACH($CN AS $cn)
 	{
-		IF(!stristr($cn,'GPS') AND !stristr($cn, 'City'))
+		IF(!stristr($cn,'GPS') AND !stristr($cn,'City'))
 		{
 			echo "<option VALUE = '$cn'>$cn</option>";
 		}
@@ -366,22 +368,18 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 				IF($parent == '0')
 				{
 					//es handelt sich um die oberste Kategorie (Neuzugenge)
-					$result2 = mysql_query("SELECT * 
-					FROM $table2 
+					$result2 = mysql_query("SELECT *
+					FROM $table2
 					WHERE has_kat = '0' 
 					AND $stat");
-					//echo mysql_error();
-					//$nop = mysql_num_rows($result2);
 				}
 				ELSE
 				{
-					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id 
-					FROM $table10 INNER JOIN $table2 
-					ON ($table10.kat_id = '$kat_nr' 
-					AND $table10.pic_id = $table2.pic_id 
-					AND $stat)");
-					//echo mysql_error();
-					//$nop = mysql_num_rows($result2);
+					$result2 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table2.Owner, $table2.pic_id, $table2.note 
+					FROM $table10, $table2 
+					WHERE ($table10.kat_id = '$kat_nr' 
+					AND $table10.pic_id = $table2.pic_id
+					AND $table2.$stat)");
 				}
 			}
 			ELSE
@@ -395,15 +393,10 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 					$result2 = mysql_query("SELECT * 
 					FROM $table2 
 					WHERE has_kat = '0' ");
-					//echo mysql_error();
-					//$nop = mysql_num_rows($result2);
 				}
 				ELSE
 				{
 					$result2 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$kat_nr'");
-					//$num2 = mysql_num_rows($result2);
-					//$nop = $nop + $num2;
-					//$nop = mysql_num_rows($result2);
 				}
 			}
 			echo mysql_error();
@@ -1478,7 +1471,11 @@ function getRecDays($y,$m,$stat)
 	//Bestimmung der Tage in dem Jahr $y und Monat $m, an welchem Aufnahmen angefertigt wurden: (abh�ngig von der Bewertung!
 	$dat_arr = array();
 	
-	$result11 = mysql_query("SELECT DISTINCT $table14.DateTimeOriginal, $table14.pic_id, $table2.note, $table2.pic_id FROM $table14 INNER JOIN $table2 ON ($table14.pic_id = $table2.pic_id AND $table14.DateTimeOriginal LIKE '%".$y."-".$m."%' AND $table2.$stat) ORDER BY $table14.DateTimeOriginal");
+	$result11 = mysql_query("SELECT DISTINCT DateTimeOriginal, pic_id, note
+	FROM $table2
+	WHERE DateTimeOriginal LIKE '%".$y."-".$m."%' 
+	AND $stat
+	ORDER BY DateTimeOriginal");
 	
 	echo mysql_error();
 	$num11 = mysql_num_rows($result11);
@@ -1643,16 +1640,14 @@ function extractExifData($pic_id, $sr, $Orientation)
 	
 	$exiftool = buildExiftoolCommand($sr);
 	
-	$result6 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-	IF(mysql_num_rows($result6) == 0)
+	$result6 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+	IF(mysql_num_rows($result6) == 1)
 	{
-		//nur wenn es noch keinen Eintrag in der meta_data-Tabelle fuer dieses Bild gibt, wird die Erfassung ausgefuehrt:
-		$result7 = mysql_query("INSERT INTO $table14 (pic_id) VALUES ('$pic_id')");
 		
 		//Ermittlung des Original-Dateinamens mit eindeutiger Bezeichnung (z.B. 12345.nef):
 		$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);
 		
-		$result8 = mysql_query("SHOW COLUMNS FROM $table14");
+		$result8 = mysql_query("SHOW COLUMNS FROM $table2");
 		$i = 0;
 		if($result8 != false)
 		{
@@ -1663,7 +1658,7 @@ function extractExifData($pic_id, $sr, $Orientation)
 			}
 		}
 		else die('Fehler bei der Datenbankabfrage');
-		// Fuer jedes Feld der Meta-Daten-Tabelle wird ein evtl. vorhandener Datenwert aus dem Bild 
+		// Fuer jedes Feld der Pictures-Tabelle wird ein evtl. vorhandener Datenwert aus dem Bild 
 		// ausgelesen und in die Tabelle geschrieben:
 		
 		$text = shell_exec($exiftool." ".$FN);
@@ -1719,21 +1714,25 @@ function extractExifData($pic_id, $sr, $Orientation)
 				//Bildbreite- und Hoehe werden zur Sicherheit in 2 Felder (ExifImageHeight (Width) UND ImageHeight (WIdth)) geschrieben:
 				IF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight') AND ($value !== '0' AND $value !== ''))
 				{
-					$result4 = mysql_query("UPDATE $table14 SET ExifImageHeight = '$value', ImageHeight = '$value' WHERE pic_id = '$pic_id'");
+					$result4 = mysql_query("UPDATE $table2 SET ExifImageHeight = '$value', ImageHeight = '$value' WHERE pic_id = '$pic_id'");
 				}
 				ELSEIF(($fieldname == 'ExifImageWidth' OR $fieldname == 'ImageWidth') AND ($value !== '0' AND $value !== ''))
 				{
-					$result4 = mysql_query("UPDATE $table14 SET ExifImageWidth = '$value', ImageWidth = '$value' WHERE pic_id = '$pic_id'");
+					$result4 = mysql_query("UPDATE $table2 SET ExifImageWidth = '$value', ImageWidth = '$value' WHERE pic_id = '$pic_id'");
 				}
 				ELSEIF(($fieldname == 'ExifImageHeight' OR $fieldname == 'ImageHeight' OR $fieldname == 'ExifImageWidth' OR $fieldname == 'ImageWidth') AND ($value == '0' OR $value == ''))
+				{
+					//keine Aktualisierung!
+				}
+				ELSEIF($fieldname == 'FileName')
 				{
 					//keine Aktualisierung!
 				}
 				ELSE
 				{
 					$value = utf8_decode($value);
-					$result4 = mysql_query("UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
-					$statement = "UPDATE $table14 SET $fieldname = '$value' WHERE pic_id = '$pic_id'";
+					$result4 = mysql_query("UPDATE $table2 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
+					$statement = "UPDATE $table2 SET $fieldname = '$value' WHERE pic_id = '$pic_id'";
 				}
 				IF(mysql_error() !== '')
 				{
@@ -1743,7 +1742,7 @@ function extractExifData($pic_id, $sr, $Orientation)
 		}
 		// Wenn Breite, Hoehe oder Dateigroesse nicht aus den EXIF-Daten ermittelt werden konnte, 
 		// wird versucht, dies per PHP-Routinen zu erledigen:
-		$result9 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
+		$result9 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 		$row = mysql_fetch_array($result9);
 		$ImageWidth = $row['ImageWidth'];
 		$ImageHeight = $row['ImageHeight'];
@@ -1757,35 +1756,20 @@ function extractExifData($pic_id, $sr, $Orientation)
 		
 		IF($ImageWidth == '0' OR $ImageWidth == '')
 		{
-			$result10 = mysql_query("UPDATE $table14 SET ImageWidth = '$breite' WHERE pic_id = '$pic_id'");
+			$result10 = mysql_query("UPDATE $table2 SET ImageWidth = '$breite' WHERE pic_id = '$pic_id'");
 		}
 		
 		IF($ImageHeight == '0' OR $ImageHeight == '')
 		{
-			$result11 = mysql_query("UPDATE $table14 SET ImageHeight = '$hoehe' WHERE pic_id = '$pic_id'");
+			$result11 = mysql_query("UPDATE $table2 SET ImageHeight = '$hoehe' WHERE pic_id = '$pic_id'");
 		}
 		
 		IF($FileSize == '0' OR $FileSize == '')
 		{
-			$result12 = mysql_query("UPDATE $table14 SET FileSize = '$FileSize' WHERE pic_id = '$pic_id'");
+			$result12 = mysql_query("UPDATE $table2 SET FileSize = '$FileSize' WHERE pic_id = '$pic_id'");
 		}
-		$result13 = mysql_query("UPDATE $table14 SET Orientation = '$Orientation' WHERE pic_id = '$pic_id'");
+		$result13 = mysql_query("UPDATE $table2 SET Orientation = '$Orientation' WHERE pic_id = '$pic_id'");
 		//echo mysql_error();
-	}
-	//Wenn alle Meta-Daten in table14 uebernommen wurden, wird geprueft, ob Geo-Koordinaten dabei waren.
-	//Wenn ja, wird eine neue location angelegt (in table12) und diese mit dem Bild referenziert:
-	$result14 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-	@$GPSLatitude = mysql_result($result14,0,'GPSLatitude');
-	@$GPSLongitude = mysql_result($result14,0,'GPSLongitude');
-	@$GPSAltitude = mysql_result($result14,0,'GPSAltitude');
-	IF($GPSLongitude !== NULL AND $GPSLatitude !== NULL)
-	{
-		$result15 = mysql_query("INSERT INTO $table12 (longitude, latitude, altitude) VALUES ('$GPSLongitude', '$GPSLatitude', '$GPSAltitude')");
-		echo mysql_error();
-		$loc_id = mysql_insert_id();
-		echo mysql_error();
-		$result16 = mysql_query("UPDATE $table2 SET loc_id = '$loc_id' WHERE pic_id = '$pic_id'");
-		echo mysql_error();
 	}
 }
 

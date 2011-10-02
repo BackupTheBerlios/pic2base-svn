@@ -40,15 +40,16 @@ $description = substr(utf8_decode(strip_tags($description)),'0','1990');
 
 IF($aufn_dat == '')
 {
-	$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = \"$description\" WHERE pic_id = '$pic_id'");
+	//wenn nur der Beschreibungstext geaendert wurde:
+	$result2 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$description\" WHERE pic_id = '$pic_id'");
 	$desc = htmlentities($description);
-	//Aenderungen in Original-Datei speichern, wenn moeglich:
-	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &");
-	//Aenderungen in jpg-Datei speichern:
-	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$fn." -overwrite_original > /dev/null &");
+	//Aenderungen in Original-Datei und jpg-Datei speichern:
+	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original 
+	-execute -IPTC:Caption-Abstract=\"$desc\" ".$fn." -overwrite_original");
 }
 ELSE
 {
+	//wenn Datum und Beschreibungstext geaendert wurde:
 	//zuerst eventuelle Leerzeichen aus dem Datum entfernen:
 	$aufn_dat = trim(str_replace(' ','',$aufn_dat));
 	$year = substr($aufn_dat,6,4);
@@ -60,14 +61,13 @@ ELSE
 		$dto = $year.":".$month.":".$day." 00:00:00";
 		//echo $aufndat."<BR>";
 		//echo $dto."<BR>";
-		$result2 = mysql_query( "UPDATE $table14 SET Caption_Abstract = \"$description\", DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
+		$result2 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$description\", DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
 		$desc = htmlentities($description);
-		//Aenderungen in Original-Datei speichern, wenn moeglich:
-		shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &");
-		shell_exec($exiftool." -EXIF:DateTimeOriginal='$dto' ".$FN." -overwrite_original > /dev/null &");
-		//Aenderungen in jpg-Datei speichern:
-		shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$fn." -overwrite_original > /dev/null &");
-		shell_exec($exiftool." -EXIF:DateTimeOriginal='$dto' ".$fn." -overwrite_original > /dev/null &");
+		//Aenderungen in Original-Datei und jpg-Datei speichern:
+		shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original 
+		-execute -EXIF:DateTimeOriginal='$dto' ".$FN." -overwrite_original
+		-execute -IPTC:Caption-Abstract=\"$desc\" ".$fn." -overwrite_original 
+		-execute -EXIF:DateTimeOriginal='$dto' ".$fn." -overwrite_original");
 	}
 	ELSE
 	{

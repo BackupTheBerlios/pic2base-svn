@@ -297,13 +297,13 @@ echo "
 		<img src='img/filmstreifen1.png' width='400px'><BR><BR>
 		&Uuml;ber den Bildern wird die Gesamtzahl und die Anzahl der hiervon georeferenzierten Bilder genannt.<BR>
 		Wenn georeferenzierte Bilder dabei sind, wird weiter rechts die M&ouml;glichkeit angeboten, sich die Standorte in GooglEarth anzeigen zu lassen. Dazu wird zun&auml;chst die kml-Datei durch einen Klick auf das graue GoogleEarth-Icon angelegt.
-		Wenn dies geschehen ist, &auml;ndert das Icon sein Aussehen. Es wird farbig dargestellt.  Mit einem Klick auf das nun farbige Icon k&ouml;nnen die georeferenzierten Bilder nun in GoogleEarth dargestellt werden.<BR>(Fragen Sie Ihren Administrator, falls GoogleEarth nicht auf Ihrem Rechner installiert ist.)<BR><BR>
+		Danach &auml;ndert das Icon sein Aussehen -es wird farbig dargestellt.  Mit einem Klick auf das nun farbige Icon k&ouml;nnen die georeferenzierten Bilder in GoogleEarth dargestellt werden.<BR>(Fragen Sie Ihren Administrator, falls GoogleEarth nicht auf Ihrem Rechner installiert ist.)<BR><BR>
 		Den gr&ouml;&szlig;ten Teil der Filmstreifens nimmt die Darstellung der Bilder ein. Wenn Sie ein Bild mit dem Mauszeiger &uuml;berfahren, werden im rechten oberen Fensterbereich weitere Details zu dem gerade &uuml;berfahrenen Bild gezeigt. Klicken Sie hingegen in ein Bild im Filmstreifen, gelangen Sie in den \"Bl&auml;tter-Modus\".<BR>
 		Hier haben Sie die M&ouml;glichkeit, sich in einer vergr&ouml;&szlig;erten Ansicht rasch durch alle gefundenen Bilder zu bewegen oder einzelne Bilder in Originalqualit&auml;t zu betrachten.<BR>
 		Wenn Sie den Bl&auml;tter-Modus durch Klick auf das Schlie&szlig;en-Icon verlassen, befinden Sie sich in der Filmstreifen-Ansicht an der Stelle des zuletzt betrachteten Bildes.<BR><BR>
-		Unter jedem Bild befindet sich ein Dowhload-Icon. Die entsprechende Berechtigung vorausgesetzt, k&ouml;nnen Sie hier&uuml;ber die gew&uuml;nschten Bilder herunterladen. Je nach Ihren pers&ouml;nlichen Einstellungen, wird das gew&uuml;nschte Bild in Ihren Download-Ordner kopiert oder Sie bekommen einen Datei-Auswahl-Dialog angezeigt.<BR><BR>
+		Unter jedem Bild befindet sich ein Download-Icon. Die entsprechende Berechtigung vorausgesetzt, k&ouml;nnen Sie hier&uuml;ber die gew&uuml;nschten Bilder herunterladen. Je nach Ihren pers&ouml;nlichen Einstellungen, wird das gew&uuml;nschte Bild in Ihren Download-Ordner kopiert oder Sie bekommen einen Datei-Auswahl-Dialog angezeigt.<BR><BR>
 		Wenn das Suchergebnis mehr als 18 Bilder lieferte, sehen Sie in der Zeile unter den Download-Icons eine Reihe orangfarbener Rechtecke. Sie repr&auml;sentieren die Anzahl der Filmstreifen-Elemente und k&ouml;nnen durch einen Klick darauf direkt aufgerufen werden.<BR>
-		So k&ouml;nnen Sie bei einer gro&szlig;en Trefferzahl rasch in alle Richtungen navigieren.
+		So k&ouml;nnen Sie bei einer gro&szlig;en Trefferzahl schnell in alle Richtungen navigieren.
 		<BR><BR><a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name = '2_edit'></a><b>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse</b><BR><BR>

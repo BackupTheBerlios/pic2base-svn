@@ -111,7 +111,7 @@ function showDelWarning(FileName, c_username, pic_id)
 	var check = confirm("Wollen Sie das Bild wirklich entfernen?");
 	if(check == true)
 	{
-		window.open('../../share/delete_picture.php?FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=350px');
+		window.open('../../share/delete_picture.php?FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=450px');
 	}
 }
 
@@ -416,15 +416,15 @@ SWITCH ($mod)
 			<TD id='geo1' style='width:60px;'>Ortsname</TD>
 			<TD id='geo2'>
 				<SELECT name=\"ort\" class='Auswahl270'>";
-				$result9 = mysql_query( "SELECT DISTINCT location FROM $table12 WHERE location <>'Ortsbezeichnung' order by location");
+				$result9 = mysql_query( "SELECT DISTINCT City FROM $table2 WHERE City <>'Ortsbezeichnung' AND City <> '' ORDER BY City");
 				echo mysql_error();
 				$num9 = mysql_num_rows($result9);
 				FOR ($i9=0; $i9<$num9; $i9++)
 				{
-					$location = mysql_result($result9, $i9, 'location');
-					$result11 = mysql_query( "SELECT * FROM $table12 WHERE location='$location'");
-					$loc_id = mysql_result($result11, $i11, 'loc_id');
-					echo "<option value='$location'>$location</option>";
+					$city = mysql_result($result9, $i9, 'City');
+					$result11 = mysql_query( "SELECT * FROM $table2 WHERE location='$city'");
+					//$loc_id = mysql_result($result11, $i11, 'loc_id');
+					echo "<option value=\"$city\">".$city."</option>";
 				}
 				
                                 echo "</SELECT>
@@ -527,7 +527,7 @@ SWITCH ($mod)
 			</TR>
 			
 			<TR>
-				<TD width = 100% align = 'left' colspan='2'><p style='FONT-SIZE:8pt; color:blue;';>Beachten Sie bitte:<BR><BR>
+				<TD width = 100% align = 'left' colspan='2'><p style='FONT-SIZE:8pt; color:blue;'>Beachten Sie bitte:<BR><BR>
 				Nicht in jedem Fall ist es zweckm&auml;ssig, die Abfrage-Bedingung 'ist gr&ouml;sser' oder 'ist kleiner' zu w&auml;hlen.<BR>
 				Liefert die Auswahl des Meta-Daten-Felds Zahlenwerte als Kriterium, kann man sehr wohl nach Vorkommen suchen, bei denen der Wert gr&ouml;sser oder kleiner als das ausgew&auml;hlte Kriterium ist.<BR>
 				Liefert die Auswahl des Meta-Daten-Felds hingegen eine Zeichenkette, sollte die Bedingung 'ist gleich' oder 'enth&auml;lt' lauten, um zu nachvollziehbaren Treffern zu gelangen.</p></TD>
@@ -545,101 +545,105 @@ SWITCH ($mod)
 		</div>";
 		break;
 	//#####################################################################################################################
-		CASE 'kette':
+		CASE 'expert_k':
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		$base_file = 'recherche2';
-		$mod='kette';
+		$mod='expert_k';
 		$modus='recherche';
-		$fh = fopen($kml_dir."/query1.txt","a+");
-		ftruncate($fh, "0");
-		$res1 = mysql_query( "SELECT * FROM $table2 WHERE loc_id <> '0'");
-		echo mysql_error();
-		IF(mysql_error() == '')
-		{
-			$num1 = mysql_num_rows($res1);
-			echo $num1." Treffer";
-			FOR($i1=0; $i1<$num1; $i1++)
-			{
-				fwrite($fh,mysql_result($res1, $i1, 'pic_id').", ");
-			}
-		}
+		$number = 0;
+		
 		echo "
 		<div id='spalte1F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Verkettete Bild-Recherche<BR>
-		<FORM name= \"kette_param\" method='POST'>
-
+		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Experten-Suche<BR>
+		<FORM name= \"expert_param\" method='POST' action='experten_suche_kat1.php'>
 		<TABLE id='desc' align='left' border = '0'>
 				
 			<TR class='normal' style='height:3px;'>
 				<TD class='normal' bgcolor='#FF9900' colspan='4'>
 				</TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD colspan='4' class='normal' style='text-align:left;'>Bisheriges MySQL-Statement:</TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD colspan='4' class='normal'><BR></TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD colspan='4' class='normal'><BR></TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD colspan='4' class='normal' style='text-align:left;'>Weitere Suchkriterien:</TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD colspan='4' class='normal'><BR></TD>
-			</TR>
+			</TR>			
 			
 			<TR id='desc'>
-				<TD class='normal' style='width:100px';>
-				<SELECT name='kriterium'>
-				<OPTION>Aufn.-Datum</OPTION>
-				<OPTION>Kategorie</OPTION>
-				<OPTION>Beschreibung</OPTION>
-				<OPTION>Aufn.-Ort</OPTION>
-				</SELECT>
+				<TD class='normal' style='width:310px; text-align:left;' colspan = '4'>
+				<p style='FONT-SIZE:8pt; color:blue;'>Beachten Sie die Bedeutung der Booleschen Operatoren:<BR><BR>
+				<u>UND</u> bedeutet:<BR>
+				Die gesuchten Bilder, geh&ouml;ren <b>sowohl</b> zur Kategorie A <b>und gleichzeitig</b> zur Kategorie B.<BR>
+				<u>ODER</u> bedeutet:<BR>
+				Die gesuchten Bilder k&ouml;nnen zur Kategorie A <b>oder</b> zur Kategorie B geh&ouml;ren.</p><BR>
+				Gesucht werden Bilder, f&uuml;r die gilt:<BR>Es sind Bilder der Kategorie
 				</TD>
+			</TR>
+			
+			<TR class='normal'>
+			<TD colspan='4' class='normal'><BR></TD>
+			</TR>
+			
+			
+			<TR>
+				<TD class='normal' style='width:360px; text-align:left'; colspan='4'>
+				<div id='parameter'>
 				
-				<TD class='normal' style='width:40px';>
-				<SELECT name='operator' style='width:40px';>
-				<OPTION>=</OPTION>
-				<OPTION><=</OPTION>
-				<OPTION>>=</OPTION>
-				<OPTION>enth&auml;lt</OPTION>
-				</SELECT>
-				</TD>
+				<input type='hidden' name='bewertung' value='$bewertung'>
 				
-				<TD class='normal' style='width:130px';>
-				<SELECT name='wert' style='width:130px';>
-				<OPTION>A</OPTION>
-				<OPTION>B</OPTION>
-				<OPTION>C</OPTION>
-				<OPTION>D</OPTION>
-				</SELECT>
-				</TD>
+				<input type='hidden' name='number1' value='$number1'>
+				<input type='hidden' name='kat1' value='$kat1'>
+				<input type='hidden' name='op1' value='$op1'>
 				
-				<TD class='normal' style='width:40px';>
-				<SELECT name='bool_operator' style='width:40px';>
-				<OPTION selected></OPTION>
-				<OPTION value='and'>UND</OPTION>
-				<OPTION value='or'>ODER</OPTION>
+				<input type='hidden' name='number2' value='$number2'>
+				<input type='hidden' name='kat2' value='$kat2'>
+				<input type='hidden' name='op2' value='$op2'>
+				
+				<input type='hidden' name='number3' value='$number3'>
+				<input type='hidden' name='kat3' value='$kat3'>
+				<input type='hidden' name='op3' value='$op3'>
+				
+				<input type='hidden' name='number4' value='$number4'>
+				<input type='hidden' name='kat4' value='$kat4'>
+				<input type='hidden' name='op4' value='$op4'>
+				
+				<input type='hidden' name='number' value='$number'>
+				<SELECT name='kat' style='width:270px; margin-right:10px';>";
+				$res1 = mysql_query( "SELECT * FROM $table4 ORDER BY kategorie");
+				//echo mysql_error();
+				IF(mysql_error() == '')
+				{
+					$num1 = mysql_num_rows($res1);
+					FOR($i1=0; $i1<$num1; $i1++)
+					{
+						$kat_id = mysql_result($res1, $i1, 'kat_id');
+						$kategorie = mysql_result($res1, $i1, 'kategorie');
+						echo "<OPTION VALUE='$kat_id'>".$kategorie."</OPTION>";
+					}
+				}
+				echo "
 				</SELECT>
+			
+				<SELECT name='op' style='width:60px'; 
+				onChange='createNextKrit(document.expert_param.number.value, document.expert_param.kat.value, document.expert_param.op.value,
+				document.expert_param.number1.value, document.expert_param.kat1.value, document.expert_param.op1.value,
+				document.expert_param.number2.value, document.expert_param.kat2.value, document.expert_param.op2.value,
+				document.expert_param.number3.value, document.expert_param.kat3.value, document.expert_param.op3.value,
+				document.expert_param.number4.value, document.expert_param.kat4.value, document.expert_param.op4.value,
+				document.expert_param.bewertung.value)'>
+				<OPTION value='' selected></OPTION>
+				<OPTION value='AND'>UND</OPTION>
+				<OPTION value='OR'>ODER</OPTION>
+				</SELECT>
+				</div>
 				</TD>
 			</TR>
 			
 			<TR>
-			<TD colspan='2'></TD>
-			<TD colspan='2'><BR></TD>
+			<TD colspan='4'><BR></TD>
 			</TR>
 			
 			<TR>
-			<TD colspan='4'><INPUT TYPE='button' value='Suche abbrechen' OnClick='location.href=\"recherche0.php\"'style='margin-right:10px;'>
-			<INPUT TYPE='submit' value='Teilmenge suchen'></TD>
+			<TD colspan='4'>
+			<INPUT TYPE='button' value='Formular leeren' OnClick='location.reload()'style='margin-right:10px;'>
+			<INPUT TYPE='button' value='Suche abbrechen' OnClick='location.href=\"recherche0.php\"'style='margin-right:10px;'>
+			<!--<INPUT TYPE='submit' value='Suchen'>-->
+			<INPUT TYPE='button' value='Suchen' onClick='getExpSearchPreview(document.expert_param.kat.value, document.expert_param.op.value, document.expert_param.kat1.value, document.expert_param.op1.value, document.expert_param.kat2.value, document.expert_param.op2.value, document.expert_param.kat3.value, document.expert_param.op3.value, document.expert_param.kat4.value, document.expert_param.op4.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",0,0)'>
+			</TD>
 			</TR>
 			
 			<TR class='normal' style='height:3px;'>

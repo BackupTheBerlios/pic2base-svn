@@ -122,7 +122,7 @@ $command = $exiftool." -IPTC:Keywords=\"$kw\" -overwrite_original ".$FN." > /dev
 //echo $command;
 shell_exec($command);
 
-$result9 = mysql_query( "UPDATE $table14 SET Keywords = \"$kw\" WHERE pic_id = '$pic_id'");
+$result9 = mysql_query( "UPDATE $table2 SET Keywords = \"$kw\" WHERE pic_id = '$pic_id'");
 //echo mysql_error();
 header("location: edit_remove_kat.php?pic_id=0&mod=kat&kat_id=$parent");
 exit();
