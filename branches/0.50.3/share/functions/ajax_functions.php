@@ -21,15 +21,13 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	$FileNameHQ = $row['FileNameHQ'];
 	$FileName = $row['FileName'];
 	$FileNameOri = $row['FileNameOri'];
+	$Width = $row['ExifImageWidth'];
+	$Height = $row['ExifImageHeight'];
+	$Orientation = $row['Orientation'];
 	
 	$FileNameOri_ext = explode('.', $FileNameOri);
-	$ext = strtolower(isset($FileNameOri_ext[1]));//Extension des Original-Bildes
+	$ext = strtolower(isset($FileNameOri_ext[1]));//Extension des Original-Bildes	
 	
-	$result1 = mysql_query( "SELECT * FROM $table14 WHERE pic_id = '$pic_id'");
-	$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
-	$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
-	$Orientation = mysql_result($result1, isset($i1), 'Orientation');
-
 	//abgeleitete Groessen:
 	$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
 	$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
@@ -136,14 +134,14 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 		CASE '0':
 		CASE '1':
 		CASE '3':
-		$Height = mysql_result($result1, isset($i1), 'ExifImageHeight');
-		$Width = mysql_result($result1, isset($i1), 'ExifImageWidth');
+		$Height = $row['ExifImageHeight'];
+		$Width = $row['ExifImageWidth'];
 		break;
 		
 		CASE '6':
 		CASE '8':
-		$Height = mysql_result($result1, isset($i1), 'ExifImageWidth');
-		$Width = mysql_result($result1, isset($i1), 'ExifImageHeight');
+		$Height = $row['ExifImageWidth'];
+		$Width = $row['ExifImageHeight'];
 		break;
 	}
 	
@@ -159,7 +157,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
       		$Hoehe = $max_size;
       		$Breite = number_format(($Hoehe * $breite_v / $hoehe_v),0,',','.');
       	}
-	echo "<a href='' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori');return false\"  title='Ansicht in optimaler Qualit&auml;t'><div class='shadow_1'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5' border='0'></div></a>";
+	echo "<a href='' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori', '');return false\"  title='Ansicht in optimaler Qualit&auml;t'><div class='shadow_1'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5' border='0'></div></a>";
 }
 
 function getShortFS($FileSize)
@@ -242,7 +240,6 @@ function magnifyPic(pic_id)
 
 function getDetails(pic_id, base_file, mod, form_name)
 {
-	//alert("uebergebener Parameter: " + pic_id);
 	var url = '../../share/get_details.php';
 	var params = 'pic_id=' + pic_id + '&base_file=' + base_file + '&mod=' + mod + '&form_name=' + form_name;
 	//alert("Parameter: "+params);
