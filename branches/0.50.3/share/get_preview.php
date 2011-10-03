@@ -315,7 +315,6 @@ SWITCH ($modus)
 				$FileName = mysql_result($result2, $i2, 'FileName');
 				$FileNameHQ = mysql_result($result2, $i2, 'FileNameHQ');
 				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
-				//$result24 = mysql_query( "SELECT FileSize FROM $table14 WHERE pic_id = '$pic_id'");
 				$FileSize = mysql_result($result2, $i2, 'FileSize');
 				//abgeleitete Groessen:
 				IF ($FileNameV == '')
@@ -909,8 +908,8 @@ SWITCH ($modus)
 				FROM $table2, $table10 
 				WHERE ($table2.pic_id = $table10.pic_id 
 				AND $table10.kat_id = '$ID' 
-				AND location <> 'Ortsbezeichnung'
-				AND location <> '' 
+				AND City <> 'Ortsbezeichnung'
+				AND City <> '' 
 				$krit2)";
 				$kml_cod_statement = urlencode($kml_statement);
 				$result8 = mysql_query( "$kml_statement");
@@ -1361,13 +1360,18 @@ SWITCH ($modus)
 				$krit2 = "AND $table2.note $vgl_op '$wert'";
 				$stat_all = $statement." ".$krit2;
 //				echo "Zeile 1375, stat_all: ".$stat_all."<BR><BR>";
-				$stat_ref = $stat_all.") AND (location <>'Ortsbezeichnung' OR location <>'') $krit2 ORDER BY DateTimeOriginal, ShutterCount";
+				$stat_ref = $stat_all.") 
+				AND (City <>'Ortsbezeichnung' OR City <>'') 
+				$krit2 
+				ORDER BY DateTimeOriginal, ShutterCount";
 //				echo "Zeile 1377: ".$stat_ref."<BR><BR>";
 			}
 			ELSE
 			{
 				$stat_all = $statement;
-				$stat_ref = $stat_all.") AND (location <>'Ortsbezeichnung' OR location <>'') ORDER BY DateTimeOriginal, ShutterCount";
+				$stat_ref = $stat_all.") 
+				AND (City <>'Ortsbezeichnung' OR City <>'') 
+				ORDER BY DateTimeOriginal, ShutterCount";
 			}
 			
 			//echo $bewertung.", ".$stat_all.")<BR>";
@@ -1504,8 +1508,8 @@ SWITCH ($modus)
 			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
 			$kml_statement = "SELECT * FROM $table2 
 			$krit1 
-			AND location <> 'Ortsbezeichnung'
-			AND location <> '' 
+			AND City <> 'Ortsbezeichnung'
+			AND City <> '' 
 			$krit2";
 			$kml_cod_statement = urlencode($kml_statement);
 			$result8 = mysql_query( "$kml_statement");
