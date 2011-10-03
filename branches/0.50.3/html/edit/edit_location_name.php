@@ -59,14 +59,12 @@ unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
 }
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/geo_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
-//echo $track_path;
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $row = mysql_fetch_array($result1);
@@ -74,12 +72,7 @@ $user_id = $row['id'];
 //echo "User-ID: ".$user_id."<BR>";
 $num2 = '0';
 $loc_id = '';
-/*
-IF(!isset($stat))
-{
-	$stat = '';
-}
-*/
+
 IF(array_key_exists('stat',$_REQUEST))
 {
 	$stat = $_REQUEST['stat'];
@@ -101,14 +94,16 @@ echo "
 	
 	<div id='spalte1F'>
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ortsbezeichnung<BR></p>";
-		$result2 = mysql_query("SELECT pic_id, Owner, FileNameV, City 
+		$result2 = mysql_query("SELECT pic_id, Owner, FileNameV, City, GPSLongitude, GPSLatitude 
 		FROM $table2 
 		WHERE Owner = '$user_id' 
-		AND (City = 'Ortsbezeichnung' OR City = '')");
+		AND (City = 'Ortsbezeichnung' OR City = '')
+		AND GPSLongitude <> 'NULL'
+		AND GPSLatitude <> 'NULL'");
 		echo mysql_error();
 		$num2 = mysql_num_rows($result2);
 		//echo "Trefferzahl: ".$num2."<BR>";
-		//echo "Dateiname: ".$FileNameV.", Location-ID: ".$loc_id.", Owner: ".$c_username.", Ort: ".$ort."<br>";
+		//echo "Dateiname: ".$FileNameV.", Owner: ".$c_username.", Ort: ".$ort."<br>";
 		echo "
 		<FORM name = 'ortsbezeichnung' method='post' action='edit_location_name_action.php' onSubmit='return chkOrt()'> 
 		<TABLE id='kat'>
@@ -136,7 +131,7 @@ echo "
 					echo "Es gibt noch ".$num2." Bilder ohne GPS-Ortszuweisung.";
 					break;
 				}
-				//echo "Loc_ID: ".$loc_id."<BR>File: ".$FileNameV."<BR>Ort: ".$ort."<BR>";
+				//echo "File: ".$FileNameV."<BR>Ort: ".$ort."<BR>";
 				IF ($num2 > '0')
 				{
 					$bildinfo = getimagesize($pic_thumbs_path."/".$FileNameV);
@@ -157,7 +152,7 @@ echo "
 					$result3 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 					@$long = mysql_result($result3, $i3, 'GPSLongitude');
 					@$lat = mysql_result($result3, $i3, 'GPSLatitude');
-					//echo "Long: ".$long.", Lat: ".$lat."<BR>";
+					//echo "Bild: ".$pic_id.", Long: ".$long.", Lat: ".$lat."<BR>";
 					//Radius: 5 km, um welchen die vorhandenen Orte ermittelt werden:
 					$radius = 5000;
 					$diff_lat = 0.000008999280058; //(Winkelaenderung je Meter)

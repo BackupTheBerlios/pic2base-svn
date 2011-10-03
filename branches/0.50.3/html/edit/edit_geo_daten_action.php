@@ -179,7 +179,7 @@ SWITCH($ge)
 							$delta++;
 							$anz = getTrackPoints($delta,$pic_time,$datum);
 						}
-						//Die Daten der betreffenden Punkte werden ermittelt, in die Tabelle 'locations' geschrieben und dieser Datensatz dem entsprechenden Bild per loc_id zugewiesen
+						//Die Daten der betreffenden Punkte werden ermittelt, in die Tabelle 'pictures' zur passenden pic_id geschrieben
 						findTrackData($delta,$pic_time,$datum,$pic_id);
 						$hinweis2 .= "Bild ".$pic_id.": <font color='green'>".$anz."</font> Trackpunkt(e) (Delta = ".$delta.")<BR>";
 						break;
