@@ -150,7 +150,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	
 //###########################   Umstrukturierung des Kategoriebaumes abgeschlossen   #######################################	
 
-	//Aktualisierung der Meta-Daten (im Bild und in der meta_data-Tabelle:
+	//Aktualisierung der Meta-Daten (im Bild):
 	//Ermittlung aller Bilder, die von der Umstrukturierung betroffen sind:
 	$result14 = mysql_query( "SELECT * FROM $table10 WHERE kat_id = '$kat_source'");
 	$num14 = mysql_num_rows($result14);
@@ -231,13 +231,13 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		//echo $command."<BR>";
 		shell_exec($command);
 		
-		//Aktualisierung des betreffenden Datensatzes in der exif_data Tabelle:
-		$result3 = mysql_query( "UPDATE $table14 SET Keywords = \"$kategorie\" WHERE pic_id = '$pic_id'");
-		$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$pic_id'");
+		//Aktualisierung des betreffenden Datensatzes in der pictures Tabelle:
+		$result3 = mysql_query( "UPDATE $table2 SET Keywords = \"$kategorie\", has_kat = '1' WHERE pic_id = '$pic_id'");
+		//$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$pic_id'");
 	}
 	//abschliessend wird die tabelle tmp_tree gesaeubert:
 	$result18 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$user_id'");
-	echo "<BR><BR><input type='button' Value='Zur&uuml;ck' onClick='location.href=\"javascript:history.back()\"'>";
+	echo "<BR><BR><input type='button' Value='Zur&uuml;ck' onClick='location.href=\"kat_ausw1.php\"'>";
 }
 ELSE
 {
