@@ -107,7 +107,7 @@ FOR($i2='0'; $i2<$num2; $i2++)
 	shell_exec($exiftool." -IPTC:Keywords='$kategorie' -overwrite_original ".$FNO." > /dev/null &");
 	
 	//abschliessend wird die meta_data-Tabelle aktualisiert:
-	$res4 = mysql_query( "UPDATE $table14 SET Keywords = '$kategorie' WHERE pic_id = '$pic_id'");
+	$res4 = mysql_query( "UPDATE $table2 SET Keywords = '$kategorie' WHERE pic_id = '$pic_id'");
 	//Die Balkenlaenge wird errechnet:
 	$width=round(500 * ($i2 + 1)/$num2);
 	?>
@@ -130,7 +130,7 @@ FOR($i2='0'; $i2<$num2; $i2++)
 	
 <?php 
 		//Am Ende derfolgt der automatische Ruecksprung zur Kat.-Bearbeitungsseite:
-echo "<meta http-equiv='Refresh' content='1, URL=kat_edit.php?kat_id=$kat_id&ID=$ID'>";
+echo "<meta http-equiv='Refresh' content='1, URL=kategorie0.php?kat_id=$kat_id'>";
 mysql_close($conn);
 ?>
 
