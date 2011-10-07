@@ -57,7 +57,8 @@ $exiftool = buildExiftoolCommand($sr);
 //##############  Kategorie-Neusortierung mit Mitnahme der Unterkategorien der Quellkategorie   ######################
 IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND $kat_dest !== '' AND $kat_dest !== NULL)
 {
-	//Wenn ein Kategoriezweig umgehaengt wird, wird dem Wurzelelement des Zweiges das neue Parent-Element zugewiesen und bei allen Elementen dez Zweiges muss der level aktualisiert werden.
+	//Wenn ein Kategoriezweig umgehaengt wird, wird dem Wurzelelement des Zweiges das neue Parent-Element 
+	//zugewiesen und bei allen Elementen dez Zweiges muss der level aktualisiert werden.
 	
 	$result1 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = \"$kat_source\"");
 	$source_name = mysql_result($result1, isset($i1), 'kategorie');
@@ -176,8 +177,6 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 			$level = $row['level'];
 			$kat_name = $row['kategorie'];			
 			$level = $row['level'];
-	//		$kat_name = mysql_result($result16, $i16, 'kategorie');
-//			echo "Kategorie: ".$kat_id.", Level: ".$level."<BR>";
 			IF($level > $max_level)
 			{
 				$max_level = $level;
@@ -215,7 +214,6 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 				{
 					//Ermittlung aller Kategorien:
 					$result2 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
-					//echo mysql_error()."<BR>";
 					$row = mysql_fetch_array($result2);
 					$kategorie = htmlentities($row['kategorie'])." ".$kategorie;
 				}
@@ -225,15 +223,12 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		//Kategorien werden ins Bild geschrieben:
 		//Ermittlung des Dateinamens des Originalbildes:
 		$FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
-		//echo $FN."<BR>";
 		//eintragen der Kategorien in IPTC:Keywords
 		$command = $exiftool." -IPTC:Keywords=\"$kategorie\" -overwrite_original ".$FN." > /dev/null &";
-		//echo $command."<BR>";
 		shell_exec($command);
 		
 		//Aktualisierung des betreffenden Datensatzes in der pictures Tabelle:
 		$result3 = mysql_query( "UPDATE $table2 SET Keywords = \"$kategorie\", has_kat = '1' WHERE pic_id = '$pic_id'");
-		//$result4 = mysql_query( "UPDATE $table2 SET has_kat = '1' WHERE pic_id = '$pic_id'");
 	}
 	//abschliessend wird die tabelle tmp_tree gesaeubert:
 	$result18 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$user_id'");
