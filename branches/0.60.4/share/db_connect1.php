@@ -1,8 +1,8 @@
 <?php
 //[Programm-Version]
-$version = "0.60.3"; // 
-$rel = "24042012.1";
-$vom = "(24.04.2012)";
+$version = "0.60.4"; // 
+$rel = "11062012.1";
+$vom = "(11.06.2012)";
 
 //[copyright-Vermerk in der Fusszeile]
 $cr = "<FONT COLOR=RGB(46,46,46)>______</FONT>2006 - 2012";
