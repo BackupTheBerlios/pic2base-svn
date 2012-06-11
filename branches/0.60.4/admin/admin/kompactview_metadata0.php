@@ -1,0 +1,270 @@
+<?php
+IF (!$_COOKIE['login'])
+{
+include '../../share/global_config.php';
+//var_dump($sr);
+  header('Location: ../../../index.php');
+}
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<TITLE>pic2base - Meta-Daten-Freigabe</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+	<!--<meta http-equiv="Refresh" Content="3600; URL=generate_exifdata0.php">-->
+	<style type="text/css">
+	<!--
+	.tablenormal	{
+			width:720px;
+			margin-left:40px;
+			}
+			
+	.trflach	{
+			height:3px;
+			background-color:#FF9900
+			}
+			
+	.tdbreit	{
+			width:200px;
+			text-align:right;
+			}
+			
+	.tdschmal	{
+			width:40px;
+			text-align:center;
+			}
+	-->
+	</style>
+</HEAD>
+
+<BODY LANG="de-DE" scroll = "auto">
+
+<CENTER>
+
+<DIV Class="klein">
+
+<?php
+
+/*
+ * Project: pic2base
+ * File: protect_metadata0.php
+ *
+ * Copyright (c) 2006 - 2012 Klaus Henneberg
+ *
+ * Project owner:
+ * Dipl.-Ing. Klaus Henneberg
+ * 38889 Blankenburg, BRD
+ *
+ * This file is licensed under the terms of the Open Software License
+ * http://www.opensource.org/licenses/osl-2.1.php
+ *
+ *Formular zur Freigabe/Sperrung der Editierbarkeit von Metadaten
+ */
+
+//welche Meta-Daten sind in der Tabelle pictures enthalten?
+//sind diese als Felder in der Tabelle meta_protect enthalten? -> ggf. Aktualisierung
+//Darstellung aller Meta-Daten-Felder in tabellarischer Form mit der Option diese writable zu schalten / zu sperren
+
+unset($username);
+IF ($_COOKIE['login'])
+{
+list($c_username) = preg_split('#,#',$_COOKIE['login']);
+//echo $c_username;
+}
+
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
+$exiftool = buildExiftoolCommand($sr);
+
+//####################################################################################################
+//Ermittlung der User-Sprache zur Uebersetzung der Meta-Tags
+$result0 = mysql_query("SELECT language FROM $table1 WHERE username = '$c_username'");
+$lang = mysql_result($result0, isset($i0), 'language');
+
+//Erzeugung verschiedener Arrays zur Identifizierung der Meta-Tag-Gruppen:
+$iptc_tags = array();
+$exif_tags = array();
+$xmp_tags = array();
+
+$iptc_tags = explode(' ', shell_exec($exiftool." -list -IPTC:All"));
+$exif_tags = explode(' ', shell_exec($exiftool." -list -EXIF:All"));
+$xmp_tags = explode(' ', shell_exec($exiftool." -list -XMP:All"));
+
+//Bereinigung der Array-Inhalte:
+
+FOR ($i=0 ; $i<count($iptc_tags);$i++) 
+{
+	if ($iptc_tags[$i]== "") 
+    {
+    	unset ( $iptc_tags[$i] );
+    }
+}
+
+FOR ($i1=0 ; $i1<count($iptc_tags);$i1++) 
+{
+	@$IPTCTAGS = trim($iptc_tags[$i1]);
+	$iptc_tags[$i1] = $IPTCTAGS;
+}
+
+FOR ($j=0 ; $j<count($exif_tags);$j++) 
+{
+    
+	if ($exif_tags[$j]== "") 
+    {
+    	unset ( $exif_tags[$j] );
+    }
+}
+
+FOR ($j1=0 ; $j1<count($exif_tags);$j1++) 
+{
+	@$EXIFTAGS = trim($exif_tags[$j1]);
+	$exif_tags[$j1] = $EXIFTAGS;
+}
+
+FOR ($k=0 ; $k<count($xmp_tags);$k++) 
+{
+    
+	if ($xmp_tags[$k]== "") 
+    {
+    	unset ( $xmp_tags[$k] );
+    }
+}
+
+FOR ($k1=0 ; $k1<count($xmp_tags);$k1++) 
+{
+	@$XMPTAGS = trim($xmp_tags[$k1]);
+	$xmp_tags[$k1] = $XMPTAGS;
+}
+
+//Ermittlung aller Metadaten-Felder anhand der Tabelle meta_protect
+$result1 = mysql_query( "SELECT * FROM $table5");
+$num1 = mysql_num_rows($result1);
+$ed_fieldname = array();
+FOR($i1='0'; $i1<$num1; $i1++)
+{
+	$field_name = mysql_result($result1, $i1, 'field_name');
+	$ed_fieldname[$i1] = $field_name;	//vorh. Tabellen-Feldname in der Tabelle meta_protect (nur Metadatenfelder)
+}
+
+$elements_number = count($ed_fieldname);
+$col_groups = 3;		//3 Spaltengruppen ; je Gruppe eine Spalte field_name und eine Spalte viewable
+//Berechnung der Zeilenzahl bei 6 Spalten (entspr. 3 Feldwerten):
+$rows = ceil($elements_number / 3);
+//echo $elements_number." Felder ergeben ".$rows." Zeilen<BR>";
+$content = "<TABLE class = 'tablenormal' border='0'>
+		<TR class='trflach'>
+		<TD colspan = '6'></TD>
+		</TR>
+		
+		<TR>
+		<TD colspan = '6' align='center'>Hier legen Sie fest, welche Meta-Daten in der kompakten Detailansicht des Info-Fensters sichtbar sind:</TD>
+		</TR>
+		
+		<TR>
+		<TD colspan = '6' align='center'>Farb-Codierung: <FONT COLOR='red'>EXIF-Daten</FONT>&#160;&#160;<FONT COLOR='green'>IPTC-Daten</FONT>&#160;&#160;<FONT COLOR='blue'>XMP-Daten</FONT>&#160;&#160;<FONT COLOR='black'>sonstige Meta-Daten</FONT></TD>
+		</TR>
+		
+		<TR class='trflach'>
+		<TD colspan = '6'></TD>
+		</TR>";
+//$result2 = mysql_query( "SELECT * FROM $table5");
+FOR($r='0'; $r<$rows; $r++)
+{
+	$content = $content."<TR>";
+	FOR($cg='0'; $cg<$col_groups; $cg++)
+	{
+		$i1 = ($r * 3) + $cg;
+		@$lfdnr = mysql_result($result1, $i1, 'lfdnr');
+		@$field_name = mysql_result($result1, $i1, 'field_name');
+		@$viewable = mysql_result($result1, $i1, 'viewable');
+		IF($viewable == '1')
+		{
+			$checked = 'checked';
+		}
+		ELSEIF($viewable == '0')
+		{
+			$checked = '';
+		}
+		IF($field_name != '')
+		{
+			//den Meta-tag-Gruppen werden individuelle Farben zugewiesen:
+			IF(in_array($field_name, $iptc_tags))
+			{
+				$color = 'green';
+				$title = 'IPTC-Tag';
+			}
+			ELSEIF(in_array($field_name, $exif_tags))
+			{
+				$color = 'red';
+				$title = 'EXIF-Tag';
+			}
+			ELSEIF(in_array($field_name, $xmp_tags))
+			{
+				$color = 'blue';
+				$title = 'XMP-Tag';
+			}
+			ELSE
+			{
+				$color = 'black';
+				$title = '';
+			}
+			
+			//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
+			$result2 = mysql_query("SELECT `$field_name` FROM $table20 WHERE lang = '$lang'");
+			$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated
+			//$content = $content."<TD class='tdbreit'>".$fnt."</TD>
+			$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$fnt."</a></TD>
+			<TD class='tdschmal'>
+			<div id='$lfdnr'>
+			<INPUT TYPE=CHECKBOX $checked name='cb' value='$viewable' onClick='changeViewable(\"$lfdnr\",\"$checked\",\"$sr\")'>
+			</div>
+			</TD>";
+		}
+		ELSE
+		{
+			$content = $content."<TD class='tdbreit'></TD>
+			<TD class='tdschmal'></TD>";
+		}
+	}
+	$content = $content."</TR>";
+}
+$content = $content."</TABLE>";
+
+
+//####################################################################################################
+
+echo "
+	<div class='page'>
+	
+		<p id='kopf'>pic2base :: Meta-Daten-Ansicht <span class='klein'>(User: ".$c_username.")</span></p>
+		
+		<div class='navi' style='clear:right;'>
+			<div class='menucontainer'>";
+			include '../../html/admin/adminnavigation.php';
+			echo "
+			</div>
+		</div>
+		
+		<div class='content'>
+		<p style='margin-top:20px; margin-left:10px; text-align:center'>";
+		echo $content;
+		echo "</p>
+		</div>
+		<br style='clear:both;' />
+	
+		<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr." </p>
+	
+	</div>
+</DIV>
+</CENTER>
+</BODY>
+</HTML>";
+?>
