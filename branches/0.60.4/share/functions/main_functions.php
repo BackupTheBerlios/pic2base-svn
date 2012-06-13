@@ -1940,54 +1940,56 @@ function checkSoftware($sr)
 	// In diesem Feld steht ab Version 0.60.2 das Pruefkriterium fuer ein Software-Update:
 	$result1_1 = mysql_query("SELECT p2b_version FROM $table16");
 	@$p2b_version = mysql_result($result1_1, isset($i1_1), 'p2b_version');
-	//echo $version."<BR>";	// Version, wie sie im Installationspaket, in db_connect.php verzeichnet ist.
-	/*
-	IF(($p2b_version !== '0.60.2' AND $p2b_version == '0.60.1') OR $p2b_version == 'NULL' OR $p2b_version == '' OR $p2b_version == '0.00.0')
+	//echo $version."<BR>";	// Version, wie sie im neu eingespielten Installationspaket, in db_connect.php verzeichnet ist.
+	//echo $p2b_version."<BR>"; // ist die aus der Tabelle 'pfade' ausgelesene, noch installierte Version
+	
+	//Fallunterscheidungen: Es kann immer nur ein Update von einer Version zur naechst hoeheren Version durchgefuehrt werden:
+
+	IF(($p2b_version == 'NULL' OR $p2b_version == '' OR $p2b_version == '0.00.0') AND ($version == '0.60.0'))
 	{
-		$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR>
+		$text = "Es liegen Software-Updates vor.<BR>";
+		$text .= "<BR>Sie verwenden jedoch noch die Version ".$version."<BR>";
+		$text .= "Diese Version ist zu alt, um direkt ein Update auf Version ".$version." durchzuf&uuml;hren.<BR>";
+		$text .= "Kontaktieren Sie f&uuml;r weitere Informationen bitte den <a href='http://www.pic2base.de/impressum1.php'>Hersteller</a>.";
+		
+	}
+	ELSEIF($p2b_version == '0.60.1' AND $version == '0.60.2')
+	{
+		$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR><BR>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR><BR>
 		Klicken Sie <a href='../../html/db_update_0601_to_0602.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR>";
 	}
-	else
+	ELSEIF($p2b_version == '0.60.1' AND $version > '0.60.2')
+	{
+		$text = "<BR><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR><BR>";
+		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR>
+		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR>";
+		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.2 durch.</FONT><BR>";
+	}
+	ELSEIF($p2b_version == '0.60.2' AND $version == '0.60.3')
+	{
+		$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR><BR>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR><BR>
+		Klicken Sie <a href='../../html/db_update_0602_to_0603.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR>";
+	}
+	ELSEIF($p2b_version == '0.60.3' AND $version == '0.60.4')
+	{
+		$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR><BR>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR><BR>
+		Klicken Sie <a href='../../html/db_update_0603_to_0604.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR>";
+	}
+	ELSEIF($p2b_version == '0.60.2' AND $version > '0.60.3')
+	{
+		$text = "<BR><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR><BR>";
+		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR>
+		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR>";
+		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.3 durch.</FONT><BR>";
+	}
+	ELSEIF($p2b_version == $version)
 	{
 		$text = "<BR><FONT COLOR='green'>Es ist kein Datenbank-Update erforderlich.</FONT><BR>";
 	}
-	*/
-	SWITCH($p2b_version)
-	{
-		CASE "NULL":
-		CASE "":
-		CASE "0.00.0":
-		CASE "0.60.1":
-			$text = "Es liegen Software-Updates vor.<BR>";
-			$text .= "<BR>Sie verwenden jedoch noch die Version ".$version."<BR>";
-			$text .= "Diese Version ist zu alt, um direkt ein Update auf Version ".$version." durchzuf&uuml;hren.";
-			SWITCH($version)
-			{
-				CASE "0.60.1":
-					$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.2 durch.";
-				break;
-				
-				CASE "0.50.2":
-				CASE "0.50.0":
-				CASE "0.45.2":
-				CASE "0.45.1":
-					$text .= "Kontaktieren Sie f&uuml;r weitere Informationen bitte den <a href='http://www.pic2base.de/impressum1.php'>Hersteller</a>.";
-				break;
-			}	
-		break;
-		
-		CASE "0.60.2":
-			IF($version == '0.60.3')
-			{
-				$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR>
-				Klicken Sie <a href='../../html/db_update_0602_to_0603.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR>";
-			}
-		break;
-		
-		CASE "0.60.3":
-			$text = "<BR><FONT COLOR='green'>Es ist kein Datenbank-Update erforderlich.</FONT><BR>";
-		break;
-	}
+	
 	//Speicherung der Software-Pfade in der Tabelle 'pfade':
 	$result1 = mysql_query("DELETE FROM $table16");
 	echo mysql_error();
