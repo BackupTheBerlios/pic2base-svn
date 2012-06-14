@@ -210,8 +210,6 @@ function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, posit
 {
 	//position: Welcher Ausschnitt des Filmstreifens dargestellt wird
 	//jump: in welche Richtung navigiert wird: 1: 6 Bilder weiter; 2: zum Ende; -1: 6 Bilder zurueck; -2: zum Anfang
-	//confirm("Jahr: " + j + ", Monat: "+ m +", Tag: "+ t +", mod: " + mod + ", pic_id: " + pic_id+", modus: "+modus+", base_file: "+base_file +", bewertung: "+bewertung +", Position: "+position +", Sprung-Richtung: "+jump);
-	
 	var url = '../../share/get_preview.php';
 	var params ='j=' + j + '&m=' + m + '&t=' + t + '&pic_id=' + pic_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&position=' + position + '&jump=' + jump;
 	//alert("Parameter: "+params);
