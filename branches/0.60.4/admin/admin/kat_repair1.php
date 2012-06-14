@@ -77,43 +77,8 @@ echo "
 	</div>
 	
 	<div id='spalte1'>";
-/*
-//Wartungs-Routine zur Bereinigung der pic-kat-Tabelle, wenn Bilder existieren, welchen nur die kat_id = 1 zugewiesen wurde. Dies ist gleichbedeutend, dass den Bildern noch KEINE Kategorie zugewiesen wurden.
-	$Z = '0';
-	$result10 = mysql_query( "SELECT DISTINCT pic_id FROM $table10");
-	$num10 = mysql_num_rows($result10);
-//#########################	
-	echo "<u>Test 1: Kontrolle auf fehlerhafte Neuzug&auml;nge</u><BR><BR>";
-	echo "Gefundene Eintr&auml;ge in der Bild-Kategorie-Tabelle: ".$num10."<BR>";
-	FOR($i10='0'; $i10<$num10; $i10++)
-	{
-		$pic_id = mysql_result($result10, isset($i10), 'pic_id');
-		//echo $pic_id."<BR>";
-		$result11 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id'");
-		$num11 = mysql_num_rows($result11);
-		IF($num11 == '1')
-		{
-			$result12 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$pic_id' AND kat_id = '1'");
-			$num12 = mysql_num_rows($result12);
-			IF($num12 == '1')
-			{
-				echo "Bild ".$pic_id." ist einmal in der pic_kat mit der Kategorie 1 gelistet.<BR>";
-				$Z++;
-			}
-		}
-	}
-	IF($Z == '0')
-	{
-		$meldung_1 = "<p style='color:green;'>Es gab keine fehlerhaften Datens&auml;tze.</p>";
-	}
-	ELSE
-	{
-		$meldung_1 = "<p style='color:red;'>Anzahl der fehlerhaften und korrigierten Datens&auml;tze: ".$Z."</p>";
-	}
-	echo $meldung_1;
-//############################
-*/
-	echo "<BR><BR><BR><u>Test 2: Kontrolle auf mehrfache Kategoriezuweisungen</u><BR><BR>";
+
+	echo "<BR><BR><BR><u>Test 1: Kontrolle auf mehrfache Kategoriezuweisungen</u><BR><BR>";
 	
 	// Zum entfernen von Dubletten (unter der Annahme, dass die Spalte lfdnr nirgends im Programmcode verwendet wird):
 	// Alle Mehrfacheinträge von pic_id und kat_id zusammen mit der kleinsten lfdnr in die Tabelle ICE_V_pic_kat_dubls eintragen
@@ -137,7 +102,7 @@ echo "
 	$result22 = mysql_query("TRUNCATE `ICE_V_pic_kat_dubls`");
 	echo mysql_error();
 //#########################	
-	echo "<BR><BR><BR><u>Test 3: Kontrolle, ob alle Vorschaubilder vorhanden sind</u><BR><BR>";
+	echo "<BR><BR><BR><u>Test 2: Kontrolle, ob alle Vorschaubilder vorhanden sind</u><BR><BR>";
 	//es wird fuer alle Eintraege in der tabelle pictures geprueft, ob die Vorschaubilder
 	//FileNameHQ, FileNameV, FileNameHist, FileNameHist_r, FileNameHist_g, FileNameHost_b und FileNameMono vorhanden sind. 
 	//Wenn nicht, werden diese erzeugt.
@@ -168,7 +133,7 @@ echo "
 			echo "                                                                                                              ";
 		}
 		usleep(10000);
-		ob_flush();
+		if( ob_get_level() > 0 ) ob_flush();
 		//######################################  genug Muell erzeugt  ####################################################
 		
 		$laenge = (round(($X / $num30) * 300));
