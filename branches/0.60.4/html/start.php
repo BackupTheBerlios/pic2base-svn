@@ -154,25 +154,29 @@ IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
 		}
 		fclose($fh);
 	}
-	$result0 = mysql_query("SELECT * FROM $table2 
+	// Der DB-Wartungs-Hinweis wird falsch angezeigt, wenn von 0.60.3 auf 0.60.4 aktualisiert werden soll, da das Feld 'aktiv' vor der Aktualisierung noch nicht vorhanden ist,
+	// auf der Startseite aber verwendet werden soll. Deshalb erfolgt hier die besondere Behandlung:
+	@$result0 = mysql_query("SELECT * FROM $table2 
 	WHERE aktiv = '0' ");
-	echo mysql_error();
-	$num0 = mysql_num_rows($result0);
-	$loesch_text = "Hinweis zur Datenbank-Wartung:";
-	IF($num0 > 0)
+	IF(mysql_error() == '')
 	{
-		IF($num0 == 1)
+		$num0 = mysql_num_rows($result0);
+		$loesch_text = "Hinweis zur Datenbank-Wartung:";
+		IF($num0 > 0)
 		{
-			$loesch_hinweis = "<FONT COLOR='red'>Es wurde ein Bild zum L&ouml;schen vorgemerkt.</FONT";
+			IF($num0 == 1)
+			{
+				$loesch_hinweis = "<FONT COLOR='red'>Es wurde ein Bild zum L&ouml;schen vorgemerkt.</FONT";
+			}
+			ELSE
+			{
+				$loesch_hinweis = "<FONT COLOR='red'>Es wurden ".$num0." Bilder zum L&ouml;schen vorgemerkt.</FONT";
+			}
 		}
 		ELSE
 		{
-			$loesch_hinweis = "<FONT COLOR='red'>Es wurden ".$num0." Bilder zum L&ouml;schen vorgemerkt.</FONT";
+			$loesch_hinweis = "<FONT COLOR='green'>Es wurden keine Bilder zum L&ouml;schen vorgemerkt.</FONT>";
 		}
-	}
-	ELSE
-	{
-		$loesch_hinweis = "<FONT COLOR='green'>Es wurden keine Bilder zum L&ouml;schen vorgemerkt.</FONT>";
 	}
 }
 ELSE
