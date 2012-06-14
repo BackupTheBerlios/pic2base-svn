@@ -70,7 +70,7 @@ IF($user == '' OR $pwd == '')
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Welche Schritte werden ausgefuehrt?
+// Die folgenden Schritte werden ausgefuehrt:
 // Es wird kontrolliert, ob die Tabelle pic_kat die unique indizes  hat - bei Bedarf wird dies nachgeholt
 // die Tabelle IVE_V_pic_kat_dubls (temp. Tabelle fuer die DB-Wartung) wird angelegt
 // die Spalte aktiv wird der Tabelle pictures hinzugefuegt
@@ -112,20 +112,37 @@ echo "
 	$res1 = mysql_query("select INDEX_NAME from information_schema.statistics WHERE TABLE_SCHEMA = 'pic2base' AND TABLE_NAME = 'pic_kat'");
 	echo mysql_error();
 	$num1 = mysql_num_rows($res1);
-
+	$index_indikator = '4';			// 4 Indizes muessen neu erzeugt werden
 	FOR($i1='0'; $i1<$num1; $i1++)
 	{
-		$index_name = mysql_result($res1, isset($i1), 'INDEX_NAME');
-		echo $index_name."<BR>";
+		$index_name = mysql_result($res1, $i1, 'INDEX_NAME');
+		//echo $index_name."<BR>";
+		IF($index_name == 'ix_kat_pic' OR $index_name == 'ix_pic_kat')
+		{
+			$index_indikator--;
+		}
+	}
+	IF($index_indikator !== '0')
+	{
+		$res2 = mysql_query("CREATE UNIQUE INDEX ix_kat_pic ON pic_kat (kat_id, pic_id)");
+		IF(mysql_error() == '')
+		{
+			$res3 = mysql_query("CREATE UNIQUE INDEX ix_pic_kat ON pic_kat (pic_id, kat_id)");
+		}
+		IF(mysql_error() !== '')
+		{
+			echo "Fehler bei der Erzeugung der neuen Indizes der Tabelle \"pic_kat\"<BR>";
+			$error++;
+		}
+		ELSE
+		{
+			echo "Tabelle \"pic_kat\" wurde modifiziert.<BR>";
+		}
 	}
 	
-	//echo phpinfo();
-	
-	/*
-	$res5 = mysql_query("SHOW tables LIKE 'ICE_V_pic_kat_dubls'");	//Indiz, dass es sich nicht um Version 0.60.4 handelt
 	$res6 = mysql_query("SELECT p2b_version FROM $table16");		// nochmalige Kontrolle, dass es sich um die aktualisierbare Vorgaengerversion handelt
 	$p2b_version = mysql_result($res6, isset($i6), 'p2b_version');
-	IF(!mysql_num_rows($res5) AND $p2b_version == '0.60.3')
+	IF($p2b_version == '0.60.3')
 	{
 		echo "Alte DB-Struktur wird in Version 0.60.4 &uuml;berf&uuml;hrt...<BR><BR>";
 		
@@ -146,8 +163,7 @@ echo "
 			echo "Tabelle \"IVE_V_pic_kat_dubls\" wurde angelegt.<BR>";
 		}
 		
-		
-		// Tabelle pictures um Feld aktiv ergaenzen:
+		// Tabelle pictures um Feld 'aktiv' ergaenzen:
 		$res20 = mysql_query("ALTER TABLE `pictures` ADD `aktiv` TINYINT NOT NULL DEFAULT '1' COMMENT '0 wenn bild geloescht werden soll'");
 		IF(mysql_error() !== '')
 		{
@@ -158,8 +174,6 @@ echo "
 		{
 			echo "Tabelle \"pictures\" wurde modifiziert.<BR>";
 		}
-		
-		
 		
 		IF($error !== 0)
 		{
@@ -182,12 +196,12 @@ echo "
 			}
 		}
 	}
-	ELSE
+	ELSEIF($p2b_version == '0.60.4')
 	{
 		echo "Die neue DB-Struktur ist bereits vorhanden.<BR>
 		Kehren Sie bitte zur Startseite zur&uuml;ck.<BR>";
 	} 
-	*/
+	
     echo "</p>
 	</div>
 	<br style='clear:both;' />
