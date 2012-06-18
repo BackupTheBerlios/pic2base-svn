@@ -155,7 +155,7 @@ echo "
 					@$lat = mysql_result($result3, $i3, 'GPSLatitude');
 					//echo "Bild: ".$pic_id.", Long: ".$long.", Lat: ".$lat."<BR>";
 					//Radius: 5 km, um welchen die vorhandenen Orte ermittelt werden:
-					$radius = 5000;
+					$radius = 10000;
 					$diff_lat = 0.000008999280058; //(Winkelaenderung je Meter)
 					$delta_lat = $radius * $diff_lat;
 					$lat_min = $lat - $delta_lat;
@@ -169,11 +169,33 @@ echo "
 					//echo "L&auml;nge: ".$long.", min. L&auml;nge: ".$long_min.", max. L&auml;nge: ".$long_max."<BR>";
 					
 					//qudratischer Auswahlbereich:
-					$result5 = mysql_query( "SELECT * FROM $table2 
-					WHERE (GPSLongitude > $long_min 
-					AND GPSLongitude < $long_max) 
-					AND (GPSLatitude > $lat_min 
-					AND GPSLatitude < $lat_max)");
+					// Ab Version 0.60.4: es wird geprueft, ob die Tabelle geo_locations existiert. Wenn ja, werden die Tabellen pictures 
+					// und geo_locations zum auffinden bekannter Orte in der Naehe verwendet, wenn nicht, nur die Tabelle pictures:
+					$res = mysql_query("show tables LIKE 'geo_locations'");
+					
+					IF(mysql_num_rows($res) == 1)
+					{
+						//echo "Tabelle vorhanden";
+						$result5 = mysql_query( "select pic_id, City, GPSLongitude, GPSLatitude
+						from 	(SELECT pic_id, City, GPSLongitude, GPSLatitude
+								FROM pictures as P2
+								union all
+								select locid, City, GPSLongitude, GPSLatitude from geo_locations) 
+				 				as X_union
+						where GPSLongitude between $long_min and $long_max
+						and GPSLatitude between $lat_min and $lat_max
+						LIMIT 200");
+					}
+					ELSE
+					{
+						//echo "Tabelle nicht da!!!";
+						$result5 = mysql_query( "SELECT * FROM $table2 
+						WHERE (GPSLongitude > $long_min 
+						AND GPSLongitude < $long_max) 
+						AND (GPSLatitude > $lat_min 
+						AND GPSLatitude < $lat_max)");
+					}
+					
 					echo mysql_error();
 					$num5 = mysql_num_rows($result5);
 					//echo $num5." Orte in der Umgebung wurden gefunden.<BR>";
