@@ -86,7 +86,7 @@ echo "<div class='page'>
 		$result4 = mysql_query( "SELECT * FROM $table2 WHERE note ='$note' ORDER BY pic_id");
 		$num4 = mysql_num_rows($result4);
 		//echo $num4." Bilder sind ohne Histogramm.<BR>";
-		
+		$error = 0;	//Initialisierung der Zaehlvariablen fuer neu erstellte Histogramme
 		FOR($i4='0'; $i4<$num4; $i4++)
 		{
 			
@@ -98,11 +98,12 @@ echo "<div class='page'>
 			$hist_r = $hist_path."/".$pic_id."_hist_0.gif";
 			$hist_g = $hist_path."/".$pic_id."_hist_1.gif";
 			$hist_b = $hist_path."/".$pic_id."_hist_2.gif";
+			
 			IF(@!fopen($hist, 'r') OR @!fopen($hist_r, 'r') OR @!fopen($hist_g, 'r') OR @!fopen($hist_b, 'r'))
 			{
 				//$file = $pic_path."/".$FileName;
 				$file = trim($pic_hq_path."/".$FileName);
-				echo $file."<BR>";
+				//echo $file."<BR>";
 				shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif > /dev/null &");
 				
 				shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg > /dev/null &");
@@ -122,8 +123,8 @@ echo "<div class='page'>
 				$hist_file = $pic_id.'_hist.gif';
 				$result2 = mysql_query( "UPDATE $table2 SET FileNameHist = '$hist_file', FileNameHist_r = '$hist_file_r', FileNameHist_g = '$hist_file_g', FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
 				echo mysql_error();
+				$error++;
 			}
-			
 			$laenge = (round((($i4 + 1) / $num4) * 500));
 			$anteil = number_format(((($i4 + 1) / $num4)*100),2,',','.');
 			flush();
@@ -139,10 +140,11 @@ echo "<div class='page'>
 			<?php
 			IF(($i4 + 1) == $num4)
 			{
-				echo "<meta http-equiv='Refresh', Content='10; URL=../../html/admin/adminframe.php'>";
+				echo "<meta http-equiv='Refresh', Content='5; URL=../../html/admin/adminframe.php'>";
 			}
 		}
 	}
+	echo "Es wurden f&uuml;r ".$error." Bilder die Histogramme neu erstellt.<BR>";
 	?>
 	
 	</p>
