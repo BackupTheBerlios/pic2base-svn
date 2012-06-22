@@ -1106,7 +1106,7 @@ function createContentFile($mod, $statement, $c_username, $bild)
 		@$num100 = mysql_num_rows($result100);
 		break;
 	}
-	
+
 	IF($statement !=='')
 	{
 		//echo $statement;
@@ -1483,18 +1483,22 @@ function getRecDays($y,$m,$stat)
 }
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-function generateHistogram($pic_id,$FileName,$sr)
+function generateHistogram($pic_id,$FileName,$sr, $benutzername)
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	//Wenn mind. ein Bild nicht vorhanden ist, werden die Histogramme neu erstellt:
-	$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
-	$hist = $hist_path."/".$pic_id."_hist.gif";
-	$hist_r = $hist_path."/".$pic_id."_hist_0.gif";
-	$hist_g = $hist_path."/".$pic_id."_hist_1.gif";
-	$hist_b = $hist_path."/".$pic_id."_hist_2.gif";
+	$file_mono = $pic_id."_mono.jpg";
+	$hist = $pic_id."_hist.gif";
+	$hist_r = $pic_id."_hist_0.gif";
+	$hist_g = $pic_id."_hist_1.gif";
+	$hist_b = $pic_id."_hist_2.gif";
+	$hist_files = file($kml_dir."/hist_files.txt");
+	$mono_files = file($kml_dir."/mono_files.txt");
 	$conv = buildConvertCommand($sr);
-	IF(!file_exists($hist) OR !file_exists($hist_r) OR !file_exists($hist_g) OR !file_exists($hist_b) OR !file_exists($file_mono))
+	$mf = 0;
+	//IF(!file_exists($hist) OR !file_exists($hist_r) OR !file_exists($hist_g) OR !file_exists($hist_b) OR !file_exists($file_mono))
+	if(!in_array($hist."\n", $hist_files) OR !in_array($hist_r."\n", $hist_files) OR !in_array($hist_g."\n", $hist_files) OR !in_array($hist_b."\n", $hist_files) OR !in_array($file_mono."\n", $mono_files))
 	{
 		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
 		$file = $pic_hq_path."/".$FileName; //<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
@@ -1518,15 +1522,16 @@ function generateHistogram($pic_id,$FileName,$sr)
 		$mono_file = $pic_id."_mono.jpg";
 		$result2 = mysql_query("UPDATE $table2 SET FileNameMono = '$mono_file', FileNameHist = '$hist_file', FileNameHist_r = '$hist_file_r', FileNameHist_g = '$hist_file_g', FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
 		echo mysql_error();
-		
 		clearstatcache();
-		chmod ($file_mono, 0700);
-		chmod ($hist, 0700);
-		chmod ($hist_r, 0700);
-		chmod ($hist_g, 0700);
-		chmod ($hist_b, 0700);
+		chmod ($monochrome_path."/".$mono_file, 0700);
+		chmod ($hist_path."/".$hist, 0700);
+		chmod ($hist_path."/".$hist_r, 0700);
+		chmod ($hist_path."/".$hist_g, 0700);
+		chmod ($hist_path."/".$hist_b, 0700);
 		clearstatcache();
+		$mf = 1;
 	}
+	return $mf;
 }
 
 function getImageInfo($FileName)
