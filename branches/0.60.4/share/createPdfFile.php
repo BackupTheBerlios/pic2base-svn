@@ -11,7 +11,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 IF($_GET['pdf_statement'])
 {
-	$pdf_statement = urldecode($_GET['pdf_statement']);
+	$pdf_statement = stripslashes(urldecode($_GET['pdf_statement'])); //stripslashes ist offenbar fuer einige php-Umgebungen erforderlich
 }
 
 IF($_GET['mod'])
