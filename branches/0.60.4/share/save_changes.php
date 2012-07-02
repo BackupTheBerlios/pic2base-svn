@@ -42,7 +42,8 @@ $description_old = mysql_result($result1, isset($i1), 'Caption_Abstract');
 $description = strip_tags($description);				//eventuelle Tags entfernen
 $description = str_replace('"', "'",$description);		//Anfuehrungszeichen korrigieren
 $description = substr($description,'0','1990'); 		//Kuerzung auf max. 2000 Zeichen
-IF(mb_detect_encoding($description !== 'UTF-8'))
+
+if(mb_detect_encoding($description !== 'UTF-8'))
 {
 	$desc_db = utf8_decode($description);
 }
