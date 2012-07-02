@@ -1,3 +1,9 @@
+<html>
+<head>
+<meta http-equiv=’Content-Type’ content=’text/html; charset=UTF-8′ />
+</head>
+<body>
+
 <?php
 IF (!$_COOKIE['login'])
 {
@@ -119,7 +125,8 @@ IF ($pic_id !=='0')
 		//$size = round($FileSize / 1024);
 		$max_size = 90;			//max. Seitenlaenge des Vorschau-Bildes
 		$quality = '3';
-		echo "<FORM name = beschr method=post action=save_desc.php?pic_id=$pic_id&base_file=$base_file>";
+		//echo "<FORM name = beschr method=post action=save_desc.php?pic_id=$pic_id&base_file=$base_file>";
+		echo "<FORM name = beschr method=post accept-encoding=”UTF-8>";
 		echo "<TABLE id='detail1'>
 		<TR id='detail1'>
 		<TD id='detail1'>Orig.-Dateiname:</TD>
@@ -411,7 +418,7 @@ IF ($pic_id !=='0')
 		OR $Owner !== $c_username AND hasPermission($c_username, 'editallpics'))
 		{
 			//saveChanges ist in ajax_functions.php:
-			echo "<CENTER><input type=button value=\"&Auml;nderungen speichern\" OnClick='saveChanges(\"$pic_id\", beschr.description.value, beschr.aufn_dat.value)'></CENTER>";
+			echo "<CENTER><input type=button value=\"&Auml;nderungen speichern\" OnClick='saveChanges(\"$pic_id\", encodeURIComponent(beschr.description.value), beschr.aufn_dat.value);'></CENTER>";
 		}
 		ELSE
 		{
@@ -430,3 +437,4 @@ IF ($pic_id !=='0')
 	}
 }
 ?>
+</body></html>
