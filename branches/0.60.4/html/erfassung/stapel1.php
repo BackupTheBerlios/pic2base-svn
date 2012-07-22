@@ -66,7 +66,7 @@ if (array_key_exists('ordner',$_GET))
 	$ordner = $_GET['ordner'];
 }
 
-$x = 0;
+$x = 0;						//Nummer der aktuell hochgeladenen Datei
 $n = 0;						//Zaehlvariable fuer die zu bearbeitenden Bilder (Bilder im Upload-Ordner)
 $del = 0;					//Zaehlvariable fuer die nach dem Upload aus dem Upload-Ordner geloeschten Bilder
 $verz=opendir($ordner);		//$ordner: Upload-Ordner des angemeldeten Users (wird von start.php geliefert)
@@ -415,23 +415,34 @@ list($end4msec, $end4sec) = explode(" ",$end4);
 $runtime4 = round(($end4sec + $end4msec) - ($start1sec + $start1msec),2);
 echo "Meta-Daten-Auslesen beendet nach : ".$runtime4." Sekunden, <b>Differenz: ".($runtime4 - $runtime3)." Sekunden</b><BR>(Meta-Daten auslesen und in die DB schreiben)<BR>";	
 */
-//  +++  loeschen der soeben in die DB aufgenommene Datei aus dem Upload-Ordner:  +++
-	IF($datei_name != "." && $datei_name != "..")
+//  +++  loeschen der soeben in die DB aufgenommene Datei aus dem Upload-Ordner, aber nur, wenn sich die Originaldatei lesen laesst:  +++
+	$fh = fopen($pic_path.'/'.$new_filename, 'r');
+	if($fh)
 	{
-		$datei_name = $ftp_path."/".$c_username."/uploads/".$datei_name;
-		IF(!@unlink($datei_name))
+		IF($datei_name != "." && $datei_name != "..")
 		{
-			echo "Konnte die Datei $datei_name nicht l&ouml;schen!<BR>";
-		}
-		ELSE
-		{
-			//Log-Datei schreiben:
-			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$c_username." erfasst. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
-			fclose($fh);
-			$del++;
+			$datei_name = $ftp_path."/".$c_username."/uploads/".$datei_name;
+			IF(!@unlink($datei_name))
+			{
+				echo "Konnte die Datei $datei_name nicht l&ouml;schen!<BR>";
+			}
+			ELSE
+			{
+				//Log-Datei schreiben:
+				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+				fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$c_username." erfasst. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+				fclose($fh);
+				$del++;
+			}
 		}
 	}
+	ELSE
+	{
+		//ansonsten wird der soeben angelegte Datensatz und alle Vorschaubilder geloescht, womit der Datensatz erneut angelegt werden muss
+		include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&c_username='.$c_username;
+	}
+		
+		
 	//echo "gel&ouml;schte Dateien: ".$del." von ".$n."<BR>";
 	
 	//#####################     Doublettenpruefung     ###########################################
