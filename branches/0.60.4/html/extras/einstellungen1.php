@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: einstellungen1.php
  *
- * Copyright (c) 2006 - 2008 Klaus Henneberg
+ * Copyright (c) 2006 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -30,10 +30,6 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2008 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -56,12 +52,15 @@ IF(hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, '
 	$titel = mysql_result($result1, isset($i1), 'titel');
 	$vorname = mysql_result($result1, isset($i1), 'vorname');
 	$name = mysql_result($result1, isset($i1), 'name');
+	$u_name = mysql_result($result1, isset($i1), 'username');
 	$strasse = mysql_result($result1, isset($i1), 'strasse');
 	$plz = mysql_result($result1, isset($i1), 'plz');
 	$ort = mysql_result($result1, isset($i1), 'ort');
 	$tel = mysql_result($result1, isset($i1), 'tel');
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
+	$language = mysql_result($result1, isset($i1), 'language');
+	$direkt_download = mysql_result($result1, isset($i1), 'direkt_download');
 	
 	echo "
 	<div class='page'>
@@ -128,6 +127,105 @@ IF(hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, '
 			<TD id='kat1' colspan='2'><input type='text' name='internet' value = '$internet' style='width:200px;'></TD>
 		</TR>
 		
+		<TR id='kat'>
+			<TD id='kat1'>Sprache:</TD>
+			<TD id='kat1' colspan='2'>
+			<SELECT name='language' style='width:200px;'>";
+			SWITCH($language)
+			{
+				CASE 'de':
+					$de = 'selected';
+				break;
+				
+				CASE 'en':
+					$en = 'selected';
+				break;
+				
+				CASE 'ru':
+					$ru = 'selected';
+				break;
+				
+				CASE 'cs':
+					$cs = 'selected';
+				break;
+				
+				CASE 'es':
+					$es = 'selected';
+				break;
+				
+				CASE 'fr':
+					$fr = 'selected';
+				break;
+				
+				CASE 'it':
+					$it = 'selected';
+				break;
+				
+				CASE 'ja':
+					$ja = 'selected';
+				break;
+				
+				CASE 'ko':
+					$ko = 'selected';
+				break;
+				
+				CASE 'nl':
+					$nl = 'selected';
+				break;
+				
+				CASE 'pl':
+					$pl = 'selected';
+				break;
+				
+				CASE 'sv':
+					$sv = 'selected';
+				break;
+				
+				CASE 'tr':
+					$tr = 'selected';
+				break;
+			}
+			
+				echo "
+				<option value='de' $de>Deutsch</option>
+				<option value='en' $en>English</option>
+				<option value='ru' $ru>Russisch</option>
+				<option value='cs' $cs>Czech</option>
+				<option value='es' $es>Espanol</option>
+				<option value='fr' $fr>Francias</option>
+				<option value='it' $it>Italiano</option>
+				<option value='ja' $ja>Japanese</option>
+				<option value='ko' $ko>Korean</option>
+				<option value='nl' $nl>Nederlands</option>
+				<option value='pl' $pl>Polski</option>
+				<option value='sv' $sv>Svenska</option>
+				<option value='tr' $tr>T&uuml;rkce</option>";
+			
+			echo "
+			</TD>
+		</TR>
+		
+		<TR id='kat'>
+			<TD id='kat1'>Bild-Download:</TD>
+			<TD id='kat1' colspan='2'>
+			<SELECT name='direkt_download' style='width:200px;'>";
+			IF($direkt_download == '0')
+			{
+				echo "
+				<option value='0' selected>per FTP</option>
+				<option value='1'>Direkt-Download</option>";
+			}
+			ELSEIF($direkt_download == '1')
+			{
+				echo "
+				<option value='0'>per FTP</option>
+				<option value='1' selected>Direkt-Download</option>";
+			}
+			
+			echo "
+			</TD>
+		</TR>
+		
 		<TR id='normal'>
 			<TD id='kat1' colspan='3'>Passwort &auml;ndern</TD>
 		</TR>
@@ -139,18 +237,18 @@ IF(hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, '
 		
 		<TR id='kat'>
 			<TD id='kat1'>Neues Passwort:</TD>
-			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_1' style='width:200px;'></TD>
+			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_1' style='width:200px;' value='$u_name'></TD>
 		</TR>
 		
 		<TR id='kat'>
 			<TD id='kat1'>Passwort wiederholen:</TD>
-			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_2' style='width:200px;'></TD>
+			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_2' style='width:200px;' value='$u_name'></TD>
 		</TR>
 		
 		<TR id='normal' style='height:10px;>
 			<TD id='normal' colspan='3'></TD>
 		</TR>
-		<input type='hidden' name='username' value = '$c_username' style='width:200px;'>
+		<input type='hidden' name='u_name' value = '$u_name' style='width:200px;'>
 		<TR id='kat'>
 			<TD id='kat1' colspan='3' style='text-align:center;'><INPUT type=\"submit\" value=\"Speichern\" style='margin-right:20px;'><INPUT type=\"button\" value=\"Abbrechen\" onClick=\"location.href='../start.php'\"></TD>
 		</TR>
