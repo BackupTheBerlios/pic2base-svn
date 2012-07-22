@@ -331,7 +331,10 @@ FOREACH($info_arr AS $IA)
 					$iat1 = $info_arr_transl_en[0];
 					
 					$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` VARCHAR( 50 ) NOT NULL ");
-					echo mysql_error();
+					if(mysql_error() !== '')
+					{
+						$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` text NOT NULL ");
+					}
 					$result9 = mysql_query("UPDATE $table20 SET `$tag` = '$iat1' WHERE lang = 'en'");
 					$result10 = mysql_query("UPDATE $table20 SET `$tag` = '$iat0' WHERE lang = '$lang'");
 					$result11 = mysql_query("INSERT INTO $table5 (field_name, writable, viewable) VALUES ('$tag', '0', '0')");
@@ -365,7 +368,10 @@ FOREACH($info_arr AS $IA)
 					$iat1 = $info_arr_transl_en[0];
 					
 					$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` VARCHAR( 50 ) NOT NULL ");
-					echo mysql_error();
+					if(mysql_error() !== '')
+					{
+						$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` text NOT NULL ");
+					}
 					$result9 = mysql_query("UPDATE $table20 SET `$tag` = '$iat1' WHERE lang = 'en'");
 					$result10 = mysql_query("UPDATE $table20 SET `$tag` = '$iat0' WHERE lang = '$lang'");
 					$result11 = mysql_query("INSERT INTO $table5 (field_name, writable, viewable) VALUES ('$tag', '0', '0')");
