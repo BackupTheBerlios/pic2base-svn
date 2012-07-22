@@ -1483,53 +1483,87 @@ function getRecDays($y,$m,$stat)
 }
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-function generateHistogram($pic_id,$FileName,$sr, $benutzername)
+function generateHistogram($pic_id,$FileName,$sr)
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	//Wenn mind. ein Bild nicht vorhanden ist, werden die Histogramme neu erstellt:
-	$file_mono = $pic_id."_mono.jpg";
-	$hist = $pic_id."_hist.gif";
-	$hist_r = $pic_id."_hist_0.gif";
-	$hist_g = $pic_id."_hist_1.gif";
-	$hist_b = $pic_id."_hist_2.gif";
-	$hist_files = file($kml_dir."/hist_files.txt");
-	$mono_files = file($kml_dir."/mono_files.txt");
+	
+	$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
+	$hist = $hist_path."/".$pic_id."_hist.gif";
+	$hist_r = $hist_path."/".$pic_id."_hist_0.gif";
+	$hist_g = $hist_path."/".$pic_id."_hist_1.gif";
+	$hist_b = $hist_path."/".$pic_id."_hist_2.gif";
 	$conv = buildConvertCommand($sr);
-	$mf = 0;
-	//IF(!file_exists($hist) OR !file_exists($hist_r) OR !file_exists($hist_g) OR !file_exists($hist_b) OR !file_exists($file_mono))
-	if(!in_array($hist."\n", $hist_files) OR !in_array($hist_r."\n", $hist_files) OR !in_array($hist_g."\n", $hist_files) OR !in_array($hist_b."\n", $hist_files) OR !in_array($file_mono."\n", $mono_files))
+	$mf = 0;								//$mf - missing files: Anzahl der fehlenden Dateien fuer Histogramme u. Monochrome Bilder
+	
+	
+	//wieviel von den hist- und monochrome-Files fehlen tatsaechlich bei dem Bild mit der genannten pic_id?
+	$mf = (file_exists($hist))? $mf : $mf + 1;
+	$mf = (file_exists($hist_r))? $mf : $mf + 1;
+	$mf = (file_exists($hist_g))? $mf : $mf + 1;
+	$mf = (file_exists($hist_b))? $mf : $mf + 1;
+	$mf = (file_exists($file_mono))? $mf : $mf + 1;
+	
+	$file = $pic_hq_path."/".$FileName; 	//<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
+	shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
+	
+	if(!file_exists($hist))
 	{
-		//$file = $pic_path."/".$FileName; <- wird verwendet, wenn Histogr. aus Originalbild erstellt wird
-		$file = $pic_hq_path."/".$FileName; //<- aus Performance-Gruenden wird Histogr. aus HQ-Bild erstellt!
-		shell_exec($conv." ".$file." -separate histogram:".$hist_path."/".$pic_id."_hist_%d.gif");
-		
 		shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
-		
 		$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
-		shell_exec($conv." ".$file_mono." histogram:".$hist_path."/".$pic_id."_hist.gif");
-		
-		$hist_file_r = $pic_id.'_hist_0.gif';
-		shell_exec($conv." ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
-
-		$hist_file_g = $pic_id.'_hist_1.gif';
-		shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
-		
-		$hist_file_b = $pic_id.'_hist_2.gif';
-		shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
-		
 		$hist_file = $pic_id.'_hist.gif';
-		$mono_file = $pic_id."_mono.jpg";
-		$result2 = mysql_query("UPDATE $table2 SET FileNameMono = '$mono_file', FileNameHist = '$hist_file', FileNameHist_r = '$hist_file_r', FileNameHist_g = '$hist_file_g', FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
+		shell_exec($conv." ".$file_mono." histogram:".$hist_path."/".$hist_file);
+		$result2 = mysql_query("UPDATE $table2 SET FileNameHist = '$hist_file' WHERE pic_id = '$pic_id'");
 		echo mysql_error();
 		clearstatcache();
-		chmod ($monochrome_path."/".$mono_file, 0700);
-		chmod ($hist_path."/".$hist, 0700);
-		chmod ($hist_path."/".$hist_r, 0700);
-		chmod ($hist_path."/".$hist_g, 0700);
-		chmod ($hist_path."/".$hist_b, 0700);
+		chmod ($hist, 0700);
 		clearstatcache();
-		$mf = 1;
+		//$mf++;
+	}
+	if(!file_exists($hist_r))
+	{
+		$hist_file_r = $pic_id.'_hist_0.gif';
+		shell_exec($conv." ".$hist_path."/".$hist_file_r." -fill red -opaque white ".$hist_path."/".$hist_file_r);
+		$result2 = mysql_query("UPDATE $table2 SET FileNameHist_r = '$hist_file_r' WHERE pic_id = '$pic_id'");
+		echo mysql_error();
+		clearstatcache();
+		chmod ($hist_r, 0700);
+		clearstatcache();
+		//$mf++;
+	}
+	if(!file_exists($hist_g))
+	{
+		$hist_file_g = $pic_id.'_hist_1.gif';
+		shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
+		$result2 = mysql_query("UPDATE $table2 SET FileNameHist_g = '$hist_file_g' WHERE pic_id = '$pic_id'");
+		echo mysql_error();
+		clearstatcache();
+		chmod ($hist_g, 0700);
+		clearstatcache();
+		//$mf++;
+	}
+	if(!file_exists($hist_b))
+	{
+		$hist_file_b = $pic_id.'_hist_2.gif';
+		shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
+		$result2 = mysql_query("UPDATE $table2 SET FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
+		echo mysql_error();
+		clearstatcache();
+		chmod ($hist_b, 0700);
+		clearstatcache();
+		//$mf++;
+	}
+	if(!file_exists($file_mono))
+	{
+		shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
+		$mono_file = $pic_id."_mono.jpg";
+		$result2 = mysql_query("UPDATE $table2 SET FileNameMono = '$mono_file' WHERE pic_id = '$pic_id'");
+		echo mysql_error();
+		clearstatcache();
+		chmod ($file_mono, 0700);
+		clearstatcache();
+		//$mf++;
 	}
 	return $mf;
 }
