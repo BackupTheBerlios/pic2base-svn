@@ -368,7 +368,7 @@ echo "<div class='page'>
 			<TR class='normal'>
 			<TD class='normal' align='center' style='height:50px;' colspan='3'></TD>
 			<TD class='normal' align='center' style='height:50px;' colspan='7'>
-			<p id='kopf' style='color:RGB(80,80,80); text-align:left; padding-left:0px;'>Informationen zum Datenbestand:</p>
+			<p style='color:RGB(80,80,80); text-align:left; padding-left:0px;'>Informationen zum Datenbestand:</p>
 			</TD>
 			</TR>
 			
@@ -464,7 +464,7 @@ echo "<div class='page'>
 				echo "
 				<TR class='normal' style='height:15px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
-				<td class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Upload-Ordner ist leer.</TD>
+				<td class='normal' align='left' valign='top' colspan='7' style='color:green'>Ihr Upload-Ordner ist leer.</TD>
 				</TR>
 				
 				<TR>
@@ -482,7 +482,7 @@ echo "<div class='page'>
 				echo "
 				<TR class='normal' style='height:15px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
-				<td class='normal' align='left' valign='top' colspan='7' style='color:green';><BR></TD>
+				<td class='normal' align='left' valign='top' colspan='7' style='color:green'><BR></TD>
 				</TR>
 				
 				<TR>
@@ -522,7 +522,7 @@ echo "<div class='page'>
 				echo "
 				<tr class='normal' style='height:30px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
-				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';>Ihr Download-Ordner ist leer.</style></TD>
+				<TD class='normal' align='left' valign='top' colspan='7' style='color:green'>Ihr Download-Ordner ist leer.</style></TD>
 				</TR>
 				
 				<TR class='normal'>
@@ -534,7 +534,7 @@ echo "<div class='page'>
 				echo "
 				<tr class='normal' style='height:30px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Download-Modus:</TD>
-				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';>Direkter Download</style></TD>
+				<TD class='normal' align='left' valign='top' colspan='7' style='color:green'>Direkter Download</style></TD>
 				</TR>
 				
 				<TR class='normal'>
@@ -546,7 +546,7 @@ echo "<div class='page'>
 				echo "
 				<tr class='normal' style='height:30px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
-				<TD class='normal' align='left' valign='top' colspan='7' style='color:green';><BR></style></TD>
+				<TD class='normal' align='left' valign='top' colspan='7' style='color:green'><BR></style></TD>
 				</TR>
 				
 				<TR class='normal'>
@@ -639,7 +639,7 @@ echo "<div class='page'>
 	
 	//log-file schreiben:
 	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-	fwrite($fh,date('d.m.Y H:i:s').": Startseite wurde von ".$c_username." aufgerufen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+	fwrite($fh,date('d.m.Y H:i:s').": Startseite wurde von ".$c_username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n");
 	fclose($fh);
 	mysql_close($conn);
 	
