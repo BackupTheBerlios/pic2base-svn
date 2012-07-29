@@ -17,9 +17,11 @@
 <DIV Class="klein">
 
 <?php
-ini_set('memory_limit', '500M');
-set_time_limit(0);
+
+//ini_set('memory_limit', '500M');
+//set_time_limit(0);
 //echo "<font color='white'>Speicher-Nutzung: ".memory_get_usage()."</font>";
+
 /*
  * Project: pic2base
  * File: kat_repair1.php
@@ -79,6 +81,7 @@ echo "
 	</div>
 	
 	<div id='spalte1'>";
+//########################################################################################################
 		echo "<p style='margin-top:50px;'><u>Test 1: Kontrolle auf mehrfache Kategoriezuweisungen</u></p>";
 		
 		// Zum entfernen von Dubletten (unter der Annahme, dass die Spalte lfdnr nirgends im Programmcode verwendet wird):
@@ -98,7 +101,7 @@ echo "
 			$meldung_2 = "<p style='color:red;'>Anzahl der korrigierten Mehrfachzuweisungen: ".$num21."</p>";
 		}
 		echo $meldung_2;
-		//$X="<p style='margin-top:20px;'>Es sind alle erforderlichen Dateien vorhanden.</p>";
+//########################################################################################################
 		echo "	<p style='margin-top: 50px; margin-bottom:30px;'><u>Test 2: Kontrolle, ob alle Vorschaubilder vorhanden sind</u></p>
 				<center>
 				Status der &Uuml;berpr&uuml;fung
@@ -327,6 +330,9 @@ echo "
 	$meldung_0 .= "Aufgabenliste nach <b>".$runtime4."</b> Sekunden zusammengestellt.<br />";
 	//#########################################
 	ob_start();
+	
+//##############################################___________Erstellung der fehlenden Bilder___________###############################################################################	
+
 	// Erstellung fehlender HQ-Vorschaubilder:
 	// Die Datensatz-ID der unvollstaendigen Vorschaubilder ergibt sich aus dem Schluessel des jeweiligen Diff-Arrays:
 	foreach($hq_files_diff AS $key => $value)
@@ -475,8 +481,14 @@ echo "
 			document.getElementById('record_nr').innerHTML='<?php echo "... bearbeite Datensatz ".$erledigt." von ".$i_neu."...<BR>(".$anteil." %)";?>';
 			</SCRIPT>
 		<?php
-	}	
+	}
 
+	
+	
+//#######################################################___________Bilderstellung abgeschlossen____________#######################################################
+
+	
+	
 	//#########################################
 	$end5 = microtime();
 	list($start1msec, $start1sec) = explode(" ",$start1);
