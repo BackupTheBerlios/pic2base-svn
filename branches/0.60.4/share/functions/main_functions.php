@@ -1514,7 +1514,7 @@ function generateHistogram($pic_id,$FileName,$sr)
 		$file_mono = $monochrome_path."/".$pic_id."_mono.jpg";
 		$hist_file = $pic_id.'_hist.gif';
 		shell_exec($conv." ".$file_mono." histogram:".$hist_path."/".$hist_file);
-		$result2 = mysql_query("UPDATE $table2 SET FileNameHist = '$hist_file' WHERE pic_id = '$pic_id'");
+		$result1 = mysql_query("UPDATE $table2 SET FileNameHist = '$hist_file' WHERE pic_id = '$pic_id'");
 		echo mysql_error();
 		clearstatcache();
 		chmod ($hist, 0700);
@@ -1536,7 +1536,7 @@ function generateHistogram($pic_id,$FileName,$sr)
 	{
 		$hist_file_g = $pic_id.'_hist_1.gif';
 		shell_exec($conv." ".$hist_path."/".$hist_file_g." -fill green -opaque white ".$hist_path."/".$hist_file_g);
-		$result2 = mysql_query("UPDATE $table2 SET FileNameHist_g = '$hist_file_g' WHERE pic_id = '$pic_id'");
+		$result3 = mysql_query("UPDATE $table2 SET FileNameHist_g = '$hist_file_g' WHERE pic_id = '$pic_id'");
 		echo mysql_error();
 		clearstatcache();
 		chmod ($hist_g, 0700);
@@ -1547,7 +1547,7 @@ function generateHistogram($pic_id,$FileName,$sr)
 	{
 		$hist_file_b = $pic_id.'_hist_2.gif';
 		shell_exec($conv." ".$hist_path."/".$hist_file_b." -fill blue -opaque white ".$hist_path."/".$hist_file_b);
-		$result2 = mysql_query("UPDATE $table2 SET FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
+		$result4 = mysql_query("UPDATE $table2 SET FileNameHist_b = '$hist_file_b' WHERE pic_id = '$pic_id'");
 		echo mysql_error();
 		clearstatcache();
 		chmod ($hist_b, 0700);
@@ -1558,12 +1558,22 @@ function generateHistogram($pic_id,$FileName,$sr)
 	{
 		shell_exec($conv." ".$file." -colorspace Gray -quality 80% ".$monochrome_path."/".$pic_id."_mono.jpg");
 		$mono_file = $pic_id."_mono.jpg";
-		$result2 = mysql_query("UPDATE $table2 SET FileNameMono = '$mono_file' WHERE pic_id = '$pic_id'");
+		$result5 = mysql_query("UPDATE $table2 SET FileNameMono = '$mono_file' WHERE pic_id = '$pic_id'");
 		echo mysql_error();
 		clearstatcache();
 		chmod ($file_mono, 0700);
 		clearstatcache();
 		//$mf++;
+	}
+	//zur Sicherheit werden die Eintraege in der Tabelle pictures fuer die hist- und mono-files nochmals geschrieben:
+	if(file_exists($file_mono) AND file_exists($hist) AND file_exists($hist_r) AND file_exists($hist_g) AND file_exists($hist_b))
+	{
+		$mono_file = $pic_id."_mono.jpg";
+		$hist_file_b = $pic_id.'_hist_2.gif';
+		$hist_file_g = $pic_id.'_hist_1.gif';
+		$hist_file_r = $pic_id.'_hist_0.gif';
+		$hist_file = $pic_id.'_hist.gif';
+		$result6 = mysql_query("UPDATE $table2 SET FileNameMono = '$mono_file', FileNameHist_b = '$hist_file_b', FileNameHist_g = '$hist_file_g', FileNameHist_r = '$hist_file_r', FileNameHist = '$hist_file' WHERE pic_id = '$pic_id'");
 	}
 	return $mf;
 }
