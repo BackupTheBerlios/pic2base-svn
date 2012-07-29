@@ -123,9 +123,9 @@ echo "
 			FOR($i0=0; $i0<$num0; $i0++)
 			{
 				$pid_dbl_ori = mysql_result($result0, $i0, 'P1.pic_id');		//Bild-ID des Referenzbildes, zu dem weitere Vorkommen existieren
-				$FileNameOri = mysql_result($result0, $i0, 'P1.FileNameOri');
-				$md5sum = mysql_result($result0, $i0, 'P1.md5sum');
-				$pid_arr[] = $pid_dbl_ori;
+				$FileNameOri = mysql_result($result0, $i0, 'P1.FileNameOri');	//dessen Original-Dateiname
+				$md5sum = mysql_result($result0, $i0, 'P1.md5sum');				//dessen Pruefsumme
+				$pid_arr[] = $pid_dbl_ori;										//Array der Bild-ID's
 				
 				$result0_1 = mysql_query("SELECT * FROM $table2 WHERE md5sum = '$md5sum' AND FileNameOri = '$FileNameOri' AND aktiv = '1'");
 				echo mysql_error();
