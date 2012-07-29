@@ -67,8 +67,6 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 $quelle = $_SERVER['HTTP_REFERER'];
 //echo $quelle;
-
-
 if(array_key_exists('user_id',$_GET))
 {
 	$user_id = $_GET['user_id']; 
@@ -90,7 +88,7 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		IF(strstr($quelle, "edit_start.php"))
+		IF(strstr($quelle, "edit_start.php") OR strstr($quelle, "stapel2.php"))
 		{
 			createNavi3($c_username);
 		}
