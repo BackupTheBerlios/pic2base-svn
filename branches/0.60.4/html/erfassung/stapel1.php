@@ -27,7 +27,7 @@ IF (!$_COOKIE['login'])
 
 /*
  * Project: pic2base
- * File: stapel1.php
+ * File: stapel1.php			#################################  ab 29.07.2012 durch stapel2.php, stapel2_action.php und show_files.php ersetzt!  ##########################################
  *
  * Copyright (c) 2003 - 2010 Klaus Henneberg
  *
@@ -209,7 +209,7 @@ FOR ($x='0';$x<$n;$x++)
 	<?php
 	$datei_name = $bild_datei[$x];
 	$bild = $ordner."/".$datei_name;
-	//echo "... bearbeite ".$bild." (".$x.")<BR>";
+	//echo "... bearbeite ".$bild." (".$x.")<BR>";//#############################################################################################################################################
 	$Ori_arr = preg_split('# : #',shell_exec($exiftool." -Orientation -n ".$bild)); //num. Wert der Ausrichtung des Ori.-bildes
 	
 	if (count($Ori_arr) > 1 )
@@ -442,7 +442,9 @@ echo "Meta-Daten-Auslesen beendet nach : ".$runtime4." Sekunden, <b>Differenz: "
 		include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&c_username='.$c_username;
 	}
 		
-		
+//######################  Ende der reinen Datenerfassung ohne weitere Aktionen  ####################################################################################
+//
+//	
 	//echo "gel&ouml;schte Dateien: ".$del." von ".$n."<BR>";
 	
 	//#####################     Doublettenpruefung     ###########################################
