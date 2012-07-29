@@ -437,7 +437,7 @@ echo "<div class='page'>
 		IF($n > '0' AND hasPermission($c_username, 'addpic'))
 		{
 			echo "
-			<Form name='folder' method='post' action='erfassung/stapel1.php'>
+			<Form name='folder' method='post' action='erfassung/stapel2.php'>
 			
 			<tr class='normal' style='height:25px;'>
 			<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
