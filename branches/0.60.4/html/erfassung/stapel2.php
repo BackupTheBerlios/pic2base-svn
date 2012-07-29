@@ -29,7 +29,7 @@ IF (!$_COOKIE['login'])
 
 
 
-<BODY onLoad='showFiles()'>
+<BODY onLoad='getUploadFiles()'>
 <CENTER>
 <DIV Class="klein">
 

@@ -624,9 +624,9 @@ function manage_picture(pic_id, modus)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 }
 
-function showFiles(value)
+function getUploadFiles(value)
 {
-	var url = '../../share/show_files.php';	
+	var url = '../../share/get_upload_files.php';	
 	var client = new XMLHttpRequest();
 	//client.open("GET", url, false);	//false erzwingt synchrone Datenuebertragung!!!
 	client.open("GET", url, true);
