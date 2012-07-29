@@ -3,14 +3,12 @@
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
 }
 
 if (array_key_exists('file',$_GET))
 {
 	$file = $_GET['file'];
 }
-//echo $file;
 
 $error_code = NULL;
 
@@ -22,12 +20,10 @@ $conv = buildConvertCommand($sr);
 $exiftool = buildExiftoolCommand($sr);
 $dcraw = buildDcrawCommand($sr);
 
-//log-file schreiben:
-$start_time = date('d.m.Y, H:i:s');
 //Diese Datei soll erfasst werden:
 $bild = $ftp_path."/".$c_username."/uploads/".$file;
 
-//Pruefung, ob die Datei ein gueltiges Dateiformat aufweist:
+//Pruefung, ob die Datei eine datei ist:
 if($bild != "" && $bild != "." && $bild != "..")
 {
 	$info = pathinfo($bild);
@@ -46,11 +42,6 @@ if($bild != "" && $bild != "." && $bild != "..")
 			$Orientation = '1';	
 		}
 		
-//		IF($Orientation == '')
-//		{
-//			$Orientation = '1';
-//		}
-		
 		$Orientation = trim($Orientation);
 		
 	//  +++  Vergabe eines eindeutigen Dateinamens  +++++
@@ -63,7 +54,6 @@ if($bild != "" && $bild != "." && $bild != "..")
 		$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$file', '$DateInsert')");
 		echo mysql_error();
 		$pic_id = mysql_insert_id();									//echo "User-ID: ".$user_id."; Rec-ID: ".$pic_id."<BR>";
-		//$info2 = pathinfo($bild);
 		$tmp_filename = $pic_id.".".$extension;							//Dateiname z.B.: 112233.nef
 		
 		//  Kontrolle, ob Upload erfolgreich war  +++++
@@ -198,7 +188,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 				{
 					//Log-Datei schreiben:
 					$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-					fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$c_username." erfasst. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+					fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$c_username." erfasst. (".$_SERVER['REMOTE_ADDR'].")\n");
 					fclose($fh);
 					$error_code = 0;
 					
@@ -228,7 +218,6 @@ if($bild != "" && $bild != "." && $bild != "..")
 								echo mysql_error();	
 							}
 						}
-						//$doublette = 1;
 					}
 					
 					//############################################################################################

@@ -93,7 +93,7 @@ echo "
 		<p style='margin:120px 0px; text-align:center'>
 		
 		<center>
-			<p>Status der Bild-Erfassung</p>
+			<p id = 'headline'>Status der Bild-Erfassung</p>
 			<p id='zaehler'></p>
 			<div id='prog_bar' style='border:solid; border-color:red; width:500px; height:12px; margin-top:30px; margin-bottom:30px; text-align:left; vertical-align:middle'>
 				<img src='../../share/images/green.gif' name='bar' />
@@ -115,10 +115,11 @@ echo "
 ?>
 
 <script>
-var timeout = 9;
+var timeout = 3;
 var fileList = null;
 var gesamtanzahl;
 var starttime = new Date();
+var avgTime;
 function fileListReceived( responseText )
 {
 	fileList = JSON.parse( responseText, null );
@@ -133,6 +134,20 @@ function fileListReceived( responseText )
 		alert( "Es sind keine Dateien zu bearbeiten." );
 		window.location="../start.php";
 	}	
+}
+
+function showReady(avgTime)
+{
+	//Erfassungsfenster leeren:
+	document.getElementById("headline").innerHTML = "";
+	document.getElementById("zaehler").innerHTML = "";
+	document.getElementById("meldung").innerHTML = "";
+	document.getElementById( "prog_bar" ).style.border = "none";
+	document.bar.width = '0';
+	document.bar.height = '0';
+	//Fertigmeldung ausgeben:
+	alert( "Die Erfassung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
+	countDown();
 }
 
 function processFile( fileList )
@@ -173,14 +188,14 @@ function processFile( fileList )
 				//Berechnung der durchschnittlichen Bearbeitungszeit pro Bild:
 				var endtime = new Date();
 				var runtime = (endtime.getTime() - starttime.getTime()) / 1000;
-				var avgTime = Math.round((runtime / gesamtanzahl) * 100) / 100;
-				document.getElementById('meldung').innerHTML='Die Erfassung ist abgschlossen.<BR>Die durchschnittliche Bearbeitungszeit pro Bild betrug ' + avgTime + ' Sekunden.';
-				//Aktualisierung des Fortschrittsbalkens:
+				avgTime = Math.round((runtime / gesamtanzahl) * 100) / 100;
+				document.getElementById("meldung").innerHTML = "Alle Bilder wurden erfasst.";
+				//Aktualisierung des Fortschrittsbalkens auf 100%:
 				var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
 				document.bar.src = '../../share/images/green.gif';
 				document.bar.width = laenge;
 				document.bar.height = '11';
-				countDown();
+				setTimeout("showReady(avgTime)", 2000);
 			}
 		}
 	};
