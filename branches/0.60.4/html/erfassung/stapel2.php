@@ -62,23 +62,8 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 $result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'"); echo mysql_error();
 $user_id = mysql_result($result1, isset($i), 'id');
 
-
 $start_time = date('d.m.Y, H:i:s');
 
-//Errechnung der Parameter fuer den Fortschrittsbalken:
-/*	
-// Bei neueren Browsern muessen mind. 256 Byte uebertragen werden, damit der Inhalt des OutputBuffers geliefert wird
-// und der Fortschrittsbalken korrekt aktualisiert wird.
-// Also wird ein wenig Muell erzeugt...
-//#################################################################################################################
-FOR($z=0; $z<300; $z++)
-{
-	echo "                                                                                                              ";
-}
-usleep(10000);
-ob_flush();
-//######################################  genug Muell erzeugt  ####################################################
-*/
 echo "
 <div class='page'>
 	<p id='kopf'>pic2base :: Stapelverarbeitung Bild-Upload <span class='klein'>(User: ".$c_username.")</span></p>
@@ -120,6 +105,7 @@ var fileList = null;
 var gesamtanzahl;
 var starttime = new Date();
 var avgTime;
+
 function fileListReceived( responseText )
 {
 	fileList = JSON.parse( responseText, null );
