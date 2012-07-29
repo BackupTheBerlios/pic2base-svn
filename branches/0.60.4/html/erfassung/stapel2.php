@@ -1,80 +1,206 @@
+<?php
+IF (!$_COOKIE['login'])
+{
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
+}
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>pic2base - Stapel-Upload</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+</HEAD>
+
+<!-- 
 <HTML>
 <HEAD>
 <TITLE>Ajax-Testseite</TITLE>
 <script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 </HEAD>
+-->
+
+
+
+
+<BODY onLoad='showFiles()'>
+<CENTER>
+<DIV Class="klein">
+
+<?php
+
+/*
+ * Project: pic2base
+ * File: stapel2.php
+ *
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
+ *
+ * Project owner:
+ * Dipl.-Ing. Klaus Henneberg
+ * 38889 Blankenburg, BRD
+ *
+ * This file is licensed under the terms of the Open Software License
+ * http://www.opensource.org/licenses/osl-2.1.php
+ */
+
+unset($username);
+IF ($_COOKIE['login'])
+{
+	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+}
+
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
+$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'"); echo mysql_error();
+$user_id = mysql_result($result1, isset($i), 'id');
+
+
+$start_time = date('d.m.Y, H:i:s');
+
+//Errechnung der Parameter fuer den Fortschrittsbalken:
+/*	
+// Bei neueren Browsern muessen mind. 256 Byte uebertragen werden, damit der Inhalt des OutputBuffers geliefert wird
+// und der Fortschrittsbalken korrekt aktualisiert wird.
+// Also wird ein wenig Muell erzeugt...
+//#################################################################################################################
+FOR($z=0; $z<300; $z++)
+{
+	echo "                                                                                                              ";
+}
+usleep(10000);
+ob_flush();
+//######################################  genug Muell erzeugt  ####################################################
+*/
+echo "
+<div class='page'>
+	<p id='kopf'>pic2base :: Stapelverarbeitung Bild-Upload <span class='klein'>(User: ".$c_username.")</span></p>
+		
+	<div class='navi' style='clear:right;'>
+		<div class='menucontainer'>
+		</div>
+	</div>
+		
+	<div class='content'>
+		<span style='font-size:12px;'>
+		<p style='margin:120px 0px; text-align:center'>
+		
+		<center>
+			<p>Status der Bild-Erfassung</p>
+			<p id='zaehler'></p>
+			<div id='prog_bar' style='border:solid; border-color:red; width:500px; height:12px; margin-top:30px; margin-bottom:30px; text-align:left; vertical-align:middle'>
+				<img src='../../share/images/green.gif' name='bar' />
+			</div>
+			<p id='meldung'>Bitte haben Sie ein wenig Geduld...</p>
+			<p id='counter'></p>
+		</center>
+		
+		</p>
+		</span>
+	</div>
+	<br style='clear:both;' />
+	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+</div>
+
+</DIV>
+</CENTER>
+</BODY>";
+?>
 
 <script>
-	var fileList = null;
-	function fileListReceived( responseText )
+var timeout = 9;
+var fileList = null;
+var gesamtanzahl;
+var starttime = new Date();
+function fileListReceived( responseText )
+{
+	fileList = JSON.parse( responseText, null );
+	if(fileList.anzahl > 0)
 	{
-		//alert( responseText );
-		fileList = JSON.parse( responseText, null );
+		gesamtanzahl = fileList.file_array.length;
+		document.getElementById("zaehler").innerHTML = "Anzahl der hochzuladenden Bild-Dateien: " + gesamtanzahl;
 		processFile( fileList );
 	}
-
-	function processFile( fileList )
+	else
 	{
-		//alert( 1 );
-		var client = new XMLHttpRequest();
-		//alert( fileList.file_array.length );
-		client.open("GET", "http://192.168.2.30/pic2base/bin/html/erfassung/stapel2_action.php?file=" + fileList.file_array[0], true);
-		alert( "Zeile 22: processing " + fileList.file_array[0] );
-		fileList.file_array.splice( 0, 1 );
-		alert( "Zeile 24: naechstes Element in der Dateiliste: " + fileList.file_array[0] );
-		client.onreadystatechange = function(){
-			//if( client.status == 200)
-			if( client.readyState == 4 )
+		alert( "Es sind keine Dateien zu bearbeiten." );
+		window.location="../start.php";
+	}	
+}
+
+function processFile( fileList )
+{
+	var client = new XMLHttpRequest();
+	client.open("GET", "stapel2_action.php?file=" + fileList.file_array[0], true);
+	fileList.file_array.splice( 0, 1 );
+	client.onreadystatechange = function()
+	{
+		if( client.readyState == 4 )
+		{
+			var result = JSON.parse( client.responseText );
+			
+			if( result.errorCode != 0 )
 			{
-				alert( "ClientReadyState: " + client.readyState );
-				alert( "ResponseText: " + client.responseText );
-				var result = JSON.parse( client.responseText );
-				alert( "geparste Client-Response: " + result );
-				
-				if( result.errorCode != 0 )
+				alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
+			}
+					
+			if( fileList.file_array.length > 0 )
+			{
+				if( fileList.file_array.length > 1)
 				{
-					alert( "Fehler" );
+					document.getElementById("meldung").innerHTML = "...es verbleiben noch " + fileList.file_array.length + " Bilder...";
 				}
 				else
 				{
-					alert( "Erfolg" );
+					document.getElementById("meldung").innerHTML = "...es verbleibt noch " + fileList.file_array.length + " Bild...";
 				}
-						
-				if( fileList.file_array.length > 0 )
-				{
-					alert("Daeilistenlaenge: " + fileList.file_array.lenght);
-					processFile( fileList );
-				}
-				else
-				{
-					alert("shit");
-				}
+				var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
+				document.bar.src = '../../share/images/green.gif';
+				document.bar.width = laenge;
+				document.bar.height = '11';
+				processFile( fileList );
 			}
 			else
 			{
-				alert( "Status: " + client.readyState );
+				//Bearbeitung ist abgeschlossen
+				//Berechnung der durchschnittlichen Bearbeitungszeit pro Bild:
+				var endtime = new Date();
+				var runtime = (endtime.getTime() - starttime.getTime()) / 1000;
+				var avgTime = Math.round((runtime / gesamtanzahl) * 100) / 100;
+				document.getElementById('meldung').innerHTML='Die Erfassung ist abgschlossen.<BR>Die durchschnittliche Bearbeitungszeit pro Bild betrug ' + avgTime + ' Sekunden.';
+				//Aktualisierung des Fortschrittsbalkens:
+				var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
+				document.bar.src = '../../share/images/green.gif';
+				document.bar.width = laenge;
+				document.bar.height = '11';
+				countDown();
 			}
-		};
-		alert( "Zeile 57: Bisher keine Reaktion auf client.onreadystatechange..." );
-		client.send( null );
+		}
+	};
+	client.send( null );
+}
+
+function countDown()
+{
+	document.getElementById( "counter" ).innerHTML = "Sie werden in " + timeout.toString() + " Sekunden zur Dublettenpr&uuml;fung weitergeleitet.";
+	timeout --;
+	if( timeout < 0 )
+	{
+		window.location='doublettenliste1.php?user_id=' + <?php echo $user_id; ?>;
 	}
-</script>
-
-<BODY onLoad='showFiles()'>
-
-<?php
-include '../../share/global_config.php';
-include $sr.'/bin/share/functions/ajax_functions.php';
-//echo "<div id='text'></div>";
-
-?>
-
-<script type="text/javascript">
+	else
+	{
+		setTimeout( "countDown()", 1000 );	
+	}
+}
 
 </script>
-
-<!--<input type='button' value='Datei-Liste anzeigen' onclick='alert(document.getElementById("new_value").value)'><br><br>-->
-<!--<input type='button' value='Datei-Liste anzeigen' onclick='showFiles()'>-->
-
 </BODY>
 </HTML>
