@@ -628,13 +628,29 @@ function getUploadFiles(value)
 {
 	var url = '../../share/get_upload_files.php';	
 	var client = new XMLHttpRequest();
-	//client.open("GET", url, false);	//false erzwingt synchrone Datenuebertragung!!!
 	client.open("GET", url, true);
 	client.onreadystatechange = function()
 								{
 									if( client.readyState == 4 )
 									{
 										fileListReceived( client.responseText );
+									}
+								};
+
+	client.send( null );
+}
+
+function getMissingFiles()
+{
+	var url = '../../share/get_missing_files.php';	
+	var client = new XMLHttpRequest();
+	//client.open("GET", url, false);	//false erzwingt synchrone Datenuebertragung!!!
+	client.open("GET", url, true);
+	client.onreadystatechange = function()
+								{
+									if( client.readyState == 4 )
+									{
+										missingFilesReceived( client.responseText );
 									}
 								};
 
