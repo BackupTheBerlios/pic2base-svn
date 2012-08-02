@@ -2103,6 +2103,16 @@ function directDownload($c_username, $sr)
 	}
 }
 
+function getUserId($c_username, $sr)
+{
+	include $sr.'/bin/share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
+	$user_id = mysql_result($result1, isset($i1), 'id');
+	return $user_id;
+}
+
+
 function buildDcrawCommand($sr)
 {
 	include $sr.'/bin/share/db_connect1.php';
