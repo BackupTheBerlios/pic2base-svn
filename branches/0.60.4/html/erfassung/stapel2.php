@@ -99,7 +99,7 @@ echo "
 </BODY>";
 ?>
 
-<script>
+<script type = text/javascript>
 var timeout = 3;
 var fileList = null;
 var gesamtanzahl;
@@ -203,5 +203,4 @@ function countDown()
 }
 
 </script>
-</BODY>
 </HTML>
