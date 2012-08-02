@@ -132,7 +132,7 @@ echo "
 </div>
 </CENTER>
 </BODY>";
-	
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX	
 	//temporaer genutzte Tabelle wird geleert:
 	$result22 = mysql_query("TRUNCATE `ICE_V_pic_kat_dubls`");
 	echo mysql_error();
@@ -330,7 +330,7 @@ echo "
 	$meldung_0 .= "Aufgabenliste nach <b>".$runtime4."</b> Sekunden zusammengestellt.<br />";
 	//#########################################
 	ob_start();
-	
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX	
 //##############################################___________Erstellung der fehlenden Bilder___________###############################################################################	
 
 	// Erstellung fehlender HQ-Vorschaubilder:
