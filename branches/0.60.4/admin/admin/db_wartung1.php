@@ -216,16 +216,19 @@ function processFile( missingFiles, filetype )
 				if( filetype == "hq" )
 				{
 					document.getElementById("hq").innerHTML = "Es werden die fehlenden HQ-Vorschaubilder erstellt...";
+					document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
 					soll = anzahl_hq;
 				}
 				else if( filetype == "v" )
 				{
 					document.getElementById("thumbs").innerHTML = "Es werden die fehlenden Thumbs erzeugt...";
+					document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
 					soll = anzahl_v;
 				}
 				else if(filetype == "hist_mono" )
 				{
 					document.getElementById("mono_hist").innerHTML = "Histogramme und monochrome Bilder werden erstellt...";
+					document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
 					soll = anzahl_hist_mono;
 				}
 				
@@ -259,19 +262,13 @@ function processFile( missingFiles, filetype )
 				{
 					document.getElementById("mono_hist").innerHTML = "Histogramme und monochrome Bilder wurden erstellt...";
 				}
-
-				//Berechnung der durchschnittlichen Bearbeitungszeit pro Bild:
-				var endtime = new Date();
-				var runtime = (endtime.getTime() - starttime.getTime()) / 1000;
-				avgTime = Math.round((runtime / gesamtzahl) * 100) / 100;
-				document.getElementById("meldung").innerHTML = "Alle fehlenden Bilder wurden erzeugt.";
-				//dies darf erst angezeigt werden, wenn das Skript vollstaendig abgearbeitet wurde:
-				document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&user_id=<?php echo $user_id; ?>\"'>";
 				//Aktualisierung des Fortschrittsbalkens auf 100%:
 				var laenge = (gesamtzahl - arrayToEdit.length) / gesamtzahl * 300;
 				document.bar.src = '../../share/images/green.gif';
 				document.bar.width = laenge;
 				document.bar.height = '11';
+				document.getElementById("meldung").innerHTML = "Alle fehlenden Bilder wurden erzeugt.";
+				document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&user_id=<?php echo $user_id; ?>\"'>";
 			}
 		}
 	};
