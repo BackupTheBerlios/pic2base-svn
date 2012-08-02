@@ -88,7 +88,7 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		IF(strstr($quelle, "edit_start.php") OR strstr($quelle, "stapel2.php"))
+		IF(strstr($quelle, "edit_start.php") OR strstr($quelle, "stapel2.php") OR strstr($quelle, "db_wartung1.php"))
 		{
 			createNavi3($c_username);
 		}
