@@ -92,7 +92,7 @@ include '../../share/global_config.php';
 			<!--<a class='navi' href='$inst_path/pic2base/bin/admin/admin/md5_add.php' title='kontrolliert auf fehlende Pr&uuml;fsummen'>md5-Check</a>-->
 			<a class='navi' href='$inst_path/pic2base/bin/admin/admin/generate_histogram0.php' title='erstellt fehlende Histogramme'>Histogramme</a>
 			<!--<a class='navi' href='$inst_path/pic2base/bin/admin/admin/generate_exifdata0.php' title='&uuml;bertr&auml;gt fehlende Meta-Daten aus den Bildern in die DB'>Meta-Daten</a>-->
-			<a class='navi' href='$inst_path/pic2base/bin/admin/admin/kat_repair1.php' title='Datenbank-Wartung mit Dublettenpr&uuml;fung'>DB-Wartung</a>
+			<a class='navi' href='$inst_path/pic2base/bin/admin/admin/db_wartung1.php' title='Datenbank-Wartung mit Dublettenpr&uuml;fung'>DB-Wartung</a>
 			<a class='navi' href='$inst_path/pic2base/bin/admin/admin/del_pics1.php' title='Vorgemerkte Datens&auml;tze l&ouml;schen'>Bilder l&ouml;schen</a>
 			<a class='navi_blind'></a>
 			<a class='navi' href='$inst_path/pic2base/bin/admin/admin/protect_metadata0.php' title='Festlegung editierbarer Meta-Daten'>Meta-Protect</a>
