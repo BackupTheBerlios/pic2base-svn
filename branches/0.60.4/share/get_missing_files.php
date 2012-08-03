@@ -9,6 +9,12 @@ IF ($_COOKIE['login'])
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
+//bei 50000 Datensaetzen waren 250M erforderlich, daher wird hier vorsorglich auf 300M erhoeht: 
+if(ini_get('memory_limit') < 300)
+{
+	ini_set('memory_limit', '300M');
+}
+
 //Ermittlung der Anzahl fehlender Dateien im Rahmen der DB-Wartung (Vorschau, Hist, Mono):
 //temporaer genutzte Tabelle wird geleert:
 $result22 = mysql_query("TRUNCATE `ICE_V_pic_kat_dubls`");
