@@ -119,7 +119,7 @@ echo "
 		<p id='thumbs' style='color:green; margin-top:0px;'></p>
 		<p id='mono_hist' style='color:green; margin-top:0px;'></p>
 		
-		<p id='meldung' style='color:green; margin-top:30px;'></p>
+		<p id='meldung' style='color:green; margin-top:30px;'>Bitte warten Sie einen Moment.<BR>Die Ermittlung der fehlenden Dateien kann eine Weile dauern.</p>
 		
 		<p id='meldung_0' style='color:green; margin-top:50px;'>".$meldung_0."</p>
 	
