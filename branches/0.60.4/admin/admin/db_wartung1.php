@@ -31,7 +31,12 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  */
-
+//bei 50000 Datensaetzen waren 250M erforderlich, daher wird hier vorsorglich auf 300M erhoeht: 
+if(ini_get('memory_limit') < 300)
+{
+	ini_set('memory_limit', '300M');
+}
+//echo ini_get('memory_limit');
 unset($username);
 IF ($_COOKIE['login'])
 {
