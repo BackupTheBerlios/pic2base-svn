@@ -190,7 +190,7 @@ function processFile( fileList )
 
 function countDown()
 {
-	document.getElementById( "counter" ).innerHTML = "Sie werden in " + timeout.toString() + " Sekunden zur Dublettenpr&uuml;fung weitergeleitet.";
+	document.getElementById( "counter" ).innerHTML = "Sie werden in " + timeout.toString() + " Sekunden zur Doublettenpr&uuml;fung weitergeleitet.";
 	timeout --;
 	if( timeout < 0 )
 	{
