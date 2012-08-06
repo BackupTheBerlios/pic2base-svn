@@ -78,7 +78,7 @@ echo "
 		<!--<a class='subnavi' href='edit_remove_kat.php?pic_id=0&mod=kat' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>-->
 		<a class='subnavi' href='remove_kat_daten.php?pic_id=0&mod=edit_remove' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>
 		<a class='subnavi_blind'></a>
-		<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$user_id'>Dubletten-Pr&uuml;fung</a>
+		<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$user_id'>Doubletten-Pr&uuml;fung</a>
 		<a class='subnavi' href='generate_quickpreview0.php?num=X' title='Service-Funktion'>Quick-Preview hochformatiger Bilder erzeugen</a>
 		</center>
 	</div>
