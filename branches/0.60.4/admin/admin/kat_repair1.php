@@ -18,9 +18,9 @@
 
 <?php
 
-//ini_set('memory_limit', '500M');
-//set_time_limit(0);
-//echo "<font color='white'>Speicher-Nutzung: ".memory_get_usage()."</font>";
+ini_set('memory_limit', '500M');
+
+echo "<font color='white'>Speicher-Nutzung: ".memory_get_usage()."</font>";
 
 /*
  * Project: pic2base
