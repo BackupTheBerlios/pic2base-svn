@@ -39,5 +39,9 @@ $supported_filetypes = array('bmp','cgm','cr2','crw','dcm','dcr','dcx','eps','ex
 //unterstuetzten Datei-Formate (OHNE RAW-Dateien):
 $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','html','jng','jpeg','jpg','mng','mvg','otb','palm','pbm','pcd','pcds','pcl','pcx','pdb','pdf','pgm','png','png8','png24','png32','pnm','ppm','ps','ps2','ps3','psd','rla','rle','sct','sfw','sgi','shtml','sun','svg','tga','tiff','tif','vicar','viff','wpg','xbm','xcf','xpm','yuv');
 //#####################################################################################
-
+//php-Parameter:
+ini_set('post_max_size', '50M');
+ini_set('upload_max_filesize', '50M');
+ini_set('max_execution_time', '30');
+//#####################################################################################
 ?>
