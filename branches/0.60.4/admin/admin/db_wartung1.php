@@ -95,7 +95,7 @@ echo "
 //########################################################################################################
 		echo "<p style='margin-top:50px;'><u>Test 1: Kontrolle auf mehrfache Kategoriezuweisungen</u></p>";
 		
-		// Zum entfernen von Dubletten (unter der Annahme, dass die Spalte lfdnr nirgends im Programmcode verwendet wird):
+		// Zum entfernen von Doubletten (unter der Annahme, dass die Spalte lfdnr nirgends im Programmcode verwendet wird):
 		// Alle Mehrfacheinträge von pic_id und kat_id zusammen mit der kleinsten lfdnr in die Tabelle ICE_V_pic_kat_dubls eintragen
 		$result20 = mysql_query("INSERT ICE_V_pic_kat_dubls(lfdnr, pic_id, kat_id, anzahl) SELECT MIN(lfdnr) as lfdnr, pic_id, kat_id, count(*) as anzahl FROM pic_kat GROUP BY pic_id, kat_id HAVING COUNT(*) > 1");
 		echo mysql_error();
@@ -139,10 +139,10 @@ echo "
 	<DIV id='spalte2'>
 		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;'>Hinweis:<BR><BR>
 		Auf der linken Seite sehen Sie das Ergebnis der &Uuml;berpr&uuml;fung.<BR><BR>
-		Bevor Sie weitere Schritte unternehmen, sollten Sie abschlie&szlig;end die Dublettenpr&uuml;fung vornehmen.<BR>
+		Bevor Sie weitere Schritte unternehmen, sollten Sie abschlie&szlig;end die Doublettenpr&uuml;fung vornehmen.<BR>
 		Dies dauert nur einen Moment, stellt aber sicher, da&szlig; Sie keine Datens&auml;tze doppelt erfa&szlig;t haben.<BR><BR>
 		Nach Abschlu&szlig; der Kontrolle klicken Sie hierzu auf diesen Button:</p>
-		<p align='center' id='button'><input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'></p>
+		<p align='center' id='button'><input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'></p>
 	</DIV>
 	
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
@@ -189,7 +189,7 @@ function missingFilesReceived( responseText )
 	else
 	{
 		document.getElementById("meldung").innerHTML = "Die Bearbeitung ist abgeschlossen.";
-		document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&user_id=<?php echo $user_id; ?>\"'>";
+		document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&user_id=<?php echo $user_id; ?>\"'>";
 //		window.location="../start.php";
 	}	
 }
@@ -231,19 +231,19 @@ function processFile( missingFiles, filetype )
 				if( filetype == "hq" )
 				{
 					document.getElementById("hq").innerHTML = "Es werden die fehlenden HQ-Vorschaubilder erstellt...";
-					document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
+					document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
 					soll = anzahl_hq;
 				}
 				else if( filetype == "v" )
 				{
 					document.getElementById("thumbs").innerHTML = "Es werden die fehlenden Thumbs erzeugt...";
-					document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
+					document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
 					soll = anzahl_v;
 				}
 				else if(filetype == "hist_mono" )
 				{
 					document.getElementById("mono_hist").innerHTML = "Histogramme und monochrome Bilder werden erstellt...";
-					document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
+					document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
 					soll = anzahl_hist_mono;
 				}
 				
@@ -283,7 +283,7 @@ function processFile( missingFiles, filetype )
 				document.bar.width = laenge;
 				document.bar.height = '11';
 				document.getElementById("meldung").innerHTML = "Alle fehlenden Bilder wurden erzeugt.";
-				document.getElementById("button").innerHTML = "<input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&user_id=<?php echo $user_id; ?>\"'>";
+				document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&user_id=<?php echo $user_id; ?>\"'>";
 			}
 		}
 	};
