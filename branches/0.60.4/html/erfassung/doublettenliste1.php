@@ -65,7 +65,16 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$quelle = $_SERVER['HTTP_REFERER'];
+//$quelle = $_SERVER['HTTP_REFERER'];
+
+if (empty($_SERVER['HTTP_REFERER']))
+{
+	$quelle =$_SERVER['HTTP_HOST'].str_replace('&', '&amp;',$_SERVER['REQUEST_URI']);
+}
+else
+{
+	$quelle = $_SERVER['HTTP_REFERER'];
+}
 //echo $quelle;
 if(array_key_exists('user_id',$_GET))
 {
@@ -88,11 +97,11 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		IF(strstr($quelle, "edit_start.php") OR strstr($quelle, "stapel2.php") OR strstr($quelle, "db_wartung1.php"))
+		IF(strstr($quelle, "edit_start.php") OR strstr($quelle, "stapel2.php") OR strstr($quelle, "doublettenliste1.php"))
 		{
 			createNavi3($c_username);
 		}
-		ELSEIF(strstr($quelle, "kat_repair1.php"))
+		ELSEIF(strstr($quelle, "db_wartung1.php"))
 		{
 			include '../admin/adminnavigation.php';
 		}
@@ -177,7 +186,7 @@ echo "
 				</TR>
 				
 				<TR style='height:10px;'>
-				<TD colspan='4' bgcolor='darkgrey'><FONT COLOR='yellow'>Wenn Sie sicher sind, da&szlig; Sie keine Dubletten in der Datenbank haben wollen, k&ouml;nnen Sie alle mehrfachen Vorkommen mit einem Klick auf den Button am Ende der Seite auf einmal entfernen.<BR>
+				<TD colspan='4' bgcolor='darkgrey'><FONT COLOR='yellow'>Wenn Sie sicher sind, da&szlig; Sie keine Doubletten in der Datenbank haben wollen, k&ouml;nnen Sie alle mehrfachen Vorkommen mit einem Klick auf den Button am Ende der Seite auf einmal entfernen.<BR>
 				Anderenfalls k&ouml;nnen Sie mit den Symbolen am rechten Bildrand f&uuml;r jedes Bild individuell entscheiden.</FONT></TD>
 				</TR>
 				
@@ -208,7 +217,7 @@ echo "
 						<TD style='width=350px; text-align: center;'><img src='$image_new' width='350' title='Bild-ID: $new_pic_id' /></TD>
 						<TD style='width=350px; text-align: center;'><img src='$image_old' width='350' title='Bild-ID: $old_pic_id' /></TD>
 						<TD style='width=55px; text-align: center;'><a href='../../share/save_doublette.php?pic_id=$new_pic_id&user_id=$user_id'><img src='../../share/images/ok.gif' title='Bild in der Datenbank belassen' /></a></TD>
-						<TD style='width=55px; text-align: center;'><A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$new_pic_id')\";><img src='../../share/images/delete.gif' title='Dublette aus der Datenbank entfernen' /></a></TD>
+						<TD style='width=55px; text-align: center;'><A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$new_pic_id')\";><img src='../../share/images/delete.gif' title='Doublette aus der Datenbank entfernen' /></a></TD>
 						</TR>";
 					}
 				}
@@ -218,7 +227,7 @@ echo "
 				</TR>
 				
 				<TR style='height:10px;'>
-				<TD colspan='4' align='center' bgcolor='yellow'><INPUT TYPE='button' VALUE='Keine Dubletten zulassen - alle doppelten Bilder aus der Datenbank entfernen' onClick=\"location.href='../../share/delete_all_dubls1.php?method=$method&user_id=$user_id&c_username=$c_username'\"></TD>
+				<TD colspan='4' align='center' bgcolor='yellow'><INPUT TYPE='button' VALUE='Keine Doubletten zulassen - alle doppelten Bilder aus der Datenbank entfernen' onClick=\"location.href='../../share/delete_all_dubls1.php?method=$method&user_id=$user_id&c_username=$c_username'\"></TD>
 				</TR>
 				
 				<TR style='height:3px;'>
@@ -228,7 +237,7 @@ echo "
 			ELSE
 			{
 				echo "<TR style='height:100px;'>
-				<TD colspan='4' align='center'>Es wurden keine Dubletten gefunden.</TD>
+				<TD colspan='4' align='center'>Es wurden keine Doubletten gefunden.</TD>
 				</TR>";
 			}
 		
