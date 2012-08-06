@@ -251,7 +251,7 @@ ELSE
 ?>
 <script language="javascript">
 document.zu.close.focus();
-setTimeout("window.close()", 2000);
+setTimeout("opener.location.reload(); window.close()", 2000);
 </script>
 </DIV>
 </CENTER>
