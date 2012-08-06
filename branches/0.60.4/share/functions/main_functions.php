@@ -1111,6 +1111,19 @@ function createContentFile($mod, $statement, $c_username, $bild)
 	{
 		//echo $statement;
 		//echo "gefundene Bilder: ".$num100."<BR>";
+		
+		//memory_limit dynamisch anpassen, falls der berechnete Wert groesser als der vorhandene Wert ist.
+		$steps = ceil($num100 / 100);
+		//echo "<font color='white'>".$steps." - </font>";
+		$memory_avail = ini_get('memory_limit');
+		$memory_value = $steps * 50;
+		if($memory_value > $memory_avail)
+		{
+			$memory = $memory_value."M";
+			ini_set('memory_limit', $memory);
+		}
+		//echo "<font color='white'>".ini_get('memory_limit')."</font>";
+		
 		$seiten = floor($num100 / 20) + 1;
 		define('FPDF_FONTPATH','../share/fpdf/font/');
 		require $sr.'/bin/share/fpdf/fpdf.php';

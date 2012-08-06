@@ -31,12 +31,7 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  */
-//bei 50000 Datensaetzen waren 250M erforderlich, daher wird hier vorsorglich auf 300M erhoeht: 
-if(ini_get('memory_limit') < 300)
-{
-	ini_set('memory_limit', '300M');
-}
-//echo ini_get('memory_limit');
+
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -47,6 +42,21 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
+
+//memory_limit dynamisch anpassen, falls der berechnete Wert groesser als der vorhandene Wert ist.
+$result1 = mysql_query("SELECT * FROM $table2");
+$pic_records = mysql_num_rows($result1);	//Anzahl der Datensaetze in der pictures-Tabelle
+//bei 50000 Datensaetzen waren 250M erforderlich, daher wird hier vorsorglich dynamisch angepasst:
+$steps = ceil($pic_records / 10000);
+//echo "<font color='white'>".$steps." - </font>";
+$memory_avail = ini_get('memory_limit');
+$memory_value = $steps * 50;
+if($memory_value > $memory_avail)
+{
+	$memory = $memory_value."M";
+	ini_set('memory_limit', $memory);
+}
+//echo "<font color='white'>".ini_get('memory_limit')."</font>";
 
 $user_id = getUserId($c_username, $sr);
 
