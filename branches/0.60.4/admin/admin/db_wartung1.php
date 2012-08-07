@@ -19,7 +19,7 @@
 
 /*
  * Project: pic2base
- * File: kat_repair1.php
+ * File: db_wartung1.php
  *
  * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
