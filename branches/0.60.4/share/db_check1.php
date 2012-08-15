@@ -35,7 +35,7 @@ IF($user == "")
 	{
 		//wenn keine Verbindung zur pic2base-Datenbank hergestellt werden kann:
 		$text = "<center><font color='green'><b>Willkommen bei pic2base!</b><BR> Noch konnte keine Verbindung zur pic2base-Datenbank hergestellt werden.<BR>Das kann daran liegen, da&szlig; Sie pic2base zum ersten Mal starten.<BR><BR>
-		F&uuml;r die Erst-Eintichtung der pic2base-Datenbank<BR>tragen Sie hier bitte den Benutzernamen und das Passwort<BR>eines <b>vorhandenen</b> MySQL-Benutzers mit <b>Administrator-Rechten</b> ein:
+		F&uuml;r die Erst-Einrichtung der pic2base-Datenbank<BR>tragen Sie hier bitte den Benutzernamen und das Passwort<BR>eines <b>vorhandenen</b> MySQL-Benutzers mit <b>Administrator-Rechten</b> ein:
 		<FORM name = 'db_access' method='post' action='index.php'><BR>
 		User-Name (Admin): <INPUT type='text' name='user'>&#160;&#160;&#160;Passwort: <input type='password' name='PWD'>&#160;&#160;<INPUT type='submit' value='OK'></font></center>
 		</FORM>";
