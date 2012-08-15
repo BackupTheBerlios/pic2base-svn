@@ -45,6 +45,6 @@ IF($num6_1 < '1001')
 	createContentFile($mod,$pdf_statement,$c_username,$bild);
 }
 	
-echo " <FONT COLOR='#FF9900'>Galerie anzeigen:</FONT>&#160;&#160;&#160; <a href = '../../../userdata/klaus/kml_files/thumb-gallery.pdf'><img src=\"$inst_path/pic2base/bin/share/images/acroread.png\" width=\"12\" height=\"12\" border=\"0\"  title='Thumbnail-Galerie anzeigen' /></a></span>";
+echo " <FONT COLOR='#FF9900'>Galerie anzeigen:</FONT>&#160;&#160;&#160; <a href = '../../../userdata/$c_username/kml_files/thumb-gallery.pdf'><img src=\"$inst_path/pic2base/bin/share/images/acroread.png\" width=\"12\" height=\"12\" border=\"0\"  title='Thumbnail-Galerie anzeigen' /></a></span>";
 
 ?>
