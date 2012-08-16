@@ -611,7 +611,7 @@ echo "<br>++++ #### ++++<br>";
 			`direkt_download` int(1) NOT NULL DEFAULT '0' COMMENT '0-per FTP, 1-per Direkt-Download je Bild',
 			`uid` int(5) NOT NULL ,
 			`gid` int(5) NOT NULL ,
-			`language` VARCHAR( 25 ) NOT NULL COMMENT 'Sprache des Users',
+			`language` VARCHAR( 25 ) NOT NULL default 'de' COMMENT 'Sprache des Users',
 			UNIQUE KEY `homedir` (`up_dir`),
 			KEY `id` (`id`),
 			KEY `username` (`username`)
