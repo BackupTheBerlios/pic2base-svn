@@ -62,7 +62,6 @@ IF($user == '' OR $pwd == '')
 	<p style='font-size:14px; font-weight:bold; margin-top:20px; margin-bottom:20px; color:red;'>Sie m&uuml;ssen die Zugangsdaten eines Datenbank-Administrators eingeben,<BR><BR>
 	sonst kann das Update nicht ausgef&uuml;hrt werden!<BR><BR>
 	<input type='button' value='Zur vorherigen Seite' onClick='javaScript:history.back()'>
-	</p>
 	</fieldset>
 	</CENTER>";
 	return;
@@ -323,7 +322,7 @@ echo "
 		}
 		
 		//Die Tabelle users wird um das Feld language ergaenzt::
-		$res6 = mysql_query("ALTER TABLE `$table1` ADD `language` VARCHAR( 25 ) NOT NULL COMMENT 'Sprache des Users'");
+		$res6 = mysql_query("ALTER TABLE `$table1` ADD `language` VARCHAR( 25 ) NOT NULL default 'de' COMMENT 'Sprache des Users'");
 		
 		IF(mysql_error() <> '')
 		{
