@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto" onLoad = 'getMissingFiles()'>
+<BODY LANG="de-DE" scroll = "auto">
 
 <CENTER>
 
@@ -97,11 +97,84 @@ echo "
 		break;
 		
 		CASE 'xml':
+			echo "... erzeuge XML-Datei...<BR>";
+			ini_set('memory_limit', '500M');
+			//get all the tables
+			$result1 = mysql_query('SHOW TABLES FROM pic2base') or die('... kann Tabellen nicht anzeigen...');
+//			echo "Anzahl der Tabellen: ".mysql_num_rows($result1)."<BR><BR>";
+
+			echo mysql_num_rows($result1)."<BR><BR>";
+			if(mysql_num_rows($result1) > 0)
+			{
+			  //Ausgabe erzeugen
+			  $tab = "\t";
+			  $br = "\n";
+			  $xml = '<?xml version="1.0" encoding="UTF-8"?>'.$br;
+			  $xml.= '<database name="pic2base">'.$br;
+			  
+			  //fuer jede Tabelle...
+			  while($table = mysql_fetch_row($result1))
+			  {
+				    //prep table out
+				    $xml.= $tab.'<table name="'.$table[0].'">'.$br;
+				    
+				    //Zeilen auslesen
+				    $records = mysql_query('SELECT * FROM '.$table[0]) or die('kann nichts auslesen aus Tabelle: '.$table[0]);
+				    echo mysql_error();
+//			    echo "Tabelle ".$table[0]." hat ".mysql_num_fields($records)." Spalten.<BR>";
+	
+				    //Tabellenattribute
+				    $attributes = array('name','blob','maxlength','multiple_key','not_null','numeric','primary_key','table','type','default','unique_key','unsigned','zerofill');
+				    $xml.= $tab.$tab.'<columns>'.$br;
+				    $x = 0;
+				    while($x < mysql_num_fields($records))
+				    {
+					      $meta = mysql_fetch_field($records[$x]);
+					      $xml.= $tab.$tab.$tab.'<column ';
+					      foreach($attributes as $attribute)
+					      {
+					        $xml.= $attribute.'="'.$meta->$attribute.'" ';
+					      }
+					      $xml.= '/>'.$br;
+					      $x++;
+				    }
+				    $xml.= $tab.$tab.'</columns>'.$br;
+	
+				    //Datensaetze einfuegen
+				    $xml.= $tab.$tab.'<records>'.$br;
+				    while($record = mysql_fetch_assoc($records))
+				    {	
+					      $xml.= $tab.$tab.$tab.'<record>'.$br;
+					      foreach($record as $key=>$value)
+					      {
+					        	$xml.= $tab.$tab.$tab.$tab.'<'.$key.'>'.htmlspecialchars(stripslashes($value)).'</'.$key.'>'.$br;
+					      }
+					      $xml.= $tab.$tab.$tab.'</record>'.$br;
+				    }
+				    $xml.= $tab.$tab.'</records>'.$br;
+				    $xml.= $tab.'</table>'.$br;
+			  }
+			  $xml.= '</database>';
+			  
+			  //Datei speichern
+			  $handle = fopen($kml_dir.'/pic2base.xml','w+');
+			  fwrite($handle,$xml);
+			  fclose($handle);
+			}
+			 $fh = fopen($kml_dir.'/pic2base.xml','r');
+			 if($fh)
+			 {
+			 	echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$c_username/kml_files/pic2base.xml'>hier</a>.</font>"; 
+			 }
+			 else
+			 {
+			 	echo "<BR><font color='red'>Es ist ein Fehler aufgetreten.<BR>Bitte kontaktieren Sie Ihren Systemadministrator.</font>"; 
+			 }
 			
 		break;
 
 		CASE 'csv':
-			
+			echo "... exportiere Datenbank als CSV-Datei...";
 		break;
 	}
 	
