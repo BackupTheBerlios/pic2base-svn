@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto" onLoad = 'getMissingFiles()'>
+<BODY LANG="de-DE" scroll = "auto">
 
 <CENTER>
 
@@ -80,31 +80,66 @@ echo "
 	
 	<font color='green'>
 	<p  style='margin-top:20px;'><b>pic2base - Export</b></p>
-	<fieldset style='width:390px; background-color:yellow; margin-top:10px;'>
+	</font>
+	<fieldset style='width:390px; background-color:lightyellow; margin-top:10px;'>
 	<legend style='color:blue; font-weight:bold;'>SQL-Export</legend>
 		F&uuml;r den Datenbank-Export der pic2base-Datenbank<BR>tragen Sie hier bitte den Benutzernamen und das Passwort<BR>eines <b>vorhandenen</b> MySQL-Benutzers<BR>mit <b>Administrator-Rechten</b> ein:
-		<FORM name = 'db_export' method='post' action='db_export_action.php' label='X'>
+		<FORM name = 'db_export' method='post' action='db_export_action.php'>
 		<center>
 		<TABLE border = '0' style='margin-top:20px;'>
 		<TR>
-		<TD>User-Name (Admin):</TD><TD><INPUT type='text' name='db_user'></TD>
+		<TD align='right'>User-Name (DB-Admin!):</TD><TD><INPUT type='text' name='db_user'></TD>
 		</TR>
 		<TR>
-		<TD>Passwort:</TD><TD><input type='password' name='PWD'></TD>
+		<TD align='right'>Passwort:</TD><TD><input type='password' name='PWD'></TD>
 		</TR>
 		<TR>
-		<TD colspan='2' align='center'><INPUT type='submit' value='DB exportieren'></TD>
+		<TD><BR></TD>
+		</TR>
+		<TR>
+		<TD colspan='2' align='center'><INPUT type='submit' value='DB als SQL exportieren'></TD>
 		</TR>
 		</TABLE>
 		</center>
 		<input type='hidden' name='method' value='sql'>
 		</FORM>
-		</fieldset>
-	</font>
+	</fieldset>
+	
+	<fieldset style='width:390px; background-color:lightyellow; margin-top:10px;'>
+	<legend style='color:blue; font-weight:bold;'>XML-Export</legend>
+		<FORM name = 'db_export' method='post' action='db_export_action.php'>
+		<center>
+		<TABLE border = '0' style='margin-top:20px;'>
+		<TR>
+		<TD colspan='2' align='center'><INPUT type='submit' value='DB als XML exportieren'></TD>
+		</TR>
+		</TABLE>
+		</center>
+		<input type='hidden' name='method' value='xml'>
+		</FORM>
+	</fieldset>
+	
+	<fieldset style='width:390px; background-color:lightyellow; margin-top:10px;'>
+	<legend style='color:blue; font-weight:bold;'>CSV-Export</legend>
+		<FORM name = 'db_export' method='post' action='db_export_action.php'>
+		<center>
+		<TABLE border = '0' style='margin-top:20px;'>
+		<TR>
+		<TD colspan='2' align='center'><INPUT type='submit' value='DB als CSV exportieren'></TD>
+		</TR>
+		</TABLE>
+		</center>
+		<input type='hidden' name='method' value='csv'>
+		</FORM>
+	</fieldset>
+	
 	</div>	
 		
 	<DIV id='spalte2'>
-		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 54px; margin-left: 20px;'>Hinweis:<BR><BR>Hier haben Sie die M&ouml;glichkeit, den gesamten Datenbank-Inhalt als SQL-Statement, CSV- oder XML-Datei zu exportieren.</p>
+		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 54px; margin-left: 20px;'>Hinweis:<BR><BR>Hier haben Sie die M&ouml;glichkeit, den gesamten Datenbank-Inhalt als SQL-Statement, CSV- oder XML-Datei zu exportieren.<BR>
+		<BR>
+		F&uuml;r einen Umzug auf ein anderes Datenbanksystem m&uuml;ssen Sie ggf. auch alle erforderlichen Bilder mit &uuml;bertragen.<BR>
+		Diese finden Sie in dem Ordner \"images\" unterhalb des pic2base-Stammverzeichnisses.<BR><BR>Die erzeugte Export-Datei wird in Ihrem pers&ouml;nlichen FTP-Bereich im Ordner \"kml_files\" abgelegt und kann mit einem FTP-Client heruntergeladen werden.</p>
 	</DIV>
 	
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
