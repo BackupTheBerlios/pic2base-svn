@@ -80,13 +80,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 $exiftool = buildExiftoolCommand($sr);
 
-echo "<div id='blend' style='display:block; z-index:99;'>
-<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:99%;' />
-<img src=\"../../share/images/loading.gif\" style='position:absolute; top:200px; width:20px; z-index:101;' />
-<p style='color:white; position:relative; top:120px; left:10px; z-index:102;' />Die &Auml;nderungen werden ausgef&uuml;hrt, bitte warten Sie...</p>
-</div>";
-
-ob_flush();
+//ob_flush();
 echo "
 <div class='page'>
 
@@ -100,6 +94,12 @@ echo "
 	
 	<div class='content'>";
 flush();
+
+echo "<div id='blend' style='display:block; z-index:99;'>
+	<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:99%;' />
+	<img src=\"../../share/images/loading.gif\" style='position:relative; top:200px; left:400px; width:20px; z-index:101;' />
+	<p style='color:white; position:relative; top:120px; left:250px; z-index:102;'>Die &Auml;nderungen werden ausgef&uuml;hrt, bitte warten Sie...</p>
+	</div>";
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++
 	

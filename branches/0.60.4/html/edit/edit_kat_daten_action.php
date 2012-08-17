@@ -80,7 +80,6 @@ include $sr.'/bin/share/functions/main_functions.php';
 $exiftool = buildExiftoolCommand($sr);
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-//$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
 
 //Variablen-Umbenennung fuer die Ruecksprung-Adresse:
 $kat_back = $kat_id;
@@ -104,16 +103,7 @@ FOREACH ($_POST AS $key => $post)
 	}
 }
 
-IF ( isset($pic_ID) AND count($pic_ID) > 0 AND count($kat_ID) > 0)
-{
-	echo "<div id='blend' style='display:block; z-index:99;'>
-	<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:99%;' />
-	<img src=\"../../share/images/loading.gif\" style='position:absolute; top:200px; width:20px; z-index:101;' />
-	<p style='color:white; position:relative; top:120px; left:10px; z-index:102;' />Die &Auml;nderungen werden ausgef&uuml;hrt, bitte warten Sie...</p>
-	</div>";
-}
-
-ob_flush();
+//ob_flush();
 echo "
 <div class='page'>
 
@@ -126,31 +116,21 @@ echo "
 	</div>
 	
 	<div class='content'>";
-flush();	
+flush();
+IF ( isset($pic_ID) AND count($pic_ID) > 0 AND count($kat_ID) > 0)
+{
+	echo "<div id='blend' style='display:block; z-index:99;'>
+	<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:99%;' />
+	<img src=\"../../share/images/loading.gif\" style='position:relative; top:200px; left:400px; width:20px; z-index:101;' />
+	<p style='color:white; position:relative; top:120px; left:250px; z-index:102;'>Die &Auml;nderungen werden ausgef&uuml;hrt, bitte warten Sie...</p>
+	</div>";
+}	
 	//++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	//HINWEIS: Wenn einem Bild eine Kategorie zugewiesen werden soll, werden ihm gleichzeitig alle Eltern-Kategorien mit zugewiesen, denn ein Motiv in Blankenburg ist zwangslaeufig in Sachsen-Anhalt, der BRD und Europa...
 	
 	//++++++++++++++++++++++++++++++++++++++++++++++++++
-	/*
-	//Ermittlung der ausgewaehlten Checkboxen:
-	//echo count($_POST)."<BR>";
-	FOREACH ($_POST AS $key => $post)
-	{
-		//echo "Schluessel / Wert: ".$key." / ".$post."<BR>";
-		IF (substr($key,0,3) == 'pic')
-		{
-			//echo substr($key,7,strlen($key)-7)."<BR>";
-			$pic_ID[] = substr($key,7,strlen($key)-7);
-		}
-		
-		IF (substr($key,0,3) == 'kat')
-		{
-			//echo substr($key,3,strlen($key)-3)."<BR>";
-			$kat_ID[] = substr($key,3,strlen($key)-3);
-		}
-	}
-	*/
+
 	//Fuer alle Elemente in dem Kategorie-Array werden die Eltern-Elemente bestimmt und ebenfalls in das Array geschrieben:
 	
 	IF (isset($kat_ID) AND count($kat_ID) > 0)
@@ -252,7 +232,7 @@ flush();
 		//echo mysql_errno();
 		IF (mysql_errno() == '0')
 		{
-			echo "<meta http-equiv='refresh' content='1; url=edit_kat_daten.php?kat_id=$kat_back&mod=$mod&ID=$ID_back'>";
+			echo "<meta http-equiv='refresh' content='0; url=edit_kat_daten.php?kat_id=$kat_back&mod=$mod&ID=$ID_back'>";
 			
 		}
 		ELSE
