@@ -40,29 +40,7 @@ IF ($_COOKIE['login'])
 }
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-//include $sr.'/bin/share/functions/permissions.php';
-//include $sr.'/bin/share/functions/main_functions.php';
-//include $sr.'/bin/share/functions/ajax_functions.php';
-/*
-IF(hasPermission($c_username, 'editkattree'))
-{
-	$navigation = "
-			<a class='navi' href='kat_sort1.php'>Sortierung</a>
-			<a class='navi_blind' href='kat_repair1.php'>Wartung</a>
-			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
-			<a class='navi_blind'></a>
-			<a class='navi_blind'></a>
-			<a class='navi_blind'></a>
-			<a class='navi_blind'></a>
-			<a class='navi' href='../../html/start.php'>zur Startseite</a>
-			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
-}
-ELSE
-{
-	header('Location: ../../../index.php');
-}
-*/
+
 echo "
 <div class='page'>
 
@@ -136,10 +114,11 @@ echo "
 	</div>	
 		
 	<DIV id='spalte2'>
-		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 54px; margin-left: 20px;'>Hinweis:<BR><BR>Hier haben Sie die M&ouml;glichkeit, den gesamten Datenbank-Inhalt als SQL-Statement, CSV- oder XML-Datei zu exportieren.<BR>
+		<p id='elf' style='background-color:white; padding: 5px; width: 395px; margin-top: 54px; margin-left: 5px;'>Hinweis:<BR><BR>Hier haben Sie die M&ouml;glichkeit, den gesamten Datenbank-Inhalt als SQL-Statement, CSV- oder XML-Datei zu exportieren.<BR>
 		<BR>
 		F&uuml;r einen Umzug auf ein anderes Datenbanksystem m&uuml;ssen Sie ggf. auch alle erforderlichen Bilder mit &uuml;bertragen.<BR>
-		Diese finden Sie in dem Ordner \"images\" unterhalb des pic2base-Stammverzeichnisses.<BR><BR>Die erzeugte Export-Datei wird in Ihrem pers&ouml;nlichen FTP-Bereich im Ordner \"kml_files\" abgelegt und kann mit einem FTP-Client heruntergeladen werden.</p>
+		Diese finden Sie in dem Ordner \"images\" unterhalb des pic2base-Stammverzeichnisses.<BR><BR>Die erzeugte Export-Datei wird in Ihrem pers&ouml;nlichen FTP-Bereich im Ordner \"kml_files\" abgelegt und kann mit einem FTP-Client heruntergeladen werden.<BR><BR>
+		Alternativ kann die Export-Datei auch &uuml;ber den entsprechenden Link auf der folgenden Seite heruntergeladen werden.</p>
 	</DIV>
 	
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>

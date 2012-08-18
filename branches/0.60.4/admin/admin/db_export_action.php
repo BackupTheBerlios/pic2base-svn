@@ -76,7 +76,7 @@ echo "
 		</p>
 	
 		<p style='margin-top:20px;'>
-		<b>Die Datenbank wird exportiert...</b>
+		<!--<b>Die Datenbank wird exportiert...</b>-->
 		</p>
 	</font>";
 //	echo "User: ".$db_user.", PWD: ".$pwd.", Methode: ".$method."<BR><BR>";
@@ -84,7 +84,6 @@ echo "
 	{
 		CASE 'sql':
 			$statement = "/opt/lampp/bin/mysqldump -u$db_user -p$pwd -h localhost $db > $kml_dir/pic2base.sql";
-//			echo $statement."<BR><BR>";
 			system($statement, $fp);
 			if ($fp==0)
 			{
@@ -97,13 +96,9 @@ echo "
 		break;
 		
 		CASE 'xml':
-			echo "... erzeuge XML-Datei...<BR>";
 			ini_set('memory_limit', '500M');
-			//get all the tables
+			//alle Tabellen ermitteln...
 			$result1 = mysql_query('SHOW TABLES FROM pic2base') or die('... kann Tabellen nicht anzeigen...');
-//			echo "Anzahl der Tabellen: ".mysql_num_rows($result1)."<BR><BR>";
-
-			echo mysql_num_rows($result1)."<BR><BR>";
 			if(mysql_num_rows($result1) > 0)
 			{
 			  //Ausgabe erzeugen
@@ -174,7 +169,7 @@ echo "
 		break;
 
 		CASE 'csv':
-			echo "... exportiere Datenbank als CSV-Datei...";
+			echo "... der CSV-Export ist noch nicht implementiert...";
 		break;
 	}
 	
@@ -183,7 +178,8 @@ echo "
 	</div>	
 	
 	<DIV id='spalte2'>
-		<!--<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;'>Export l&auml;uft...</p>-->
+		<p id='elf' style='background-color:white; padding: 5px; width: 395px; margin-top: 54px; margin-left: 5px;'>Wenn der Export erfolgreich war, liegt die Datei nun in Ihrem FTP-Bereich im Ordner \"kml_files\".<BR><BR>
+		Alternativ k&ouml;nnen Sie die Datei auch &uuml;ber den Link in der linken Spalte herunterladen.</p>
 	</DIV>
 	
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
