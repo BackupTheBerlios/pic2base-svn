@@ -103,7 +103,7 @@ FOREACH ($_POST AS $key => $post)
 	}
 }
 
-//ob_flush();
+
 echo "
 <div class='page'>
 
@@ -116,7 +116,7 @@ echo "
 	</div>
 	
 	<div class='content'>";
-flush();
+	
 IF ( isset($pic_ID) AND count($pic_ID) > 0 AND count($kat_ID) > 0)
 {
 	echo "<div id='blend' style='display:block; z-index:99;'>
@@ -124,7 +124,9 @@ IF ( isset($pic_ID) AND count($pic_ID) > 0 AND count($kat_ID) > 0)
 	<img src=\"../../share/images/loading.gif\" style='position:relative; top:200px; left:400px; width:20px; z-index:101;' />
 	<p style='color:white; position:relative; top:120px; left:250px; z-index:102;'>Die &Auml;nderungen werden ausgef&uuml;hrt, bitte warten Sie...</p>
 	</div>";
-}	
+}
+ob_flush();
+flush();
 	//++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	//HINWEIS: Wenn einem Bild eine Kategorie zugewiesen werden soll, werden ihm gleichzeitig alle Eltern-Kategorien mit zugewiesen, denn ein Motiv in Blankenburg ist zwangslaeufig in Sachsen-Anhalt, der BRD und Europa...
