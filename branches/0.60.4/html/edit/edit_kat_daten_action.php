@@ -19,6 +19,8 @@ IF (!$_COOKIE['login'])
 
 <BODY LANG="de-DE" scroll = "auto">
 
+
+
 <CENTER>
 
 <DIV Class="klein">
@@ -244,9 +246,34 @@ flush();
 	}
 	ELSE
 	{
+		//echo $ID_back;
+		$ID_back = "";
 		echo "<p class='zwoelfred' align='center'>Es wurde kein Bild oder keine Kategorie ausgew&auml;hlt!<BR><BR>
 		Bitte w&auml;hlen Sie mindestens ein Bild aus<BR>oder verlassen Sie den vorhergehenden Dialog<BR>mit \"Abbrechen\"!</p>
-		<meta http-equiv='refresh' content='5; url=edit_kat_daten.php?kat_id=$kat_back&mod=$mod&ID=$ID_back'>";
+		<p id='counter' style='margin-left:240px; margin-top:50px;'></p>"; 
+		?>
+		<script type='text/javascript'>
+		var timeout = 7;
+		var mod = '<?php echo $mod; ?>';
+		countDown();
+
+		function countDown()
+		{
+			//alert("mod");
+			document.getElementById( "counter" ).innerHTML = "Sie werden in " + timeout.toString() + " Sekunden zur vorherigen Seite weitergeleitet.";
+			timeout --;
+			if( timeout < 0 )
+			{
+				window.location='edit_kat_daten.php?kat_id=' + <?php echo $kat_back; ?> + '&mod=' + mod;
+			}
+			else
+			{
+				setTimeout( "countDown()", 1000 );	
+			}
+		}
+		
+		</script>
+		<?php 
 	}
 	
 	echo "
