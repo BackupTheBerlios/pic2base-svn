@@ -319,7 +319,7 @@ IF ($pic_id !=='0')
 			$longitude2 = mysql_result($result11,isset($i11), 'GPSLongitude');
 			$latitude2 = mysql_result($result11,isset($i11), 'GPSLatitude');
 			$altitude2 = mysql_result($result11,isset($i11), 'GPSAltitude');
-			IF(($longitude2 == "0") OR ($latitude2 == "0") OR ($longitude2 =='') OR ($latitude2 == ''))
+			IF(($longitude2 == "0") OR ($latitude2 == "0") OR ($longitude2 =='') OR ($latitude2 == '') OR ($location == 'Ortsbezeichnung'))
 			{
 				echo "<TD id='detail6'><span style='cursor:pointer;'>
 				<img src='$inst_path/pic2base/bin/share/images/no_googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='keine Geo-Informationen' />
