@@ -7,6 +7,17 @@
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	
+	<script type="text/javascript">
+	function countChars () 
+	{
+	  document.kat_neu.Kontrolle.value = document.kat_neu.kategorie.value.length + 1;
+	  if(document.kat_neu.Kontrolle.value > 30)
+		  alert("30 Zeichen sind erlaubt!\nWeitere Zeichen werden ignoriert.");
+	  return true;
+	}
+	</script>
+	
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
@@ -223,7 +234,8 @@ function setFontColor($ID, $kat_id)
 		echo "<FORM name='kat_neu' action='kat_add_action1.php?kat_id=$KAT_ID&level=$level&ID=$ID' method='POST'>
 		<INPUT type='hidden' name='parent' value='$ID'>
 		<INPUT type='hidden' name='level' value='$level_neu'>
-		<INPUT type='text' name='kategorie' value='' size='30' maxlength='30'>&#160;
+		<INPUT type='text' name='kategorie' value='' size='30' maxlength='30' onkeydown='countChars(this.value)'>&#160;
+		<input type='hidden' value='0' readonly='readonly' size='3' name='Kontrolle'>
 		<INPUT type='submit' value='Speichern'>&#160;
 		<INPUT TYPE = 'button' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>
 		</FORM>
