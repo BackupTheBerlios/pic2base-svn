@@ -1,5 +1,7 @@
 <script language='javascript'>
 
+
+
 var divLargeImageElement;
 var divFullscreenImageElement;
 var currentPreviewImageIndex;
@@ -234,19 +236,19 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '</center></div>'+
       '<div style="position:absolute; bottom:0px; width:100%; z-index:1000;"><center>'+
       '<table border=0 width=548px height=68px style="background-image:url(../../share/images/navbg.png)" cellpadding=0 cellspacing=0><tr>'+
-      '<td align=center valign=middle width=70><a href="javascript:showFullscreenImage(' + "'" + imagePath + "'" + ');" title="zur Vollbild-Ansicht"><img src="../../share/images/fullscreen.png" border=0></a></td>'+
+      '<td align=center valign=middle width=70><a href="javascript:showFullscreenImage(' + "'" + imagePath + "'" + ');" title="zur Vollbild-Ansicht (F)"><img src="../../share/images/fullscreen.png" border=0></a></td>'+
       '<td align=center valign=middle></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:firstImage(' + "'" + imagePath + "'" + ');" title="zum ersten Bild"><img id="imgNavFirst" src="../../share/images/first.png" border=0></a></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:prevStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder zur&uuml;ck"><img id="imgNavPrevStep" src="../../share/images/prevstep.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:firstImage(' + "'" + imagePath + "'" + ');" title="zum ersten Bild (Pos1-Taste)"><img id="imgNavFirst" src="../../share/images/first.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:prevStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder zur&uuml;ck (Pfeil-Unten-Taste)"><img id="imgNavPrevStep" src="../../share/images/prevstep.png" border=0></a></td>'+
       '<td align=center valign=middle width=20></td>'+
-      '<td align=center valign=middle width=60><a href="javascript:prevImage(' + "'" + imagePath + "'" + ');" title="zum vorigen Bild"><img id="imgNavPrev" src="../../share/images/prev.png" border=0></a></td>'+
+      '<td align=center valign=middle width=60><a href="javascript:prevImage(' + "'" + imagePath + "'" + ');" title="zum vorigen Bild (Pfeil-Links-Taste)"><img id="imgNavPrev" src="../../share/images/prev.png" border=0></a></td>'+
       '<td align=center valign=middle width=10></td>'+
-      '<td align=center valign=middle width=60><a href="javascript:nextImage(' + "'" + imagePath + "'" + ');" title="zum n&auml;chsten Bild"><img id="imgNavNext" src="../../share/images/next.png" border=0></a></td>'+
+      '<td align=center valign=middle width=60><a href="javascript:nextImage(' + "'" + imagePath + "'" + ');" title="zum n&auml;chsten Bild (Pfeil-Rechts-Taste)"><img id="imgNavNext" src="../../share/images/next.png" border=0></a></td>'+
       '<td align=center valign=middle width=20></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:nextStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder vor"><img id="imgNavNextStep" src="../../share/images/nextstep.png" border=0></a></td>'+
-      '<td align=center valign=middle width=40><a href="javascript:lastImage(' + "'" + imagePath + "'" + ');" title="zum letzten Bild"><img id="imgNavLast" src="../../share/images/last.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:nextStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder vor (Pfeil-Oben-Taste)"><img id="imgNavNextStep" src="../../share/images/nextstep.png" border=0></a></td>'+
+      '<td align=center valign=middle width=40><a href="javascript:lastImage(' + "'" + imagePath + "'" + ');" title="zum letzten Bild (Ende-Taste)"><img id="imgNavLast" src="../../share/images/last.png" border=0></a></td>'+
       '<td align=center valign=middle></td>'+
-      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);" title="Vorschau schlie&szlig;en"><img src="../../share/images/close.png" border=0></a></td>'+
+      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);" title="Vorschau schlie&szlig;en (ESC)"><img src="../../share/images/close.png" border=0></a></td>'+
       '</tr></table>'+
       '</center></div>'+
       //'</div>'+
@@ -280,5 +282,100 @@ self.openPreview = function openPreview(newImagePath, getImageArrayCallback, ini
     updateNavImages();
 	}
 }
+
+function keyPressed (Ereignis) 
+{
+  if (!Ereignis)
+    Ereignis = window.event;
+  if (Ereignis.which) 
+  {
+    Tastencode = Ereignis.which;
+    if(Ereignis.which == 35)
+    {
+    	//alert("Ende");
+    	lastImage(imagePath);
+    }
+    else if(Ereignis.which == 36)
+    {
+    	//alert("Pos 1");
+    	firstImage(imagePath);
+    }
+    else if(Ereignis.which == 37)
+    {
+    	//alert("eins zurueck");
+    	prevImage(imagePath);
+    }
+    else if(Ereignis.which == 39)
+    {
+    	//alert("eins vor" + imagePath);
+    	nextImage(imagePath);
+    }
+    else if(Ereignis.which == 38)
+    {
+    	//alert("10 vor");
+    	nextStepImage(imagePath);
+    }
+    else if(Ereignis.which == 40)
+    {
+    	//alert("10 zurueck");
+    	prevStepImage(imagePath);
+    }
+    else if(Ereignis.which == 27)
+    {
+    	//alert("abbrechen");
+    	hideFullscreenOverlay(gotoFilmstreifenPosition);
+    }
+    else if(Ereignis.which == 70)
+    {
+    	//alert("fullscreen");
+    	showFullscreenImage(imagePath);
+    }
+  } 
+  else if (Ereignis.keyCode) 
+  {
+    Tastencode = Ereignis.keyCode;
+    if(Ereignis.keyCode == 35)
+    {
+    	//alert("Ende");
+    	lastImage(imagePath);
+    }
+    else if(Ereignis.keyCode == 36)
+    {
+    	//alert("Pos 1");
+    	firstImage(imagePath);
+    }
+    else if(Ereignis.keyCode == 37)
+    {
+    	//alert("eins zurueck");
+    	prevImage(imagePath);
+    }
+    else if(Ereignis.keyCode == 39)
+    {
+    	//alert("eins vor");
+    	nextImage(imagePath);
+    }
+    else if(Ereignis.keyCode == 38)
+    {
+    	//alert("10 vor");
+    	nextStepImage(imagePath);
+    }
+    else if(Ereignis.keyCode == 40)
+    {
+    	//alert("10 zurueck");
+    	prevStepImage(imagePath);
+    }
+    else if(Ereignis.keyCode == 27)
+    {
+    	//alert("abbrechen");
+    	hideFullscreenOverlay(gotoFilmstreifenPosition);
+    }
+    else if(Ereignis.keyCode == 70)
+    {
+    	//alert("fullscreen");
+    	showFullscreenImage(imagePath);
+    }
+  }
+}
+document.onkeydown = keyPressed;
 
 </script>
