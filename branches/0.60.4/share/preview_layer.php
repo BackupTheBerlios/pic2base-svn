@@ -249,7 +249,7 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<td align=center valign=middle width=40><a href="javascript:nextStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder vor (Pfeil-Oben-Taste)"><img id="imgNavNextStep" src="../../share/images/nextstep.png" border=0></a></td>'+
       '<td align=center valign=middle width=40><a href="javascript:lastImage(' + "'" + imagePath + "'" + ');" title="zum letzten Bild (Ende-Taste)"><img id="imgNavLast" src="../../share/images/last.png" border=0></a></td>'+
       '<td align=center valign=middle></td>'+
-      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);" title="Vorschau schlie&szlig;en (ESC)"><img src="../../share/images/close.png" border=0></a></td>'+
+      '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);" title="Vorschau schlie&szlig;en (F10)"><img src="../../share/images/close.png" border=0></a></td>'+
       '</tr></table>'+
       '</center></div>'+
       //'</div>'+
@@ -375,10 +375,9 @@ self.keyPressed = function keyPressed(Ereignis, currentPreviewImageIndex)
     		prevStepImage(imagePath);
     	}
     }
-    else if(Ereignis.which == 27)
+    else if(Ereignis.which == 121)
     {
     	//alert("abbrechen");
-    	//alert(n);
     	if(statusFlag == 0)
     	{
     		hideFullscreenOverlay(gotoFilmstreifenPosition);
