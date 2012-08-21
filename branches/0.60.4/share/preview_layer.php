@@ -243,7 +243,7 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<td align=center valign=middle width=20></td>'+
       '<td align=center valign=middle width=60><a href="javascript:prevImage(' + "'" + imagePath + "'" + ');" title="zum vorigen Bild (Pfeil-Links-Taste)"><img id="imgNavPrev" src="../../share/images/prev.png" border=0></a></td>'+
       '<td align=center valign=middle width=10></td>'+
-      '<td align=center valign=middle width=60><a href="javascript:nextImage(' + "'" + imagePath + "'" + ');" title="zum n&auml;chsten Bild (Pfeil-Rechts-Taste)"><img id="imgNavNext" src="../../share/images/next.png" border=0></a></td>'+
+      '<td align=center valign=middle width=60><a href="javascript:nextImage(' + "'" + imagePath + "'" + ');" title="zum n&auml;chsten Bild (Leertaste oder Pfeil-Rechts-Taste)"><img id="imgNavNext" src="../../share/images/next.png" border=0></a></td>'+
       '<td align=center valign=middle width=20></td>'+
       '<td align=center valign=middle width=40><a href="javascript:nextStepImage(' + "'" + imagePath + "'" + ');" title="zehn Bilder vor (Pfeil-Oben-Taste)"><img id="imgNavNextStep" src="../../share/images/nextstep.png" border=0></a></td>'+
       '<td align=center valign=middle width=40><a href="javascript:lastImage(' + "'" + imagePath + "'" + ');" title="zum letzten Bild (Ende-Taste)"><img id="imgNavLast" src="../../share/images/last.png" border=0></a></td>'+
@@ -305,7 +305,7 @@ function keyPressed (Ereignis)
     	//alert("eins zurueck");
     	prevImage(imagePath);
     }
-    else if(Ereignis.which == 39)
+    else if(Ereignis.which == 39 || Ereignis.which == 32)
     {
     	//alert("eins vor" + imagePath);
     	nextImage(imagePath);
@@ -349,7 +349,7 @@ function keyPressed (Ereignis)
     	//alert("eins zurueck");
     	prevImage(imagePath);
     }
-    else if(Ereignis.keyCode == 39)
+    else if(Ereignis.keyCode == 39 || Ereignis.keyCode == 32)
     {
     	//alert("eins vor");
     	nextImage(imagePath);
