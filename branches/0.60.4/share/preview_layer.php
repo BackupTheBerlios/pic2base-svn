@@ -1,12 +1,12 @@
 <script language='javascript'>
 
-
-
 var divLargeImageElement;
 var divFullscreenImageElement;
 var currentPreviewImageIndex;
 var imagePath;
 var user_id = 0;
+var statusFlag = 0; // 0 - F wechselt von klein zu Vollbild, 1 - F wechselt von Vollbild zurueck zu klein
+var n = 0;
 
 self.updateNavImages = function updateNavImages()
 {
@@ -112,6 +112,7 @@ self.nextImage = function nextImage(imagePath)
   }
   updateNavImages();
   loadCurrentPreviewImage(imagePath);
+  n = currentPreviewImageIndex;
 }
 
 self.nextStepImage = function nextStepImage(imagePath)
@@ -283,7 +284,7 @@ self.openPreview = function openPreview(newImagePath, getImageArrayCallback, ini
 	}
 }
 
-function keyPressed (Ereignis) 
+self.keyPressed = function keyPressed(Ereignis, currentPreviewImageIndex) 
 {
   if (!Ereignis)
     Ereignis = window.event;
@@ -293,42 +294,115 @@ function keyPressed (Ereignis)
     if(Ereignis.which == 35)
     {
     	//alert("Ende");
-    	lastImage(imagePath);
+    	if(statusFlag == 0)
+    	{
+    		lastImage(imagePath);
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    		lastImage(imagePath);
+    	}
     }
     else if(Ereignis.which == 36)
     {
     	//alert("Pos 1");
-    	firstImage(imagePath);
+    	if(statusFlag == 0)
+    	{
+    		firstImage(imagePath);
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    		firstImage(imagePath);
+    	}
     }
     else if(Ereignis.which == 37)
     {
     	//alert("eins zurueck");
-    	prevImage(imagePath);
+    	if(statusFlag == 0)
+    	{
+    		prevImage(imagePath);
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    		prevImage(imagePath);
+    	}
     }
     else if(Ereignis.which == 39 || Ereignis.which == 32)
     {
     	//alert("eins vor" + imagePath);
-    	nextImage(imagePath);
+    	if(statusFlag == 0)
+    	{	
+    		nextImage(imagePath);
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    		nextImage(imagePath);
+    	}
     }
     else if(Ereignis.which == 38)
     {
     	//alert("10 vor");
-    	nextStepImage(imagePath);
+    	if(statusFlag == 0)
+    	{
+    		nextStepImage(imagePath);
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    		nextStepImage(imagePath);
+    	}
     }
     else if(Ereignis.which == 40)
     {
     	//alert("10 zurueck");
-    	prevStepImage(imagePath);
+    	if(statusFlag == 0)
+    	{
+    		prevStepImage(imagePath);
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    		prevStepImage(imagePath);
+    	}
     }
     else if(Ereignis.which == 27)
     {
     	//alert("abbrechen");
-    	hideFullscreenOverlay(gotoFilmstreifenPosition);
+    	//alert(n);
+    	if(statusFlag == 0)
+    	{
+    		hideFullscreenOverlay(gotoFilmstreifenPosition);
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    		hideFullscreenOverlay(gotoFilmstreifenPosition);
+    	}
     }
     else if(Ereignis.which == 70)
     {
     	//alert("fullscreen");
-    	showFullscreenImage(imagePath);
+    	if(statusFlag == 0)
+    	{
+    		showFullscreenImage(imagePath);
+    		statusFlag = 1;
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    	}
     }
   } 
   else if (Ereignis.keyCode) 
@@ -372,7 +446,16 @@ function keyPressed (Ereignis)
     else if(Ereignis.keyCode == 70)
     {
     	//alert("fullscreen");
-    	showFullscreenImage(imagePath);
+    	if(statusFlag == 0)
+    	{
+    		showFullscreenImage(imagePath);
+    		statusFlag = 1;
+    	}
+    	else if(statusFlag == 1)
+    	{
+    		hideFullscreenImage();
+    		statusFlag = 0;
+    	}
     }
   }
 }
