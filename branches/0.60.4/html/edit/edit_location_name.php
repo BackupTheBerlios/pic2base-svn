@@ -172,7 +172,7 @@ echo "
 					// Ab Version 0.60.4: es wird geprueft, ob die Tabelle geo_locations existiert. Wenn ja, werden die Tabellen pictures 
 					// und geo_locations zum auffinden bekannter Orte in der Naehe verwendet, wenn nicht, nur die Tabelle pictures:
 					$res = mysql_query("show tables LIKE 'geo_locations'");
-					
+					//$res = 0;
 					IF(mysql_num_rows($res) == 1)
 					{
 						//echo "Tabelle vorhanden";
@@ -183,8 +183,7 @@ echo "
 								select locid, City, GPSLongitude, GPSLatitude from geo_locations) 
 				 				as X_union
 						where GPSLongitude between $long_min and $long_max
-						and GPSLatitude between $lat_min and $lat_max
-						LIMIT 200");
+						and GPSLatitude between $lat_min and $lat_max");
 					}
 					ELSE
 					{
@@ -302,7 +301,7 @@ echo "
 								
 								echo "<OPTION VALUE='$ort_arr[$pos]' $auswahl>".$ort_arr[$pos]."</OPTION>";
 								//echo $locid[$pos]."&#160;&#160;&#160;&#160;".$ort_arr[$pos]."&#160;&#160;&#160;&#160;".$ABST."<BR>";
-								//echo $ABST.", zugeh. Ort: ".$ort[$pos]."<BR>";
+								echo $ABST.", zugeh. Ort: ".$ort[$pos]."<BR>";
 								$zv++;
 							}
 						echo '	
