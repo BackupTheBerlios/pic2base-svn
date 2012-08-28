@@ -38,15 +38,51 @@ $result29 = mysql_query("UPDATE $table2 SET FileNameMono = CONCAT(pic_id,'_mono.
 echo mysql_error();
 $result30 = mysql_query( "SELECT * FROM $table2");
 echo mysql_error();
+
+$hq_files_soll = array();
+$v_files_soll = array();
+$hist_files_soll = array();
+$hist_r_files_soll = array();
+$hist_g_files_soll = array();
+$hist_b_files_soll = array();
+$mono_files_soll = array();
+
 WHILE($row = mysql_fetch_array($result30))
 {
-	$hq_files_soll[$row[0]] = $row[3];
-	$v_files_soll[$row[0]] = $row[4];
-	$hist_files_soll[$row[0]] = $row[5];
-	$hist_r_files_soll[$row[0]] = $row[6];
-	$hist_g_files_soll[$row[0]] = $row[7];
-	$hist_b_files_soll[$row[0]] = $row[8];	
-	$mono_files_soll[$row[0]] = $row[9];
+	foreach($row AS $key => $value)
+	{
+//		echo "Element: ".$row[0].", Key: ".$key." - Wert: ".$value."<BR>";
+		switch(trim($key))
+		{
+			CASE 'FileNameHQ':
+				$hq_files_soll[$row[0]] = $value;	
+			break;
+			
+			CASE 'FileNameV':
+				$v_files_soll[$row[0]] = $value;
+			break;
+			
+			CASE 'FileNameHist':
+				$hist_files_soll[$row[0]] = $value;
+			break;
+			
+			CASE 'FileNameHist_r':
+				$hist_r_files_soll[$row[0]] = $value;
+			break;
+			
+			CASE 'FileNameHist_g':
+				$hist_g_files_soll[$row[0]] = $value;
+			break;
+			
+			CASE 'FileNameHist_b':
+				$hist_b_files_soll[$row[0]] = $value;
+			break;
+			
+			CASE 'FileNameMono':
+				$mono_files_soll[$row[0]] = $value;
+			break;
+		}
+	}
 }
 
 ksort($hq_files_soll);
@@ -130,7 +166,8 @@ $runtime2 = round(($end2sec + $end2msec) - ($start1sec + $start1msec),4);
 $meldung_0 .= "Lesen / sortieren der Ist-Dateien nach: <b>".$runtime2."</b> Sek. beendet.<br />";
 //#########################################
 */
-//Ermittlung der Differenzen zwischen Soll und Ist:	
+//Ermittlung der Differenzen zwischen Soll und Ist:
+	
 $hq_files_diff = array_diff($hq_files_soll, $hq_files_ist);
 $v_files_diff = array_diff($v_files_soll, $v_files_ist);
 $hist_files_diff = array_diff($hist_files_soll, $hist_files_ist);
@@ -138,6 +175,118 @@ $hist_r_files_diff = array_diff($hist_r_files_soll, $hist_r_files_ist);
 $hist_g_files_diff = array_diff($hist_g_files_soll, $hist_g_files_ist);
 $hist_b_files_diff = array_diff($hist_b_files_soll, $hist_b_files_ist);
 $mono_files_diff = array_diff($mono_files_soll, $mono_files_ist);
+
+/*
+function hist_array_diff($a, $b) 
+{
+    $map = $out = array();
+    foreach($a as $val) $map[$val] = 1;
+    foreach($b as $val) if(isset($map[$val])) $map[$val] = 0;
+    foreach($map as $val => $ok) if($ok) $out[] = $val;
+    return $out;
+}
+$a = $hist_files_soll;
+$b = $hist_files_ist;
+//echo "fehlende hist-files nach neuer Berechnung:<BR>";
+$hist_files_diff = hist_array_diff($a, $b);
+print_r($hist_files_diff);
+//echo "<BR><BR>";
+
+function hist_r_array_diff($c, $d) 
+{
+    $map = $out = array();
+    foreach($c as $val) $map[$val] = 1;
+    foreach($d as $val) if(isset($map[$val])) $map[$val] = 0;
+    foreach($map as $val => $ok) if($ok) $out[] = $val;
+    return $out;
+}
+$c = $hist_r_files_soll;
+$d = $hist_r_files_ist;
+//echo "fehlende hist-R-files nach neuer Berechnung:<BR>";
+$hist_r_files_diff = hist_r_array_diff($c, $d);
+//print_r($hist_r_files_diff);
+//echo "<BR><BR>";
+
+
+function hist_g_array_diff($e, $f) 
+{
+    $map = $out = array();
+    foreach($e as $val) $map[$val] = 1;
+    foreach($f as $val) if(isset($map[$val])) $map[$val] = 0;
+    foreach($map as $val => $ok) if($ok) $out[] = $val;
+    return $out;
+}
+$e = $hist_g_files_soll;
+$f = $hist_g_files_ist;
+//echo "fehlende hist-G-files nach neuer Berechnung:<BR>";
+$hist_g_files_diff = hist_g_array_diff($e, $f);
+//print_r($hist_g_files_diff);
+//echo "<BR><BR>";
+
+
+function hist_b_array_diff($g, $h) 
+{
+    $map = $out = array();
+    foreach($g as $val) $map[$val] = 1;
+    foreach($h as $val) if(isset($map[$val])) $map[$val] = 0;
+    foreach($map as $val => $ok) if($ok) $out[] = $val;
+    return $out;
+}
+$g = $hist_b_files_soll;
+$h = $hist_b_files_ist;
+//echo "fehlende hist-B-files nach neuer Berechnung:<BR>";
+$hist_b_files_diff = hist_b_array_diff($g, $h);
+//print_r($hist_b_files_diff);
+//echo "<BR><BR>";
+
+
+function mono_array_diff($i, $j) 
+{
+    $map = $out = array();
+    foreach($i as $val) $map[$val] = 1;
+    foreach($j as $val) if(isset($map[$val])) $map[$val] = 0;
+    foreach($map as $val => $ok) if($ok) $out[] = $val;
+    return $out;
+}
+$i = $mono_files_soll;
+$j = $mono_files_ist;
+//echo "fehlende mono-files nach neuer Berechnung:<BR>";
+$mono_files_diff = mono_array_diff($i, $j);
+//print_r($mono_files_diff);
+//echo "<BR><BR>";
+
+
+function hq_array_diff($k, $l) 
+{
+    $map = $out = array();
+    foreach($k as $val) $map[$val] = 1;
+    foreach($l as $val) if(isset($map[$val])) $map[$val] = 0;
+    foreach($map as $val => $ok) if($ok) $out[] = $val;
+    return $out;
+}
+$k = $hq_files_soll;
+$l = $hq_files_ist;
+//echo "fehlende hq-files nach neuer Berechnung:<BR>";
+$hq_files_diff = hq_array_diff($k, $l);
+//print_r($hq_files_diff);
+//echo "<BR><BR>";
+
+
+function v_array_diff($m, $n) 
+{
+    $map = $out = array();
+    foreach($m as $val) $map[$val] = 1;
+    foreach($n as $val) if(isset($map[$val])) $map[$val] = 0;
+    foreach($map as $val => $ok) if($ok) $out[] = $val;
+    return $out;
+}
+$m = $v_files_soll;
+$n = $v_files_ist;
+//echo "fehlende v-files nach neuer Berechnung:<BR>";
+$v_files_diff = v_array_diff($m, $n);
+//print_r($v_files_diff);
+//echo "<BR><BR>";
+*/
 //###################################
 	
 //nicht mehr bnoetigte Arrays werden geleert:	
