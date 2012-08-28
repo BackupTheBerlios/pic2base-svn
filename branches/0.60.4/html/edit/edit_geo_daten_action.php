@@ -218,11 +218,11 @@ SWITCH($ge)
 		
 		<div id='spalte2F'>
 			<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hinweise zur Referenzierung<BR></p>";
-			echo $hinweis2;
 			
 			//Wenn alle Bilder referenziert wurden, werden die benutzereignen Datens&auml;tze aus der temp. Tabelle 'geo_tmp' gel&ouml;scht und nochmals alle Bilder dargestellt, damit den Koordinaten eine Ortsbezeichnung hinzugefgt werden kann:
 			$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$user_id'");
-			echo "<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p>
+			echo "Die Geo-Referenzierung wurde abgeschlossen.<BR>Die Zusammenfassung des Ergebnisses finden Sie unter dem Button \"Weiter\", mit dem Sie zur Ortzuweisung gelangen.<BR><BR>"
+			echo "<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p><BR>Zusammenfassung der Koordinaten-Zuweisung:<BR><BR>".$hinweis2."
 		</div>
 		
 		<div id='filmstreifen'>
