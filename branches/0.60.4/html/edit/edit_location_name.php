@@ -298,10 +298,10 @@ echo "
 								{
 									$ort_arr[$pos] = utf8_encode($ort_arr[$pos]);
 								}
-								
+					
 								echo "<OPTION VALUE='$ort_arr[$pos]' $auswahl>".$ort_arr[$pos]."</OPTION>";
 								//echo $locid[$pos]."&#160;&#160;&#160;&#160;".$ort_arr[$pos]."&#160;&#160;&#160;&#160;".$ABST."<BR>";
-								echo $ABST.", zugeh. Ort: ".$ort[$pos]."<BR>";
+								//echo $ABST.", zugeh. Ort: ".$ort[$pos]."<BR>";
 								$zv++;
 							}
 						echo '	
@@ -355,6 +355,19 @@ mysql_close($conn);
 ?>
 <script language="javascript">
 document.ortsbezeichnung.button1.focus();
+//Variante, wenn viele Bilder mit dem gleichen Ort referenziert werden sollen
+//alert(document.ortsbezeichnung.ort.value);
+//##########  ab hier aktivieren und Ortsbezeichnung eintragen  ################
+//if(document.ortsbezeichnung.ort.value.slice(0, 22) == 'Blankenburg, Mauerstra')
+//{
+//	//alert(document.ortsbezeichnung.ort.value);
+//	document.ortsbezeichnung.button1.click();
+//}
+//else
+//{
+//	alert(document.ortsbezeichnung.ort.value.slice(0, 22));
+//}
+//##############################################################################
 </script>
 </DIV>
 </CENTER>
