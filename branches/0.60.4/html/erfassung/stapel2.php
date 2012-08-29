@@ -139,49 +139,59 @@ function showReady(avgTime)
 function processFile( fileList )
 {
 	var client = new XMLHttpRequest();
-	client.open("GET", "stapel2_action.php?file=" + fileList.file_array[0], true);
-	fileList.file_array.splice( 0, 1 );
-	client.onreadystatechange = function()
+	//alert(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß|\s/));
+	if(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß|\s/) !== -1)
 	{
-		if( client.readyState == 4 )
+		alert("Es ist ein Fehler aufgetreten!\n\nDer Dateiname "+ fileList.file_array[0] + " beinhaltet unerlaubte Zeichen.\nDie Erfassung wird abgebrochen.\nBitte korrigieren Sie den Dateinamen und starten dann die Erfassung neu.\nFragen Sie ggf. Ihren Administrator.");
+		//alert(fileList.file_array[0]);
+		location.href='../start.php';
+	}
+	else
+	{
+		client.open("GET", "stapel2_action.php?file=" + fileList.file_array[0], true);
+		fileList.file_array.splice( 0, 1 );
+		client.onreadystatechange = function()
 		{
-			var result = JSON.parse( client.responseText );
-			
-			if( result.errorCode != 0 )
+			if( client.readyState == 4 )
 			{
-				alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
-			}
-					
-			if( fileList.file_array.length > 0 )
-			{
-				if( fileList.file_array.length > 1)
+				var result = JSON.parse( client.responseText );
+				
+				if( result.errorCode != 0 )
 				{
-					document.getElementById("meldung").innerHTML = "...es verbleiben noch " + fileList.file_array.length + " Bilder...";
+					alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
+				}
+						
+				if( fileList.file_array.length > 0 )
+				{
+					if( fileList.file_array.length > 1)
+					{
+						document.getElementById("meldung").innerHTML = "...es verbleiben noch " + fileList.file_array.length + " Bilder...";
+					}
+					else
+					{
+						document.getElementById("meldung").innerHTML = "...es verbleibt noch " + fileList.file_array.length + " Bild...";
+					}
+					var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
+					document.bar.src = '../../share/images/green.gif';
+					document.bar.width = laenge;
+					document.bar.height = '11';
+					processFile( fileList );
 				}
 				else
 				{
-					document.getElementById("meldung").innerHTML = "...es verbleibt noch " + fileList.file_array.length + " Bild...";
+					//Bearbeitung ist abgeschlossen
+					//Berechnung der durchschnittlichen Bearbeitungszeit pro Bild:
+					var endtime = new Date();
+					var runtime = (endtime.getTime() - starttime.getTime()) / 1000;
+					avgTime = Math.round((runtime / gesamtanzahl) * 100) / 100;
+					document.getElementById("meldung").innerHTML = "Alle Bilder wurden erfasst.";
+					//Aktualisierung des Fortschrittsbalkens auf 100%:
+					var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
+					document.bar.src = '../../share/images/green.gif';
+					document.bar.width = laenge;
+					document.bar.height = '11';
+					setTimeout("showReady(avgTime)", 2000);
 				}
-				var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
-				document.bar.src = '../../share/images/green.gif';
-				document.bar.width = laenge;
-				document.bar.height = '11';
-				processFile( fileList );
-			}
-			else
-			{
-				//Bearbeitung ist abgeschlossen
-				//Berechnung der durchschnittlichen Bearbeitungszeit pro Bild:
-				var endtime = new Date();
-				var runtime = (endtime.getTime() - starttime.getTime()) / 1000;
-				avgTime = Math.round((runtime / gesamtanzahl) * 100) / 100;
-				document.getElementById("meldung").innerHTML = "Alle Bilder wurden erfasst.";
-				//Aktualisierung des Fortschrittsbalkens auf 100%:
-				var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
-				document.bar.src = '../../share/images/green.gif';
-				document.bar.width = laenge;
-				document.bar.height = '11';
-				setTimeout("showReady(avgTime)", 2000);
 			}
 		}
 	};
