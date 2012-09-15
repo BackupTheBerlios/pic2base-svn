@@ -46,29 +46,64 @@ FOREACH($_POST AS $key => $value)
 {
 	//Festlegung: Kleinschreibung: Original-Werte; Grossschreibung: formatierte Werte
 	//Kontrolle, ob ein Datum geaendert werden soll:
-	IF(stristr($key,'date'))
-	{
-		//um das Datum in ein gueltiges Format zu wandeln, muessen die Doppelpunkte im Datum ersetzt werden:
-		IF($value != '')
-		{
-			$VAL = explode(" ",$value);
-			$VALUE = str_replace(":","-",$VAL[0])." ".$VAL[1];
-			$KEY = $key;
-			$KEY_db = $key;
-			$VALUE_db = $VALUE;
-		}
-		ELSE
-		{
-			$KEY = $key;
-			$KEY_db = $key;
-			$VALUE = "";	
-		}
-		//echo "Datum formatieren: ".$KEY." / ".$VALUE."<BR>";
-	}
-	ELSE
-	{
+	
+//	echo $key."<BR>";;
 		SWITCH($key)
 		{
+			CASE stristr($key,'datetime'):
+			IF($value != '')
+			{
+				$VAL = explode(" ",$value);
+				$VALUE = str_replace(":","-",$VAL[0])." ".$VAL[1];
+				$KEY = $key;
+				$KEY_db = $key;
+				$VALUE_db = $VALUE;
+			}
+			ELSE
+			{
+				$KEY = $key;
+				$KEY_db = $key;
+				$VALUE = "";	
+			}
+//			echo "Datum/Zeit formatiert: ".$KEY." / ".$VALUE."<BR>";	
+			break;
+			
+			CASE stristr($key, 'DateCreated'):
+			IF($value != '')
+			{
+				$VAL = explode(" ",$value);
+				$VALUE = $VAL[0];
+				$KEY = "IPTC:".$key;
+				$KEY_db = $key;
+				$VALUE_db = $VALUE;
+			}
+			ELSE
+			{
+				$KEY = $key;
+				$KEY_db = $key;
+				$VALUE = "";	
+			}
+//		echo "Datum formatiert: ".$KEY." / ".$VALUE."<BR>";	
+			break;
+			
+			CASE stristr($key, 'TimeCreated'):
+			IF($value != '')
+			{
+				$VAL = explode(" ",$value);
+				$VALUE = $VAL[0];
+				$KEY = "IPTC:".$key;
+				$KEY_db = $key;
+				$VALUE_db = $VALUE;
+			}
+			ELSE
+			{
+				$KEY = $key;
+				$KEY_db = $key;
+				$VALUE = "";	
+			}
+//		echo "Zeit formatiert: ".$KEY." / ".$VALUE."<BR>";	
+			break;
+			
 			CASE 'Orientation':
 			$VALUE = convertOrientationTextToNumber($value);
 			$KEY = 'Orientation';
@@ -82,7 +117,7 @@ FOREACH($_POST AS $key => $value)
 			break;
 		}
 		//echo $KEY_db." / ".$VALUE."<BR>";
-	}
+//	}
 	//Wenn das Metadaten-Feld auch in der Tabelle pictures enthalten ist, wird auch dies aktualisiert:
 	IF(in_array($KEY_db, $row_arr))
 	{
@@ -92,7 +127,7 @@ FOREACH($_POST AS $key => $value)
 	
 	//Aktualisierung der Meta-Daten des Bildes:
 	$command = $exiftool. " -".$KEY."='$VALUE' ".$FN." -overwrite_original";
-	//echo $command."<BR><BR>";
+//	echo $command."<BR><BR>";
 	shell_exec($command);
 }
 
