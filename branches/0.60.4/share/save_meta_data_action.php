@@ -21,6 +21,7 @@ include '../share/global_config.php';
 <body style='background-color:#999999'>
 
 <?php
+ini_set('memory_limit', '500M');
 //skript speichert die geaenderten Meta-Daten in die pictures-Tabelle und in das betreffende Bild
 IF(array_key_exists('pic_id', $_POST))
 {
