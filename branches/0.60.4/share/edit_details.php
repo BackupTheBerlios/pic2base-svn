@@ -170,35 +170,65 @@ IF ( isset($writable_tags) )
 			SWITCH($wt)
 			{
 				//Es handelt sich um ein Datumsfeld:
-				CASE (stristr($wt,'date') == true):
+				CASE (stristr($wt,'datetime') == true):
 					//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 					$result3 = mysql_query("SELECT `$wt` FROM $table20 WHERE lang = '$lang'");
-					$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
-					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-					<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)." <blink>*)</blink></FONT></TD>
-					<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
-					</TR>";
+					@$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
+					if($fnt != '')
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)." <blink>*)</blink></FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
+					else
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
 				break;
 			
 				//Es handelt sich um Textfelder:
 				CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
 					//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 					$result3 = mysql_query("SELECT `$wt` FROM $table20 WHERE lang = '$lang'");
-					$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
-					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-					<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
-					<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'>".$value."</textarea></TD>
-					</TR>";
+					@$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
+					if($fnt != '')
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'>".$value."</textarea></TD>
+						</TR>";
+					}
+					else
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'>".$value."</textarea></TD>
+						</TR>";
+					}
 				break;
 			
 				default:
 					//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 					$result3 = mysql_query("SELECT `$wt` FROM $table20 WHERE lang = '$lang'");
-					$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
-					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-					<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
-					<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
-					</TR>";
+					@$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
+					if($fnt != '')
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
+					else
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
 				break;
 			}
 		}
@@ -211,32 +241,62 @@ IF ( isset($writable_tags) )
 				CASE (stristr($wt,'date') == true):
 					//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 					$result3 = mysql_query("SELECT `$wt` FROM $table20 WHERE lang = '$lang'");
-					$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
-					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-					<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)." <blink>*)</blink></FONT></TD>
-					<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
-					</TR>";
+					@$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
+					if($fnt != '') // Fallunterscheidung, falls keine Uebersetzung vorliegt
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)." <blink>*)</blink></FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
+					else
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt." <blink>*)</blink></FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
 				break;
 			
 				//Es handelt sich um Textfelder:
 				CASE ($wt == 'UserComment' OR $wt == 'Caption-Abstract' OR $wt == 'Copyright'):
 					//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 					$result3 = mysql_query("SELECT `$wt` FROM $table20 WHERE lang = '$lang'");
-					$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
-					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-					<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
-					<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'></textarea></TD>
-					</TR>";
+					@$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
+					if($fnt != '')
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'></textarea></TD>
+						</TR>";
+					}
+					else
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'></textarea></TD>
+						</TR>";
+					}
 				break;
 			
 				default:
 					//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 					$result3 = mysql_query("SELECT `$wt` FROM $table20 WHERE lang = '$lang'");
-					$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
-					echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-					<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
-					<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
-					</TR>";
+					@$fnt = mysql_result($result3, isset($i3), `$wt`); // $fnt: field_name_translated
+					if($fnt != '')
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
+					else
+					{
+						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$wt."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
+						</TR>";
+					}
 				break;
 			}
 		}		
