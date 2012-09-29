@@ -22,9 +22,7 @@ include '../../share/global_config.php';
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
-
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -50,7 +48,6 @@ IF ($_COOKIE['login'])
 	//echo $c_username;
 }
 $benutzername = $c_username;
-//echo $c_username;
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -221,7 +218,7 @@ SWITCH($ge)
 			
 			//Wenn alle Bilder referenziert wurden, werden die benutzereignen Datens&auml;tze aus der temp. Tabelle 'geo_tmp' gel&ouml;scht und nochmals alle Bilder dargestellt, damit den Koordinaten eine Ortsbezeichnung hinzugefgt werden kann:
 			$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$user_id'");
-			echo "Die Geo-Referenzierung wurde abgeschlossen.<BR>Die Zusammenfassung des Ergebnisses finden Sie unter dem Button \"Weiter\", mit dem Sie zur Ortzuweisung gelangen.<BR><BR>"
+			echo "Die Geo-Referenzierung wurde abgeschlossen.<BR>Die Zusammenfassung des Ergebnisses finden Sie unter dem Button \"Weiter\", mit dem Sie zur Ortzuweisung gelangen.<BR><BR>";
 			echo "<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p><BR>Zusammenfassung der Koordinaten-Zuweisung:<BR><BR>".$hinweis2."
 		</div>
 		
