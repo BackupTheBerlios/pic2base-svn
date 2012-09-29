@@ -323,7 +323,11 @@ SWITCH ($modus)
 				$FileNameHQ = mysql_result($result2, $i2, 'FileNameHQ');
 				$FileNameV = mysql_result($result2, $i2, 'FileNameV');
 				$FileSize = mysql_result($result2, $i2, 'FileSize');
+				//Initialisierung der Fehlerindikatoren:
+				$error_breite = 0;
+				$error_hoehe = 0;
 				//abgeleitete Groessen:
+				// Fehlerbehandlungen, falls Vorschaubilder fehlen oder der Datensatz korrupt ist:
 				IF ($FileNameV == '')
 				{
 					$FileNameV = 'no_preview.jpg';
@@ -332,10 +336,37 @@ SWITCH ($modus)
 				{
 					@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 				}	
-				$breite = $parameter_v[0];
-				$hoehe = $parameter_v[1];
-				$breite_v = $breite * 5;
-				$hoehe_v = $hoehe * 5;
+				if(@$parameter_v[0])
+				{
+					$breite = $parameter_v[0];
+					$breite_v = $breite * 5;
+				}
+				else
+				{
+					$error_breite = 1;
+					$breite = 0;
+				}
+				
+				if(@$parameter_v[1])
+				{
+					$hoehe = $parameter_v[1];
+					$hoehe_v = $hoehe * 5;
+				}
+				else
+				{
+					$error_hoehe = 1;
+					$hoehe = 0;
+				}
+				
+				if(($error_breite + $error_hoehe) > 0)
+				{
+					$error_msg = "<font color='yellow'><span  style='cursor:pointer;' title='Es fehlen Vorschaubilder. Der Datensatz ist korrupt.'>Fehler bei Bild ".$pic_id."</span></font>";
+				}
+				else
+				{
+					$error_msg = "";
+				}
+				
 				IF ($breite == 0 OR $hoehe == 0)
 				{
 					//echo "Keine Groessenangaben!";
@@ -349,8 +380,7 @@ SWITCH ($modus)
 				}
 					
 				echo mysql_error();
-					
-				echo "<TD align='center'>";
+				echo "<TD align='center'>".$error_msg;
 				getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, $mod, $form_name);
 				$PIC_ID[] = $pic_id;
 			}
@@ -2634,7 +2664,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	//Wenn Breite und Hoehe nicht ausgelesen werden konnten, werden die Werte zu Fuss ermittelt und in die Meta-Daten-Tabelle geschrieben:
 	IF($Width == '0' OR $Height == '0')
 	{
-		$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
+		@$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
 		$Width = $parameter_o[0];
 		$Height = $parameter_o[1];
 		//echo $Width." x ".$Height."<BR>";
@@ -2648,7 +2678,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	}
 	IF(!file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 	{
-		echo "<FONT COLOR='yellow'>Vorschau-Datei $FileName fehlt.<BR>Administrator benachrichtigen.</FONT>";
+		echo "<FONT COLOR='yellow'>Vorschau-Datei $FileNameV fehlt.<BR>Administrator benachrichtigen.</FONT>";
 		$hoehe = 0;
 		$breite = 0;
 	}
