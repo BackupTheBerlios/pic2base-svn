@@ -95,7 +95,7 @@ if(!isset($ID))
 
 echo "
 <div class='page'>
-	<FORM name='kat-zuweisung', method='post' action='edit_kat_daten_action.php?kat_id=$kat_id&mod=$mod&ID=$ID'>
+	<FORM name='kat-zuweisung', method='post' action='edit_kat_daten_action2.php?kat_id=$kat_id&mod=$mod&ID=$ID'>
 	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Kategorien zuweisen) <span class='klein'>(User: $c_username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
