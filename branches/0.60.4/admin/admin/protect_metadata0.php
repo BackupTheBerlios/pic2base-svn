@@ -143,9 +143,16 @@ FOR ($k1=0 ; $k1<count($xmp_tags);$k1++)
 	$xmp_tags[$k1] = $XMPTAGS;
 }
 
-//Ermittlung aller IPTC-Metadaten-Felder anhand der Tabelle meta_protect
-$result1 = mysql_query( "SELECT * FROM $table5");
+//Ermittlung aller Metadaten-Felder anhand der Tabelle meta_protect
+//$result1 = mysql_query( "SELECT * FROM $table5");
+$result1 = mysql_query( "SELECT field_name, lfdnr, writable, viewable FROM $table5 GROUP BY field_name");
 $num1 = mysql_num_rows($result1);
+echo "Alle: ".$num1."<BR>";
+
+$result2 = mysql_query( "SELECT field_name, lfdnr, writable, viewable FROM $table5 GROUP BY field_name");
+$num2 = mysql_num_rows($result2);
+echo "ohne Dubletten: ".$num2."<BR>";
+
 
 $ed_fieldname = array();
 
@@ -226,13 +233,29 @@ FOR($r='0'; $r<$rows; $r++)
 
 			//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 			$result2 = mysql_query("SELECT `$field_name` FROM $table20 WHERE lang = '$lang'");
-			$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated
-			$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$fnt."</a></TD>
-			<TD class='tdschmal'>
-			<div id='$lfdnr'>
-			<INPUT TYPE=CHECKBOX $checked name='cb' value='$writable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
-			</div>
-			</TD>";
+			@$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated; in die Sprache des angemeldeten Users uebersetzter Feldname
+			if($fnt != '')
+			{
+				$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$fnt."</a></TD>
+				<TD class='tdschmal'>
+				<div id='$lfdnr'>
+				<INPUT TYPE=CHECKBOX $checked name='cb' value='$writable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
+				</div>
+				</TD>";
+			}
+			else
+			{
+				$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$field_name."</a></TD>
+				<TD class='tdschmal'>
+				<div id='$lfdnr'>
+				<INPUT TYPE=CHECKBOX $checked name='cb' value='$writable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
+				</div>
+				</TD>";
+				
+				
+				//$content = $content."<TD class='tdbreit'>".$field_name."</TD>
+				//<TD class='tdschmal'></TD>";
+			}
 		}
 		ELSE
 		{
