@@ -377,11 +377,21 @@ FOREACH($info_arr AS $IA)
 					$result11 = mysql_query("INSERT INTO $table5 (field_name, writable, viewable) VALUES ('$tag', '0', '0')");
 				}
 				$result12 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-				$tag_name = utf8_encode(mysql_result($result12, isset($i12), $tag));
-				echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
-				echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag_name."</FONT></TD>
-				<TD class='liste2' style='width:225px;'>".$value."</TD>
-			</TR>";
+				@$tag_name = utf8_encode(mysql_result($result12, isset($i12), $tag));
+				if($tag_name != '')//Fallunterscheidung, ob Tag-Uebersetzung existiert
+				{
+					echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag_name."</FONT></TD>
+					<TD class='liste2' style='width:225px;'>".$value."</TD>
+					</TR>";
+				}
+				else
+				{
+					echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
+					<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag."</FONT></TD>
+					<TD class='liste2' style='width:225px;'>".$value."</TD>
+					</TR>";
+				}
 			break;
 		}
 	}
