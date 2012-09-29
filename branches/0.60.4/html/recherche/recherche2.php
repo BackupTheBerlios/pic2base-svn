@@ -202,12 +202,6 @@ if ( array_key_exists('s_m',$_GET) )
 
 $stat = createStatement($bewertung);
 //echo $stat;
-/*
-//log-file schreiben:
-$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
-fclose($fh);
-*/
 //Ermittlung der Usersprache:
 $result1 = mysql_query("SELECT language FROM $table1 WHERE username = '$c_username'");
 $language = mysql_result($result1, isset($i1), 'language');
@@ -431,8 +425,7 @@ SWITCH ($mod)
 					//$loc_id = mysql_result($result11, $i11, 'loc_id');
 					echo "<option value=\"$city\">".$city."</option>";
 				}
-				
-                                echo "</SELECT>
+                echo "</SELECT>
 			</TD>
 		</TR>
 		
@@ -442,8 +435,8 @@ SWITCH ($mod)
 			<SELECT name=\"einheit2\" class='Auswahl' style='height:20px;'>
 			<option value = '1'>m</option>
 			<option value = '1000' selected>km</option>
-                        </SELECT>
-                        </TD>
+            </SELECT>
+            </TD>
 		</TR>
 				
 		<TR id='geo'>
@@ -462,6 +455,8 @@ SWITCH ($mod)
 		break;
 	//#####################################################################################################################
 		CASE 'exif':
+		//echo ini_get('memory_limit');
+		ini_set('memory_limit', '250M');
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		$base_file = 'recherche2';
 		$mod='exif';
@@ -728,9 +723,8 @@ SWITCH ($mod)
 
 mysql_close($conn);
 
-echo "</DIV>";
 ?>
-
+</DIV>
 </CENTER>
 </BODY>
 </HTML>
