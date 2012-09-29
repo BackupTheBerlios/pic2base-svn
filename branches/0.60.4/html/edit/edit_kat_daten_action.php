@@ -30,6 +30,7 @@ IF (!$_COOKIE['login'])
 /*
  * Project: pic2base
  * File: edit_kat_daten_action.php
+ * Variante, die bis Version 0.60.3 verwendet wurde, ohne AJAX-basierter Fortschrittsnzeige
  *
  * Copyright (c) 2005 - 2011 Klaus Henneberg
  *
@@ -52,7 +53,8 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 
 if(array_key_exists('kat_id',$_GET))
 {
-	$kat_id = $_GET['kat_id']; 
+	$kat_id = $_GET['kat_id'];
+	echo "kat_id: ".$kat_id."<BR>"; 
 }
 else
 {
@@ -61,6 +63,7 @@ else
 if(array_key_exists('ID',$_GET))
 {
 	$ID = $_GET['ID'];
+	echo "ID: ".$ID."<BR>"; 
 }
 else
 {
@@ -69,6 +72,7 @@ else
 if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
+	echo "mod: ".$mod."<BR>"; 
 }
 else
 {
@@ -91,7 +95,7 @@ $ID_back = $ID;
 //echo count($_POST)."<BR>";
 FOREACH ($_POST AS $key => $post)
 {
-	//echo "Schluessel / Wert: ".$key." / ".$post."<BR>";
+	echo "Schluessel / Wert: ".$key." / ".$post."<BR>";
 	IF (substr($key,0,3) == 'pic')
 	{
 		//echo substr($key,7,strlen($key)-7)."<BR>";
@@ -135,7 +139,7 @@ flush();
 	
 	//++++++++++++++++++++++++++++++++++++++++++++++++++
 
-	//Fuer alle Elemente in dem Kategorie-Array werden die Eltern-Elemente bestimmt und ebenfalls in das Array geschrieben:
+	//Fuer alle Elemente in dem Ziel-Kategorie-Array werden alle zugehoerigen Eltern-Elemente bestimmt und ebenfalls in das Array geschrieben:
 	
 	IF (isset($kat_ID) AND count($kat_ID) > 0)
 	{
