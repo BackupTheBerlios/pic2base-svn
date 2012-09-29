@@ -190,6 +190,7 @@ function processFile( pic_array, kat_array )
 	{
 		if( client.readyState == 4 )
 		{
+			//alert(client.responseText);
 			var result = JSON.parse( client.responseText );
 			if( result.errorCode == 1 )
 			{

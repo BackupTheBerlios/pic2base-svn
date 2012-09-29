@@ -18,7 +18,6 @@ include '../../share/global_config.php';
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
 	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
 </HEAD>
 <script language="JavaScript">
