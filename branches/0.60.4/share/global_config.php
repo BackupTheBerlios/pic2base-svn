@@ -49,6 +49,7 @@ $supported_extensions = array('bmp','cgm','dcm','dcx','eps','exr','fax','gif','h
 ini_set('post_max_size', '50M');
 ini_set('upload_max_filesize', '50M');
 ini_set('max_execution_time', '30');
+ini_set('memory_limit', '128M');
 //ini_set('display_errors', 'Off');		// nur fuer Echtbetrieb
 //#############################################################################################################
 ?>
