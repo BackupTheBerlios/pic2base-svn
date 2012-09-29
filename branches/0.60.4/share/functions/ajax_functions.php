@@ -636,7 +636,6 @@ function getUploadFiles(value)
 										fileListReceived( client.responseText );
 									}
 								};
-
 	client.send( null );
 }
 
@@ -653,8 +652,8 @@ function getMissingFiles()
 										missingFilesReceived( client.responseText );
 									}
 								};
-
 	client.send( null );
 }
+
 -->
 </SCRIPT>
