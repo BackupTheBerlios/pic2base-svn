@@ -18,17 +18,6 @@ IF (!$_COOKIE['login'])
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
-<!-- 
-<HTML>
-<HEAD>
-<TITLE>Ajax-Testseite</TITLE>
-<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-</HEAD>
--->
-
-
-
-
 <BODY onLoad='getUploadFiles()'>
 <CENTER>
 <DIV Class="klein">
