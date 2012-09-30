@@ -48,10 +48,7 @@ $output = json_encode($obj);
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto" onLoad='picKatList(<?php echo json_encode($obj); ?>)'>
-<!-- <BODY>-->
-
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
