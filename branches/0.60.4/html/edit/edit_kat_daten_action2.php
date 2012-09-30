@@ -23,6 +23,12 @@ FOREACH ($_POST AS $key => $post)
 		$kat_ID[] = substr($key,3,strlen($key)-3);
 	}
 }
+if(array_key_exists('mod',$_GET))
+{
+	$mod = $_GET['mod'];
+	//echo "mod: ".$mod."<BR>"; 
+}
+$obj->mod = $mod;
 $obj->pic_anzahl = count($pic_ID);
 $obj->pic_array = $pic_ID;
 $obj->kat_array = $kat_ID;
@@ -146,6 +152,7 @@ var timeout = 1;
 var gesamtanzahl;
 var starttime = new Date();
 var avgTime;
+var mod = "<?php echo $mod;?>";
 
 function picKatList( params )
 {
@@ -153,16 +160,16 @@ function picKatList( params )
 	{
 		gesamtanzahl = params.pic_array.length;
 		document.getElementById("zaehler").innerHTML = "Anzahl der zu verarbeitenden Bilder: " + gesamtanzahl;
-		processFile( params.pic_array,params.kat_array );
+		processFile( params.pic_array,params.kat_array,params.mod );
 	}
 	else
 	{
 		alert( "Es sind keine Dateien zu bearbeiten.\nBitte legen Sie Bilder und Kategorien fest, die diesen zugeordnet werden sollen." );
-		window.location='edit_kat_daten.php?kat_id=' + <?php echo $kat_id;?> + '&mod=edit&pic_id=0';
+		window.location='edit_kat_daten.php?kat_id=' + <?php echo $kat_id;?> + '&mod=' + params.mod + '&pic_id=0';
 	}	
 }
 
-function showReady(avgTime)
+function showReady( avgTime,mod )
 {
 	//Erfassungsfenster leeren:
 	document.getElementById("headline").innerHTML = "";
@@ -173,19 +180,17 @@ function showReady(avgTime)
 	document.bar.height = '0';
 	//Fertigmeldung ausgeben:
 	alert( "Die Bearbeitung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
-	countDown();
+	window.location='edit_kat_daten.php?kat_id=' + <?php echo $kat_id;?> + '&mod=' + mod + '&pic_id=0';
 }
 
-function processFile( pic_array, kat_array )
+function processFile( pic_array, kat_array, mod )
 {
 	//Bild fuer Bild werden die neuen Kategorien zugewiesen und das Bild-Array nach jeder Bearbeitung gekuerzt
 	//nach jedem bearbeiteten Bild wird der Fortschrittsbalken aktualisiert
 	
 	var client = new XMLHttpRequest();
-	
 	client.open("GET", "update_kat_daten.php?pic_id=" + pic_array[0] + "&kat_liste=" + kat_array, true);
 	pic_array.splice( 0, 1 );
-	
 	client.onreadystatechange = function()
 	{
 		if( client.readyState == 4 )
@@ -200,8 +205,7 @@ function processFile( pic_array, kat_array )
 			{
 				alert("Sie haben entweder kein Bild oder keine Kategorie festgelegt!");
 			}
-			
-					
+				
 			if( pic_array.length > 0 )
 			{
 				if( pic_array.length > 1)
@@ -216,7 +220,7 @@ function processFile( pic_array, kat_array )
 				document.bar.src = '../../share/images/green.gif';
 				document.bar.width = laenge;
 				document.bar.height = '11';
-				processFile( pic_array, kat_array );
+				processFile( pic_array, kat_array, mod );
 			}
 			else
 			{
@@ -231,26 +235,13 @@ function processFile( pic_array, kat_array )
 				document.bar.src = '../../share/images/green.gif';
 				document.bar.width = laenge;
 				document.bar.height = '11';
-				setTimeout("showReady(avgTime)", 1000);
+				setTimeout("showReady(avgTime,mod)", 1000);
+				//showReady(avgTime,mod)
 			}
 		}
 	};
-client.send( null );
-
+	client.send( null );
 }
 
-function countDown()
-{
-	document.getElementById( "counter" ).innerHTML = "Sie werden in " + timeout.toString() + " Sekunden zur vorhergehenden Seite weitergeleitet.";
-	timeout --;
-	if( timeout < 0 )
-	{
-		window.location='edit_kat_daten.php?kat_id=' + <?php echo $kat_id;?> + '&mod=edit&pic_id=0';
-	}
-	else
-	{
-		setTimeout( "countDown()", 1000 );	
-	}
-}
 </script>
 </HTML>
