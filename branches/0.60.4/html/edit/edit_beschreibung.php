@@ -18,7 +18,6 @@ IF (!$_COOKIE['login'])
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
 	<script language="JavaScript" type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
 </HEAD>
 
@@ -101,7 +100,7 @@ else
 
 echo "
 <div class='page'>
-	<FORM name='desc-zuweisung', method='post' action='edit_desc_daten_action.php?kat_id=$kat_id&ID=$ID&art=$art'>
+	<FORM name='desc-zuweisung', method='post' action='edit_desc_daten_action2.php?kat_id=$kat_id&ID=$ID&art=$art'>
 	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Beschreibung bearbeiten) <span class='klein'>(User: $c_username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
