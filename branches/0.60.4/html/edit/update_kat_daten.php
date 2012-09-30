@@ -99,76 +99,76 @@ IF (isset($kat_array) AND count($kat_array) > 0)
 
 IF ( isset($pic_id) AND count($pic_id) > 0 AND count($kat_array) > 0)
 {
-		$bild_id = $pic_id;
-		$kategorie = '';
-		$kategorie_iptc = '';
-		FOREACH ($kat_array AS $kat_id)
+	$bild_id = $pic_id;
+	$kategorie = '';
+	$kategorie_iptc = '';
+	FOREACH ($kat_array AS $kat_id)
+	{
+		$res0 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$bild_id' AND kat_id = '$kat_id'");
+		IF (mysql_num_rows($res0) == '0')
 		{
-			$res0 = mysql_query( "SELECT * FROM $table10 WHERE pic_id = '$bild_id' AND kat_id = '$kat_id'");
-			IF (mysql_num_rows($res0) == '0')
+			$res1 = mysql_query( "INSERT INTO $table10 (pic_id, kat_id) VALUES ('$bild_id', '$kat_id')");
+			IF($kat_id !== '1')
 			{
-				$res1 = mysql_query( "INSERT INTO $table10 (pic_id, kat_id) VALUES ('$bild_id', '$kat_id')");
-				IF($kat_id !== '1')
-				{
-					//Ermittlung aller Kategorien:
-					$result2 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
-					//echo mysql_error()."<BR>";
-					$kategorie = mysql_result($result2, isset($i2), 'kategorie')." ".$kategorie;
-				}
+				//Ermittlung aller Kategorien:
+				$result2 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
+				//echo mysql_error()."<BR>";
+				$kategorie = mysql_result($result2, isset($i2), 'kategorie')." ".$kategorie;
 			}
 		}
-		
-		//Log-Datei schreiben:
-		$result3 = mysql_query("SELECT Keywords, pic_id FROM $table2 WHERE pic_id = '$bild_id'");
-		$kategorie_alt = mysql_result($result3, isset($i3), 'Keywords');
-		$kategorie = $kategorie_alt."".$kategorie;	//die neue Kat-Zuweisung entspricht der alten zzgl. der neu hinzugekommenen Kategorien
-		$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-		fwrite($fh,date('d.m.Y H:i:s').": Kategoriezuordnung von Bild ".$bild_id." wurde von ".$c_username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$kategorie_alt.", neu: ".$kategorie."\n");
-		fclose($fh);
-		//echo $kategorie;
-		
-		$kategorie = htmlentities($kategorie);
-		//Aktualisierung des betreffenden Datensatzes in der pictures Tabelle:
-		$result4 = mysql_query( "UPDATE $table2 SET Keywords = \"$kategorie\", has_kat = '1' WHERE pic_id = '$bild_id'");
+	}
+	
+	//Log-Datei schreiben:
+	$result3 = mysql_query("SELECT Keywords, pic_id FROM $table2 WHERE pic_id = '$bild_id'");
+	$kategorie_alt = mysql_result($result3, isset($i3), 'Keywords');
+	$kategorie = $kategorie_alt."".$kategorie;	//die neue Kat-Zuweisung entspricht der alten zzgl. der neu hinzugekommenen Kategorien
+	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+	fwrite($fh,date('d.m.Y H:i:s').": Kategoriezuordnung von Bild ".$bild_id." wurde von ".$c_username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$kategorie_alt.", neu: ".$kategorie."\n");
+	fclose($fh);
+	//echo $kategorie;
+	
+	$kategorie = htmlentities($kategorie);
+	//Aktualisierung des betreffenden Datensatzes in der pictures Tabelle:
+	$result4 = mysql_query( "UPDATE $table2 SET Keywords = \"$kategorie\", has_kat = '1' WHERE pic_id = '$bild_id'");
 
-		//wenn dem Bild die Kategorien zugewiesen wurden, werden diese als keywords in den IPTC-Block des Bildes geschrieben:
-		$bild_id = $pic_id;
-		$FN = strtolower($pic_path."/".restoreOriFilename($bild_id, $sr));
-		//fuer den IPTC-Block muessen die keywords kommasepariert und jeweils kuerzer als 64 Zeichen sein:
-		$result5 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie
-		FROM $table10, $table4
-		WHERE $table10.pic_id = '$bild_id'
-		AND $table10.kat_id = $table4.kat_id
-		AND $table4.kat_id <> '1'");
-		$num5 = mysql_num_rows($result5);
-		//echo "Anz. der Kat.: ".$num5."<BR>";
-		FOR($i5='0'; $i5<$num5; $i5++)
+	//wenn dem Bild die Kategorien zugewiesen wurden, werden diese als keywords in den IPTC-Block des Bildes geschrieben:
+	$bild_id = $pic_id;
+	$FN = strtolower($pic_path."/".restoreOriFilename($bild_id, $sr));
+	//fuer den IPTC-Block muessen die keywords kommasepariert und jeweils kuerzer als 64 Zeichen sein:
+	$result5 = mysql_query("SELECT $table10.pic_id, $table10.kat_id, $table4.kat_id, $table4.kategorie
+	FROM $table10, $table4
+	WHERE $table10.pic_id = '$bild_id'
+	AND $table10.kat_id = $table4.kat_id
+	AND $table4.kat_id <> '1'");
+	$num5 = mysql_num_rows($result5);
+	//echo "Anz. der Kat.: ".$num5."<BR>";
+	FOR($i5='0'; $i5<$num5; $i5++)
+	{
+		$kat_iptc = mysql_result($result5, $i5, 'kategorie');
+		$kategorie_iptc = utf8_encode($kat_iptc);
+		//echo "Bild: ".$bild_id." - ".$kategorie_iptc."<BR>";
+		//es wird geprueft, ob das keyword bereits im IPTC-Block enthalten ist:
+		$keyw = shell_exec($exiftool." -IPTC:Keywords ".$FN);
+		$kwa = explode(":", $keyw);
+		@$kw_array = explode(",", $kwa[1]); 					//Array aller keywords des Bildes
+		
+		FOR ($i1=0 ; $i1<count($kw_array);$i1++) 
 		{
-			$kat_iptc = mysql_result($result5, $i5, 'kategorie');
-			$kategorie_iptc = utf8_encode($kat_iptc);
-			//echo "Bild: ".$bild_id." - ".$kategorie_iptc."<BR>";
-			//es wird geprueft, ob das keyword bereits im IPTC-Block enthalten ist:
-			$keyw = shell_exec($exiftool." -IPTC:Keywords ".$FN);
-			$kwa = explode(":", $keyw);
-			@$kw_array = explode(",", $kwa[1]); 					//Array aller keywords des Bildes
-			
-			FOR ($i1=0 ; $i1<count($kw_array);$i1++) 
-			{
-				@$KWords = trim($kw_array[$i1]);
-				$kw_array[$i1] = $KWords;							//Array mit allen bereinigten Keywords des Bildes
-			}
-			
-			IF(in_array($kategorie_iptc, $kw_array))
-			{
-				//echo $kategorie_iptc." ist bereits enthalten<BR>";
-			}
-			ELSE
-			{
-				//echo $kategorie_iptc." wird in das Bild geschrieben<BR>";
-				$command = $exiftool." -IPTC:Keywords+=\"$kategorie_iptc\" -overwrite_original ".$FN." > /dev/null &";
-				shell_exec($command);
-			}
+			@$KWords = trim($kw_array[$i1]);
+			$kw_array[$i1] = $KWords;							//Array mit allen bereinigten Keywords des Bildes
 		}
+		
+		IF(in_array($kategorie_iptc, $kw_array))
+		{
+			//echo $kategorie_iptc." ist bereits enthalten<BR>";
+		}
+		ELSE
+		{
+			//echo $kategorie_iptc." wird in das Bild geschrieben<BR>";
+			$command = $exiftool." -IPTC:Keywords+=\"$kategorie_iptc\" -overwrite_original ".$FN." > /dev/null &";
+			shell_exec($command);
+		}
+	}
 
 	IF (mysql_errno() == '0')
 	{
