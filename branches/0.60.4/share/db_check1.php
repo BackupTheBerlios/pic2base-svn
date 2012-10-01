@@ -665,7 +665,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			
 			$res21_1 = mysql_query( "INSERT INTO `pfade` (`dcraw_path`, `conv_path`, `et_path`, `gpsb_path`, `md5sum_path`, `apache_uid`, `apache_gid`, `p2b_version`) VALUES 
-			('', '', '', '', '', '', '', '0.60.2');");
+			('', '', '', '', '', '', '', '0.60.4');");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Bef&uuml;llung der Tabelle \"pfade\"<BR>";
