@@ -92,7 +92,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"ftp_transfer\" wurde angelegt.<BR>";
+				//echo "Tabelle \"ftp_transfer\" wurde angelegt.<BR>";
 			}			
 			
 			$res3 = mysql_query( "CREATE TABLE IF NOT EXISTS `geo_tmp` (
@@ -112,7 +112,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"geo_tmp\" wurde angelegt.<BR>";
+				//echo "Tabelle \"geo_tmp\" wurde angelegt.<BR>";
 			}		
 			
 			
@@ -130,7 +130,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"grouppermissions\" wurde angelegt.<BR>";
+				//echo "Tabelle \"grouppermissions\" wurde angelegt.<BR>";
 			}
 			$res4_1 = mysql_query( "INSERT INTO `grouppermissions` (`id`, `group_id`, `permission_id`, `enabled`) VALUES 
 			(1, 1, 999, 1),
@@ -209,9 +209,9 @@ echo "<br>++++ #### ++++<br>";
 			(74, 4, 549, 0),
 			(75, 4, 639, 0),
 			(76, 4, 649, 0),
-			(77, 1, 889, 1)
-			(78, 2, 889, 0)
-			(79, 3, 889, 0)
+			(77, 1, 889, 1),
+			(78, 2, 889, 0),
+			(79, 3, 889, 0),
 			(80, 4, 889, 0);");
 			IF(mysql_error() !== '')
 			{
@@ -220,7 +220,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"grouppermissions\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"grouppermissions\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			
@@ -241,7 +241,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"kategorien\" wurde angelegt.<BR>";
+				//echo "Tabelle \"kategorien\" wurde angelegt.<BR>";
 			}
 			
 			$res5_1 = mysql_query( "INSERT INTO `kategorien` (`kategorie`, `parent`, `level`) VALUES ('Neuzugaenge','0','0');");
@@ -252,7 +252,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"kategorien\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"kategorien\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			$res7 = mysql_query( "CREATE TABLE IF NOT EXISTS `kat_lex` (
@@ -268,7 +268,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"kat_lex\" wurde angelegt.<BR>";
+				//echo "Tabelle \"kat_lex\" wurde angelegt.<BR>";
 			}		
 			
 			$res2 = mysql_query( "CREATE TABLE IF NOT EXISTS `meta_protect` (
@@ -285,7 +285,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"meta_protect\" wurde angelegt.<BR>";
+				//echo "Tabelle \"meta_protect\" wurde angelegt.<BR>";
 			}		
 			
 			
@@ -303,7 +303,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"permissions\" wurde angelegt.<BR>";
+				//echo "Tabelle \"permissions\" wurde angelegt.<BR>";
 			}		
 			
 			$res8_1 = mysql_query( "INSERT INTO `permissions` (`id`, `perm_id`, `description`, `shortdescription`) VALUES
@@ -334,7 +334,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"permissions\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"permissions\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			
@@ -429,7 +429,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"pictures\" wurde angelegt.<BR>";
+				//echo "Tabelle \"pictures\" wurde angelegt.<BR>";
 			}		
 			
 			
@@ -446,7 +446,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"pic_kat\" wurde angelegt.<BR>";
+				//echo "Tabelle \"pic_kat\" wurde angelegt.<BR>";
 			}
 			$res9_1 = mysql_query("CREATE UNIQUE INDEX `ix_kat_pic` ON `pic_kat` (`kat_id`, `pic_id`);");
 			$res9_2 = mysql_query("CREATE UNIQUE INDEX `ix_pic_kat` ON `pic_kat` (`pic_id`, `kat_id`);");
@@ -469,7 +469,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"tmp_tree\" wurde angelegt.<BR>";
+				//echo "Tabelle \"tmp_tree\" wurde angelegt.<BR>";
 			}		
 			
 			$res11 = mysql_query( "CREATE TABLE IF NOT EXISTS `tag_trans` (
@@ -485,7 +485,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"tag_trans\" wurde angelegt.<BR>";
+				//echo "Tabelle \"tag_trans\" wurde angelegt.<BR>";
 			}
 
 			$res11_1 = mysql_query( "INSERT INTO `tag_trans` (`id` ,`lang` ,`Make`) VALUES 
@@ -498,7 +498,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"tag_trans\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"tag_trans\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			$res12 = mysql_query( "CREATE TABLE IF NOT EXISTS `usergroups` (
@@ -513,7 +513,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"usergroups\" wurde angelegt.<BR>";
+				//echo "Tabelle \"usergroups\" wurde angelegt.<BR>";
 			}		
 			
 			$res12_1 = mysql_query( "INSERT INTO `usergroups` (`id`, `description`) VALUES 
@@ -528,7 +528,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"usergroups\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"usergroups\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			
@@ -546,7 +546,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"userpermissions\" wurde angelegt.<BR>";
+				//echo "Tabelle \"userpermissions\" wurde angelegt.<BR>";
 			}		
 			
 			$res13_1 = mysql_query( "INSERT INTO `userpermissions` (`id`, `user_id`, `permission_id`, `enabled`) VALUES 
@@ -577,7 +577,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"userpermissions\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"userpermissions\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			$res14 = mysql_query( "CREATE TABLE IF NOT EXISTS `users` (
@@ -623,7 +623,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"users\" wurde angelegt.<BR>";
+				//echo "Tabelle \"users\" wurde angelegt.<BR>";
 			}	
 			
 			$res20 = mysql_query( "CREATE TABLE IF NOT EXISTS `diary` (
@@ -639,7 +639,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"diary\" wurde angelegt.<BR>";
+				//echo "Tabelle \"diary\" wurde angelegt.<BR>";
 			}	
 			
 			// Ablage der Pfade zu den benoetigten Hilfsprogrammen, wird nach der Installation oder dem Softwarecheck neu befuellt
@@ -661,11 +661,11 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"pfade\" wurde angelegt.<BR>";
+				//echo "Tabelle \"pfade\" wurde angelegt.<BR>";
 			}
 			
 			$res21_1 = mysql_query( "INSERT INTO `pfade` (`dcraw_path`, `conv_path`, `et_path`, `gpsb_path`, `md5sum_path`, `apache_uid`, `apache_gid`, `p2b_version`) VALUES 
-			('', '', '', '', '', '', '', '0.60.4');");
+			('0', '0', '0', '0', '0', '0', '0', '0.60.4');");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Bef&uuml;llung der Tabelle \"pfade\"<BR>";
@@ -673,7 +673,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"pfade\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"pfade\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			//Ablage der von dcraw unterstuetzten Dateiformate
@@ -691,7 +691,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"fileformats\" wurde angelegt.<BR>";
+				//echo "Tabelle \"fileformats\" wurde angelegt.<BR>";
 			}
 			
 			//Tabelle der Datenlogger
@@ -709,7 +709,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"data_logger\" wurde angelegt.<BR>";
+				//echo "Tabelle \"data_logger\" wurde angelegt.<BR>";
 			}
 			
 			$res23_1 = mysql_query("INSERT INTO `data_logger` (`logger_id`, `logger_number`, `logger_name`, `enabled`) VALUES
@@ -728,7 +728,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"data_logger\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"data_logger\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			//Tabelle der Zeitzonen
@@ -746,7 +746,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"timezone\" wurde angelegt.<BR>";
+				//echo "Tabelle \"timezone\" wurde angelegt.<BR>";
 			}
 			
 			$res24_1 = mysql_query( "INSERT INTO `timezone` (`zone_id`, `zone_number`, `zone_name`) VALUES
@@ -782,7 +782,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"timezone\" wurde mit Daten vorbelegt.<BR>";
+				//echo "Tabelle \"timezone\" wurde mit Daten vorbelegt.<BR>";
 			}
 			
 			//Tabelle der Dublettenliste
@@ -800,7 +800,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"doubletten\" wurde angelegt.<BR>";
+				//echo "Tabelle \"doubletten\" wurde angelegt.<BR>";
 			}
 			
 			//Hilfstabelle fuer die DB-Wartung:
@@ -812,12 +812,12 @@ echo "<br>++++ #### ++++<br>";
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 			IF(mysql_error() !== '')
 			{
-				echo "Fehler bei der Anlage der Tabelle \"IVE_V_pic_kat_dubls\"<BR>";
+				echo "Fehler bei der Anlage der Tabelle \"ICE_V_pic_kat_dubls\"<BR>";
 				$err_count++;
 			}
 			ELSE
 			{
-				echo "Tabelle \"IVE_V_pic_kat_dubls\" wurde angelegt.<BR>";
+				//echo "Tabelle \"ICE_V_pic_kat_dubls\" wurde angelegt.<BR>";
 			}
 			
 			if(!isset($titel))
@@ -882,7 +882,7 @@ echo "<br>++++ #### ++++<br>";
 			}
 			ELSE
 			{
-				echo "Tabelle \"pfade\" wurde mit der aktuellen p2b-Version belegt.<BR>";
+				//echo "Tabelle \"pfade\" wurde mit der aktuellen p2b-Version belegt.<BR>";
 			}
 			mysql_close($conn);
 			
