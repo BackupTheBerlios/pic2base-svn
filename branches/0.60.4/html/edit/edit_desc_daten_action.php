@@ -35,6 +35,7 @@ IF (!$_COOKIE['login'])
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
+ * #######################  ab version 0.60.4 (30.09.2012) nicht mehr verwendet  #############################
  */
 
 unset($username);
