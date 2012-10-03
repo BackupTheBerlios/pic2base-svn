@@ -147,11 +147,11 @@ FOR ($k1=0 ; $k1<count($xmp_tags);$k1++)
 //$result1 = mysql_query( "SELECT * FROM $table5");
 $result1 = mysql_query( "SELECT field_name, lfdnr, writable, viewable FROM $table5 GROUP BY field_name");
 $num1 = mysql_num_rows($result1);
-echo "Alle: ".$num1."<BR>";
+//echo "Alle: ".$num1."<BR>";
 
 $result2 = mysql_query( "SELECT field_name, lfdnr, writable, viewable FROM $table5 GROUP BY field_name");
 $num2 = mysql_num_rows($result2);
-echo "ohne Dubletten: ".$num2."<BR>";
+//echo "ohne Dubletten: ".$num2."<BR>";
 
 
 $ed_fieldname = array();
