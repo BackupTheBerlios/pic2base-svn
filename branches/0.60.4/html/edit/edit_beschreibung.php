@@ -82,7 +82,7 @@ else
 {
 	if(!isset($kat_id))
 	{
-		$kat_id = '';
+		$kat_id = 0;
 	}
 }
 

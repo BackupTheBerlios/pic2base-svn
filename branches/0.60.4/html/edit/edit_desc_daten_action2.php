@@ -79,6 +79,10 @@ if ( array_key_exists('kat_id',$_GET) )
 {
 	$kat_id = $_GET['kat_id'];
 }
+else
+{
+	$kat_id = '0';
+}
 if ( array_key_exists('ID',$_GET) )
 {
 	$ID = $_GET['ID'];
