@@ -5,10 +5,8 @@ error_reporting(E_ALL);
 // [Pfade] Globale Konfigurationseinstellungen
 $doc_root = $_SERVER['DOCUMENT_ROOT'];						//DocumentRoot des Web-Servers
 $inst_path = "";											//Pfad zwischen DocumentRoot und pic2base
-//$inst_path = trim(str_replace('/pic2base/bin/share','',str_replace($_SERVER['DOCUMENT_ROOT'],'',dirname(__FILE__))));
 $p2b_path = $doc_root.$inst_path."/";						//Pfad zur p2b-Wurzel
 $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
-//$sr = trim(str_replace('/bin/share','',dirname(__FILE__)));
 $fs_hoehe = '76';											//Hoehe der Bilder im Filmstreifen in px
 //############################################################################################################
 // [Benutzerspezifische Pfade]
