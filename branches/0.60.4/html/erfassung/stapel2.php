@@ -89,7 +89,7 @@ echo "
 ?>
 
 <script type = text/javascript>
-var timeout = 3;
+var timeout = 2;
 var fileList = null;
 var gesamtanzahl;
 var starttime = new Date();
