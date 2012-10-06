@@ -39,7 +39,7 @@ IF ($_COOKIE['login'])
 }
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/permissions.php';
+//include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
@@ -59,8 +59,8 @@ if($memory_value > $memory_avail)
 //echo "<font color='white'>".ini_get('memory_limit')."</font>";
 
 $user_id = getUserId($c_username, $sr);
-
-IF(hasPermission($c_username, 'editkattree'))
+/*
+IF(hasPermission($c_username, 'editkattree', $sr))
 {
 	$navigation = "
 			<a class='navi' href='kat_sort1.php'>Sortierung</a>
@@ -78,7 +78,7 @@ ELSE
 {
 	header('Location: ../../../index.php');
 }
-
+*/
 echo "
 <div class='page'>
 
@@ -87,7 +87,7 @@ echo "
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
 		//echo $navigation."
-		 include '../adminnavigation.php';
+		 include $sr.'/bin/html/admin/adminnavigation.php';
 		echo "</div>
 	</div>
 	
@@ -113,6 +113,9 @@ echo "
 		}
 		echo $meldung_2;
 //########################################################################################################
+		$X = "";
+		$meldung_0 = "";
+		$meldung_1 = "";
 		echo "	
 		<p style='margin-top: 50px; margin-bottom:30px;'><u>Test 2: Kontrolle, ob alle Vorschaubilder vorhanden sind</u></p>
 		<center>
@@ -190,7 +193,9 @@ function missingFilesReceived( responseText )
 	{
 		document.getElementById("meldung").innerHTML = "Die Bearbeitung ist abgeschlossen.";
 		document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&user_id=<?php echo $user_id; ?>\"'>";
-//		window.location="../start.php";
+		document.bar.src = '../../share/images/green.gif';
+		document.bar.width = '300';
+		document.bar.height = '11';
 	}	
 }
 
