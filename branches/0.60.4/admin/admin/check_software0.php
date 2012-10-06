@@ -38,7 +38,6 @@ header("Pragma: no-cache"); // HTTP/1.0
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<meta http-equiv="Refresh" Content="3600; URL=generate_exifdata0.php">-->
 	<style type="text/css">
 	<!--
 	.tablenormal	{
