@@ -1882,6 +1882,7 @@ function convertOrientationTextToNumber($value)
 function checkSoftware($sr)
 {
 	include $sr.'/bin/share/db_connect1.php';
+	include $sr.'/bin/share/global_config.php';
 	//Kontrolle, ob erforderliche Software-Komponenten installiert sind:
 	$et = shell_exec("which exiftool");
 	$conv = shell_exec("which convert");
@@ -2079,7 +2080,7 @@ function checkSoftware($sr)
 		</TR>
 		<TR>
 		<TD><BR>".$text."<BR>
-		<input type='button' value='Zur Startseite' onClick=\"location.href='../../html/start.php'\"> 
+		<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\">
 		</TD>
 		</TR>
 		</TABLE>
@@ -2091,7 +2092,7 @@ function checkSoftware($sr)
 		<TABLE style='width:500px; text-align:center;'>
 		<TR>
 		<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR>
-		<input type='button' value='Zur Startseite' onClick=\"location.href='../../html/start.php'\"> 
+		<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\"> 
 		</TD>
 		</TR>
 		</TABLE>
