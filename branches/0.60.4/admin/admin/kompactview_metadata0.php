@@ -219,7 +219,7 @@ FOR($r='0'; $r<$rows; $r++)
 			
 			//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 			$result2 = mysql_query("SELECT `$field_name` FROM $table20 WHERE lang = '$lang'");
-			$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated
+			@$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated
 			//$content = $content."<TD class='tdbreit'>".$fnt."</TD>
 			$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$fnt."</a></TD>
 			<TD class='tdschmal'>
