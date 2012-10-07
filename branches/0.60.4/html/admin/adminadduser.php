@@ -15,6 +15,20 @@ IF ($_COOKIE['login'])
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include_once $sr.'/bin/share/functions/permissions.php';
+
+//Kontrolle, ob bereits ein erster Admin angelegt wurde:
+$result0 = mysql_query("SELECT * FROM $table1");
+$num0 = mysql_num_rows($result0);
+$username = mysql_result($result0, isset($i0), 'username');
+IF($num0 == 1 AND $username == 'pb')
+{
+	$erstinstallation = 1;
+}
+ELSEIF($num0 > 1)
+{
+	$erstinstallation = 0;
+}
+
 if (hasPermission($c_username, 'adminlogin', $sr))
 {
 	echo "
@@ -122,27 +136,39 @@ if (hasPermission($c_username, 'adminlogin', $sr))
 	<tr>
 	<td align=left>
 	Berechtigung:
-	</td>
-	<td>
-	<select name='group' class='Auswahl150'>";
-	$result1 = mysql_query("SELECT * FROM $table9 ORDER BY description");
-	$num1 = mysql_num_rows($result1);
-	FOR($i1='0'; $i1<$num1; $i1++)
+	</td>";
+	IF($erstinstallation == 1)
 	{
-		$id = mysql_result($result1, $i1, 'id');
-		$description = mysql_result($result1, $i1, 'description');
-		IF($description == 'Gast')
-		{
-			$sel = 'selected';
-		}
-		ELSE
-		{
-			$sel = '';
-		}
-		echo "<option value=$id $sel>".$description."</option>";
+		echo "<td>
+		<select name='group' class='Auswahl150'>
+		<option value=1>Admin</option>
+		</select>
+		</td>";
 	}
-	echo "</SELECT>
-	</td>
+	ELSE
+	{
+		echo "<td>
+		<select name='group' class='Auswahl150'>";
+		$result1 = mysql_query("SELECT * FROM $table9 ORDER BY description");
+		$num1 = mysql_num_rows($result1);
+		FOR($i1='0'; $i1<$num1; $i1++)
+		{
+			$id = mysql_result($result1, $i1, 'id');
+			$description = mysql_result($result1, $i1, 'description');
+			IF($description == 'Gast')
+			{
+				$sel = 'selected';
+			}
+			ELSE
+			{
+				$sel = '';
+			}
+			echo "<option value=$id $sel>".$description."</option>";
+		}
+		echo "</SELECT>
+		</td>";
+	}
+	echo "
 	</tr>
 	
 	<tr>
