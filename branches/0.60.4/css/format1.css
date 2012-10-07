@@ -119,6 +119,7 @@ p#kopf {
 	margin: 0px;
 	text-align: left;
 	color:#eeeeee;
+	border-bottom:1px solid #eeeeee;
 	}
 	
 p#fuss {
@@ -128,6 +129,7 @@ p#fuss {
 	padding: 13px;
 	margin: 0px;
 	text-align: right;
+	border-top:1px solid #eeeeee;
 	}
 	
 	
@@ -503,11 +505,21 @@ TABLE.liste2 {
     font-size:10pt;
     width:80px;
   }
-  
+
+/*Speichern-Button im Bearbeitungs-Bereich*/
 .button3 {
     font-family: Arial, Helvetica, sans-serif;
     font-size:10pt;
     width:100px;
+    margin-top:335px;
+  }
+  
+/*Abbrechen-Button im Bearbeitungs-Bereich*/
+.button3a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:10pt;
+    width:100px;
+    margin-top:5px;
   }
   
 .button4 {
@@ -530,6 +542,7 @@ a.navi {
     text-decoration:none;
     height:16px;
     width: 100px;
+    border-bottom: 2px solid #888888;
   }
 
 
@@ -553,6 +566,7 @@ a.navi_blind {
     text-decoration:none;
     height:16px;
     width: 100px;
+    border-bottom: 2px solid #888888;
   }
  /*fuer inaktive Navigations-Links:*/
 a.navi_dummy {
@@ -567,6 +581,7 @@ a.navi_dummy {
     text-decoration:none;
     height:16px;
     width: 100px;
+    border-bottom: 2px solid #888888;
   }
     
 a.subnavi {
@@ -622,7 +637,8 @@ div.page {
     height:700px;
     margin:0px auto;
     text-align:left;
-    background-color:RGB(80,80,80);
+    /*background-color:RGB(80,80,80);*/
+    background-color:RGB(120,120,120);
     border:1px solid #888888;
   }
 
