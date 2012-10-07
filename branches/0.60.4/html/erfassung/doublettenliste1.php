@@ -249,7 +249,7 @@ echo "
 	</div>
 	<br style='clear:both;' />
 
-	<p id='fuss'><A style='margin-right:780px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 </div>";
 ?>
 
