@@ -101,7 +101,7 @@ echo "
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
 			createNavi3_1($c_username);
-			echo "<INPUT type='submit' class='button3' value = 'Speichern' style='margin-top:375px;'><BR><INPUT type='button' class='button3' style='margin-top:5px;' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
+			echo "<INPUT type='submit' class='button3' value = 'Speichern'><BR><INPUT type='button' class='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
 		</div>
 	</div>";
 			
