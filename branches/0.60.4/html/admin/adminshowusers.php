@@ -8,7 +8,6 @@ include '../../share/global_config.php';
 
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	mysql_connect ($db_server, $user, $PWD);
 	$result = mysql_query("select * from users ORDER BY username");
 	$num = mysql_num_rows($result);
 	echo "<center>

@@ -51,7 +51,7 @@ ELSE
 
 //echo "Methode: ".$method.", User: ".$c_username."<BR>";
 
-if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'deleteallpics')) 
+if (hasPermission($c_username, 'deletemypics', $sr) OR hasPermission($c_username, 'deleteallpics', $sr)) 
 {
 	//Bestimmung der user_id:
 	$result100 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");

@@ -20,7 +20,7 @@ include '../../share/global_config.php';
 	
 	$group_id = $_GET['group_id']; // fuer register_globals = off
 	$permission_id = $_GET['permission_id']; // fuer register_globals = off
-	if (hasPermission($c_username, 'adminlogin'))
+	if (hasPermission($c_username, 'adminlogin', $sr))
 	{
 		mysql_connect ($db_server, $user, $PWD);
 		$result = mysql_query("SELECT * FROM $table6 WHERE group_id='".$group_id."' AND permission_id='".$permission_id."'");

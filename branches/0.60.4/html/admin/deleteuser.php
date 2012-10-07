@@ -16,7 +16,7 @@ $users = $_POST['users'];
 $id = $_GET['id'];
 
 //echo "User-ID: ".$users;
-if (hasPermission($c_username, 'adminlogin') AND $users !== '')
+if (hasPermission($c_username, 'adminlogin', $sr) AND $users !== '')
 {
 	mysql_connect ($db_server, $user, $PWD);
 	$result0 = mysql_query( "SELECT username FROM $table1 WHERE id = '$id'");

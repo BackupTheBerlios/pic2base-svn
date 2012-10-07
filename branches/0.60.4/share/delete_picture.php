@@ -62,7 +62,7 @@ IF($num0 == 1)
 {
 	//echo "User ist Mitglied der Admin-Gruppe, Bild wird geloescht, wenn er darf<BR>";
 
-	if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'deleteallpics')) 
+	if (hasPermission($c_username, 'deletemypics', $sr) OR hasPermission($c_username, 'deleteallpics', $sr)) 
 	{
 		//Die Bild-Daten werden ermittelt:
 		$result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
@@ -226,7 +226,7 @@ ELSE
 {
 	//echo "User darf nur vormerken<BR>";
 	//darf der user ueberhaupt loeschen?
-	if (hasPermission($c_username, 'deletemypics') OR hasPermission($c_username, 'deleteallpics')) 
+	if (hasPermission($c_username, 'deletemypics', $sr) OR hasPermission($c_username, 'deleteallpics', $sr)) 
 	{
 		//Bild-Status wird auf inaktiv gesetzt (aktiv = 0)
 		$result1 = mysql_query("UPDATE $table2 SET aktiv = 0 WHERE pic_id = '$pic_id'");

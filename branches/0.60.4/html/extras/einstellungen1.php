@@ -45,7 +45,7 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, 'editallprofiles'))
+IF(hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_username, 'editallprofiles', $sr))
 {
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username'");
 	echo mysql_error();
@@ -275,7 +275,7 @@ IF(hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, '
 	
 	</div>";
 }
-ELSEIF(hasPermission($c_username, 'editallprofiles'))
+ELSEIF(hasPermission($c_username, 'editallprofiles', $sr))
 {
 	$result2 = mysql_query("SELECT * FROM $table1");
 	echo mysql_error();
@@ -312,7 +312,7 @@ ELSEIF(hasPermission($c_username, 'editallprofiles'))
 			$vorname = mysql_result($result2, $i2, 'vorname');
 			$name = mysql_result($result2, $i2, 'name');
 			//IF($username !== 'pb')
-			IF($username !== 'pb' AND ($username !== $c_username OR hasPermission($username, 'editmyprofile')))
+			IF($username !== 'pb' AND ($username !== $c_username OR hasPermission($username, 'editmyprofile', $sr)))
 			{
 				echo "
 				<TR id='kat'>
@@ -346,7 +346,7 @@ ELSEIF(hasPermission($c_username, 'editallprofiles'))
 	
 	</div>";
 }
-ELSEIF(!hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, 'editallprofiles'))
+ELSEIF(!hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_username, 'editallprofiles', $sr))
 {
 	echo "<meta http-equiv='refresh' content = '10; URL=../start.php'>";
 }

@@ -2,7 +2,6 @@
 IF (!$_COOKIE['login'])
 {
 	include '../../share/global_config.php';
-	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
 include $sr.'/bin/share/functions/ajax_functions.php';
@@ -28,11 +27,11 @@ echo "<CENTER>
 
 //var_dump($_GET);
 $group_id = $_GET['id']; 	// fuer register_globals = off
-$col_groups = 2;	//2 Spaltengruppen ; je Gruppe eine Spalte Parameter und eine Spalte Erlaubnis
+$col_groups = 2;			//2 Spaltengruppen ; je Gruppe eine Spalte Parameter und eine Spalte Erlaubnis
 $content = '';
-  
-mysql_connect ($db_server, $user, $PWD);
-mysql_select_db($db);
+
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
 $result = mysql_query("select * from $table9 WHERE id=".$group_id); //usergroups
 if (mysql_num_rows($result) == 1)
 {
@@ -43,7 +42,7 @@ else
 	$desc = "[keine Gruppe gew&auml;hlt]";
 }
 
-if (hasPermission($c_username, 'adminlogin'))
+if (hasPermission($c_username, 'adminlogin', $sr))
 {
 	
 	echo "<table class='tablenormal' border='0'>
@@ -95,11 +94,11 @@ if (hasPermission($c_username, 'adminlogin'))
 					$editable = 0;
 					$text = 'keine Berechtigung';	
 				}
-					$content = $content."<TD class='tdschmal'>
-					<div id = '$perm_id'>
-					<input type=checkbox $checked name='cb' title = '$text' onClick='changeGrouppermission(\"$group_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
-					</div>
-					</td>";
+				$content = $content."<TD class='tdschmal'>
+				<div id = '$perm_id'>
+				<input type=checkbox $checked name='cb' title = '$text' onClick='changeGrouppermission(\"$group_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
+				</div>
+				</td>";
 			}
 			ELSE
 			{
@@ -114,7 +113,7 @@ if (hasPermission($c_username, 'adminlogin'))
 }
 
 
-if (hasPermission($c_username, 'showusers'))
+if (hasPermission($c_username, 'showusers', $sr))
 {
 	echo "<TR>
 	<TD colspan='4'>Benutzer in dieser Gruppe:</TD>

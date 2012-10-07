@@ -506,8 +506,8 @@ echo "
 	//echo count($writable_fields);
 	//IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username AND $ed !== '')
 	IF(($editable == '1' OR count(isset($writable_fields)) > 0) 
-	AND (($u_name == $c_username AND hasPermission($c_username, 'editmypics'))
-	OR ($u_name !== $c_username AND hasPermission($c_username, 'editallpics'))) 
+	AND (($u_name == $c_username AND hasPermission($c_username, 'editmypics', $sr))
+	OR ($u_name !== $c_username AND hasPermission($c_username, 'editallpics', $sr))) 
 	AND $ed !== '')
 	{
 		echo "

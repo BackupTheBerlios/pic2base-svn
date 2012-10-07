@@ -6,10 +6,9 @@ include '../../share/global_config.php';
   header('Location: ../../../index.php');
 }
 
-  mysql_connect ($db_server, $user, $PWD);
-  $result = mysql_query("select * from $table2 WHERE City <> 'Ortsbezeichnung' GROUP BY City ORDER BY City");
-  $num = mysql_num_rows($result);
-  echo "<center><table class='normal' border='0'>
+$result = mysql_query("select * from $table2 WHERE City <> 'Ortsbezeichnung' GROUP BY City ORDER BY City");
+$num = mysql_num_rows($result);
+echo "<center><table class='normal' border='0'>
 	<tr>
 	<td colspan='4' style='font-size:12pt; text-align:center;'>&Uuml;bersicht &uuml;ber alle vorhandenen Ortsnamen</td>
 	</tr>
@@ -22,17 +21,17 @@ include '../../share/global_config.php';
 	<td colspan='4'>&nbsp;</td>
 	</tr>";
 	
-  FOR ($i = 0; $i < $num; $i++)
-  {
+FOR ($i = 0; $i < $num; $i++)
+{
 	$pic_id = mysql_result ($result, $i, "pic_id");
 	$city = mysql_result ($result, $i, "City");
 	
 	echo "<TR>
 	<TD align='left' colspan='4' style='padding-left:20px;'><a href=adminframe.php?item=admineditlocation&id=".$pic_id.">".$city."</a></TD>
 	</TR>";
-  }
+}
   
-  echo "<tr>
+echo "<tr>
 	<td colspan='4'>&nbsp;</td>
 	</tr>
 	

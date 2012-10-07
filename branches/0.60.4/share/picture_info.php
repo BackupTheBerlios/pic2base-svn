@@ -44,7 +44,7 @@ if ($inforequest == 'DownloadStatusIconPreview')
 	}
 	else
 	{
-		/*IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
+		/*IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics', $sr)) OR hasPermission($c_username, 'downloadallpics', $sr))
 		{
 			IF(directDownload($c_username, $sr))
 			//IF($direkt_download > '0')

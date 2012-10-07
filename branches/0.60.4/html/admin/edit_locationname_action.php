@@ -26,56 +26,54 @@ if(array_key_exists('locationname_new',$_POST))
 }
 //Nur wenn der Ortsname geaendert wurde, wird die Bearbeitung begonnen:
 IF($locationname_new !== $locationname)
-{
-  mysql_connect ($db_server, $user, $PWD);
-  
-  $result1 = mysql_query("SELECT City, pic_id
-  FROM $table2
-  WHERE City = \"$locationname\"");
-  $num1 = mysql_num_rows($result1);
-
-  echo "
-  <center>
-  <table class='normal' border='0'>
-	<tr>
-	<td colspan='4' style='font-size:12pt; text-align:center;'>Neuer Ortsname wird gespeichert</td>
-	</tr>
+{  
+	  $result1 = mysql_query("SELECT City, pic_id
+	  FROM $table2
+	  WHERE City = \"$locationname\"");
+	  $num1 = mysql_num_rows($result1);
 	
-	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
-	</TR>
-	
-	<tr>
-	<td colspan='4'>&nbsp;</td>
-	</tr>
-	
-  	<TR>
-	<TD align='CENTER' colspan='4' style='padding-left:20px;'>
-	Es gibt ".$num1." Bilder mit dem Ortsnamen 
-	".$locationname."<BR><BR>
-	Dieser soll in ".$locationname_new." ge&auml;ndert werden.<BR><BR>
-  	Dieser Vorgang wird eine Weile dauern und ist abgeschlossen,<BR>
-  	wenn hier wieder die Startseite des Administrationsbereichs zu sehen ist.<BR><BR>
-  	<FONT color='red'>Bitte unterbrechen Sie den Vorgang NICHT</FONT><BR>
-	</TD>
-	</TR>
-	
-	<tr>
-	<td colspan='4'>&nbsp;</td>
-	</tr>
-	
-	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
-	</TR>
-  
-  	<TR>
-	<TD align='center' colspan = '4'></TD>
-	</TR>
-	</table>
-</center>";
-  
-  flush();
-  sleep(0);
+	  echo "
+	  <center>
+	  <table class='normal' border='0'>
+		<tr>
+		<td colspan='4' style='font-size:12pt; text-align:center;'>Neuer Ortsname wird gespeichert</td>
+		</tr>
+		
+		<tr style='height:3px;'>
+		<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+		</TR>
+		
+		<tr>
+		<td colspan='4'>&nbsp;</td>
+		</tr>
+		
+	  	<TR>
+		<TD align='CENTER' colspan='4' style='padding-left:20px;'>
+		Es gibt ".$num1." Bilder mit dem Ortsnamen 
+		".$locationname."<BR><BR>
+		Dieser soll in ".$locationname_new." ge&auml;ndert werden.<BR><BR>
+	  	Dieser Vorgang wird eine Weile dauern und ist abgeschlossen,<BR>
+	  	wenn hier wieder die Startseite des Administrationsbereichs zu sehen ist.<BR><BR>
+	  	<FONT color='red'>Bitte unterbrechen Sie den Vorgang NICHT</FONT><BR>
+		</TD>
+		</TR>
+		
+		<tr>
+		<td colspan='4'>&nbsp;</td>
+		</tr>
+		
+		<tr style='height:3px;'>
+		<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+		</TR>
+	  
+	  	<TR>
+		<TD align='center' colspan = '4'></TD>
+		</TR>
+		</table>
+	</center>";
+	  
+	flush();
+	sleep(0);
   	
   	//Aktualisierung der Tabelle pictures:
   	$result2 = mysql_query("UPDATE $table2 SET City = \"$locationname_new\" WHERE City = \"$locationname\"");
@@ -103,7 +101,7 @@ IF($locationname_new !== $locationname)
   		$command = " -IPTC:City=\"$iptc_city\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$CA_neu\" ".$FN." -overwrite_original > /dev/null &";
   		shell_exec($exiftool." ".$command);
   	}
-  	echo "<meta http-equiv='Refresh' Content='2; URL=adminframe.php'>";
+  	echo "<meta http-equiv='Refresh' Content='2; URL=adminframe.php?item=editlocationname'>";
   	
 ?>
 <script language="javascript">

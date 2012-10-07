@@ -53,7 +53,7 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 $result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
 $row = mysql_fetch_array($result2);
 $group_id = $row['group_id'];
-IF(hasPermission($c_username, 'editdiary'))	//berechtigte User duerfen das Tagebuch editieren
+IF(hasPermission($c_username, 'editdiary', $sr))	//berechtigte User duerfen das Tagebuch editieren
 {
 	$editable = '1';
 	$view = 'Default';

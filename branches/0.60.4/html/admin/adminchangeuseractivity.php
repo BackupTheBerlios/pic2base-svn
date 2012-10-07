@@ -17,7 +17,7 @@ include '../../share/global_config.php';
 	include $sr.'/bin/share/functions/permissions.php';
 	
 	$user_id = $_GET['user_id']; // fuer register_globals = off
-	if (hasPermission($c_username, 'adminlogin'))
+	if (hasPermission($c_username, 'adminlogin', $sr))
 	{
 		mysql_connect ($db_server, $user, $PWD);
 		$result = mysql_query("SELECT * FROM users WHERE id='$user_id'");

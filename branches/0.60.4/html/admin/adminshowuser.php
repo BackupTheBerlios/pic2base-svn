@@ -13,10 +13,10 @@ $user_id = $_GET['id'];
 $del = $_GET['del'];
 
 
-if (hasPermission($c_username, 'adminlogin'))
+if (hasPermission($c_username, 'adminlogin', $sr))
 {
-   	$content = '';
-	mysql_connect ($db_server, $user, $PWD);
+   	include '../../share/db_connect1.php';
+	$content = '';
 	$result = mysql_query("select * from $table1 WHERE id=".$user_id);
     $vorname = mysql_result ($result, 0, "vorname");
     $name = mysql_result ($result, 0, "name");
@@ -105,10 +105,6 @@ if (hasPermission($c_username, 'adminlogin'))
 	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
 	</TR>";
     
-   
-}
-if (hasPermission($c_username, 'adminlogin'))
-{
 	$col_groups = 2;	//2 Spaltengruppen ; je Gruppe eine Spalte Parameter und eine Spalte Erlaubnis
 	echo "
 	<tr>
@@ -140,7 +136,7 @@ if (hasPermission($c_username, 'adminlogin'))
 			{
 				$content = $content."<td class='tdbreit'>".$description."</td>";
 				
-				IF (hasPermission($username, $shortdescription))
+				IF (hasPermission($username, $shortdescription, $sr))
 				{
 					$checked = 'checked';
 					$text = 'Berechtigung erteilt';
@@ -177,6 +173,8 @@ if (hasPermission($c_username, 'adminlogin'))
 	Hinweis: Ein Klick in das jeweilige Auswahlfeld &auml;ndert sofort <b>und ohne R&uuml;ckfrage</b> den Status der Berechtigung.</TD>
 	</TR>";
 }
+
+// .. wenn der User geloescht werden soll:
 IF($del == '1')
 {
   	echo "

@@ -63,7 +63,7 @@ include $sr.'/bin/share/db_connect1.php';
 		$groupname = $_POST['groupname'];
 		
 		$groupname = strip_tags($groupname);
-		if ((hasPermission($c_username, 'adminlogin')) AND ($groupname !== ''))
+		if ((hasPermission($c_username, 'adminlogin', $sr)) AND ($groupname !== ''))
 		{
 			mysql_connect ($db_server, $user, $PWD);
 			$result1 = mysql_query("INSERT INTO $table9 (description) VALUES ('".$groupname."')");

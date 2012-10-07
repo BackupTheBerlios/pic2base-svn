@@ -4,7 +4,7 @@
   echo mysql_error();
   if (mysql_num_rows($result) == 1)
   {
-    if (hasPermission(mysql_result ($result, 0, "id"), "adminlogin"))
+    if (hasPermission(mysql_result ($result, 0, "id"), "adminlogin", ""))
     {
       echo "Login erfolgreich! <a href='index.php?item=showusers'>Hier gehts weiter.</a>";
     } 

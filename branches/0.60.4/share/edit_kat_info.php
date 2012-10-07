@@ -59,7 +59,7 @@ $result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_usern
 $row = mysql_fetch_array($result2);
 //$group_id = mysql_result($result2, isset($i2), 'group_id');
 $group_id = $row['group_id'];
-IF(hasPermission($c_username, 'editkatlex'))	//berechtigte User duerfen das Kat.-Lexikon editieren
+IF(hasPermission($c_username, 'editkatlex', $sr))	//berechtigte User duerfen das Kat.-Lexikon editieren
 {
 	$editable = '1';
 	$view = 'Default';

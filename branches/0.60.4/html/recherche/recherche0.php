@@ -16,7 +16,7 @@ ELSE
 	IF ($_COOKIE['login'])
 	{
 		list($c_username) = preg_split('#,#',$_COOKIE['login']);
-		IF(!hasPermission($c_username, 'searchpic'))
+		IF(!hasPermission($c_username, 'searchpic', $sr))
 		{
 			header('Location: ../../../index.php');
 		}
@@ -81,16 +81,8 @@ function switchBewertung(bewertung)
  */
 
 include $sr.'/bin/share/functions/ajax_functions.php';
-/*
-//log-file schreiben:
-$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s')." ".isset($REMOTE_ADDR)." ".$_SERVER['PHP_SELF']." ".$_SERVER['HTTP_USER_AGENT']." ".$c_username."\n");
-fclose($fh);
-*/
 $result2 = mysql_query("SELECT * FROM $table2");
 $num2 = mysql_num_rows($result2);
-//echo "Anz. der Bild-Datensaetze: ".$num2."<BR>";
-//var_dump($_COOKIE);
 
 ?>
 <div class="page">

@@ -12,7 +12,7 @@ ELSE
 	IF ($_COOKIE['login'])
 	{
 		list($c_username) = preg_split('#,#',$_COOKIE['login']);
-		IF(!hasPermission($c_username, 'adminlogin') AND (!hasPermission($c_username, 'editkattree')) AND (!hasPermission($c_username, 'editlocationname')))
+		IF(!hasPermission($c_username, 'adminlogin', $sr) AND (!hasPermission($c_username, 'editkattree', $sr)) AND (!hasPermission($c_username, 'editlocationname', $sr)))
 		{
 			header('Location: ../../../index.php');
 		}

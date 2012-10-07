@@ -17,12 +17,11 @@ else
 //##################################################################################################
 //Datei wird im Admin-Bereich zur nachtraeglichen Aenderung von Ortsnamen verwendet#################
 //##################################################################################################
-  mysql_connect ($db_server, $user, $PWD);
-  $result = mysql_query("select * from $table2 WHERE pic_id = $id");
-  $num = mysql_num_rows($result);
-  //$loc_id = mysql_result ($result, $i, "loc_id");
-  $city = mysql_result ($result, $i, "City");
-  echo "
+ 
+$result = mysql_query("select * from $table2 WHERE pic_id = $id");
+$num = mysql_num_rows($result);
+$city = mysql_result ($result, isset($i), "City");
+echo "
   <center>
   <FORM name='location' method='post' action='adminframe.php?item=admineditlocationnameaction&pic_id=$id'>
   <table class='normal' border='0'>

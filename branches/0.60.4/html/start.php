@@ -124,7 +124,7 @@ ELSE
 //===================================================================================================
 
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist und Kontrolle, ob Bilder zum Loeschen vorliegen:
-IF(hasPermission($c_username, 'adminlogin') AND $check == '1')
+IF(hasPermission($c_username, 'adminlogin', $sr) AND $check == '1')
 {
 	$file1 = 'http://www.pic2base.de/web/includes/conf.inc.php';
 	@$fh = fopen($file1,'r');
@@ -387,7 +387,7 @@ echo "<div class='page'>
 			
 			";
 			
-			IF(hasPermission($c_username, 'addpic'))
+			IF(hasPermission($c_username, 'addpic', $sr))
 			{
 				echo "
 				<tr class='normal'>
@@ -409,7 +409,7 @@ echo "<div class='page'>
 			</TR>";
 
 		
-		IF ($num_pic > '0' AND hasPermission($c_username, 'addpic'))
+		IF ($num_pic > '0' AND hasPermission($c_username, 'addpic', $sr))
 		{
 			echo "
 			<tr class='normal'>
@@ -434,7 +434,7 @@ echo "<div class='page'>
 			</TR>";
 		}
 	
-		IF($n > '0' AND hasPermission($c_username, 'addpic'))
+		IF($n > '0' AND hasPermission($c_username, 'addpic', $sr))
 		{
 			echo "
 			<Form name='folder' method='post' action='erfassung/stapel2.php'>
@@ -459,7 +459,7 @@ echo "<div class='page'>
 		}
 		ELSE
 		{
-			IF(hasPermission($c_username, 'addpic'))
+			IF(hasPermission($c_username, 'addpic', $sr))
 			{
 				echo "
 				<TR class='normal' style='height:15px;'>
@@ -495,7 +495,7 @@ echo "<div class='page'>
 			}
 		}
 		
-		IF($m > '0' AND (hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND !directDownload($c_username, $sr))
+		IF($m > '0' AND (hasPermission($c_username, 'downloadmypics', $sr) OR hasPermission($c_username, 'downloadallpics', $sr)) AND !directDownload($c_username, $sr))
 		{
 			$download_path = 'ftp://'.$c_username."@".$_SERVER['SERVER_NAME'].'/downloads/';
 			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$c_username.'/downloads/';
@@ -517,7 +517,7 @@ echo "<div class='page'>
 		}
 		ELSE
 		{
-			IF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND !directDownload($c_username, $sr))
+			IF((hasPermission($c_username, 'downloadmypics', $sr) OR hasPermission($c_username, 'downloadallpics', $sr)) AND !directDownload($c_username, $sr))
 			{	
 				echo "
 				<tr class='normal' style='height:30px;'>
@@ -529,7 +529,7 @@ echo "<div class='page'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
 			}
-			ELSEIF((hasPermission($c_username, 'downloadmypics') OR hasPermission($c_username, 'downloadallpics')) AND directDownload($c_username, $sr))
+			ELSEIF((hasPermission($c_username, 'downloadmypics', $sr) OR hasPermission($c_username, 'downloadallpics', $sr)) AND directDownload($c_username, $sr))
 			{
 				echo "
 				<tr class='normal' style='height:30px;'>

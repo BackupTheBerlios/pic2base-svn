@@ -297,7 +297,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 			//die keiner weiteren Unterkategorie zugeordnert sind.
 			//Fuer Unterkategorien (mit Plus) werden die Bilder in dieser und aller weiteren Unterkategorien angezeigt
 			//abhaengig von der Berechtigung wird die Anzahl der Bilder ermittelt:
-			IF(hasPermission($c_username, 'editallpics'))
+			IF(hasPermission($c_username, 'editallpics', $sr))
 			{
 				//Sonderfall Neuzugaenge: hier wird nur die Anz. der noch nicht kategorisierten Bilder ermittelt:
 				$result3 = mysql_query("SELECT * FROM $table4 WHERE kat_id = '$kat_nr'");
@@ -333,7 +333,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 					}
 				}
 			}
-			ELSEIF(hasPermission($c_username, 'editmypics'))
+			ELSEIF(hasPermission($c_username, 'editmypics', $sr))
 			{
 				//Sonderfall Neuzugaenge: hier wird nur die Anz. der noch nicht kategorisierten Bilder ermittelt:
 				$result3 = mysql_query("SELECT * FROM $table4 WHERE kat_id = '$kat_nr'");
@@ -474,7 +474,7 @@ function createNavi0($c_username)
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 		
@@ -541,8 +541,8 @@ function createNavi0($c_username)
 		$text = '';
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile')
-	OR hasPermission($c_username, 'editallprofiles'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr)
+	OR hasPermission($c_username, 'editallprofiles', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -551,7 +551,7 @@ function createNavi0($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
 	
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -560,7 +560,7 @@ function createNavi0($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -569,7 +569,7 @@ function createNavi0($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -604,7 +604,7 @@ function createNavi1($c_username)
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -612,7 +612,7 @@ function createNavi1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -620,7 +620,7 @@ function createNavi1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -628,7 +628,7 @@ function createNavi1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -636,7 +636,7 @@ function createNavi1($c_username)
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -662,7 +662,7 @@ if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -670,7 +670,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -678,7 +678,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -686,7 +686,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -694,7 +694,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -721,7 +721,7 @@ function createNavi2_1($c_username)
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -730,7 +730,7 @@ function createNavi2_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -739,7 +739,7 @@ function createNavi2_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
 	
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -748,7 +748,7 @@ function createNavi2_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -757,7 +757,7 @@ function createNavi2_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -784,7 +784,7 @@ if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -792,7 +792,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -800,7 +800,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -808,7 +808,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -816,7 +816,7 @@ if(!isset($navigation))
 	{
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -843,7 +843,7 @@ function createNavi3_1($c_username)
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -852,7 +852,7 @@ function createNavi3_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -861,7 +861,7 @@ function createNavi3_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
 	
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -870,7 +870,7 @@ function createNavi3_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -879,7 +879,7 @@ function createNavi3_1($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -906,7 +906,7 @@ if(!isset($navigation))
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -915,7 +915,7 @@ if(!isset($navigation))
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -924,7 +924,7 @@ if(!isset($navigation))
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
 	
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -933,7 +933,7 @@ if(!isset($navigation))
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -942,7 +942,7 @@ if(!isset($navigation))
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -969,7 +969,7 @@ function createNavi5($c_username)
 	{
 		$navigation = '';
 	}
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -978,7 +978,7 @@ function createNavi5($c_username)
 		$navigation .= "<a class='navi_dummy'>Administration</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile') OR hasPermission($c_username, 'editallprofiles'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr) OR hasPermission($c_username, 'editallprofiles', $sr))
 	{
 		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -987,7 +987,7 @@ function createNavi5($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
 	
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -996,7 +996,7 @@ function createNavi5($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -1005,7 +1005,7 @@ function createNavi5($c_username)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}
@@ -1034,7 +1034,7 @@ function createNavi6($c_username,$sr)
 		$navigation = '';
 	}
 	
-	IF(hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editkattree') OR hasPermission($c_username, 'editlocationname'))
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr) OR hasPermission($c_username, 'editlocationname', $sr))
 	{
 		$navigation = "<a class='navi_blind' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
 	}
@@ -1043,7 +1043,7 @@ function createNavi6($c_username,$sr)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmyprofile'))
+	IF(hasPermission($c_username, 'editmyprofile', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
 	}
@@ -1052,7 +1052,7 @@ function createNavi6($c_username,$sr)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
 	}
 	
-	IF(hasPermission($c_username, 'addpic'))
+	IF(hasPermission($c_username, 'addpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
 	}
@@ -1061,7 +1061,7 @@ function createNavi6($c_username,$sr)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'editmypics'))
+	IF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
 	}
@@ -1070,7 +1070,7 @@ function createNavi6($c_username,$sr)
 		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
 	}
 	
-	IF(hasPermission($c_username, 'searchpic'))
+	IF(hasPermission($c_username, 'searchpic', $sr))
 	{
 		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
 	}

@@ -133,7 +133,8 @@ IF ($pic_id !=='0')
 		<TD id='detail2' colspan='2'>";
 		IF(strlen($FileNameOri) > 14)
 		{
-			$fn_text = 	substr($FileNameOri,0,10)."...";
+			$fn_text = substr($FileNameOri,0,15)."...";
+			//$fn_text = $FileNameOri;
 			echo "<a href='#' title='$FileNameOri' style='text-decoration:none;'>".$fn_text."</a>";
 		}
 		ELSE
@@ -246,7 +247,7 @@ IF ($pic_id !=='0')
 		<TD id='detail5'><span style='cursor:pointer;' title= \"$vorname $name, $ort\">".$autor."</span></TD>
 		";
 		
-		IF($Owner == $c_username AND ((hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic'))))
+		IF($Owner == $c_username AND ((hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editpic', $sr))))
 		{
 			echo "<TD id='detail6'><span style='cursor:pointer;'>
 			<img src=\"$inst_path/pic2base/bin/share/images/change_owner.gif\" width='30' height='15' border='0'  alt='Owner wechseln' title='Bild-Eigent&uuml;merschaft &uuml;bertragen' OnClick=\"changeOwner('$pic_id', '$c_username')\"/>
@@ -338,8 +339,8 @@ IF ($pic_id !=='0')
 		$symb1 = "<BR>";
 		$symb5 = "<BR>";
 		
-		//IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin') OR hasPermission($c_username, 'editpic')))
-		IF($Owner == $c_username AND (hasPermission($c_username, 'georefmypics')) OR ($Owner !== $c_username AND (hasPermission($c_username, 'georefallpics'))))
+		//IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editpic', $sr)))
+		IF($Owner == $c_username AND (hasPermission($c_username, 'georefmypics', $sr)) OR ($Owner !== $c_username AND (hasPermission($c_username, 'georefallpics', $sr))))
 		{
 			$symb4 = "<SPAN style='cursor:pointer;'>
 			<img src=\"$inst_path/pic2base/bin/share/images/del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Geo-Referenzierung &auml;ndern\" onClick=\"changeGeoParam('$FileName','$c_username','$pic_id')\" />
@@ -357,8 +358,8 @@ IF ($pic_id !=='0')
 		$supp_rawformats = array_diff($supported_filetypes, $supported_extensions);
 		//print_r($supp_rawformats);
 		$ext = strtolower(substr($FileNameOri,-3,3));
-		IF(($Owner == $c_username AND (hasPermission($c_username, 'editmypics')) 
-		OR ($Owner !== $c_username AND (hasPermission($c_username, 'editallpics')))) 
+		IF(($Owner == $c_username AND (hasPermission($c_username, 'editmypics', $sr)) 
+		OR ($Owner !== $c_username AND (hasPermission($c_username, 'editallpics', $sr)))) 
 		AND in_array($ext, $supp_rawformats))
 		{
 			$symb3 = "<SPAN style='cursor:pointer;'>
@@ -373,7 +374,7 @@ IF ($pic_id !=='0')
 		}
 		
 		//wenn der User Bilder loeschen darf, wird das Trash-Icon angezeigt:
-		IF($Owner == $c_username AND (hasPermission($c_username, 'deletemypics')) OR ($Owner !== $c_username AND (hasPermission($c_username, 'deleteallpics'))))
+		IF($Owner == $c_username AND (hasPermission($c_username, 'deletemypics', $sr)) OR ($Owner !== $c_username AND (hasPermission($c_username, 'deleteallpics', $sr))))
 		{
 			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
 		}
@@ -391,31 +392,36 @@ IF ($pic_id !=='0')
 		<TD id='detailorlo1'>".$symb4."</TD>
 		<TD id='detailolo1'>".$symb5."</TD>
 		</TR>
-		
+		<!--
 		<TR id='detail2'>
 		<TD id='detail4' colspan='8' bgcolor='#bdbec6' height=5px></TD>
-		</TR>";
+		</TR>-->";
 
 		echo "
 		<TR id='detail2'>
-		<TD id='detail4' colspan='8' height=70px valign=top><b>zugewiesene Kategorien:</b><BR>".$kat_info."</TD>
+		<!--<TD id='detail4' colspan='8' height=75px valign=top><b>zugewiesene Kategorien:</b><BR>".$kat_info."</TD>-->
+		<TD id='detail4' colspan='8'><b>zugewiesene Kategorien:</b><BR>
+		<div id='kategorien'>
+			<textarea name='kategorien' wordwrap readonly style='width:380px; height:60px; background-color:#DFEFFf; font-size:9pt; font-family:Helvitica,Arial;'>".$kat_info."</textarea>
+		</div>
+		</TD>
 		</TR>
-		
+		<!--
 		<TR id='detail2'>
 		<TD id='detail4' colspan='8' bgcolor='#bdbec6' height=5px></TD>
 		</TR>
-		
+		-->
 		<TR id='detail2'>
 		<TD id='detail4' colspan='8'><b>Bildbeschreibung:</b><BR>
 		<div id='description'>
-			<textarea name='description' wordwrap style='width:380px; height:105px; background-color:#DFEFFf; font-size:9pt; font-family:Helvitica,Arial;'>".$Description."</textarea>
+			<textarea name='description' wordwrap style='width:380px; height:110px; background-color:#DFEFFf; font-size:9pt; font-family:Helvitica,Arial;'>".$Description."</textarea>
 		</div>
 		</TD>
 		</TR>
 		
 		</TABLE>";
-		IF($Owner == $c_username AND hasPermission($c_username, 'editmypics')
-		OR $Owner !== $c_username AND hasPermission($c_username, 'editallpics'))
+		IF($Owner == $c_username AND hasPermission($c_username, 'editmypics', $sr)
+		OR $Owner !== $c_username AND hasPermission($c_username, 'editallpics', $sr))
 		{
 			//saveChanges ist in ajax_functions.php:
 			echo "<CENTER><input type=button value=\"&Auml;nderungen speichern\" OnClick='saveChanges(\"$pic_id\", encodeURIComponent(beschr.description.value), beschr.aufn_dat.value);'></CENTER>";

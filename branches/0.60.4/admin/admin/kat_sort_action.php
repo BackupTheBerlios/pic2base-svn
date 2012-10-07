@@ -51,7 +51,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-IF(hasPermission($c_username, 'editkattree'))
+IF(hasPermission($c_username, 'editkattree', $sr))
 {
 	$navigation = "<a class='navi' href='kategorie0.php?kat_id=0'>Zur&uuml;ck</a>";
 }

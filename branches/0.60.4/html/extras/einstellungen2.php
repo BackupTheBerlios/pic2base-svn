@@ -47,7 +47,7 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include_once $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'editallprofiles'))
+IF(hasPermission($c_username, 'editallprofiles', $sr))
 {
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$id'");
 	echo mysql_error();
@@ -279,7 +279,7 @@ IF(hasPermission($c_username, 'editallprofiles'))
 	
 	</div>";
 }
-ELSEIF(!hasPermission($c_username, 'editmyprofile') AND !hasPermission($c_username, 'editallprofiles'))
+ELSEIF(!hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_username, 'editallprofiles', $sr))
 {
 	echo "<meta http-equiv='refresh' content = '0; URL=../start.php'>";
 }

@@ -33,7 +33,7 @@ if(@copy($datei,$target))
 	$result1 = mysql_query( "UPDATE $table2 SET ranking = ranking + 1 WHERE pic_id = '$pic_id'");
 	$result2 = mysql_query( "SELECT FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
 	$FileNameV = mysql_result($result2, isset($i2), 'FileNameV');
-	IF(hasPermission($c_username, 'rotatepicture'))
+	IF(hasPermission($c_username, 'rotatepicture', $sr))
 	{
 		echo "
 		<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>

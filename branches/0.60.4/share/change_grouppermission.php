@@ -2,7 +2,6 @@
 IF (!$_COOKIE['login'])
 {
 	include '../share/global_config.php';
-	//var_dump($sr);
 	header('Location: ../../index.php');
 }
 
@@ -10,11 +9,10 @@ unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
 }
 
 $sr = $_GET['sr'];
-
+include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 
@@ -36,20 +34,22 @@ IF($checked == '')
 {
 	$new_status = '1';
 	$checked = 'checked';
+	$text = 'Berechtigung erteilt';
 }
 ELSEIF($checked == 'checked')
 {
 	$new_status = '0';
 	$checked = '';
+	$text = 'keine Berechtigung';
 }
 
 IF ($group_id !== '' AND $perm_id !== '')
 {
-	if (hasPermission($c_username, 'adminlogin'))
+	if (hasPermission($c_username, 'adminlogin', $sr))
 	{
-		mysql_connect ($db_server, $user, $PWD);
-		$result = mysql_query("SELECT * FROM $table6 WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
-		$enabled = mysql_result($result, 0, 'enabled');
+		$result0 = mysql_query("SELECT * FROM $table6 WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
+		$enabled = mysql_result($result0, 0, 'enabled');
+		
 		IF($enabled == '1')
 		{
 			$en = '0';
@@ -59,7 +59,7 @@ IF ($group_id !== '' AND $perm_id !== '')
 			$en = '1';
 		}
 		
-		$result = mysql_query("UPDATE $table6 SET enabled='$en' WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
+		$result1 = mysql_query("UPDATE $table6 SET enabled='$en' WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
 		//Es werden die Benutzer der Gruppe ermittelt:
 		$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
 		$num2 = mysql_num_rows($result2);
@@ -71,10 +71,9 @@ IF ($group_id !== '' AND $perm_id !== '')
 			//echo "User-ID: ".$user_id."<BR>";
 			//echo "Recht-ID: ".$perm_id."<BR>";
 			$result3 = mysql_query( "UPDATE $table7 SET enabled='$en' WHERE user_id = '$user_id' AND permission_id='$perm_id'");
-			//echo mysql_error();
 		}
-		//echo mysql_error();
-		echo "<INPUT TYPE=CHECKBOX $checked value='$new_status' onClick='changeGrouppermission(\"$group_id\",\"$perm_id\",\"$checked\",\"$sr\")'>";
+		
+		echo "<INPUT TYPE=CHECKBOX $checked value='$new_status' title = '$text' onClick='changeGrouppermission(\"$group_id\",\"$perm_id\",\"$checked\",\"$sr\")'>";
 	}
 	ELSE
 	{
@@ -85,11 +84,5 @@ ELSE
 {
 	echo "Es liegt ein Fehler vor!";
 }
-
-/*
-$result1 = mysql_query( "UPDATE $table7 SET enabled = '$new_status' WHERE permission_id = '$perm_id' AND user_id = '$user_id'");
-echo mysql_error();
 mysql_close($conn);
-*/
-
 ?>

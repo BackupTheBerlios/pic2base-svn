@@ -30,16 +30,18 @@ IF($checked == '')
 {
 	$new_status = '1';
 	$checked = 'checked';
+	$text = 'Berechtigung erteilt';
 }
 ELSEIF($checked == 'checked')
 {
 	$new_status = '0';
 	$checked = '';
+	$text = 'keine Berechtigung';
 }
 
 $result1 = mysql_query( "UPDATE $table7 SET enabled = '$new_status' WHERE permission_id = '$perm_id' AND user_id = '$user_id'");
 echo mysql_error();
 mysql_close($conn);
 
-echo "<INPUT TYPE=CHECKBOX $checked value='$new_status' onClick='changeUserpermission(\"$user_id\",\"$perm_id\",\"$checked\",\"$sr\")'>";
+echo "<INPUT TYPE=CHECKBOX $checked value='$new_status' title= '$text' onClick='changeUserpermission(\"$user_id\",\"$perm_id\",\"$checked\",\"$sr\")'>";
 ?>

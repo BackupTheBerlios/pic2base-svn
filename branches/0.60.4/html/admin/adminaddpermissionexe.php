@@ -30,7 +30,7 @@ include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
 
-	if ((hasPermission($c_username, 'addpermission')) AND ($description !== '') AND ($shortdescription !== '') AND ($permission_id !== ''))
+	if ((hasPermission($c_username, 'addpermission', $sr)) AND ($description !== '') AND ($shortdescription !== '') AND ($permission_id !== ''))
 	{
 		mysql_connect ($db_server, $user, $PWD);
 		$res1 = mysql_query("SELECT * FROM $table8 WHERE perm_id = '$permission_id'");

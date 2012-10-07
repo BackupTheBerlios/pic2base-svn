@@ -45,7 +45,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 include_once $sr.'/bin/share/functions/ajax_functions.php';
 
-IF(hasPermission($c_username, 'editkattree'))
+IF(hasPermission($c_username, 'editkattree', $sr))
 {
 	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
 					<a class='navi' href='../../html/start.php'>zur Startseite</a>

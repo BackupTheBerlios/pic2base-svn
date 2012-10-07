@@ -56,7 +56,7 @@ $mod = $_GET['mod'];
 $id = $_GET['id'];
 $gruppe = $_POST['gruppe'];
 
-IF(hasPermission($c_username, 'adminlogin'))
+IF(hasPermission($c_username, 'adminlogin', $sr))
 {
 	SWITCH($mod)
 	{

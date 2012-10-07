@@ -402,7 +402,7 @@ SWITCH ($modus)
 		//gueltig fuer alle Kategorien ausser Wurzel:
 		//abhaengig von der Berechtigung werden die in Frage kommenden Bilder dargestellt:
 
-		IF(hasPermission($c_username, 'editallpics'))
+		IF(hasPermission($c_username, 'editallpics', $sr))
 		{
 			IF($treestatus == 'plus')
 			{
@@ -425,7 +425,7 @@ SWITCH ($modus)
 				echo mysql_error();
 			}
 		}
-		ELSEIF(hasPermission($c_username, 'editmypics'))
+		ELSEIF(hasPermission($c_username, 'editmypics', $sr))
 		{
 			IF($treestatus == 'plus')
 			{
@@ -544,14 +544,14 @@ SWITCH ($modus)
 	}
 	//echo "Kriterium 1: ".$krit1;
 	
-	IF(hasPermission($c_username, 'editallpics'))
+	IF(hasPermission($c_username, 'editallpics', $sr))
 	{
 		$result2 = mysql_query( "SELECT * FROM $table2
 		WHERE aktiv = '1'
 		AND $krit1 
 		ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
 	}
-	ELSEIF(hasPermission($c_username, 'editmypics'))
+	ELSEIF(hasPermission($c_username, 'editmypics', $sr))
 	{
 		$result2 = mysql_query( "SELECT * FROM $table2 
 		WHERE (Owner = '$user_id' 
@@ -731,7 +731,7 @@ SWITCH ($modus)
 					ELSE
 					{
 						//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-						IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
+						IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
 						{
 							IF(directDownload($userName, $softwareRoot))
 							{
@@ -830,7 +830,7 @@ SWITCH ($modus)
 						ELSE
 						{
 							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
+							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
 							{
 								IF(directDownload($userName, $softwareRoot))
 								{
@@ -924,7 +924,7 @@ SWITCH ($modus)
 						ELSE
 						{
 							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
+							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
 							{
 								IF(directDownload($userName, $softwareRoot))
 								{
@@ -1258,7 +1258,7 @@ SWITCH ($modus)
 						ELSE
 						{
 							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
+							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
 							{
 								IF(directDownload($userName, $softwareRoot))
 								{
@@ -1486,7 +1486,7 @@ SWITCH ($modus)
 				{
 				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
+					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
 					{
 						IF(directDownload($userName, $softwareRoot))
 						//IF($direkt_download > '0')
@@ -1634,7 +1634,7 @@ SWITCH ($modus)
 				{
 				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
+					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
 					{
 						IF(directDownload($userName, $softwareRoot))
 						//IF($direkt_download > '0')
@@ -1822,7 +1822,7 @@ SWITCH ($modus)
 					ELSE
 					{
 						//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-						IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics')) OR hasPermission($userName, 'downloadallpics'))
+						IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
 						{
 							IF(directDownload($userName, $softwareRoot))
 							{
@@ -2307,7 +2307,7 @@ SWITCH ($modus)
 			{
 			//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
+				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics', $sr)) OR hasPermission($c_username, 'downloadallpics', $sr))
 				{
 					IF(directDownload($c_username, $sr))
 					//IF($direkt_download > '0')
@@ -2430,12 +2430,12 @@ SWITCH ($modus)
 			{
 				//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics')) OR hasPermission($c_username, 'downloadallpics'))
+				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics', $sr)) OR hasPermission($c_username, 'downloadallpics', $sr))
 				{
 					IF(directDownload($c_username, $sr))
 					//IF($direkt_download > '0')
 					{
-						IF(hasPermission($c_username, 'rotatepicture'))
+						IF(hasPermission($c_username, 'rotatepicture', $sr))
 						{
 							$icon[$i6] = "
 							<TD align='center' width='43'>
@@ -2468,7 +2468,7 @@ SWITCH ($modus)
 					}
 					ELSE
 					{
-						IF(hasPermission($c_username, 'rotatepicture'))
+						IF(hasPermission($c_username, 'rotatepicture', $sr))
 						{
 							$icon[$i6] = "
 							<TD align='center' width='43'>

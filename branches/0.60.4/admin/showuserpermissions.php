@@ -1,4 +1,4 @@
-<center><h2>Rechtevergabe für Benutzer</h2></center>
+<center><h2>Rechtevergabe f&uuml;r Benutzer</h2></center>
 <center>
 Gruppe: 
 <?php
@@ -9,7 +9,7 @@ Gruppe:
     echo mysql_result ($result, 0, "description");
   } else
   {
-    echo "[keine Gruppe gewählt]";
+    echo "[keine Gruppe gewï¿½hlt]";
   }
 ?>
 <table><tr><td width=150>Parameter</td><td width=100 align=right>Erlaubnis</td></tr>
@@ -20,7 +20,7 @@ Gruppe:
   {
     echo "<tr>";
     echo "<td>".mysql_result($result, $i, "description")."</td>";
-    if (hasPermission($id, mysql_result($result, $i, "shortdescription")))
+    if (hasPermission($id, mysql_result($result, $i, "shortdescription", "")))
     {
       echo "<td align=right>Ja</td>";
     } else

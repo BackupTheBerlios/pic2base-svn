@@ -5,7 +5,8 @@ $rel = "03102012.1";
 $vom = "(03.10.2012)";
 
 //[copyright-Vermerk in der Fusszeile]
-$cr = "<FONT COLOR=RGB(46,46,46)>______</FONT>2006 - 2012";
+$cr = "<FONT COLOR=#7b7d8e>______</FONT>2006 - 2012";
+//$cr = "<FONT COLOR=#eeeeee>______</FONT>2006 - 2012";
 
 //Zugangsdaten fuer den Datenbankzugriff (normaler User mit teilweisen Zugriffsbeschraenkungen auf DB pic2base)
 $db_server = 'localhost';

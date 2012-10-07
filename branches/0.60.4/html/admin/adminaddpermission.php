@@ -15,7 +15,7 @@ IF ($_COOKIE['login'])
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include_once $sr.'/bin/share/functions/permissions.php';
-if (hasPermission($c_username, 'adminlogin'))
+if (hasPermission($c_username, 'adminlogin', $sr))
 {
 	echo "
 	<CENTER>
