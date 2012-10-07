@@ -43,7 +43,7 @@ include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'adminlogin'))
+IF(hasPermission($c_username, 'adminlogin', $sr))
 {
 	$navigation = 	"<a class='navi_blind'></a>
 			<a class='navi' href='?action=about'>About</a>
