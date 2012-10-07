@@ -46,7 +46,7 @@ ELSE
 {
 	$db_server='localhost';
 	$db = 'pic2base';
-echo "<br>++++ #### ++++<br>";
+//echo "<br>++++ #### ++++<br>";
 	//mit den neuen Parametern wird versucht eine Datenbank-Verbindung aufzubauen:
 	@$conn = mysql_connect($db_server,$user,$PWD);
 	@$database = mysql_pconnect($db_server,$user,$PWD);
@@ -850,22 +850,8 @@ echo "<br>++++ #### ++++<br>";
 			clearstatcache();  
 			exec("chmod -R 700 $sr");
 			clearstatcache();
-			
-			//die aktuelle Version wird in die Tabelle pfade eingetragen
 			mysql_close($conn_neu);
-			include_once 'db_connect.php';
-			$res120 = mysql_query("UPDATE `pfade` SET p2b_version = '$version'");
-			IF(mysql_error() !== '')
-			{
-				echo "Fehler bei der Speicherung der p2b-Version in der Tabelle \"pfade\".<BR>";
-				$err_count++;
-			}
-			ELSE
-			{
-				//echo "Tabelle \"pfade\" wurde mit der aktuellen p2b-Version belegt.<BR>";
-			}
-			mysql_close($conn);
-			
+
 			$text .= "...fertig!";
 			IF($err_count == 0)
 			{
