@@ -48,7 +48,6 @@ function showDelWarning(FileName, c_username, pic_id)
 }
 </script>
 
-
 <BODY LANG="de-DE">
 <DIV Class="klein">
 <?php
