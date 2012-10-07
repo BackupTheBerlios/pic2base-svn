@@ -19,9 +19,6 @@ IF (!$_COOKIE['login'])
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
-
-<CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -108,134 +105,129 @@ $t_akt = mktime();
 //echo "T_0: ".$t_0.", T_akt: ".$t_akt."<BR>";
 ?>
 
-<div class="page">
-
-	<p id="kopf">pic2base :: Quick-Preview-Erzeugung <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
+	<div class="page">
 	
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
-		createNavi3_1($c_username);
-		?>
-		</div>
-	</div>
-	
-	<div class="content">
-	<p style="margin:120px 0px; text-align:center">
-	
-	<?php
-	//echo "Es gibt ".$num1." kopfstehende Fotos.<BR>";
-	//echo "Es gibt ".$num2." 90 (cw) gedrehte Fotos .<BR>";
-	//echo "Es gibt ".$num3." -90 (ccw) gedrehte Fotos.<BR>";
-	IF ($num > '0')
-	{
-		//echo $z_0."ter Durchlauf im aktuellen Prozess<BR>";
-		SWITCH($num)
-		{
-			CASE 'X':
-			//das X dient der Initialisierung bei Aufruf der Seite
-			echo "Bitte haben Sie einen Moment Geduld.<BR><BR>";
-			break;
-			
-			CASE ($num > '1'):
-			echo $num." Bilder m&uuml;ssen noch bearbeitet werden.<BR>";
-			break;
-			
-			CASE '1':
-			echo $num." Bild muss noch bearbeitet werden.<BR>";
-			break;
-		}
-		IF ($t_rest > '0')
-		{
-			$h = $t_rest / 3600;
-			$min = round(($t_rest / 60),0);
-			IF ($min > '1')
-			{
-				echo "Restzeit: etwa ".$min," Minuten<BR><BR>";
-			}
-			ELSE
-			{
-				echo "Restzeit: etwa ".$min," Minute<BR><BR>";
-			}
-			
-		}
-	}
-	ELSE
-	{
-		echo "Es sind keine Bilder mehr zu bearbeiten.<BR>";
-		echo "<meta http-equiv='Refresh', content='2; url=edit_start.php'>";
-		return;
-	}
-	
-	FOR($i4='0'; $i4<$num4; $i4++)
-	{
-		$FileName = mysql_result($result4, $i4, 'FileName');
+		<p id="kopf">pic2base :: Quick-Preview-Erzeugung <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
 		
-		//Feststellung, ob gedrehtes Bild existiert:
-		//$verz=opendir('../../../images/originale/rotated');
-		$verz=opendir($pic_rot_path);
-		$n = 0;
-		while($bilddatei=readdir($verz))
+		<div class="navi" style="clear:right;">
+			<div class="menucontainer">
+			<?php
+			createNavi3_1($c_username);
+			?>
+			</div>
+		</div>
+		
+		<div class="content">
+		<CENTER>
+		<p style="margin:120px 0px; text-align:center">
+		
+		<?php
+		//echo "Es gibt ".$num1." kopfstehende Fotos.<BR>";
+		//echo "Es gibt ".$num2." 90 (cw) gedrehte Fotos .<BR>";
+		//echo "Es gibt ".$num3." -90 (ccw) gedrehte Fotos.<BR>";
+		IF ($num > '0')
 		{
-			if($bilddatei != "." && $bilddatei != "..")
+			//echo $z_0."ter Durchlauf im aktuellen Prozess<BR>";
+			SWITCH($num)
 			{
-				//$bildd=$bilder_verzeichnis."/".$bilddatei;
-				//echo "Bild: ".$bilddatei."; Datei: ".$file_name."<BR>";
-				IF ($bilddatei == $FileName)
+				CASE 'X':
+				//das X dient der Initialisierung bei Aufruf der Seite
+				echo "Bitte haben Sie einen Moment Geduld.<BR><BR>";
+				break;
+				
+				CASE ($num > '1'):
+				echo $num." Bilder m&uuml;ssen noch bearbeitet werden.<BR>";
+				break;
+				
+				CASE '1':
+				echo $num." Bild muss noch bearbeitet werden.<BR>";
+				break;
+			}
+			IF ($t_rest > '0')
+			{
+				$h = $t_rest / 3600;
+				$min = round(($t_rest / 60),0);
+				IF ($min > '1')
 				{
-					$n++;
+					echo "Restzeit: etwa ".$min," Minuten<BR><BR>";
+				}
+				ELSE
+				{
+					echo "Restzeit: etwa ".$min," Minute<BR><BR>";
 				}
 			}
 		}
-		//echo "N: ".$n."<BR>";
-		IF ($n == '0')
-		{
-			echo " Bild ".$FileName." muss gedreht werden.<BR>";
-			$Orientation = mysql_result($result4, $i4, 'Orientation');
-			//echo $FileName.", ".$orientation."<BR>";
-			createQuickPreview($Orientation, $FileName);
-			$rest = $num4 - $i4 - 1;
-		}
 		ELSE
 		{
-			$rest = '';
-		}
-		
-		//Restzeit-Berechnung:
-		IF ($z_0 > '0')
-		{
-			$t_rest = (($t_akt - $t_0) / $z_0) * $rest;
-		}
-		IF ($rest == '0')
-		{
+			echo "Es sind keine Bilder mehr zu bearbeiten.";
 			echo "<meta http-equiv='Refresh', content='2; url=edit_start.php'>";
 			return;
 		}
-		ELSE
+		
+		FOR($i4='0'; $i4<$num4; $i4++)
 		{
-			echo "<meta http-equiv='Refresh', content='0; url=generate_quickpreview0.php?num=$rest&t_0=$t_0&t_rest=$t_rest&i4=$i4&z_0=$z_0'>";
+			$FileName = mysql_result($result4, $i4, 'FileName');
+			
+			//Feststellung, ob gedrehtes Bild existiert:
+			//$verz=opendir('../../../images/originale/rotated');
+			$verz=opendir($pic_rot_path);
+			$n = 0;
+			while($bilddatei=readdir($verz))
+			{
+				if($bilddatei != "." && $bilddatei != "..")
+				{
+					//$bildd=$bilder_verzeichnis."/".$bilddatei;
+					//echo "Bild: ".$bilddatei."; Datei: ".$file_name."<BR>";
+					IF ($bilddatei == $FileName)
+					{
+						$n++;
+					}
+				}
+			}
+			//echo "N: ".$n."<BR>";
+			IF ($n == '0')
+			{
+				echo " Bild ".$FileName." muss gedreht werden.<BR>";
+				$Orientation = mysql_result($result4, $i4, 'Orientation');
+				//echo $FileName.", ".$orientation."<BR>";
+				createQuickPreview($Orientation, $FileName);
+				$rest = $num4 - $i4 - 1;
+			}
+			ELSE
+			{
+				$rest = '';
+			}
+			
+			//Restzeit-Berechnung:
+			IF ($z_0 > '0')
+			{
+				$t_rest = (($t_akt - $t_0) / $z_0) * $rest;
+			}
+			IF ($rest == '0')
+			{
+				echo "<meta http-equiv='Refresh', content='2; url=edit_start.php'>";
+				return;
+			}
+			ELSE
+			{
+				echo "<meta http-equiv='Refresh', content='0; url=generate_quickpreview0.php?num=$rest&t_0=$t_0&t_rest=$t_rest&i4=$i4&z_0=$z_0'>";
+			}
 		}
-	}
-mysql_close($conn);
-
-	IF ($num4 == 0)
-	{
-		echo "Es sind keine Bilder zu bearbeiten.<BR>";
-		echo "<meta http-equiv='Refresh', content='2; url=edit_start.php'>";
-		return;
-	}
+		mysql_close($conn);
 	
-
-	?>
-	
-	</p>
-	</div>
-	<br style="clear:both;" />
-
-	<p id="fuss"><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A><?php echo $cr; ?></p>
-
+		IF ($num4 == 0)
+		{
+			echo "Es sind keine Bilder zu bearbeiten.";
+			echo "<meta http-equiv='Refresh', content='20; url=edit_start.php'>";
+			return;
+		}
+		echo "
+		</CENTER>
+		</div>
+		<br style='clear:both;' />
+		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	</div>";
+?>
 </div>
-</DIV>
-</CENTER>
 </BODY>
 </HTML>
