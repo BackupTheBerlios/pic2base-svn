@@ -2007,7 +2007,7 @@ function checkSoftware($sr)
 	//echo $p2b_version."<BR>"; // ist die aus der Tabelle 'pfade' ausgelesene, noch installierte Version
 	
 	//Fallunterscheidungen: Es kann immer nur ein Update von einer Version zur naechst hoeheren Version durchgefuehrt werden:
-
+	$text = "";
 	IF(($p2b_version == 'NULL' OR $p2b_version == '' OR $p2b_version == '0.00.0') AND ($version == '0.60.0'))
 	{
 		$text = "Es liegen Software-Updates vor.<BR>";
@@ -2077,44 +2077,40 @@ function checkSoftware($sr)
 		Dies kann vor allem dann auftreten,<BR>wenn erforderliche Software-Komponenten nicht &uuml;ber den <BR>
 		Paketmanager hinzugef&uuml;gt wurden.
 		</TD>
-		</TR>";
+		</TR>
+		</TABLE>
+		</CENTER>";
+	}
+	ELSE
+	{
 		// Wenn in der Tabelle users nur der user pb enthalten ist (Auslieferungszustand), erfolgt die Weiterleitung mit entspr. Hinweis zur Anlage des ersten echten Administrators:
 		$result3 = mysql_query("SELECT * FROM $table1");
 		$num3 = mysql_num_rows($result3);
 		$username = mysql_result($result3, isset($i3), 'username');
 		IF($num3 == 1 AND $username == 'pb')
 		{
-			echo "
+			echo "<CENTER>
+			<TABLE style='width:500px; text-align:center;'>
 			<TR>
-			<TD><BR>".$text."<BR><BR><font color='red'>Legen Sie nun bitte den ersten Benutzer mit Admin-Berechtigung an.</font>
+			<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR><font color='red'>Legen Sie nun bitte den ersten Benutzer mit Admin-Berechtigung an.</font><BR><BR>
 			<input type='button' value='Ersten Benutzer anlegen' onClick=\"location.href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminadduser'\">
 			</TD>
-			</TR>";
+			</TR>
+			</TABLE>
+			</CENTER>";
 		}
 		ELSEIF($num3 > 1)
 		{
-			echo "
+			echo "<CENTER>
+			<TABLE style='width:500px; text-align:center;'>
 			<TR>
-			<TD><BR>".$text."<BR>
-			<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\">
+			<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR>
+			<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\"> 
 			</TD>
-			</TR>";
+			</TR>
+			</TABLE>
+			</CENTER>";
 		}
-		echo "
-		</TABLE>
-		</CENTER>";
-	}
-	ELSE
-	{
-		echo "<CENTER>
-		<TABLE style='width:500px; text-align:center;'>
-		<TR>
-		<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR>
-		<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\"> 
-		</TD>
-		</TR>
-		</TABLE>
-		</CENTER>";
 	}
 }
 
