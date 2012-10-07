@@ -17,7 +17,7 @@
  * Project: pic2base
  * File: pwd_check.php
  *
- * Copyright (c) 2005 - 2011 Klaus Henneberg
+ * Copyright (c) 2005 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -90,7 +90,7 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	</div>
 	<br style="clear:both;" />
 
-	<p id="fuss"><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A><?php echo $cr; ?></p>
+	<p id="fuss"><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A><?php echo $cr; ?></p>
 
 </div>
 </DIV>
