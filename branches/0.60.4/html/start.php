@@ -150,7 +150,7 @@ IF(hasPermission($c_username, 'adminlogin', $sr) AND $check == '1')
 		}
 		ELSE
 		{
-			$online_hinweis = "Es sind keine Online-Updates verf&uuml;gbar.";
+			$online_hinweis = "<FONT COLOR='green'>Es sind keine Online-Updates verf&uuml;gbar.</font>";
 		}
 		fclose($fh);
 	}
