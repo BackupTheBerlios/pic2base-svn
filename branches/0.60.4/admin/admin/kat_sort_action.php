@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Kategorie-Sortierung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -232,7 +232,10 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 			{
 //				echo "geloescht: ".$kd."<BR>";
 				$result11 = mysql_query("DELETE FROM $table10 WHERE pic_id = '$bildnr' AND kat_id = '$kd'");
-				echo mysql_error();
+				if(mysql_error() !== '')
+				{
+					echo "Fehler beim Kategorie-L&ouml;schen: ".mysql_error()."<BR>";
+				}
 			}
 			
 // 6)
@@ -248,7 +251,10 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 				// WHERE NOT EXISTS(SELECT * FROM pic_kat WHERE pic_id = 1 and kat_id = 1)
 				//LIMIT 1, 1
 				// (2012.04.12/ICE)
-				echo mysql_error();
+				if(mysql_error() !== '')
+				{
+					echo "Fehler bei der Kategorie-Neuzuweisung: ".mysql_error()."<BR>";
+				}
 			}
 		}
 // 7)

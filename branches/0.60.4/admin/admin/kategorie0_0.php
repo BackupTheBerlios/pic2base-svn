@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -19,7 +19,7 @@
 
 /*
  * Project: pic2base
- * File: kategorie0.php
+ * File: kategorie0_0.php
  *
  * Copyright (c) 2003 - 2005 Klaus Henneberg
  *
@@ -29,11 +29,6 @@
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package INTRAPLAN
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
 unset($username);
@@ -182,7 +177,6 @@ echo "</TABLE>";
 <?php
 mysql_close($conn);
 ?>
-<p class="klein">- KH 09/2006 -</P>
 </DIV></CENTER>
 </BODY>
 </HTML>

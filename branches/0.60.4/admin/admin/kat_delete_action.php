@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -40,89 +40,97 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, isset($i1), 'berechtigung');
-SWITCH ($berechtigung)
+IF(hasPermission($c_username, 'editkattree', $sr))
 {
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = "<a class='navi' href='kategorie0.php?kat_id=0'>Zur&uuml;ck</a>";
-	break;
-}
-
-//Ausgehend von der gew�hlten Kategorie m�ssen alle Unterkategorien bestimmt werden. Dann m�ssen aus der Tabelle 10 (pic_kat) alle Eintr�ge gel�scht werden, welche auf die gew�hlte Kategorie bzw. deren Unterkategorie verweisen.
-
-// f�r register_globals = off
-$ID = $_GET['ID']; 
-if(array_key_exists('kat_id',$_GET))
-{
-	$kat_id = $_GET['kat_id']; 
-}
-
-$res1 = mysql_query( "SELECT max(level) FROM $table4");
-$max_level = mysql_result($res1, isset($i1), 'max(level)');
-//echo "max. Level: ".$max_level."<BR>";
-$result2 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$ID'");
-$num2 = mysql_num_rows($result2);
-$child_arr[] = $ID;
-IF($num2 > '0')
-{
-	$curr_level = mysql_result($result2, isset($i2), 'level');
-	WHILE($curr_level <= $max_level)
+	$navigation = "
+	<a class='navi' href='kat_sort1.php'>Sortierung</a>
+	<a class='navi' href='kat_repair1.php'>Wartung</a>
+	<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+	<a class='navi_blind'></a>
+	<a class='navi_blind'></a>
+	<a class='navi_blind'></a>
+	<a class='navi_blind'></a>
+	<a class='navi' href='../../html/start.php'>zur Startseite</a>
+	<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
+	<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
+	
+	//Ausgehend von der gewaehlten Kategorie muessen alle Unterkategorien bestimmt werden. Dann muessen aus der Tabelle 10 (pic_kat) alle Eintraege geloescht werden, welche auf die gewaehlte Kategorie bzw. deren Unterkategorie verweisen.
+	// fuer register_globals = off
+	$ID = $_GET['ID']; 
+	if(array_key_exists('kat_id',$_GET))
+	{
+		$kat_id = $_GET['kat_id']; 
+	}
+	
+	$res1 = mysql_query( "SELECT max(level) FROM $table4");
+	$max_level = mysql_result($res1, isset($i1), 'max(level)');
+	//echo "max. Level: ".$max_level."<BR>";
+	$result2 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$ID'");
+	$num2 = mysql_num_rows($result2);
+	$child_arr[] = $ID;
+	IF($num2 > '0')
+	{
+		$curr_level = mysql_result($result2, isset($i2), 'level');
+		WHILE($curr_level <= $max_level)
+		{
+			FOREACH($child_arr AS $child)
+			{
+				$result3 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$child' AND level = '$curr_level'");
+				$num3 = mysql_num_rows($result3);
+				IF($num3 > '0')
+				{
+					FOR($i3='0'; $i3<$num3; $i3++)
+					{
+						$child_arr[] = mysql_result($result3, $i3, 'kat_id');	
+					}
+				}
+			}
+			$curr_level++;
+		}
+	}
+	
+	$pic_arr = array();
+	FOREACH($child_arr AS $child)
+	{
+		$res3 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$child'");
+		if(!isset($u_kategorie))
+		{
+			$u_kategorie = '';
+		}
+		$u_kategorie .= utf8_encode(mysql_result($res3, isset($i), 'kategorie'))."<BR>";
+		//echo $child."<BR>";			//$child - Nummer der zu loeschenden Kategorie
+		//Loeschvorgang der Kategorie in der Kategorie-Tabelle ($table4):
+		$result4 = mysql_query( "DELETE FROM $table4 WHERE kat_id = '$child'");
+		//Eintrag aus der kat_lex loeschen:
+		$result6 = mysql_query( "DELETE FROM $table11 WHERE kat_id = '$child'");
+		
+		$res4 = mysql_query( "SELECT * FROM $table10 WHERE kat_id = '$child'");
+		$num4 = mysql_num_rows($res4); 
+		FOR($i4='0'; $i4<$num4; $i4++)
+		{
+			$pic_id = mysql_result($res4, $i4, 'pic_id');
+			IF(!in_array($pic_id, $pic_arr))
+			{
+				$pic_arr[] = $pic_id;
+			}
+		}
+	}
+	
+	//loeschen der Bild-Zuordnungen in der pic_kat-Tabelle:
+	FOREACH($pic_arr AS $pic)
 	{
 		FOREACH($child_arr AS $child)
 		{
-			$result3 = mysql_query( "SELECT * FROM $table4 WHERE parent = '$child' AND level = '$curr_level'");
-			$num3 = mysql_num_rows($result3);
-			IF($num3 > '0')
-			{
-				FOR($i3='0'; $i3<$num3; $i3++)
-				{
-					$child_arr[] = mysql_result($result3, $i3, 'kat_id');	
-				}
-			}
-		}
-		$curr_level++;
-	}
-}
-
-$pic_arr = array();
-FOREACH($child_arr AS $child)
-{
-	$res3 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$child'");
-	if(!isset($u_kategorie))
-	{
-		$u_kategorie = '';
-	}
-	$u_kategorie .= mysql_result($res3, isset($i), 'kategorie')."<BR>";
-	//echo $child."<BR>";			//$child - Nummer der zu l�schenden Kategorie
-	//L�schvorgang der Kategorie in der Kategorie-Tabelle ($table4):
-	$result4 = mysql_query( "DELETE FROM $table4 WHERE kat_id = '$child'");
-	//Eintrag aus der kat_lex l�schen:
-	$result6 = mysql_query( "DELETE FROM $table11 WHERE kat_id = '$child'");
-	
-	$res4 = mysql_query( "SELECT * FROM $table10 WHERE kat_id = '$child'");
-	$num4 = mysql_num_rows($res4); 
-	FOR($i4='0'; $i4<$num4; $i4++)
-	{
-		$pic_id = mysql_result($res4, $i4, 'pic_id');
-		IF(!in_array($pic_id, $pic_arr))
-		{
-			$pic_arr[] = $pic_id;
+			$result5 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic' AND kat_id = '$child'"); 
 		}
 	}
 }
-
-//l�schen der Bild-Zuordnungen in der pic_kat-Tabelle:
-FOREACH($pic_arr AS $pic)
+ELSE
 {
-	FOREACH($child_arr AS $child)
-	{
-		$result5 = mysql_query( "DELETE FROM $table10 WHERE pic_id = '$pic' AND kat_id = '$child'"); 
-	}
+	header('Location: ../../../index.php');
 }
-
 echo "
 <div class='page'>
 

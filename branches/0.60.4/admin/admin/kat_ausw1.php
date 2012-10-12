@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -42,9 +42,10 @@ IF ($_COOKIE['login'])
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/permissions.php';
+//include_once $sr.'/bin/share/functions/permissions.php';
+include $sr.'/bin/share/functions/main_functions.php';
 include_once $sr.'/bin/share/functions/ajax_functions.php';
-
+/*
 IF(hasPermission($c_username, 'editkattree', $sr))
 {
 	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
@@ -56,16 +57,17 @@ ELSE
 {
 	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
 }
+*/
 echo "
 <div class='page'>
 <FORM name='kat-zuweisung' method='post' action='kat_sort_action.php'>
 	<p id='kopf'>pic2base :: Admin-Bereich - Kategorie-Sortierung</p>
 	
 	<div class='navi' style='clear:right;'>
-		<div class='menucontainer'>".
-		$navigation
-		."<INPUT type='submit' class='button3' value = 'Speichern' style='margin-top:520px;'><BR>
-		<INPUT type='button' class='button3' style='margin-top:5px;' value='Abbrechen' OnClick='location.href=\"$inst_path/pic2base/bin/html/admin/adminframe.php\"'>
+		<div class='menucontainer'>";
+		createNavi5_1($c_username);
+		echo "<INPUT type='submit' class='button3' value = 'Speichern'><BR>
+		<INPUT type='button' class='button3a' value='Abbrechen' OnClick='location.href=\"$inst_path/pic2base/bin/html/admin/adminframe.php\"'>
 		</div>
 	</div>
 	
@@ -76,7 +78,7 @@ echo "
 		</TR>";
 	
 	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
-	$kategorie = mysql_result($result10, isset($i10), 'kategorie');
+	$kategorie = utf8_encode(mysql_result($result10, isset($i10), 'kategorie'));
 	$kat_id_s = mysql_result($result10, isset($i10), 'kat_id');
 		
 	$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";

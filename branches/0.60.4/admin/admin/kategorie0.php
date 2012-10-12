@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Kategorieverwaltung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -46,7 +46,7 @@ IF(hasPermission($c_username, 'editkattree', $sr))
 {
 	$navigation = "
 			<a class='navi' href='kat_sort1.php'>Sortierung</a>
-			<a class='navi' href='kat_repair1.php'>Wartung</a>
+			<a class='navi' href='db_wartung1.php'>Wartung</a>
 			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
 			<a class='navi_blind'></a>
 			<a class='navi_blind'></a>
@@ -115,7 +115,7 @@ echo "
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
-			$kategorie = mysql_result($result10, $i10, 'kategorie');
+			$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
 			$parent = mysql_result($result10, $i10, 'parent');
 			$level = mysql_result($result10, $i10, 'level');
 			$kat_id = mysql_result($result10, $i10, 'kat_id');
@@ -194,7 +194,7 @@ echo "
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
-		$kategorie = mysql_result($result10, $i10, 'kategorie');
+		$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
 		$parent = mysql_result($result10, $i10, 'parent');
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id = mysql_result($result10, $i10, 'kat_id');

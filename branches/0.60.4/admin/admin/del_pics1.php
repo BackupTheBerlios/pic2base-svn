@@ -14,7 +14,7 @@ include '../../share/global_config.php';
   <title>pic2base - vorgemerkte Bilder l&ouml;schen</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel=stylesheet type="text/css" href="../../css/format1.css">
   <link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
