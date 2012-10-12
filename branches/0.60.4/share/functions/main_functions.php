@@ -1022,6 +1022,38 @@ function createNavi5($c_username)
 	echo $navigation;
 }
 
+function createNavi5_1($c_username)
+{
+	//Navigationsstruktur der Kategorie-Sortierungsseite-Seite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	include_once $sr.'/bin/share/functions/permissions.php';
+	if(!isset($navigation))
+	{
+		$navigation = '';
+	}
+	IF(hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editkattree', $sr))
+	{
+		$navigation = "<a class='navi_blind' href='#'>Sortierung</a>
+		<a class='navi' href='db_wartung1.php'>DB-Wartung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy'>Administration</a>";
+	}
+	
+	
+	$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=5' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
+	echo $navigation;
+}
+
 function createNavi6($c_username,$sr)
 {
 	//Navigationsstruktur der Log-Datei-Seite
