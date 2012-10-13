@@ -35,7 +35,7 @@ include $sr.'/bin/share/db_connect1.php';
 $result = mysql_query("select * from $table9 WHERE id=".$group_id); //usergroups
 if (mysql_num_rows($result) == 1)
 {
-    $desc = mysql_result ($result, 0, "description");
+    $desc = utf8_encode(mysql_result ($result, 0, "description"));
 }
 else
 {
@@ -73,7 +73,7 @@ if (hasPermission($c_username, 'adminlogin', $sr))
 		{
 			$perm_id = '';
 			$i = ($r * 2) + $cg;
-			@$description = trim(mysql_result($result, $i, "description"));
+			@$description = trim(utf8_encode(mysql_result($result, $i, "description")));
 			@$shortdescription = mysql_result($result, $i, "shortdescription");
 			@$perm_id = mysql_result($result, $i, "perm_id");
 			
