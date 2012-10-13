@@ -142,7 +142,8 @@ echo "
 					      $xml.= $tab.$tab.$tab.'<record>'.$br;
 					      foreach($record as $key=>$value)
 					      {
-					        	$xml.= $tab.$tab.$tab.$tab.'<'.$key.'>'.htmlspecialchars(stripslashes($value)).'</'.$key.'>'.$br;
+					        $value = utf8_encode($value);	
+					      	$xml.= $tab.$tab.$tab.$tab.'<'.$key.'>'.htmlspecialchars(stripslashes($value)).'</'.$key.'>'.$br;
 					      }
 					      $xml.= $tab.$tab.$tab.'</record>'.$br;
 				    }
