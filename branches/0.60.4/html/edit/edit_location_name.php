@@ -77,6 +77,10 @@ IF(array_key_exists('stat',$_REQUEST))
 {
 	$stat = $_REQUEST['stat'];
 }
+else
+{
+	$stat = '';
+}
 
 IF(!isset($i2))
 {
@@ -249,7 +253,6 @@ echo "
 			IF($num2 > '0')
 			{
 				echo "
-				
 				<TR id='kat'>
 					<TD style='height:280px;'>",$imgsrc."
 					</TD>
@@ -273,7 +276,6 @@ echo "
 					}
 					ELSE
 					{
-						
 						echo '
 						<SELECT name="ort" id="ort" SIZE="1" style = "width:203px;">
 						<OPTION VALUE = "">neuen Ort anlegen</OPTION>';
