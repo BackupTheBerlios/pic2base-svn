@@ -68,9 +68,10 @@ IF ($group_id !== '' AND $perm_id !== '')
 		FOR($i2=0; $i2<$num2; $i2++)
 		{
 			$user_id = mysql_result($result2, $i2, 'id');
-			//echo "User-ID: ".$user_id."<BR>";
-			//echo "Recht-ID: ".$perm_id."<BR>";
+			echo "User-ID: ".$user_id."<BR>";
+			echo "Recht-ID: ".$perm_id."<BR>";
 			$result3 = mysql_query( "UPDATE $table7 SET enabled='$en' WHERE user_id = '$user_id' AND permission_id='$perm_id'");
+			echo mysql_error();
 		}
 		
 		echo "<INPUT TYPE=CHECKBOX $checked value='$new_status' title = '$text' onClick='changeGrouppermission(\"$group_id\",\"$perm_id\",\"$checked\",\"$sr\")'>";
