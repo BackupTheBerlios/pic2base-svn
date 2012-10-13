@@ -116,15 +116,15 @@ echo "
 				    //Zeilen auslesen
 				    $records = mysql_query('SELECT * FROM '.$table[0]) or die('kann nichts auslesen aus Tabelle: '.$table[0]);
 				    echo mysql_error();
-//			    echo "Tabelle ".$table[0]." hat ".mysql_num_fields($records)." Spalten.<BR>";
+//			    	echo "Tabelle ".$table[0]." hat ".mysql_num_fields($records)." Spalten.<BR>";
 	
 				    //Tabellenattribute
-				    $attributes = array('name','blob','maxlength','multiple_key','not_null','numeric','primary_key','table','type','default','unique_key','unsigned','zerofill');
+				    $attributes = array('name','blob','max_length','multiple_key','not_null','numeric','primary_key','table','type','unique_key','unsigned','zerofill');
 				    $xml.= $tab.$tab.'<columns>'.$br;
 				    $x = 0;
 				    while($x < mysql_num_fields($records))
 				    {
-					      $meta = mysql_fetch_field($records[$x]);
+					      $meta = mysql_fetch_field($records, $x);
 					      $xml.= $tab.$tab.$tab.'<column ';
 					      foreach($attributes as $attribute)
 					      {
