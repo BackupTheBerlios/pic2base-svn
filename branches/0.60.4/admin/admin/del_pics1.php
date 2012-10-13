@@ -137,17 +137,17 @@ echo "
 				FOR($i0=0; $i0<$num0; $i0++)
 				{
 					$pic_id = mysql_result($result0, $i0, 'pic_id');
-					$caption_abstract = mysql_result($result0, $i0, 'Caption_Abstract');
+					$caption_abstract = utf8_encode(mysql_result($result0, $i0, 'Caption_Abstract'));
 					$keywords = mysql_result($result0, $i0, 'keywords');
 					$owner = mysql_result($result0, $i0, 'Owner');
 					$result1 = mysql_query("SELECT username, vorname, name FROM $table1 WHERE id = '$owner'");
-					$username = mysql_result($result1, isset($i1), 'username');
-					$vorname = mysql_result($result1, isset($i1), 'vorname');
-					$name = mysql_result($result1, isset($i1), 'name');
+					$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+					$vorname = utf8_encode(mysql_result($result1, isset($i1), 'vorname'));
+					$name = utf8_encode(mysql_result($result1, isset($i1), 'name'));
 					$FileNameHQ = mysql_result($result0, $i0, 'FileNameHQ');
 					$FileNameV = mysql_result($result0, $i0, 'FileNameV');
-					//$image = "../../../images/vorschau/hq-preview/".$FileNameHQ; 
-					$image = "../../../images/vorschau/thumbs/".$FileNameV; 
+					$image = "../../../images/vorschau/hq-preview/".$FileNameHQ; 
+					//$image = "../../../images/vorschau/thumbs/".$FileNameV; 
 					//echo $image;
 					
 					echo "
