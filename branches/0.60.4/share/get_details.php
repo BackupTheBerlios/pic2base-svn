@@ -78,8 +78,9 @@ IF ($pic_id !=='0')
 		$Width = mysql_result($result8, isset($i8), 'ExifImageWidth');
 		$Height = mysql_result($result8, isset($i8), 'ExifImageHeight');
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
-//		echo mb_detect_encoding($Description)."<BR>";
-		IF(mb_detect_encoding($Description) == 'UTF-8')
+		echo mb_detect_encoding($Description)."<BR>";
+		//IF(mb_detect_encoding($Description) == 'UTF-8')
+		if(mb_detect_encoding($Description, 'UTF-8', true) === FALSE)
 		{
 			$Description = utf8_encode($Description);
 		}
