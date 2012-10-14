@@ -20,7 +20,7 @@ else
  
 $result = mysql_query("select * from $table2 WHERE pic_id = $id");
 $num = mysql_num_rows($result);
-$city = mysql_result ($result, isset($i), "City");
+$city = utf8_encode(mysql_result ($result, isset($i), "City"));
 echo "
   <center>
   <FORM name='location' method='post' action='adminframe.php?item=admineditlocationnameaction&pic_id=$id'>

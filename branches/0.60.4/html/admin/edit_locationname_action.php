@@ -22,14 +22,21 @@ if(array_key_exists('locationname',$_POST))
 if(array_key_exists('locationname_new',$_POST))
 {
 	$locationname_new = $_POST['locationname_new'];
-	$iptc_city = utf8_encode($locationname_new); 
+	//$iptc_city = utf8_encode($locationname_new);
+	$iptc_city = $locationname_new; 
 }
+//echo "alte Ortsbezeichnung: ".$locationname."<BR>";
+//echo "neue Ortsbezeichnung: ".$locationname_new."<BR>";
+//echo "IPTC-Ort: ".$iptc_city."<BR>";
 //Nur wenn der Ortsname geaendert wurde, wird die Bearbeitung begonnen:
+
 IF($locationname_new !== $locationname)
 {  
-	  $result1 = mysql_query("SELECT City, pic_id
+	$locationname_statement = utf8_decode($locationname);  
+	$result1 = mysql_query("SELECT City, pic_id
 	  FROM $table2
-	  WHERE City = \"$locationname\"");
+	  WHERE City = '$locationname_statement'");
+	  echo mysql_error();
 	  $num1 = mysql_num_rows($result1);
 	
 	  echo "
@@ -76,8 +83,8 @@ IF($locationname_new !== $locationname)
 	sleep(0);
   	
   	//Aktualisierung der Tabelle pictures:
-  	$result2 = mysql_query("UPDATE $table2 SET City = \"$locationname_new\" WHERE City = \"$locationname\"");
-
+  	$locationname_sql = utf8_decode($locationname_new);
+  	$result2 = mysql_query("UPDATE $table2 SET City = \"$locationname_sql\" WHERE City = \"$locationname_statement\"");
   	//Aenderung der Caption_Abstracts und IPTC-Eintraege fuer alle betroffenen Bilder:
   	FOR($i1=0; $i1<$num1; $i1++)
   	{
@@ -85,7 +92,7 @@ IF($locationname_new !== $locationname)
   		$FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
   		//Aktualisierung der Tabelle pictures.Caption_Abstract:
   		$result4 = mysql_query("SELECT Caption_Abstract FROM $table2 WHERE pic_id = '$pic_id'");
-  		$CA = mysql_result($result4, isset($i4), 'Caption_Abstract');
+  		$CA = utf8_encode(mysql_result($result4, isset($i4), 'Caption_Abstract'));
   		//Textersetzung:
   		$search = 'Kamerastandort: '.$locationname;  		// alter Textbestandteil
   		$replace = 'Kamerastandort: '.$locationname_new;	// neue Textergaenzung
@@ -94,15 +101,16 @@ IF($locationname_new !== $locationname)
   		{
   			$CA_new = $CA.", Kamerastandort: ".$locationname_new;
   		}
-  		$result3 = mysql_query("UPDATE $table2 SET Caption_Abstract = \"$CA_new\" WHERE pic_id = '$pic_id'");
-  		
+  		$CA_sql = utf8_decode($CA_new);
+  		$result3 = mysql_query("UPDATE $table2 SET Caption_Abstract = \"$CA_sql\" WHERE pic_id = '$pic_id'");
   		//IPTC.City aendern:
-  		$CA_neu = utf8_encode($CA_new);
-  		$command = " -IPTC:City=\"$iptc_city\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$CA_neu\" ".$FN." -overwrite_original > /dev/null &";
-  		shell_exec($exiftool." ".$command);
+  		$iptc_city = strip_tags($iptc_city);
+  		$command = " -IPTC:City=\"$iptc_city\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$CA_new\" ".$FN." -overwrite_original > /dev/null &";
+  		shell_exec($exiftool." ".$command);	
+  		
   	}
   	echo "<meta http-equiv='Refresh' Content='2; URL=adminframe.php?item=editlocationname'>";
-  	
+
 ?>
 <script language="javascript">
 document.location.locationname.focus();
