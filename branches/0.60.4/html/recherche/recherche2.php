@@ -36,9 +36,9 @@ ELSE
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Datensatz-Recherche</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
+	<META http-equiv="Content-Style-Type" content="text/css">
 	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
+	<META http-equiv="cache-control" content="no-cache">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
