@@ -35,7 +35,7 @@ else
 
 if(array_key_exists('description',$_GET))
 {
-	$description = $_GET['description'];
+	$description = utf8_decode($_GET['description']);
 }
 else
 {
@@ -66,7 +66,6 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND $description !== "")
 	$res1 = mysql_query( "SELECT Caption_Abstract FROM $table2 WHERE pic_id = '$bild_id'");
 	$row = mysql_fetch_array($res1);
 	$desc = $row['Caption_Abstract'];
-	//$desc = htmlentities($desc);
 	echo mysql_error();
 	IF ($desc == '')
 	{
@@ -87,7 +86,6 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND $description !== "")
 
 	$FN = $pic_path."/".restoreOriFilename($bild_id, $sr);
 	$desc = utf8_encode($Description);
-	//echo $FN.", ".$desc."<BR>";
 	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &");
 			
 	IF (mysql_errno() == '0')

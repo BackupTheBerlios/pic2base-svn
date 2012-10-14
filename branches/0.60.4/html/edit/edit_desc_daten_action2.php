@@ -22,7 +22,6 @@ FOREACH ($_POST AS $key => $post)
 		$description = $post;
 		$description = strip_tags($description);
 		//$description = str_replace('"', "'",$description);
-		$description = utf8_encode($description);
 	}
 }
 
@@ -30,13 +29,13 @@ $obj->description = $description;
 $obj->pic_anzahl = count($pic_ID);
 $obj->pic_array = $pic_ID;
 $output = json_encode($obj);
-//echo "<font color='white'>".$output." - ".ini_get('memory_limit')."</font>";
+echo "<font color='white'>".$output." - ".ini_get('memory_limit')."</font>";
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">

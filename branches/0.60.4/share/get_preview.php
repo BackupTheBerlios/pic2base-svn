@@ -2714,7 +2714,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			}
 			IF(file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 			{
-				echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".htmlentities($description)."</span></a></div>";
+				echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".utf8_encode($description)."</span></a></div>";
 			}
 		break;
 		
