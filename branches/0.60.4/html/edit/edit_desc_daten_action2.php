@@ -29,7 +29,7 @@ $obj->description = $description;
 $obj->pic_anzahl = count($pic_ID);
 $obj->pic_array = $pic_ID;
 $output = json_encode($obj);
-echo "<font color='white'>".$output." - ".ini_get('memory_limit')."</font>";
+//echo "<font color='white'>".$output." - ".ini_get('memory_limit')."</font>";
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
