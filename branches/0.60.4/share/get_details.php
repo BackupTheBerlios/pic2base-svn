@@ -60,7 +60,7 @@ IF ($pic_id !=='0')
 	echo mysql_error();
 	IF(mysql_num_rows($result8) > '0')
 	{
-		echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Details zum ausgew&auml;hlten Bild:<BR>";
+		echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; margin-right: 20px; text-align:center;'>Details zum ausgew&auml;hlten Bild:<BR>";
 		
 		$DateTimeOriginal = mysql_result($result8, isset($i8), 'DateTimeOriginal');
 		$FileName = mysql_result($result8, isset($i8), 'FileName');
@@ -78,7 +78,7 @@ IF ($pic_id !=='0')
 		$Width = mysql_result($result8, isset($i8), 'ExifImageWidth');
 		$Height = mysql_result($result8, isset($i8), 'ExifImageHeight');
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
-		echo mb_detect_encoding($Description)."<BR>";
+//		echo mb_detect_encoding($Description)."<BR>";
 		//IF(mb_detect_encoding($Description) == 'UTF-8')
 		if(mb_detect_encoding($Description, 'UTF-8', true) === FALSE)
 		{
