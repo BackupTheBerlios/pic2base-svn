@@ -62,7 +62,7 @@ if (hasPermission($c_username, 'adminlogin', $sr))
 	<td colspan='4'>&nbsp;</td>
 	</tr>";
 
-	$result = mysql_query("select * from permissions ORDER BY perm_id DESC");
+	$result = mysql_query("select * from $table8 ORDER BY perm_id DESC");
 	$num = mysql_num_rows($result);
 	$rows = ceil($num/2);
 	for ($r = 0; $r < $rows; $r++)
@@ -85,18 +85,25 @@ if (hasPermission($c_username, 'adminlogin', $sr))
 				IF (hasGroupPermission($group_id, $shortdescription))
 				{
 					$checked = 'checked';
-					$editable = 1;
+					if ($group_id == '1' AND $shortdescription == 'adminlogin')
+					{
+						$status = 'disabled';
+					}
+					else
+					{
+						$status = 'enabled';
+					}
 					$text = 'Berechtigung erteilt';
 				}
 				ELSE
 				{
 					$checked = '';
-					$editable = 0;
+					$status = 'enabled';
 					$text = 'keine Berechtigung';	
 				}
 				$content = $content."<TD class='tdschmal'>
 				<div id = '$perm_id'>
-				<input type=checkbox $checked name='cb' title = '$text' onClick='changeGrouppermission(\"$group_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
+				<input type=checkbox $checked $status name='cb' title = '$text' onClick='changeGrouppermission(\"$group_id\", \"$perm_id\", \"$checked\", \"$sr\")'>
 				</div>
 				</td>";
 			}
@@ -132,13 +139,9 @@ if (hasPermission($c_username, 'showusers', $sr))
 		<TD colspan='4'>";
 		for ($i = 0; $i < $num; $i++)
 		{
-			if ($i == 0)
+			if (mysql_result($result, $i, "username") !== 'pb')
 			{
-				echo mysql_result($result, $i, "username");
-			} 
-			else
-			{
-				echo ", ".mysql_result($result, $i, "username");
+				echo mysql_result($result, $i, "username").($i < ($num - 1) ? ", " :  '');
 			}
 		}
 		echo "</TD>
