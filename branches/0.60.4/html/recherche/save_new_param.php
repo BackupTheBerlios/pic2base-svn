@@ -52,7 +52,7 @@ ELSE
 }
 
 //Parameter fuer naechste Referenzierung speichern:
-$parameter = $location.",".utf8_encode($ort);
+$parameter = $location.",".utf8_decode($ort);
 setcookie("parameter", $parameter, time()+3600, "/");
 
 $result0 = mysql_query("SELECT FileName FROM $table2 WHERE pic_id = '$pic_id'");
@@ -61,6 +61,7 @@ $fn = mysql_result($result0,0,'FileName');
 $fn = $pic_path."/".$fn;
 
 $FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
+
 //Fallunterscheidungen:
 //Es ist nur eine der erforderlichen Angaben vorhanden (Koordinaten oder Ortsbezeichnung):
 IF(($location == '' AND $ort !== '') OR ($location !== '' AND $ort == ''))
@@ -82,8 +83,8 @@ ELSEIF(($vorh_location !== '' AND $vorh_location !== 'Ortsbezeichnung') AND $ort
 	echo "<p style='font-family:Helvitica,Arial; color:red; text-align:center;'>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</p>";
 	flush();
 	$result01 = mysql_query( "SELECT City FROM $table2 WHERE pic_id = '$pic_id'");
-	$ort_alt = htmlentities(mysql_result($result01,0, 'City'));
-//	echo "Es gab eine Referenzierung, - alte Ortsbezeichnung: ".$ort_alt."<BR>";
+	$ort_alt = utf8_encode(mysql_result($result01,0, 'City'));
+	echo "Es gab eine Referenzierung, - alte Ortsbezeichnung: ".$ort_alt."<BR>";
 	$ort_db = utf8_decode($ort);
 	$result1 = mysql_query( "UPDATE $table2 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = \"$ort_db\" WHERE pic_id = '$pic_id'");
 	echo mysql_error();
@@ -98,7 +99,7 @@ ELSEIF(($vorh_location == '' OR $vorh_location == 'Ortsbezeichnung') AND $ort !=
 	echo "<p style='font-family:Helvitica,Arial; color:red; text-align:center;'>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</p>";
 	flush();
 	$ort_alt = '';
-//	echo "Es gibt bisher KEINE Referenzierung<BR>";
+	echo "Es gibt bisher KEINE Referenzierung<BR>";
 	$ort_db = utf8_decode($ort);
 	$result1 = mysql_query( "UPDATE $table2 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = \"$ort_db\" WHERE pic_id = '$pic_id'");
 	echo mysql_error();
@@ -107,27 +108,47 @@ ELSEIF(($vorh_location == '' OR $vorh_location == 'Ortsbezeichnung') AND $ort !=
 	//Eintragung der Geo-Daten in den EXIF-Block des internen jpg-Bildes:
 	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$fn." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$fn." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$fn." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$fn." -overwrite_original");
 }
+
 //abschliessend wird die Ortsbezeichnung in der Bildbeschreibung aktualisiert:
+
 IF($ort_alt != $ort)
 {
+	echo "Die Ortsbezeichnung wurde ge&auml;ndert.<BR>";	
 	$result4 = mysql_query( "SELECT Caption_Abstract FROM $table2 WHERE pic_id = '$pic_id'");
-	$description = htmlentities(mysql_result($result4, 0, 'Caption_Abstract'));
+	$description = mysql_result($result4, 0, 'Caption_Abstract');
+//#################################################################
+	echo "aus der DB ausgelesene bisherige Beschreibung: ".$description."<BR>";
+
+	$description = utf8_encode(mysql_result($result4, 0, 'Caption_Abstract'));
+	
 	IF($ort_alt !== '')
 	{
 		$description_neu = str_replace($ort_alt, $ort, $description);
+		echo "Neue Beschreibung, weil der Ort ge&auml;ndert wurde: ".$description_neu."<BR>"; 
 	}
 	ELSE
 	{
 		$description_neu = $description.", Kamerastandort: ".$ort;
+		echo "Neue Beschreibung, ohne alten Ort: ".$description_neu."<BR>";
 	}
 
 	$description_neu = str_replace('Kamerastandort: '.$ort,'',$description_neu);	
 	//Codierung fuer den Eintrag in die DB:
-	$description_neu = html_entity_decode($description_neu)." Kamerastandort: ".utf8_decode($ort);
-	$result5 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$description_neu\" WHERE pic_id = '$pic_id'");
+	$description_neu_db = utf8_decode($description_neu)." Kamerastandort: ".utf8_decode($ort);
+	/*
+	echo "Ort: ".$ort."<BR>";
+	echo "alter Ort: ".$ort_alt."<BR>";
+	echo "Neue Beschreibung, uncodiert: ".$description_neu."<BR>";
+	echo "DB-Beschreibung: ".$description_neu_db."<BR>";	
+	*/	
+	$result5 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$description_neu_db\" WHERE pic_id = '$pic_id'");
+	echo mysql_error();
+//###################################################################
 	//Vermerk im IPTC:Caption-Abstract-Tag des Originalbildes:
-	//Codierung fuer Eintrag in die Metadaten des Bildes
-	$description_neu_iptc = utf8_encode($description_neu);
+	$description_neu_iptc = $description_neu." Kamerastandort: ".$ort;
+
+//	echo "IPTC-Beschreibung: ".$description_neu_iptc."<BR>";
+
 	shell_exec($exiftool." -IPTC:Caption-Abstract='$description_neu_iptc' ".$FN." -overwrite_original")."<BR>";
 	//Vermerk im IPTC:Caption-Abstract-Tag des internen jpg-Bildes:
 	shell_exec($exiftool." -IPTC:Caption-Abstract='$description_neu_iptc' ".$fn." -overwrite_original")."<BR>";
@@ -148,10 +169,11 @@ IF (mysql_error() == '')
 		anotherWindow.close();
 	}
 	</script>";
+	
 }
 ELSE
 {
-	echo "Fehler";
+	echo "Es trat ein Fehler auf!";
 	echo mysql_error();
 }
 

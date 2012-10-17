@@ -59,11 +59,7 @@ IF($vorh_location !== 'Ortsbezeichnung' AND $vorh_location !== '')
 	$lat = mysql_result($result1,0, 'GPSLatitude');
 	$alt = mysql_result($result1,0, 'GPSAltitude');
 	$loc = round($lat,6).",".round($long,6);
-	$ort = mysql_result($result1,0, 'City');
-	IF(mb_detect_encoding($ort) == 'UTF-8')
-	{
-		$ort = utf8_encode($ort);
-	}
+	$ort = utf8_encode(mysql_result($result1,0, 'City'));
 }
 ELSE
 {
@@ -83,7 +79,7 @@ ELSE
 		$ort = '';
 		FOR($K=2; $K<count($param); $K++)
 		{
-			$ort .= utf8_decode($param[$K]);
+			$ort .= utf8_encode($param[$K]);
 			IF($K<count($param) - 1)
 			{
 				$ort .= ',';
@@ -151,7 +147,7 @@ function initialize()
 <div id="loc" style="position: absolute; top:390px;left:10px;">
 <form name = "lok" method = "post" action = "../html/recherche/save_new_param.php">
 <input type="text" name = "location" id="location" style="width:140px; margin-right:10px;" value = "<?php echo $loc; ?>">
-<input type="text" name = 'ort' style="width:180px; margin-right:10px;" value = "<?php echo "$ort"; ?>">
+<input type="text" name = 'ort' style="width:180px; margin-right:10px;" value = "<?php echo $ort; ?>">
 <input type = "hidden" name = "vorh_location" value = "<?php echo $vorh_location; ?>">
 <input type = "hidden" name = "pic_id" value = "<?php echo $pic_id; ?>">
 <input type="submit" name = "send" value="Position und Ort speichern" style="width:175px;">
