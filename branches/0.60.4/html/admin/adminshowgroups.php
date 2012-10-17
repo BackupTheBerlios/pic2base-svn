@@ -25,12 +25,23 @@ echo "<center><table class='normal' border='0'>
 
 FOR ($i = 0; $i < $num; $i++)
 {
-	$group_id = mysql_result ($result, $i, "id");
+	$group_id = mysql_result ($result, $i, "id"); //echo $group_id;
 	$group_desc = mysql_result ($result, $i, "description");
+	//Im Auslieferungszustand hat die Admin-Gruppe die id=1. Diese Gruppe kann nicht geloescht werden!
 	
 	echo "<tr>
 	<td align='center' colspan='2'><a href=adminframe.php?item=adminshowgroup&id=".$group_id.">".$group_desc."</a></td>
-	<TD align='center' colspan = '2'><input type=button value='Gruppe l&ouml;schen' onClick='location.href=\"adminframe.php?item=del_group&group_id=$group_id\"'></TD>
+	<TD align='center' colspan = '2'>";
+	if ($group_id !== '1')
+	{
+		echo "<input type=button value='Gruppe l&ouml;schen' onClick='location.href=\"adminframe.php?item=del_group&group_id=$group_id\"'>";
+	}
+	else
+	{
+		echo "Diese Gruppe kann nicht gel&ouml;scht werden!";
+	}
+	echo "
+	</TD>
 	</tr>";
 }
   
