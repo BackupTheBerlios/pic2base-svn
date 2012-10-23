@@ -83,8 +83,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 			ELSE
 			{
 				//wenn keins gefunden wurde wird es gedreht und dann angezeigt:
-				$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/'.$FileName;
-				
+				$bildname = 'http://'.$_SERVER['SERVER_NAME'].$inst_path.'/pic2base/images/originale/'.$FileName;			
 				IF($ext == 'nef')
 				{
 					copy("$pic_path/$FileName", "$pic_rot_path/$FileName");
