@@ -15,10 +15,12 @@ IF (!$_COOKIE['login'])
 $users = $_POST['users'];
 $id = $_GET['id'];
 
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+
 //echo "User-ID: ".$users;
 if (hasPermission($c_username, 'adminlogin', $sr) AND $users !== '')
 {
-	mysql_connect ($db_server, $user, $PWD);
 	$result0 = mysql_query( "SELECT username FROM $table1 WHERE id = '$id'");
 	$benutzername = mysql_result($result0, isset($i0), 'username');
 	//echo $ftp_path."/".$benutzername;
