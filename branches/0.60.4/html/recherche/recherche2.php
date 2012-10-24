@@ -63,7 +63,7 @@ ELSE
 
 <script language="javascript" type="text/javascript" src="../../share/calendar.js"></script>
 <script language="javascript" type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
-<!-- <script language="javascript" type="text/javascript" src="../../share/functions/jquery-1.8.2.min.js"></script> -->
+<script language="javascript" type="text/javascript" src="../../share/functions/jquery-1.8.2.min.js"></script>
 
 <script language="JavaScript">
 jQuery.noConflict();
