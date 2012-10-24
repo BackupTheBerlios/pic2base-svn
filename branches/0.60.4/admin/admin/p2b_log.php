@@ -39,7 +39,6 @@ IF ($_COOKIE['login'])
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/main_functions.php';
 
 echo "
 <div class='page'>
@@ -48,24 +47,23 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class = 'navi_blind'></a>
-		<a class='navi' href='../../html/start.php'>zur Startseite</a>
-		<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-		<a class='navi' href='../../../index.php'>Logout</a>";
-		//createNavi6($c_username,$sr);
-		echo "</div>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class = 'navi_blind'></a>
+			<a class='navi' href='../../html/start.php'>zur Startseite</a>
+			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
+			<a class='navi' href='../../../index.php'>Logout</a>
+		</div>
 	</div>
 
 	<div class='content'>
@@ -76,7 +74,6 @@ echo "
 
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
 </div>";
-mysql_close($conn);
 ?>
 </DIV>
 </CENTER>
