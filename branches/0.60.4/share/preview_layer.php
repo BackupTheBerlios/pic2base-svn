@@ -155,7 +155,11 @@ self.hideFullscreenImage = function hideFullscreenImage()
 
 self.showFullscreenImage = function showFullscreenImage(imagePath)
 {
-  divFullscreenImageElement = document.createElement("divFullscreenImage");
+	
+	var image = imageArray[currentPreviewImageIndex].fileName + ".jpg";
+//	alert(image);
+	
+	  divFullscreenImageElement = document.createElement("divFullscreenImage");
   var h = 100;
   var w = 100;
 	if (window.innerHeight)
@@ -178,15 +182,26 @@ self.showFullscreenImage = function showFullscreenImage(imagePath)
 		h = w / imageArray[currentPreviewImageIndex].ratio; 
 	}
 	//alert(h);
+	
+	//Kontrolle, ob gedrehtes Vorschabild verwendet werden kann:
+//	jQuery.noConflict();
+	var result = "default";
+	result = jQuery.ajax({
+	type: 'POST',
+	async: false,   // WICHTIG!
+	url: '../../share/check_rotated_preview.php',
+	data: ({
+		filename: image,
+	})
+	}).responseText;
+//	alert(result);
+	
   divFullscreenImageElement.innerHTML = 
 	'<div id="divImageLarge" style="position:fixed; left:0px; top:0px; width:100%; height:100%; background-color:#333333; z-index:600; overflow: hidden;">'+
-    //'<div id="divImageLarge" style="position:fixed; left:0px; top:0px; width:100%; height:100%; background-image:url(../../share/images/bg_trans_70.png); z-index:600;">'+
     '<center>'+
-    //'<table border=0 width=100% height=100% cellspacing=0 cellpadding=0><tr><td>'+
     '<a href="javascript:hideFullscreenImage()" title=\"[Mausklick schlie&szlig;t Fenster!]\";>'+
-    '<img id="imgFullscreen" src="' + imagePath + 'originale/' + imageArray[currentPreviewImageIndex].fileName + '.jpg" height='+h+' style="max-width:100%;" border=0>'+
+    '<img id="imgFullscreen" src="' + imagePath + result + imageArray[currentPreviewImageIndex].fileName + '.jpg" height='+h+' style="max-width:100%;" border=0>'+
     '</a>'+
-    //'</td></tr></table>'+
     '</center>'+
     '</div>';
   document.body.appendChild(divFullscreenImageElement);
