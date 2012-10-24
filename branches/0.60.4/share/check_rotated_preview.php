@@ -1,38 +1,33 @@
 <?php
-//Skript prueft, ob fuer die Vollbild-Vorschau ein gedrehtes Original-Bild existiert
+// Skript prueft, ob fuer die Vollbild-Vorschau ein gedrehtes Original-Bild existiert
+// verwendet in preview_layer.php, Z. 192
+include 'global_config.php';
 if(array_key_exists('filename', $_POST))
 {
 	$FileName = $_POST['filename'];
-	
 	$verz=opendir($sr.'/images/originale/rotated');
 	$n = 0;
 	while($bilddatei=readdir($verz))
 	{
 		if($bilddatei != "." && $bilddatei != "..")
 		{
-			//$bildd=$bilder_verzeichnis."/".$bilddatei;
-			//echo "Bild: ".$bilddatei."; Datei: ".$file_name."<BR>";
 			IF ($bilddatei == $FileName)
 			{
 				$n++;
 			}
 		}
 	}
-//	echo "N: ".$n."<BR>";
-	IF ($n > '0')
+	if ($n > '0')
 	{
-		echo "originale/rotated/";
-		//echo "<BR>Bild liegt gedreht vor.<BR>";
+		echo "originale/rotated/";	//Bild liegt gedreht vor
 	}
-	ELSE
+	else
 	{
-		echo "originale/";
-		//echo "<BR>Bild liegt N I C HT gedreht vor.<BR>";
+		echo "originale/";			//Bild liegt N I C HT gedreht vor
 	}
-	//echo $FileName;
 }
 else
 {
-	echo "nichts übergeben.";
+	echo "Es liegt ein Fehler vor.";
 }
 ?>
