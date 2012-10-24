@@ -10,7 +10,7 @@ IF (!$_COOKIE['login'])
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -32,6 +32,9 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
 
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+
 // fuer register_globals = off
 $benutzername = $_POST['benutzername'];
 $vorname = $_POST['vorname'];
@@ -42,14 +45,10 @@ $strasse = $_POST['strasse'];
 $plz = $_POST['plz'];
 $ort = $_POST['ort'];
 $group = $_POST['group'];
-//$berechtigung = $_POST['group'];
 $telefon = $_POST['telefon'];
 $email = $_POST['email'];
 $internet = $_POST['internet'];
 $language = $_POST['language'];
-
-include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
 
 ?>
 
@@ -75,7 +74,6 @@ include $sr.'/bin/share/db_connect1.php';
 			$ben_name = strip_tags($ben_name);
 			$ben_name = stripslashes($ben_name);
 			$ben_name = stripcslashes($ben_name);
-			//echo $ben_name."<BR>";
 			
 			$array_1 = array('utf8_decode(ä)', 'utf8_decode(ö)', 'utf8_decode(ü)', 'utf8_decode(Ä)', 'utf8_decode(Ö)', 'utf8_decode(Ü)', 'utf8_decode(ß)', '/', ' ');	//moegliche Vorkommen
 			$array_2 = array('?', '?', '?', '?', '?', '?', '?', '?', '?');	//deren Ersetzungen
@@ -87,9 +85,9 @@ include $sr.'/bin/share/db_connect1.php';
 			
 			IF(($ben_name == $benutzername) AND (strlen($ben_name) < 15))
 			{
-				//echo "G &Uuml; L T I G E R Name (".$ben_name.")<BR>";
-				//echo $user_dir."<BR>".$up_dir."<BR>".$down_dir."<BR>".$kml_dir."<BR>";
-				$key = '0815';
+//				echo "G &Uuml; L T I G E R Name (".$ben_name.")<BR>";
+//				echo $user_dir."<BR>".$up_dir."<BR>".$down_dir."<BR>".$kml_dir."<BR>";
+//				$key = '0815';
 				$ftp_passwd = crypt($pwd);
 				//Ermittlung der Apache-UID/GID:
 				$result0 = mysql_query("SELECT apache_uid, apache_gid FROM $table16");
@@ -110,7 +108,6 @@ include $sr.'/bin/share/db_connect1.php';
 					$result3 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$user_id', '$perm_id', '1')");
 				}
 				echo mysql_error()."<BR>";
-				
 				//anlegen des User-Ordners:
 				clearstatcache();
 				if(!file_exists($user_dir) AND mysql_error() == '')
