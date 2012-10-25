@@ -67,6 +67,8 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	@$num1 = mysql_num_rows($result1);
 	IF ($num1 > '0')
 	{
+		$uid = mysql_result($result1, isset($i1), 'id');
+		setcookie('uid',$uid,0,'/');
 		echo "<CENTER>
 		<p class='mittel'>Zugangspr&uuml;fung l&auml;uft...</p>
 		<img src='share/images/loading.gif' width='20' height='20' />
