@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,7 +25,7 @@ IF (!$_COOKIE['login'])
  * Project: pic2base
  * File: erfassung1.php
  *
- * Copyright (c) 2005 - 2009 Klaus Henneberg
+ * Copyright (c) 2005 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -45,13 +46,16 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result1, isset($i1), 'username');
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
-
+*/
 
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
@@ -59,12 +63,12 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 
 <div class="page">
 
-	<p id='kopf'>pic2base :: Einzelbild-Erfassung  <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
+	<p id='kopf'>pic2base :: Einzelbild-Erfassung  <span class='klein'>(User: <?php echo $username;?>)</span></p>
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
 		<?php
-		createNavi1($c_username);
+		createNavi1($uid);
 		?>
 		</div>
 	</div>
