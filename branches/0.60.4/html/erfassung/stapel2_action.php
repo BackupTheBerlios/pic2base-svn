@@ -1,8 +1,9 @@
 <?php
 
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
+	//list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
 if (array_key_exists('file',$_GET))
@@ -16,12 +17,15 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 $conv = buildConvertCommand($sr);
 $exiftool = buildExiftoolCommand($sr);
 $dcraw = buildDcrawCommand($sr);
 
 //Diese Datei soll erfasst werden:
-$bild = $ftp_path."/".$c_username."/uploads/".$file;
+$bild = $ftp_path."/".$uid."/uploads/".$file;
 
 //Pruefung, ob die Datei eine datei ist:
 if($bild != "" && $bild != "." && $bild != "..")
@@ -47,9 +51,10 @@ if($bild != "" && $bild != "." && $bild != "..")
 	//  +++  Vergabe eines eindeutigen Dateinamens  +++++
 		//Zur eindeutigen Identifizierung der Bilddateien wird seit dem 12.06.2008 die Datensatz-Nr. des jeweiligen Bildes verwendet. 
 		// Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:
-		$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-		echo mysql_error();
-		$user_id = mysql_result($result1, isset($i), 'id');
+//		$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+//		echo mysql_error();
+//		$user_id = mysql_result($result1, isset($i), 'id');
+		$user_id = $uid;
 		$DateInsert = date('Y-m-d H:i:s');
 		$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$file', '$DateInsert')");
 		echo mysql_error();
@@ -178,7 +183,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 		{
 			IF($bild != "." && $bild != "..")
 			{
-				$bild = $ftp_path."/".$c_username."/uploads/".$file;
+				$bild = $ftp_path."/".$uid."/uploads/".$file;
 				IF(!@unlink($bild))
 				{
 					echo "Konnte die Datei $bild nicht l&ouml;schen!<BR>";
@@ -188,7 +193,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 				{
 					//Log-Datei schreiben:
 					$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-					fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$c_username." erfasst. (".$_SERVER['REMOTE_ADDR'].")\n");
+					fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$username." erfasst. (".$_SERVER['REMOTE_ADDR'].")\n");
 					fclose($fh);
 					$error_code = 0;
 					
@@ -228,7 +233,8 @@ if($bild != "" && $bild != "." && $bild != "..")
 		ELSE
 		{
 			//ansonsten wird der soeben angelegte Datensatz und alle Vorschaubilder geloescht, womit der Datensatz erneut angelegt werden muss
-			include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&c_username='.$c_username;
+//			include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&c_username='.$c_username;
+			include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&uid='.$uid;
 		}
 	}
 	ELSE
@@ -240,7 +246,8 @@ if($bild != "" && $bild != "." && $bild != "..")
 $obj1 = new stdClass();
 $obj1->errorCode = $error_code;
 $obj1->Datei = $bild;
-$obj1->Username = $c_username;
+//$obj1->Username = $c_username;
+$obj1->Userid = $uid;
 $output = json_encode($obj1);
 echo $output;
 ?>

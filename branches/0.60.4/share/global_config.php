@@ -10,15 +10,28 @@ $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
 $fs_hoehe = '76';											//Hoehe der Bilder im Filmstreifen in px
 //############################################################################################################
 // [Benutzerspezifische Pfade]
+/*
 if(!isset($benutzername))
 {
 	$benutzername = '';
 }
-$ftp_path = $sr."/userdata";
-$user_dir = $ftp_path.'/'.$benutzername;
-$up_dir = $ftp_path.'/'.$benutzername.'/uploads';
-$down_dir = $ftp_path.'/'.$benutzername.'/downloads';
-$kml_dir = $ftp_path.'/'.$benutzername.'/kml_files';
+*/
+if(!isset($uid))
+{
+	$uid = '';
+}
+else
+{
+	$ftp_path = $sr."/userdata";
+	//$user_dir = $ftp_path.'/'.$benutzername;
+	//$up_dir = $ftp_path.'/'.$benutzername.'/uploads';
+	//$down_dir = $ftp_path.'/'.$benutzername.'/downloads';
+	//$kml_dir = $ftp_path.'/'.$benutzername.'/kml_files';
+	$user_dir = $ftp_path.'/'.$uid;
+	$up_dir = $ftp_path.'/'.$uid.'/uploads';
+	$down_dir = $ftp_path.'/'.$uid.'/downloads';
+	$kml_dir = $ftp_path.'/'.$uid.'/kml_files';
+}
 //#############################################################################################################
 // [Datei-Ablagepfade]				
 $pic_path = $sr."/images/originale";						//Ablage der Originale	

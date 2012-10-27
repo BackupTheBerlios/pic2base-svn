@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -47,7 +48,7 @@ Es werden die folgenden Schritte abgearbeitet:
 die Datei wird in den Upload-Ordner des Users heladen und dann der Stapel-Upload gestartet
 */
 //################################################################################################################################
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -55,10 +56,13 @@ IF ($_COOKIE['login'])
 	//echo $c_username;
 	$benutzername = $c_username;
 }
-
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result1, isset($i1), 'username');
 
 /*Dateinamens-Konventionen:
 $datei_name		Name der hochzuladenden Datei
@@ -73,7 +77,7 @@ $tmp_name = $_FILES['datei']['tmp_name'];
 
 IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 {
-	$target = $ftp_path."/".$c_username."/uploads/".$datei_name;
+	$target = $ftp_path."/".$uid."/uploads/".$datei_name;
 	
 	if ( !move_uploaded_file($tmp_name,$target) )
 	{
@@ -106,7 +110,7 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 		} 		
 		echo "
 		<div class='page'>
-		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
+		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span></p>
 			<div class='navi' style='clear:right;'>
 				<div class='menucontainer'>
 				<!--<a class='navi' href='erfassung1.php'>Erfassung</a>
@@ -136,7 +140,7 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 	
 		echo "
 		<div class='page'>
-			<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
+			<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span></p>
 		
 			<div class='navi' style='clear:right;'>
 				<div class='menucontainer'>
@@ -157,14 +161,14 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 			<br style='clear:both;' />
 			<p id='fuss'>".$cr."</p>
 		</div>
-		<meta http-equiv='Refresh' Content='2; URL=stapel1.php?ordner=$ftp_path/$c_username/uploads'>";
+		<meta http-equiv='Refresh' Content='1; URL=stapel1.php?ordner=$ftp_path/$uid/uploads'>";
 	}
 }
 ELSE
 {
 	echo "
 	<div class='page'>
-		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$c_username.")</span></p>
+		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span></p>
 		
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>

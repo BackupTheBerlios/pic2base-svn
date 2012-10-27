@@ -1,10 +1,11 @@
 <?php
 unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	//list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
-	$benutzername = $c_username;
+	//$benutzername = $c_username;
+	$uid = $_COOKIE['uid'];
 }
 
 include 'global_config.php';

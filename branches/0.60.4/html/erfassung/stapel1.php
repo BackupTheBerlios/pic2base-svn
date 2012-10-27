@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,16 +39,19 @@ IF (!$_COOKIE['login'])
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 $conv = buildConvertCommand($sr);
 $exiftool = buildExiftoolCommand($sr);
@@ -94,7 +98,7 @@ while($datei_name=readdir($verz))
 $meldung = "Bitte haben Sie ein wenig Geduld...";
 echo "
 <div class='page'>
-	<p id='kopf'>pic2base :: Stapelverarbeitung Bild-Upload <span class='klein'>(User: ".$c_username.")</span></p>
+	<p id='kopf'>pic2base :: Stapelverarbeitung Bild-Upload <span class='klein'>(User: ".$username.")</span></p>
 		
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>
@@ -230,8 +234,9 @@ FOR ($x='0';$x<$n;$x++)
 //  +++  Vergabe eines eindeutigen Dateinamens  +++++
 	/*Zur eindeutigen Identifizierung der Bilddateien wird seit dem 12.06.2008 die Datensatz-Nr. des jeweiligen Bildes verwendet. 
 	 * Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:*/
-	$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");echo mysql_error();
-	$user_id = mysql_result($result1, isset($i), 'id');
+//	$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");echo mysql_error();
+//	$user_id = mysql_result($result1, isset($i), 'id');
+	$user_id = $uid;
 	$DateInsert = date('Y-m-d H:i:s');
 	$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$datei_name', '$DateInsert')");
 	echo mysql_error();
@@ -421,7 +426,7 @@ echo "Meta-Daten-Auslesen beendet nach : ".$runtime4." Sekunden, <b>Differenz: "
 	{
 		IF($datei_name != "." && $datei_name != "..")
 		{
-			$datei_name = $ftp_path."/".$c_username."/uploads/".$datei_name;
+			$datei_name = $ftp_path."/".$uid."/uploads/".$datei_name;
 			IF(!@unlink($datei_name))
 			{
 				echo "Konnte die Datei $datei_name nicht l&ouml;schen!<BR>";
@@ -430,7 +435,7 @@ echo "Meta-Daten-Auslesen beendet nach : ".$runtime4." Sekunden, <b>Differenz: "
 			{
 				//Log-Datei schreiben:
 				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-				fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$c_username." erfasst. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+				fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$username." erfasst. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 				fclose($fh);
 				$del++;
 			}
@@ -439,7 +444,8 @@ echo "Meta-Daten-Auslesen beendet nach : ".$runtime4." Sekunden, <b>Differenz: "
 	ELSE
 	{
 		//ansonsten wird der soeben angelegte Datensatz und alle Vorschaubilder geloescht, womit der Datensatz erneut angelegt werden muss
-		include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&c_username='.$c_username;
+//		include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&c_username='.$username;
+		include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&uid='.$uid;
 	}
 		
 //######################  Ende der reinen Datenerfassung ohne weitere Aktionen  ####################################################################################

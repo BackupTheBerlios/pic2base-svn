@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,25 +38,27 @@ IF (!$_COOKIE['login'])
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
-$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'"); echo mysql_error();
-$user_id = mysql_result($result1, isset($i), 'id');
+
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"); echo mysql_error();
+$username = mysql_result($result1, isset($i1), 'username');
+$user_id = $uid;
 
 $start_time = date('d.m.Y, H:i:s');
 
 echo "
 <div class='page'>
-	<p id='kopf'>pic2base :: Stapelverarbeitung Bild-Upload <span class='klein'>(User: ".$c_username.")</span></p>
+	<p id='kopf'>pic2base :: Stapelverarbeitung Bild-Upload <span class='klein'>(User: ".$username.")</span></p>
 		
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>
