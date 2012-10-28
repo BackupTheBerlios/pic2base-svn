@@ -1,8 +1,12 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 
 unset($parameter);
@@ -76,9 +80,9 @@ function showAllDetails(mod, pic_id)
 	Fenster1.focus();
 }
 
-function reloadPreviews(pic_id, c_username)
+function reloadPreviews(pic_id, uid)
 {
-	Fenster1 = window.open('select_params.php?pic_id='+pic_id + '&c_username=' + c_username, 'Parameter', "width=780,height=580,scrollbars,resizable=no,");
+	Fenster1 = window.open('select_params.php?pic_id='+pic_id, 'Parameter', "width=780,height=580,scrollbars,resizable=no,");
 	Fenster1.focus();
 }
 
@@ -157,6 +161,7 @@ function showDiary(aufn_dat)
 <?php 
 //var_dump($_REQUEST);
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -164,6 +169,8 @@ IF ($_COOKIE['login'])
 	//echo $c_username;
 	$benutzername = $c_username;
 }
+*/
+
 IF (array_key_exists('bewertung', $_COOKIE))
 {
 	list($bewertung) = preg_split('#,#',$_COOKIE['bewertung']);
@@ -181,6 +188,9 @@ IF($bewertung == '')
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 //var_dump($_GET);
 //var_dump($_POST);
@@ -205,18 +215,18 @@ if ( array_key_exists('s_m',$_GET) )
 $stat = createStatement($bewertung);
 //echo $stat;
 //Ermittlung der Usersprache:
-$result1 = mysql_query("SELECT language FROM $table1 WHERE username = '$c_username'");
+$result1 = mysql_query("SELECT language FROM $table1 WHERE id = '$uid'");
 $language = mysql_result($result1, isset($i1), 'language');
 
 $base_file = 'recherche2';
 
 echo "
 <div class='page'>
-	<p id='kopf'>pic2base :: Datensatz-Recherche <span class='klein'>(User: $c_username; eingestellte Bewertung: ".showBewertung($bewertung).")</span></p>
+	<p id='kopf'>pic2base :: Datensatz-Recherche <span class='klein'>(User: $username; eingestellte Bewertung: ".showBewertung($bewertung).")</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi2_1($c_username);
+			createNavi2_1($uid);
 		echo "</div>
 	</div>";
 //################################################################################################################

@@ -2,12 +2,13 @@
 //var_dump($_GET);
 function createPreviewAjax($pic_id, $max_size, $quality)
 {
+	/*
 	unset($username);
-	IF ($_COOKIE['login'])
+	IF ($_COOKIE['uid'])
 	{
 		list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	}
-	
+	*/
 	//Erzeugung einer Bildvorschau unter optimaler Nutzung des Bildschirmes;
 	//Qualitaeten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
 	include '../share/global_config.php';
@@ -472,10 +473,10 @@ function getTimeTreeview2(pic_id, mod, s_m)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
-function createNewPreview(pic_id, c_username, hl, gamma, targ_color, col_inter, rota, wb, hsi, contrast, FileNameRaw, modus, Orientation)
+function createNewPreview(pic_id, hl, gamma, targ_color, col_inter, rota, wb, hsi, contrast, FileNameRaw, modus, Orientation)
 {
 	var url = '../../share/create_new_previews.php';
-	var params = 'pic_id=' + pic_id + '&c_username=' + c_username + '&hl=' + hl + '&gamma=' + gamma + '&targ_color=' + targ_color + '&col_inter=' + col_inter + '&rota=' + rota + '&wb=' + wb + '&hsi=' + hsi + '&contrast=' + contrast + '&file_name_raw=' + FileNameRaw + '&modus=' + modus + '&Orientation=' + Orientation;
+	var params = 'pic_id=' + pic_id + '&hl=' + hl + '&gamma=' + gamma + '&targ_color=' + targ_color + '&col_inter=' + col_inter + '&rota=' + rota + '&wb=' + wb + '&hsi=' + hsi + '&contrast=' + contrast + '&file_name_raw=' + FileNameRaw + '&modus=' + modus + '&Orientation=' + Orientation;
 	//alert("Parameter: "+params);
 	var target = 'new_preview';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});

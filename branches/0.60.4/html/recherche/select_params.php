@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -37,6 +41,7 @@ function eraseCookie(name, domain, path)
 <?php
 // verwendet als Popup-Fenster zur Festlegung der neuen Konvertierungs-Parameter fuer das RAW-Bild
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -44,6 +49,7 @@ IF ($_COOKIE['login'])
 	//echo $c_username;
 	$benutzername = $c_username;
 }
+*/
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -499,7 +505,7 @@ echo "	<TR class='normal' style='height:180px;'>
 		
 		<input type='button' value='L&ouml;sche gespeicherte Parameter' onClick=\"eraseCookie('params','','')\" style='margin-top:10px; width:250px'>
 		
-		<input type='button' value='Ansicht mit gew&auml;hlten Parametern' onClick=\"createNewPreview('$pic_id', '$c_username', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'tmp', '$Orientation')\" style='margin-top:10px; width:250px'>
+		<input type='button' value='Ansicht mit gew&auml;hlten Parametern' onClick=\"createNewPreview('$pic_id', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'tmp', '$Orientation')\" style='margin-top:10px; width:250px'>
 		</TD>
 	</TR>
 	
@@ -513,7 +519,7 @@ echo "	<TR class='normal' style='height:180px;'>
 		<input type='button' value='Fenster schliessen' onClick='javascript:window.close()' style='width:250px'>
 		</TD>
 		<TD class='normal' bgcolor='#EEEEAA' style='text-align:center;'>
-		<input type='button' value='Vorschaubilder neu erzeugen' onClick=\"createNewPreview('$pic_id', '$c_username', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'new', '$Orientation')\" style='width:250px;'>
+		<input type='button' value='Vorschaubilder neu erzeugen' onClick=\"createNewPreview('$pic_id', document.params.highlight.value, document.params.gamma.value, document.params.color_space.value, document.params.color_interpol.value, document.params.rota.value, document.params.wb.value, document.params.hsi.value, document.params.contrast.value, '$FileNameRaw', 'new', '$Orientation')\" style='width:250px;'>
 		</TD>
 	</TR>
 	
