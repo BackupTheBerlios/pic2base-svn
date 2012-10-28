@@ -1,5 +1,5 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
@@ -61,12 +61,14 @@ $output = json_encode($obj);
  * ##########  ab Version 0.60.4 (30.09.2012) verwendet; Version mit AJAX-basierter Fortschrittsanzeige  ###########
  */
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
+*/
  
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -91,7 +93,7 @@ if ( array_key_exists('art',$_GET) )
 	$art = $_GET['art'];
 }
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+//$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 
 //Variablen-Umbenennung fuer die Ruecksprung-Adresse:
 $kat_back = $kat_id;

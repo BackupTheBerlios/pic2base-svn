@@ -1,8 +1,12 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 
 /*
@@ -19,11 +23,14 @@ IF (!$_COOKIE['login'])
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
+*/
+
 if(array_key_exists('pic_id',$_GET))
 {
 	$pic_id = $_GET['pic_id'];
@@ -57,7 +64,8 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 $exiftool = buildExiftoolCommand($sr);
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result0 = mysql_query( "SELECT username FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 IF ( isset($pic_id) AND count($pic_id) > 0 AND $description !== "")
 {
@@ -80,7 +88,7 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND $description !== "")
 	{
 		//Log-Datei schreiben:
 		$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-		fwrite($fh,date('d.m.Y H:i:s').": Beschreibung von Bild ".$bild_id." wurde von ".$c_username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$desc.", neu: ".$Description."\n");
+		fwrite($fh,date('d.m.Y H:i:s').": Beschreibung von Bild ".$bild_id." wurde von ".$username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$desc.", neu: ".$Description."\n");
 		fclose($fh);
 	}
 
@@ -105,7 +113,7 @@ mysql_close($conn);
 
 $obj1 = new stdClass();
 $obj1->errorCode = $error_code;
-$obj1->Username = $c_username;
+$obj1->Userid = $uid;
 $output = json_encode($obj1);
 echo $output;
 ?>
