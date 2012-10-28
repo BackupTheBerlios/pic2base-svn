@@ -2,17 +2,18 @@
 include '../../share/global_config.php';
 
 //Zugriffskontrolle ######################################################
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
   header('Location: ../../../index.php');
 }
 ELSE
 {
-	unset($username);
-	IF ($_COOKIE['login'])
+//	unset($username);
+	IF ($_COOKIE['uid'])
 	{
-		list($c_username) = preg_split('#,#',$_COOKIE['login']);
-		IF(!hasPermission($c_username, 'adminlogin', $sr) AND (!hasPermission($c_username, 'editkattree', $sr)) AND (!hasPermission($c_username, 'editlocationname', $sr)))
+//		list($c_username) = preg_split('#,#',$_COOKIE['login']);
+		$uid = $_COOKIE['uid'];
+		IF(!hasPermission($uid, 'adminlogin', $sr) AND (!hasPermission($uid, 'editkattree', $sr)) AND (!hasPermission($uid, 'editlocationname', $sr)))
 		{
 			header('Location: ../../../index.php');
 		}

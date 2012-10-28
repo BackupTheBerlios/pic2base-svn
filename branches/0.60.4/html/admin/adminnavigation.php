@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../../index.php');
 }
+$uid = $_COOKIE['uid'];
 
 if(array_key_exists('item',$_GET))
 {
@@ -20,20 +21,20 @@ include $sr.'/bin/share/functions/permissions.php';
 switch ($item)
 {
 	case "":
-	if (hasPermission($c_username, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
-    if (hasPermission($c_username, 'editlocationname', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=editlocationname' title='georeferenzierte Ortsnamen bearbeiten'>Ortsnamen</a>";
+	if (hasPermission($uid, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
+    if (hasPermission($uid, 'editlocationname', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=editlocationname' title='georeferenzierte Ortsnamen bearbeiten'>Ortsnamen</a>";
     break;
     	
     case "adminshowusers":
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminadduser' title='Benutzer hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminadduser' title='Benutzer hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
     echo "<a class='navi' href='adminframe.php'>Zur&uuml;ck</a>";
     break;
     	
     case "adminshowgroups":
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminaddusergroup' title='Gruppen hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminaddusergroup' title='Gruppen hinzuf&uuml;gen'>Hinzuf&uuml;gen</a>";
     echo "<a class='navi_blind'><a class='navi' href='adminframe.php'>Zur&uuml;ck</a>";
     break;
     	
@@ -54,11 +55,11 @@ switch ($item)
     break;
     	
     case "adminshowpermissions":
-    if (hasPermission($c_username, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Zur&uuml;ck</a>";
-    if (hasPermission($c_username, 'editlocationname', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=editlocationname' title='georeferenzierte Ortsnamen bearbeiten'>Ortsnamen</a>";
+    if (hasPermission($uid, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Zur&uuml;ck</a>";
+    if (hasPermission($uid, 'editlocationname', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=editlocationname' title='georeferenzierte Ortsnamen bearbeiten'>Ortsnamen</a>";
     break;
     	
     case "adminaddpermission":
@@ -66,25 +67,25 @@ switch ($item)
     break;
     
     case "editlocationname":
-    if (hasPermission($c_username, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
+    if (hasPermission($uid, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
     echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php'>Zur&uuml;ck</a>";
     break;
     
     case "admineditlocation":
-    if (hasPermission($c_username, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
-    if (hasPermission($c_username, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
+    if (hasPermission($uid, 'editkattree', $sr)) echo "<a class='navi' href='../../admin/admin/kategorie0.php' title='Verwaltung / Sortierung der Bildkategorien'>Kategorien</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowusers' title='Benutzer-Verwaltung'>Benutzer</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowgroups' title='Benutzergruppen-Verwaltung'>Gruppen</a>";
+    if (hasPermission($uid, 'adminlogin', $sr)) echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminshowpermissions' title='Verwaltung der Zugangsberechtigungen'>Berechtigungen</a>";
     echo "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=editlocationname'>Zur&uuml;ck</a>";
     break;
 }
   
 IF($item !== 'admineditlocationnameaction')
 {
-    IF(hasPermission($c_username, 'adminlogin', $sr))
+    IF(hasPermission($uid, 'adminlogin', $sr))
     {
 	   	echo "
 	   	<a class='navi' href='$inst_path/pic2base/bin/ftp_frontend/?' title='FTP-Statistik'>FTP-Statistik</a>

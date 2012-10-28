@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,20 +27,23 @@ IF (!$_COOKIE['login'])
 <DIV Class="klein">
 
 <?php
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
-
+*/
 include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';	
+include $sr.'/bin/share/db_connect1.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 //log-file schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s').": Adminbereich wurde von ".$c_username." aufgerufen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+fwrite($fh,date('d.m.Y H:i:s').": Adminbereich wurde von ".$username." aufgerufen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 fclose($fh);
 
 echo "<div class='page'>
