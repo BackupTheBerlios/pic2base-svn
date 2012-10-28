@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -68,16 +72,18 @@ $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
 $vorname = $row['vorname'];
 $name = $row['name'];
-$u_name = $row['username'];
+//$u_name = $row['username'];
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
+*/
 
-$result1 = mysql_query( "SELECT language FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query( "SELECT language FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $lang = mysql_result($result1, isset($i1), 'language'); //echo "<BR>".$lang."<BR>";
 
 //############   Erstellung der Histogramme, falls nicht bereits vorhanden:   #######################
@@ -506,8 +512,8 @@ echo "
 	//echo count($writable_fields);
 	//IF(($editable == '1' OR count(isset($writable_fields)) > 0) AND $u_name === $c_username AND $ed !== '')
 	IF(($editable == '1' OR count(isset($writable_fields)) > 0) 
-	AND (($u_name == $c_username AND hasPermission($c_username, 'editmypics', $sr))
-	OR ($u_name !== $c_username AND hasPermission($c_username, 'editallpics', $sr))) 
+	AND (($Owner == $uid AND hasPermission($uid, 'editmypics', $sr))
+	OR ($Owner !== $uid AND hasPermission($uid, 'editallpics', $sr))) 
 	AND $ed !== '')
 	{
 		echo "

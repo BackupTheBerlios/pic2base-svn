@@ -5,20 +5,28 @@
 <body>
 
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/permissions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 $exiftool = buildExiftoolCommand($sr);
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -26,7 +34,15 @@ IF ($_COOKIE['login'])
 }
 $result15 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
 $user_id = mysql_result($result15, isset($i15), 'id');
-include $sr.'/bin/share/functions/permissions.php';
+*/
+//################################################
+//
+// Vereinbarungen:
+// $uid - ID des angemeldeten Users
+// $owner - ID des Besitzers des gewaehlten Bildes
+//
+//################################################
+
 
 //var_dump($_REQUEST);
 if(array_key_exists('pic_id',$_GET))
@@ -65,10 +81,12 @@ IF ($pic_id !=='0')
 		$DateTimeOriginal = mysql_result($result8, isset($i8), 'DateTimeOriginal');
 		$FileName = mysql_result($result8, isset($i8), 'FileName');
 		$FileNameOri = mysql_result($result8, isset($i8), 'FileNameOri');
-		$user_id = mysql_result($result8, isset($i8), 'Owner');
+//		$user_id = mysql_result($result8, isset($i8), 'Owner');
+		$owner = mysql_result($result8, isset($i8), 'Owner');
 		
-		$result10 = mysql_query( "SELECT username, titel, vorname, name, ort FROM $table1 WHERE id = '$user_id'");
-		@$Owner = mysql_result($result10, $i10, 'username');
+		$result10 = mysql_query( "SELECT username, titel, vorname, name, ort FROM $table1 WHERE id = '$owner'");
+//		@$Owner = mysql_result($result10, $i10, 'username');
+		@$username = mysql_result($result10, $i10, 'username');
 		@$titel = mysql_result($result10, $i10, 'titel');
 		@$vorname = mysql_result($result10, $i10, 'vorname');
 		@$name = mysql_result($result10, $i10, 'name');
@@ -213,7 +231,7 @@ IF ($pic_id !=='0')
 				$DateTimeOriginal = date('d.m.Y - H:i:s', strtotime($DateTimeOriginal));
 			}
 
-			IF($Owner == $c_username)
+			IF($owner == $uid)
 			{
 				//Eigentuemer darf Aufnahme-Datum manuell ergaenzen
 				echo "<input type='text' id='aufn_dat' name='aufn_dat' value = '$DateTimeOriginal' style='width:70px; height:16px;font-size:10px;text-align:center;'>&#160;<span style='cursor:pointer'><img src=\"$inst_path/pic2base/bin/share/images/calendar.png\" style=\"width:14px; height:14px; vertical-align:middle;\" title='Hier klicken, um Datum auszuw&auml;hlen' onClick='JavaScript:Kalender.anzeige(null,null,\"aufn_dat\",-3650,3651,\"%d.%m.%y\")'></span>";
@@ -248,10 +266,10 @@ IF ($pic_id !=='0')
 		<TD id='detail5'><span style='cursor:pointer;' title= \"$vorname $name, $ort\">".$autor."</span></TD>
 		";
 		
-		IF($Owner == $c_username AND ((hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editpic', $sr))))
+		IF($owner == $uid AND ((hasPermission($uid, 'adminlogin', $sr) OR hasPermission($uid, 'editpic', $sr))))
 		{
 			echo "<TD id='detail6'><span style='cursor:pointer;'>
-			<img src=\"$inst_path/pic2base/bin/share/images/change_owner.gif\" width='30' height='15' border='0'  alt='Owner wechseln' title='Bild-Eigent&uuml;merschaft &uuml;bertragen' OnClick=\"changeOwner('$pic_id', '$c_username')\"/>
+			<img src=\"$inst_path/pic2base/bin/share/images/change_owner.gif\" width='30' height='15' border='0'  alt='Owner wechseln' title='Bild-Eigent&uuml;merschaft &uuml;bertragen' OnClick=\"changeOwner('$pic_id', '$uid')\"/>
 			</span>";
 		}
 		ELSE
@@ -341,10 +359,10 @@ IF ($pic_id !=='0')
 		$symb5 = "<BR>";
 		
 		//IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editpic', $sr)))
-		IF($Owner == $c_username AND (hasPermission($c_username, 'georefmypics', $sr)) OR ($Owner !== $c_username AND (hasPermission($c_username, 'georefallpics', $sr))))
+		IF($owner == $uid AND (hasPermission($uid, 'georefmypics', $sr)) OR ($owner !== $uid AND (hasPermission($uid, 'georefallpics', $sr))))
 		{
 			$symb4 = "<SPAN style='cursor:pointer;'>
-			<img src=\"$inst_path/pic2base/bin/share/images/del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Geo-Referenzierung &auml;ndern\" onClick=\"changeGeoParam('$FileName','$c_username','$pic_id')\" />
+			<img src=\"$inst_path/pic2base/bin/share/images/del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Geo-Referenzierung &auml;ndern\" onClick=\"changeGeoParam('$FileName','$uid','$pic_id')\" />
 			</SPAN>";
 		}
 		ELSE
@@ -359,12 +377,12 @@ IF ($pic_id !=='0')
 		$supp_rawformats = array_diff($supported_filetypes, $supported_extensions);
 		//print_r($supp_rawformats);
 		$ext = strtolower(substr($FileNameOri,-3,3));
-		IF(($Owner == $c_username AND (hasPermission($c_username, 'editmypics', $sr)) 
-		OR ($Owner !== $c_username AND (hasPermission($c_username, 'editallpics', $sr)))) 
+		IF(($owner == $uid AND (hasPermission($uid, 'editmypics', $sr)) 
+		OR ($owner !== $uid AND (hasPermission($uid, 'editallpics', $sr)))) 
 		AND in_array($ext, $supp_rawformats))
 		{
 			$symb3 = "<SPAN style='cursor:pointer;'>
-			<img src=\"$inst_path/pic2base/bin/share/images/reload.png\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Vorschaubilder mit neuen Parametern einlesen\" onClick=\"reloadPreviews('$pic_id', '$c_username')\" />
+			<img src=\"$inst_path/pic2base/bin/share/images/reload.png\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Vorschaubilder mit neuen Parametern einlesen\" onClick=\"reloadPreviews('$pic_id')\" />
 			</SPAN>";
 		}
 		ELSE
@@ -375,9 +393,9 @@ IF ($pic_id !=='0')
 		}
 		
 		//wenn der User Bilder loeschen darf, wird das Trash-Icon angezeigt:
-		IF($Owner == $c_username AND (hasPermission($c_username, 'deletemypics', $sr)) OR ($Owner !== $c_username AND (hasPermission($c_username, 'deleteallpics', $sr))))
+		IF($owner == $uid AND (hasPermission($uid, 'deletemypics', $sr)) OR ($owner !== $uid AND (hasPermission($uid, 'deleteallpics', $sr))))
 		{
-			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
+			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$uid', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
 		}
 		ELSE
 		{
@@ -421,8 +439,9 @@ IF ($pic_id !=='0')
 		</TR>
 		
 		</TABLE>";
-		IF($Owner == $c_username AND hasPermission($c_username, 'editmypics', $sr)
-		OR $Owner !== $c_username AND hasPermission($c_username, 'editallpics', $sr))
+//		IF($owner == $uid AND hasPermission($uid, 'editmypics', $sr)
+//		OR $owner !== $uid AND hasPermission($uid, 'editallpics', $sr))
+		IF(($owner == $uid AND hasPermission($uid, 'editmypics', $sr)) OR hasPermission($uid, 'editallpics', $sr))
 		{
 			//saveChanges ist in ajax_functions.php:
 			echo "<CENTER><input type=button value=\"&Auml;nderungen speichern\" OnClick='saveChanges(\"$pic_id\", encodeURIComponent(beschr.description.value), beschr.aufn_dat.value);'></CENTER>";

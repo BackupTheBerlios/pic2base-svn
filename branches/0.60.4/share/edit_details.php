@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -25,7 +29,9 @@ IF (!$_COOKIE['login'])
 include_once 'global_config.php';
 include_once 'db_connect1.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
-//include_once $sr.'/bin/share/functions/meta_tag_translation.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 $exiftool = buildExiftoolCommand($sr);
 
@@ -44,15 +50,17 @@ $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
 $vorname = $row['vorname'];
 $name = $row['name'];
-$u_name = $row['username'];
+//$u_name = $row['username'];
 $lang = $row['language'];
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
+*/
 
 //Ermittlung aller writable gesetzten Tags in der exif_protect-Tabelle (Obermenge):
 $result1 = mysql_query( "SELECT * FROM $table5 WHERE writable = '1'");
