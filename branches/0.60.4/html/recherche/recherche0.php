@@ -5,13 +5,14 @@ include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
 
 //Zugriffskontrolle ######################################################
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 ELSE
 {
+	/*
 	unset($c_username);
 	IF ($_COOKIE['login'])
 	{
@@ -20,6 +21,12 @@ ELSE
 		{
 			header('Location: ../../../index.php');
 		}
+	}
+	*/
+	$uid = $_COOKIE['uid'];
+	IF(!hasPermission($uid, 'searchpic', $sr))
+	{
+		header('Location: ../../../index.php');
 	}
 }
 //########################################################################
@@ -70,7 +77,7 @@ function switchBewertung(bewertung)
  * Project: pic2base
  * File: recherche0.php
  *
- * Copyright (c) 2003 - 2010 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -81,24 +88,25 @@ function switchBewertung(bewertung)
  */
 
 include $sr.'/bin/share/functions/ajax_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 $result2 = mysql_query("SELECT * FROM $table2");
 $num2 = mysql_num_rows($result2);
 
-?>
-<div class="page">
+echo "
+<div class='page'>
 
-	<p id="kopf">pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
-		createNavi2($c_username);
-		//echo $navigation;
-		?>
+	<p id='kopf'>pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: ".$username.")</span></p>
+	<div class='navi'' style='clear:right;'>
+		<div class='menucontainer'>";
+		createNavi2($uid);
+		echo "
 		</div>
 	</div>
-	<div id="spalte1">
+	<div id='spalte1'>";
 	
-	<?php
 	IF( array_key_exists('bewertung',$_COOKIE) )
 	{
 		$bewertung = $_COOKIE['bewertung'];
