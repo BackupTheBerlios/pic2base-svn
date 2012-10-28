@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -27,7 +31,7 @@ IF (!$_COOKIE['login'])
  * Project: pic2base
  * File: generate_quickpreview0.php
  *
- * Copyright (c) 2006 - 2007 Klaus Henneberg
+ * Copyright (c) 2006 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -37,16 +41,21 @@ IF (!$_COOKIE['login'])
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
+*/
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 //var_dump($_REQUEST);
 if(array_key_exists('num',$_GET))
@@ -73,13 +82,13 @@ if(array_key_exists('z_0',$_REQUEST))
 
 
 //fuer alle notwendigen Drehungen wird geprueft, ob bereits ein Vorschau-Bild existiert. Wenn nicht, wird dieses angelegt:
-
+/*
 $result0 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username'");
 $user_id = mysql_result($result0, isset($i0), 'id');
-
+*/
 $result4 = mysql_query( "SELECT pic_id, Owner, FileName, Orientation 
 FROM $table2
-WHERE Owner = '$user_id' 
+WHERE Owner = '$uid' 
 AND (Orientation = '6' OR Orientation = '3' OR Orientation = '8')");
 $num4 = mysql_num_rows($result4);
 //echo $num4." Bilder, welche nicht im Querformat aufgenommen wurden.<BR>";
@@ -107,12 +116,12 @@ $t_akt = mktime();
 
 	<div class="page">
 	
-		<p id="kopf">pic2base :: Quick-Preview-Erzeugung <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
+		<p id="kopf">pic2base :: Quick-Preview-Erzeugung <span class='klein'>(User: <?php echo $username;?>)</span></p>
 		
 		<div class="navi" style="clear:right;">
 			<div class="menucontainer">
 			<?php
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 			?>
 			</div>
 		</div>
@@ -218,7 +227,7 @@ $t_akt = mktime();
 		IF ($num4 == 0)
 		{
 			echo "Es sind keine Bilder zu bearbeiten.";
-			echo "<meta http-equiv='Refresh', content='20; url=edit_start.php'>";
+			echo "<meta http-equiv='Refresh', content='2; url=edit_start.php'>";
 			return;
 		}
 		echo "
