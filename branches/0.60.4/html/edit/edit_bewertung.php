@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -43,21 +47,21 @@ function showKatInfo(kat_id)
  * Project: pic2base
  * File: edit_bewertung.php
  *
- * Copyright (c) 2007 - 2010 Klaus Henneberg
+ * Copyright (c) 2007 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
  *
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
- 
+*/
 //var_dump($_GET);
 $pic_id = $_GET['pic_id'];
 $mod = $_GET['mod'];
@@ -82,14 +86,17 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 echo "
 <div class='page'>
 	<FORM name='bew-zuweisung', method='post' action='edit_bew_daten_action.php?kat_id=$kat_id&ID=$ID&art=$art'>
-	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Bewertung bearbeiten) <span class='klein'>(User: $c_username)</span></p>
+	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Bewertung bearbeiten) <span class='klein'>(User: $username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 			echo "
 		</div>
 	</div>
