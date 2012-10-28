@@ -1,8 +1,12 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ini_set('memory_limit','300M');
 $pic_ID = array();
@@ -68,12 +72,13 @@ $output = json_encode($obj);
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 if(array_key_exists('kat_id',$_GET))
 {
 	$kat_id = $_GET['kat_id'];
@@ -106,12 +111,16 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+/*
 $result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'"); echo mysql_error();
 $user_id = mysql_result($result1, isset($i), 'id');
-
+*/
 echo "
 <div class='page'>
-	<p id='kopf'>pic2base :: Kategorie-Zuweisung - &Auml;nderungen speichern<span class='klein'>(User: ".$c_username.")</span></p>
+	<p id='kopf'>pic2base :: Kategorie-Zuweisung - &Auml;nderungen speichern<span class='klein'>(User: ".$username.")</span></p>
 		
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>
