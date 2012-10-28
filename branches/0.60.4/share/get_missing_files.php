@@ -1,14 +1,19 @@
 <?php
+/*
 unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	$benutzername = $c_username;
+//	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
+//	$benutzername = $c_username;
 }
-
+*/
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-
+/*
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+*/
 //bei 50000 Datensaetzen waren 250M erforderlich, daher wird hier vorsorglich auf 300M erhoeht: 
 if(ini_get('memory_limit') < 300)
 {

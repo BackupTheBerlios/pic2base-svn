@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,12 +39,12 @@ include '../../share/global_config.php';
  */
  -->
 <script type = text/javascript>
-function showDelWarning(FileName, c_username, pic_id)
+function showDelWarning(FileName, uid, pic_id)
 {
 	var check = confirm("Wollen Sie das Bild wirklich entfernen?");
 	if(check == true)
 	{
-		window.open('../../share/delete_picture.php?FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=450px');
+		window.open('../../share/delete_picture.php?FileName=' + FileName + '&uid=' + uid + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=450px');
 	}
 }
 </script>
@@ -51,18 +52,22 @@ function showDelWarning(FileName, c_username, pic_id)
 <BODY LANG="de-DE">
 <DIV Class="klein">
 <?php
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 //$quelle = $_SERVER['HTTP_REFERER'];
 
@@ -92,13 +97,13 @@ ELSE
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base :: Doublettenpr&uuml;fung <span class='klein'>(User: $c_username)</span></p>
+	<p id='kopf'>pic2base :: Doublettenpr&uuml;fung <span class='klein'>(User: $username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
 		IF(strstr($quelle, "edit_start.php") OR strstr($quelle, "stapel2.php") OR strstr($quelle, "doublettenliste1.php"))
 		{
-			createNavi3($c_username);
+			createNavi3($uid);
 		}
 		ELSEIF(strstr($quelle, "db_wartung1.php"))
 		{
@@ -216,7 +221,7 @@ echo "
 						<TD style='width=350px; text-align: center;'><img src='$image_new' width='350' title='Bild-ID: $new_pic_id' /></TD>
 						<TD style='width=350px; text-align: center;'><img src='$image_old' width='350' title='Bild-ID: $old_pic_id' /></TD>
 						<TD style='width=55px; text-align: center;'><a href='../../share/save_doublette.php?pic_id=$new_pic_id&user_id=$user_id'><img src='../../share/images/ok.gif' title='Bild in der Datenbank belassen' /></a></TD>
-						<TD style='width=55px; text-align: center;'><A HREF = '#' onClick=\"showDelWarning('$FileName', '$c_username', '$new_pic_id')\";><img src='../../share/images/delete.gif' title='Doublette aus der Datenbank entfernen' /></a></TD>
+						<TD style='width=55px; text-align: center;'><A HREF = '#' onClick=\"showDelWarning('$FileName', '$uid', '$new_pic_id')\";><img src='../../share/images/delete.gif' title='Doublette aus der Datenbank entfernen' /></a></TD>
 						</TR>";
 					}
 				}
@@ -226,7 +231,7 @@ echo "
 				</TR>
 				
 				<TR style='height:10px;'>
-				<TD colspan='4' align='center' bgcolor='yellow'><INPUT TYPE='button' VALUE='Keine Doubletten zulassen - alle doppelten Bilder aus der Datenbank entfernen' onClick=\"location.href='../../share/delete_all_dubls1.php?method=$method&user_id=$user_id&c_username=$c_username'\"></TD>
+				<TD colspan='4' align='center' bgcolor='yellow'><INPUT TYPE='button' VALUE='Keine Doubletten zulassen - alle doppelten Bilder aus der Datenbank entfernen' onClick=\"location.href='../../share/delete_all_dubls1.php?method=$method&user_id=$user_id&uid=$uid'\"></TD>
 				</TR>
 				
 				<TR style='height:3px;'>

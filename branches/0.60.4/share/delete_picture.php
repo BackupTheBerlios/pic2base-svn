@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -33,12 +34,16 @@ include 'db_connect1.php';
 include 'functions/ajax_functions.php';
 include 'functions/permissions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 //var_dump($_GET);
+/*
 if ( array_key_exists('c_username',$_GET) )
 {
 	$c_username = $_GET['c_username'];
 }
-/*
+
 if ( array_key_exists('FileName',$_GET) )
 {
 	$FileName = $_GET['FileName'];
@@ -51,9 +56,9 @@ if ( array_key_exists('pic_id',$_GET) )
 
 // normale Benutzer setzen beim loeschen nur den Bildstatus auf inaktiv (pictures.aktiv = 0); Ein Admin loescht wirklich
 // Ermittlung der Gruppenzugehoerigkeit des Users:
-$res0 = mysql_query("SELECT $table1.username, $table1.group_id, $table9.id, $table9.description
+$res0 = mysql_query("SELECT $table1.id, $table1.group_id, $table9.id, $table9.description
 FROM $table1, $table9
-WHERE $table1.username = '$c_username'
+WHERE $table1.id = '$uid'
 AND $table1.group_id = $table9.id
 AND $table9.description = 'Admin'");
 echo mysql_error();
@@ -62,7 +67,7 @@ IF($num0 == 1)
 {
 	//echo "User ist Mitglied der Admin-Gruppe, Bild wird geloescht, wenn er darf<BR>";
 
-	if (hasPermission($c_username, 'deletemypics', $sr) OR hasPermission($c_username, 'deleteallpics', $sr)) 
+	if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpics', $sr)) 
 	{
 		//Die Bild-Daten werden ermittelt:
 		$result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
@@ -211,7 +216,7 @@ IF($num0 == 1)
 		echo mysql_error();
 		//log-file im Klartext schreiben:
 		$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-		fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$c_username." geloescht. Zugriff von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung:\n".$CaptionAbstract."\n##########\n");
+		fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht. Zugriff von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung:\n".$CaptionAbstract."\n##########\n");
 		fclose($fh);
 		echo "<BR>Die Original-Datei wurde gel&ouml;scht.<BR><BR>
 		<BR><CENTER><FORM name='zu'><INPUT TYPE='button' name='close' VALUE='Fenster schlie&szlig;en' OnClick='javascript:window.close();window.opener.location.reload();' tabindex='1'></FORM></CENTER></p>";

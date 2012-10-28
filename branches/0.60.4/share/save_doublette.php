@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
@@ -14,13 +13,13 @@
 <CENTER>
 <DIV Class="klein">
 <?php
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 if(array_key_exists('user_id',$_GET))
 {
 	$user_id = $_GET['user_id']; 
@@ -34,9 +33,12 @@ include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$user_id' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 echo "
 <div class='page'>
-	<p id='kopf'>pic2base :: Doubletten-Best&auml;tigung <span class='klein'>(User: ".$c_username.")</span></p>
+	<p id='kopf'>pic2base :: Doubletten-Best&auml;tigung <span class='klein'>(User: ".$username.")</span></p>
 		
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>

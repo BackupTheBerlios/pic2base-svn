@@ -1,8 +1,9 @@
 <?php
 
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+//	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
 
 if (array_key_exists('pic_id',$_GET))
@@ -46,7 +47,7 @@ SWITCH($filetype)
 		$obj1 = new stdClass();
 		$obj1->errorCode = $error_code;
 		$obj1->pic_id = $pic_id;
-		$obj1->Username = $c_username;
+		$obj1->Userid = $uid;
 		$obj1->filetype = $filetype;
 		$output = json_encode($obj1);
 		echo $output;	
@@ -76,7 +77,7 @@ SWITCH($filetype)
 		$obj1 = new stdClass();
 		$obj1->errorCode = $error_code;
 		$obj1->pic_id = $pic_id;
-		$obj1->Username = $c_username;
+		$obj1->Userid = $uid;
 		$obj1->filetype = $filetype;
 		$output = json_encode($obj1);
 		echo $output;	
@@ -91,7 +92,7 @@ SWITCH($filetype)
 		$obj1 = new stdClass();
 		$obj1->errorCode = $error_code;
 		$obj1->pic_id = $pic_id;
-		$obj1->Username = $c_username;
+		$obj1->Userid = $uid;
 		$obj1->filetype = $filetype;
 		$output = json_encode($obj1);
 		echo $output;	

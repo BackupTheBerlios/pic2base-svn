@@ -1,10 +1,11 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+	 header('Location: ../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -33,13 +34,17 @@ include 'db_connect1.php';
 include 'functions/ajax_functions.php';
 include 'functions/permissions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 //var_dump($_GET);
 //var_dump($_POST);
+/*
 if ( array_key_exists('c_username',$_GET) )
 {
 	$c_username = $_GET['c_username'];
 }
-
+*/
 if(array_key_exists('method',$_GET))
 {
 	$method = $_GET['method']; 
@@ -51,11 +56,12 @@ ELSE
 
 //echo "Methode: ".$method.", User: ".$c_username."<BR>";
 
-if (hasPermission($c_username, 'deletemypics', $sr) OR hasPermission($c_username, 'deleteallpics', $sr)) 
+if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpics', $sr)) 
 {
 	//Bestimmung der user_id:
-	$result100 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
-	$user_id = mysql_result($result100, isset($i1), 'id');
+//	$result100 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
+//	$user_id = mysql_result($result100, isset($i1), 'id');
+	$user_id = $uid;
 //	echo "User-ID: ".$user_id."<BR>";
 	
 	//Bestimmung aller erkannter Dubletten:
@@ -220,7 +226,7 @@ if (hasPermission($c_username, 'deletemypics', $sr) OR hasPermission($c_username
 			echo mysql_error();
 			//log-file im Klartext schreiben:
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$c_username." geloescht.\n");
+			fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht.\n");
 			fclose($fh);
 			echo "<BR>Die Original-Datei wurde gel&ouml;scht.<BR></p>";
 		}

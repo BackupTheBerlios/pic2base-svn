@@ -1,10 +1,12 @@
 <?php
-IF (!$_COOKIE['login'])
+//IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../index.php');
 }
+$uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -75,7 +77,7 @@ function delAllMetadata(c_username)
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -83,6 +85,7 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 $benutzername = $c_username;
 //echo $c_username;
 }
+*/
  
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -124,7 +127,8 @@ ELSE
 //===================================================================================================
 
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist und Kontrolle, ob Bilder zum Loeschen vorliegen:
-IF(hasPermission($c_username, 'adminlogin', $sr) AND $check == '1')
+//IF(hasPermission($c_username, 'adminlogin', $sr) AND $check == '1')
+IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 {
 	$file1 = 'http://www.pic2base.de/web/includes/conf.inc.php';
 	@$fh = fopen($file1,'r');
@@ -187,15 +191,20 @@ ELSE
 	$loesch_hinweis = "";
 }
 
+$user_id = $uid;
+$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result1, isset($i1), 'username');
+
+//# # # # # # # # # # # # # # folgender Block muss noch auf die uid anstelle des c_usernamen umgestellt werden: # # # # # # # # # # # # # # # 
 //bei jedem Aufruf der Startseite wird der kml-Ordner des betreffenden Users geleert:
-IF($c_username !== 'pb')
+IF($username !== 'pb')
 {
-	$folder = opendir($ftp_path."/".$c_username."/kml_files");	
+	$folder = opendir($ftp_path."/".$uid."/kml_files");	
 	while($datei_name=readdir($folder))
 	{
 		if($datei_name != "." && $datei_name != "..")
 		{
-			$datei_name = $ftp_path."/".$c_username."/kml_files/".$datei_name;
+			$datei_name = $ftp_path."/".$uid."/kml_files/".$datei_name;
 			if(!@unlink($datei_name))
 			{
 				echo "Konnte die Datei $datei_name nicht l&ouml;schen!<BR>";
@@ -203,9 +212,10 @@ IF($c_username !== 'pb')
 		}
 	}
 }
+//# # # # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # #  # # # # #
+//$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+//$user_id = mysql_result($result1, isset($i1), 'id');
 
-$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result1, isset($i1), 'id');
 
 //Ermittlung wieviel User in der DB registriert sind:
 $result2 = mysql_query("SELECT * FROM $table1");
@@ -298,7 +308,7 @@ ELSE
 	
 	//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
 	$m = 0;
-	@$verz=opendir($ftp_path."/".$c_username."/downloads");
+	@$verz=opendir($ftp_path."/".$uid."/downloads");
 	//echo "V: ".$verz;
 	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
 	IF($verz)
@@ -336,11 +346,11 @@ $result4 = mysql_query("SELECT * FROM $table2 WHERE ranking <>'' AND ranking >'0
 
 echo "<div class='page'>
 
-	<p id='kopf'>pic2base :: Startseite <span class='klein'>(User: ".$c_username.")</span></p>
+	<p id='kopf'>pic2base :: Startseite <span class='klein'>(User: ".$username." (".$uid."))</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi0($c_username);
+		createNavi0($uid);
 		echo "</div>
 	</div>
 	
@@ -387,7 +397,7 @@ echo "<div class='page'>
 			
 			";
 			
-			IF(hasPermission($c_username, 'addpic', $sr))
+			IF(hasPermission($uid, 'addpic', $sr))
 			{
 				echo "
 				<tr class='normal'>
@@ -409,7 +419,7 @@ echo "<div class='page'>
 			</TR>";
 
 		
-		IF ($num_pic > '0' AND hasPermission($c_username, 'addpic', $sr))
+		IF ($num_pic > '0' AND hasPermission($uid, 'addpic', $sr))
 		{
 			echo "
 			<tr class='normal'>
@@ -434,7 +444,7 @@ echo "<div class='page'>
 			</TR>";
 		}
 	
-		IF($n > '0' AND hasPermission($c_username, 'addpic', $sr))
+		IF($n > '0' AND hasPermission($uid, 'addpic', $sr))
 		{
 			echo "
 			<Form name='folder' method='post' action='erfassung/stapel2.php'>
@@ -448,7 +458,7 @@ echo "<div class='page'>
 			<TD class='normal' align='center' colspan='10'><INPUT type='submit' name='upload' value='Upload starten'></TD>
 			</TR>
 			
-			<INPUT type='hidden' name='ordner' value='$ftp_path/$c_username/uploads' size='70'>
+			<INPUT type='hidden' name='ordner' value='$ftp_path/$username/uploads' size='70'>
 			
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;
@@ -459,7 +469,7 @@ echo "<div class='page'>
 		}
 		ELSE
 		{
-			IF(hasPermission($c_username, 'addpic', $sr))
+			IF(hasPermission($uid, 'addpic', $sr))
 			{
 				echo "
 				<TR class='normal' style='height:15px;'>
@@ -471,7 +481,7 @@ echo "<div class='page'>
 				<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
 				</TR>
 				
-				<INPUT type='hidden' name='ordner' value='$ftp_path/$c_username/uploads' size='70' readonly>
+				<INPUT type='hidden' name='ordner' value='$ftp_path/$username/uploads' size='70' readonly>
 				
 				<TR class='normal'>
 				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
@@ -495,10 +505,10 @@ echo "<div class='page'>
 			}
 		}
 		
-		IF($m > '0' AND (hasPermission($c_username, 'downloadmypics', $sr) OR hasPermission($c_username, 'downloadallpics', $sr)) AND !directDownload($c_username, $sr))
+		IF($m > '0' AND (hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($username, $sr))
 		{
-			$download_path = 'ftp://'.$c_username."@".$_SERVER['SERVER_NAME'].'/downloads/';
-			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$c_username.'/downloads/';
+			$download_path = 'ftp://'.$username."@".$_SERVER['SERVER_NAME'].'/downloads/';
+			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$username.'/downloads/';
 			//echo $download_path;
 			echo "
 			<tr class='normal' style='height:30px;'>
@@ -511,13 +521,13 @@ echo "<div class='page'>
 			<TR class='normal'>
 			<TD class='normal' align='left' valign='top' colspan='3'></TD>
 			<TD class='normal' align='left' colspan='7'>
-			<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$c_username\")'>
+			<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$username\")'>
 			</TD>
 			</TR>";
 		}
 		ELSE
 		{
-			IF((hasPermission($c_username, 'downloadmypics', $sr) OR hasPermission($c_username, 'downloadallpics', $sr)) AND !directDownload($c_username, $sr))
+			IF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($username, $sr))
 			{	
 				echo "
 				<tr class='normal' style='height:30px;'>
@@ -529,7 +539,7 @@ echo "<div class='page'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
 			}
-			ELSEIF((hasPermission($c_username, 'downloadmypics', $sr) OR hasPermission($c_username, 'downloadallpics', $sr)) AND directDownload($c_username, $sr))
+			ELSEIF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND directDownload($username, $sr))
 			{
 				echo "
 				<tr class='normal' style='height:30px;'>
@@ -639,7 +649,7 @@ echo "<div class='page'>
 	
 	//log-file schreiben:
 	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-	fwrite($fh,date('d.m.Y H:i:s').": Startseite wurde von ".$c_username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n");
+	fwrite($fh,date('d.m.Y H:i:s').": Startseite wurde von ".$username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n");
 	fclose($fh);
 	mysql_close($conn);
 	
