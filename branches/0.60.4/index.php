@@ -1,2 +1,2 @@
-<?php setcookie('login','',-86400);
+<?php setcookie('uid','',-86400);
 ?>
