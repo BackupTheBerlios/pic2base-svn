@@ -1,9 +1,8 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+  	header('Location: ../../index.php');
 }
 
 include 'global_config.php';
@@ -15,14 +14,11 @@ if( array_key_exists('pic_id',$_GET))
 	$pic_id = $_GET['pic_id'];
 }
 
-//echo $pic_id."<BR>";
 $result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 echo mysql_error();
 $FileNameHQ = mysql_result($result1, 0, 'FileNameHQ');
-//echo $FileNameHQ;
 @$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 $breite = $parameter_v[0];
-//echo $breite;
 $hoehe = $parameter_v[1];
 $ratio = $breite / $hoehe;
 IF($ratio > '1')
@@ -37,6 +33,5 @@ ELSE
 	$Hoehe = 350;
 	$Breite = number_format($Hoehe * $ratio,0,'.',',');
 }
-//echo $img;
 echo "<CENTER><img src='$inst_path/pic2base/images/vorschau/hq-preview/$FileNameHQ' alt='$FileNameHQ' width='$Breite', height='$Hoehe'></CENTER>";
 ?>
