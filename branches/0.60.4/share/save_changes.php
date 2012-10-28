@@ -1,5 +1,5 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
@@ -7,12 +7,15 @@ IF (!$_COOKIE['login'])
 }
 ELSE
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
 
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 $exiftool = buildExiftoolCommand($sr);
 
@@ -83,7 +86,7 @@ ELSE
 
 //Log-Datei schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s').": Beschreibung von Bild ".$pic_id." wurde von ".$c_username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$description_old.", neu: ".$desc_db."\n");
+fwrite($fh,date('d.m.Y H:i:s').": Beschreibung von Bild ".$pic_id." wurde von ".$username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$description_old.", neu: ".$desc_db."\n");
 fclose($fh);
 
 echo "<FONT COLOR='red'>OK!</FONT>";
