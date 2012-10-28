@@ -86,9 +86,9 @@ function reloadPreviews(pic_id, uid)
 	Fenster1.focus();
 }
 
-function changeOwner(pic_id, c_username)
+function changeOwner(pic_id)
 {
-	Fenster1 = window.open('change_owner.php?pic_id='+pic_id + '&c_username=' + c_username, 'Parameter', "width=780,height=570,scrollbars,resizable=no,");
+	Fenster1 = window.open('change_owner.php?pic_id='+pic_id, 'Parameter', "width=780,height=570,scrollbars,resizable=no,");
 	Fenster1.focus();
 }
 
@@ -98,12 +98,12 @@ function showMap(lat,long)
 	Fenster1.focus();
 }
 
-function changeGeoParam(FileName, c_username, pic_id)
+function changeGeoParam(pic_id)
 {
 	var lat = <?php echo $lat; ?>;
 	var long = <?php echo $long; ?>;
 	var ort = "<?php echo $ort; ?>";
-	var Fenster1 = window.open('../../share/change_geo_param.php?filename='+FileName+'&c_username='+c_username+'&pic_id='+pic_id+'&lat='+lat+'&long='+long+'&ort='+ort, 'Karte', "width=550,height=430,resizable=no,");
+	var Fenster1 = window.open('../../share/change_geo_param.php?pic_id='+pic_id+'&lat='+lat+'&long='+long+'&ort='+ort, 'Karte', "width=550,height=430,resizable=no,");
 	Fenster1.focus();
 }
 
@@ -112,12 +112,12 @@ function saveNewParam(newlocation, ort, loc_id, pic_id)
 	Fenster1 = window.open('save_new_param.php?location='+newlocation+'&ort='+ort+'&loc_id='+loc_id+'&pic_id='+pic_id, 'Speicherung', "width=10,height=10,scrollbars,resizable=no,");
 }
 
-function showDelWarning(FileName, c_username, pic_id)
+function showDelWarning(pic_id)
 {
 	var check = confirm("Wollen Sie das Bild wirklich entfernen?");
 	if(check == true)
 	{
-		window.open('../../share/delete_picture.php?FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id, 'Delete', 'width=600px, height=450px');
+		window.open('../../share/delete_picture.php?pic_id=' + pic_id, 'Delete', 'width=600px, height=450px');
 	}
 }
 

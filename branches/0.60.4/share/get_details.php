@@ -269,7 +269,7 @@ IF ($pic_id !=='0')
 		IF($owner == $uid AND ((hasPermission($uid, 'adminlogin', $sr) OR hasPermission($uid, 'editpic', $sr))))
 		{
 			echo "<TD id='detail6'><span style='cursor:pointer;'>
-			<img src=\"$inst_path/pic2base/bin/share/images/change_owner.gif\" width='30' height='15' border='0'  alt='Owner wechseln' title='Bild-Eigent&uuml;merschaft &uuml;bertragen' OnClick=\"changeOwner('$pic_id', '$uid')\"/>
+			<img src=\"$inst_path/pic2base/bin/share/images/change_owner.gif\" width='30' height='15' border='0'  alt='Owner wechseln' title='Bild-Eigent&uuml;merschaft &uuml;bertragen' OnClick=\"changeOwner('$pic_id')\"/>
 			</span>";
 		}
 		ELSE
@@ -362,7 +362,7 @@ IF ($pic_id !=='0')
 		IF($owner == $uid AND (hasPermission($uid, 'georefmypics', $sr)) OR ($owner !== $uid AND (hasPermission($uid, 'georefallpics', $sr))))
 		{
 			$symb4 = "<SPAN style='cursor:pointer;'>
-			<img src=\"$inst_path/pic2base/bin/share/images/del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Geo-Referenzierung &auml;ndern\" onClick=\"changeGeoParam('$FileName','$uid','$pic_id')\" />
+			<img src=\"$inst_path/pic2base/bin/share/images/del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title=\"Geo-Referenzierung &auml;ndern\" onClick=\"changeGeoParam('$pic_id')\" />
 			</SPAN>";
 		}
 		ELSE
@@ -395,7 +395,7 @@ IF ($pic_id !=='0')
 		//wenn der User Bilder loeschen darf, wird das Trash-Icon angezeigt:
 		IF($owner == $uid AND (hasPermission($uid, 'deletemypics', $sr)) OR ($owner !== $uid AND (hasPermission($uid, 'deleteallpics', $sr))))
 		{
-			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$FileName', '$uid', '$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
+			$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
 		}
 		ELSE
 		{
