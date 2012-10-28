@@ -5,11 +5,13 @@ include $sr.'/bin/share/db_connect1.php';
 //include $sr.'/bin/share/functions/main_functions.php';
 //include $sr.'/bin/share/functions/permissions.php';
 
-unset($c_username);
-IF ($_COOKIE['login'])
+/*
+//unset($c_username);
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
+*/
 
 if( array_key_exists('tag',$_REQUEST) )
 {
