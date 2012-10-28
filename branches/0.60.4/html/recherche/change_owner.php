@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -30,10 +34,12 @@ include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 //var_dump($_REQUEST);
+/*
 if ( array_key_exists('c_username',$_GET) )
 {
 	$c_username = $_GET['c_username'];
 }
+*/
 if ( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
@@ -51,10 +57,10 @@ $owner = $row['Owner'];
 $name = $row['name'];
 $vorname = $row['vorname'];
 $ort = $row['ort'];
-$username = $row['username'];
+//$username = $row['username'];
 //echo "derz. User: ".$c_username.", Eigentuemer: ".$name."<BR>";
 //echo $FileNameV.", ".$pic_thumbs_path;
-IF($c_username === $username)
+IF($uid === $owner)
 {
 	//welche User gibt es noch im System, der Bilder erfassen darf (permission 799)?
 	$result2 = mysql_query("SELECT $table1.id, $table1.username, $table1.vorname, $table1.name, $table1.ort, $table1.aktiv, 
@@ -103,7 +109,7 @@ IF($c_username === $username)
 		<TD style='; background-color:#99FF99;'>
 		<div id='other_user' style='width:430px; height:450px; overflow:auto; margin-left:30px;'>
 		<fieldset style='margin-top:20px;'>
-		<legend>vorhandene Benutzer</legend>
+		<legend>weitere Benutzer</legend>
 		<TABLE style='width:400px; border-style:none;'>
 		<TR class='normal' >
 		<TD class='normal' style='width:310px; text-align:left; padding-left:50px;'>";
@@ -113,20 +119,12 @@ IF($c_username === $username)
 			$name= mysql_result($result2, $i2, 'name');
 			$vorname = mysql_result($result2, $i2, 'vorname');
 			$ort = mysql_result($result2, $i2, 'ort');
-			$username = mysql_result($result2, $i2, 'username');
-			//echo $id;
-			IF($username === $c_username)
+			if(!($uid === $id))
 			{
-				$sel = 'disabled';
+				echo "
+				<INPUT type='radio' name='new_owner' value='$id'  style='margin-right:20px;'>".$vorname." ".$name.", ".$ort."<BR>
+				<input type='hidden' name ='pic_id' value='$pic_id'>";
 			}
-			ELSE
-			{
-				$sel = '';
-			}
-			
-			echo "
-			<INPUT type=\"radio\" name=\"new_owner\" value=\"$id\" \"$sel\" style='margin-right:20px;'>".$vorname." ".$name.", ".$ort."<BR>
-			<input type='hidden' name ='pic_id' value='$pic_id'>";
 		}
 		
 		echo "</TD>
@@ -147,8 +145,12 @@ IF($c_username === $username)
 		<TD class='normal' bgcolor='#EEEEAA' colspan='2' style='width:250px;'>
 		<input type='button' value='Fenster schliessen' onClick='javascript:window.close()' style='width:250px'>
 		</TD>
-		<TD class='normal' bgcolor='#EEEEAA' style='text-align:center;'>
-		<input type='submit' value='Neuen Eigent&uuml;mer zuweisen' style='width:250px;'>
+		<TD class='normal' bgcolor='#EEEEAA' style='text-align:center;'>";
+		if($i2 > 0)
+		{
+			echo "<input type='submit' value='Neuen Eigent&uuml;mer zuweisen' style='width:250px;'>";
+		}
+		echo "
 		</TD>
 	</TR>
 	
