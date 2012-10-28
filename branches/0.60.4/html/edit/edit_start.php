@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -37,29 +41,29 @@ IF (!$_COOKIE['login'])
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
- 
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
-$user_id = mysql_result($result1, isset($i1), 'id');
+$result1 = mysql_query("SELECT username FROM $table1 WHERE id = '$uid'");
+$username = mysql_result($result1, isset($i1), 'username');
 
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base :: Datensatz-Bearbeitung <span class='klein'>(User: ".$c_username.")</span></p>
+	<p id='kopf'>pic2base :: Datensatz-Bearbeitung <span class='klein'>(User: ".$username.")</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi3($c_username);
+		createNavi3($uid);
 		echo "</div>
 	</div>
 	
@@ -78,7 +82,7 @@ echo "
 		<!--<a class='subnavi' href='edit_remove_kat.php?pic_id=0&mod=kat' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>-->
 		<a class='subnavi' href='remove_kat_daten.php?pic_id=0&mod=edit_remove' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>
 		<a class='subnavi_blind'></a>
-		<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$user_id'>Doubletten-Pr&uuml;fung</a>
+		<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$uid'>Doubletten-Pr&uuml;fung</a>
 		<a class='subnavi' href='generate_quickpreview0.php?num=X' title='Service-Funktion'>Quick-Preview hochformatiger Bilder erzeugen</a>
 		</center>
 	</div>
