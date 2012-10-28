@@ -31,12 +31,14 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
+*/
+$uid = $_COOKIE['uid'];
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 //include $sr.'/bin/share/functions/permissions.php';
@@ -58,7 +60,8 @@ if($memory_value > $memory_avail)
 }
 //echo "<font color='white'>".ini_get('memory_limit')."</font>";
 
-$user_id = getUserId($c_username, $sr);
+//$user_id = getUserId($c_username, $sr);
+$user_id = $uid;
 /*
 IF(hasPermission($c_username, 'editkattree', $sr))
 {
@@ -168,6 +171,7 @@ var arrayToEdit = null;
 
 function missingFilesReceived( responseText )
 {
+//	alert(responseText);
 	missingFiles = JSON.parse( responseText, null );
 	if(missingFiles.anzahl > 0)
 	{
