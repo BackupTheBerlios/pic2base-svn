@@ -1,8 +1,12 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -39,13 +43,15 @@ IF (!$_COOKIE['login'])
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
- 
+*/
+
 //var_dump($_POST);
 //var_dump($_GET);
 
@@ -77,6 +83,9 @@ else
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 $exiftool = buildExiftoolCommand($sr);
 
@@ -202,7 +211,7 @@ flush();
 				$kategorie_alt = utf8_encode(mysql_result($result10, isset($i10), 'Keywords'));
 				//$kategorie = $kategorie_alt."".$kategorie;	//die neue Kat-Zuweisung entspricht der alten zzgl. der neu hinzugekommenen Kategorien
 				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-				fwrite($fh,date('d.m.Y H:i:s').": Kategoriezuordnung von Bild ".$pic_id." wurde von ".$c_username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$kategorie_alt.", neu: ".$kw."\n");
+				fwrite($fh,date('d.m.Y H:i:s').": Kategoriezuordnung von Bild ".$pic_id." wurde von ".$username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$kategorie_alt.", neu: ".$kw."\n");
 				fclose($fh);
 				
 				$result11 = mysql_query( "UPDATE $table2 SET Keywords = \"$kw\" WHERE pic_id = '$pic_id'");

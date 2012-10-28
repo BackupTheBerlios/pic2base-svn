@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -53,16 +57,22 @@ function showKatInfo(kat_id)
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
- 
+*/
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 //var_dump($_REQUEST);
 if(array_key_exists('mod',$_GET))
 {
@@ -96,11 +106,11 @@ if(!isset($ID))
 echo "
 <div class='page'>
 	<FORM name='kat-aufhebung', method='post' action='remove_kat_daten_action.php?kat_id=$kat_id&mod=$mod'>
-	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Kategorie-Zuweisungen entfernen) <span class='klein'>(User: $c_username)</span></p>
+	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Kategorie-Zuweisungen entfernen) <span class='klein'>(User: $username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 			echo "<INPUT type='submit' class='button3' value = 'Speichern'><BR><INPUT type='button' class='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
 		</div>
 	</div>";
