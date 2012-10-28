@@ -1,8 +1,8 @@
 <?php
-unset($username);
-IF ($_COOKIE['login'])
+//unset($username);
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
 //$benutzername = $c_username;
 include 'global_config.php';
@@ -42,9 +42,9 @@ IF($num6_1 < '1001')
 	{
 		$pdf_statement = '';
 	}	
-	createContentFile($mod,$pdf_statement,$c_username,$bild);
+	createContentFile($mod,$pdf_statement,$uid,$bild);
 }
 	
-echo " <FONT COLOR='#FF9900'>Galerie anzeigen:</FONT>&#160;&#160;&#160; <a href = '../../../userdata/$c_username/kml_files/thumb-gallery.pdf'><img src=\"$inst_path/pic2base/bin/share/images/acroread.png\" width=\"12\" height=\"12\" border=\"0\"  title='Thumbnail-Galerie anzeigen' /></a></span>";
+echo " <FONT COLOR='#FF9900'>Galerie anzeigen:</FONT>&#160;&#160;&#160; <a href = '../../../userdata/$uid/kml_files/thumb-gallery.pdf'><img src=\"$inst_path/pic2base/bin/share/images/acroread.png\" width=\"12\" height=\"12\" border=\"0\"  title='Thumbnail-Galerie anzeigen' /></a></span>";
 
 ?>
