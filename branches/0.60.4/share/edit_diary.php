@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -42,7 +46,7 @@ $aufn_DAT = explode('-', $aufn_dat); //lesbare Formatierung
 $AD = $aufn_DAT[2].".".$aufn_DAT[1].".".$aufn_DAT[0];
 $info = $row['info'];
 //echo $AD;
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
@@ -53,7 +57,8 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 $result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
 $row = mysql_fetch_array($result2);
 $group_id = $row['group_id'];
-IF(hasPermission($c_username, 'editdiary', $sr))	//berechtigte User duerfen das Tagebuch editieren
+*/
+IF(hasPermission($uid, 'editdiary', $sr))	//berechtigte User duerfen das Tagebuch editieren
 {
 	$editable = '1';
 	$view = 'Default';
