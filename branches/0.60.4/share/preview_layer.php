@@ -184,7 +184,6 @@ self.showFullscreenImage = function showFullscreenImage(imagePath)
 	//alert(h);
 	
 	//Kontrolle, ob gedrehtes Vorschabild verwendet werden kann:
-//	jQuery.noConflict();
 	var result = "default";
 	result = jQuery.ajax({
 	type: 'POST',
@@ -219,23 +218,16 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
   //alert("<?php echo $_SERVER['SCRIPT_FILENAME']; ?>");
   divLargeImageElement.innerHTML = 
 	  '<div id="divImageLarge" style="position:fixed; left:0px; top:0px; width:100%; height:100%; background-color:#333333; z-index:500;">'+
-    //'<div id="divImageLarge" style="position:fixed; left:0px; top:0px; width:100%; height:100%; background-image:url(../../share/images/bg_trans_70.png); z-index:500;">'+
-      //'<div id="divInner1" style="position:absolute; width:100%; height:100%">'+
       '<table border=0 width="100%" height="100%">'+
       '<tr><td align=center valign=middle>'+
       '<table border=0><tr><td>'+
       
       '<table border=0 cellspacing=0>'+
-      //'<tr><td colspan=2 style="background-color:#ffffff; margin:0px;" align=right>'+
-    //'<div id="divInner2" style="z-index:1;">'+
-      //'<div style="top:10px; right:0px; width:23px; height:23px; z-index:1;"><a href="javascript:hideFullscreenOverlay();"><img src="img/button_close.png" border=0></a></div>'+
-      //'</td></tr>'+
       '<tr><td colspan=2 style="margin:0px;" align=center>'+
       '<div id="divOverlayContent" align=left style="margin:0px">' +
       '<img id="imgPreview" src="' + imagePath + 'vorschau/hq-preview/' + imageArray[currentPreviewImageIndex].fileName + '_hq.jpg">' +
       '' +
       '</div>'+
-      //'</div>'+
       '</td></tr>'+
       '</table>'+
       
@@ -246,7 +238,6 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<table border=0 width=270px height=27px style="background-image:url(../../share/images/navtop.png)" cellpadding=0 cellspacing=0><tr>'+
       '<td width=27 valign=top>&nbsp;</td>'+
       '<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;">Datei <label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label> - Bild <label id="labelPreviewFileNumber">' + currentPreviewImageIndex + '</label> von ' + imageArray.length + '</font></td>'+
-      //'<td align=center valign=middle><font style="color:#ffffff; font-family:arial, Helvetica,sans-serif; font-size:12px;"><label id="labelPreviewFileName">' + imageArray[currentPreviewImageIndex].fileName + '.jpg</label></font></td>'+
       '<td width=27 valign=top><!--<div id="divPreviewDownloadButton"></div>--></td>'+
       '</tr></table>'+
       '</center></div>'+
@@ -267,16 +258,12 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<td align=center valign=middle width=70><a href="javascript:hideFullscreenOverlay(gotoFilmstreifenPosition);" title="Vorschau schlie&szlig;en (F10)"><img src="../../share/images/close.png" border=0></a></td>'+
       '</tr></table>'+
       '</center></div>'+
-      //'</div>'+
     '</div>';
   document.body.appendChild(divLargeImageElement);
-  //$("divOverlayContent").innerHTML = '<img src=../img/symbols/ajax-loader.gif>';
-  //new Ajax.Updater($("divOverlayContent"), filename, {method: "get"});
 }
 
 self.openPreview = function openPreview(newImagePath, getImageArrayCallback, initialFileName)
 {
-  //user_id = newUser_id;
   imagePath = newImagePath;
   imageArray = getImageArrayCallback();
   if (imageArray.length > 0)
