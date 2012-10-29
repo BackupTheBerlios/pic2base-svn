@@ -1,10 +1,9 @@
 <?php
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
-$benutzername = $c_username;
+
 include 'global_config.php';
 include 'db_connect1.php';
 IF($_GET['kml_cod_statement'])
@@ -281,5 +280,5 @@ ELSE
 		fclose($fh);
 	}
 }
-echo " <FONT COLOR='#FF9900'>Diese anzeigen:</FONT>&#160;&#160;&#160; <a href = '../../../userdata/klaus/kml_files/$file'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\"  title='Bilder in GoogleEarth darstellen' /></a></span>";
+echo " <FONT COLOR='#FF9900'>Diese anzeigen:</FONT>&#160;&#160;&#160; <a href = '../../../userdata/$uid/kml_files/$file'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\"  title='Bilder in GoogleEarth darstellen' /></a></span>";
 ?>
