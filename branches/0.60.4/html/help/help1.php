@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -39,16 +43,19 @@ IF (!$_COOKIE['login'])
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
- 
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 $conv = buildConvertCommand($sr);
 $identify = str_replace('convert', 'identify', $conv);
@@ -88,7 +95,7 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi4_1($c_username);
+		createNavi4_1($uid);
 		echo "
 		</div>
 	</div>
@@ -194,7 +201,7 @@ echo "
 		LINUX-Benutzer k&ouml;nnen z.B. den Konqueror f&uuml;r den Upload benutzen, wobei sich eine zweigeteilte Fenster-Ansicht als 
 		vorteilhaft erwiesen hat.<BR>
 		Die Adresse des pic2base-FTP-Servers lautet ".$_SERVER['SERVER_NAME'].". 
-		Melden Sie sich mit Ihren pers&ouml;nlichen Zugangsdaten (Benutzername: ".$c_username." und entsprechendem Passwort) an und 
+		Melden Sie sich mit Ihren pers&ouml;nlichen Zugangsdaten (Benutzername: ".$username." und entsprechendem Passwort) an und 
 		kopieren Ihre Bild-Dateien in Ihren <b>UPLOAD</b>-Ordner. Wenn Sie nun zu pic2base zur&uuml;ckkehren erhalten Sie 
 		einen Hinweis, da&#223; Bilddateien in Ihrem Upload-Ordner liegen. Klicken Sie zur &Uuml;bernahme auf den Button 'Upload starten'. 
 		Je nach Anzahl der Bilder und deren Dateigr&ouml;&#223;e kann der Upload eine Weile dauern.<BR>
