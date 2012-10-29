@@ -276,6 +276,16 @@ ELSE
 		$file = time().'.kml';
 		$file_name = $kml_dir.'/'.$file;
 		$fh = fopen($file_name,"w");
+		/*
+		if(!$fh)
+		{
+			echo "konnte Datei nicht oeffnen";
+		}
+		else
+		{
+			echo "habe Datei geoeffnet";
+		}
+		*/
 		fwrite($fh,$content);
 		fclose($fh);
 	}
