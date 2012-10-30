@@ -1,14 +1,12 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	header('Location: ../../index.php');
 }
-
-unset($username);
-IF ($_COOKIE['login'])
+else
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
 
 $sr = $_GET['sr'];
@@ -45,7 +43,7 @@ ELSEIF($checked == 'checked')
 
 IF ($group_id !== '' AND $perm_id !== '')
 {
-	if (hasPermission($c_username, 'adminlogin', $sr))
+	if (hasPermission($uid, 'adminlogin', $sr))
 	{
 		$result0 = mysql_query("SELECT * FROM $table6 WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
 		$enabled = mysql_result($result0, 0, 'enabled');
@@ -59,6 +57,7 @@ IF ($group_id !== '' AND $perm_id !== '')
 			$en = '1';
 		}
 		
+		//Die Gruppenrechte werden neu gesetzt:
 		$result1 = mysql_query("UPDATE $table6 SET enabled='$en' WHERE group_id='".$group_id."' AND permission_id='".$perm_id."'");
 		//Es werden die Benutzer der Gruppe ermittelt:
 		$result2 = mysql_query( "SELECT * FROM $table1 WHERE group_id = '$group_id'");
