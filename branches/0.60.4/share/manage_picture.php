@@ -90,7 +90,7 @@ ELSEIF($modus == 'delete')
 	//nur wenn keine scene-Dateien mehr im Originale-Ordner sind, wird auch die Nicht-JPG-Datei geloescht
 	
 	$file_info = pathinfo($datei_ori);
-	$ext = ".".$file_info['extension'];				//Dateiendung mit Punkt
+	$ext = ".".$file_info['extension'];							//Dateiendung mit Punkt
 	$base_name = str_replace($ext,'',$file_info['basename']);	//Dateiname ohne Punkt und Rumpf 
 	//echo $base_name;
 	$base_name1 = $base_name.".";
