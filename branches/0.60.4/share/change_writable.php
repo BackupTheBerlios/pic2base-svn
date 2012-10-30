@@ -1,17 +1,14 @@
-<!--<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>-->
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
 }
 
 $sr = $_GET['sr'];
 
 include $sr.'/bin/share/db_connect1.php';
-//include $sr.'/bin/share/functions/ajax_functions.php';
-//include $sr.'/bin/share/functions/main_functions.php';
 
 //var_dump($_GET);
 if ( array_key_exists('lfdnr',$_GET) )

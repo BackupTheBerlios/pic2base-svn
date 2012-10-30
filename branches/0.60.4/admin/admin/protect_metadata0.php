@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -71,21 +75,24 @@ include '../../share/global_config.php';
 //sind diese als Felder in der Tabelle exif_protect enthalten? -> ggf. Aktualisierung
 //Darstellung aller Meta-Daten-Felder in tabellarischer Form mit der Option diese writable zu schalten / zu sperren
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 //echo $c_username;
 }
-
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
+
 $exiftool = buildExiftoolCommand($sr);
 
-//Ermittlung der User-Sprache zur Uebersetzung der Meta-Tags
-$result0 = mysql_query("SELECT language FROM $table1 WHERE username = '$c_username'");
+//Ermittlung von Username, User-Sprache zur Uebersetzung der Meta-Tags
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 $lang = mysql_result($result0, isset($i0), 'language');
 
 //Erzeugung verschiedener Arrays zur Identifizierung der Meta-Tag-Gruppen:
@@ -270,7 +277,7 @@ $content = $content."</TABLE>";
 echo "
 	<div class='page'>
 	
-		<p id='kopf'>pic2base :: Meta-Daten-Freigabe <span class='klein'>(User: ".$c_username.")</span></p>
+		<p id='kopf'>pic2base :: Meta-Daten-Freigabe <span class='klein'>(User: ".$username.")</span></p>
 		
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
