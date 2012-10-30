@@ -1,3 +1,14 @@
+<?php 
+IF (!$_COOKIE['uid'])
+{
+	include '../../share/global_config.php';
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
+}
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
@@ -31,6 +42,7 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  */
+
 /*
 unset($username);
 IF ($_COOKIE['login'])
@@ -38,7 +50,7 @@ IF ($_COOKIE['login'])
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 */
-$uid = $_COOKIE['uid'];
+
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 //include $sr.'/bin/share/functions/permissions.php';
