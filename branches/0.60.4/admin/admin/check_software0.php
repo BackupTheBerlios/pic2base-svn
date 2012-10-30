@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 //soll verhindern, dass nachtraeglich installierte Software immer noch nicht gefunden wird: 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Datum aus Vergangenheit
@@ -15,7 +19,7 @@ header("Pragma: no-cache"); // HTTP/1.0
  * Project: pic2base
  * File: check_software0.php
  *
- * Copyright (c) 2006 - 2011 Klaus Henneberg
+ * Copyright (c) 2006 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -70,21 +74,24 @@ header("Pragma: no-cache"); // HTTP/1.0
 <DIV Class="klein">
 
 <?php
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 echo "
 	<div class='page'>
 	
-		<p id='kopf'>pic2base :: Software-Kontrolle <span class='klein'>(User: ".$c_username.")</span></p>
+		<p id='kopf'>pic2base :: Software-Kontrolle <span class='klein'>(User: ".$username.")</span></p>
 		
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
