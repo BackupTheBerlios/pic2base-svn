@@ -2,18 +2,18 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Anzeige des ausgewaehlten Benutzers und dessen Rechte
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
 include $sr.'/bin/share/functions/ajax_functions.php';
-$user_id = $_GET['id']; 
+$user_id = $_GET['id']; //Benutzer-ID des anzuzeigenden Benutzers
 $del = $_GET['del'];
 
 
-if (hasPermission($c_username, 'adminlogin', $sr))
+if (hasPermission($uid, 'adminlogin', $sr))
 {
    	include '../../share/db_connect1.php';
 	$content = '';
@@ -28,11 +28,12 @@ if (hasPermission($c_username, 'adminlogin', $sr))
     {
     	$warnung = '';
     }
+    
     if (mysql_num_rows($result) == 1)
     {
 		//$user_id = $id;
     	$groupid = mysql_result ($result, 0, "group_id");
-		$username = mysql_result ($result, 0, "username");
+		$username = utf8_encode(mysql_result ($result, 0, "username"));
 		echo "
 		<style type='text/css'>
 		<!--
@@ -136,7 +137,7 @@ if (hasPermission($c_username, 'adminlogin', $sr))
 			{
 				$content = $content."<td class='tdbreit'>".$description."</td>";
 				
-				IF (hasPermission($username, $shortdescription, $sr))
+				IF (hasPermission($user_id, $shortdescription, $sr))
 				{
 					$checked = 'checked';
 					$text = 'Berechtigung erteilt';

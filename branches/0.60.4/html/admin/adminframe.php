@@ -5,7 +5,7 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
-$uid = $_COOKIE['uid'];
+$Uid = $_COOKIE['uid'];
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,7 +38,7 @@ list($c_username) = preg_split('#,#',$_COOKIE['login']);
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$Uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
 
 //log-file schreiben:

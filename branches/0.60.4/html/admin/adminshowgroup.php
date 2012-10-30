@@ -146,7 +146,7 @@ if (hasPermission($uid, 'showusers', $sr))
 		{
 			if (mysql_result($result, $i, "username") !== 'pb')
 			{
-				echo mysql_result($result, $i, "username").($i < ($num - 1) ? ", " :  '');
+				echo utf8_encode(mysql_result($result, $i, "username")).($i < ($num - 1) ? ", " :  '');
 			}
 		}
 		echo "</TD>

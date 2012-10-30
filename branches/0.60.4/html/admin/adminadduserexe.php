@@ -1,9 +1,14 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
+}
+else
+{
+	unset ($uid);
+	$bearbeiter_id = $_COOKIE['uid'];	//hier anders genannt, um Verwechslungen mit dem anzulegenden User auszuschliessen!
 }
 ?>
 
@@ -25,18 +30,14 @@ IF (!$_COOKIE['login'])
 <DIV Class="klein">
 
 <?php
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
-
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$bearbeiter_id' AND aktiv = '1'");
+$bearbeitername = mysql_result($result0, isset($i0), 'username');		//Benutzername des angemeldeten Benutzers (Bearbeiters)
+
 // fuer register_globals = off
-$benutzername = $_POST['benutzername'];
+$benutzername = $_POST['benutzername'];									//Benutzername des neu anzulegenden Benutzers
 $vorname = $_POST['vorname'];
 $name = $_POST['name'];
 $pwd = $_POST['pwd'];
@@ -50,54 +51,55 @@ $email = $_POST['email'];
 $internet = $_POST['internet'];
 $language = $_POST['language'];
 
-?>
+echo "
 
-<div class="page">
+<div class='page'>
 
-	<p id="kopf">pic2base :: Admin-Bereich - Neuanlage eines Users</p>
+	<p id='kopf'>pic2base :: Admin-Bereich - Neuanlage eines Users</p>
 
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?php
+	<div class='navi' style='clear:right;'>
+		<div class='menucontainer'>";
 		  include "adminnavigation.php";
-		?>
+		echo "
 		</div>
 	</div>
 
-	<div class="content">
-		<p style="margin:70px 0px; text-align:center">
-		<?php
+	<div class='content'>
+		<p style='margin:70px 0px; text-align:center'>";
 		//Pruefung der Eingaben:
 		IF(($benutzername !==  '') AND ($name !== '') AND ($vorname !== '') AND ($pwd !== ''))
 		{
+//			echo $benutzername;
 			$ben_name = trim($benutzername);
-			$ben_name = strip_tags($ben_name);
-			$ben_name = stripslashes($ben_name);
-			$ben_name = stripcslashes($ben_name);
+
+			// einige Angaben muessen vor der Aufnahme in die DB utf8_decodiert werden:
+			$ben_name = utf8_decode($ben_name);
+			$vorname = utf8_decode($vorname); 
+			$name = utf8_decode($name); 
+			$strasse = utf8_decode($strasse);
+			$ort = utf8_decode($ort);
 			
-			$array_1 = array('utf8_decode(ä)', 'utf8_decode(ö)', 'utf8_decode(ü)', 'utf8_decode(Ä)', 'utf8_decode(Ö)', 'utf8_decode(Ü)', 'utf8_decode(ß)', '/', ' ');	//moegliche Vorkommen
-			$array_2 = array('?', '?', '?', '?', '?', '?', '?', '?', '?');	//deren Ersetzungen
-			
-			for($x = 0; $x < count($array_1); $x++)
+			if(strlen($ben_name) < 15)
 			{
-				$ben_name = str_replace($array_1[$x], $array_2[$x], $ben_name);
-			}
-			
-			IF(($ben_name == $benutzername) AND (strlen($ben_name) < 15))
-			{
-//				echo "G &Uuml; L T I G E R Name (".$ben_name.")<BR>";
-//				echo $user_dir."<BR>".$up_dir."<BR>".$down_dir."<BR>".$kml_dir."<BR>";
-//				$key = '0815';
 				$ftp_passwd = crypt($pwd);
 				//Ermittlung der Apache-UID/GID:
 				$result0 = mysql_query("SELECT apache_uid, apache_gid FROM $table16");
 				$apache_uid = mysql_result($result0, isset($i0), 'apache_uid');
 				$apache_gid = mysql_result($result0, isset($i0), 'apache_gid');
 				//Benutzerdaten erfassen:
-				$result1 = mysql_query( "INSERT INTO $table1 (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, language, uid, gid, aktiv, user_dir, up_dir, down_dir, group_id) VALUES ('$benutzername', '$titel', '$name', '$vorname', '$strasse', '$plz', '$ort', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', '$email', '$internet', '$language', '$apache_uid', '$apache_gid', '1', '$user_dir', '$up_dir', '$down_dir', '$group')");
+				//Zuerst muss ein dummy-Datensatz erzeugt werden, anhand dessen die neue Benutzer-ID ermittelt werden kann.
+				//Erst dann koennen die Benutzerverzeichnisse angelegt werden:
+				$result1 = mysql_query( "INSERT INTO $table1 (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, language, uid, gid, aktiv, group_id) VALUES ('$ben_name', '$titel', '$name', '$vorname', '$strasse', '$plz', '$ort', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', '$email', '$internet', '$language', '$apache_uid', '$apache_gid', '1', '$group')");
+				echo mysql_error();	//echo "<BR>Ben-Name: ".$ben_name."<BR>";
+				$result4 = mysql_query( "SELECT * FROM $table1 WHERE username = '$ben_name' AND name = '$name' AND vorname = '$vorname'");
 				echo mysql_error();
-				$result4 = mysql_query( "SELECT * FROM $table1 WHERE username = '$benutzername' AND name = '$name' AND vorname = '$vorname'");
-				$user_id = mysql_result($result4, isset($i4), 'id');
+				$new_uid = mysql_result($result4, isset($i4), 'id'); //echo "Neue UID: ".$new_uid."<BR>";
+				// Benutzerverzeichnisse anlegen:
+				$user_dir = $ftp_path.'/'.$new_uid;
+				$up_dir = $ftp_path.'/'.$new_uid.'/uploads'; //echo $up_dir;
+				$down_dir = $ftp_path.'/'.$new_uid.'/downloads';
+				$kml_dir = $ftp_path.'/'.$new_uid.'/kml_files';
+				$result1_1 = mysql_query("UPDATE $table1 SET user_dir = '$user_dir', up_dir = '$up_dir', down_dir = '$down_dir' WHERE id = '$new_uid'");
 				//Benutzerrechte eintragen:
 				$result2 = mysql_query( "SELECT * FROM $table6 WHERE group_id = '$group' AND enabled = '1'");
 				$num2 = mysql_num_rows($result2);
@@ -105,9 +107,11 @@ $language = $_POST['language'];
 				FOR($i2=0; $i2<$num2; $i2++)
 				{
 					$perm_id = mysql_result($result2, $i2, 'permission_id');
-					$result3 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$user_id', '$perm_id', '1')");
+					$result3 = mysql_query( "INSERT INTO $table7 (user_id, permission_id, enabled) VALUES ('$new_uid', '$perm_id', '1')");
 				}
 				echo mysql_error()."<BR>";
+				
+				
 				//anlegen des User-Ordners:
 				clearstatcache();
 				if(!file_exists($user_dir) AND mysql_error() == '')
@@ -191,7 +195,7 @@ $language = $_POST['language'];
 			
 			//log-file schreiben:
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,date('d.m.Y H:i:s').": Neuer Benutzer ".$ben_name." wurde von ".$c_username." angelegt. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+			fwrite($fh,date('d.m.Y H:i:s').": Neuer Benutzer ".$ben_name." wurde von ".$bearbeitername." angelegt. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 			fclose($fh);
 		}
 		ELSE
@@ -200,14 +204,16 @@ $language = $_POST['language'];
 			Die mit (*) gekennzeichneten Felder M&Uuml;SSEN ausgef&uuml;llt werden!<BR><BR>
 			<input type='button' value='Zur&uuml;ck' OnClick='javascript:history.back()'>";
 		}
-		?>
+		echo "
 		</p>
 	</div>
-	<br style="clear:both;" />
+	<br style='clear:both;' />
 
-	<p id="fuss"><?php echo $cr; ?></p>
+	<p id='fuss'>".$cr."</p>
 
 </div>
 </DIV></CENTER>
 </BODY>
-</HTML>
+</HTML>";
+
+?>

@@ -1,9 +1,9 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
 
 	include '../../share/global_config.php';
@@ -36,7 +36,7 @@ include '../../share/global_config.php';
 	for ($i = 0; $i < $num; $i++)
 	{
 		$user_id = mysql_result ($result, $i, "id");
-		$user_name = mysql_result ($result, $i, "username");
+		$user_name = utf8_encode(mysql_result ($result, $i, "username"));
 		$group_id = mysql_result ($result, $i, "group_id");
 		$aktiv = mysql_result ($result, $i, "aktiv");
 		($aktiv == '1')? $bgcolor = '':$bgcolor='yellow';
@@ -51,7 +51,7 @@ include '../../share/global_config.php';
 			if (mysql_num_rows($result2) == 1)
 			{
 				$gr_id = mysql_result ($result2, 0, "id");
-				$desc = mysql_result ($result2, 0, "description");
+				$desc = utf8_encode(mysql_result ($result2, 0, "description"));
 				echo "<td><a href=adminframe.php?item=adminshowgroup&id=".$gr_id." title='Details der Gruppe anzeigen'>".$desc."</a></td>";
 			}
 			$result3 = mysql_query( "SELECT * FROM $table9 ORDER BY 'id'");
@@ -70,7 +70,7 @@ include '../../share/global_config.php';
 				<SELECT name='gruppe' style='width:100px';>";
 				FOR($i3=0; $i3<$num3; $i3++)
 				{
-					$grp = mysql_result($result3, $i3, 'description');
+					$grp = utf8_encode(mysql_result($result3, $i3, 'description'));
 					IF($grp == $desc)
 					{
 						$sel = 'selected';

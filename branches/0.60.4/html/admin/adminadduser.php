@@ -1,17 +1,15 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-}
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include_once $sr.'/bin/share/functions/permissions.php';
@@ -29,7 +27,7 @@ ELSEIF($num0 > 1)
 	$erstinstallation = 0;
 }
 
-if (hasPermission($c_username, 'adminlogin', $sr))
+if (hasPermission($uid, 'adminlogin', $sr))
 {
 	echo "
 	<center>
@@ -154,7 +152,7 @@ if (hasPermission($c_username, 'adminlogin', $sr))
 		FOR($i1='0'; $i1<$num1; $i1++)
 		{
 			$id = mysql_result($result1, $i1, 'id');
-			$description = mysql_result($result1, $i1, 'description');
+			$description = utf8_encode(mysql_result($result1, $i1, 'description'));
 			IF($description == 'Gast')
 			{
 				$sel = 'selected';
