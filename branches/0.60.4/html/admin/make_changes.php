@@ -1,16 +1,25 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
+else
+{
+	$uid = $_COOKIE['uid'];
+}
+//##################################################################################################
+//
+//Skript wird von adminshowusers.php aufgerufen, um die Gruppenzugehoerigkeit eines Users zu aendern
+//
+//##################################################################################################
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Gruppe wechseln</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -30,7 +39,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: make_changes.php
  *
- * Copyright (c) 2003 - 2011 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -41,13 +50,6 @@ include '../../share/global_config.php';
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//$c_username;
-}
- 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
@@ -56,7 +58,7 @@ $mod = $_GET['mod'];
 $id = $_GET['id'];
 $gruppe = $_POST['gruppe'];
 
-IF(hasPermission($c_username, 'adminlogin', $sr))
+IF(hasPermission($uid, 'adminlogin', $sr))
 {
 	SWITCH($mod)
 	{
@@ -113,7 +115,7 @@ IF(hasPermission($c_username, 'adminlogin', $sr))
 }
 ELSE
 {
-	echo "Sie haben falsche Rechte!<meta http-equiv='Refresh', Content='2; URL=../../../index.php'>";
+	echo "Sie haben keine ausreichende Rechte!<meta http-equiv='Refresh', Content='2; URL=../../../index.php'>";
 	return;
 }
 mysql_close($conn);
