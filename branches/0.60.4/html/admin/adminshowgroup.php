@@ -164,5 +164,6 @@ if (hasPermission($uid, 'showusers', $sr))
 	Diese Berechtigungs&auml;nderung wird direkt an alle Mitglieder dieser Gruppe weitergereicht.</p></TD>
 	</TR>";
 }
-echo "</TABLE>";
+echo "</TABLE>
+</center>";
 ?>

@@ -32,7 +32,7 @@ echo "<center><table class='normal' border='0'>
 FOR ($i = 0; $i < $num; $i++)
 {
 	$group_id = mysql_result ($result, $i, "id"); //echo $group_id;
-	$group_desc = mysql_result ($result, $i, "description");
+	$group_desc = utf8_encode(mysql_result ($result, $i, "description"));
 	//Im Auslieferungszustand hat die Admin-Gruppe die id=1. Diese Gruppe kann nicht geloescht werden!
 	
 	echo "<tr>
