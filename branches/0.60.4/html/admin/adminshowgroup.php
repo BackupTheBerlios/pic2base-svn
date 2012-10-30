@@ -1,11 +1,16 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	header('Location: ../../../index.php');
 }
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 include $sr.'/bin/share/functions/ajax_functions.php';
 echo "<CENTER>
+
 <style type='text/css'>
 <!--
 .tablenormal	{
@@ -42,7 +47,7 @@ else
 	$desc = "[keine Gruppe gew&auml;hlt]";
 }
 
-if (hasPermission($c_username, 'adminlogin', $sr))
+if (hasPermission($uid, 'adminlogin', $sr))
 {
 	
 	echo "<table class='tablenormal' border='0'>
@@ -120,7 +125,7 @@ if (hasPermission($c_username, 'adminlogin', $sr))
 }
 
 
-if (hasPermission($c_username, 'showusers', $sr))
+if (hasPermission($uid, 'showusers', $sr))
 {
 	echo "<TR>
 	<TD colspan='4'>Benutzer in dieser Gruppe:</TD>
@@ -155,7 +160,7 @@ if (hasPermission($c_username, 'showusers', $sr))
 	<tr style='height:30px;'>
 	<td class='normal' align='left' colspan='4'>
 	<p>Hinweis:</p>
-	<p>Ein Klick in das jeweilige Auswahlfeld &auml;ndert sofort <b>und ohne R&uuml;ckfrage</b> den Status der Berechtigung.<BR>
+	<p>Ein Klick in das jeweilige Auswahlfeld &auml;ndert <b><u>sofort</u></b> und <b><u>ohne R&uuml;ckfrage</u></b> den Status der Berechtigung.<BR>
 	Diese Berechtigungs&auml;nderung wird direkt an alle Mitglieder dieser Gruppe weitergereicht.</p></TD>
 	</TR>";
 }
