@@ -1,3 +1,14 @@
+<?php 
+IF (!$_COOKIE['uid'])
+{
+	include '../../share/global_config.php';
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
+}
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
@@ -47,13 +58,15 @@ if(array_key_exists('method', $_POST))
 	$method = $_POST['method'];
 }
 
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	$benutzername = $c_username;
 }
+*/
+
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
@@ -87,7 +100,7 @@ echo "
 			system($statement, $fp);
 			if ($fp==0)
 			{
-				echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$c_username/kml_files/pic2base.sql'>hier</a>.</font>"; 
+				echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.sql'>hier</a>.</font>"; 
 			}
 			else
 			{
@@ -160,7 +173,7 @@ echo "
 			 $fh = fopen($kml_dir.'/pic2base.xml','r');
 			 if($fh)
 			 {
-			 	echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$c_username/kml_files/pic2base.xml'>hier</a>.</font>"; 
+			 	echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.xml'>hier</a>.</font>"; 
 			 }
 			 else
 			 {

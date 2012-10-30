@@ -1,3 +1,14 @@
+<?php 
+IF (!$_COOKIE['uid'])
+{
+	include '../../share/global_config.php';
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
+}
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
@@ -32,12 +43,15 @@
  *
  */
 
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	$benutzername = $c_username;
 }
+*/
+
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
@@ -54,10 +68,9 @@ echo "
 	</div>
 	
 	<div id='spalte1'>
-	<!--DB-Export<BR><BR><BR>Diese Funktion steht noch nicht zur Verf&uuml;gung.-->
 	
 	<font color='green'>
-	<p  style='margin-top:20px;'><b>pic2base - Export</b></p>
+		<p  style='margin-top:20px;'><b>pic2base - Export</b></p>
 	</font>
 	<fieldset style='width:390px; background-color:lightyellow; margin-top:10px;'>
 	<legend style='color:blue; font-weight:bold;'>SQL-Export</legend>
