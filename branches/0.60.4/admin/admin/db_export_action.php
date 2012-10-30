@@ -67,8 +67,11 @@ IF ($_COOKIE['login'])
 }
 */
 
-INCLUDE '../../share/global_config.php';
+include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
 
 echo "
 <div class='page'>
@@ -100,7 +103,11 @@ echo "
 			system($statement, $fp);
 			if ($fp==0)
 			{
-				echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.sql'>hier</a>.</font>"; 
+				echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.sql'>hier</a>.</font>";
+				//log-file schreiben:
+				$fh_log = fopen($p2b_path.'pic2base/log/p2b.log','a');
+				fwrite($fh_log,date('d.m.Y H:i:s').": Die pic2base-DB wurde von ".$username." als SQL exportiert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+				fclose($fh_log); 
 			}
 			else
 			{
@@ -173,7 +180,11 @@ echo "
 			 $fh = fopen($kml_dir.'/pic2base.xml','r');
 			 if($fh)
 			 {
-			 	echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.xml'>hier</a>.</font>"; 
+			 	echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.xml'>hier</a>.</font>";
+			 	//log-file schreiben:
+				$fh_log = fopen($p2b_path.'pic2base/log/p2b.log','a');
+				fwrite($fh_log,date('d.m.Y H:i:s').": Die pic2base-DB wurde von ".$username." als XML exportiert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+				fclose($fh_log);  
 			 }
 			 else
 			 {
