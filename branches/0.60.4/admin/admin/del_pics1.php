@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -43,26 +47,30 @@ include '../../share/global_config.php';
 <BODY LANG="de-DE">
 <DIV Class="klein">
 <?php
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+/*
 if(array_key_exists('user_id',$_GET))
 {
 	$user_id = $_GET['user_id']; 
 }
-
+*/
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base :: vorgemerkte Bilder l&ouml;schen <span class='klein'>(User: $c_username)</span></p>
+	<p id='kopf'>pic2base :: vorgemerkte Bilder l&ouml;schen <span class='klein'>(User: $username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
@@ -141,7 +149,7 @@ echo "
 					$keywords = mysql_result($result0, $i0, 'keywords');
 					$owner = mysql_result($result0, $i0, 'Owner');
 					$result1 = mysql_query("SELECT username, vorname, name FROM $table1 WHERE id = '$owner'");
-					$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+					$ownername = utf8_encode(mysql_result($result1, isset($i1), 'username'));
 					$vorname = utf8_encode(mysql_result($result1, isset($i1), 'vorname'));
 					$name = utf8_encode(mysql_result($result1, isset($i1), 'name'));
 					$FileNameHQ = mysql_result($result0, $i0, 'FileNameHQ');
@@ -164,7 +172,7 @@ echo "
 					<TD style='width=30px; text-align: center;'><SPAN style='cursor:pointer;' onClick=\"if(confirm('Wollen Sie das Bild wirklich aus der Datenbank entfernen?')) manage_picture('$pic_id', 'delete')\"><img src='../../share/images/delete.gif' title='Bild $pic_id aus der Datenbank l&ouml;schen' /></a></TD>
 					<TD style='width=265px; text-align: center;'><a href=#  style='text-decoration:none'; title='".$keywords."'>".substr($keywords,0,35)."</TD>
 					<TD style='width=265px; text-align: center;'><a href=#  style='text-decoration:none'; title='".$caption_abstract."'>".substr($caption_abstract,0,35)."</TD>
-					<TD style='width=50px; text-align: center;'><a href=#  style='text-decoration:none'; title='".$vorname." ".$name."'>".$username."</a></TD>
+					<TD style='width=50px; text-align: center;'><a href=#  style='text-decoration:none'; title='".$vorname." ".$name."'>".$ownername."</a></TD>
 					</TR>";
 				}
 				echo "
