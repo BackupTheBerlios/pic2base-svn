@@ -1,6 +1,11 @@
 <?php
+//####################################################
+//
+//informative Auflistung der moeglichen Berechtigungen
+//
+//####################################################
 include '../../share/global_config.php';
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
   	header('Location: ../../../index.php');
 }
