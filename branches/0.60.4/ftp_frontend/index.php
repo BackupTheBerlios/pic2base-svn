@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: index.php
  *
- * Copyright (c) 2003 - 2010 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -32,18 +32,16 @@
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
 
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'adminlogin', $sr))
+IF(hasPermission($uid, 'adminlogin', $sr))
 {
 	$navigation = 	"<a class='navi_blind'></a>
 			<a class='navi' href='?action=about'>About</a>
