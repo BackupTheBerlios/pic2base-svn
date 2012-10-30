@@ -1,11 +1,19 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
 }
-
+else
+{
+	$uid = $_COOKIE['uid'];
+}
+//#########################################################################
+//
+//Skript listet im Admin-Bereich alle Ortsbezeichnungen zur Bearbeitung auf
+//
+//#########################################################################
 $result = mysql_query("select * from $table2 WHERE City <> 'Ortsbezeichnung' GROUP BY City ORDER BY City");
 $num = mysql_num_rows($result);
 echo "<center><table class='normal' border='0'>

@@ -1,7 +1,6 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-	//var_dump($sr);
   	header('Location: ../../../index.php');
 }
 
@@ -111,11 +110,11 @@ IF($locationname_new !== $locationname)
   	}
   	echo "<meta http-equiv='Refresh' Content='2; URL=adminframe.php?item=editlocationname'>";
 
-?>
-<script language="javascript">
-document.location.locationname.focus();
-</script>
-<?php
+	?>
+	<script language="javascript">
+	document.location.locationname.focus();
+	</script>
+	<?php
 }
 ELSE
 {
