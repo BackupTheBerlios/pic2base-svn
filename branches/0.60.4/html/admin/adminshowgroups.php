@@ -1,10 +1,16 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../../index.php');
 }
+
+//#######################################################
+//
+//Liste aller angelegten Benutzergruppen
+//
+//#######################################################
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
