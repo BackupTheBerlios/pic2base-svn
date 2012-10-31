@@ -201,8 +201,8 @@ IF($del == '1')
   	$num3 = mysql_num_rows($result3);
   	FOR($i3='0'; $i3<$num3; $i3++)
   	{
-	  	$Vorname = mysql_result($result3, $i3, 'vorname');
-	  	$Name = mysql_result($result3, $i3, 'Name');
+	  	$Vorname = utf8_encode(mysql_result($result3, $i3, 'vorname'));
+	  	$Name = utf8_encode(mysql_result($result3, $i3, 'Name'));
 	  	$ID = mysql_result($result3, $i3, 'id');
 	  	echo "<OPTION value='$ID'>".$Vorname." ".$Name."</OPTION>";
   	}

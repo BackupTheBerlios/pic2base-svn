@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
 	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 
 // abzuarbeitende Schritte:
@@ -18,8 +22,11 @@ $id = $_GET['id'];
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
 //echo "User-ID: ".$users;
-if (hasPermission($c_username, 'adminlogin', $sr) AND $users !== '')
+if (hasPermission($uid, 'adminlogin', $sr) AND $users !== '')
 {
 	$result0 = mysql_query( "SELECT username FROM $table1 WHERE id = '$id'");
 	$benutzername = mysql_result($result0, isset($i0), 'username');
@@ -32,7 +39,7 @@ if (hasPermission($c_username, 'adminlogin', $sr) AND $users !== '')
 	$result3 = mysql_query( "DELETE FROM $table7 WHERE user_id = '$id'");
 	echo "L&ouml;sche aus Userrechte alles f&uuml;r User $id";
 	
-	$user_dir = $ftp_path."/".$benutzername;
+	$user_dir = $ftp_path."/".$id;
 	$command = "rm -r ".$user_dir;
 	shell_exec($command." > /dev/null &");
 
@@ -50,7 +57,7 @@ if (hasPermission($c_username, 'adminlogin', $sr) AND $users !== '')
 	{
 		//log-file schreiben:
 		$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-		fwrite($fh,date('d.m.Y H:i:s').": Benutzer ".$benutzername." wurde von ".$c_username." geloescht. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+		fwrite($fh,date('d.m.Y H:i:s').": Benutzer ".$benutzername." wurde von ".$username." geloescht. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 		fclose($fh);
 		echo "<meta http-equiv='Refresh' content='2; URL=adminframe.php?item=adminshowusers'>";
 	}
