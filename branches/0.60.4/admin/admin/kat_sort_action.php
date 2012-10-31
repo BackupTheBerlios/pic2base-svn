@@ -32,14 +32,12 @@
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
 echo "<div id='blend' style='display:block; z-index:99;'>
-<p style='color:white; position:absolute; top:100px; left:400px; z-index:102;' />Die &Auml;nderungen werden ausgef&uuml;hrt, bitte warten Sie...</p>
+<p style='color:white; position:absolute; top:100px; left:300px; z-index:102;' />Die &Auml;nderungen werden ausgef&uuml;hrt, bitte warten Sie...<BR>Sie werden nach Beendigung der Sortierung wieder automatisch zur Startseite geleitet.</p>
 </div>";
 
 ob_flush();
@@ -51,7 +49,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-IF(hasPermission($c_username, 'editkattree', $sr))
+IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "<a class='navi' href='kategorie0.php?kat_id=0'>Zur&uuml;ck</a>";
 }
@@ -83,8 +81,8 @@ IF(hasPermission($c_username, 'editkattree', $sr))
 @$kat_source = $_POST['kat_source'];		// diese Kategorie soll samt aller unterkategorien umgehaengt werden
 @$kat_dest = $_POST['kat_dest'];			// unter diese Kategorie soll der Zweig eingehaengt werden
 $exiftool = buildExiftoolCommand($sr);
-$result0 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
-$user_id = mysql_result($result0, isset($i0), 'id');
+//$result0 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
+//$user_id = mysql_result($result0, isset($i0), 'id');
 
 IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND $kat_dest !== '' AND $kat_dest !== NULL)
 {
@@ -93,7 +91,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	$old_parent = mysql_result($result1, isset($i1), 'parent'); //unterhalb dieser Kategorie war die umzuhaengende Kat. bisher eingehaengt
 	$old_level = mysql_result($result1, isset($i1), 'level');
 	
-//	echo "Benutzer: ".$user_id."<BR>";
+//	echo "Benutzer: ".$uid."<BR>";
 //	echo "umzuh&auml;ngende Kategorie: ".$kat_source."<BR>";
 //	echo "Diese Kategorie war bisher unter ".$old_parent." eingeh&auml;ngt.<BR>";
 //	echo "Sie soll neu unter Kat. ".$kat_dest." eingeh&auml;ngt werden.<BR><BR>";
@@ -140,9 +138,9 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	
 	//Ermittlung aller Unterkategorien unter der umzuhaengenden Kategorie:
 	//zur Sicherheit Bereinigung der tmp_tree-Tabelle:
-	$result3 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$user_id'");
+	$result3 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$uid'");
 	//Parameter der umzuhaengenden Kat. werden in die Tabelle tmp_tree geschrieben:
-	$result4 = mysql_query( "INSERT INTO $table15 (kat_id, old_level, kat_name, user_id, new_level, new_parent) VALUES (\"$kat_source\", \"$old_level\", \"$source_name\", '$user_id', \"$new_level\", \"$kat_dest\")");
+	$result4 = mysql_query( "INSERT INTO $table15 (kat_id, old_level, kat_name, user_id, new_level, new_parent) VALUES (\"$kat_source\", \"$old_level\", \"$source_name\", '$uid', \"$new_level\", \"$kat_dest\")");
 	echo mysql_error();
 	
 	$delta_level = $new_level - $old_level;
@@ -200,7 +198,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 	}
 	// parent und level fuer die umzuhaengende Kategorie wird in der Tabelle 4 (kategorien) geaendert:
 	// (Uebertragung der Daten aus der tmp-Tabelle in die Kategorie-Tabelle)
-	$result8 = mysql_query( "SELECT * FROM $table15 WHERE user_id = '$user_id'");
+	$result8 = mysql_query( "SELECT * FROM $table15 WHERE user_id = '$uid'");
 	$num8 = mysql_num_rows($result8);
 	FOR($i8='0'; $i8<$num8; $i8++)
 	{
@@ -296,8 +294,8 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 		}
 	}
 	//abschliessend wird die tabelle tmp_tree gesaeubert:
-	$result15 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$user_id'");
-	echo "<BR><BR><input type='button' style='margin-top:180px;' Value='Fertig - Zur&uuml;ck' onClick='location.href=\"kat_ausw1.php\"'>";
+	$result15 = mysql_query( "DELETE FROM $table15 WHERE user_id = '$uid'");
+	echo "<meta http-equiv='refresh', content='0; url=kat_ausw1.php'>";
 }
 ELSE
 {

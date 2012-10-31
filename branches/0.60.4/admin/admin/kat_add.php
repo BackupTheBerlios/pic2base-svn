@@ -32,7 +32,7 @@
  * Project: pic2base
  * File: kat_add.php
  *
- * Copyright (c) 2003 - 2006 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -41,22 +41,18 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2006 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
-IF(hasPermission($c_username, 'editkattree', $sr))
+
+IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "
 			<a class='navi' href='kat_sort1.php'>Sortierung</a>

@@ -32,32 +32,17 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  */
-//setlocale(LC_CTYPE, 'de_DE');
-unset($username);
-IF ($_COOKIE['login'])
+
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-//include_once $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include_once $sr.'/bin/share/functions/ajax_functions.php';
-/*
-IF(hasPermission($c_username, 'editkattree', $sr))
-{
-	$navigation = 	"<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
-					<a class='navi' href='../../html/start.php'>zur Startseite</a>
-					<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-					";
-}
-ELSE
-{
-	$navigation = 	"<a class='navi' href='../../../index.php'>Logout</a>";
-}
-*/
+
 echo "
 <div class='page'>
 <FORM name='kat-zuweisung' method='post' action='kat_sort_action.php'>
@@ -65,7 +50,7 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-		createNavi5_1($c_username);
+		createNavi5_1($uid);
 		echo "<INPUT type='submit' class='button3' value = 'Speichern'><BR>
 		<INPUT type='button' class='button3a' value='Abbrechen' OnClick='location.href=\"$inst_path/pic2base/bin/html/admin/adminframe.php\"'>
 		</div>

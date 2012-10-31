@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: kat_sort1.php
  *
- * Copyright (c) 2003 - 2010 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -31,17 +31,16 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
-IF(hasPermission($c_username, 'editkattree', $sr))
+
+IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "
 			<a class='navi_blind' href='kat_sort1.php'>Sortierung</a>
@@ -80,7 +79,6 @@ ELSE
 	//Erzeugung der Baumstruktur:
 	//Beim ersten Aufruf der Seite wird nur das Wurzel-Element angezeigt.
 	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// f�r register_globals = off
 	if(array_key_exists('kat_id',$_GET))
 	{
 		$kat_id = $_GET['kat_id']; 
@@ -96,8 +94,6 @@ ELSE
 	
 	WHILE ($kat_id > '1')
 	{
-		//include '../../share/db_connect1.php';
-		//INCLUDE '../../share/global_config.php';
 		$res0 = mysql_query( "SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
 		echo mysql_error();
 		$kat_id = mysql_result($res0, isset($i0), 'parent');

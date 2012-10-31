@@ -25,19 +25,21 @@
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
 
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+
 echo "
 <div class='page'>
-	<p id='kopf'>pic2base :: Stapelverarbeitung Kategorie-Umbenennung <span class='klein'>(User: ".$c_username.")</span></p>
+	<p id='kopf'>pic2base :: Stapelverarbeitung Kategorie-Umbenennung <span class='klein'>(User: ".$username.")</span></p>
 		
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>

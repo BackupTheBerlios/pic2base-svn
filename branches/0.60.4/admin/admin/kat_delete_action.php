@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: kat_delete_action.php
  *
- * Copyright (c) 2003 - 2008 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -31,18 +31,16 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'editkattree', $sr))
+IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "
 	<a class='navi' href='kat_sort1.php'>Sortierung</a>

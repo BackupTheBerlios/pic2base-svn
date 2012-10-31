@@ -22,7 +22,7 @@
  * Project: pic2base
  * File: kategorie0.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -33,17 +33,17 @@
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
-IF(hasPermission($c_username, 'editkattree', $sr))
+
+IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "
 			<a class='navi' href='kat_sort1.php'>Sortierung</a>
@@ -59,7 +59,7 @@ IF(hasPermission($c_username, 'editkattree', $sr))
 }
 ELSE
 {
-	
+	header('Location: ../../../index.php');
 }
 
 $kat_id = $_GET['kat_id'];

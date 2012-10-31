@@ -36,17 +36,16 @@
  * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
  
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'editkattree', $sr))
+IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "
 			<a class='navi' href='kat_sort1.php'>Sortierung</a>
@@ -62,7 +61,7 @@ IF(hasPermission($c_username, 'editkattree', $sr))
 }
 ELSE
 {
-	
+	header('Location: ../../../index.php');
 }
 function setFontColor($ID, $kat_id)
 {
