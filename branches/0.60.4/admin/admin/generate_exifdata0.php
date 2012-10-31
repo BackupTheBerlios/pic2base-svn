@@ -1,9 +1,8 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+		include '../../share/global_config.php';
+  		header('Location: ../../../index.php');
 }
 ?>
 
@@ -44,13 +43,6 @@ include '../../share/global_config.php';
  *
  *Datei leist Meta-Daten aus den Bild-Dateien aus und schreibt sie in die Tabelle pictures
  */
-
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-$benutzername = $c_username;
-}
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';

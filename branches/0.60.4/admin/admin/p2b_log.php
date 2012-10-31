@@ -31,13 +31,6 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 

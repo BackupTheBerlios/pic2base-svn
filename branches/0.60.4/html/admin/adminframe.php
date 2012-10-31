@@ -27,14 +27,7 @@ $Uid = $_COOKIE['uid'];
 <DIV Class="klein">
 
 <?php
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
-*/
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 

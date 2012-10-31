@@ -1,9 +1,8 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+  	header('Location: ../../../index.php');
 }
 
 include '../../share/global_config.php';

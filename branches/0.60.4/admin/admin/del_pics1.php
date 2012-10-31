@@ -2,7 +2,6 @@
 IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
-	//var_dump($sr);
   	header('Location: ../../../index.php');
 }
 else
@@ -47,13 +46,7 @@ else
 <BODY LANG="de-DE">
 <DIV Class="klein">
 <?php
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
@@ -61,12 +54,7 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
-/*
-if(array_key_exists('user_id',$_GET))
-{
-	$user_id = $_GET['user_id']; 
-}
-*/
+
 echo "
 <div class='page'>
 

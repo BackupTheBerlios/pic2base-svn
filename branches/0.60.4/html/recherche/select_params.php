@@ -17,7 +17,7 @@ else
 <head>
   <title>Neue Konvertierungs-Parameter</title>
   <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <link rel=stylesheet type="text/css" href='../../css/format1.css'>
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
@@ -39,17 +39,11 @@ function eraseCookie(name, domain, path)
 
 <body style='background-color:#999999'>
 <?php
+//################################################################################################
+//
 // verwendet als Popup-Fenster zur Festlegung der neuen Konvertierungs-Parameter fuer das RAW-Bild
-
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-	$benutzername = $c_username;
-}
-*/
+//
+//################################################################################################
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -57,8 +51,6 @@ include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 $exiftool = buildExiftoolCommand($sr);
-
-//$pic_id = '10';
 
 if ( array_key_exists('pic_id',$_GET) )
 {

@@ -10,12 +10,6 @@ $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
 $fs_hoehe = '76';											//Hoehe der Bilder im Filmstreifen in px
 //############################################################################################################
 // [Benutzerspezifische Pfade]
-/*
-if(!isset($benutzername))
-{
-	$benutzername = '';
-}
-*/
 if(!isset($uid))
 {
 	$uid = '';

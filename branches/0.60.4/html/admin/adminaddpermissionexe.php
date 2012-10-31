@@ -1,17 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+  	header('Location: ../../../index.php');
 }
-
-	unset($username);
-	IF ($_COOKIE['login'])
-	{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-	}
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 	//var_dump($_POST);
 	if(array_key_exists('description',$_POST))
 	{
@@ -30,7 +26,7 @@ include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
 
-	if ((hasPermission($c_username, 'addpermission', $sr)) AND ($description !== '') AND ($shortdescription !== '') AND ($permission_id !== ''))
+	if ((hasPermission($uid, 'addpermission', $sr)) AND ($description !== '') AND ($shortdescription !== '') AND ($permission_id !== ''))
 	{
 		mysql_connect ($db_server, $user, $PWD);
 		$res1 = mysql_query("SELECT * FROM $table8 WHERE perm_id = '$permission_id'");

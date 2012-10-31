@@ -53,15 +53,6 @@ $name = $row['name'];
 //$u_name = $row['username'];
 $lang = $row['language'];
 
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
-*/
-
 //Ermittlung aller writable gesetzten Tags in der exif_protect-Tabelle (Obermenge):
 $result1 = mysql_query( "SELECT * FROM $table5 WHERE writable = '1'");
 $num1 = mysql_num_rows($result1);

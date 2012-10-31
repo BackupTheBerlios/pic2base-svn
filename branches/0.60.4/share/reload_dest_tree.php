@@ -1,16 +1,15 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
-	//var_dump($sr);
 	header('Location: ../../index.php');
 }
 
 //echo "Quell-Kat-ID: ".$kat_id_s."<BR>";
-include 'db_connect1.php';
-INCLUDE 'global_config.php';
+include 'global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+//INCLUDE 'global_config.php';
 
-// fuer register_globals = off
 if(array_key_exists('kat_id_s',$_GET))
 {
 	$kat_id_s = $_GET['kat_id_s']; 
@@ -20,8 +19,8 @@ else
 	$kat_id_s = 0;
 }
 
-//Es muss sichergestellt werden, dass als Zielkategorie keine Kategorie unterhalb der Quellkategorie gewaehlt werden kann, denn diese wird ja gel�scht! $child_arr enth�lt alle 'verbotenen' Kategorien
-
+// Es muss sichergestellt werden, dass als Zielkategorie keine Kategorie unterhalb der Quellkategorie gewaehlt werden kann, denn diese wird ja geloescht! 
+// $child_arr enthaelt alle 'verbotenen' Kategorien
 //Bestimmung aller Unterkategorien der gewaehlten Quell-Kategorie:
 
 $res1 = mysql_query("SELECT max(level) FROM $table4");

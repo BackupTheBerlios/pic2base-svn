@@ -3,7 +3,6 @@
 IF ($_COOKIE['uid'])
 {
 	$uid = $_COOKIE['uid'];
-	//list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
 
 if (array_key_exists('file',$_GET))

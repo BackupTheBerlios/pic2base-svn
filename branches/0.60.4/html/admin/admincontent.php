@@ -8,10 +8,8 @@ IF (!$_COOKIE['uid'])
 }
 ELSE
 {
-//	unset($username);
 	IF ($_COOKIE['uid'])
 	{
-//		list($c_username) = preg_split('#,#',$_COOKIE['login']);
 		$uid = $_COOKIE['uid'];
 		IF(!hasPermission($uid, 'adminlogin', $sr) AND (!hasPermission($uid, 'editkattree', $sr)) AND (!hasPermission($uid, 'editlocationname', $sr)))
 		{

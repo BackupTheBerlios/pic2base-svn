@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - DB-Wartung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -38,18 +38,20 @@ echo "<font color='white'>Speicher-Nutzung: ".memory_get_usage()."</font>";
  */
 
 unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['login'];
 }
-//$benutzername = $c_username;
+
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
-//include $sr.'/bin/share/functions/ajax_functions.php';
 
-IF(hasPermission($c_username, 'editkattree', $sr))
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+
+IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "
 			<a class='navi' href='kat_sort1.php'>Sortierung</a>
@@ -124,7 +126,7 @@ echo "
 		Bevor Sie weitere Schritte unternehmen, sollten Sie abschlie&szlig;end die Dublettenpr&uuml;fung vornehmen.<BR>
 		Dies dauert nur einen Moment, stellt aber sicher, da&szlig; Sie keine Datens&auml;tze doppelt erfa&szlig;t haben.<BR><BR>
 		Klicken Sie hierzu auf diesen Button:<BR>
-		<center><input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&c_username=$c_username\"'></center></p>
+		<center><input type='button' value='zur Dublettenpr&uuml;fung' onClick='location.href=\"../../html/erfassung/doublettenliste1.php?method=all&c_username=$username\"'></center></p>
 	</DIV>
 	
 	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>

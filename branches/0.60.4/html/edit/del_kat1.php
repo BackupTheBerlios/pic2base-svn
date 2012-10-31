@@ -1,5 +1,5 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
@@ -10,7 +10,7 @@ IF (!$_COOKIE['login'])
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Kategorie l&ouml;schen</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -41,14 +41,6 @@ IF (!$_COOKIE['login'])
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
-
-//var_dump($_GET);
 IF(array_key_exists('kat_id', $_GET))
 {
 	$kat_id = $_GET['kat_id'];
@@ -62,7 +54,9 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+
 $result2 = mysql_query("SELECT * FROM $table4 WHERE kat_id =  '$kat_id'");
 $kategorie = mysql_result($result2, isset($i2), 'kategorie');
 $parent = mysql_result($result2, isset($i2), 'parent');
@@ -71,12 +65,12 @@ $parent = mysql_result($result2, isset($i2), 'parent');
 
 <div class="page">
 
-	<p id="kopf">pic2base :: Kategoriezuweisung aufheben <span class='klein'>(User: <?php echo $c_username;?>)</span></p>
+	<p id="kopf">pic2base :: Kategoriezuweisung aufheben <span class='klein'>(User: <?php echo $username;?>)</span></p>
 	
 	<div class="navi" style="clear:right;">
 		<div class="menucontainer">
 		<?php
-		createNavi3_1($c_username);
+		createNavi3_1($uid);
 		//echo $navigation;
 		?>
 		</div>

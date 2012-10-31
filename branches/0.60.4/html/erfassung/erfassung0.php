@@ -15,7 +15,7 @@ $uid = $_COOKIE['uid'];
   <title>pic2base - Erfassung</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel=stylesheet type="text/css" href="../../css/format1.css">
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
 </head>
@@ -42,13 +42,7 @@ $uid = $_COOKIE['uid'];
 <BODY LANG="de-DE" scroll = "auto">
 <DIV Class="klein">
 <?php
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
+
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 

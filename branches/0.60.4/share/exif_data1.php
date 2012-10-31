@@ -1,9 +1,8 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+  	header('Location: ../../index.php');
 }
 
 // PHP-Version ermitteln
@@ -263,18 +262,7 @@ if($vernum >= 420)
 			echo "Lon. in Dezimalform: ".$GPSLongitude."<BR>";
 		}
 	}
-      /*
-      if($exifdata["GPS"]["GPSLatitude"])
-      {
-      	$GPSLatitude=$exifdata["GPS"]["GPSLatitude"];  echo $GPSLatitude."<BR>";
-      	$GPSLatitude_EP = 1;
-      }
-      if($exifdata["GPS"]["GPSLongitude"])
-      {
-      	$GPSLongitude=$exifdata["GPS"]["GPSLongitude"];  echo $GPSLongitude."<BR>";
-      	$GPSLongitude_EP = 1;
-      }
-      */
+ 
       if($exifdata["GPS"]["GPSAltitude"])
       {
       	$GPSAltitude=$exifdata["GPS"]["GPSAltitude"];  //echo $GPSAltitude."<BR>";

@@ -31,17 +31,15 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
  
 INCLUDE '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, $i1, 'berechtigung');
 SWITCH ($berechtigung)
 {

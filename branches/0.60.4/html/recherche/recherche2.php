@@ -159,17 +159,6 @@ function showDiary(aufn_dat)
 <DIV Class="klein">
 
 <?php 
-//var_dump($_REQUEST);
-
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-	$benutzername = $c_username;
-}
-*/
 
 IF (array_key_exists('bewertung', $_COOKIE))
 {
@@ -191,9 +180,6 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
-
-//var_dump($_GET);
-//var_dump($_POST);
 
 if ( array_key_exists('pic_id',$_GET) )
 {

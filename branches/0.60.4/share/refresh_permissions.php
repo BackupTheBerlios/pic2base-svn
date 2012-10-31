@@ -1,17 +1,14 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
-	//var_dump($sr);
 	header('Location: ../../index.php');
 }
-
-unset($username);
-IF ($_COOKIE['login'])
+else
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
+
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';

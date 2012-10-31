@@ -1,26 +1,24 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
 <?php
-	unset($username);
-	IF ($_COOKIE['login'])
-	{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-	}
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/permissions.php';
 	
 	$group_id = $_GET['group_id']; // fuer register_globals = off
 	$permission_id = $_GET['permission_id']; // fuer register_globals = off
-	if (hasPermission($c_username, 'adminlogin', $sr))
+	if (hasPermission($uid, 'adminlogin', $sr))
 	{
 		mysql_connect ($db_server, $user, $PWD);
 		$result = mysql_query("SELECT * FROM $table6 WHERE group_id='".$group_id."' AND permission_id='".$permission_id."'");

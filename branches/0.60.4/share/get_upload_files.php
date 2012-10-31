@@ -2,9 +2,6 @@
 unset($username);
 IF ($_COOKIE['uid'])
 {
-	//list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-	//$benutzername = $c_username;
 	$uid = $_COOKIE['uid'];
 }
 

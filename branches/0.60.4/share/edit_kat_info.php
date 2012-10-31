@@ -26,8 +26,6 @@ else
 <?php
 // verwendet als Popup-Fenster mit den Kategorie-Infos
 
-//var_dump($_REQUEST);
-
 if(array_key_exists('kat_id',$_GET))
 {
 	$kat_id = $_GET['kat_id'];
@@ -48,22 +46,8 @@ $num0 = mysql_num_rows($result0);
 $row = mysql_fetch_array($result0);
 //var_dump($row);
 $kategorie = htmlentities($row['kategorie']);
-//$kategorie = htmlentities(mysql_result($result0, isset($i0), 'kategorie'));
-//$info = mysql_result($result0, isset($i0), 'info');
 $info = $row['info'];
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
 
-$result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
-$row = mysql_fetch_array($result2);
-//$group_id = mysql_result($result2, isset($i2), 'group_id');
-$group_id = $row['group_id'];
-*/
 IF(hasPermission($uid, 'editkatlex', $sr))	//berechtigte User duerfen das Kat.-Lexikon editieren
 {
 	$editable = '1';
@@ -106,7 +90,6 @@ echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post'>
 		</TD>
 	</TR>
 
-	
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
 		</TD>

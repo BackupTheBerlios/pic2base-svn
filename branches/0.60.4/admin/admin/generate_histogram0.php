@@ -1,9 +1,12 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
@@ -42,26 +45,19 @@ include '../../share/global_config.php';
  * Skript erzeugt Histogramme und speichert sie im Histogramm-Ordner
  */
 
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-}
-
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$conv = buildConvertCommand($sr);
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
 
-$result0 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username'");
-$user_id = mysql_result($result0, isset($i0), 'id');
+$conv = buildConvertCommand($sr);
 
 
 echo "<div class='page'>
 
-	<p id='kopf'>pic2base :: Histogramm-Erzeugung <span class='klein'>(User: <?echo $c_username;?>)</span></p>
+	<p id='kopf'>pic2base :: Histogramm-Erzeugung <span class='klein'>(User: <?echo $username;?>)</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";

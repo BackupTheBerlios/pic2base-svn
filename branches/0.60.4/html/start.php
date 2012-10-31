@@ -1,12 +1,13 @@
 <?php
-//IF (!$_COOKIE['login'])
 IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
-	//var_dump($sr);
 	header('Location: ../../index.php');
 }
-$uid = $_COOKIE['uid'];
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -46,10 +47,10 @@ $uid = $_COOKIE['uid'];
 <script language="javascript" type="text/javascript" src="../share/functions/ShowPicture.js"></script>
 <script language="JavaScript">
 <!--
-function delAllMetadata(c_username)
+function delAllMetadata(uid)
 {
 	//alert("User: "+c_username);
-	Fenster1 = window.open('../share/del_all_metadata.php?c_username='+c_username, 'entferne Metadaten...', "width=300,height=70,scrollbars,resizable=no,");
+	Fenster1 = window.open('../share/del_all_metadata.php?uid='+uid, 'entferne Metadaten...', "width=300,height=70,scrollbars,resizable=no,");
 	Fenster1.focus();
 }
 -->
@@ -67,7 +68,7 @@ function delAllMetadata(c_username)
  * Project: pic2base
  * File: start.php
  *
- * Copyright (c) 2006 - 2011 Klaus Henneberg
+ * Copyright (c) 2006 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -77,15 +78,6 @@ function delAllMetadata(c_username)
  * http://www.opensource.org/licenses/osl-2.1.php
  *
  */
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-$benutzername = $c_username;
-//echo $c_username;
-}
-*/
  
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -458,7 +450,7 @@ echo "<div class='page'>
 			<TD class='normal' align='center' colspan='10'><INPUT type='submit' name='upload' value='Upload starten'></TD>
 			</TR>
 			
-			<INPUT type='hidden' name='ordner' value='$ftp_path/$username/uploads' size='70'>
+			<INPUT type='hidden' name='ordner' value='$ftp_path/$uid/uploads' size='70'>
 			
 			<tr class='normal'>
 			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;
@@ -481,7 +473,7 @@ echo "<div class='page'>
 				<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
 				</TR>
 				
-				<INPUT type='hidden' name='ordner' value='$ftp_path/$username/uploads' size='70' readonly>
+				<INPUT type='hidden' name='ordner' value='$ftp_path/$uid/uploads' size='70' readonly>
 				
 				<TR class='normal'>
 				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
@@ -521,7 +513,7 @@ echo "<div class='page'>
 			<TR class='normal'>
 			<TD class='normal' align='left' valign='top' colspan='3'></TD>
 			<TD class='normal' align='left' colspan='7'>
-			<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$username\")'>
+			<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$uid\")'>
 			</TD>
 			</TR>";
 		}

@@ -43,14 +43,6 @@ else
  *
  */
 
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
-
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 //include $sr.'/bin/share/functions/permissions.php';

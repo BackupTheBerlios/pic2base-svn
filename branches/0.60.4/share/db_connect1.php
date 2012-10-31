@@ -2,7 +2,7 @@
 //[Programm-Version]
 $version = "0.60.4"; // 
 $rel = "07102012.1";
-$vom = "(07.10.2012)";
+$vom = "(17.10.2012)";
 
 //[copyright-Vermerk in der Fusszeile]
 $cr = "<FONT COLOR=#7b7d8e>______</FONT>2006 - 2012";

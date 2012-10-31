@@ -1,12 +1,15 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../index.php');
 }
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 
-//var_dump($_REQUEST);
 //==============================================
 //											   |
 //* Skript generiert die Filmstreifen-Ansicht  |
@@ -245,14 +248,9 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
 
-unset($c_username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-$benutzername = $c_username;
-$result15 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result15, isset($i15), 'id');
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+$user_id = $uid;
 
 $server_url = "http://{$_SERVER['SERVER_NAME']}$inst_path";
 
@@ -267,7 +265,7 @@ if (!isset($zusatz))
 
 echo '
 <script language="javascript">
-var c_username = "'.$c_username.'";
+var c_username = "'.$username.'";
 </script>
 ';
 
@@ -402,7 +400,7 @@ SWITCH ($modus)
 		//gueltig fuer alle Kategorien ausser Wurzel:
 		//abhaengig von der Berechtigung werden die in Frage kommenden Bilder dargestellt:
 
-		IF(hasPermission($c_username, 'editallpics', $sr))
+		IF(hasPermission($uid, 'editallpics', $sr))
 		{
 			IF($treestatus == 'plus')
 			{
@@ -425,7 +423,7 @@ SWITCH ($modus)
 				echo mysql_error();
 			}
 		}
-		ELSEIF(hasPermission($c_username, 'editmypics', $sr))
+		ELSEIF(hasPermission($uid, 'editmypics', $sr))
 		{
 			IF($treestatus == 'plus')
 			{
@@ -544,14 +542,14 @@ SWITCH ($modus)
 	}
 	//echo "Kriterium 1: ".$krit1;
 	
-	IF(hasPermission($c_username, 'editallpics', $sr))
+	IF(hasPermission($uid, 'editallpics', $sr))
 	{
 		$result2 = mysql_query( "SELECT * FROM $table2
 		WHERE aktiv = '1'
 		AND $krit1 
 		ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
 	}
-	ELSEIF(hasPermission($c_username, 'editmypics', $sr))
+	ELSEIF(hasPermission($uid, 'editmypics', $sr))
 	{
 		$result2 = mysql_query( "SELECT * FROM $table2 
 		WHERE (Owner = '$user_id' 
@@ -683,13 +681,15 @@ SWITCH ($modus)
 			ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
 			$pdf_statement = urlencode($statement);
 			//echo $statement; //Statement wird zur Erzeugung der pdf-Galerie benoetigt	
-			
+			/*
 			$result6_1 = mysql_query( "SELECT DateTimeOriginal, ShutterCount, DateInsert, pic_id, ExifImageWidth, ExifImageHeight, Orientation, Owner, note, FileName, aktiv 
 			FROM $table2 
 			$krit1 
 			$krit2 
 			AND aktiv = '1' 
 			ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
+			*/
+			$result6_1 = mysql_query($statement);
 			echo mysql_error();
 			
 			$kml_statement = "SELECT pic_id, City, GPSLongitude, GPSLatitude, GPSAltitude, note, FileNameHQ, Caption_Abstract, DateTimeOriginal, ShutterCount, DateInsert, aktiv 
@@ -706,7 +706,7 @@ SWITCH ($modus)
 			echo mysql_error();
 				
 			//#########################################################################		
-			function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
+			function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 			{
 				$res = "";
 				$sqlResultNumRows = mysql_num_rows($sqlResult);
@@ -722,7 +722,7 @@ SWITCH ($modus)
 					$downloadStatus = 0;
 					//Erzeugung der Download-Icons:
 					$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-					$check = fileExists($fileName, $userName);
+					$check = fileExists($fileName, $uID);
 					IF($check > 0)
 					{
 						//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
@@ -731,9 +731,9 @@ SWITCH ($modus)
 					ELSE
 					{
 						//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-						IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
+						IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
 						{
-							IF(directDownload($userName, $softwareRoot))
+							IF(directDownload($uID, $softwareRoot))
 							{
 								$downloadStatus = 1;
 							}
@@ -761,7 +761,7 @@ SWITCH ($modus)
 			self.getImageArray = function getImageArray()
 			{
 				  imageArray = [];';
-				$previewLayerHtml .= generateImageArray($result6_1, $c_username, $user_id, $sr);
+				$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
 				$previewLayerHtml .= '
 				  return imageArray;
 			}
@@ -805,7 +805,7 @@ SWITCH ($modus)
 					
 				//#########################################################	
 			
-				function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
+				function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 				{
 					$res = "";
 					$sqlResultNumRows = mysql_num_rows($sqlResult);
@@ -821,7 +821,7 @@ SWITCH ($modus)
 						$downloadStatus = 0;
 						//Erzeugung der Download-Icons:
 						$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-						$check = fileExists($fileName, $userName);
+						$check = fileExists($fileName, $uID);
 						IF($check > 0)
 						{
 							//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
@@ -830,9 +830,9 @@ SWITCH ($modus)
 						ELSE
 						{
 							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
+							IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
 							{
-								IF(directDownload($userName, $softwareRoot))
+								IF(directDownload($uID, $softwareRoot))
 								{
 									$downloadStatus = 1;
 								}
@@ -861,7 +861,7 @@ SWITCH ($modus)
 				{
 				  imageArray = [];
 				';
-				$previewLayerHtml .= generateImageArray($result6_1, $c_username, $user_id, $sr);
+				$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
 				$previewLayerHtml .= '
 				  return imageArray;
 				}
@@ -899,7 +899,7 @@ SWITCH ($modus)
 				$pdf_statement = urlencode($statement);
 				$result6_1 = mysql_query("$statement");
 				//#########################################################				
-				function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
+				function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 				{
 					$res = "";
 					$sqlResultNumRows = mysql_num_rows($sqlResult);
@@ -915,7 +915,7 @@ SWITCH ($modus)
 						$downloadStatus = 0;
 						//Erzeugung der Download-Icons:
 						$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-						$check = fileExists($fileName, $userName);
+						$check = fileExists($fileName, $uID);
 						IF($check > 0)
 						{
 							//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
@@ -924,9 +924,9 @@ SWITCH ($modus)
 						ELSE
 						{
 							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
+							IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
 							{
-								IF(directDownload($userName, $softwareRoot))
+								IF(directDownload($uID, $softwareRoot))
 								{
 									$downloadStatus = 1;
 								}
@@ -955,7 +955,7 @@ SWITCH ($modus)
 				{
 				  imageArray = [];
 				';
-				$previewLayerHtml .= generateImageArray($result6_1, $c_username, $user_id, $sr);
+				$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
 				$previewLayerHtml .= '
 				  return imageArray;
 				}
@@ -1222,7 +1222,7 @@ SWITCH ($modus)
 	//######################################################################### 
 			IF($arr_werte !== 0)
 			{
-				function generateImageArray($pic_id_arr, $userName, $userId, $softwareRoot)
+				function generateImageArray($pic_id_arr, $userName, $uID, $softwareRoot)
 				{
 					//$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
 					//flush();
@@ -1249,7 +1249,7 @@ SWITCH ($modus)
 						
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
 						
-						$check = fileExists($fileNamePrefix, $userName);
+						$check = fileExists($fileNamePrefix, $uID);
 						IF($check > 0)
 						{
 							//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
@@ -1258,9 +1258,9 @@ SWITCH ($modus)
 						ELSE
 						{
 							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
+							IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
 							{
-								IF(directDownload($userName, $softwareRoot))
+								IF(directDownload($uID, $softwareRoot))
 								{
 									$downloadStatus = 1;
 								}
@@ -1294,7 +1294,7 @@ SWITCH ($modus)
 				self.getImageArray = function getImageArray()
 				{
 					imageArray = [];';
-					$previewLayerHtml .= generateImageArray($pic_id_arr, $c_username, $user_id, $sr);
+					$previewLayerHtml .= generateImageArray($pic_id_arr, $username, $uid, $sr);
 					$previewLayerHtml .= '
 					  return imageArray;
 				}
@@ -1460,7 +1460,7 @@ SWITCH ($modus)
 			$result6_1 = mysql_query( $stat_all.") ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
 			
 //#########################################################################				
-		function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
+		function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 		{
 			$res = "";
 			$sqlResultNumRows = mysql_num_rows($sqlResult);
@@ -1476,7 +1476,7 @@ SWITCH ($modus)
 				$downloadStatus = 0;
 				//Erzeugung der Download-Icons:
 				$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-				$check = fileExists($fileName, $userName);
+				$check = fileExists($fileName, $uID);
 				IF($check > 0)
 				{
 					//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
@@ -1486,9 +1486,9 @@ SWITCH ($modus)
 				{
 				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
+					IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
 					{
-						IF(directDownload($userName, $softwareRoot))
+						IF(directDownload($uID, $softwareRoot))
 						//IF($direkt_download > '0')
 						{
 							$downloadStatus = 1;
@@ -1527,7 +1527,7 @@ SWITCH ($modus)
 				$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
 				';
 			}*/
-			$previewLayerHtml .= generateImageArray($result6_1, $c_username, $user_id, $sr);
+			$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
 			$previewLayerHtml .= '
 			  return imageArray;
 		}
@@ -1608,7 +1608,7 @@ SWITCH ($modus)
 		
 			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
 //#########################################################			
-		function generateImageArray($sqlResult, $userName, $userId, $softwareRoot)
+		function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 		{
 			$res = "";
 			$sqlResultNumRows = mysql_num_rows($sqlResult);
@@ -1624,7 +1624,7 @@ SWITCH ($modus)
 				$downloadStatus = 0;
 				//Erzeugung der Download-Icons:
 				$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-				$check = fileExists($fileName, $userName);
+				$check = fileExists($fileName, $uID);
 				IF($check > 0)
 				{
 					//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
@@ -1634,9 +1634,9 @@ SWITCH ($modus)
 				{
 				//echo $Owner.", ".$user_id;
 					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-					IF(($userId == $Owner AND hasPermission($userName, 'downloadmypics', $softwareRoot)) OR hasPermission($userName, 'downloadallpics', $softwareRoot))
+					IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
 					{
-						IF(directDownload($userName, $softwareRoot))
+						IF(directDownload($uID, $softwareRoot))
 						//IF($direkt_download > '0')
 						{
 							$downloadStatus = 1;
@@ -1666,7 +1666,7 @@ SWITCH ($modus)
 		{
 		  imageArray = [];
 		';
-		$previewLayerHtml .= generateImageArray($result6_1, $c_username, $user_id, $sr);
+		$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
 		$previewLayerHtml .= '
 		  return imageArray;
 		}
@@ -1852,7 +1852,7 @@ SWITCH ($modus)
 			{
 			  imageArray = [];
 			';
-			$previewLayerHtml .= generateImageArray($result6_1, $c_username, $user_id, $sr);
+			$previewLayerHtml .= generateImageArray($result6_1, $username, $user_id, $sr);
 			$previewLayerHtml .= '
 			  return imageArray;
 			}
@@ -2033,7 +2033,7 @@ SWITCH ($modus)
 		IF($num6_1 > '0')
 		{
 			$zusatz = "
-			(Diese(s) in <a href='$inst_path/pic2base/userdata/$c_username/kml_files/$file'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\" />
+			(Diese(s) in <a href='$inst_path/pic2base/userdata/$username/kml_files/$file'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\" />
 			<span>
 			<strong>Zur Anzeige der Fotos in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
 			<br />
@@ -2291,13 +2291,13 @@ SWITCH ($modus)
 		
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6_1, $i6_1, 'Owner');
-			$check = fileExists($FileName, $c_username);
+			$check = fileExists($FileName, $uid);
 			IF($check > '0')
 			{
 				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
 				$icon[$j] = "<TD align='center' width='43'>
 				<div id='box$pic_id'>
-				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$username\",\"$pic_id\")'>
 				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/>
 				</SPAN>	
 				</div>
@@ -2305,17 +2305,17 @@ SWITCH ($modus)
 			}
 			ELSE
 			{
-			//echo $Owner.", ".$user_id;
+				//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics', $sr)) OR hasPermission($c_username, 'downloadallpics', $sr))
+				IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
 				{
-					IF(directDownload($c_username, $sr))
+					IF(directDownload($uid, $sr))
 					//IF($direkt_download > '0')
 					{
 						$icon[$j] = "
 						<TD align='center' width='43'>
 						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
+						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$username&pic_id=$pic_id\")'>
 						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/>
 						</SPAN>
 						</div>	
@@ -2326,7 +2326,7 @@ SWITCH ($modus)
 						$icon[$j] = "
 						<TD align='center' width='43'>
 						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$user_id\",\"$pic_id\")'>
 						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/>
 						</SPAN>
 						</div>	
@@ -2414,14 +2414,14 @@ SWITCH ($modus)
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6, $i6, 'Owner');
 			//Pruefung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur Loesch-Routine:
-			$check = fileExists($FileName, $c_username);
+			$check = fileExists($FileName, $uid);
 			IF($check > '0')
 			{
 				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
 				$icon[$i6] = "
 				<TD align='center' width='43'>
 				<div id='box$pic_id'>
-				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
 				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus dem FTP-Download-Ordner entfernen' /></SPAN>	
 				</div>
 				</TD>";
@@ -2430,12 +2430,12 @@ SWITCH ($modus)
 			{
 				//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				IF(($user_id == $Owner AND hasPermission($c_username, 'downloadmypics', $sr)) OR hasPermission($c_username, 'downloadallpics', $sr))
+				IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
 				{
-					IF(directDownload($c_username, $sr))
+					IF(directDownload($uid, $sr))
 					//IF($direkt_download > '0')
 					{
-						IF(hasPermission($c_username, 'rotatepicture', $sr))
+						IF(hasPermission($uid, 'rotatepicture', $sr))
 						{
 							$icon[$i6] = "
 							<TD align='center' width='43'>
@@ -2444,7 +2444,7 @@ SWITCH ($modus)
 							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
 							<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
 							
-							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
+							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
 							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
 							
 							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
@@ -2459,7 +2459,7 @@ SWITCH ($modus)
 							<TD align='center' width='43'>
 							<div id='box$pic_id'>
 
-							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$c_username&pic_id=$pic_id\")'>
+							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
 							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
 							
 							</div>
@@ -2468,14 +2468,14 @@ SWITCH ($modus)
 					}
 					ELSE
 					{
-						IF(hasPermission($c_username, 'rotatepicture', $sr))
+						IF(hasPermission($uid, 'rotatepicture', $sr))
 						{
 							$icon[$i6] = "
 							<TD align='center' width='43'>
 							<div id='box$pic_id'>
 							
 							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
-							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
 							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
 							
 							</div>	
@@ -2487,7 +2487,7 @@ SWITCH ($modus)
 							<TD align='center' width='43'>
 							<div id='box$pic_id'>
 							
-							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'>
+							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
 							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
 							
 							</div>	

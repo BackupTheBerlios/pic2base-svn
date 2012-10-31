@@ -1,16 +1,20 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
   	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -30,7 +34,7 @@ IF (!$_COOKIE['login'])
  * Project: pic2base
  * File: del_pic.php
  *
- * Copyright (c) 2006 - 2007 Klaus Henneberg
+ * Copyright (c) 2006 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -40,19 +44,16 @@ IF (!$_COOKIE['login'])
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
 include '../../share/global_config.php'; 
 include $sr.'/bin/share/db_connect1.php';
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
 
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base :: L&ouml;sche Duplikat (User: $c_username)</p>
+	<p id='kopf'>pic2base :: L&ouml;sche Duplikat (User: $username)</p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>

@@ -5,13 +5,16 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
-$uid = $_COOKIE['uid'];
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Stapel-Upload</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -38,20 +41,14 @@ $uid = $_COOKIE['uid'];
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"); echo mysql_error();
-$username = mysql_result($result1, isset($i1), 'username');
+$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
 $user_id = $uid;
 
 $start_time = date('d.m.Y, H:i:s');

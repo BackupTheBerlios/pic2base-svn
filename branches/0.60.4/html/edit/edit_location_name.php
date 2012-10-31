@@ -59,13 +59,7 @@ else
 //#######################################################################################
 //# Datei wird bei der Bearbeitung / Geo-Referenzierung verwendet (Benennung der Orte) ##
 //#######################################################################################
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/geo_functions.php';

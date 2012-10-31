@@ -5,7 +5,10 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
-$uid = $_COOKIE['uid'];
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,7 +18,7 @@ $uid = $_COOKIE['uid'];
   <title>pic2base - Dublettenpr&uuml;fung</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel=stylesheet type="text/css" href="../../css/format1.css">
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
 </head>
@@ -52,16 +55,6 @@ function showDelWarning(FileName, uid, pic_id)
 <BODY LANG="de-DE">
 <DIV Class="klein">
 <?php
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
-$ACTION = $_SERVER['PHP_SELF'];
-$link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
-
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
@@ -164,7 +157,7 @@ echo "
 			}
 			ELSEIF($method == '')
 			{
-				//Variante, wenn die Dublettenpruefung von einem normalen User aus dem Bearbeiten-Menue gestartet wurde:
+				//Variante, wenn die Dublettenpruefung von einem normalen User aus dem Bearbeiten- oder Erfassungs-Menue gestartet wurde:
 				$result1 = mysql_query("SELECT * FROM $table21 WHERE user_id = '$user_id'");
 			}
 			

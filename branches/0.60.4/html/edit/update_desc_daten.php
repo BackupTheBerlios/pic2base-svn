@@ -23,14 +23,6 @@ else
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-*/
-
 if(array_key_exists('pic_id',$_GET))
 {
 	$pic_id = $_GET['pic_id'];

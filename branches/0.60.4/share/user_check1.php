@@ -1,16 +1,14 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+  	header('Location: ../../index.php');
 }
 
-unset($c_username);
-IF ($_COOKIE['login'])
+
+IF ($_COOKIE['uid'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
 ELSE
 {
@@ -18,7 +16,7 @@ ELSE
 }
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $berechtigung = mysql_result($result1, $i1, 'berechtigung');
 IF ($berechtigung > '8')
 {

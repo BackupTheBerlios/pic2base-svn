@@ -1,5 +1,5 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
 	//var_dump($sr);
@@ -43,13 +43,6 @@ IF (!$_COOKIE['login'])
  * Mit dem Skript koennen falsch skalierte HQ-Vorschaubilder nachtraeglich korrekt auf max. 800 px skaliert werden
  * Der Skalierungsfehler trat vereinzelt in einer sehr fruehen p2b-Version auf
  */
-
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
 
 if(array_key_exists('param',$_GET))
 {

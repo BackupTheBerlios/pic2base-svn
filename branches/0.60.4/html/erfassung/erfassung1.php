@@ -51,18 +51,6 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-}
-
-
-$ACTION = $_SERVER['PHP_SELF'];
-$link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
-*/
 ?>
 
 <div class="page">

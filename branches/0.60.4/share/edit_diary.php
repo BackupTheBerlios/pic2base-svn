@@ -45,19 +45,7 @@ $row = mysql_fetch_array($result0);
 $aufn_DAT = explode('-', $aufn_dat); //lesbare Formatierung
 $AD = $aufn_DAT[2].".".$aufn_DAT[1].".".$aufn_DAT[0];
 $info = $row['info'];
-//echo $AD;
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
 
-$result2 = mysql_query( "SELECT group_id FROM $table1 WHERE username = '$c_username'");
-$row = mysql_fetch_array($result2);
-$group_id = $row['group_id'];
-*/
 IF(hasPermission($uid, 'editdiary', $sr))	//berechtigte User duerfen das Tagebuch editieren
 {
 	$editable = '1';

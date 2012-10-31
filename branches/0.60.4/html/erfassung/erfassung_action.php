@@ -51,15 +51,7 @@ Es werden die folgenden Schritte abgearbeitet:
 die Datei wird in den Upload-Ordner des Users heladen und dann der Stapel-Upload gestartet
 */
 //################################################################################################################################
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-	$benutzername = $c_username;
-}
-*/
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';

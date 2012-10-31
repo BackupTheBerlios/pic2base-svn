@@ -2,7 +2,6 @@
 IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
-	//var_dump($sr);
   	header('Location: ../../index.php');
 }
 else
@@ -72,16 +71,6 @@ $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
 $vorname = $row['vorname'];
 $name = $row['name'];
-//$u_name = $row['username'];
-
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-}
-*/
 
 $result1 = mysql_query( "SELECT language FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $lang = mysql_result($result1, isset($i1), 'language'); //echo "<BR>".$lang."<BR>";

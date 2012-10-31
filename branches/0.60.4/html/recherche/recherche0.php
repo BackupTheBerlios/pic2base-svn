@@ -12,17 +12,6 @@ IF (!$_COOKIE['uid'])
 }
 ELSE
 {
-	/*
-	unset($c_username);
-	IF ($_COOKIE['login'])
-	{
-		list($c_username) = preg_split('#,#',$_COOKIE['login']);
-		IF(!hasPermission($c_username, 'searchpic', $sr))
-		{
-			header('Location: ../../../index.php');
-		}
-	}
-	*/
 	$uid = $_COOKIE['uid'];
 	IF(!hasPermission($uid, 'searchpic', $sr))
 	{
