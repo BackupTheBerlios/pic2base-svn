@@ -41,20 +41,13 @@ else
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
-*/
+
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 $result1 = mysql_query("SELECT username FROM $table1 WHERE id = '$uid'");
-$username = mysql_result($result1, isset($i1), 'username');
+$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
 
 echo "
 <div class='page'>
@@ -68,18 +61,12 @@ echo "
 	</div>
 	
 	<div id='spalte1'>
-		<!--<a class='subnavi' href='#'>EXIF-Daten bearbeiten</a>-->
 		<center>
 		<a class='subnavi' href='edit_geo_daten.php?pic_id=0&mod=kat' title='Standortbestimmung mittels aufgezeichneter Trackdaten'>Geo-Referenzierung</a>
-		<!--<a class='subnavi_blind'></a>-->
 		<a class='subnavi' href='edit_bewertung.php?pic_id=0&mod=kat' title='Bilder qualitativ bewerten, Noten vergeben'>Bilder bewerten / Bewertung &auml;ndern</a>
-		<!--<a class='subnavi_blind'></a>-->
 		<a class='subnavi' href='edit_beschreibung.php?pic_id=0&mod=kat' title='mehreren Bildern eine gemeinsame Beschreibung zuweisen'>Beschreibungen zuweisen</a>
-		<!--<a class='subnavi_blind'></a>-->
 		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=edit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Kategorien'>Kategorie-Zuweisung - Auswahl nach Kategorien</a>
 		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=zeit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Aufnahmedatum'>Kategorie-Zuweisung - Auswahl nach Datum</a>
-		<!--<a class='subnavi_blind'></a>-->
-		<!--<a class='subnavi' href='edit_remove_kat.php?pic_id=0&mod=kat' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>-->
 		<a class='subnavi' href='remove_kat_daten.php?pic_id=0&mod=edit_remove' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>
 		<a class='subnavi_blind'></a>
 		<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$uid'>Doubletten-Pr&uuml;fung</a>
