@@ -17,7 +17,7 @@ else
 <head>
   <title>Neuen Eigent&uuml;mer festlegen</title>
   <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <link rel=stylesheet type="text/css" href='../../css/format1.css'>
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
@@ -33,13 +33,6 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
-//var_dump($_REQUEST);
-/*
-if ( array_key_exists('c_username',$_GET) )
-{
-	$c_username = $_GET['c_username'];
-}
-*/
 if ( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
@@ -62,7 +55,7 @@ $ort = $row['ort'];
 //echo $FileNameV.", ".$pic_thumbs_path;
 IF($uid === $owner)
 {
-	//welche User gibt es noch im System, der Bilder erfassen darf (permission 799)?
+	//welche User gibt es noch ausser dem angemeldeten im System, der Bilder erfassen darf (permission 799)?
 	$result2 = mysql_query("SELECT $table1.id, $table1.username, $table1.vorname, $table1.name, $table1.ort, $table1.aktiv, 
 	$table7.user_id, $table7.permission_id, $table7.enabled
 	FROM $table1 INNER JOIN $table7
@@ -116,9 +109,9 @@ IF($uid === $owner)
 		FOR($i2='0'; $i2<$num2; $i2++)
 		{
 			$id = mysql_result($result2, $i2, 'id');
-			$name= mysql_result($result2, $i2, 'name');
-			$vorname = mysql_result($result2, $i2, 'vorname');
-			$ort = mysql_result($result2, $i2, 'ort');
+			$name= utf8_encode(mysql_result($result2, $i2, 'name'));
+			$vorname = utf8_encode(mysql_result($result2, $i2, 'vorname'));
+			$ort = utf8_encode(mysql_result($result2, $i2, 'ort'));
 			if(!($uid === $id))
 			{
 				echo "

@@ -13,7 +13,7 @@ IF (!$_COOKIE['uid'])
 <head>
   <title>Neune Eigent&uuml;mer festlegen</title>
   <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <link rel=stylesheet type="text/css" href='../../css/format1.css'>
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
@@ -47,8 +47,8 @@ IF( $new_owner !== '' AND $new_owner !== NULL)
 	$result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$new_owner'");
 	$num1 = mysql_num_rows($result1);
 	$row = mysql_fetch_array($result1);
-	$vorname = $row['vorname'];
-	$name = $row['name'];
+	$vorname = utf8_encode($row['vorname']);
+	$name = utf8_encode($row['name']);
 	$result2 = mysql_query( "UPDATE $table2 SET Owner = '$new_owner' WHERE pic_id = '$pic_id'");
 	IF(mysql_error() == '')
 	{
