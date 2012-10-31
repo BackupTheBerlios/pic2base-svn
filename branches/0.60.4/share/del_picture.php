@@ -1,5 +1,5 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
@@ -9,26 +9,27 @@ IF (!$_COOKIE['login'])
 //##################################################################
 //wird beim loeschen von Bildern aus dem Download-Ordner verwendet #
 //##################################################################
-include 'global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/permissions.php';
 
 //var_dump($_GET);
 if ( array_key_exists('FileName',$_GET) )
 {
 	$FileName = $_GET['FileName'];
 }
-if ( array_key_exists('c_username',$_GET) )
+if ( array_key_exists('uid',$_GET) )
 {
-	$c_username = $_GET['c_username'];
+	$uid = $_GET['uid'];
 }
 if ( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
 }
 
+include 'global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/permissions.php';
+
 //echo "Datei l&ouml;schen??"
-$datei = $ftp_path."/".$c_username."/downloads/".$FileName;
+$datei = $ftp_path."/".$uid."/downloads/".$FileName;
 //echo $datei;
 
 if(@unlink($datei))
@@ -36,20 +37,20 @@ if(@unlink($datei))
 	$result1 = mysql_query( "UPDATE $table2 SET ranking = ranking - 1 WHERE pic_id = '$pic_id'");
 	$result2 = mysql_query( "SELECT FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
 	$FileNameV = mysql_result($result2, isset($i2), 'FileNameV');
-	IF(hasPermission($c_username, 'rotatepicture', $sr))
+	IF(hasPermission($uid, 'rotatepicture', $sr))
 	{
 		echo "
 		<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
-		<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren' /></SPAN>
+		<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren' /></SPAN>
 		<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>";
 	}
 	ELSE
 	{
-		echo "<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$c_username\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren' /></SPAN>";
+		echo "<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren' /></SPAN>";
 	}
 	//Log-Datei schreiben:
 	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-	fwrite($fh,date('d.m.Y H:i:s').": Download des Bildes ".$pic_id." wurde von ".$c_username." abgebrochen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+	fwrite($fh,date('d.m.Y H:i:s').": Download des Bildes ".$pic_id." wurde von ".$uid." abgebrochen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 	fclose($fh);
 }
 else
@@ -71,7 +72,7 @@ $k = '0';
 FOR($i2='0'; $i2<$num2; $i2++)
 {
 	$file_name = mysql_result($result2, $i2, 'FileName');
-	IF(file_exists($ftp_path."/".$c_username."/downloads/".$file_name))
+	IF(file_exists($ftp_path."/".$uid."/downloads/".$file_name))
 	{
 		$k++;
 	}
@@ -83,10 +84,10 @@ IF($k == '0')
 	//wenn keine Stamm-Datei mehr im Download-Ordner mehr ist wird eine evtl. vorh. Nicht-JPG-Datei geloescht:
 	FOREACH($supported_filetypes AS $sft)
 	{
-		IF(file_exists($ftp_path."/".$c_username."/downloads/".$base_name.".".$sft))
+		IF(file_exists($ftp_path."/".$uid."/downloads/".$base_name.".".$sft))
 		{
 			//echo "Es gibt eine Nicht-JPG-Datei";
-			unlink($ftp_path."/".$c_username."/downloads/".$base_name.".".$sft);
+			unlink($ftp_path."/".$uid."/downloads/".$base_name.".".$sft);
 		}
 	}
 }

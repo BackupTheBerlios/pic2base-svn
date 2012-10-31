@@ -11,7 +11,7 @@ else
 }
 
 include 'global_config.php';
-include 'db_connect1.php';
+include $sr.'/bin/share/db_connect1.php';
 //var_dump($_GET);
 if ( array_key_exists('FileName',$_GET) )
 {

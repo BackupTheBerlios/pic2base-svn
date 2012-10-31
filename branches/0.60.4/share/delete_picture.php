@@ -35,26 +35,16 @@ include 'functions/ajax_functions.php';
 include 'functions/permissions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = mysql_result($result0, isset($i0), 'username');
+$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
 
 //var_dump($_GET);
-/*
-if ( array_key_exists('c_username',$_GET) )
-{
-	$c_username = $_GET['c_username'];
-}
-
-if ( array_key_exists('FileName',$_GET) )
-{
-	$FileName = $_GET['FileName'];
-}
-*/
 if ( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
 }
 
 // normale Benutzer setzen beim loeschen nur den Bildstatus auf inaktiv (pictures.aktiv = 0); Ein Admin loescht wirklich
+/*
 // Ermittlung der Gruppenzugehoerigkeit des Users:
 $res0 = mysql_query("SELECT $table1.id, $table1.group_id, $table9.id, $table9.description
 FROM $table1, $table9
@@ -64,6 +54,8 @@ AND $table9.description = 'Admin'");
 echo mysql_error();
 @$num0 = mysql_num_rows($res0);
 IF($num0 == 1)
+*/
+if(hasPermission($uid, 'adminlogin', $sr))
 {
 	//echo "User ist Mitglied der Admin-Gruppe, Bild wird geloescht, wenn er darf<BR>";
 
@@ -231,7 +223,7 @@ ELSE
 {
 	//echo "User darf nur vormerken<BR>";
 	//darf der user ueberhaupt loeschen?
-	if (hasPermission($c_username, 'deletemypics', $sr) OR hasPermission($c_username, 'deleteallpics', $sr)) 
+	if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpics', $sr)) 
 	{
 		//Bild-Status wird auf inaktiv gesetzt (aktiv = 0)
 		$result1 = mysql_query("UPDATE $table2 SET aktiv = 0 WHERE pic_id = '$pic_id'");
@@ -242,7 +234,7 @@ ELSE
 			<BR><CENTER><FORM name='zu'><INPUT TYPE='button' name='close' VALUE='Fenster schlie&szlig;en' OnClick='javascript:window.close();window.opener.location.reload();' tabindex='1'></FORM></CENTER></p>";
 			//log-file im Klartext schreiben:
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,">>>>>>>>>>\n".date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$c_username." zum loeschen vorgemerkt. Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n<<<<<<<<<<\n");
+			fwrite($fh,">>>>>>>>>>\n".date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$username." zum loeschen vorgemerkt. Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n<<<<<<<<<<\n");
 			fclose($fh);
 		}
 	}
