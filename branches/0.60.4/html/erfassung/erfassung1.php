@@ -5,7 +5,10 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
-$uid = $_COOKIE['uid'];
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,7 +18,7 @@ $uid = $_COOKIE['uid'];
   <title>pic2base - Einzelbild-Erfassung</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel=stylesheet type="text/css" href="../../css/format1.css">
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
 </head>
@@ -46,8 +49,8 @@ include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = mysql_result($result1, isset($i1), 'username');
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
 /*
 unset($username);
 IF ($_COOKIE['login'])
@@ -55,10 +58,11 @@ IF ($_COOKIE['login'])
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 	//echo $c_username;
 }
-*/
+
 
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
+*/
 ?>
 
 <div class="page">

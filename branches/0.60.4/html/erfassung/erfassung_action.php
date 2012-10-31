@@ -5,13 +5,16 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
 	header('Location: ../../../index.php');
 }
-$uid = $_COOKIE['uid'];
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Datenerfassung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -31,7 +34,7 @@ $uid = $_COOKIE['uid'];
  * Project: pic2base
  * File: erfassung_action.php
  *
- * Copyright (c) 2003 - 2009 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -62,15 +65,16 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 $result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = mysql_result($result1, isset($i1), 'username');
+$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
 
-/*Dateinamens-Konventionen:
+/*
+Dateinamens-Konventionen:
 $datei_name		Name der hochzuladenden Datei
 $datei			Name der Datei im Cache
 */
 
 //var_dump($_FILES);
-$datei_name = $_FILES['datei']['name']; // fuer register_globals = off
+$datei_name = $_FILES['datei']['name'];
 $tmp_name = $_FILES['datei']['tmp_name'];
 //echo "Name der hochzuladenden Datei: ".$datei_name."<BR>";
 //echo " Name der Datei im Cache: ".$datei."<BR>";
@@ -161,7 +165,7 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 			<br style='clear:both;' />
 			<p id='fuss'>".$cr."</p>
 		</div>
-		<meta http-equiv='Refresh' Content='1; URL=stapel1.php?ordner=$ftp_path/$uid/uploads'>";
+		<meta http-equiv='Refresh' Content='1; URL=stapel2.php?ordner=$ftp_path/$uid/uploads'>";
 	}
 }
 ELSE
