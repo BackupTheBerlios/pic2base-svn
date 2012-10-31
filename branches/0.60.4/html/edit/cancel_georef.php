@@ -1,7 +1,7 @@
 <?php
-if ( array_key_exists('user',$_GET) )
+if ( array_key_exists('userid',$_GET) )
 {
-	$uname = $_GET['user'];
+	$userid = $_GET['userid'];
 }
 echo "Georeferenzierung wird abgebrochen...<BR>";
 //echo "&Uuml;bergebener Username: ".$uname."<BR>";
@@ -15,10 +15,9 @@ include $sr.'/bin/share/db_connect1.php';
 //pictures-Tabelle die loc_id auf 0 zu setzen.
 //
 
-$result1 = mysql_query("SELECT $table1.id, $table1.username, $table2.owner, $table2.pic_id, $table2.City
-FROM $table1, $table2
-WHERE $table2.owner = $table1.id
-AND $table1.username = '$uname'
+$result1 = mysql_query("SELECT $table2.owner, $table2.pic_id, $table2.City
+FROM $table2
+WHERE $table2.owner = $userid
 AND ($table2.City = 'Ortsbezeichnung' OR $table2.City = ''");
 echo mysql_error();
 $num1 = mysql_num_rows($result1);

@@ -1,16 +1,20 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Geo-Referenzierung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -31,7 +35,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: edit_geo_daten_action.php
  *
- * Copyright (c) 2005 - 2009 Klaus Henneberg
+ * Copyright (c) 2005 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -40,14 +44,6 @@ include '../../share/global_config.php';
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	//echo $c_username;
-}
-$benutzername = $c_username;
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -69,10 +65,10 @@ if ( array_key_exists('ge',$_POST) )
 	$ge = $_POST['ge'];
 }
 
-$result0 = mysql_query("UPDATE $table1 SET timezone = '$timezone', logger_type = '$data_logger' WHERE username = '$c_username'");
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result0 = mysql_query("UPDATE $table1 SET timezone = '$timezone', logger_type = '$data_logger' WHERE id = '$uid'");
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $row = mysql_fetch_array($result1);
-$user_id = $row['id'];
+$username = $row['username'];
 //var_dump($_FILES);
 $geo_file = $_FILES['geo_file']['name'];
 $geo_file_name = $track_path."/".$geo_file;
@@ -103,9 +99,9 @@ $info = pathinfo($geo_file_name);
 //echo "Datei-Extension: ".strtolower($info['extension'])."<BR>";
 //die ausgewaehlte Trackdatei wird ueberprueft, bei Erfolg in eine kml-Datei konvertiert und der Inhalt
 //(Geo-Koordinaten und Zeitstempel in die geo_tmp (table13) geschrieben
-convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_id,$timezone);
+convertFile($sr,$data_logger,$info,$geo_file_name,$uid,$timezone);
 //Bestimmung der verwertbaren Datensaetze:
-$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$user_id'");
+$result2 = mysql_query( "SELECT * FROM $table13 WHERE user_id = '$uid'");
 $line_number = mysql_num_rows($result2);
 
 SWITCH($ge)
@@ -122,7 +118,7 @@ SWITCH($ge)
 		DEFAULT:
 		$hinweis1 = "Die Track-Datei enth&auml;lt ".$line_number." verwertbare Trackpunkte.<BR><BR>";
 		//aus der temp. Tabelle wird fuer jeden Tag die Zeitspanne (der frueheste und spaeteste Zeitpunkt) ermittelt:
-		$result4 = mysql_query( "SELECT DISTINCT date FROM $table13 WHERE user_id = '$user_id'");
+		$result4 = mysql_query( "SELECT DISTINCT date FROM $table13 WHERE user_id = '$uid'");
 		$num4 = mysql_num_rows($result4);
 		$hinweis2 = '';
 		FOR ($i4=0; $i4<$num4; $i4++)
@@ -130,7 +126,7 @@ SWITCH($ge)
 			$datum = mysql_result($result4, $i4, 'date');
 			//echo "vorh. Datum: ".$datum."<BR>";
 			//Zu jedem vorh. Datum wird die Zeitspanne vorh. Trackdaten bestimmt:
-			$result5 = mysql_query( "SELECT MIN(time), MAX(time) FROM $table13 WHERE date = '$datum' AND user_id = '$user_id'");
+			$result5 = mysql_query( "SELECT MIN(time), MAX(time) FROM $table13 WHERE date = '$datum' AND user_id = '$uid'");
 			$row = mysql_fetch_array($result5);
 			$min_time = $row['MIN(time)'];
 			$max_time = $row['MAX(time)'];
@@ -145,10 +141,10 @@ SWITCH($ge)
 			WHERE DateTimeOriginal >= '$start_time' 
 			AND DateTimeOriginal <= '$end_time' 
 			AND (City ='Ortsbezeichnung' OR City = '' OR GPSLongitude = '0' OR GPSLatitude = '0')
-			AND Owner = '$user_id'
+			AND Owner = '$uid'
 			AND aktiv = '1'");
 			$num6 = mysql_num_rows($result6);
-			//echo "<p style='color:white';>Treffer fuer User ".$user_id.": ".$num6."</p><BR>";
+			//echo "<p style='color:white';>Treffer fuer User ".$uid.": ".$num6."</p><BR>";
 			IF($num6 > '0')
 			{
 				FOR($i6=0; $i6<$num6; $i6++)
@@ -194,11 +190,11 @@ SWITCH($ge)
 	
 	echo "
 	<div class='page'>
-		<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Geo-Referenzierung) (User: $c_username)</p>
+		<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Geo-Referenzierung) <span class='klein'>(User: $username)</span></p>
 		
 		<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 		echo "</div>
 		</div>
 		
@@ -217,7 +213,7 @@ SWITCH($ge)
 			<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hinweise zur Referenzierung<BR></p>";
 			
 			//Wenn alle Bilder referenziert wurden, werden die benutzereignen Datens&auml;tze aus der temp. Tabelle 'geo_tmp' gel&ouml;scht und nochmals alle Bilder dargestellt, damit den Koordinaten eine Ortsbezeichnung hinzugefgt werden kann:
-			$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$user_id'");
+			$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$uid'");
 			echo "Die Geo-Referenzierung wurde abgeschlossen.<BR>Die Zusammenfassung des Ergebnisses finden Sie unter dem Button \"Weiter\", mit dem Sie zur Ortzuweisung gelangen.<BR><BR>";
 			echo "<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p><BR>Zusammenfassung der Koordinaten-Zuweisung:<BR><BR>".$hinweis2."
 		</div>
@@ -237,7 +233,7 @@ SWITCH($ge)
 	//Wenn der Track nur in GE angezeigt werden soll:
 	//Da die gpx-Datei schrittweise vom Anfang an abgearbeitet wird, erfolgt der Eintrag in die Tabelle in zeitlicher Reihenfolge. Somit genuegt eine Sortierung beim auslesen nach loc_id.
 	$result2 = mysql_query( "SELECT * FROM $table13 
-	WHERE user_id = '$user_id' AND longitude <> '' AND latitude <> '' 
+	WHERE user_id = '$uid' AND longitude <> '' AND latitude <> '' 
 	ORDER BY loc_id");
 	$num2 = mysql_num_rows($result2);
 	$date = mysql_result($result2, 0, 'date');
@@ -292,21 +288,21 @@ SWITCH($ge)
 	fwrite($fh,$content);
 	fclose($fh);
 	
-	//Wenn kml-Track-Datei erzeugt wurde, werden die benutzereignen Datens�ze aus der temp. Tabelle 'geo_tmp' gel�cht:
-	$result9 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$user_id'");
+	//Wenn kml-Track-Datei erzeugt wurde, werden die benutzereignen Datensaeze aus der temp. Tabelle 'geo_tmp' geloescht:
+	$result9 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$uid'");
 	
 	echo "
 	<div class='page'>
-		<p id='kopf'>pic2base :: Track-Darstellung in GoogleEarth (User: $c_username)</p>
+		<p id='kopf'>pic2base :: Track-Darstellung in GoogleEarth (User: $username)</p>
 		
 				<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 		echo "</div>
 		</div>
 		
 		<div id='spalte1F'>
-			<div id='tooltip1'><p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Streckenverlauf in <a href='../../../userdata/$c_username/kml_files/$file'>GoogleEarth 
+			<div id='tooltip1'><p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Streckenverlauf in <a href='../../../userdata/$uid/kml_files/$file'>GoogleEarth 
 			<span>
 			<strong>Zur Anzeige des Streckenverlaufs in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
 			<br />

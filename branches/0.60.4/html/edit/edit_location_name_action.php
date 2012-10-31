@@ -1,16 +1,20 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Geo-Referenzierung (Ortsnamen)</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -30,7 +34,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: edit_location_name_action.php
  *
- * Copyright (c) 2005 - 20011 Klaus Henneberg
+ * Copyright (c) 2005 - 20012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -39,16 +43,16 @@ include '../../share/global_config.php';
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 IF(array_key_exists('ort', $_POST))
 {
-	$ort = $_POST['ort'];
+	$ort = utf8_decode($_POST['ort']);
 }
 
 IF(array_key_exists('pic_id', $_POST))
@@ -68,7 +72,7 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 		echo "</div>
 	</div>
 	

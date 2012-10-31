@@ -1,23 +1,26 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Geo-Referenzierung</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
 	<script language="JavaScript" type="text/javascript">
 	function chkLogger()
 	{
@@ -49,7 +52,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: edit_geo_daten.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -58,29 +61,23 @@ include '../../share/global_config.php';
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
-unset($username);
-IF ($_COOKIE['login'])
-{
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
-}
  
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-//var_dump($_GET);
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
 
 echo "
 <div class='page'>
 	<FORM name='geo_zuweisung', method='post', action='edit_geo_daten_action.php', ENCTYPE='multipart/form-data' onSubmit='return chkLogger()'>
-	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Geo-Referenzierung)<span class='klein'> User: $c_username)</span></p>
+	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Geo-Referenzierung)<span class='klein'> User: $username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 		echo "</div>
 	</div>
 	
@@ -93,13 +90,12 @@ echo "
 				<td align='center' colspan = '2'><p style='text-align:left; margin-left:12px;'>
 					In welcher Zeitzone wurden die Bilder aufgenommen?</p>
 					<SELECT name='timezone' style='width:328px; margin-bottom:20px;'>";
+					//Welche Zeitzone hat der User ggf. bereits gespeichert?
+					$timezone = mysql_result($result0, isset($i0), 'timezone');
+					//Welchen Datenlogger hat der User ggf. bereits gespeichert?
+					$logger_type = mysql_result($result0, isset($i0), 'logger_type');
 					//Ermittlung aller Zeitzonen:
 					$result1 = mysql_query("SELECT * FROM $table19");
-					//Welche Zeitzone hat der User ggf. bereits gespeichert?
-					$result2 = mysql_query("SELECT * FROM $table1
-					WHERE username = '$c_username'");
-					echo mysql_error();
-					$timezone = mysql_result($result2, isset($i2), 'timezone');
 					$num1 = mysql_num_rows($result1);
 					FOR($i1=0; $i1<$num1; $i1++)
 					{
@@ -121,11 +117,6 @@ echo "
 					<SELECT name='data_logger' style='width:328px;'>";
 					//Ermittlung aller Logger-Typen:
 					$result3 = mysql_query("SELECT * FROM $table18 ORDER BY logger_number");
-					//Welchen Datenlogger hat der User ggf. bereits gespeichert?
-					$result4 = mysql_query("SELECT * FROM $table1
-					WHERE username = '$c_username'");
-					echo mysql_error();
-					$logger_type = mysql_result($result4, isset($i4), 'logger_type');
 					$num3 = mysql_num_rows($result3);
 					FOR($i3=0; $i3<$num3; $i3++)
 					{

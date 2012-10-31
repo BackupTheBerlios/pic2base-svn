@@ -1,16 +1,20 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../../index.php');
+	include '../../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Geo-Referenzierung (Ortsnamen)</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -43,7 +47,7 @@ include '../../share/global_config.php';
  * Project: pic2base
  * File: edit_location_name.php
  *
- * Copyright (c) 2003 - 2008 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -55,21 +59,21 @@ include '../../share/global_config.php';
 //#######################################################################################
 //# Datei wird bei der Bearbeitung / Geo-Referenzierung verwendet (Benennung der Orte) ##
 //#######################################################################################
+/*
 unset($username);
 IF ($_COOKIE['login'])
 {
 	list($c_username) = preg_split('#,#',$_COOKIE['login']);
 }
-
+*/
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/geo_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
-$result1 = mysql_query( "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
+$result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $row = mysql_fetch_array($result1);
-$user_id = $row['id'];
-//echo "User-ID: ".$user_id."<BR>";
+
 $num2 = '0';
 $loc_id = '';
 
@@ -92,7 +96,7 @@ echo "
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
-			createNavi3_1($c_username);
+			createNavi3_1($uid);
 		echo "</div>
 	</div>
 	
@@ -100,7 +104,7 @@ echo "
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Ortsbezeichnung<BR></p>";
 		$result2 = mysql_query("SELECT pic_id, Owner, FileNameV, City, GPSLongitude, GPSLatitude, aktiv 
 		FROM $table2 
-		WHERE Owner = '$user_id' 
+		WHERE Owner = '$uid' 
 		AND (City = 'Ortsbezeichnung' OR City = '')
 		AND GPSLongitude <> 'NULL'
 		AND GPSLatitude <> 'NULL'
@@ -214,13 +218,13 @@ echo "
 					FOR($i5='0'; $i5<$num5; $i5++)
 					{
 						$picture_id = mysql_result($result5, $i5, 'pic_id');
-						$city = mysql_result($result5, $i5, 'City');
+						$city = utf8_encode(mysql_result($result5, $i5, 'City'));
 						$longitude = mysql_result($result5, $i5, 'GPSLongitude');
 						$latitude = mysql_result($result5, $i5, 'GPSLatitude');
 						$delta = sqrt(pow(($long - $longitude),2) + pow(($lat - $latitude),2));
 						
-						$zk = mb_detect_encoding($city);
-						//echo "Zeichencodierung fuer ".$city.": ".$zk."<BR>";
+//						$zk = mb_detect_encoding($city);
+//						echo "Zeichencodierung fuer ".$city.": ".$zk."<BR>";
 						
 						//echo $picture_id.", ".$City.", ".$delta."<BR>";
 						IF (!in_array($city,$ort_arr) AND ($city !== 'Ortsbezeichnung'))
@@ -322,7 +326,7 @@ echo "
 
 				<TR id='kat'>
 					<TD id='kat1'>
-					<p align='center'><INPUT id='button0' type='button' value='Abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?user=$c_username\"'><INPUT id='button1' type='submit' value='Weiter'></p>
+					<p align='center'><INPUT id='button0' type='button' value='Abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?userid=$uid\"'><INPUT id='button1' type='submit' value='Weiter'></p>
 					</TD>
 				</TR>";
 			}
