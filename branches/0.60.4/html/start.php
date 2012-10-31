@@ -193,7 +193,7 @@ ELSE
 
 $user_id = $uid;
 $result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = mysql_result($result1, isset($i1), 'username');
+$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
 
 //# # # # # # # # # # # # # # folgender Block muss noch auf die uid anstelle des c_usernamen umgestellt werden: # # # # # # # # # # # # # # # 
 //bei jedem Aufruf der Startseite wird der kml-Ordner des betreffenden Users geleert:
@@ -505,10 +505,10 @@ echo "<div class='page'>
 			}
 		}
 		
-		IF($m > '0' AND (hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($username, $sr))
+		IF($m > '0' AND (hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($uid, $sr))
 		{
 			$download_path = 'ftp://'.$username."@".$_SERVER['SERVER_NAME'].'/downloads/';
-			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$username.'/downloads/';
+			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$uid.'/downloads/';
 			//echo $download_path;
 			echo "
 			<tr class='normal' style='height:30px;'>
@@ -527,7 +527,7 @@ echo "<div class='page'>
 		}
 		ELSE
 		{
-			IF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($username, $sr))
+			IF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($uid, $sr))
 			{	
 				echo "
 				<tr class='normal' style='height:30px;'>
@@ -539,7 +539,7 @@ echo "<div class='page'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
 				</TR>";
 			}
-			ELSEIF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND directDownload($username, $sr))
+			ELSEIF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND directDownload($uid, $sr))
 			{
 				echo "
 				<tr class='normal' style='height:30px;'>
