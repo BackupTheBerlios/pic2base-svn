@@ -1,9 +1,13 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
-include '../share/global_config.php';
-//var_dump($sr);
-  header('Location: ../../index.php');
+	include '../share/global_config.php';
+	//var_dump($sr);
+  	header('Location: ../../index.php');
+}
+else
+{
+	$uid = $_COOKIE['uid'];
 }
 
 include 'global_config.php';
@@ -13,10 +17,7 @@ if ( array_key_exists('FileName',$_GET) )
 {
 	$FileName = $_GET['FileName'];
 }
-if ( array_key_exists('c_username',$_GET) )
-{
-	$c_username = $_GET['c_username'];
-}
+
 if ( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
