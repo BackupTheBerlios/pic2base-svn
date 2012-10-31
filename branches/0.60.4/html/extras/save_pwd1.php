@@ -126,7 +126,7 @@ echo "
 		IF(mysql_error() == '')
 		{
 			shell_exec('/opt/lampp/lampp reloadftp');
-			echo "<meta http-equiv='refresh' content = '10; URL=../start.php'>";
+			echo "<meta http-equiv='refresh' content = '1; URL=../start.php'>";
 		}
 		ELSE
 		{
