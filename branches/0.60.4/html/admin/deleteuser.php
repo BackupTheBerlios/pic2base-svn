@@ -30,7 +30,6 @@ if (hasPermission($uid, 'adminlogin', $sr) AND $users !== '')
 {
 	$result0 = mysql_query( "SELECT username FROM $table1 WHERE id = '$id'");
 	$benutzername = mysql_result($result0, isset($i0), 'username');
-	//echo $ftp_path."/".$benutzername;
 	
 	$result = mysql_query("UPDATE $table2 SET Owner = '$users' WHERE Owner = '$id'");
 	echo "&Auml;ndere in pictures den Owner von $id auf $users<BR>";
