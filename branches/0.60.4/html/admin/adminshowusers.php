@@ -46,7 +46,7 @@ IF (!$_COOKIE['uid'])
 			echo "
 			<FORM name='$user_id' method='post' action = 'make_changes.php?mod=user&id=$user_id'>
 			<tr bgcolor=$bgcolor>
-			<td><a href=adminframe.php?item=adminshowuser&id=".$user_id."&del=0 title='Details des Users anzeigen'>".$user_name."</a></td>";
+			<td><a href=adminframe.php?item=adminshowuser&id=".$user_id."&del=0 title='Details des Users anzeigen'>".$user_name." (".$user_id.")</a></td>";
 			$result2 = mysql_query("select * from usergroups where id= '$group_id'");
 			if (mysql_num_rows($result2) == 1)
 			{
