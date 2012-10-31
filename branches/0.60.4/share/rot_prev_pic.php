@@ -1,5 +1,5 @@
 <?php
-IF (!$_COOKIE['login'])
+IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
@@ -56,9 +56,6 @@ $fn_v = $file_info."_v.jpg";
 //Name des Monochrome-Bildes:
 $fn_mono = $file_info."_mono.jpg"; 
 
-
-
-
 SWITCH($Orientation)
 {
 	case '3':
@@ -108,8 +105,6 @@ SWITCH($Orientation)
 }
 //dann wird lt. Festlegung die Ausrichtung auf 1 gesetzt
 $result1 = mysql_query("UPDATE $table2 SET Orientation = '1' WHERE pic_id = '$pic_id'");
-
-
 
 $time = time();
 
