@@ -114,7 +114,7 @@ function deg2dec($value)
 	return $value;
 }
 
-function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_id,$timezone)
+function convertFile($sr,$data_logger,$info,$geo_file_name,$uid,$timezone)
 {
 	include $sr.'/bin/share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
@@ -295,7 +295,7 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$benutzername,$user_i
 				$date_new = substr(gmtToLocalTime($date,$time,$timezone),0,10);	//zeitzonenkorrigiertes Datum
 				//echo $altitude." / ".$date." / ".$date_new." / ".$time_new."<BR>";
 
-				$result1 = mysql_query( "INSERT INTO $table13 (longitude, latitude, altitude, date, time, user_id) VALUES ('$data_arr[0]', '$data_arr[1]', '$altitude', '$date_new', '$time_new', '$user_id')");
+				$result1 = mysql_query( "INSERT INTO $table13 (longitude, latitude, altitude, date, time, user_id) VALUES ('$data_arr[0]', '$data_arr[1]', '$altitude', '$date_new', '$time_new', '$uid')");
 				echo mysql_error();
 				
 			}
