@@ -26,15 +26,7 @@ $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"
 $username = mysql_result($result0, isset($i0), 'username');
 
 $exiftool = buildExiftoolCommand($sr);
-/*
-unset($username);
-IF ($_COOKIE['login'])
-{
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
-}
-$result15 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$user_id = mysql_result($result15, isset($i15), 'id');
-*/
+
 //################################################
 //
 // Vereinbarungen:
@@ -43,8 +35,6 @@ $user_id = mysql_result($result15, isset($i15), 'id');
 //
 //################################################
 
-
-//var_dump($_REQUEST);
 if(array_key_exists('pic_id',$_GET))
 {
 	$pic_id = $_GET['pic_id']; 
@@ -85,19 +75,17 @@ IF ($pic_id !=='0')
 		$owner = mysql_result($result8, isset($i8), 'Owner');
 		
 		$result10 = mysql_query( "SELECT username, titel, vorname, name, ort FROM $table1 WHERE id = '$owner'");
-//		@$Owner = mysql_result($result10, $i10, 'username');
-		@$username = mysql_result($result10, $i10, 'username');
+		@$username = utf8_encode(mysql_result($result10, $i10, 'username'));
 		@$titel = mysql_result($result10, $i10, 'titel');
-		@$vorname = mysql_result($result10, $i10, 'vorname');
-		@$name = mysql_result($result10, $i10, 'name');
-		@$ort = mysql_result($result10, $i10, 'ort');
+		@$vorname = utf8_encode(mysql_result($result10, $i10, 'vorname'));
+		@$name = utf8_encode(mysql_result($result10, $i10, 'name'));
+		@$ort = utf8_encode(mysql_result($result10, $i10, 'ort'));
 		
 		$FileSize = mysql_result($result8, isset($i8), 'FileSize');
 		$Width = mysql_result($result8, isset($i8), 'ExifImageWidth');
 		$Height = mysql_result($result8, isset($i8), 'ExifImageHeight');
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
-//		echo mb_detect_encoding($Description)."<BR>";
-		//IF(mb_detect_encoding($Description) == 'UTF-8')
+
 		if(mb_detect_encoding($Description, 'UTF-8', true) === FALSE)
 		{
 			$Description = utf8_encode($Description);
