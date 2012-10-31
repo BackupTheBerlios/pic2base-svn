@@ -5,7 +5,7 @@
   <title>Willkommen bei pic2base</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel=stylesheet type='text/css' href='../css/format1.css'>
   <link rel="stylesheet" href="../css/lightbox.css" type="text/css" media="screen" />
   <link rel="shortcut icon" href="../share/images/favicon.ico">
@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: login1.php
  *
- * Copyright (c) 2005 - 2006 Klaus Henneberg
+ * Copyright (c) 2005 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg

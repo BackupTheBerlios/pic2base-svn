@@ -6,7 +6,7 @@
   <title>pic2base - Zugangskontrolle</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel=stylesheet type='text/css' href='css/format1.css'>
   <link rel="shortcut icon" href="share/images/favicon.ico">
 </head>
@@ -57,9 +57,9 @@ $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 	{
 		if( !empty($_POST['username']) )
 	        {
-                	$username=$_POST['username'];
-                        $passwd=$_POST['passwd'];
-                }
+                	$username = utf8_decode($_POST['username']);
+                    $passwd = utf8_decode($_POST['passwd']);
+            }
 	}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$username' AND pwd = ENCRYPT('$passwd','$key') AND aktiv = '1'");

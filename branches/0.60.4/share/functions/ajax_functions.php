@@ -2,13 +2,6 @@
 //var_dump($_GET);
 function createPreviewAjax($pic_id, $max_size, $quality)
 {
-	/*
-	unset($username);
-	IF ($_COOKIE['uid'])
-	{
-		list($c_username) = preg_split('#,#',$_COOKIE['login']);
-	}
-	*/
 	//Erzeugung einer Bildvorschau unter optimaler Nutzung des Bildschirmes;
 	//Qualitaeten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
 	include '../share/global_config.php';
@@ -328,11 +321,11 @@ function getExpSearchPreview(kat, op, kat1, op1, kat2, op2, kat3, op3, kat4, op4
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
 }
 
-function delPicture(FileName, c_username, pic_id, waitUntilDeleted)
+function delPicture(FileName, uid, pic_id, waitUntilDeleted)
 {
 	//loescht Bild-Datei aus dem DOWNLOAD-Ordner
 	var url = '../../share/del_picture.php';
-	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id;
+	var params = 'FileName=' + FileName + '&uid=' + uid + '&pic_id=' + pic_id;
 	//alert("Parameter: "+params);
 	var target = 'box' + pic_id;
 	if( waitUntilDeleted == null )
@@ -342,10 +335,10 @@ function delPicture(FileName, c_username, pic_id, waitUntilDeleted)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, asynchronous: !waitUntilDeleted});
 }
 
-function copyPicture(FileName, c_username, pic_id, waitUntilCopyed)
+function copyPicture(FileName, uid, pic_id, waitUntilCopyed)
 {
 	var url = '../../share/copy_picture.php';
-	var params = 'FileName=' + FileName + '&c_username=' + c_username + '&pic_id=' + pic_id;
+	var params = 'FileName=' + FileName + '&uid=' + uid + '&pic_id=' + pic_id;
 	//alert("Parameter: "+params);
 	var target = 'box' + pic_id;
 	if( waitUntilCopyed == null )
