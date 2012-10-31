@@ -44,7 +44,7 @@ IF(hasPermission($uid, 'editkattree', $sr))
 {
 	$navigation = "
 	<a class='navi' href='kat_sort1.php'>Sortierung</a>
-	<a class='navi' href='kat_repair1.php'>Wartung</a>
+	<a class='navi' href='db_wartung1.php'>Wartung</a>
 	<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
 	<a class='navi_blind'></a>
 	<a class='navi_blind'></a>
