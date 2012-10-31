@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -32,11 +32,9 @@
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-list($c_username) = preg_split('/,/',$_COOKIE['login']);
-//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
 
 include '../../share/global_config.php';
@@ -45,17 +43,20 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_username, 'editallprofiles', $sr))
+$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+
+IF(hasPermission($uid, 'editmyprofile', $sr) AND !hasPermission($uid, 'editallprofiles', $sr))
 {
-	$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username'");
+//	Benutzer darf nur seine eigenen Daten aendern
 	echo mysql_error();
 	$titel = mysql_result($result1, isset($i1), 'titel');
-	$vorname = mysql_result($result1, isset($i1), 'vorname');
-	$name = mysql_result($result1, isset($i1), 'name');
-	$u_name = mysql_result($result1, isset($i1), 'username');
-	$strasse = mysql_result($result1, isset($i1), 'strasse');
+	$vorname = utf8_encode(mysql_result($result1, isset($i1), 'vorname'));
+	$name = utf8_encode(mysql_result($result1, isset($i1), 'name'));
+	$u_name = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+	$strasse = utf8_encode(mysql_result($result1, isset($i1), 'strasse'));
 	$plz = mysql_result($result1, isset($i1), 'plz');
-	$ort = mysql_result($result1, isset($i1), 'ort');
+	$ort = utf8_encode(mysql_result($result1, isset($i1), 'ort'));
 	$tel = mysql_result($result1, isset($i1), 'tel');
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
@@ -65,11 +66,11 @@ IF(hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_userna
 	echo "
 	<div class='page'>
 	
-		<p id='kopf'>pic2base :: Pers&ouml;nliche Einstellungen anpassen <span class='klein'>(User: $c_username)</span></p>
+		<p id='kopf'>pic2base :: Pers&ouml;nliche Einstellungen anpassen <span class='klein'>(User: $username)</span></p>
 			
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			createNavi5($c_username);
+			createNavi5($uid);
 			echo "</div>
 		</div>
 		
@@ -275,8 +276,9 @@ IF(hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_userna
 	
 	</div>";
 }
-ELSEIF(hasPermission($c_username, 'editallprofiles', $sr))
+ELSEIF(hasPermission($uid, 'editallprofiles', $sr))
 {
+	// Benutzer darf auch Daten der anderen User aendern
 	$result2 = mysql_query("SELECT * FROM $table1");
 	echo mysql_error();
 	$num2 = mysql_num_rows($result2);
@@ -284,11 +286,11 @@ ELSEIF(hasPermission($c_username, 'editallprofiles', $sr))
 	echo "
 	<div class='page'>
 	
-		<p id='kopf'>pic2base :: Benutzerdaten anpassen <span class='klein'>(User: $c_username)</span></p>
+		<p id='kopf'>pic2base :: Benutzerdaten anpassen <span class='klein'>(User: $username)</span></p>
 			
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			createNavi5($c_username);
+			createNavi5($uid);
 			echo "</div>
 		</div>
 		
@@ -307,12 +309,12 @@ ELSEIF(hasPermission($c_username, 'editallprofiles', $sr))
 		FOR($i2='0'; $i2<$num2; $i2++)
 		{
 			$user_id = mysql_result($result2, $i2, 'id');
-			$username = mysql_result($result2, $i2, 'username');
+			$benutzername = utf8_encode(mysql_result($result2, $i2, 'username'));	//Namen der registrierten Benutzer, nicht des bearbeitenden Benutzers
 			$titel = mysql_result($result2, $i2, 'titel');
-			$vorname = mysql_result($result2, $i2, 'vorname');
-			$name = mysql_result($result2, $i2, 'name');
+			$vorname = utf8_encode(mysql_result($result2, $i2, 'vorname'));
+			$name = utf8_encode(mysql_result($result2, $i2, 'name'));
 			//IF($username !== 'pb')
-			IF($username !== 'pb' AND ($username !== $c_username OR hasPermission($username, 'editmyprofile', $sr)))
+			IF($benutzername !== 'pb' AND ($benutzername !== $username OR hasPermission($uid, 'editmyprofile', $sr)))
 			{
 				echo "
 				<TR id='kat'>
@@ -346,7 +348,7 @@ ELSEIF(hasPermission($c_username, 'editallprofiles', $sr))
 	
 	</div>";
 }
-ELSEIF(!hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_username, 'editallprofiles', $sr))
+ELSEIF(!hasPermission($uid, 'editmyprofile', $sr) AND !hasPermission($uid, 'editallprofiles', $sr))
 {
 	echo "<meta http-equiv='refresh' content = '10; URL=../start.php'>";
 }

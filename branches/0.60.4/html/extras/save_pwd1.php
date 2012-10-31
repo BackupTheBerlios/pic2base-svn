@@ -1,12 +1,11 @@
-<?php //setcookie('login',$_POST['username']);?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
-  <title>pic2base - Zugangskontrolle</title>
+  <title>pic2base - Einstellungen speichern</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta name="AUTHOR" content="k. henneberg">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel=stylesheet type='text/css' href='../../css/format1.css'>
   <link rel="shortcut icon" href="../share/images/favicon.ico">
 </head>
@@ -16,7 +15,7 @@
  * Project: pic2base
  * File: save_pwd1.php
  *
- * Copyright (c) 2005 - 2008 Klaus Henneberg
+ * Copyright (c) 2005 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -31,18 +30,17 @@
  
 <?php
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-	list($c_username) = preg_split('#,#',$_COOKIE['login']);
+	$uid = $_COOKIE['uid'];
 }
 
-$vorname = $_POST['vorname'];
-$name = $_POST['name'];
+$vorname = utf8_decode($_POST['vorname']);
+$name = utf8_decode($_POST['name']);
 $titel = $_POST['titel'];
-$strasse = $_POST['strasse'];
+$strasse = utf8_decode($_POST['strasse']);
 $plz = $_POST['plz'];
-$ort = $_POST['ort'];
+$ort = utf8_decode($_POST['ort']);
 $tel = $_POST['tel'];
 $email = $_POST['email'];
 $internet = $_POST['internet'];
@@ -51,17 +49,26 @@ $dir_down = $_POST['direkt_download'];
 
 IF( array_key_exists('old_pwd',$_POST) )
 {
-	$old_pwd = $_POST['old_pwd'];
+	$old_pwd = utf8_decode($_POST['old_pwd']);
 }
 ELSE
 {
 	$old_pwd = '';
 }
 
-$new_pwd_1 = $_POST['new_pwd_1'];
-$new_pwd_2 = $_POST['new_pwd_2'];
+IF( array_key_exists('id',$_POST) )
+{
+	$user_id = $_POST['id'];		// ID des zu bearbeitenden Benutzers
+}
+ELSE
+{
+	$user_id = '';					// ID des zu bearbeitenden Benutzers
+}
+
+$new_pwd_1 = utf8_decode($_POST['new_pwd_1']); //echo "Neues PWD: ".$new_pwd_1."<BR>";
+$new_pwd_2 = utf8_decode($_POST['new_pwd_2']);
 $mod = $_REQUEST['mod'];
-$u_name = $_POST['u_name'];
+$u_name = $_POST['u_name'];			
 
 echo "
 <div class='page'>
@@ -76,30 +83,28 @@ echo "
 	<div class='content'>
 	<p style='margin:170px 0px; text-align:center'>";
 	
-	//include 'share/db_connect1.php';
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	IF($mod == 'my')
 	{
-		$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
+		$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND pwd = ENCRYPT('$old_pwd','$key') AND aktiv = '1'");
 		echo mysql_error();
 		$num1 = mysql_num_rows($result1);
+		$user_id = $uid;
 	}
 	ELSEIF($mod == 'all')
 	{
-		$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$u_name' AND aktiv = '1'");
+		$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$user_id' AND aktiv = '1'");
 		echo mysql_error();
 		$num1 = mysql_num_rows($result1);
 	}
 	
-	IF ($num1 > '0' AND $new_pwd_1 !== ''  AND $new_pwd_2 !== '' AND strlen($new_pwd_1) > '4' AND $new_pwd_1 === $new_pwd_2)
+	IF ($num1 > '0' AND $new_pwd_1 !== '' AND $new_pwd_2 !== '' AND strlen($new_pwd_1) > '4' AND $new_pwd_1 === $new_pwd_2)
 	{
 		echo "<p class='mittel' align='center'>Die ge&auml;nderten Daten werden gespeichert...</p>";
 		
-		$user_id = mysql_result($result1, isset($i1), 'id');
 		$key = '0815';
 		$ftp_passwd = crypt($new_pwd_1);
-		//echo $dir_down;
 		//Benutzerdaten erfassen:
 		$result2 = mysql_query( "UPDATE $table1 
 		SET 
@@ -121,7 +126,7 @@ echo "
 		IF(mysql_error() == '')
 		{
 			shell_exec('/opt/lampp/lampp reloadftp');
-			echo "<meta http-equiv='refresh' content = '1; URL=../start.php'>";
+			echo "<meta http-equiv='refresh' content = '10; URL=../start.php'>";
 		}
 		ELSE
 		{

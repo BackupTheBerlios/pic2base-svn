@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
@@ -21,7 +21,7 @@
  * Project: pic2base
  * File: einstellungen1.php
  *
- * Copyright (c) 2006 - 2008 Klaus Henneberg
+ * Copyright (c) 2006 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -32,14 +32,12 @@
  *
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-list($c_username) = preg_split('/,/',$_COOKIE['login']);
-//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
 
-$id = $_REQUEST['id'];
+$id = $_REQUEST['id'];	// ID des zu bearbeitenden Benutzers
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -47,17 +45,20 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include_once $sr.'/bin/share/functions/permissions.php';
 
-IF(hasPermission($c_username, 'editallprofiles', $sr))
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
+IF(hasPermission($uid, 'editallprofiles', $sr))
 {
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$id'");
 	echo mysql_error();
 	$titel = mysql_result($result1, isset($i1), 'titel');
-	$vorname = mysql_result($result1, isset($i1), 'vorname');
-	$name = mysql_result($result1, isset($i1), 'name');
-	$u_name = mysql_result($result1, isset($i1), 'username');
-	$strasse = mysql_result($result1, isset($i1), 'strasse');
+	$vorname = utf8_encode(mysql_result($result1, isset($i1), 'vorname'));
+	$name = utf8_encode(mysql_result($result1, isset($i1), 'name'));
+	$u_name = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+	$strasse = utf8_encode(mysql_result($result1, isset($i1), 'strasse'));
 	$plz = mysql_result($result1, isset($i1), 'plz');
-	$ort = mysql_result($result1, isset($i1), 'ort');
+	$ort = utf8_encode(mysql_result($result1, isset($i1), 'ort'));
 	$tel = mysql_result($result1, isset($i1), 'tel');
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
@@ -67,11 +68,11 @@ IF(hasPermission($c_username, 'editallprofiles', $sr))
 	echo "
 	<div class='page'>
 	
-		<p id='kopf'>pic2base :: Benutzerdaten anpassen <span class='klein'>(User: $c_username)</span></p>
+		<p id='kopf'>pic2base :: Benutzerdaten anpassen <span class='klein'>(User: $username)</span></p>
 			
 		<div class='navi' style='clear:right;'>
 			<div class='menucontainer'>";
-			createNavi5($c_username);
+			createNavi5($uid);
 			echo "</div>
 		</div>
 		
@@ -251,6 +252,7 @@ IF(hasPermission($c_username, 'editallprofiles', $sr))
 			<TD id='normal' colspan='3'></TD>
 		</TR>
 		<input type='hidden' name='u_name' value = '$u_name' style='width:200px;'>
+		<input type='hidden' name='id' value = '$id' style='width:200px;'>
 		<TR id='kat'>
 			<TD id='kat1' colspan='3' style='text-align:center;'><INPUT type=\"submit\" value=\"Speichern\" style='margin-right:20px;'><INPUT type=\"button\" value=\"Abbrechen\" onClick=\"javascript:history.back()\"></TD>
 		</TR>
@@ -279,7 +281,7 @@ IF(hasPermission($c_username, 'editallprofiles', $sr))
 	
 	</div>";
 }
-ELSEIF(!hasPermission($c_username, 'editmyprofile', $sr) AND !hasPermission($c_username, 'editallprofiles', $sr))
+ELSEIF(!hasPermission($uid, 'editmyprofile', $sr) AND !hasPermission($uid, 'editallprofiles', $sr))
 {
 	echo "<meta http-equiv='refresh' content = '0; URL=../start.php'>";
 }
