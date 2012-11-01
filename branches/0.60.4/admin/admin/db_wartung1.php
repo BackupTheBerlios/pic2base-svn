@@ -64,28 +64,8 @@ if($memory_value > $memory_avail)
 }
 //echo "<font color='white'>".ini_get('memory_limit')."</font>";
 
-//$user_id = getUserId($c_username, $sr);
 $user_id = $uid;
-/*
-IF(hasPermission($c_username, 'editkattree', $sr))
-{
-	$navigation = "
-			<a class='navi' href='kat_sort1.php'>Sortierung</a>
-			<a class='navi_blind' href='kat_repair1.php'>Wartung</a>
-			<a class='navi' href='../../html/admin/adminframe.php'>Zur&uuml;ck</a>
-			<a class='navi_blind'></a>
-			<a class='navi_blind'></a>
-			<a class='navi_blind'></a>
-			<a class='navi_blind'></a>
-			<a class='navi' href='../../html/start.php'>zur Startseite</a>
-			<a class='navi' href='../../html/help/help1.php?page=5'>Hilfe</a>
-			<a class='navi' href='$inst_path/pic2base/index.php'>Logout</a>";
-}
-ELSE
-{
-	header('Location: ../../../index.php');
-}
-*/
+
 echo "
 <div class='page'>
 
