@@ -5,6 +5,10 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
   	header('Location: ../../index.php');
 }
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 
 /*#####################################################################
 wird verwendet, wenn Bilddaten bearbeit werden sollen und die Auswahl
@@ -14,6 +18,7 @@ ueber das Aufnahmedatum erfolgen soll
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
+include_once $sr.'/bin/share/functions/permissions.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
 
 $sel_one = "<IMG src='$inst_path/pic2base/bin/share/images/one.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='einzelne Bilder dieses Datums ausw&auml;hlen'>";
@@ -56,7 +61,7 @@ else
 		$show_mod = 0;
 	}
 }
-	
+
 $stat = createStatement($bewertung);
 //echo $stat;
 $base_file = 'edit_kat_daten';
@@ -79,13 +84,26 @@ echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; 
 	<TD id='kat2'>Anz.</TD>
 	</TR>";
 $runtime_sum = 0;
+
+// Welche Berechtigung hat der angemeldete User? (darf er alle oder nur seine Bilder bearbeiten?)
+if(hasPermission($uid, 'editmypics', $sr))
+{
+	$restriction = "AND Owner = $uid";
+}
+elseif(hasPermission($uid, 'editallpics', $sr))
+{
+	$restriction = "";
+}
+
 //Bestimmung der Jahrgaenge, in denen Bilder entstanden sind:
 $result1 = mysql_query( "SELECT DISTINCT YEAR(DateTimeOriginal) AS DTO, COUNT(*)
 FROM $table2
 WHERE YEAR(DateTimeOriginal) <> '0000'
 AND aktiv = '1'
+$restriction
 GROUP BY YEAR(DateTimeOriginal)
 ORDER BY YEAR(DateTimeOriginal) DESC");
+echo mysql_error();
 $num1 = mysql_num_rows($result1);
 
 FOR($i1 = '0'; $i1<$num1; $i1++)
@@ -133,6 +151,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 			WHERE DATE_FORMAT(DateTimeOriginal,'%Y') = '$jahr'
 			AND DateTimeOriginal <> '0000-00-00 00:00:00'
 			AND aktiv = '1'
+			$restriction
 			GROUP BY DATE_FORMAT(DateTimeOriginal,'%Y-%m')
 			ORDER BY DATE_FORMAT(DateTimeOriginal,'%Y-%m') DESC");
 			echo mysql_error();
@@ -180,12 +199,12 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 							</TR>";
 			
 							//Ermittlung der Tage, an welchen in diesem Monat/Jahr Aufnahmen gemacht wurden:
-							
 							$result12 = mysql_query( "SELECT DATE_FORMAT(DateTimeOriginal,'%Y-%m-%d'), COUNT(*), pic_id, note, DateTimeOriginal, aktiv 
 							FROM $table2 
 							WHERE DateTimeOriginal LIKE '%".$y."-".$m."%' 
 							AND DateTimeOriginal <> '0000-00-00 00:00:00'
-							AND aktiv = '1' 
+							AND aktiv = '1'
+							$restriction 
 							AND $stat
 							GROUP BY DATE_FORMAT(DateTimeOriginal,'%Y-%m-%d')
 							ORDER BY DATE_FORMAT(DateTimeOriginal,'%Y-%m-%d')");
@@ -230,11 +249,12 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 	}
 }
 //Ermittlung der Bilder, welche noch keinem Datum zugeordnet wurden:
-
+$modus = 'zeit';
 $result7 = mysql_query( "SELECT DateTimeOriginal, note, pic_id, aktiv 
 FROM $table2 
 WHERE DateTimeOriginal = '0000-00-00 00:00:00'
-AND aktiv = '1' 
+AND aktiv = '1'
+$restriction 
 AND $stat");
 
 @$num7 = mysql_num_rows($result7);
