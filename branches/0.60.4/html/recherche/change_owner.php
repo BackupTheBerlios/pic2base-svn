@@ -47,12 +47,9 @@ $num1 = mysql_num_rows($result1);
 $row = mysql_fetch_array($result1);
 $FileNameV = $row['FileNameV'];
 $owner = $row['Owner'];
-$name = $row['name'];
-$vorname = $row['vorname'];
-$ort = $row['ort'];
-//$username = $row['username'];
-//echo "derz. User: ".$c_username.", Eigentuemer: ".$name."<BR>";
-//echo $FileNameV.", ".$pic_thumbs_path;
+$name = utf8_encode($row['name']);
+$vorname = utf8_encode($row['vorname']);
+$ort = utf8_encode($row['ort']);
 IF($uid === $owner)
 {
 	//welche User gibt es noch ausser dem angemeldeten im System, der Bilder erfassen darf (permission 799)?
