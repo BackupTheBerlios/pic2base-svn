@@ -5,7 +5,10 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
   	header('Location: ../../index.php');
 }
-$uid = $_COOKIE['uid'];
+else
+{
+	$uid = $_COOKIE['uid'];
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,28 +40,15 @@ include 'functions/permissions.php';
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
 
-//var_dump($_GET);
 if ( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
 }
 
 // normale Benutzer setzen beim loeschen nur den Bildstatus auf inaktiv (pictures.aktiv = 0); Ein Admin loescht wirklich
-/*
-// Ermittlung der Gruppenzugehoerigkeit des Users:
-$res0 = mysql_query("SELECT $table1.id, $table1.group_id, $table9.id, $table9.description
-FROM $table1, $table9
-WHERE $table1.id = '$uid'
-AND $table1.group_id = $table9.id
-AND $table9.description = 'Admin'");
-echo mysql_error();
-@$num0 = mysql_num_rows($res0);
-IF($num0 == 1)
-*/
 if(hasPermission($uid, 'adminlogin', $sr))
 {
 	//echo "User ist Mitglied der Admin-Gruppe, Bild wird geloescht, wenn er darf<BR>";
-
 	if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpics', $sr)) 
 	{
 		//Die Bild-Daten werden ermittelt:
@@ -74,7 +64,6 @@ if(hasPermission($uid, 'adminlogin', $sr))
 			//Angaben fuer die Log-Datei:
 			$CaptionAbstract = $row['Caption_Abstract'];
 			$Keywords = $row['Keywords'];
-			
 			
 			$datei_mono = $monochrome_path."/".$pic_id."_mono.jpg";
 			$datei_hist = $hist_path."/".$pic_id."_hist.gif";
@@ -248,7 +237,7 @@ ELSE
 ?>
 <script language="javascript">
 document.zu.close.focus();
-setTimeout("opener.location.reload(); window.close()", 2000);
+setTimeout("opener.location.reload(); window.close()", 1000);
 </script>
 </DIV>
 </CENTER>
