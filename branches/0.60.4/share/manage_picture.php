@@ -1,6 +1,6 @@
 <?php
 include 'global_config.php';
-include 'db_connect1.php';
+include $sr.'/bin/share/db_connect1.php';
 
 if ( array_key_exists('pic_id',$_GET) )
 {
