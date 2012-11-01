@@ -36,7 +36,6 @@ $exiftool = buildExiftoolCommand($sr);
 if( array_key_exists('pic_id',$_GET) )
 {
 	$pic_id = $_GET['pic_id'];
-	//echo "Bild-ID: ".$pic_id;
 }
 
 if( array_key_exists('view',$_REQUEST) )
@@ -69,8 +68,8 @@ ELSE
 //	echo $location;
 $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
-$vorname = $row['vorname'];
-$name = $row['name'];
+$vorname = utf8_encode($row['vorname']);
+$name = utf8_encode($row['name']);
 
 $result1 = mysql_query( "SELECT language FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $lang = mysql_result($result1, isset($i1), 'language'); //echo "<BR>".$lang."<BR>";
