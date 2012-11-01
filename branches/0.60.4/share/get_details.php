@@ -132,7 +132,7 @@ IF ($pic_id !=='0')
 		//$size = round($FileSize / 1024);
 		$max_size = 90;			//max. Seitenlaenge des Vorschau-Bildes
 		$quality = '3';
-		//echo "<FORM name = beschr method=post action=save_desc.php?pic_id=$pic_id&base_file=$base_file>";
+
 		echo "<FORM name = beschr method=post accept-encoding=”UTF-8>";
 		echo "<TABLE id='detail1'>
 		<TR id='detail1'>
@@ -254,7 +254,7 @@ IF ($pic_id !=='0')
 		<TD id='detail5'><span style='cursor:pointer;' title= \"$vorname $name, $ort\">".$autor."</span></TD>
 		";
 		
-		IF($owner == $uid AND ((hasPermission($uid, 'adminlogin', $sr) OR hasPermission($uid, 'editpic', $sr))))
+		IF((($owner == $uid AND hasPermission($uid, 'editmypics', $sr)) OR hasPermission($uid, 'editallpics', $sr)))
 		{
 			echo "<TD id='detail6'><span style='cursor:pointer;'>
 			<img src=\"$inst_path/pic2base/bin/share/images/change_owner.gif\" width='30' height='15' border='0'  alt='Owner wechseln' title='Bild-Eigent&uuml;merschaft &uuml;bertragen' OnClick=\"changeOwner('$pic_id')\"/>
