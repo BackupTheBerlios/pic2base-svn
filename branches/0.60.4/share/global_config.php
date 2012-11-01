@@ -17,10 +17,6 @@ if(!isset($uid))
 else
 {
 	$ftp_path = $sr."/userdata";
-	//$user_dir = $ftp_path.'/'.$benutzername;
-	//$up_dir = $ftp_path.'/'.$benutzername.'/uploads';
-	//$down_dir = $ftp_path.'/'.$benutzername.'/downloads';
-	//$kml_dir = $ftp_path.'/'.$benutzername.'/kml_files';
 	$user_dir = $ftp_path.'/'.$uid;
 	$up_dir = $ftp_path.'/'.$uid.'/uploads';
 	$down_dir = $ftp_path.'/'.$uid.'/downloads';
