@@ -582,7 +582,6 @@ ELSE
 			`tel` varchar(25) NOT NULL,
 			`email` varchar(50) NOT NULL,
 			`internet` varchar(50) NOT NULL,
-			`berechtigung` char(1) NOT NULL,
 			`aktiv` char(1) NOT NULL,
 			`user_dir` varchar(75) NOT NULL COMMENT 'ftp-Stammverz. des Users',
 			`up_dir` varchar(75) NOT NULL COMMENT 'ftp_uploadverzeichnis des Users',
@@ -820,10 +819,7 @@ ELSE
 			{
 				$telefon = '';
 			}
-			if(!isset($berechtigung))
-			{
-				$berechtigung = '';
-			}
+
 			//ersten User anlegen:
 			$res115 = mysql_query( "CREATE USER 'pb'@'localhost' IDENTIFIED BY 'pic_base';");
 			//diesem User Rechte erteilen:
@@ -839,7 +835,7 @@ ELSE
 			$ftp_passwd = crypt('pic_base');
 			$apache_uid = posix_getuid();
 			$apache_gid = posix_getgid();
-			$res120 = mysql_query( "INSERT INTO `users` (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, berechtigung, group_id) VALUES ('pb', '$titel', '$name', '$vorname', '$strasse', '38889', 'Blankenburg (Harz)', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', 'info@pic2base.de', 'http://www.pic2base.de', '$apache_uid', '$apache_gid', '1', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/uploads', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/downloads','$berechtigung', '1')");
+			$res120 = mysql_query( "INSERT INTO `users` (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, group_id) VALUES ('pb', '$titel', '$name', '$vorname', '$strasse', '38889', 'Blankenburg (Harz)', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', 'info@pic2base.de', 'http://www.pic2base.de', '$apache_uid', '$apache_gid', '1', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/uploads', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/downloads', '1')");
 			
 			//setzen der Rechte auf die Ordner: images, tracks und userdaten:
 			include_once 'global_config.php';
