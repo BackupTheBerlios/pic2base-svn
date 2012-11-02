@@ -2119,8 +2119,10 @@ function checkSoftware($sr)
 		// Wenn in der Tabelle users nur der user pb enthalten ist (Auslieferungszustand), erfolgt die Weiterleitung mit entspr. Hinweis zur Anlage des ersten echten Administrators:
 		$result3 = mysql_query("SELECT * FROM $table1");
 		$num3 = mysql_num_rows($result3);
+		$result4 = mysql_query("SELECT * FROM $table2");
+		$num4 = mysql_num_rows($result4);
 		$username = mysql_result($result3, isset($i3), 'username');
-		IF($num3 == 1 AND $username == 'pb')
+		if($num3 == 1 AND $username == 'pb')	//wenn es nur einen User gibt und dieser pb ist:
 		{
 			echo "<CENTER>
 			<TABLE style='width:500px; text-align:center;'>
@@ -2132,7 +2134,21 @@ function checkSoftware($sr)
 			</TABLE>
 			</CENTER>";
 		}
-		ELSEIF($num3 > 1)
+		elseif($num3 > 1 AND $num4 == 0)		//wenn es mehrere User gibt, aber keine Bilder in der DB
+		{
+			$text = "<BR>Beginnen Sie nun bitte mit der Datenerfassung, indem Sie Bilder per Einzelbild-Erfassung in die Datenbank stellen<BR>
+			oder den Weg &uuml;ber den <a href='$inst_path/pic2base/bin/html/help/help1.php?page=1'>FTP-Upload</a> w&auml;hlen.<BR>";
+			 echo "<CENTER>
+			<TABLE style='width:500px; text-align:center;'>
+			<TR>
+			<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR>
+			<input type='button' value='Zur Einzelbild-Erfassung' onClick=\"location.href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'\"> 
+			</TD>
+			</TR>
+			</TABLE>
+			</CENTER>";
+		}
+		elseif($num3 > 1 AND $num4 > 0)			// der Normalfall: es gibt mehrere User und es gibt bereits Bilder in der DB
 		{
 			echo "<CENTER>
 			<TABLE style='width:500px; text-align:center;'>
