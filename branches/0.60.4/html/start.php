@@ -49,7 +49,6 @@ else
 <!--
 function delAllMetadata(uid)
 {
-	//alert("User: "+c_username);
 	Fenster1 = window.open('../share/del_all_metadata.php?uid='+uid, 'entferne Metadaten...', "width=300,height=70,scrollbars,resizable=no,");
 	Fenster1.focus();
 }
@@ -83,7 +82,7 @@ include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
-//echo buildDcrawCommand($sr);
+
 IF(array_key_exists('check',$_GET))
 {
 	$check = $_GET['check'];
@@ -114,12 +113,9 @@ ELSE
 {
 	//echo "Die neue DB-Struktur ist bereits vorhanden.<BR><BR>";
 } 
-
-
 //===================================================================================================
 
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist und Kontrolle, ob Bilder zum Loeschen vorliegen:
-//IF(hasPermission($c_username, 'adminlogin', $sr) AND $check == '1')
 IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 {
 	$file1 = 'http://www.pic2base.de/web/includes/conf.inc.php';
@@ -205,10 +201,6 @@ IF($username !== 'pb')
 	}
 }
 //# # # # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # #  # # # # #
-//$result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-//$user_id = mysql_result($result1, isset($i1), 'id');
-
-
 //Ermittlung wieviel User in der DB registriert sind:
 $result2 = mysql_query("SELECT * FROM $table1");
 $num_user = mysql_num_rows($result2);
@@ -334,7 +326,6 @@ ELSE
 //Ermittlung der 'Top-Ten':
 $result4 = mysql_query("SELECT * FROM $table2 WHERE ranking <>'' AND ranking >'0' AND aktiv = '1' ORDER BY ranking DESC LIMIT 10");
 @$num4 = mysql_num_rows($result4);
-//echo $num4;
 
 echo "<div class='page'>
 
