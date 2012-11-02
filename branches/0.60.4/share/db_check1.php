@@ -1,16 +1,11 @@
 <?php
 //Beim normalen Start wird versucht mit den Standard-Parametern eine Verbindung zur Datenbank herzustellen:
-//echo "User: ".$user."<BR>PWD: ".$PWD."<BR>";
-//var_dump($_REQUEST);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//var_dump($_REQUEST);
-//register_globels =  off - Variante:
 if( isset($_POST['user']) )
 {
-//    echo "Jetzt im isset()-Zweig. User: ".$_POST['user'];
-	if( !empty($_POST['user']) )
-        {
+	if( !empty($_POST['user']))
+    {
 	    $user=$_POST['user'];
 	    $PWD=$_POST['PWD'];
 	}
@@ -46,13 +41,11 @@ ELSE
 {
 	$db_server='localhost';
 	$db = 'pic2base';
-//echo "<br>++++ #### ++++<br>";
 	//mit den neuen Parametern wird versucht eine Datenbank-Verbindung aufzubauen:
 	@$conn = mysql_connect($db_server,$user,$PWD);
 	@$database = mysql_pconnect($db_server,$user,$PWD);
 	mysql_set_charset('utf8', $conn);
 	
-//	mysql_error();
 	if (!$database) 
 	{
 		//Der Datenbank-Server kann nicht erreicht werden!
@@ -820,7 +813,7 @@ ELSE
 				$telefon = '';
 			}
 
-			//ersten User anlegen:
+			//ersten User (pb) anlegen:
 			$res115 = mysql_query( "CREATE USER 'pb'@'localhost' IDENTIFIED BY 'pic_base';");
 			//diesem User Rechte erteilen:
 			$res116 = mysql_query( "GRANT USAGE ON * . * TO 'pb'@'localhost' IDENTIFIED BY 'pic_base' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;");
