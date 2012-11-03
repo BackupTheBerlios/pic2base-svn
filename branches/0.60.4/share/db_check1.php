@@ -558,7 +558,6 @@ ELSE
 			`pwd` varchar(25) NOT NULL,
 			`ftp_passwd` varchar(255) collate latin1_german1_ci NOT NULL default '',
 			`shell` varchar(20) collate latin1_german1_ci NOT NULL default '/bin/sh',
-			`note` text collate latin1_german1_ci,
 			`count` int(11) NOT NULL default '0',
 			`admin` int(1) NOT NULL default '0',
 			`last_login` datetime default NULL,
