@@ -173,8 +173,7 @@ echo "
 			}
 			ELSE
 			{
-				echo "Der Benutzername ist ung&uuml;ltig.<BR>Hinweis:<BR>Der Benutzername darf keine Leerzeichen oder Sonderzeichen enthalten<BR>
-				und darf h&uuml;chstens 15 Zeichen lang sein.!<BR><BR>
+				echo "Der Benutzername ist ung&uuml;ltig.<BR>Hinweis:<BR>Der Benutzername darf h&uuml;chstens 15 Zeichen lang sein.!<BR><BR>
 				<input type='button' value='Zur&uuml;ck' OnClick='javasript:history.back()'>";
 				return;
 			}
@@ -191,8 +190,12 @@ echo "
 			}
 			//echo "Es gibt derzeit ".$num3." Benutzer mit Admin-Rechten.<BR>";
 			echo "Benutzer wurde erfolgreich angelegt.<BR><BR>
-			<input type='button' value='Zur&uuml;ck' OnClick='location.href=\"adminframe.php?item=adminadduser\"'>";
-			
+			<input type='button' id='back' value='Zur&uuml;ck' OnClick='location.href=\"adminframe.php?item=adminadduser\"'>";
+			?>
+			<script type='text/javascript'>
+			document.getElementById('back').focus();
+			</script>
+			<?php
 			//log-file schreiben:
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 			fwrite($fh,date('d.m.Y H:i:s').": Neuer Benutzer ".$ben_name." wurde von ".$bearbeitername." angelegt. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
