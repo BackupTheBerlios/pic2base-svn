@@ -45,7 +45,7 @@ echo "<DIV Class='klein'>";
 		</div>
 		
 		<div class='content'>
-			<p style='margin:170px 0px; text-align:center'>";
+			<p style='margin:80px 0px; text-align:center'>";
 			
 				include 'share/global_config.php';
 				include $sr.'/bin/share/db_connect1.php';
