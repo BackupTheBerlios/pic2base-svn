@@ -76,6 +76,7 @@ echo "
 			$ben_name = utf8_decode($ben_name);
 			$vorname = utf8_decode($vorname); 
 			$name = utf8_decode($name); 
+			$pwd = utf8_decode($pwd);
 			$strasse = utf8_decode($strasse);
 			$ort = utf8_decode($ort);
 			
