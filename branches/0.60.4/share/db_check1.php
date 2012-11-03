@@ -554,7 +554,7 @@ ELSE
 			
 			$res14 = mysql_query( "CREATE TABLE IF NOT EXISTS `users` (
 			`id` int(11) NOT NULL auto_increment,
-			`username` varbinary(15) NOT NULL,
+			`username` varchar(15) NOT NULL,
 			`pwd` varchar(25) NOT NULL,
 			`ftp_passwd` varchar(255) collate latin1_german1_ci NOT NULL default '',
 			`shell` varchar(20) collate latin1_german1_ci NOT NULL default '/bin/sh',
