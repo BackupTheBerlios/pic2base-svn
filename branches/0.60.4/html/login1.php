@@ -9,14 +9,13 @@
   <link rel=stylesheet type='text/css' href='../css/format1.css'>
   <link rel="stylesheet" href="../css/lightbox.css" type="text/css" media="screen" />
   <link rel="shortcut icon" href="../share/images/favicon.ico">
-  	<script type="text/javascript" src="../ajax/inc/prototype.js"></script>
-	<script type="text/javascript" src="../ajax/inc/scriptaculous.js?load=effects,builder"></script>
-	<script type="text/javascript" src="../ajax/inc/lightbox.js"></script>
-
   <meta http-equiv="Refresh" content="200; URL=../../index.php">
 </head>
 
-<!--
+<body>
+
+<?php
+
 /*
  * Project: pic2base
  * File: login1.php
@@ -31,11 +30,10 @@
  * All files of this project are licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
- -->
-<body>
-<DIV Class="klein">
- 
-<?php
+
+
+echo "
+<DIV Class='klein'>";
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 include '../share/global_config.php';
@@ -52,52 +50,53 @@ IF($cr == NULL OR $inst_path == '/')
 	</fieldset></center>";
 	break;
 }
-?>
 
-<div class="page">
-
-	<p id="kopf">pic2base :: Login</p>
+echo "
+	<div class='page'>
 	
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<BR>
+		<p id='kopf'>pic2base :: Login</p>
+		
+		<div class='navi' style='clear:right;'>
+			<div class='menucontainer'>
+			<BR>
+			</div>
 		</div>
-	</div>
+		
+		<div class='content'>
+		<p style='margin:70px 0px; text-align:center'>
 	
-	<div class="content">
-	<p style="margin:70px 0px; text-align:center">
-
-	<FORM action='../pwd_check.php' method='POST' name='pwd'>
-	<p class="mittel" align='left'>Bitte geben Sie hier Ihren Benutzernamen und Ihr Passwort ein:</p>
-	<table class="schmal" border='0' align='center'>
-	<tbody>
-	<tr>
-	<td class='normal'>Benutzername:  </td>
-	<td class='normal'><input type="text" class="Feld150" name="username" size=12 tabindex="1"></td>
-	</tr>
-	<tr>
-	<td class='normal'>Ihr Passwort:  </td>
-	<td class='normal'><input type="password" class="Feld150" name="passwd" size=12 tabindex="2"></td>
-	</tr>
-	<tr>
-	<td class='normal'><BR></td>
-	<td class='normal'></td>
-	</tr>
-	<tr>
-	<td class='normal'><input type="submit" value="Login" tabindex="3" style='width:80px;'></td>
-	<td class='normal'><INPUT TYPE=button VALUE="Abbrechen" onclick="location.href='../../index.php'" tabindex="4" style='width:80px;'></td>
-	</tr>
-	</tbody>
-	</table>
-	</FORM>
-	</p>
+		<FORM action='../pwd_check.php' method='POST' name='pwd'>
+		<p class='mittel' align='left'>Bitte geben Sie hier Ihren Benutzernamen und Ihr Passwort ein:</p>
+		<table class='schmal' border='0' align='center'>
+		<tbody>
+		<tr>
+		<td class='normal'>Benutzername:  </td>
+		<td class='normal'><input type='text' class='Feld150' name='username' size=12 tabindex='1'></td>
+		</tr>
+		<tr>
+		<td class='normal'>Ihr Passwort:  </td>
+		<td class='normal'><input type='password' class='Feld150' name='passwd' size=12 tabindex='2'></td>
+		</tr>
+		<tr>
+		<td class='normal'><BR></td>
+		<td class='normal'></td>
+		</tr>
+		<tr>
+		<td class='normal'><input type='submit' value='Login' tabindex='3' style='width:80px;'></td>
+		<td class='normal'><INPUT TYPE=button VALUE='Abbrechen' onclick=\"location.href='../../index.php'\" tabindex='4' style='width:80px;'></td>
+		</tr>
+		</tbody>
+		</table>
+		</FORM>
+		</p>
+		</div>
+		<br style='clear:both;' />
+	
+		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+	
 	</div>
-	<br style="clear:both;" />
-
-	<p id="fuss"><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A><?php echo $cr; ?></p>
-
-</div>
-</DIV>
+</DIV>";
+?>
 </body>
 <script language="javascript">
 document.pwd.username.focus();
