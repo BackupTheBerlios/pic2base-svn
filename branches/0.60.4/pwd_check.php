@@ -56,7 +56,7 @@ echo "<DIV Class='klein'>";
 				oder Ihr Account wurde gesperrt.<BR>
 				Der Vorgang wird abgebrochen.</b>
 				</p><BR>
-				<INPUT TYPE='button' id='back' Value='Zur&uuml;ck' OnClick='location.href=\"../index.php\"'>
+				<INPUT TYPE='button' id='back' Value='Zur&uuml;ck' OnClick='location.href=\"html/login1.php\"'>
 				</CENTER>
 				<script type='text/javascript'>
 				document.getElementById('back').focus();
