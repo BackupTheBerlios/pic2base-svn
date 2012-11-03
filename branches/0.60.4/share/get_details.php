@@ -113,7 +113,7 @@ IF ($pic_id !=='0')
 		FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewaehlt, da die Wurzel uninteressant ist!
 		{
 			//echo $num5."<BR>";
-			$kategorie = htmlentities(mysql_result($result9, $i9, 'kategorie'));
+			$kategorie = utf8_encode(mysql_result($result9, $i9, 'kategorie'));
 			$kat_id = mysql_result($result9, $i9, $table4.'.kat_id');
 			$pic_id = mysql_result($result9, $i9, $table10.'.pic_id');
 			//echo $kat_id;
