@@ -97,6 +97,7 @@ var avgTime;
 
 function fileListReceived( responseText )
 {
+	//alert(responseText);
 	fileList = JSON.parse( responseText, null );
 	if(fileList.anzahl > 0)
 	{

@@ -26,7 +26,7 @@ $dcraw = buildDcrawCommand($sr);
 //Diese Datei soll erfasst werden:
 $bild = $ftp_path."/".$uid."/uploads/".$file;
 
-//Pruefung, ob die Datei eine datei ist:
+//Pruefung, ob die Datei gueltig ist:
 if($bild != "" && $bild != "." && $bild != "..")
 {
 	$info = pathinfo($bild);
@@ -48,11 +48,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 		$Orientation = trim($Orientation);
 		
 	//  +++  Vergabe eines eindeutigen Dateinamens  +++++
-		//Zur eindeutigen Identifizierung der Bilddateien wird seit dem 12.06.2008 die Datensatz-Nr. des jeweiligen Bildes verwendet. 
 		// Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:
-//		$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-//		echo mysql_error();
-//		$user_id = mysql_result($result1, isset($i), 'id');
 		$user_id = $uid;
 		$DateInsert = date('Y-m-d H:i:s');
 		$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$file', '$DateInsert')");
@@ -232,7 +228,6 @@ if($bild != "" && $bild != "." && $bild != "..")
 		ELSE
 		{
 			//ansonsten wird der soeben angelegte Datensatz und alle Vorschaubilder geloescht, womit der Datensatz erneut angelegt werden muss
-//			include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&c_username='.$c_username;
 			include $sr.'/bin/share/delete_picture.php?pic_id='.$pic_id.'&uid='.$uid;
 		}
 	}
@@ -245,7 +240,6 @@ if($bild != "" && $bild != "." && $bild != "..")
 $obj1 = new stdClass();
 $obj1->errorCode = $error_code;
 $obj1->Datei = $bild;
-//$obj1->Username = $c_username;
 $obj1->Userid = $uid;
 $output = json_encode($obj1);
 echo $output;
