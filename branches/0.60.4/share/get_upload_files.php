@@ -6,7 +6,6 @@ IF ($_COOKIE['uid'])
 }
 
 include 'global_config.php';
-
 //Ermittlung der Anzahl von Dateien im Uploadordner des angemeldeten Users:
 //echo "<BR>Upload-Ordner des Users: ".$up_dir."<BR><BR>";
 
