@@ -183,7 +183,6 @@ $user_id = $uid;
 $result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
 
-//# # # # # # # # # # # # # # folgender Block muss noch auf die uid anstelle des c_usernamen umgestellt werden: # # # # # # # # # # # # # # # 
 //bei jedem Aufruf der Startseite wird der kml-Ordner des betreffenden Users geleert:
 IF($username !== 'pb')
 {
@@ -200,7 +199,7 @@ IF($username !== 'pb')
 		}
 	}
 }
-//# # # # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # #  # # # # #
+
 //Ermittlung wieviel User in der DB registriert sind:
 $result2 = mysql_query("SELECT * FROM $table1");
 $num_user = mysql_num_rows($result2);
@@ -217,7 +216,6 @@ ELSE
 	$hinweis10 = "Es befinden sich zur Zeit noch keine Bilder in der Datenbank.";
 }
 //Nur wenn der angemeldete User Erfassungs- und Downloadrechte hat, werden die folgenden Kontrollen durchgefuehrt:
-
 	//Pruefung, ob Bilder ohne Kategorie-Zuweisung fuer den Benutzer vorliegen:
 	$num_pic = '0';
 	$result2 = mysql_query("SELECT * FROM $table2 WHERE Owner = '$user_id' AND aktiv = '1'");
@@ -268,9 +266,14 @@ ELSE
 		{
 			if($datei != "." && $datei != "..")
 			{
-				$info = pathinfo($datei);
-				$extension = strtolower($info['extension']);
-				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
+//				$info = pathinfo($datei);
+//				$extension = strtolower($info['extension']);
+				$bild = $ftp_path."/".$uid."/uploads/".$datei;
+				$exiftool = buildExiftoolCommand($sr);
+				$cmd = $exiftool." -S -FileType ".$bild;
+				$ft = preg_split('/ /', shell_exec($cmd));
+				$extension = strtolower(trim($ft[1]));
+				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
 				{
 					$bild_datei[] = $datei;
 					$n++;
@@ -289,25 +292,20 @@ ELSE
 			}
 		}
 	}
-	
+//	print_r($bild_datei);
 	//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
 	$m = 0;
 	@$verz=opendir($ftp_path."/".$uid."/downloads");
-	//echo "V: ".$verz;
-	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
+	// Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
+	// (Hier braucht nicht mehr auf gueltige Dateiformate kontrolliert zu werden)
 	IF($verz)
 	{
 		while($datei=readdir($verz))
 		{
 			if($datei != "." && $datei != "..")
 			{
-				$info = pathinfo($datei);
-				$extension = strtolower($info['extension']);
-				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
-				{
-					$bild_datei[] = $datei;
-					$m++;
-				}
+				$bild_datei[] = $datei;
+				$m++;
 			}
 		}
 		IF($m > 0)
