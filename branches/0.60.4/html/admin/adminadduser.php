@@ -32,44 +32,44 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	echo "
 	<center>
 	<form method='post' name='aau' action='adminadduserexe.php'>
-	<table class='normal'>
+	<table class='normal' border='0'>
 	<tr>
-	<td colspan='2' align='center' style='font-size:12pt; text-align:center;'>
+	<td colspan='3' align='center' style='font-size:12pt; text-align:center;'>
 	Neuen Benutzer hinzuf&uuml;gen
 	</td>
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
 	</TR>
 	
 	<tr>
-	<td colspan='2'>&nbsp;</td>
+	<td colspan='3'>&nbsp;</td>
 	</tr>
 	
 	<tr>
-	<td align=left colspan='2'>Hinweis: Der  Benutzername darf keine Leerzeichen oder Sonderzeichen enthalten<BR>
-	und darf h&ouml;chstens 15 Zeichen lang sein.!<BR>
-	Die mit * gekennzeichneten Felder M&Uuml;SSEN ausgef&uuml;llt werden.
+	<td align='center' colspan='3'><u>Hinweis:</u> Die mit * gekennzeichneten Felder M&Uuml;SSEN ausgef&uuml;llt werden.
 	</td>
 	</tr>
 	
 	<tr>
-	<td align=left colspan='2'>
+	<td align=left colspan='3'>
 	&nbsp;
 	</td>
 	</tr>
 	
 	<tr>
-	<td align=left>
+	<td width = '100'></td>
+	<td align=left width='150'>
 	Benutzername: *
 	</td>
-	<td>
+	<td width='250'>
 	<input type=text name=benutzername class='Auswahl150'>
 	</td>
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Titel:
 	</td>
@@ -79,6 +79,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Name: *
 	</td>
@@ -87,6 +88,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Vorname: *
 	</td>
@@ -96,6 +98,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Stra&szlig;e:
 	</td>
@@ -105,6 +108,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	PLZ:
 	</td>
@@ -114,6 +118,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Ort:
 	</td>
@@ -123,6 +128,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	PWD: *
 	</td>
@@ -132,6 +138,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Berechtigung:
 	</td>";
@@ -170,6 +177,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Telefon:
 	</td>
@@ -179,6 +187,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	e-Mail:
 	</td>
@@ -188,6 +197,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Internet:
 	</td>
@@ -197,6 +207,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
+	<td width = '100'></td>
 	<td align=left>
 	Sprache:
 	</td>
@@ -219,22 +230,22 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr>
-	<td align=left colspan='2'>&nbsp;
+	<td align=left colspan='3'>&nbsp;
 	</td>
 	</tr>
 	
 	<tr>
-	<td align=center colspan='2'>
+	<td align=center colspan='3'>
 	<INPUT type='button' value='Abbrechen' OnClick='location.href=\"adminframe.php?item=adminshowusers\"'>&nbsp;&nbsp;<input type=submit value='Hinzuf&uuml;gen'>
 	</td>
 	</tr>
 	
 	<tr>
-	<td colspan='2'>&nbsp;</td>
+	<td colspan='3'>&nbsp;</td>
 	</tr>
 		
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
 	</TR>
 	
 	</table>
