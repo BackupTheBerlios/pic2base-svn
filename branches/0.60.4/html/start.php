@@ -262,21 +262,41 @@ ELSE
 	//Ermittlung, wieviel Bilddateien sich in dem angegebenen Ordner befinden und Abspeicherung der Dateinamen in einem Array:
 	IF($verz)
 	{
+		$warning = "";
 		while($datei=readdir($verz))
 		{
 			if($datei != "." && $datei != "..")
 			{
-//				$info = pathinfo($datei);
-//				$extension = strtolower($info['extension']);
-				$bild = $ftp_path."/".$uid."/uploads/".$datei;
+				$info = pathinfo($datei);
+				$extension_0 = strtolower($info['extension']);	//Dateiendung
+				//$bild = $ftp_path."/".$uid."/uploads/".$datei;
+				$bild = $up_dir."/".$datei;
 				$exiftool = buildExiftoolCommand($sr);
 				$cmd = $exiftool." -S -FileType ".$bild;
 				$ft = preg_split('/ /', shell_exec($cmd));
-				$extension = strtolower(trim($ft[1]));
-				IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
+				$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
+				if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
 				{
+					if($extension_0 !== $extension)
+					{
+						$new_filename = str_replace($extension_0, $extension, $datei);
+						$ren_file = rename($up_dir."/".$datei, $up_dir."/".$new_filename);
+						if($ren_file)
+						{
+							$datei = $new_filename;
+						}
+						else
+						{
+							echo "Datei ".$datei." konnte nicht umbenannt werden...";
+						}
+						
+					}
 					$bild_datei[] = $datei;
 					$n++;
+				}
+				else
+				{
+					$warning .= "<BR>Bild <u>".$datei."</u> besitzt kein <a href='help/help1.php?page=1'>unterst&uuml;tztes Dateiformat</a>.";
 				}
 			}
 		}
@@ -284,15 +304,14 @@ ELSE
 		{
 			IF($n == 1)
 			{
-				$hinweis2 = "<FONT COLOR='red'>Es befindet sich eine Datei in Ihrem Upload-Ordner.</FONT>";
+				$hinweis2 = "<FONT COLOR='red'>Es befindet sich eine Datei in Ihrem Upload-Ordner.</FONT>".$warning;
 			}
 			ELSEIF($n > 1)
 			{
-				$hinweis2 = "<FONT COLOR='red'>Es befinden sich ".$n." Dateien in Ihrem Upload-Ordner.</FONT>";
+				$hinweis2 = "<FONT COLOR='red'>Es befinden sich ".$n." Dateien in Ihrem Upload-Ordner.</FONT>".$warning;
 			}
 		}
 	}
-//	print_r($bild_datei);
 	//Pruefung, ob Dateien im FTP-Download-Ordner vorliegen:
 	$m = 0;
 	@$verz=opendir($ftp_path."/".$uid."/downloads");
