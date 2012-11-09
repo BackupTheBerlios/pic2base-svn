@@ -19,9 +19,9 @@
 
 /*
  * Project: pic2base
- * File: start.php
+ * File: ###.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -30,78 +30,42 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2003-2005 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
  
-include '../share/db_connect1.php';
+include '../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
 
-$result1 = mysql($db, "SELECT * FROM $table1 WHERE username = '$c_username' AND aktiv = '1'");
-$berechtigung = mysql_result($result1, $i1, 'berechtigung');
-SWITCH ($berechtigung)
-{
-	//Admin
-	CASE $berechtigung == '1':
-	$navigation = 	"<a class='navi' href='adminframe.php'>Administration</a>
-			<a class='navi' href='erfassung0.php'>Erfassung</a>
-			<a class='navi' href='auswahl0.php?mod=rech'>Recherche</a>
-			<a class='navi' href='edit_start.php'>Bearbeitung</a>
-			<a class='navi' href='hilfe1.php'>Hilfe</a>
-			<a class='navi' href='../../index.php'>Logout</a>";
-	break;
+$result1 = mysql($db, "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+
+echo"
+
+<div class='page'>
+
+	<p id='kopf'>pic2base :: </p>
 	
-	//Owner
-	CASE $berechtigung == '5':
-	$navigation = 	"<a class='navi' href='erfassung0.php'>Erfassung</a>
-			<a class='navi' href='recherche1.php'>Recherche</a>
-			<a class='navi' href='vorschau.php'>Bearbeitung</a>
-			<a class='navi' href='hilfe1.php'>Hilfe</a>
-			<a class='navi' href='../../index.php'>Logout</a>";
-	break;
-	
-	//Web-User
-	CASE $berechtigung == '9':
-	$navigation = 	"<a class='navi' href='recherche1.php'>Recherche</a>
-			<a class='navi' href='hilfe1.php'>Hilfe</a>
-			<a class='navi' href='../../index.php'>Logout</a>";
-	break;
-}
-
-
-
-?>
-
-<div class="page">
-
-	<p id="kopf">pic2base :: Startseite</p>
-	
-	<div class="navi" style="clear:right;">
-		<div class="menucontainer">
-		<?
+	<div class='navi'' style='clear:right;'>
+		<div class='menucontainer'>";
+		
 		echo $navigation;
-		?>
+		echo "
 		</div>
 	</div>
 	
-	<div class="content">
-	<p style="margin:120px 0px; text-align:center">W�hlen Sie bitte aus der linken Leiste die gew�nschte Aktion aus.</p>
+	<div class='content'>
+	<p style='margin:120px 0px; text-align:center'>W&auml;hlen Sie bitte aus der linken Leiste die gew&uuml;nschte Aktion aus.</p>
 	</div>
-	<br style="clear:both;" />
+	<br style='clear:both;'' />
 
-	<p id="fuss"><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A><?php echo $cr; ?></p>
+	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."></p>
 
-</div>
+</div>";
 
-<?
 mysql_close($conn);
 ?>
 </DIV>

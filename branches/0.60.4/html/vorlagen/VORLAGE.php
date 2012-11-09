@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>pic2base - Startseite</TITLE>
+	<TITLE>pic2base - </TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../css/format1.css'>
@@ -29,25 +29,20 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
- * @copyright 2006-2007 Klaus Henneberg
- * @author Klaus Henneberg
- * @package pic2base
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
 
-unset($username);
-IF ($_COOKIE['login'])
+IF ($_COOKIE['uid'])
 {
-list($c_username) = preg_split('#,#',$_COOKIE['login']);
-//echo $c_username;
+	$uid = $_COOKIE['uid'];
 }
-include '../share/user_check1.php';
-include '../share/db_connect1.php';
+
+include '../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
 
 echo "
 <div class='page'>
 
-	<p id='kopf'>pic2base - Startseite</p>
+	<p id='kopf'>pic2base - </p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>
