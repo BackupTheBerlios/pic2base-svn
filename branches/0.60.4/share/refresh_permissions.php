@@ -14,7 +14,8 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
 
 //#######################################################################################################
-//Skript kann verwendet werden, um alle verfuegbaren Rechte in die Gruppen- und Userabellen zu schreiben
+// Skript kann verwendet werden, um alle verfuegbaren Rechte in die Gruppen- und Userabellen zu schreiben
+// # # # # # # # # # hidden Feature # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 //
 // 1 auslesen aller Rechte aus der Tabelle permissions (table8)
 // 2 Ermittlung, welche Gruppen es gibt Tabelle usergroups (table9)
