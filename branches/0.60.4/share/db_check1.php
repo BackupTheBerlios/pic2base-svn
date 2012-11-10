@@ -827,7 +827,7 @@ ELSE
 			$ftp_passwd = crypt('pic_base');
 			$apache_uid = posix_getuid();
 			$apache_gid = posix_getgid();
-			$res120 = mysql_query( "INSERT INTO `users` (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, group_id) VALUES ('pb', '$titel', '$name', '$vorname', '$strasse', '38889', 'Blankenburg (Harz)', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', 'info@pic2base.de', 'http://www.pic2base.de', '$apache_uid', '$apache_gid', '1', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/uploads', '/opt/lampp/htdocs/events/admin/pic2base/userdata/pb/downloads', '1')");
+			$res120 = mysql_query( "INSERT INTO `users` (username, titel, name, vorname, strasse, plz, ort, pwd, ftp_passwd, tel, email, internet, uid, gid, aktiv, user_dir, up_dir, down_dir, group_id) VALUES ('pb', '$titel', '$name', '$vorname', '$strasse', '38889', 'Blankenburg (Harz)', ENCRYPT('$pwd','$key'), '$ftp_passwd', '$telefon', 'info@pic2base.de', 'http://www.pic2base.de', '$apache_uid', '$apache_gid', '1', '/opt/lampp/htdocs/pic2base/userdata/pb', '/opt/lampp/htdocs/pic2base/userdata/pb/uploads', '/opt/lampp/htdocs/pic2base/userdata/pb/downloads', '1')");
 			
 			//setzen der Rechte auf die Ordner: images, tracks und userdaten:
 			include_once 'global_config.php';
