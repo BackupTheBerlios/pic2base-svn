@@ -7,18 +7,11 @@ echo "Georeferenzierung wird abgebrochen...<BR>";
 //echo "&Uuml;bergebener Username: ".$uname."<BR>";
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
-//
-//Ermittlung aller Bilder des Users $uname, fuer die gilt:
-//In der Tabelle locations sind Datensaetze mit der Ortsbezeichnung "Ortsbezeichnung" enthalten,
-//deren loc_id den Bilden des Users $uname zugewiesen sind.
-//dann sind diese Datensaetze in der Tabelle locations zu loeschen und in dem korrespondierenden Datensatz in der
-//pictures-Tabelle die loc_id auf 0 zu setzen.
-//
 
-$result1 = mysql_query("SELECT $table2.owner, $table2.pic_id, $table2.City
+$result1 = mysql_query("SELECT $table2.Owner, $table2.pic_id, $table2.City
 FROM $table2
-WHERE $table2.owner = $userid
-AND ($table2.City = 'Ortsbezeichnung' OR $table2.City = ''");
+WHERE $table2.Owner = $userid
+AND ($table2.City = 'Ortsbezeichnung' OR $table2.City = '' OR $table2.City = 'skipped'");
 echo mysql_error();
 $num1 = mysql_num_rows($result1);
 //echo $num1." Treffer.<BR>";

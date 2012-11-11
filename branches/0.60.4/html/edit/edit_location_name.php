@@ -2,7 +2,6 @@
 IF (!$_COOKIE['uid'])
 {
 	include '../../share/global_config.php';
-	//var_dump($sr);
   	header('Location: ../../../index.php');
 }
 else
@@ -116,8 +115,24 @@ echo "
 				{
 					//Erzeugung des Hinweistextes ueber dem Vorschaubild:
 					CASE '0':
-					echo "Es gibt kein Bild mehr ohne GPS-Ortszuweisung.<BR>
-					<meta http-equiv='refresh', content='0; URL=edit_start.php'>";
+					echo "Es gibt kein Bild mehr ohne GPS-Ortszuweisung.<BR>";
+					//wenn alle Bilder referenziert wurden, wird bei den uebersprungenen (skipped) Bildern des angemeldeten Users City wieder auf 'Ortsbezeichnung' gesetzt:
+					
+					$result4 = mysql_query("SELECT $table2.Owner, $table2.pic_id, $table2.City
+					FROM $table2
+					WHERE $table2.Owner = $uid
+					AND $table2.City = 'skipped'");
+					//echo mysql_error();
+					$num4 = mysql_num_rows($result4);
+					//echo $num4." Treffer.<BR>";
+					FOR ($i4='0'; $i4<$num4; $i4++)
+					{
+						$pic_id = mysql_result($result4, $i4, 'pic_id');
+						$result5 = mysql_query("UPDATE $table2 SET City = 'Ortsbezeichnung' WHERE pic_id = '$pic_id'");
+						//echo mysql_error();
+					}
+					
+					echo "<meta http-equiv='refresh', content='0; URL=edit_start.php'>";
 					break;
 					
 					CASE '1':
@@ -264,7 +279,7 @@ echo "
 
 				<TR id='kat'>
 				<TD id='kat'>";
-				IF($stat !== 'new')
+				IF($stat !== 'new' AND $stat !== 'skip')
 				{
 					IF($elements == '0')
 					{
@@ -306,23 +321,30 @@ echo "
 							}
 						echo '	
 						</SELECT>';
-						
 					}
 				}
-				ELSE
+				elseif($stat == 'new' AND $stat !== 'skip')
 				{
 					//Variante, wenn ein euer Ort angelegt werden soll:
 					echo "
 					<INPUT TYPE = 'text' name='ort' id='ort' maxlength='50' style = 'width:200px;' />";
+				}
+				elseif($stat !== 'new' AND $stat == 'skip')
+				{
+					// der aktuelle Bilddatensatz wird aus der Tabelle geo_tmp geloescht und die Ortsbezeichnung wird mit dem naechsten Datensatz fortgesetzt
 				}
 				echo "</TD>
 				</TR>
 
 				<TR id='kat'>
 					<TD id='kat1'>
-					<p align='center'><INPUT id='button0' type='button' value='Abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?userid=$uid\"'><INPUT id='button1' type='submit' value='Weiter'></p>
+					<p align='center'><INPUT type='button' value='Skip' title='Referenzierung dieses Bildes &uuml;berspringen' onClick='location.href=\"skip_georef.php?pic_id=$pic_id&uid=$uid\"'><INPUT id='button0' type='button' value='Abbrechen' title='Gesamte Referenzierung abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?userid=$uid\"'><INPUT id='button1' type='submit' value='Weiter'></p>
 					</TD>
 				</TR>";
+			}
+			else
+			{
+				$pic_id = '';
 			}
 			echo "
 		</TABLE>
@@ -334,11 +356,10 @@ echo "
 		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hilfe zur Ortsbezeichnung<BR></p>";
 		IF($pic_id !== '0' AND $pic_id !== '')
 		{
-		$result12 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-		@$longitude = mysql_result($result12, $i12, 'GPSLongitude');
-		@$latitude = mysql_result($result12, $i12, 'GPSLatitude');
-		
-		echo "<iframe src='../recherche/show_map.php?lat=$latitude&long=$longitude&width=399&height=404' frameborder='0' style='width:405px; height:410px;'>Ihr Browser unterst&uuml;tzt leider keine eingebetteten Frames.</iframe>";
+			$result12 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+			@$longitude = mysql_result($result12, $i12, 'GPSLongitude');
+			@$latitude = mysql_result($result12, $i12, 'GPSLatitude');
+			echo "<iframe src='../recherche/show_map.php?lat=$latitude&long=$longitude&width=399&height=404' frameborder='0' style='width:405px; height:410px;'>Ihr Browser unterst&uuml;tzt leider keine eingebetteten Frames.</iframe>";
 		}
 	echo "	
 	</div>
