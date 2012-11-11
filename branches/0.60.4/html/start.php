@@ -268,16 +268,18 @@ ELSE
 			if($datei != "." && $datei != "..")
 			{
 				$info = pathinfo($datei);
-				$extension_0 = strtolower($info['extension']);	//Dateiendung
+				$extension_0 = strtolower($info['extension']);	//Dateiendung, die das Bild mitbringt
 				//$bild = $ftp_path."/".$uid."/uploads/".$datei;
 				$bild = $up_dir."/".$datei;
 				$exiftool = buildExiftoolCommand($sr);
 				$cmd = $exiftool." -S -FileType ".$bild;
 				$ft = preg_split('/ /', shell_exec($cmd));
 				$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
+				// Bei jpg-Dateien wird der Dateityp 'jpeg' identifiziert. Dies wuerde bedeuten, dass praktisch jedes jpg-Bild umbenannt werden muss
+				// Zur Vereinfachung wird hier eine Ausnahme hinzugefuegt: jpg-Bilder werden nicht zu jpeg umbenannt!
 				if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
 				{
-					if($extension_0 !== $extension)
+					if($extension_0 !== $extension AND $extension_0 !== 'jpg')
 					{
 						$new_filename = str_replace($extension_0, $extension, $datei);
 						$ren_file = rename($up_dir."/".$datei, $up_dir."/".$new_filename);
