@@ -67,7 +67,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 		$file_info = pathinfo($tmp_filename);
 		//Pruefung auf unterstuetzte Datei-Formate:
 		//... wenn es keine jpg-Datei ist:
-		IF($file_info['extension'] !== 'jpg')
+		IF($file_info['extension'] !== 'jpg' AND $file_info['extension'] !== 'jpeg')
 		{
 			$base_name = $file_info['basename'];
 			$ext = strtolower($file_info['extension']);		//echo "Ext: ".$ext."<BR>";
