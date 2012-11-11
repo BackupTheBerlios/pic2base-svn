@@ -49,11 +49,11 @@ if($bild != "" && $bild != "." && $bild != "..")
 		
 	//  +++  Vergabe eines eindeutigen Dateinamens  +++++
 		// Hierzu wird vor dem eigentlichen Upload ein Dummy-Datensatz angelegt und die Datensatz-Nr. ermittelt:
-		$user_id = $uid;
+//		$user_id = $uid;
 		$DateInsert = date('Y-m-d H:i:s');
-		$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$user_id', '$file', '$DateInsert')");
+		$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$uid', '$file', '$DateInsert')");
 		echo mysql_error();
-		$pic_id = mysql_insert_id();									//echo "User-ID: ".$user_id."; Rec-ID: ".$pic_id."<BR>";
+		$pic_id = mysql_insert_id();									//echo "User-ID: ".$uid."; Rec-ID: ".$pic_id."<BR>";
 		$tmp_filename = $pic_id.".".$extension;							//Dateiname z.B.: 112233.nef
 		
 		//  Kontrolle, ob Upload erfolgreich war  +++++
@@ -158,7 +158,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 		}
 
 		//Funktions-Parameter: Bild-ID, Anzahl der Szenen; User-ID; Ausrichtung
-		savePicture($pic_id,'1',$user_id,$Orientation,$sr);	//Parameter sollten reichen, da sich alles weitere erzeugen laesst
+		savePicture($pic_id,'1',$uid,$Orientation,$sr);	//Parameter sollten reichen, da sich alles weitere erzeugen laesst
 
 		//Aus Preformance-Gruenden werden die Histogramme aus den HQ-Bildern gewonnen:
 		$result3 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
@@ -198,7 +198,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 					//Original-Dateinamen und md5-Pruefsumme
 					
 					$neue_datei = basename($bild);
-					//echo "neuer Dateiname: ".$neue_datei.", MD5-Summe: ".$md5sum.", User-ID: ".$user_id."<BR>";
+					//echo "neuer Dateiname: ".$neue_datei.", MD5-Summe: ".$md5sum.", User-ID: ".$uid."<BR>";
 					
 					$result5 = mysql_query("SELECT * FROM $table2 WHERE FileNameOri = '$neue_datei' AND md5sum = '$md5sum'");
 					$num5 = mysql_num_rows($result5);
@@ -214,7 +214,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 							// $bild_id ist ein Datensatz in der DB mit dem gleichen Original-Dateinamen und der gleichen Pruefsumme wie das soeben erfasste Bild
 							IF($bild_id !== $pic_id)
 							{
-								$result6 = mysql_query("INSERT INTO $table21 (new_pic_id, old_pic_id, user_id) VALUES ('$pic_id', '$bild_id', '$user_id')");
+								$result6 = mysql_query("INSERT INTO $table21 (new_pic_id, old_pic_id, user_id) VALUES ('$pic_id', '$bild_id', '$uid')");
 								echo mysql_error();	
 							}
 						}
