@@ -241,7 +241,8 @@ function createPreviewPicture($FILE, $dest_path, $max_len, $sr)
 	//-wird bei der Erfassung von Bildern angewendet.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	$file_nameV = str_replace('_hq.jpg','_v.jpg',basename($FILE));	//Variante, bei der die Vorschau aus HQ erzeugt wird
-    $command = $conv." -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." +profile '*' ".$dest_path."/".$file_nameV."";
+	$command = $conv." -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." +profile '*' ".$dest_path."/".$file_nameV."";
+//    $command = $conv." -quality 80 ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameV."";
     $output = shell_exec($command);
 	return $file_nameV;
 }
@@ -255,7 +256,8 @@ function resizeOriginalPicture($FILE, $dest_path, $max_len, $sr)
 	//Die Funktion generiert aus dem Original ein HQ-Vorschaubild, dessen max. Ausdehnung max_len Pixel betraegt und speichert dieses unter dem Destination-Pfad ab.
 	//egal was rein kommt, das Vorschaubild wird immer als jpg abgelegt:
 	$file_nameT = str_replace('.jpg','_hq.jpg',basename($FILE));
-    $command = $conv." -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." +profile '*' ".$dest_path."/".$file_nameT."";
+	$command = $conv." -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." +profile '*' ".$dest_path."/".$file_nameT."";
+//    $command = $conv." -quality 80 -size ".$max_len."x".$max_len." ".$FILE." -resize ".$max_len."x".$max_len." ".$dest_path."/".$file_nameT."";
     $output = shell_exec($command);
 	return $file_nameT;
 }
