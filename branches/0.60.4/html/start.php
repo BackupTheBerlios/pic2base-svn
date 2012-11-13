@@ -118,7 +118,7 @@ ELSE
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist und Kontrolle, ob Bilder zum Loeschen vorliegen:
 IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 {
-	$file1 = 'http://www.pic2base.de/web/includes/conf.inc.php';
+	$file1 = 'http://www.pic2base.de/includes/conf.inc.php';
 	@$fh = fopen($file1,'r');
 	IF(!$fh)
 	{
