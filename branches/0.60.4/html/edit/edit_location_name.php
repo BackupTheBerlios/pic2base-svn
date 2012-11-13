@@ -338,7 +338,7 @@ echo "
 
 				<TR id='kat'>
 					<TD id='kat1'>
-					<p align='center'><INPUT type='button' value='Skip' title='Referenzierung dieses Bildes &uuml;berspringen' onClick='location.href=\"skip_georef.php?pic_id=$pic_id&uid=$uid\"'><INPUT id='button0' type='button' value='Abbrechen' title='Gesamte Referenzierung abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?userid=$uid\"'><INPUT id='button1' type='submit' value='Weiter'></p>
+					<p align='center'><INPUT type='button' value='&Uuml;berspringen' title='Referenzierung dieses Bildes &uuml;berspringen' onClick='location.href=\"skip_georef.php?pic_id=$pic_id&uid=$uid\"'><INPUT id='button0' type='button' value='Abbrechen' title='Gesamte Referenzierung abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?userid=$uid\"'><INPUT id='button1' type='submit' value='Weiter'></p>
 					</TD>
 				</TR>";
 			}
