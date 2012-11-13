@@ -187,19 +187,19 @@ echo "
 	if($soll == 0)
 	{
 		
-		$result3 = mysql_query("ALTER TABLE $table1 DROP `bewertung`, DROP `note`;");
+		$result3 = mysql_query("ALTER TABLE $table1 DROP `berechtigung`, DROP `note`;");
 		if(mysql_error() !== "")
 		{
 			echo mysql_error();
 			$fh = fopen($p2b_path.'pic2base/log/'.$log_file,'a');
-			fwrite($fh,date('d.m.Y H:i:s').": Fehler: Update der Users-Tabelle; Spalten 'bewertung' und/oder 'note' konnten nicht entfernt werden.\n");
+			fwrite($fh,date('d.m.Y H:i:s').": Fehler: Update der Users-Tabelle; Spalten 'berechtigung' und/oder 'note' konnten nicht entfernt werden.\n");
 			fclose($fh);
 			$error++;
 		}
 		else
 		{
 			$fh = fopen($p2b_path.'pic2base/log/'.$log_file,'a');
-			fwrite($fh,date('d.m.Y H:i:s').": Update der Users-Tabelle; Spalten 'bewertung' und 'note' wurden entfernt.\n");
+			fwrite($fh,date('d.m.Y H:i:s').": Update der Users-Tabelle; Spalten 'berechtigung' und 'note' wurden entfernt.\n");
 			fclose($fh);
 		}
 		
@@ -207,7 +207,7 @@ echo "
 	else
 	{
 		$fh = fopen($p2b_path.'pic2base/log/'.$log_file,'a');
-		fwrite($fh,date('d.m.Y H:i:s').": Update der Users-Tabelle; Spalten 'bewertung' und/oder 'note' waren nicht mehr vorhanden.\n");
+		fwrite($fh,date('d.m.Y H:i:s').": Update der Users-Tabelle; Spalten 'berechtigung' und/oder 'note' waren nicht mehr vorhanden.\n");
 		fclose($fh);
 	}
 	echo "&Uuml;berfl&uuml;ssige Spalten wurden aus der Tabelle 'users' entfernt.<BR>";
