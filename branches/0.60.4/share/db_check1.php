@@ -77,7 +77,7 @@ ELSE
 			`aktion` tinytext collate latin1_german1_ci,
 			`dauer` tinytext collate latin1_german1_ci,
 			`lokale_zeit` datetime default NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;");
+			) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Anlage der Tabelle \"ftp_transfer\"<BR>";
@@ -392,7 +392,7 @@ ELSE
 			KEY `Owner` (`Owner`),
 			KEY `ranking` (`ranking`),
 			KEY `md5sum` (`md5sum`)
-			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Bilddaten' AUTO_INCREMENT=1;");
+			) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT='Bilddaten' AUTO_INCREMENT=1;");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Anlage der Tabelle \"pictures\"<BR><BR>";
@@ -434,7 +434,7 @@ ELSE
 			`new_level` int(11) NOT NULL,
 			`new_parent` int(11) NOT NULL,
 			PRIMARY KEY  (`lfdnr`)
-			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=306;");
+			) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=306;");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Anlage der Tabelle \"tmp_tree\"<BR>";
@@ -450,7 +450,7 @@ ELSE
 			`lang` VARCHAR( 5 ) NOT NULL COMMENT 'Benutzersprache',
 			`Make` VARCHAR( 50 ) NOT NULL ,
 			PRIMARY KEY ( `id` )
-			) ENGINE = MYISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=0;");
+			) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=0;");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Anlage der Tabelle \"tag_trans\"<BR>";
@@ -623,7 +623,7 @@ ELSE
 			`apache_uid` SMALLINT UNSIGNED NOT NULL ,
 			`apache_gid` SMALLINT UNSIGNED NOT NULL ,
 			`p2b_version` VARCHAR( 10 ) NOT NULL DEFAULT '0.00.0' COMMENT 'Update-Kriterium, verwendet ab Version 0.60.2'
-			) ENGINE = MYISAM COMMENT = 'Pfade zur Hilfssoftware';");
+			) ENGINE = MYISAM COMMENT = 'Pfade zur Hilfssoftware'CHARACTER SET utf8 COLLATE utf8_unicode_ci;");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Anlage der Tabelle \"pfade\"<BR>";
