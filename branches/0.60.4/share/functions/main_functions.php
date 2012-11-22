@@ -71,7 +71,8 @@ function OptionFields($language)
 			IF($language !== 'en')
 			{
 				$result3 = mysql_query("SELECT $cn FROM $table20 WHERE lang = '$language'");
-				$tag_name = utf8_encode(mysql_result($result3, isset($i3), $cn));
+//				$tag_name = utf8_encode(mysql_result($result3, isset($i3), $cn));
+				$tag_name = mysql_result($result3, isset($i3), $cn);
 				IF($tag_name == '')
 				{
 					$tag_name = $cn;
@@ -1820,7 +1821,7 @@ function extractExifData($pic_id, $sr, $Orientation)
 				}
 				ELSE
 				{
-					$value = utf8_decode($value);
+//					$value = utf8_decode($value);
 					$result4 = mysql_query("UPDATE $table2 SET $fieldname = '$value' WHERE pic_id = '$pic_id'");
 					$statement = "UPDATE $table2 SET $fieldname = '$value' WHERE pic_id = '$pic_id'";
 				}
