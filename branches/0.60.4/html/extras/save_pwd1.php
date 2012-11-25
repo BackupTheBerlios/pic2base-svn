@@ -35,12 +35,12 @@ IF ($_COOKIE['uid'])
 	$uid = $_COOKIE['uid'];
 }
 
-$vorname = utf8_decode($_POST['vorname']);
-$name = utf8_decode($_POST['name']);
+$vorname = $_POST['vorname'];
+$name = $_POST['name'];
 $titel = $_POST['titel'];
-$strasse = utf8_decode($_POST['strasse']);
+$strasse = $_POST['strasse'];
 $plz = $_POST['plz'];
-$ort = utf8_decode($_POST['ort']);
+$ort = $_POST['ort'];
 $tel = $_POST['tel'];
 $email = $_POST['email'];
 $internet = $_POST['internet'];
@@ -49,7 +49,7 @@ $dir_down = $_POST['direkt_download'];
 
 IF( array_key_exists('old_pwd',$_POST) )
 {
-	$old_pwd = utf8_decode($_POST['old_pwd']);
+	$old_pwd = $_POST['old_pwd'];
 }
 ELSE
 {
@@ -65,8 +65,8 @@ ELSE
 	$user_id = '';					// ID des zu bearbeitenden Benutzers
 }
 
-$new_pwd_1 = utf8_decode($_POST['new_pwd_1']); //echo "Neues PWD: ".$new_pwd_1."<BR>";
-$new_pwd_2 = utf8_decode($_POST['new_pwd_2']);
+$new_pwd_1 = $_POST['new_pwd_1']; //echo "Neues PWD: ".$new_pwd_1."<BR>";
+$new_pwd_2 = $_POST['new_pwd_2'];
 $mod = $_REQUEST['mod'];
 $u_name = $_POST['u_name'];			
 

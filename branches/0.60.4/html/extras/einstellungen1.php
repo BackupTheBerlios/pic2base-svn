@@ -44,19 +44,19 @@ include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
 
 $result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+$username = mysql_result($result1, isset($i1), 'username');
 
 IF(hasPermission($uid, 'editmyprofile', $sr) AND !hasPermission($uid, 'editallprofiles', $sr))
 {
 //	Benutzer darf nur seine eigenen Daten aendern
 	echo mysql_error();
 	$titel = mysql_result($result1, isset($i1), 'titel');
-	$vorname = utf8_encode(mysql_result($result1, isset($i1), 'vorname'));
-	$name = utf8_encode(mysql_result($result1, isset($i1), 'name'));
-	$u_name = utf8_encode(mysql_result($result1, isset($i1), 'username'));
-	$strasse = utf8_encode(mysql_result($result1, isset($i1), 'strasse'));
+	$vorname = mysql_result($result1, isset($i1), 'vorname');
+	$name = mysql_result($result1, isset($i1), 'name');
+	$u_name = mysql_result($result1, isset($i1), 'username');
+	$strasse = mysql_result($result1, isset($i1), 'strasse');
 	$plz = mysql_result($result1, isset($i1), 'plz');
-	$ort = utf8_encode(mysql_result($result1, isset($i1), 'ort'));
+	$ort = mysql_result($result1, isset($i1), 'ort');
 	$tel = mysql_result($result1, isset($i1), 'tel');
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
@@ -309,10 +309,10 @@ ELSEIF(hasPermission($uid, 'editallprofiles', $sr))
 		FOR($i2='0'; $i2<$num2; $i2++)
 		{
 			$user_id = mysql_result($result2, $i2, 'id');
-			$benutzername = utf8_encode(mysql_result($result2, $i2, 'username'));	//Namen der registrierten Benutzer, nicht des bearbeitenden Benutzers
+			$benutzername = mysql_result($result2, $i2, 'username');	//Namen der registrierten Benutzer, nicht des bearbeitenden Benutzers
 			$titel = mysql_result($result2, $i2, 'titel');
-			$vorname = utf8_encode(mysql_result($result2, $i2, 'vorname'));
-			$name = utf8_encode(mysql_result($result2, $i2, 'name'));
+			$vorname = mysql_result($result2, $i2, 'vorname');
+			$name = mysql_result($result2, $i2, 'name');
 			//IF($username !== 'pb')
 			IF($benutzername !== 'pb' AND ($benutzername !== $username OR hasPermission($uid, 'editmyprofile', $sr)))
 			{

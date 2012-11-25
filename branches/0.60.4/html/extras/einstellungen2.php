@@ -53,12 +53,12 @@ IF(hasPermission($uid, 'editallprofiles', $sr))
 	$result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$id'");
 	echo mysql_error();
 	$titel = mysql_result($result1, isset($i1), 'titel');
-	$vorname = utf8_encode(mysql_result($result1, isset($i1), 'vorname'));
-	$name = utf8_encode(mysql_result($result1, isset($i1), 'name'));
-	$u_name = utf8_encode(mysql_result($result1, isset($i1), 'username'));
-	$strasse = utf8_encode(mysql_result($result1, isset($i1), 'strasse'));
+	$vorname = mysql_result($result1, isset($i1), 'vorname');
+	$name = mysql_result($result1, isset($i1), 'name');
+	$u_name = mysql_result($result1, isset($i1), 'username');
+	$strasse = mysql_result($result1, isset($i1), 'strasse');
 	$plz = mysql_result($result1, isset($i1), 'plz');
-	$ort = utf8_encode(mysql_result($result1, isset($i1), 'ort'));
+	$ort = mysql_result($result1, isset($i1), 'ort');
 	$tel = mysql_result($result1, isset($i1), 'tel');
 	$email = mysql_result($result1, isset($i1), 'email');
 	$internet = mysql_result($result1, isset($i1), 'internet');
