@@ -29,7 +29,7 @@ include $sr.'/bin/share/functions/permissions.php';
 $exiftool = buildExiftoolCommand($sr);
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+$username = mysql_result($result0, isset($i0), 'username');
 
 $datei = $pic_path."/".$FileName;
 $target = $ftp_path."/".$uid."/downloads/".$FileName;

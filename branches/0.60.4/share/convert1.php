@@ -45,7 +45,7 @@ FOR($i1='0'; $i1<$num1; $i1++)
 		echo mysql_error();
 		
 		$desc = substr($desc,'0','1990');
-		$desc = htmlentities($desc);
+//		$desc = htmlentities($desc);
 		shell_exec($et_path."/exiftool -IPTC:Caption-Abstract='$desc' ".$FN." -overwrite_original");
 	}
 	ELSE
@@ -81,7 +81,7 @@ FOR($i1='0'; $i1<$num1; $i1++)
 	FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gew�hlt, da die Wurzel uninteressant ist!
 	{
 		//echo $num5."<BR>";
-		$kategorie = htmlentities(mysql_result($result9, $i9, 'kategorie'));
+//		$kategorie = htmlentities(mysql_result($result9, $i9, 'kategorie'));
 		$kat_id = mysql_result($result9, $i9, $table4.'.kat_id');
 		$pic_id = mysql_result($result9, $i9, $table10.'.pic_id');
 		//echo $kat_id;
@@ -98,7 +98,7 @@ FOR($i1='0'; $i1<$num1; $i1++)
 	echo "Bild: ".$pic_id.", Kategorien: ".$kat_info."<BR>";
 	IF ($kat_info !== '')
 	{
-		$kategorie = htmlentities($kat_info);
+//		$kategorie = htmlentities($kat_info);
 		shell_exec($et_path."/exiftool -IPTC:Keywords='$kategorie' -overwrite_original ".$FN);
 	}
 }

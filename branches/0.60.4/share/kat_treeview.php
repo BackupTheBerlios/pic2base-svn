@@ -14,7 +14,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+$username = mysql_result($result0, isset($i0), 'username');
 
 $sel_one = "<IMG src='$inst_path/pic2base/bin/share/images/one.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='einzelne Bilder dieser Kategorie ausw&auml;hlen'>";
 $sel_all = "<IMG src='$inst_path/pic2base/bin/share/images/all.gif' width='22' height='11' hspace='0' vspace='0' border='0' title='alle Bilder dieser Kategorie ausw&auml;hlen'>";
@@ -88,7 +88,7 @@ if(!isset($bewertung))
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
-			$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
+			$kategorie = mysql_result($result10, $i10, 'kategorie');
 			$parent = mysql_result($result10, $i10, 'parent');
 			$level = mysql_result($result10, $i10, 'level');
 			$kat_id = mysql_result($result10, $i10, 'kat_id');
@@ -208,7 +208,7 @@ IF($KAT_ID=='' OR $KAT_ID == '0')
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
-		$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
+		$kategorie = mysql_result($result10, $i10, 'kategorie');
 		$parent = mysql_result($result10, $i10, 'parent');
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id = mysql_result($result10, $i10, 'kat_id');

@@ -66,7 +66,7 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
-		$kategorie = htmlentities(mysql_result($result10, $i10, 'kategorie'));
+		$kategorie = mysql_result($result10, $i10, 'kategorie');
 		$parent = mysql_result($result10, $i10, 'parent');
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id_s = mysql_result($result10, $i10, 'kat_id');
@@ -132,7 +132,7 @@ $result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
 $num10 = mysql_num_rows($result10);
 FOR ($i10=0; $i10<$num10; $i10++)
 {
-	$kategorie = htmlentities(mysql_result($result10, $i10, 'kategorie'));
+	$kategorie = mysql_result($result10, $i10, 'kategorie');
 	$parent = mysql_result($result10, $i10, 'parent');
 	$level = mysql_result($result10, $i10, 'level');
 	$kat_id_s = mysql_result($result10, $i10, 'kat_id');

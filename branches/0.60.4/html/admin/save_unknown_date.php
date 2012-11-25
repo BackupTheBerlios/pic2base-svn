@@ -79,7 +79,6 @@ FOR($n='0'; $n<$x; $n++)
 			 
 			//ohne die folgenden Anweisungen kann ein Trockenlauf erfolgen: ##########################
 			$result4 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$ca_neu\", DateTimeOriginal = '$next_date' WHERE pic_id = '$pic_id'");
-//			$desc = htmlentities($ca_neu);
 			$desc = $ca_neu;
 			//Aenderungen in Original-Datei und jpg-Datei speichern:
 			shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original 

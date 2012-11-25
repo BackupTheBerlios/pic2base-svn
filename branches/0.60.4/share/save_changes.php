@@ -46,19 +46,10 @@ $description = strip_tags($description);				//eventuelle Tags entfernen
 $description = str_replace('"', "'",$description);		//Anfuehrungszeichen korrigieren
 $description = substr($description,'0','1990'); 		//Kuerzung auf max. 2000 Zeichen
 
-if(mb_detect_encoding($description !== 'UTF-8'))
-{
-	$desc_db = utf8_decode($description);
-}
-ELSE
-{
-	$desc_db = $description;
-}
-
 IF($aufn_dat == '')
 {
 	//wenn nur der Beschreibungstext geaendert wurde:
-	$result2 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$desc_db\" WHERE pic_id = '$pic_id'");
+	$result2 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$description\" WHERE pic_id = '$pic_id'");
 	//Aenderungen in Original-Datei und jpg-Datei speichern:
 	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$description\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$description\" ".$fn." -overwrite_original");
 }
@@ -74,7 +65,7 @@ ELSE
 	{
 		$aufndat = $year."-".$month."-".$day." 00:00:00";
 		$dto = $year.":".$month.":".$day." 00:00:00";
-		$result2 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$desc_db\", DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
+		$result2 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$description\", DateTimeOriginal = '$aufndat' WHERE pic_id = '$pic_id'");
 		//Aenderungen in Original-Datei und jpg-Datei speichern:
 		shell_exec($exiftool." -IPTC:Caption-Abstract=\"$description\" ".$FN." -overwrite_original -execute -EXIF:DateTimeOriginal='$dto' ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$description\" ".$fn." -overwrite_original -execute -EXIF:DateTimeOriginal='$dto' ".$fn." -overwrite_original");
 	}
@@ -86,7 +77,7 @@ ELSE
 
 //Log-Datei schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s').": Beschreibung von Bild ".$pic_id." wurde von ".$username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$description_old.", neu: ".$desc_db."\n");
+fwrite($fh,date('d.m.Y H:i:s').": Beschreibung von Bild ".$pic_id." wurde von ".$username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$description_old.", neu: ".$description."\n");
 fclose($fh);
 
 echo "<FONT COLOR='red'>OK!</FONT>";

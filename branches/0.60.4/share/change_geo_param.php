@@ -59,7 +59,7 @@ IF($vorh_location !== 'Ortsbezeichnung' AND $vorh_location !== '')
 	$lat = mysql_result($result1,0, 'GPSLatitude');
 	$alt = mysql_result($result1,0, 'GPSAltitude');
 	$loc = round($lat,6).",".round($long,6);
-	$ort = utf8_encode(mysql_result($result1,0, 'City'));
+	$ort = mysql_result($result1,0, 'City');
 }
 ELSE
 {
@@ -79,7 +79,7 @@ ELSE
 		$ort = '';
 		FOR($K=2; $K<count($param); $K++)
 		{
-			$ort .= utf8_encode($param[$K]);
+			$ort .= $param[$K];
 			IF($K<count($param) - 1)
 			{
 				$ort .= ',';

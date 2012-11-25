@@ -71,25 +71,19 @@ IF ($pic_id !=='0')
 		$DateTimeOriginal = mysql_result($result8, isset($i8), 'DateTimeOriginal');
 		$FileName = mysql_result($result8, isset($i8), 'FileName');
 		$FileNameOri = mysql_result($result8, isset($i8), 'FileNameOri');
-//		$user_id = mysql_result($result8, isset($i8), 'Owner');
 		$owner = mysql_result($result8, isset($i8), 'Owner');
 		
 		$result10 = mysql_query( "SELECT username, titel, vorname, name, ort FROM $table1 WHERE id = '$owner'");
-		@$username = utf8_encode(mysql_result($result10, $i10, 'username'));
 		@$titel = mysql_result($result10, $i10, 'titel');
-		@$vorname = utf8_encode(mysql_result($result10, $i10, 'vorname'));
-		@$name = utf8_encode(mysql_result($result10, $i10, 'name'));
-		@$ort = utf8_encode(mysql_result($result10, $i10, 'ort'));
+		@$username = mysql_result($result10, $i10, 'username');
+		@$vorname = mysql_result($result10, $i10, 'vorname');
+		@$name = mysql_result($result10, $i10, 'name');
+		@$ort = mysql_result($result10, $i10, 'ort');
 		
 		$FileSize = mysql_result($result8, isset($i8), 'FileSize');
 		$Width = mysql_result($result8, isset($i8), 'ExifImageWidth');
 		$Height = mysql_result($result8, isset($i8), 'ExifImageHeight');
 		$Description = mysql_result($result8, isset($i8), 'Caption_Abstract');
-
-		if(mb_detect_encoding($Description, 'UTF-8', true) === FALSE)
-		{
-			$Description = utf8_encode($Description);
-		}
 		$note = mysql_result($result8, isset($i8), 'note');
 		$bild = $pic_path."/".restoreOriFilename($pic_id, $sr);
 		$Orientation = trim(shell_exec($exiftool." -s -S '-Orientation' ".$bild));
@@ -113,7 +107,7 @@ IF ($pic_id !=='0')
 		FOR ($i9=1; $i9<$num9; $i9++)	//Als Start wurde "1" gewaehlt, da die Wurzel uninteressant ist!
 		{
 			//echo $num5."<BR>";
-			$kategorie = utf8_encode(mysql_result($result9, $i9, 'kategorie'));
+			$kategorie = mysql_result($result9, $i9, 'kategorie');
 			$kat_id = mysql_result($result9, $i9, $table4.'.kat_id');
 			$pic_id = mysql_result($result9, $i9, $table10.'.pic_id');
 			//echo $kat_id;
@@ -293,7 +287,7 @@ IF ($pic_id !=='0')
 		<TD id='detail5'><div id='tooltip1'><span style='cursor:pointer;'>
 		<img src=\"$inst_path/pic2base/bin/share/images/info.gif\" width=\"15\" height=\"15\" OnClick=\"showAllDetails('$mod', '$pic_id')\" title='Detaillierte Informationen zum Bild $pic_id' alt='Info' />";
 		$result13 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
-		$Copyright = htmlentities(mysql_result($result13, isset($i13), 'Copyright'));
+		$Copyright = mysql_result($result13, isset($i13), 'Copyright');
 		IF($Copyright !== '')
 		{
 			echo "<a href='#'><img src=\"$inst_path/pic2base/bin/share/images/copyright_notice.gif\" width=\"15\" height=\"15\" title='(C)-Info' alt='Copyright-Vermerk' border='none' style='margin-left:5px;' />

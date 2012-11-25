@@ -92,7 +92,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
-			$kategorie = htmlentities(mysql_result($result10, $i10, 'kategorie'));
+			$kategorie = mysql_result($result10, $i10, 'kategorie');
 			$parent = mysql_result($result10, $i10, 'parent');
 			$level = mysql_result($result10, $i10, 'level');
 			$kat_id_d = mysql_result($result10, $i10, 'kat_id');
@@ -168,7 +168,7 @@ $knoten_arr_d = array_reverse($knoten_arr_d);
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
-		$kategorie = htmlentities(mysql_result($result10, $i10, 'kategorie'));
+		$kategorie = mysql_result($result10, $i10, 'kategorie');
 		$parent = mysql_result($result10, $i10, 'parent');
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id_d = mysql_result($result10, $i10, 'kat_id');

@@ -98,7 +98,6 @@ FOR($i2='0'; $i2<$num2; $i2++)
 		$row3 = mysql_fetch_row($res3);
 		IF($row3[2]!=='1')
 		{
-//			$kategorie = htmlentities($row3[3])." ".$kategorie;
 			$kategorie = $row3[3]." ".$kategorie;
 		}
 	}

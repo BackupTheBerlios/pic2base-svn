@@ -176,7 +176,7 @@ IF ( isset($writable_tags) )
 					if($fnt != '')
 					{
 						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)." <blink>*)</blink></FONT></TD>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$fnt." <blink>*)</blink></FONT></TD>
 						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
 						</TR>";
 					}
@@ -197,7 +197,7 @@ IF ( isset($writable_tags) )
 					if($fnt != '')
 					{
 						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$fnt."</FONT></TD>
 						<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'>".$value."</textarea></TD>
 						</TR>";
 					}
@@ -217,7 +217,7 @@ IF ( isset($writable_tags) )
 					if($fnt != '')
 					{
 						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$fnt."</FONT></TD>
 						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' value='$value' style='width:220px; height:15px;'></TD>
 						</TR>";
 					}
@@ -244,7 +244,7 @@ IF ( isset($writable_tags) )
 					if($fnt != '') // Fallunterscheidung, falls keine Uebersetzung vorliegt
 					{
 						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)." <blink>*)</blink></FONT></TD>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$fnt." <blink>*)</blink></FONT></TD>
 						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
 						</TR>";
 					}
@@ -265,7 +265,7 @@ IF ( isset($writable_tags) )
 					if($fnt != '')
 					{
 						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$fnt."</FONT></TD>
 						<TD class='liste2' style='width:225px;'><textarea name='$wt' style='width:220px; height:100px;'></textarea></TD>
 						</TR>";
 					}
@@ -285,7 +285,7 @@ IF ( isset($writable_tags) )
 					if($fnt != '')
 					{
 						echo "	<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
-						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".utf8_encode($fnt)."</FONT></TD>
+						<TD class='liste2' style='width:225px;'><FONT COLOR='red'>".$fnt."</FONT></TD>
 						<TD class='liste2' style='width:225px;'><INPUT type='text' name='$wt' style='width:220px; height:15px;'></TD>
 						</TR>";
 					}

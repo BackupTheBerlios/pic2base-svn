@@ -457,7 +457,7 @@ SWITCH ($modus)
 		ELSE
 		{
 			$result4 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id='$ID'");
-			$kategorie = htmlentities(mysql_result($result4, isset($i4), 'kategorie'));
+			$kategorie = mysql_result($result4, isset($i4), 'kategorie');
 			echo "Es gibt ".$num2." Bilder in der Kategorie \"".$kategorie."\"";
 			//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, 
 			//in der unteren die jeweils dazugehoerigen Auswahlboxen:
@@ -799,12 +799,8 @@ SWITCH ($modus)
 				AND aktiv = '1' $krit2 
 				ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
 				$pdf_statement = urlencode($statement);
-				$result6_1 = mysql_query( "SELECT *	FROM $table2 
-				WHERE has_kat = '0' $krit2 
-				ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
-					
+				$result6_1 = mysql_query($statement);
 				//#########################################################	
-			
 				function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 				{
 					$res = "";
@@ -852,7 +848,7 @@ SWITCH ($modus)
 					return $res;
 				}			
 	
-				$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder (hier: ohne Kategorie-Zuweisung
+				$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder (hier: ohne Kategorie-Zuweisung)
 				echo "Bilder ohne Kat.-Zuw: ".$num6_1." - ";
 				$previewLayerHtml .= '
 				<script language="javascript">
@@ -885,7 +881,7 @@ SWITCH ($modus)
 					break;
 				}
 				break;
-			
+// ################################################################################################################################################################################			
 				default:
 				//bei allen Kategorien ausser der Wurzel:
 				//Ermittlung aller Bilder der Kategorie:
@@ -947,7 +943,7 @@ SWITCH ($modus)
 				}			
 	
 				$num6_1 = mysql_num_rows($result6_1);
-				//echo $num6_1;  	//Gesamtzahl der gefundenen Bilder
+				//echo $num6_1;  	//Gesamtzahl der gefundenen Bilder mit Kategorie-Zuweisung
 				$previewLayerHtml .= '
 				<script language="javascript">
 				var imageArray = new Array();
@@ -978,12 +974,9 @@ SWITCH ($modus)
 				$kategorie = mysql_result($result4, isset($i4), 'kategorie');
 				IF(strlen($kategorie) > 17)
 				{
-					$kategorie = htmlentities(substr($kategorie,0,15))."...";
+					$kategorie = substr($kategorie,0,15)."...";
 				}
-				ELSE
-				{
-					$kategorie = htmlentities($kategorie);
-				}	
+				
 				echo mysql_error();
 				if($result6_1)
 				{
@@ -1089,7 +1082,6 @@ SWITCH ($modus)
 			//Bestimmung, welche Koordinaten dem gewaehlten Ort entsprechen und Ermittlung des arithmetischen Mittelwertes als 'gemeinsamer Mittelpunkt':
 			//echo "an get_preview &uuml;bergebene Ortsbezeichnung: ".htmlentities($ort)."<BR>";
 			$ORT = $ort;
-			$ort = utf8_decode($ort);
 			$result10 = mysql_query( "SELECT * FROM $table2 WHERE City = \"$ort\" AND aktiv = '1'");
 			$num10 = mysql_num_rows($result10);
 			IF($num10 == '0')
@@ -1325,11 +1317,11 @@ SWITCH ($modus)
 
 		CASE 'desc':
 		//Bereinigung der Text-Eingabe-Felder:
-		$desc1 = utf8_decode(strip_tags($desc1));
-		$desc2 = utf8_decode(strip_tags($desc2));
-		$desc3 = utf8_decode(strip_tags($desc3));
-		$desc4 = utf8_decode(strip_tags($desc4));
-		$desc5 = utf8_decode(strip_tags($desc5));
+		$desc1 = strip_tags($desc1);
+		$desc2 = strip_tags($desc2);
+		$desc3 = strip_tags($desc3);
+		$desc4 = strip_tags($desc4);
+		$desc5 = strip_tags($desc5);
 		
 		//Montage des SQL-Statements:
 		$statement = 'SELECT * FROM '.$table2.' WHERE aktiv = "1" AND (Caption_Abstract LIKE ';
@@ -1570,13 +1562,11 @@ SWITCH ($modus)
 			//echo $zw1."<BR>";;
 			IF($bedingung1 == 'LIKE')
 			{
-				$zw1 = utf8_decode($zw1); 
 				//echo $zw1;
 				$krit1 = "WHERE ".$table2.".".$zusatz1." LIKE '%".$zw1."%'";
 			}
 			ELSE
 			{
-				$zw1 = utf8_decode($zw1); 
 				$krit1 = "WHERE ".$table2.".".$zusatz1." ".$bedingung1." '".$zw1."'";
 				//echo $krit1;
 			}
@@ -2144,7 +2134,7 @@ SWITCH ($modus)
 		echo "<p class='gross' style='color:red; text-align:center;'>Es wurden keine Bilder gefunden.<BR>Bitte pr&uuml;fen Sie Ihre Eingaben.</P>";
 	}
 
-//#############   Aufbau des Statements fuer die limiterte Abfrage:   ###########################################################
+//#############   Aufbau des Statements fuer die limitierte Abfrage:   ###########################################################
 		
 	IF($num6_1 > $step)
 	{
@@ -2154,102 +2144,135 @@ SWITCH ($modus)
 	{
 		$krit3 = '';
 	}
-	//echo "Z 1446 ".$krit3;
+//	echo "Z 2155 ".$krit3;
 	SWITCH($mod)
 	{
 		CASE 'zeit':
-		$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, DateTimeOriginal, ShutterCount, DateInsert, FileSize, aktiv 
-		FROM $table2
-		$krit1 
-		$krit2 
-		AND aktiv = '1'
-		ORDER BY DateTimeOriginal, ShutterCount, DateInsert $krit3");
+			$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, DateTimeOriginal, ShutterCount, DateInsert, FileSize, aktiv 
+			FROM $table2
+			$krit1 
+			$krit2 
+			AND aktiv = '1'
+			ORDER BY DateTimeOriginal, ShutterCount, DateInsert $krit3");
 		break;
 		
+		// fehlerhafte Fassung, in der keine Vorschaubilder fuer die Neuzugaenge bei der Suche nach Kategorien angezeigt werden: ~~~~~~~~~~~~~
 		CASE 'kat':
-		$result6 = mysql_query( "SELECT $table2.*, $table10.* 
-		FROM $table2, $table10 
-		WHERE ($table2.pic_id = $table10.pic_id 
-		AND $table10.kat_id = '$ID'
-		AND $table2.aktiv = '1' $krit2) 
-		ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount, $table2.DateInsert $krit3");
+			$statement = "SELECT $table2.*, $table10.* 
+			FROM $table2, $table10 
+			WHERE ($table2.pic_id = $table10.pic_id 
+			AND $table10.kat_id = '$ID'
+			AND $table2.aktiv = '1' $krit2) 
+			ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount, $table2.DateInsert $krit3";
+//			echo "<BR>".$statement."<BR>";
+			$result6 = mysql_query($statement);	
 		break;
-		
+		// Reparaturversuch: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		/*
+		CASE 'kat':
+		IF($N>='0')
+		{
+			$statement = "SELECT *	FROM $table2 
+			WHERE has_kat = '0'
+			AND aktiv = '1' $krit2 
+			ORDER BY DateTimeOriginal, ShutterCount, DateInsert $krit3";
+//			echo "<BR>".$statement."<BR>";
+			$result6 = mysql_query($statement);
+		}
+		else
+		{
+			$statement = "SELECT $table2.*, $table10.* 
+			FROM $table2, $table10 
+			WHERE ($table2.pic_id = $table10.pic_id 
+			AND $table10.kat_id = '$ID'
+			AND $table2.aktiv = '1' $krit2) 
+			ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount, $table2.DateInsert $krit3";
+//			echo "<BR>".$statement."<BR>";
+			$result6 = mysql_query($statement);
+		}
+		break;
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		*/
 		CASE 'desc':
 			$stat = "SELECT * FROM $table2 $krit1 $krit2 AND aktiv = '1' ORDER BY DateTimeOriginal, ShutterCount, DateInsert $krit3";
 //			echo "Zeile 2138: ".$stat."<BR>Krit.1: ".$krit1.", Krit2: ".$krit2.", Krit 3: ".$krit3."<BR>";
-		$result6 = mysql_query( "SELECT * FROM $table2 
-		$krit1 
-		$krit2 
-		AND aktiv = '1' 
-		ORDER BY DateTimeOriginal, ShutterCount, DateInsert 
-		$krit3");
+			$result6 = mysql_query( "SELECT * FROM $table2 
+			$krit1 
+			$krit2 
+			AND aktiv = '1' 
+			ORDER BY DateTimeOriginal, ShutterCount, DateInsert 
+			$krit3");
 		break;
 		
 		CASE 'geo':
-		//echo $krit3;
-		IF(count($pic_id_arr) > '1')
-		{
-			FOR($z1='0'; $z1<count($pic_id_arr); $z1++)
+			//echo $krit3;
+			IF(count($pic_id_arr) > '1')
 			{
-				IF($z1 == '0')
+				FOR($z1='0'; $z1<count($pic_id_arr); $z1++)
 				{
-					$krit1 = "WHERE $table2.pic_id = '$pic_id_arr[$z1]'";
-				}
-				ELSE
-				{
-					$krit1 .= " OR $table2.pic_id = '$pic_id_arr[$z1]'";
+					IF($z1 == '0')
+					{
+						$krit1 = "WHERE $table2.pic_id = '$pic_id_arr[$z1]'";
+					}
+					ELSE
+					{
+						$krit1 .= " OR $table2.pic_id = '$pic_id_arr[$z1]'";
+					}
 				}
 			}
-		}
-		ELSE
-		{
-			$krit1 = "WHERE $table2.pic_id = '$pic_id_arr[0]'";
-		}
-		//echo $krit1."  -  ".$krit2."<BR>";
-		$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, note, DateTimeOriginal, ShutterCount, DateInsert, FileSize 
-		FROM $table2
-		$krit1 
-		$krit2 
-		ORDER BY DateTimeOriginal, ShutterCount, DateInsert 
-		$krit3");
-		echo mysql_error();
+			ELSE
+			{
+				$krit1 = "WHERE $table2.pic_id = '$pic_id_arr[0]'";
+			}
+			//echo $krit1."  -  ".$krit2."<BR>";
+			$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, note, DateTimeOriginal, ShutterCount, DateInsert, FileSize 
+			FROM $table2
+			$krit1 
+			$krit2 
+			ORDER BY DateTimeOriginal, ShutterCount, DateInsert 
+			$krit3");
+			echo mysql_error();
 		break;
 		
 		CASE 'exif':
-		$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, DateTimeOriginal, ShutterCount, DateInsert, FileSize, aktiv 
-		FROM $table2 
-		$krit1 
-		$krit2 
-		AND aktiv = '1' 
-		ORDER BY DateTimeOriginal, ShutterCount, DateInsert 
-		$krit3");
-		echo mysql_error();
+			$result6 = mysql_query( "SELECT pic_id, FileName, FileNameHQ, FileNameV, Owner, DateTimeOriginal, ShutterCount, DateInsert, FileSize, aktiv 
+			FROM $table2 
+			$krit1 
+			$krit2 
+			AND aktiv = '1' 
+			ORDER BY DateTimeOriginal, ShutterCount, DateInsert 
+			$krit3");
+			echo mysql_error();
 		break;
 		
 		CASE 'expert_k':
-		$result6 = mysql_query($statement." ".$krit3);
-		echo mysql_error();	
+			$result6 = mysql_query($statement." ".$krit3);
+			echo mysql_error();	
 		break;
 		
 	}
 	//echo "get_preview, Zeile 1345: ".$steps.", ".$position;
-	$num6 = mysql_num_rows($result6);
+	$num6 = mysql_num_rows($result6); 
+//	echo $num6;
 //	$N = $num6;
 		
-//#############   Aufbau des Filmstreifens:   #################################################################################
+//#############   Aufbau des Filmstreifens:   #############################################################################################
 	//$N: Anz. der Bilder ohne Kat.-Zuweisung
+	//
+	// fehlerhafte Fassung, in der keine Vorschaubilder fuer die Neuzugaenge bei der Suche nach Kategorien angezeigt werden: ~~~~~~~~~~~~~~
+	//
 	IF ($N >= '0' AND $mod == 'kat')
 	{
-	//Anzeige der Bilder ohne Kategorie-Zuweisung:
+		//Anzeige der Bilder ohne Kategorie-Zuweisung:
 		if ( isset($text1) )
 		{
 			echo $text1;
 		}
 		echo "	<TABLE border='0' align='center'>
-		<TR>";	
-		$j = '0';	//Zaehlvariable fuer den Array-Index der Download-Icons
+		<TR>";
 		
+		$j = '0';	//Zaehlvariable fuer den Array-Index der Download-Icons
+
 		FOR($i6_1='0'; $i6_1<$num6_1; $i6_1++)
 		{
 			//echo $pic_id."<BR>";
@@ -2285,9 +2308,10 @@ SWITCH ($modus)
 			}
 			
 			echo "<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
-			<div id='pic$pic_id'>";
-			getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, $mod, $form_name);
-			echo "</div></TD>";
+					<div id='pic$pic_id'>";
+					getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
+					echo "</div>
+			</TD>";
 		
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6_1, $i6_1, 'Owner');
@@ -2357,7 +2381,16 @@ SWITCH ($modus)
 		</div>
 		</TABLE>";
 	}
-	ELSE
+	//
+	// Reparaturversuch: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//
+	/*
+	if()
+	{
+		// korrigierter Code...
+	}
+	 */
+	ELSE //################################################################################################################
 	{
 		//normale Anzeige der Bilder lt. Suchkriterium:
 		//echo $text1;
@@ -2637,7 +2670,7 @@ SWITCH ($modus)
 
 function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, $mod, $form_name)
 {
-	//echo "Vorschau...";
+//	echo "Vorschau...";
 	global $ID;
 	include 'db_connect1.php';
 	include 'global_config.php';
@@ -2714,7 +2747,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			}
 			IF(file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 			{
-				echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".utf8_encode($description)."</span></a></div>";
+				echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".$description."</span></a></div>";
 			}
 		break;
 		
@@ -2748,7 +2781,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			{
 				$kat_id = mysql_result($result16, $i16, 'kat_id');
 				$result17 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_id'");
-				$kategorie = htmlentities(mysql_result($result17, isset($i17), 'kategorie'));
+				$kategorie = mysql_result($result17, isset($i17), 'kategorie');
 				IF($kat_id !== '1')
 				{
 				$zugew_kat .= $kategorie."<BR>";

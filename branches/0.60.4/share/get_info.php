@@ -13,7 +13,7 @@ SWITCH($id)
 	break;
 	
 	CASE '2':
-	echo "Klicken Sie hier, wenn Sie sich alle Bilder vom ".htmlentities($zeit)." anzeigen lassen wollen.";
+	echo "Klicken Sie hier, wenn Sie sich alle Bilder vom ".$zeit." anzeigen lassen wollen.";
 	break;
 	
 	CASE '3':
@@ -21,11 +21,11 @@ SWITCH($id)
 	break;
 	
 	CASE '4':
-	echo "Klicken Sie hier, wenn Sie die Tages-Auswahl f&uuml;r den ".htmlentities($zeit)." &ouml;ffnen wollen.";
+	echo "Klicken Sie hier, wenn Sie die Tages-Auswahl f&uuml;r den ".$zeit." &ouml;ffnen wollen.";
 	break;
 	
 	CASE '5':
-	echo "Klicken Sie hier, wenn Sie die Tages-Auswahl f&uuml;r den ".htmlentities($zeit)." schlie&szlig;en wollen.";
+	echo "Klicken Sie hier, wenn Sie die Tages-Auswahl f&uuml;r den ".$zeit." schlie&szlig;en wollen.";
 	break;
 	
 	CASE '6':
@@ -33,7 +33,7 @@ SWITCH($id)
 	break;
 	
 	CASE '7':
-	echo "Klicken Sie hier, wenn Sie die Monats&uuml;bersicht f&uuml;r ".htmlentities($zeit)." schlie&szlig;en wollen.";
+	echo "Klicken Sie hier, wenn Sie die Monats&uuml;bersicht f&uuml;r ".$zeit." schlie&szlig;en wollen.";
 	break;
 	
 	CASE '9':

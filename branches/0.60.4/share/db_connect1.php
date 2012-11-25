@@ -1,12 +1,11 @@
 <?php
 //[Programm-Version]
 $version = "0.70.0"; // 
-$rel = "07112012.1";
-$vom = "(07.11.2012)";
+$rel = "25112012.1";
+$vom = "(25.11.2012)";
 
 //[copyright-Vermerk in der Fusszeile]
 $cr = "<FONT COLOR=#7b7d8e>______</FONT>2006 - 2012";
-//$cr = "<FONT COLOR=#eeeeee>______</FONT>2006 - 2012";
 
 //Zugangsdaten fuer den Datenbankzugriff (normaler User mit teilweisen Zugriffsbeschraenkungen auf DB pic2base)
 $db_server = 'localhost';
@@ -59,7 +58,7 @@ if (!mysql_select_db($mydb))
 	return;
 }
 
-mysql_query("SET CHARACTER SET latin1");
+mysql_query("SET CHARACTER SET utf8");
 //Encryption-Key fuer PWD-Ver-/Entschluesselung
 $key = '0815';
 //echo phpinfo();

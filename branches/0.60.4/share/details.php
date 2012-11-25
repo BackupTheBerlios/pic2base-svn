@@ -59,7 +59,7 @@ $location = $row['City'];
 
 IF($location !== 'Ortsbezeichnung' AND $location !== '')
 {
-	$location = htmlentities($row['City']);
+	$location = $row['City'];
 }
 ELSE
 {
@@ -68,8 +68,8 @@ ELSE
 //	echo $location;
 $result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$Owner'");
 $row = mysql_fetch_array($result2);
-$vorname = utf8_encode($row['vorname']);
-$name = utf8_encode($row['name']);
+$vorname = $row['vorname'];
+$name = $row['name'];
 
 $result1 = mysql_query( "SELECT language FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $lang = mysql_result($result1, isset($i1), 'language'); //echo "<BR>".$lang."<BR>";
@@ -318,7 +318,7 @@ FOREACH($info_arr AS $IA)
 					//usersprachliche Meta-Tag-Uebersetzung
 					$exif_daten_transl = shell_exec($exiftool." -".$tag." -lang ".$lang." -x 'Directory' ".$file);
 					$info_arr_transl = explode(':', $exif_daten_transl);
-					$iat0 = utf8_decode($info_arr_transl[0]);
+					$iat0 = $info_arr_transl[0];
 					// englische Meta-Tag-Bezeichnung
 					$exif_daten_transl_en = shell_exec($exiftool." -".$tag." -lang en -x 'Directory' ".$file);
 					$info_arr_transl_en = explode(':', $exif_daten_transl_en);
@@ -334,7 +334,7 @@ FOREACH($info_arr AS $IA)
 					$result11 = mysql_query("INSERT INTO $table5 (field_name, writable, viewable) VALUES ('$tag', '0', '0')");
 				}
 				$result12 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-				$tag_name = utf8_encode(mysql_result($result12, isset($i12), $tag));
+				$tag_name = mysql_result($result12, isset($i12), $tag);
 				echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
 				echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag_name."</FONT></TD>
 				<TD class='liste2' style='width:225px;'>".$value."</TD>
@@ -355,7 +355,7 @@ FOREACH($info_arr AS $IA)
 					//usersprachliche Meta-Tag-Uebersetzung
 					$exif_daten_transl = shell_exec($exiftool." -".$tag." -lang ".$lang." -x 'Directory' ".$file);
 					$info_arr_transl = explode(':', $exif_daten_transl);
-					$iat0 = utf8_decode($info_arr_transl[0]);
+					$iat0 = $info_arr_transl[0];
 					// englische Meta-Tag-Bezeichnung
 					$exif_daten_transl_en = shell_exec($exiftool." -".$tag." -lang en -x 'Directory' ".$file);
 					$info_arr_transl_en = explode(':', $exif_daten_transl_en);
@@ -371,7 +371,7 @@ FOREACH($info_arr AS $IA)
 					$result11 = mysql_query("INSERT INTO $table5 (field_name, writable, viewable) VALUES ('$tag', '0', '0')");
 				}
 				$result12 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-				@$tag_name = utf8_encode(mysql_result($result12, isset($i12), $tag));
+				@$tag_name = mysql_result($result12, isset($i12), $tag);
 				if($tag_name != '')//Fallunterscheidung, ob Tag-Uebersetzung existiert
 				{
 					echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
@@ -406,7 +406,7 @@ IF($view == 'all')
 	//echo $num4." Treffer<BR>";
 	FOR($i4='0'; $i4<$num4; $i4++)
 	{
-		@$kategorie = htmlentities(mysql_result($result4, $i4, 'kategorie'));
+		@$kategorie = mysql_result($result4, $i4, 'kategorie');
 		@$kat_info = mysql_result($result4, $i4, 'info');
 		//echo $kategorie.": ".$info."<BR>";
 		IF($kat_info != '')

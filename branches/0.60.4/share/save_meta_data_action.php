@@ -111,7 +111,7 @@ FOREACH($_POST AS $key => $value)
 			break;
 			
 			default:
-			$VALUE_db = utf8_decode($value);
+			$VALUE_db = $value;
 			$VALUE = $value;
 			$KEY_db = str_replace("-","_",$key);
 			$KEY = $key;

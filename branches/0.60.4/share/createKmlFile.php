@@ -52,7 +52,7 @@ IF($mod <> 'geo')
 		{
 			$pic_id = mysql_result($result8, $i8, 'pic_id');
 			$FileNameHQ = mysql_result($result8, $i8, 'FileNameHQ');
-			$Description = utf8_encode(mysql_result($result8, $i8, 'Caption_Abstract'));
+			$Description = mysql_result($result8, $i8, 'Caption_Abstract');
 			$longitude = mysql_result($result8,$i8,'GPSLongitude');
 			$latitude = mysql_result($result8,$i8,'GPSLatitude');
 			$altitude = mysql_result($result8,$i8,'GPSAltitude');

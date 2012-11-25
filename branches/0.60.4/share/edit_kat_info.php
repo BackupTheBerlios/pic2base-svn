@@ -44,8 +44,7 @@ AND $table4.kat_id = $table11.kat_id");
 echo mysql_error();
 $num0 = mysql_num_rows($result0);
 $row = mysql_fetch_array($result0);
-//var_dump($row);
-$kategorie = htmlentities($row['kategorie']);
+$kategorie = $row['kategorie'];
 $info = $row['info'];
 
 IF(hasPermission($uid, 'editkatlex', $sr))	//berechtigte User duerfen das Kat.-Lexikon editieren

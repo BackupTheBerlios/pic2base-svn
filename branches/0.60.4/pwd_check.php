@@ -25,8 +25,8 @@ else
 	</script>";
 	if( !empty($_POST['username']) )
 	{
-		$username = utf8_decode($_POST['username']);
-        $passwd = utf8_decode($_POST['passwd']);
+		$username = $_POST['username'];
+        $passwd = $_POST['passwd'];
         $result1 = mysql_query("SELECT * FROM $table1 WHERE username = '$username' AND pwd = ENCRYPT('$passwd','$key') AND aktiv = '1'");
 		@$num1 = mysql_num_rows($result1);
 		

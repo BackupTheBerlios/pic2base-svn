@@ -38,7 +38,7 @@ include 'functions/ajax_functions.php';
 include 'functions/permissions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+$username = mysql_result($result0, isset($i0), 'username');
 
 if ( array_key_exists('pic_id',$_GET) )
 {

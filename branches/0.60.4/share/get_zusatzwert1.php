@@ -42,7 +42,7 @@ IF($field !== '')
 			{
 				$value = mysql_result($result3, $i3, 'Owner');
 				$result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$value'");
-				$wert = htmlentities(mysql_result($result2, $i2, 'vorname')." ".mysql_result($result2, $i2, 'name'));
+				$wert = mysql_result($result2, $i2, 'vorname')." ".mysql_result($result2, $i2, 'name');
 				//$val = '*'.$value;	//warum wurde der Wert um den Stern ergaenzt??
 				$val = $value;
 				echo "<option value='$val'>".$wert."</option>";
@@ -312,8 +312,7 @@ IF($field !== '')
 				break;
 				
 				default:
-				//$wert = htmlentities($value);
-				$wert = utf8_encode($value);
+				$wert = $value;
 				$val = $wert;
 				break;
 			}
