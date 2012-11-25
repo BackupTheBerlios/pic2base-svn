@@ -69,16 +69,7 @@ echo "
 		//Pruefung der Eingaben:
 		IF(($benutzername !==  '') AND ($name !== '') AND ($vorname !== '') AND ($pwd !== ''))
 		{
-			$ben_name = trim($benutzername);
-/*
-			// einige Angaben muessen vor der Aufnahme in die DB utf8_decodiert werden:
-			$ben_name = utf8_decode($ben_name);
-			$vorname = utf8_decode($vorname); 
-			$name = utf8_decode($name); 
-			$pwd = utf8_decode($pwd);
-			$strasse = utf8_decode($strasse);
-			$ort = utf8_decode($ort);
-*/			
+			$ben_name = trim($benutzername);	
 			if(strlen($ben_name) < 15)
 			{
 				$ftp_passwd = crypt($pwd);

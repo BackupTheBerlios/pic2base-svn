@@ -30,7 +30,6 @@ if(array_key_exists('locationname_new',$_POST))
 
 IF($locationname_new !== $locationname)
 {  
-//	$locationname_statement = utf8_decode($locationname);
 	$locationname_statement = $locationname;   
 	$result1 = mysql_query("SELECT City, pic_id
 	  FROM $table2
@@ -104,7 +103,6 @@ IF($locationname_new !== $locationname)
   		$iptc_city = strip_tags($iptc_city);
   		$command = " -IPTC:City=\"$iptc_city\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$CA_new\" ".$FN." -overwrite_original > /dev/null &";
   		shell_exec($exiftool." ".$command);	
-  		
   	}
   	echo "<meta http-equiv='Refresh' Content='0; URL=adminframe.php?item=editlocationname'>";
 
