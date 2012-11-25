@@ -52,7 +52,7 @@ ELSE
 }
 
 //Parameter fuer naechste Referenzierung speichern:
-$parameter = $location.",".utf8_decode($ort);
+$parameter = $location.",".$ort;
 setcookie("parameter", $parameter, time()+3600, "/");
 
 $result0 = mysql_query("SELECT FileName FROM $table2 WHERE pic_id = '$pic_id'");
@@ -83,9 +83,9 @@ ELSEIF(($vorh_location !== '' AND $vorh_location !== 'Ortsbezeichnung') AND $ort
 	echo "<p style='font-family:Helvitica,Arial; color:red; text-align:center;'>Bitte warten,<BR>die &Auml;nderungen werden gespeichert...</p>";
 	flush();
 	$result01 = mysql_query( "SELECT City FROM $table2 WHERE pic_id = '$pic_id'");
-	$ort_alt = utf8_encode(mysql_result($result01,0, 'City'));
+	$ort_alt = mysql_result($result01,0, 'City');
 	echo "Es gab eine Referenzierung, - alte Ortsbezeichnung: ".$ort_alt."<BR>";
-	$ort_db = utf8_decode($ort);
+	$ort_db = $ort;
 	$result1 = mysql_query( "UPDATE $table2 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = \"$ort_db\" WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
@@ -100,7 +100,7 @@ ELSEIF(($vorh_location == '' OR $vorh_location == 'Ortsbezeichnung') AND $ort !=
 	flush();
 	$ort_alt = '';
 	echo "Es gibt bisher KEINE Referenzierung<BR>";
-	$ort_db = utf8_decode($ort);
+	$ort_db = $ort;
 	$result1 = mysql_query( "UPDATE $table2 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = \"$ort_db\" WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
@@ -119,7 +119,7 @@ IF($ort_alt != $ort)
 //#################################################################
 	echo "aus der DB ausgelesene bisherige Beschreibung: ".$description."<BR>";
 
-	$description = utf8_encode(mysql_result($result4, 0, 'Caption_Abstract'));
+	$description = mysql_result($result4, 0, 'Caption_Abstract');
 	
 	IF($ort_alt !== '')
 	{
@@ -134,7 +134,7 @@ IF($ort_alt != $ort)
 
 	$description_neu = str_replace('Kamerastandort: '.$ort,'',$description_neu);	
 	//Codierung fuer den Eintrag in die DB:
-	$description_neu_db = utf8_decode($description_neu)." Kamerastandort: ".utf8_decode($ort);
+	$description_neu_db = $description_neu." Kamerastandort: ".$ort;
 	/*
 	echo "Ort: ".$ort."<BR>";
 	echo "alter Ort: ".$ort_alt."<BR>";

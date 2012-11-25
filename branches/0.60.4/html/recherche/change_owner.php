@@ -47,9 +47,9 @@ $num1 = mysql_num_rows($result1);
 $row = mysql_fetch_array($result1);
 $FileNameV = $row['FileNameV'];
 $owner = $row['Owner'];
-$name = utf8_encode($row['name']);
-$vorname = utf8_encode($row['vorname']);
-$ort = utf8_encode($row['ort']);
+$name = $row['name'];
+$vorname = $row['vorname'];
+$ort = $row['ort'];
 IF($uid === $owner)
 {
 	//welche User gibt es noch ausser dem angemeldeten im System, der Bilder erfassen darf (permission 799)?
@@ -106,9 +106,9 @@ IF($uid === $owner)
 		FOR($i2='0'; $i2<$num2; $i2++)
 		{
 			$id = mysql_result($result2, $i2, 'id');
-			$name= utf8_encode(mysql_result($result2, $i2, 'name'));
-			$vorname = utf8_encode(mysql_result($result2, $i2, 'vorname'));
-			$ort = utf8_encode(mysql_result($result2, $i2, 'ort'));
+			$name= mysql_result($result2, $i2, 'name');
+			$vorname = mysql_result($result2, $i2, 'vorname');
+			$ort = mysql_result($result2, $i2, 'ort');
 			if(!($uid === $id))
 			{
 				echo "

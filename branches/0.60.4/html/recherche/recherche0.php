@@ -79,7 +79,7 @@ function switchBewertung(bewertung)
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+$username = mysql_result($result0, isset($i0), 'username');
 
 $result2 = mysql_query("SELECT * FROM $table2");
 $num2 = mysql_num_rows($result2);
