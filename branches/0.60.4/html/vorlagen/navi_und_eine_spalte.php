@@ -41,7 +41,7 @@ include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
 $result1 = mysql($db, "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+$username = mysql_result($result1, isset($i1), 'username');
 
 echo"
 

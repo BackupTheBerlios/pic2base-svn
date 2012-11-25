@@ -181,7 +181,7 @@ ELSE
 
 $user_id = $uid;
 $result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+$username = mysql_result($result1, isset($i1), 'username');
 
 //bei jedem Aufruf der Startseite wird der kml-Ordner des betreffenden Users geleert:
 IF($username !== 'pb')

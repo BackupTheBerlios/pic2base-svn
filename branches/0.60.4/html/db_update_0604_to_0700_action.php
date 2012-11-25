@@ -123,7 +123,7 @@ echo "
 	{
 		
 		$user_id = mysql_result($result1, $i1, 'id');
-		$username = utf8_encode(mysql_result($result1, $i1, 'username'));
+		$username = mysql_result($result1, $i1, 'username');
 		if($username !== 'pb' AND $user_id !== '1')
 		{
 			// fuer alle user ausser pb werden die userpfade korrigiert (username -> uid)
@@ -218,7 +218,7 @@ echo "
 	FOR($i4=0; $i4<$num4; $i4++)
 	{
 		$user_id = mysql_result($result4, $i4, 'id');
-		$username = utf8_encode(mysql_result($result4, $i4, 'username'));
+		$username = mysql_result($result4, $i4, 'username');
 		$user_dir = mysql_result($result4, $i4, 'user_dir');
 		$old_user_dir = str_replace($user_id, $username, $user_dir);
 		clearstatcache();
