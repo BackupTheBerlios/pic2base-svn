@@ -48,7 +48,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 $result1 = mysql_query( "SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"); echo mysql_error();
-$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+$username = mysql_result($result1, isset($i1), 'username');
 $user_id = $uid;
 
 $start_time = date('d.m.Y, H:i:s');
@@ -97,7 +97,7 @@ var avgTime;
 
 function fileListReceived( responseText )
 {
-	alert(responseText);
+	//alert(responseText);
 	fileList = JSON.parse( responseText, null );
 	if(fileList.anzahl > 0)
 	{
