@@ -34,7 +34,7 @@ else
 
 if(array_key_exists('description',$_GET))
 {
-	$description = utf8_decode($_GET['description']);
+	$description = $_GET['description'];
 }
 else
 {
@@ -85,7 +85,7 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND $description !== "")
 	}
 
 	$FN = $pic_path."/".restoreOriFilename($bild_id, $sr);
-	$desc = utf8_encode($Description);
+	$desc = $Description;
 	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &");
 			
 	IF (mysql_errno() == '0')

@@ -47,7 +47,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 $result1 = mysql_query("SELECT username FROM $table1 WHERE id = '$uid'");
-$username = utf8_encode(mysql_result($result1, isset($i1), 'username'));
+$username = mysql_result($result1, isset($i1), 'username');
 
 echo "
 <div class='page'>

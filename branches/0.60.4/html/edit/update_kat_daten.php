@@ -130,7 +130,6 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND count($kat_array) > 0)
 	fclose($fh);
 	//echo $kategorie;
 	
-	$kategorie = htmlentities($kategorie);
 	//Aktualisierung des betreffenden Datensatzes in der pictures Tabelle:
 	$result4 = mysql_query( "UPDATE $table2 SET Keywords = \"$kategorie\", has_kat = '1' WHERE pic_id = '$bild_id'");
 
@@ -148,7 +147,7 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND count($kat_array) > 0)
 	FOR($i5='0'; $i5<$num5; $i5++)
 	{
 		$kat_iptc = mysql_result($result5, $i5, 'kategorie');
-		$kategorie_iptc = utf8_encode($kat_iptc);
+		$kategorie_iptc = $kat_iptc;
 		//echo "Bild: ".$bild_id." - ".$kategorie_iptc."<BR>";
 		//es wird geprueft, ob das keyword bereits im IPTC-Block enthalten ist:
 		$keyw = shell_exec($exiftool." -IPTC:Keywords ".$FN);
@@ -161,11 +160,7 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND count($kat_array) > 0)
 			$kw_array[$i1] = $KWords;							//Array mit allen bereinigten Keywords des Bildes
 		}
 		
-		IF(in_array($kategorie_iptc, $kw_array))
-		{
-			//echo $kategorie_iptc." ist bereits enthalten<BR>";
-		}
-		ELSE
+		IF(!in_array($kategorie_iptc, $kw_array))
 		{
 			//echo $kategorie_iptc." wird in das Bild geschrieben<BR>";
 			$command = $exiftool." -IPTC:Keywords+=\"$kategorie_iptc\" -overwrite_original ".$FN." > /dev/null &";

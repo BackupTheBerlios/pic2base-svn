@@ -227,13 +227,10 @@ echo "
 					FOR($i5='0'; $i5<$num5; $i5++)
 					{
 						$picture_id = mysql_result($result5, $i5, 'pic_id');
-						$city = utf8_encode(mysql_result($result5, $i5, 'City'));
+						$city = mysql_result($result5, $i5, 'City');
 						$longitude = mysql_result($result5, $i5, 'GPSLongitude');
 						$latitude = mysql_result($result5, $i5, 'GPSLatitude');
 						$delta = sqrt(pow(($long - $longitude),2) + pow(($lat - $latitude),2));
-						
-//						$zk = mb_detect_encoding($city);
-//						echo "Zeichencodierung fuer ".$city.": ".$zk."<BR>";
 						
 						//echo $picture_id.", ".$City.", ".$delta."<BR>";
 						IF (!in_array($city,$ort_arr) AND ($city !== 'Ortsbezeichnung'))
@@ -311,7 +308,7 @@ echo "
 								}
 								ELSEIF(mb_detect_encoding($ort_arr[$pos]) == 'ASCII')
 								{
-									$ort_arr[$pos] = utf8_encode($ort_arr[$pos]);
+									$ort_arr[$pos] = $ort_arr[$pos];
 								}
 					
 								echo "<OPTION VALUE='$ort_arr[$pos]' $auswahl>".$ort_arr[$pos]."</OPTION>";

@@ -46,7 +46,7 @@ else
 
 IF(array_key_exists('ort', $_POST))
 {
-	$ort = utf8_decode($_POST['ort']);
+	$ort = $_POST['ort'];
 }
 
 IF(array_key_exists('pic_id', $_POST))
@@ -89,8 +89,8 @@ echo "
 			$lat = mysql_result($result3, $i3, 'GPSLatitude');
 			$alt = mysql_result($result3, $i3, 'GPSAltitude');
 			$city = mysql_result($result3, $i3, 'City');
-			$ort_iptc = utf8_encode($city);
-			$desc_neu = utf8_encode($description_neu);
+			$ort_iptc = $city;
+			$desc_neu = $description_neu;
 			//Bestimmung des Dateinamens der Original-Datei:
 			$FN = $pic_path."/".restoreOriFilename($pic_id, $sr);//echo $FN;
 			//Speicherung der Geo-Koordinaten, Ortsbezeichnung und Beschreibung in der Bild-Datei:

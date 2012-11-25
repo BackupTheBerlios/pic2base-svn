@@ -76,7 +76,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+$username = mysql_result($result0, isset($i0), 'username');
 
 $exiftool = buildExiftoolCommand($sr);
 
@@ -190,8 +190,7 @@ flush();
 					{
 						$result9 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$KAT_ID'");
 						$keywords = mysql_result($result9, isset($i9), 'kategorie');
-						$KW = utf8_encode($keywords);
-						$command = $exiftool." -IPTC:Keywords+=\"$KW\" -overwrite_original ".$FN;
+						$command = $exiftool." -IPTC:Keywords+=\"$keywords\" -overwrite_original ".$FN;
 						shell_exec($command);
 						$kw .= $keywords." ";
 					}
@@ -199,8 +198,7 @@ flush();
 				
 				//Log-Datei schreiben:
 				$result10 = mysql_query("SELECT Keywords, pic_id FROM $table2 WHERE pic_id = '$pic_id'");
-				$kategorie_alt = utf8_encode(mysql_result($result10, isset($i10), 'Keywords'));
-				//$kategorie = $kategorie_alt."".$kategorie;	//die neue Kat-Zuweisung entspricht der alten zzgl. der neu hinzugekommenen Kategorien
+				$kategorie_alt = mysql_result($result10, isset($i10), 'Keywords');
 				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 				fwrite($fh,date('d.m.Y H:i:s').": Kategoriezuordnung von Bild ".$pic_id." wurde von ".$username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$kategorie_alt.", neu: ".$kw."\n");
 				fclose($fh);

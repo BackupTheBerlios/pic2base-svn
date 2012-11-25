@@ -109,8 +109,7 @@ ELSE
 		{
 			$result9 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id = '$kat_id'");
 			$keywords = mysql_result($result9, isset($i9), 'kategorie');
-			$KW = utf8_encode($keywords);
-			$command = $exiftool." -IPTC:Keywords+=\"$KW\" -overwrite_original ".$FN;
+			$command = $exiftool." -IPTC:Keywords+=\"$keywords\" -overwrite_original ".$FN;
 			//echo $command;
 			shell_exec($command);
 			$kw .= $keywords." ";
