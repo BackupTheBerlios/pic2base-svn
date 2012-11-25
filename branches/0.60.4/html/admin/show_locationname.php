@@ -32,7 +32,7 @@ echo "<center><table class='normal' border='0'>
 FOR ($i = 0; $i < $num; $i++)
 {
 	$pic_id = mysql_result ($result, $i, "pic_id");
-	$city = utf8_encode(mysql_result ($result, $i, "City"));
+	$city = mysql_result ($result, $i, "City");
 	
 	echo "<TR>
 	<TD align='left' colspan='4' style='padding-left:20px;'><a href=adminframe.php?item=admineditlocation&id=".$pic_id.">".$city."</a></TD>

@@ -34,7 +34,7 @@ IF (!$_COOKIE['uid'])
 		for ($i = 0; $i < $num; $i++)
 		{
 		  echo "<tr>
-		  <td align=left colspan='2'>".utf8_encode(mysql_result ($result, $i, "description"))."</td>
+		  <td align=left colspan='2'>".mysql_result ($result, $i, "description")."</td>
 		  <td align=left colspan='2'>".mysql_result ($result, $i, "perm_id")." - ".mysql_result ($result, $i, "shortdescription")."</td>
 		  </tr>";
 		}

@@ -159,7 +159,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 		FOR($i1='0'; $i1<$num1; $i1++)
 		{
 			$id = mysql_result($result1, $i1, 'id');
-			$description = utf8_encode(mysql_result($result1, $i1, 'description'));
+			$description = mysql_result($result1, $i1, 'description');
 			IF($description == 'Gast')
 			{
 				$sel = 'selected';

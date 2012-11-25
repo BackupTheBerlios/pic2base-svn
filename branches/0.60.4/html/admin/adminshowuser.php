@@ -18,8 +18,8 @@ if (hasPermission($uid, 'adminlogin', $sr))
    	include '../../share/db_connect1.php';
 	$content = '';
 	$result = mysql_query("select * from $table1 WHERE id=".$user_id);
-    $vorname = utf8_encode(mysql_result ($result, 0, "vorname"));
-    $name = utf8_encode(mysql_result ($result, 0, "name"));
+    $vorname = mysql_result ($result, 0, "vorname");
+    $name = mysql_result ($result, 0, "name");
     IF($del == '1')
     {
     	$warnung = "<FONT color='red'><b><blink>L&Ouml;SCHE</blink></b></FONT>";
@@ -33,7 +33,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
     {
 		//$user_id = $id;
     	$groupid = mysql_result ($result, 0, "group_id");
-		$username = utf8_encode(mysql_result ($result, 0, "username"));
+		$username = mysql_result ($result, 0, "username");
 		echo "
 		<style type='text/css'>
 		<!--
@@ -77,7 +77,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 		$result2 = mysql_query("select * from usergroups WHERE id=".$groupid);
 		if (mysql_num_rows($result2) == 1)
 		{
-			echo utf8_encode(mysql_result ($result2, 0, "description"));
+			echo mysql_result ($result2, 0, "description");
 		}
 		else
 		{
@@ -94,12 +94,12 @@ if (hasPermission($uid, 'adminlogin', $sr))
     
     <tr>
     <td align=left>Stra&szlig;e:</td>
-    <td align=left colspan='3'>".utf8_encode(mysql_result ($result, 0, "strasse"))."</td>
+    <td align=left colspan='3'>".mysql_result ($result, 0, "strasse")."</td>
     </tr>
     
     <tr>
     <td align=left>PLZ, Ort:</td>
-    <td align=left colspan='3'>".mysql_result ($result, 0, "plz").", ".utf8_encode(mysql_result ($result, 0, "ort"))."</td>
+    <td align=left colspan='3'>".mysql_result ($result, 0, "plz").", ".mysql_result ($result, 0, "ort")."</td>
     </tr>
 	
 	<tr style='height:3px;'>
@@ -130,7 +130,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 		FOR($cg='0'; $cg<$col_groups; $cg++)
 		{
 			$i = ($r * 2) + $cg;
-			@$description = trim(utf8_encode(mysql_result($result, $i, "description")));
+			@$description = trim(mysql_result($result, $i, "description"));
 			@$shortdescription = mysql_result($result, $i, "shortdescription");
 			@$perm_id = mysql_result($result, $i, "perm_id");
 			IF ($description !== '')
@@ -201,8 +201,8 @@ IF($del == '1')
   	$num3 = mysql_num_rows($result3);
   	FOR($i3='0'; $i3<$num3; $i3++)
   	{
-	  	$Vorname = utf8_encode(mysql_result($result3, $i3, 'vorname'));
-	  	$Name = utf8_encode(mysql_result($result3, $i3, 'Name'));
+	  	$Vorname = mysql_result($result3, $i3, 'vorname');
+	  	$Name = mysql_result($result3, $i3, 'Name');
 	  	$ID = mysql_result($result3, $i3, 'id');
 	  	echo "<OPTION value='$ID'>".$Vorname." ".$Name."</OPTION>";
   	}

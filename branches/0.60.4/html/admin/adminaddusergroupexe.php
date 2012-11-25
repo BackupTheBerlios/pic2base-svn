@@ -51,10 +51,9 @@ echo "
 				
 		$groupname = $_POST['groupname'];
 		
-		$groupname = strip_tags(utf8_decode($groupname));
+		$groupname = strip_tags($groupname);
 		if ((hasPermission($uid, 'adminlogin', $sr)) AND ($groupname !== ''))
 		{
-//			mysql_connect ($db_server, $user, $PWD);
 			$result1 = mysql_query("INSERT INTO $table9 (description) VALUES ('".$groupname."')");
 			$result2 = mysql_query( "SELECT id FROM $table9 WHERE description = '$groupname'");
 			$groupid = mysql_result($result2, isset($i2), 'id');

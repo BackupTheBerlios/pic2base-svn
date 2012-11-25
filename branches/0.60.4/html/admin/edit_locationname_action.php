@@ -21,7 +21,6 @@ if(array_key_exists('locationname',$_POST))
 if(array_key_exists('locationname_new',$_POST))
 {
 	$locationname_new = $_POST['locationname_new'];
-	//$iptc_city = utf8_encode($locationname_new);
 	$iptc_city = $locationname_new; 
 }
 //echo "alte Ortsbezeichnung: ".$locationname."<BR>";
@@ -31,7 +30,8 @@ if(array_key_exists('locationname_new',$_POST))
 
 IF($locationname_new !== $locationname)
 {  
-	$locationname_statement = utf8_decode($locationname);  
+//	$locationname_statement = utf8_decode($locationname);
+	$locationname_statement = $locationname;   
 	$result1 = mysql_query("SELECT City, pic_id
 	  FROM $table2
 	  WHERE City = '$locationname_statement'");
@@ -82,8 +82,7 @@ IF($locationname_new !== $locationname)
 	sleep(0);
   	
   	//Aktualisierung der Tabelle pictures:
-  	$locationname_sql = utf8_decode($locationname_new);
-  	$result2 = mysql_query("UPDATE $table2 SET City = \"$locationname_sql\" WHERE City = \"$locationname_statement\"");
+  	$result2 = mysql_query("UPDATE $table2 SET City = \"$locationname_new\" WHERE City = \"$locationname_statement\"");
   	//Aenderung der Caption_Abstracts und IPTC-Eintraege fuer alle betroffenen Bilder:
   	FOR($i1=0; $i1<$num1; $i1++)
   	{
@@ -91,7 +90,7 @@ IF($locationname_new !== $locationname)
   		$FN = strtolower($pic_path."/".restoreOriFilename($pic_id, $sr));
   		//Aktualisierung der Tabelle pictures.Caption_Abstract:
   		$result4 = mysql_query("SELECT Caption_Abstract FROM $table2 WHERE pic_id = '$pic_id'");
-  		$CA = utf8_encode(mysql_result($result4, isset($i4), 'Caption_Abstract'));
+  		$CA = mysql_result($result4, isset($i4), 'Caption_Abstract');
   		//Textersetzung:
   		$search = 'Kamerastandort: '.$locationname;  		// alter Textbestandteil
   		$replace = 'Kamerastandort: '.$locationname_new;	// neue Textergaenzung
@@ -100,15 +99,14 @@ IF($locationname_new !== $locationname)
   		{
   			$CA_new = $CA.", Kamerastandort: ".$locationname_new;
   		}
-  		$CA_sql = utf8_decode($CA_new);
-  		$result3 = mysql_query("UPDATE $table2 SET Caption_Abstract = \"$CA_sql\" WHERE pic_id = '$pic_id'");
+  		$result3 = mysql_query("UPDATE $table2 SET Caption_Abstract = \"$CA_new\" WHERE pic_id = '$pic_id'");
   		//IPTC.City aendern:
   		$iptc_city = strip_tags($iptc_city);
   		$command = " -IPTC:City=\"$iptc_city\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$CA_new\" ".$FN." -overwrite_original > /dev/null &";
   		shell_exec($exiftool." ".$command);	
   		
   	}
-  	echo "<meta http-equiv='Refresh' Content='2; URL=adminframe.php?item=editlocationname'>";
+  	echo "<meta http-equiv='Refresh' Content='0; URL=adminframe.php?item=editlocationname'>";
 
 	?>
 	<script language="javascript">
