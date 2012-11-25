@@ -29,7 +29,7 @@
 INCLUDE '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-$kategorie = utf8_decode($_POST['kategorie']); 
+$kategorie = $_POST['kategorie']; 
 $parent = $_POST['parent']; 
 $level = $_REQUEST['level']; 
 $kat_id = $_REQUEST['kat_id']; 

@@ -278,8 +278,7 @@ IF($kat_source !== $kat_dest AND $kat_source !== '' AND $kat_source !== NULL AND
 				// Feldinhalt fuer die pictures.Keywords-Spalte generieren:
 				$kategorie .= " ".$sel_kategorie;
 // 8)			Schluesselworte fuer IPTC:Keywords erzeugen
-				$sel_kat = utf8_encode($sel_kategorie);
-				$keyword_string.= " -IPTC:Keywords=\"$sel_kat\"";
+				$keyword_string.= " -IPTC:Keywords=\"$sel_kategorie\"";
 			}
 			
 // weiter mit 7)

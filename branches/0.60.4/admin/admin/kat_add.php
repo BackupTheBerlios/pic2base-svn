@@ -136,7 +136,7 @@ function setFontColor($ID, $kat_id)
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
-			$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
+			$kategorie = mysql_result($result10, $i10, 'kategorie');
 			$parent = mysql_result($result10, $i10, 'parent');
 			$level = mysql_result($result10, $i10, 'level');
 			$kat_id = mysql_result($result10, $i10, 'kat_id');
@@ -155,7 +155,6 @@ function setFontColor($ID, $kat_id)
 			//echo "Kat-ID: ".$kat_id.", ID: ".$ID.", Font_Color: ".setFontColor($ID, $kat_id)."<BR>";
 			IF (in_array($kat_id, $knoten_arr))
 			{
-				//echo $kat_id_back;
 				$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 				echo 	"<TR id='kat'><TD id='kat1'>
 					".$space."<a href='kategorie0.php?kat_id=$kat_id_back'>".$img."</a>&#160;&#160;<font color=".setFontColor($ID, $kat_id).">".$kategorie."</font>
@@ -180,7 +179,7 @@ function setFontColor($ID, $kat_id)
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
-		$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
+		$kategorie = mysql_result($result10, $i10, 'kategorie');
 		$parent = mysql_result($result10, $i10, 'parent');
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id = mysql_result($result10, $i10, 'kat_id');
@@ -222,7 +221,7 @@ function setFontColor($ID, $kat_id)
 		<center>";
 		//das eigentliche Bearbeitungs-Formular:
 		$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
-		$kategorie_alt = utf8_encode(mysql_result($result2, isset($i2), 'kategorie'));
+		$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
 		echo "<p id='elf' style='padding: 5px; width: 400px; margin-top: 40px;'>
 		Tragen Sie hier bitte den Namen<BR>der neuen Unter-Kategorie ein:<BR><BR>
 		Diese wird unterhalb der Kategorie <BR><BR><font color='red'>\"".$kategorie_alt."\"</font><BR><BR>angelegt und darf	max. 30 Zeichen lang sein.<BR><BR></P>";

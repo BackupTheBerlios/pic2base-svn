@@ -97,7 +97,7 @@ IF(hasPermission($uid, 'editkattree', $sr))
 		{
 			$u_kategorie = '';
 		}
-		$u_kategorie .= utf8_encode(mysql_result($res3, isset($i), 'kategorie'))."<BR>";
+		$u_kategorie .= mysql_result($res3, isset($i), 'kategorie')."<BR>";
 		//echo $child."<BR>";			//$child - Nummer der zu loeschenden Kategorie
 		//Loeschvorgang der Kategorie in der Kategorie-Tabelle ($table4):
 		$result4 = mysql_query( "DELETE FROM $table4 WHERE kat_id = '$child'");

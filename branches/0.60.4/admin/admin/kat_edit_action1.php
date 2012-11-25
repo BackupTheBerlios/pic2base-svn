@@ -17,7 +17,7 @@
  * Project: pic2base
  * File: kat_edit_action1.php
  *
- * Copyright (c) 2003 - 2011 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -35,7 +35,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+$username = mysql_result($result0, isset($i0), 'username');
 
 echo "
 <div class='page'>
@@ -69,7 +69,7 @@ ob_flush();
 //var_dump($_POST);
 $ID = $_GET['ID']; 
 $kat_id = $_GET['kat_id']; 
-$kategorie = utf8_decode($_POST['kategorie']); 
+$kategorie = $_POST['kategorie']; 
 $exiftool = buildExiftoolCommand($sr);
 
 // zuerst wird der Kategoriename in der DB aktualisiert
@@ -98,7 +98,8 @@ FOR($i2='0'; $i2<$num2; $i2++)
 		$row3 = mysql_fetch_row($res3);
 		IF($row3[2]!=='1')
 		{
-			$kategorie = htmlentities($row3[3])." ".$kategorie;
+//			$kategorie = htmlentities($row3[3])." ".$kategorie;
+			$kategorie = $row3[3]." ".$kategorie;
 		}
 	}
 	//echo $kategorie."<BR>";

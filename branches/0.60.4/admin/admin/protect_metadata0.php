@@ -232,7 +232,7 @@ FOR($r='0'; $r<$rows; $r++)
 
 			//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 			$result2 = mysql_query("SELECT `$field_name` FROM $table20 WHERE lang = '$lang'");
-			@$fnt = utf8_encode(mysql_result($result2, isset($i2), `$field_name`)); // $fnt: field_name_translated; in die Sprache des angemeldeten Users uebersetzter Feldname
+			@$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated; in die Sprache des angemeldeten Users uebersetzter Feldname
 			if($fnt != '')
 			{
 				$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$fnt."</a></TD>
@@ -250,10 +250,6 @@ FOR($r='0'; $r<$rows; $r++)
 				<INPUT TYPE=CHECKBOX $checked name='cb' value='$writable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
 				</div>
 				</TD>";
-				
-				
-				//$content = $content."<TD class='tdbreit'>".$field_name."</TD>
-				//<TD class='tdschmal'></TD>";
 			}
 		}
 		ELSE

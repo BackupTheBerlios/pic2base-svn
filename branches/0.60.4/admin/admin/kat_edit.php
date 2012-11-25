@@ -124,7 +124,7 @@ function setFontColor($ID, $kat_id)
 		$num10 = mysql_num_rows($result10);
 		FOR ($i10=0; $i10<$num10; $i10++)
 		{
-			$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
+			$kategorie = mysql_result($result10, $i10, 'kategorie');
 			$parent = mysql_result($result10, $i10, 'parent');
 			$level = mysql_result($result10, $i10, 'level');
 			$kat_id = mysql_result($result10, $i10, 'kat_id');
@@ -167,7 +167,7 @@ function setFontColor($ID, $kat_id)
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
-		$kategorie = utf8_encode(mysql_result($result10, $i10, 'kategorie'));
+		$kategorie = mysql_result($result10, $i10, 'kategorie');
 		$parent = mysql_result($result10, $i10, 'parent');
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id = mysql_result($result10, $i10, 'kat_id');
@@ -208,7 +208,7 @@ function setFontColor($ID, $kat_id)
 	<div id='spalte2'><center>";
 	//das eigentliche Bearbeitungs-Formular:
 	$result2 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='$ID'");
-	$kategorie_alt = utf8_encode(mysql_result($result2, isset($i2), 'kategorie'));
+	$kategorie_alt = mysql_result($result2, isset($i2), 'kategorie');
 	echo "<div id='bar_1'>
 	<p id='elf' style='padding: 5px; width: 350px; margin-top: 40px; margin-bottom:50px;'>
 	Nehmen Sie hier bitte die &Auml;nderungen<BR>f&uuml;r die ausgew&auml;hlte Kategorie vor:</P>";

@@ -53,7 +53,7 @@ include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = utf8_encode(mysql_result($result0, isset($i0), 'username'));
+$username = mysql_result($result0, isset($i0), 'username');
 
 echo "
 <div class='page'>
@@ -133,13 +133,13 @@ echo "
 				FOR($i0=0; $i0<$num0; $i0++)
 				{
 					$pic_id = mysql_result($result0, $i0, 'pic_id');
-					$caption_abstract = utf8_encode(mysql_result($result0, $i0, 'Caption_Abstract'));
-					$keywords = utf8_encode(mysql_result($result0, $i0, 'keywords'));
+					$caption_abstract = mysql_result($result0, $i0, 'Caption_Abstract');
+					$keywords = mysql_result($result0, $i0, 'keywords');
 					$owner = mysql_result($result0, $i0, 'Owner');
 					$result1 = mysql_query("SELECT username, vorname, name FROM $table1 WHERE id = '$owner'");
-					$ownername = utf8_encode(mysql_result($result1, isset($i1), 'username'));
-					$vorname = utf8_encode(mysql_result($result1, isset($i1), 'vorname'));
-					$name = utf8_encode(mysql_result($result1, isset($i1), 'name'));
+					$ownername = mysql_result($result1, isset($i1), 'username');
+					$vorname = mysql_result($result1, isset($i1), 'vorname');
+					$name = mysql_result($result1, isset($i1), 'name');
 					$FileNameHQ = mysql_result($result0, $i0, 'FileNameHQ');
 					$FileNameV = mysql_result($result0, $i0, 'FileNameV');
 					$image = "../../../images/vorschau/hq-preview/".$FileNameHQ; 
