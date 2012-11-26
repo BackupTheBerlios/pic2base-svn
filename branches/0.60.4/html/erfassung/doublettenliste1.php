@@ -112,6 +112,16 @@ echo "
 
 			//Tabelle doubletten von alten Eintraegen bereinigen:
 			$result = mysql_query("DELETE FROM $table21 WHERE user_id = '$user_id'");
+			//Ermittlung der Datensaetze, bei denen die md5-Summe mehrfach gleich sind:
+			$result0 = mysql_query("SELECT P1.pic_id, P1.FileNameOri, P1.md5sum, P1.aktiv 
+			FROM $table2 AS P1, 
+			(SELECT P.md5sum FROM $table2 as P GROUP BY P.md5sum HAVING COUNT( * ) > 1) 
+			as P2 
+			WHERE P1.md5sum = P2.md5sum
+			AND P1.aktiv = '1' 
+			ORDER BY P1.pic_id DESC");
+			
+			/* original:
 			//Ermittlung der Datensaetze, bei denen der Original-Dateiname und die md5-Summe mehrfach gleich sind:
 			$result0 = mysql_query("SELECT P1.pic_id, P1.FileNameOri, P1.md5sum, P1.aktiv 
 			FROM $table2 AS P1, 
@@ -121,6 +131,8 @@ echo "
 			AND P1.md5sum = P2.md5sum
 			AND P1.aktiv = '1' 
 			ORDER BY P1.pic_id DESC");
+			*/
+			
 			echo mysql_error();
 			$num0 = mysql_num_rows($result0);
 			$pid_arr = array();
@@ -131,7 +143,11 @@ echo "
 				$md5sum = mysql_result($result0, $i0, 'P1.md5sum');				//dessen Pruefsumme
 				$pid_arr[] = $pid_dbl_ori;										//Array der Bild-ID's
 				
-				$result0_1 = mysql_query("SELECT * FROM $table2 WHERE md5sum = '$md5sum' AND FileNameOri = '$FileNameOri' AND aktiv = '1'");
+				//Statement fuer die Ermittlung der Datensaetze, bei denen der Original-Dateiname und die md5-Summe mehrfach gleich sind:
+				//$result0_1 = mysql_query("SELECT * FROM $table2 WHERE md5sum = '$md5sum' AND FileNameOri = '$FileNameOri' AND aktiv = '1'");
+				
+				//Statement fuer die Ermittlung der Datensaetze, bei denen nur die md5-Summen mehrfach gleich sind:
+				$result0_1 = mysql_query("SELECT * FROM $table2 WHERE md5sum = '$md5sum' AND aktiv = '1'");
 				echo mysql_error();
 				$num0_1 = mysql_num_rows($result0_1);
 				FOR($i0_1=0; $i0_1<$num0_1; $i0_1++)
