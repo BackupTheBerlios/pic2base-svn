@@ -201,7 +201,8 @@ echo "
 		Je nach Anzahl der Bilder und deren Dateigr&ouml;&#223;e kann der Upload eine Weile dauern.<BR>
 		Am Ende des Uploads erfolgt eine automatische Dublettenkontrolle. Damit soll sichergestellt werden, da&szlig; nicht versehentlich Bilder mehrfach erfa&szlig;t werden.<BR>Im Anschlu&#223; daran werden Sie aufgefordert, 
 		den soeben &uuml;bernommenen Bildern weitere Informationen hinzuzuf&uuml;gen (Geo.Koordinaten, Bewertung, Beschreibung) und abschlie&#223;end 
-		allen Bildern Kategorien zuzuweisen. Dies ist f&uuml;r die sp&auml;tere Recherche wichtig.
+		allen Bildern Kategorien zuzuweisen. Dies ist f&uuml;r die sp&auml;tere Recherche wichtig.<BR>
+		Beachten Sie weiterhin, da&szlig; der Dateiname eines hochzuladenden Bildes <b>keine ung&uuml;ltigen Zeichen</b> (Umlaute, Leerzeichen, &szlig; etc.) enth&auml;lt. Erlaubte Zeichen sind Ziffern, alle Buchstaben des angels&auml;chsischen Alphabets und der Unterstrich. Anderenfalls wird die Erfassung mit einem entsprechenden Hinweis abgebrochen.
 		</p>";
 		break;
 		
