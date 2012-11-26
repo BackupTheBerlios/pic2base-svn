@@ -260,7 +260,7 @@ ELSE
 ?>
 <script language="javascript">
 document.zu.close.focus();
-setTimeout("opener.location.reload(); window.close()", 100000);
+setTimeout("opener.location.reload(); window.close()", 500);
 </script>
 </DIV>
 </CENTER>
