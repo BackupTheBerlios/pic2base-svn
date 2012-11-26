@@ -14,6 +14,12 @@
 <DIV Class="klein">
 <?php
 
+/*
+ * Diese Routine funktioniert so nicht!
+ * Ein bild, das als Doublette eines anderen in der Datenbank verbleiben soll, muß als solches explizit gekennzeichnet werden, oder aber es muß z.B. durch einen Meta-Daten-Eintrag verändert werden, damit sich
+ * das Identifikationskriterium (die md5-Summe) ändert
+ */
+
 if(array_key_exists('user_id',$_GET))
 {
 	$user_id = $_GET['user_id']; 
@@ -48,6 +54,7 @@ echo "
 		//echo "Bild ".$pic_id." wird aus der Tabelle ".$table21." gel&ouml;scht.";
 		echo "Bild ".$pic_id." wird in die Datenbank &uuml;bernommen.";
 		$result1 = mysql_query("DELETE FROM $table21 WHERE new_pic_id = '$pic_id'");
+		// Beim nächsten Aufruf der Doublettenprüfung (siehe unten!) wird dieser Eintrag wieder in die Tabelle 21 geschrieben, also wieder der alte Zustand hergestellt!
 		echo mysql_error();
 
 		echo "	

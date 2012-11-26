@@ -229,7 +229,7 @@ echo "
 						<TR>
 						<TD style='width=350px; text-align: center;'><img src='$image_new' width='350' title='Bild-ID: $new_pic_id' /></TD>
 						<TD style='width=350px; text-align: center;'><img src='$image_old' width='350' title='Bild-ID: $old_pic_id' /></TD>
-						<TD style='width=55px; text-align: center;'><a href='../../share/save_doublette.php?pic_id=$new_pic_id&user_id=$user_id'><img src='../../share/images/ok.gif' title='Bild in der Datenbank belassen' /></a></TD>
+						<TD style='width=55px; text-align: center;'><!--<a href='../../share/save_doublette.php?pic_id=$new_pic_id&user_id=$user_id'><img src='../../share/images/ok.gif' title='Bild in der Datenbank belassen' /></a>--></TD>
 						<TD style='width=55px; text-align: center;'><A HREF = '#' onClick=\"showDelWarning('$FileName', '$uid', '$new_pic_id')\";><img src='../../share/images/delete.gif' title='Doublette aus der Datenbank entfernen' /></a></TD>
 						</TR>";
 					}
