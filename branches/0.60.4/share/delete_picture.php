@@ -193,12 +193,35 @@ if(hasPermission($uid, 'adminlogin', $sr))
 			}
 		}
 		//falls es zu dem geloeschten Bild einen Eintrag in der Tabelle21 (doubletten) gab, wird dieser entfernt:
-		$result6 = mysql_query("DELETE FROM $table21 WHERE new_pic_id = '$pic_id'");
-		echo mysql_error();
-		//log-file im Klartext schreiben:
-		$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-		fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht. Zugriff von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung:\n".$CaptionAbstract."\n##########\n");
-		fclose($fh);
+		//echo "Bild-ID: ".$pic_id."<BR>";
+		$num6 = 0;
+		$result6 = mysql_query("SELECT $table21.old_pic_id, $table21.new_pic_id, $table2.pic_id, $table2.FileNameOri 
+		FROM $table2, $table21 
+		WHERE $table21.new_pic_id = '$pic_id'
+		AND $table2.pic_id = $table21.old_pic_id");
+		$FileNameOri_ori = mysql_result($result6, isset($i6), 'FileNameOri');
+		//echo $FileNameOri_ori;
+		@$result7 = mysql_query("DELETE FROM $table21 WHERE new_pic_id = '$pic_id'");
+		//echo mysql_error();
+		//log-file in Abhaengigkeit der Art der Loeschung (Doublette oder normales Bild) im Klartext schreiben:
+		$num7 = mysql_affected_rows();
+		//echo "Anz. betroffener Zeilen: ".$num6."<BR>";
+		if($num7 > 0)
+		{
+			//es wurde eine Doublette entfernt
+			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+			fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".$FileNameOri." zum Original ".$FileNameOri_ori." wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+			fclose($fh);
+		}
+		else
+		{
+			//es wurde ein normales Bild geloescht
+			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+			fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+			fclose($fh);
+		}
+		
+		
 		echo "<BR>Die Original-Datei wurde gel&ouml;scht.<BR><BR>
 		<BR><CENTER><FORM name='zu'><INPUT TYPE='button' name='close' VALUE='Fenster schlie&szlig;en' OnClick='javascript:window.close();window.opener.location.reload();' tabindex='1'></FORM></CENTER></p>";
 	}
@@ -223,7 +246,7 @@ ELSE
 			<BR><CENTER><FORM name='zu'><INPUT TYPE='button' name='close' VALUE='Fenster schlie&szlig;en' OnClick='javascript:window.close();window.opener.location.reload();' tabindex='1'></FORM></CENTER></p>";
 			//log-file im Klartext schreiben:
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,">>>>>>>>>>\n".date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$username." zum loeschen vorgemerkt. Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n<<<<<<<<<<\n");
+			fwrite($fh,">>>>>>>>>>\n".date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$username." zum loeschen vorgemerkt. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\n<<<<<<<<<<\n");
 			fclose($fh);
 		}
 	}
@@ -237,7 +260,7 @@ ELSE
 ?>
 <script language="javascript">
 document.zu.close.focus();
-setTimeout("opener.location.reload(); window.close()", 1000);
+setTimeout("opener.location.reload(); window.close()", 100000);
 </script>
 </DIV>
 </CENTER>

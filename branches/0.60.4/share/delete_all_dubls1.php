@@ -93,6 +93,10 @@ if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpi
 				$pic_id = $row['pic_id'];
 				$FileName = $row['FileName'];
 				$FileNameOri = $row['FileNameOri'];
+				//Angaben fuer die Log-Datei:
+				$CaptionAbstract = $row['Caption_Abstract'];
+				$Keywords = $row['Keywords'];
+			
 				$datei_mono = $monochrome_path."/".$pic_id."_mono.jpg";
 				$datei_hist = $hist_path."/".$pic_id."_hist.gif";
 				$datei_hist_r = $hist_path."/".$pic_id."_hist_0.gif";
@@ -221,6 +225,7 @@ if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpi
 					}
 				}
 			}
+			/*
 			//falls es zu dem geloeschten Bild einen Eintrag in der Tabelle21 (doubletten) gab, wird dieser entfernt:
 			$result6 = mysql_query("DELETE FROM $table21 WHERE new_pic_id = '$pic_id'");
 			echo mysql_error();
@@ -228,6 +233,35 @@ if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpi
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 			fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht.\n");
 			fclose($fh);
+			*/
+			//falls es zu dem geloeschten Bild einen Eintrag in der Tabelle21 (doubletten) gab, wird dieser entfernt:
+			//echo "Bild-ID: ".$pic_id."<BR>";
+			$num6 = 0;
+			$result6 = mysql_query("SELECT $table21.old_pic_id, $table21.new_pic_id, $table2.pic_id, $table2.FileNameOri 
+			FROM $table2, $table21 
+			WHERE $table21.new_pic_id = '$pic_id'
+			AND $table2.pic_id = $table21.old_pic_id");
+			$FileNameOri_ori = mysql_result($result6, isset($i6), 'FileNameOri');
+			//echo $FileNameOri_ori;
+			@$result7 = mysql_query("DELETE FROM $table21 WHERE new_pic_id = '$pic_id'");
+			//echo mysql_error();
+			//log-file in Abhaengigkeit der Art der Loeschung (Doublette oder normales Bild) im Klartext schreiben:
+			$num7 = mysql_affected_rows();
+			//echo "Anz. betroffener Zeilen: ".$num6."<BR>";
+			if($num7 > 0)
+			{
+				//es wurde eine Doublette entfernt
+				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".$FileNameOri." zum Original ".$FileNameOri_ori." wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+				fclose($fh);
+			}
+			else
+			{
+				//es wurde ein normales Bild geloescht
+				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+				fclose($fh);
+			}
 			echo "<BR>Die Original-Datei wurde gel&ouml;scht.<BR></p>";
 		}
 		echo "<CENTER><FORM name='zu'><INPUT TYPE='button' name='close' VALUE='Zur&uuml;ck' OnClick='location.href=\"../html/edit/edit_start.php\"' tabindex='1'></FORM></CENTER>";

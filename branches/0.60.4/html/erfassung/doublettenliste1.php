@@ -180,7 +180,13 @@ echo "
 			$num1 = mysql_num_rows($result1);
 			IF($num1 > 0)
 			{
-				echo "<TR style='height:3px;'>
+				echo "
+				<TR style='height:10px;'>
+				<TD colspan='4' bgcolor='darkgrey'><FONT COLOR='yellow'>Wenn Sie sicher sind, da&szlig; Sie keine Doubletten in der Datenbank haben wollen, k&ouml;nnen Sie alle mehrfachen Vorkommen mit einem Klick auf den Button am Ende der Seite auf einmal entfernen.<BR>
+				Anderenfalls k&ouml;nnen Sie mit den Symbolen am rechten Bildrand f&uuml;r jedes Bild individuell entscheiden.</FONT></TD>
+				</TR>
+				
+				<TR style='height:3px;'>
 				<TD colspan='4' bgcolor='#FF9900'></TD>
 				</TR>
 				
@@ -196,11 +202,6 @@ echo "
 				
 				<TR style='height:3px;'>
 				<TD colspan='4'></TD>
-				</TR>
-				
-				<TR style='height:10px;'>
-				<TD colspan='4' bgcolor='darkgrey'><FONT COLOR='yellow'>Wenn Sie sicher sind, da&szlig; Sie keine Doubletten in der Datenbank haben wollen, k&ouml;nnen Sie alle mehrfachen Vorkommen mit einem Klick auf den Button am Ende der Seite auf einmal entfernen.<BR>
-				Anderenfalls k&ouml;nnen Sie mit den Symbolen am rechten Bildrand f&uuml;r jedes Bild individuell entscheiden.</FONT></TD>
 				</TR>
 				
 				<TR style='height:3px;'>
