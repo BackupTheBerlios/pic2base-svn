@@ -130,9 +130,9 @@ function processFile( fileList )
 {
 	var client = new XMLHttpRequest();
 	//alert(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß|\s/));
-	if(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß|\s/) !== -1)
+	if(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß| |\s/) !== -1)
 	{
-		alert("Es ist ein Fehler aufgetreten!\n\nDer Dateiname "+ fileList.file_array[0] + " beinhaltet unerlaubte Zeichen.\nDie Erfassung wird abgebrochen.\nBitte korrigieren Sie den Dateinamen und starten dann die Erfassung neu.\nFragen Sie ggf. Ihren Administrator.");
+		alert("Es ist ein Fehler aufgetreten!\n\nDer Dateiname "+ fileList.file_array[0] + " beinhaltet unerlaubte Zeichen (Umlaute, Leerzeichen etc.).\nDie Erfassung wird abgebrochen.\nBitte korrigieren Sie den Dateinamen und starten dann die Erfassung neu.\nFragen Sie ggf. Ihren Administrator.");
 		//alert(fileList.file_array[0]);
 		location.href='../start.php';
 	}
