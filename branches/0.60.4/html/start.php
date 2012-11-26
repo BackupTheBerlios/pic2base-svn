@@ -267,38 +267,48 @@ ELSE
 		{
 			if($datei != "." && $datei != "..")
 			{
-				$info = pathinfo($datei);
-				$extension_0 = strtolower($info['extension']);	//Dateiendung, die das Bild mitbringt
-				//$bild = $ftp_path."/".$uid."/uploads/".$datei;
-				$bild = $up_dir."/".$datei;
-				$exiftool = buildExiftoolCommand($sr);
-				$cmd = $exiftool." -S -FileType ".$bild;
-				$ft = preg_split('/ /', shell_exec($cmd));
-				$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
-				// Bei jpg-Dateien wird der Dateityp 'jpeg' identifiziert. Dies wuerde bedeuten, dass praktisch jedes jpg-Bild umbenannt werden muss
-				// Zur Vereinfachung wird hier eine Ausnahme hinzugefuegt: jpg-Bilder werden nicht zu jpeg umbenannt!
-				if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
+				//pruefung auf gueltigen Dateinamen:
+				if(!preg_match("/ä|Ä|ö|Ö|ü|Ü|ß| |\s/",$datei))
 				{
-					if($extension_0 !== $extension AND $extension_0 !== 'jpg')
+					$info = pathinfo($datei);	echo $datei;
+					$extension_0 = strtolower($info['extension']);	//Dateiendung, die das Bild mitbringt
+					//$bild = $ftp_path."/".$uid."/uploads/".$datei;
+					$bild = $up_dir."/".$datei;
+					$exiftool = buildExiftoolCommand($sr);
+					$cmd = $exiftool." -S -FileType ".$bild;
+					$ft = preg_split('/ /', shell_exec($cmd)); print_r($ft);
+					$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
+					// Bei jpg-Dateien wird der Dateityp 'jpeg' identifiziert. Dies wuerde bedeuten, dass praktisch jedes jpg-Bild umbenannt werden muss
+					// Zur Vereinfachung wird hier eine Ausnahme hinzugefuegt: jpg-Bilder werden nicht zu jpeg umbenannt!
+					if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
 					{
-						$new_filename = str_replace($extension_0, $extension, $datei);
-						$ren_file = rename($up_dir."/".$datei, $up_dir."/".$new_filename);
-						if($ren_file)
+						if($extension_0 !== $extension AND $extension_0 !== 'jpg')
 						{
-							$datei = $new_filename;
+							$new_filename = str_replace($extension_0, $extension, $datei);
+							$ren_file = rename($up_dir."/".$datei, $up_dir."/".$new_filename);
+							if($ren_file)
+							{
+								$datei = $new_filename;
+							}
+							else
+							{
+								echo "Datei ".$datei." konnte nicht umbenannt werden...";
+							}
+							
 						}
-						else
-						{
-							echo "Datei ".$datei." konnte nicht umbenannt werden...";
-						}
-						
+						$bild_datei[] = $datei;
+						$n++;
 					}
-					$bild_datei[] = $datei;
-					$n++;
+					else
+					{
+						$n++;
+						$warning .= "<BR>Bild <u>".$datei."</u> besitzt kein <a href='help/help1.php?page=1'>unterst&uuml;tztes Dateiformat</a>.";
+					}
 				}
 				else
 				{
-					$warning .= "<BR>Bild <u>".$datei."</u> besitzt kein <a href='help/help1.php?page=1'>unterst&uuml;tztes Dateiformat</a>.";
+					$n++;
+					$warning .= "<BR>Der Dateiname <u>".$datei."</u> enth&auml;lt <a href='help/help1.php?page=1'>unerlaubte</a> Zeichen (Umlaute, Leerzeichen etc.).";
 				}
 			}
 		}
@@ -456,8 +466,17 @@ echo "<div class='page'>
 			<td class='normal' align='left' valign='top' colspan='7'>".$hinweis2."</TD>
 			</TR>
 			
-			<TR>
-			<TD class='normal' align='center' colspan='10'><INPUT type='submit' name='upload' value='Upload starten'></TD>
+			<TR>";
+			if($warning == '')
+			{
+				echo "<TD class='normal' align='center' colspan='10'><INPUT type='submit' name='upload' value='Upload starten'></TD>";
+			}
+			else
+			{
+				echo "<TD class='normal' align='left' colspan='3'></td>
+				<TD class='normal' align='left' colspan='7'><b><u>Bitte korrigieren Sie die oben genannten Probleme!</u></b></TD>";
+			}
+			echo "
 			</TR>
 			
 			<INPUT type='hidden' name='ordner' value='$ftp_path/$uid/uploads' size='70'>
