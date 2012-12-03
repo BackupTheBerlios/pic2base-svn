@@ -1,7 +1,3 @@
-function top()
-{
-	alert("TOP");
-}
 function ZeigeBild(bildname,breite,hoehe,ratio_pic,modus,source)
 {
 	//alert("Bildname: " + bildname + ", Breite: " + breite + ", Hoehe: " + hoehe + ", Ratio: " + ratio_pic + ", Modus: " + modus + ", Quelle: " + source)
