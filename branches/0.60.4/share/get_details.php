@@ -135,7 +135,6 @@ IF ($pic_id !=='0')
 		IF(strlen($FileNameOri) > 14)
 		{
 			$fn_text = substr($FileNameOri,0,15)."...";
-			//$fn_text = $FileNameOri;
 			echo "<a href='#' title='$FileNameOri' style='text-decoration:none;'>".$fn_text."</a>";
 		}
 		ELSE
