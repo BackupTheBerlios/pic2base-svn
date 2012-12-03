@@ -288,7 +288,7 @@ IF ($pic_id !=='0')
 		<img src=\"$inst_path/pic2base/bin/share/images/info.gif\" width=\"15\" height=\"15\" OnClick=\"showAllDetails('$mod', '$pic_id')\" title='Detaillierte Informationen zum Bild $pic_id' alt='Info' />";
 		$result13 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 		$Copyright = mysql_result($result13, isset($i13), 'Copyright');
-		IF($Copyright !== '')
+		IF($Copyright !== NULL)
 		{
 			echo "<a href='#'><img src=\"$inst_path/pic2base/bin/share/images/copyright_notice.gif\" width=\"15\" height=\"15\" title='(C)-Info' alt='Copyright-Vermerk' border='none' style='margin-left:5px;' />
 			<span>
