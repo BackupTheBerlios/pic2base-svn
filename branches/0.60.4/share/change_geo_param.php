@@ -150,7 +150,7 @@ function initialize()
 <input type="text" name = 'ort' style="width:180px; margin-right:10px;" value = "<?php echo $ort; ?>">
 <input type = "hidden" name = "vorh_location" value = "<?php echo $vorh_location; ?>">
 <input type = "hidden" name = "pic_id" value = "<?php echo $pic_id; ?>">
-<input type="submit" name = "send" value="Position und Ort speichern" style="width:175px;">
+<input type="submit" name = "send" value="Ortsangabe speichern" style="width:165px;">
 </div>
 </form>
 </body>
