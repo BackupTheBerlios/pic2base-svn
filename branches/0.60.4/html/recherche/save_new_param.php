@@ -5,7 +5,7 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
   	header('Location: ../../../index.php');
 }
-header("Content-type: text/html; charset='utf-8'");
+header("Content-type: text/html; charset=utf-8");
 //var_dump($_REQUEST);
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
