@@ -458,7 +458,8 @@ SWITCH ($modus)
 		{
 			$result4 = mysql_query( "SELECT kategorie FROM $table4 WHERE kat_id='$ID'");
 			$kategorie = mysql_result($result4, isset($i4), 'kategorie');
-			echo "Es gibt ".$num2." Bilder in der Kategorie \"".$kategorie."\"";
+			//echo "Es gibt ".$num2." Bilder in der Kategorie \"".$kategorie."\"";
+			echo $num2." Bilder in der Kategorie \"".$kategorie."\"";
 			//Es wird eine zweizeilige Tabelle erzeugt, in deren oberer Zeile die Vorschaubilder zu sehen sind, 
 			//in der unteren die jeweils dazugehoerigen Auswahlboxen:
 			//der Normalfall - Es werden alle Bilder angezeigt, welche der gewaehlten Kategorie angehoeren
@@ -1002,7 +1003,8 @@ SWITCH ($modus)
 				}
 				ELSE
 				{
-					$text1 = "<div id='tooltip1'>Es gibt ".$num6_1." Bilder in der Kategorie \"".$kategorie."\"";
+					//$text1 = "<div id='tooltip1'>Es gibt ".$num6_1." Bilder in der Kategorie \"".$kategorie."\"";
+					$text1 = "<div id='tooltip1'>".$num6_1." Bilder in der Kategorie \"".$kategorie."\"";
 				}
 				break;
 			}
@@ -2086,7 +2088,7 @@ SWITCH ($modus)
 	IF(isset($num8) AND $num8 > '0')
 	{
 		@$zusatz = "
-			(davon ".$num8." geo-ref.; <span id='ge_icon'>Anzeige vorbereiten: <a href='#' style='cursor:pointer;' onClick='createKmlFile(\"$kml_cod_statement\",\"$sr\",\"$mod\",\"$long_mittel\",\"$lat_mittel\",\"$radius\")'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon_grey.png\" width=\"12\" height=\"12\" border=\"0\"  title='kml-Datei erzeugen'/><span>
+			(".$num8." geo-ref.; <span id='ge_icon'>Anzeige vorbereiten: <a href='#' style='cursor:pointer;' onClick='createKmlFile(\"$kml_cod_statement\",\"$sr\",\"$mod\",\"$long_mittel\",\"$lat_mittel\",\"$radius\")'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon_grey.png\" width=\"12\" height=\"12\" border=\"0\"  title='kml-Datei erzeugen'/><span>
 			<strong>Zur Anzeige der Fotos in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
 			<br />
 			Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
