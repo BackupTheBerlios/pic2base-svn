@@ -15,14 +15,13 @@ else
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
-	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
+	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>	
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 </HEAD>
 <script language="JavaScript">
 <!--
