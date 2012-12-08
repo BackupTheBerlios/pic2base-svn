@@ -2274,4 +2274,51 @@ function showCheckboxes($base_file, $auswahl, $result2, $num2, $sr)
 		break;
 	}
 }
+
+function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
+{
+	$res = "";
+	$sqlResultNumRows = mysql_num_rows($sqlResult);
+	for ($imageArrayIndex = 0; $imageArrayIndex < $sqlResultNumRows; $imageArrayIndex++)
+	{
+		$fileName = mysql_result($sqlResult, $imageArrayIndex, 'FileName');
+		$fileNamePrefix = str_replace('.jpg', '', $fileName);
+		$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
+		if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
+		{
+			$ratio = 1.0 / $ratio;
+		}
+		$downloadStatus = 0;
+		//Erzeugung der Download-Icons:
+		$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
+		$check = fileExists($fileName, $uID);
+		IF($check > 0)
+		{
+			//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
+			$downloadStatus = 100;
+		}
+		ELSE
+		{
+			//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
+			IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
+			{
+				IF(directDownload($uID, $softwareRoot))
+				{
+					$downloadStatus = 1;
+				}
+				ELSE
+				{
+					$downloadStatus = 2;
+				}
+			}
+			ELSE
+			{
+				$downloadStatus = 0;
+			}
+		}
+		$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.mysql_result($sqlResult, $imageArrayIndex, 'pic_id').'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
+		';
+	}
+	return $res;
+}
 ?>
