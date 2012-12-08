@@ -2733,7 +2733,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 	}
 	//echo "Breite: ".$breite.", Hoehe: ".$hoehe."<BR>";
       	
-   	//Fuer die Darstellung des Vollbildes wird eine mittlete Groesse unter Beachtung des Seitenverhaeltnisses errechnet:
+   	//Fuer die Darstellung des Vollbildes wird eine mittlere Groesse unter Beachtung des Seitenverhaeltnisses errechnet:
    	//max. Ausdehnung: 1000px
    	$max = '1000';
    	$bild = $inst_path.'/pic2base/images/vorschau/hq-preview/'.$FileNameHQ;
