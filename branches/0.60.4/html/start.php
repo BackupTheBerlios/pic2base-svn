@@ -358,7 +358,7 @@ $result4 = mysql_query("SELECT * FROM $table2 WHERE ranking <>'' AND ranking >'0
 
 echo "<div class='page'>
 
-	<p id='kopf'>pic2base :: Startseite <span class='klein'>(User: ".$username." (".$uid."))</span></p>
+	<p id='kopf'>pic2base :: Startseite <span class='klein'>(User: ".$username.", ID: ".$uid.")</span></p>
 	
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>";
