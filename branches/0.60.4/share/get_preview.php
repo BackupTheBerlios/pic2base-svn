@@ -237,8 +237,8 @@ if( array_key_exists('op4',$_GET))
 //Auslesen der Vorschau-Bilder aus den EXIF-Daten
 //verwendet in edit_kat_daten.php, recherche2.php, edit_beschreibung.php, remove_kat_daten
 //echo "&Uuml;bergebene Parameter: kat_id: ".$kat_id.", ID: ".$ID.", mod: ".$mod.", pic_id: ".$pic_id.", modus: ".$modus;
-//echo $base_file;
-//echo $bewertung;
+//echo "Base-File: ".$base_file;
+//echo "Bewertung: ".$bewertung;
 //echo "Server-URL: ".$server_url;
 //########################################################################################################################
 //Darstellung der zu einer Kategorie zugehoerigen Bilder:
@@ -632,16 +632,13 @@ SWITCH ($modus)
 			IF($vgl_op == '<=')
 			{
 				$vgl_op = '>=';
-				//echo $vgl_op;
 			}
 			ELSEIF($vgl_op == '>=')
 			{
 				$vgl_op = '<=';
-				//echo $vgl_op;
 			}
 			$wert = substr($bewertung,-1);
 			$krit2 = "AND $table2.note $vgl_op '$wert'";
-			//echo $krit2;
 		}
 		ELSE
 		{
@@ -680,16 +677,7 @@ SWITCH ($modus)
 			$krit2 
 			AND aktiv = '1' 
 			ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
-			$pdf_statement = urlencode($statement);
-			//echo $statement; //Statement wird zur Erzeugung der pdf-Galerie benoetigt	
-			/*
-			$result6_1 = mysql_query( "SELECT DateTimeOriginal, ShutterCount, DateInsert, pic_id, ExifImageWidth, ExifImageHeight, Orientation, Owner, note, FileName, aktiv 
-			FROM $table2 
-			$krit1 
-			$krit2 
-			AND aktiv = '1' 
-			ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
-			*/
+			$pdf_statement = urlencode($statement);  //Statement wird zur Erzeugung der pdf-Galerie benoetigt	
 			$result6_1 = mysql_query($statement);
 			echo mysql_error();
 			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
@@ -701,62 +689,10 @@ SWITCH ($modus)
 			AND City <> 'Ortsbezeichnung'
 			AND City <> '' 
 			ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
-			//echo $kml_statement;
 			$kml_cod_statement = urlencode($kml_statement); // wird bei der Erzeugung der kml-Datei verwendet
 			$result8 = mysql_query( "$kml_statement");
 			$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
 			echo mysql_error();
-				
-			//#########################################################################	
-/*
-			function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
-			{
-				$res = "";
-				$sqlResultNumRows = mysql_num_rows($sqlResult);
-				for ($imageArrayIndex = 0; $imageArrayIndex < $sqlResultNumRows; $imageArrayIndex++)
-				{
-					$fileName = mysql_result($sqlResult, $imageArrayIndex, 'FileName');
-					$fileNamePrefix = str_replace('.jpg', '', $fileName);
-					$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
-					if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
-					{
-						$ratio = 1.0 / $ratio;
-					}
-					$downloadStatus = 0;
-					//Erzeugung der Download-Icons:
-					$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-					$check = fileExists($fileName, $uID);
-					IF($check > 0)
-					{
-						//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-						$downloadStatus = 100;
-					}
-					ELSE
-					{
-						//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-						IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
-						{
-							IF(directDownload($uID, $softwareRoot))
-							{
-								$downloadStatus = 1;
-							}
-							ELSE
-							{
-								$downloadStatus = 2;
-							}
-						}
-						ELSE
-						{
-							$downloadStatus = 0;
-						}
-					}
-					$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.mysql_result($sqlResult, $imageArrayIndex, 'pic_id').'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
-					';
-				}
-				return $res;
-			}
-*/
-//			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
 			
 			$previewLayerHtml .= '
 			<script language="javascript">
@@ -769,8 +705,7 @@ SWITCH ($modus)
 				  return imageArray;
 			}
 			</script>';
-			//##########################################################################		
-//			$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
+			
 			SWITCH ($num6_1)
 			{
 				CASE '0':
@@ -786,7 +721,7 @@ SWITCH ($modus)
 				break;
 			}
 		break;
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 		CASE 'kat':
 			SWITCH ($ID)
 			{
@@ -803,74 +738,47 @@ SWITCH ($modus)
 				ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
 				$pdf_statement = urlencode($statement);
 				$result6_1 = mysql_query($statement);
-				//#########################################################
-/*				
-				function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
-				{
-					$res = "";
-					$sqlResultNumRows = mysql_num_rows($sqlResult);
-					for ($imageArrayIndex = 0; $imageArrayIndex < $sqlResultNumRows; $imageArrayIndex++)
-					{
-						$fileName = mysql_result($sqlResult, $imageArrayIndex, 'FileName');
-						$fileNamePrefix = str_replace('.jpg', '', $fileName);
-						$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
-						if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
-						{
-							$ratio = 1.0 / $ratio;
-						}
-						$downloadStatus = 0;
-						//Erzeugung der Download-Icons:
-						$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-						$check = fileExists($fileName, $uID);
-						IF($check > 0)
-						{
-							//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-							$downloadStatus = 100;
-						}
-						ELSE
-						{
-							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
-							{
-								IF(directDownload($uID, $softwareRoot))
-								{
-									$downloadStatus = 1;
-								}
-								ELSE
-								{
-									$downloadStatus = 2;
-								}
-							}
-							ELSE
-							{
-								$downloadStatus = 0;
-							}
-						}
-						$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.mysql_result($sqlResult, $imageArrayIndex, 'pic_id').'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
-						';
-					}
-					return $res;
-				}			
-*/	
 				$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder (hier: ohne Kategorie-Zuweisung)
-				echo "Bilder ohne Kat.-Zuw: ".$num6_1." - ";
-				$previewLayerHtml .= '
-				<script language="javascript">
-				var imageArray = new Array();
-				self.getImageArray = function getImageArray()
+				/*
+				//davon Ermittlung aller Bilder mit Geo-Referenzierung:
+				$kml_statement = "SELECT * 
+				FROM $table2
+				WHERE has_kat = '0' 
+				AND aktiv = '1'
+				AND City <> 'Ortsbezeichnung'
+				AND City <> '' 
+				$krit2";
+				//echo $kml_statement;
+				$kml_cod_statement = urlencode($kml_statement); // wird bei der Erzeugung der kml-Datei verwendet
+				$result8 = mysql_query( "$kml_statement");		// echo mysql_error();
+				if($result8)
 				{
-				  imageArray = [];
-				';
-				$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
-				$previewLayerHtml .= '
-				  return imageArray;
+					$num8 = mysql_num_rows($result8);
 				}
-				</script>
-				';
-				//########################################################
-				
+				else
+				{
+					$num8 = 0;
+				}
+				*/
+				if($num6_1 > 0)
+				{
+					//echo "Bilder ohne Kat.-Zuw: ".$num6_1." - ";
+					$previewLayerHtml .= '
+					<script language="javascript">
+					var imageArray = new Array();
+					self.getImageArray = function getImageArray()
+					{
+					  imageArray = [];
+					';
+					$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
+					$previewLayerHtml .= '
+					  return imageArray;
+					}
+					</script>
+					';
+				}
 				$N = $num6_1;
-				SWITCH ($N)
+				SWITCH ($num6_1)
 				{
 					CASE '0':
 					echo "<p class='gross' style='color:green; text-align:center;'>Jedem Bild wurde mind. eine Kategorie zugewiesen.</p>";
@@ -881,11 +789,11 @@ SWITCH ($modus)
 					break;
 				
 					default:
-					echo $N." Bilder sind ohne Kategorie-Zuweisung.";
+					echo $num6_1." Bilder sind ohne Kategorie-Zuweisung.";
 					break;
 				}
 				break;
-// ################################################################################################################################################################################			
+// ################################################################################################################		
 				default:
 				//bei allen Kategorien ausser der Wurzel:
 				//Ermittlung aller Bilder der Kategorie:
@@ -898,71 +806,6 @@ SWITCH ($modus)
 				ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount, $table2.DateInsert";
 				$pdf_statement = urlencode($statement);
 				$result6_1 = mysql_query("$statement");
-				//#########################################################
-/*								
-				function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
-				{
-					$res = "";
-					$sqlResultNumRows = mysql_num_rows($sqlResult);
-					for ($imageArrayIndex = 0; $imageArrayIndex < $sqlResultNumRows; $imageArrayIndex++)
-					{
-						$fileName = mysql_result($sqlResult, $imageArrayIndex, 'FileName');
-						$fileNamePrefix = str_replace('.jpg', '', $fileName);
-						$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
-						if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
-						{
-							$ratio = 1.0 / $ratio;
-						}
-						$downloadStatus = 0;
-						//Erzeugung der Download-Icons:
-						$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-						$check = fileExists($fileName, $uID);
-						IF($check > 0)
-						{
-							//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-							$downloadStatus = 100;
-						}
-						ELSE
-						{
-							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
-							{
-								IF(directDownload($uID, $softwareRoot))
-								{
-									$downloadStatus = 1;
-								}
-								ELSE
-								{
-									$downloadStatus = 2;
-								}
-							}
-							ELSE
-							{
-								$downloadStatus = 0;
-							}
-						}
-						$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.mysql_result($sqlResult, $imageArrayIndex, 'pic_id').'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
-						';
-					}
-					return $res;
-				}			
-*/	
-				$num6_1 = mysql_num_rows($result6_1);
-				//echo $num6_1;  	//Gesamtzahl der gefundenen Bilder mit Kategorie-Zuweisung
-				$previewLayerHtml .= '
-				<script language="javascript">
-				var imageArray = new Array();
-				self.getImageArray = function getImageArray()
-				{
-				  imageArray = [];
-				';
-				$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
-				$previewLayerHtml .= '
-				  return imageArray;
-				}
-				</script>
-				';
-		//########################################################
 				//davon Ermittlung aller Bilder mit Geo-Referenzierung:
 				$kml_statement = "SELECT $table2.*, $table10.* 
 				FROM $table2, $table10 
@@ -976,7 +819,7 @@ SWITCH ($modus)
 				$result8 = mysql_query( "$kml_statement");
 				if($result8)
 				{
-					$num8 = mysql_num_rows($result8);
+					$num8 = mysql_num_rows($result8);			//Gesamtzahl der gefundenen Bilder mit Geo-Referenzierung
 				}
 				else
 				{
@@ -988,40 +831,38 @@ SWITCH ($modus)
 				{
 					$kategorie = substr($kategorie,0,15)."...";
 				}
-				
 				echo mysql_error();
 				if($result6_1)
 				{
 					$num6_1 = mysql_num_rows($result6_1);
+					//echo $num6_1;  	//Gesamtzahl der gefundenen Bilder mit Kategorie-Zuweisung
+					if($num6_1 > 0)
+					{
+						$previewLayerHtml .= '
+						<script language="javascript">
+						var imageArray = new Array();
+						self.getImageArray = function getImageArray()
+						{
+						  imageArray = [];
+						';
+						$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
+						$previewLayerHtml .= '
+						  return imageArray;
+						}
+						</script>
+						';
+						$text1 = "<div id='tooltip1'>".$num6_1." Bilder in der Kategorie \"".$kategorie."\"";
+					}
 				}
 				else
 				{
 					$num6_1 = 0;
-				}
-/*				
-				if($result8)
-				{
-					$num8 = mysql_num_rows($result8);
-				}
-				else
-				{
-					$num8 = 0;
-				}
-*/
-				IF ($num6_1 == '0')
-				{
 					echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die der gew&auml;hlten Kategorie zugewiesen wurden!</p>";
-					return;
-				}
-				ELSE
-				{
-					//$text1 = "<div id='tooltip1'>Es gibt ".$num6_1." Bilder in der Kategorie \"".$kategorie."\"";
-					$text1 = "<div id='tooltip1'>".$num6_1." Bilder in der Kategorie \"".$kategorie."\"";
-				}
+				}		
 				break;
 			}
 		break;
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 		CASE 'geo':
 		include 'functions/geo_functions.php';
 		//Ermittlung, welches der Formulare abgesendet wurde:
@@ -1094,7 +935,6 @@ SWITCH ($modus)
 			CASE 'geo_rech2':
 			//Suche nach Ortsbezeichnung und Umkreis
 			//Bestimmung, welche Koordinaten dem gewaehlten Ort entsprechen und Ermittlung des arithmetischen Mittelwertes als 'gemeinsamer Mittelpunkt':
-			//echo "an get_preview &uuml;bergebene Ortsbezeichnung: ".htmlentities($ort)."<BR>";
 			$ORT = $ort;
 			$result10 = mysql_query( "SELECT * FROM $table2 WHERE City = \"$ort\" AND aktiv = '1'");
 			$num10 = mysql_num_rows($result10);
@@ -1113,7 +953,6 @@ SWITCH ($modus)
 			//echo "Summe Breite: ".$lat.", Summe Laenge: ".$long."<BR>";
 			$lat_mittel = $lat / $num10;
 			$long_mittel = $long / $num10;
-			//echo htmlentities("mittlere Breite: ".$lat_mittel.", mittlere Laenge: ".$long_mittel)."<BR>";
 			
 			//Plausibilitaetspruefung:
 			$RADIUS2 = $radius2;
@@ -1136,198 +975,180 @@ SWITCH ($modus)
 			$delta_long = getDeltaLong($lat_mittel, $radius);
 			$long_min = $long_mittel - $delta_long;
 			$long_max = $long_mittel + $delta_long;
-			//echo htmlentities("Laenge: ".$long_mittel.", min. Laenge: ".$long_min.", max. Laenge: ".$long_max)."<BR>";
 			
 			//qudratischer Auswahlbereich:
 			$result5 = mysql_query( "SELECT * FROM $table2 
 			WHERE (GPSLongitude > '$long_min' AND GPSLongitude < '$long_max') 
 			AND (GPSLatitude > '$lat_min' AND GPSLatitude < '$lat_max')
 			AND aktiv = '1'");
-			//echo mysql_error();
+			echo mysql_error();
 			break;
 		}
-			$num5 = mysql_num_rows($result5);
-			IF ($num5 == '0')
+		$num5 = mysql_num_rows($result5);
+		IF ($num5 == '0')
+		{
+			echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die den gew&auml;hlten Bedingungen entsprechen!</p>";
+			return;
+		}
+		ELSE
+		{
+			//echo "Anzahl der gefundenen Bilder im Rechteck: ".$num5."<BR>";
+			$p_i_arr = array();
+			FOR($i5=0; $i5<$num5; $i5++)
 			{
-				echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die den gew&auml;hlten Bedingungen entsprechen!</p>";
-				return;
-			}
-			ELSE
-			{
-				//echo "Anzahl der gefundenen Bilder im Rechteck: ".$num5."<BR>";
-				$p_i_arr = array();
-				FOR($i5=0; $i5<$num5; $i5++)
+				$pic_id = mysql_result($result5, $i5, 'pic_id');
+				$longitude = mysql_result($result5, $i5, 'GPSLongitude');
+				$latitude = mysql_result($result5, $i5, 'GPSLatitude');
+				//Pruefung, ob der Punkt in einem KREIS-Bereich um das Zentrum herum liegt:
+				$inside = isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius);
+				IF($inside == 'true')
 				{
-					$pic_id = mysql_result($result5, $i5, 'pic_id');
-					$longitude = mysql_result($result5, $i5, 'GPSLongitude');
-					$latitude = mysql_result($result5, $i5, 'GPSLatitude');
-					//Pruefung, ob der Punkt in einem KREIS-Bereich um das Zentrum herum liegt:
-					$inside = isInCircle($longitude, $long_mittel, $latitude, $lat_mittel, $radius);
-					IF($inside == 'true')
+					//echo "Punkt ist im Kreis ".$pic_id."<BR>";
+					SWITCH($bewertung)
 					{
-						//echo "Punkt ist im Kreis ".$pic_id."<BR>";
-						SWITCH($bewertung)
-						{
-							CASE '6':
-								$result9 = mysql_query( "SELECT * FROM $table2
-								WHERE GPSLongitude = '$longitude' AND GPSLatitude = '$latitude' AND aktiv = '1'");
-							break;
-							
-							default:
-								//echo $krit2;
-								$result9 = mysql_query( "SELECT * FROM $table2
-								WHERE GPSLongitude = '$longitude' AND GPSLatitude = '$latitude' AND aktiv = '1'
-								$krit2");
-								echo mysql_error();
-							break;
-						}
-						$num9 = mysql_num_rows($result9);
-						IF($num9 > 0)
-						{
-							//die gueltigen pic_id's werden zur weiteren Verwendung in ein Array geschrieben:
-							$p_i_arr[] = $pic_id;
-						}
+						CASE '6':
+							$result9 = mysql_query( "SELECT * FROM $table2
+							WHERE GPSLongitude = '$longitude' AND GPSLatitude = '$latitude' AND aktiv = '1'");
+						break;
+						
+						default:
+							$result9 = mysql_query( "SELECT * FROM $table2
+							WHERE GPSLongitude = '$longitude' AND GPSLatitude = '$latitude' AND aktiv = '1'
+							$krit2");
+							echo mysql_error();
+						break;
 					}
-					ELSE
+					$num9 = mysql_num_rows($result9);
+					IF($num9 > 0)
 					{
-						//echo "Punkt ist N I C H T im Kreis ".$pic_id."<BR>";
+						//die gueltigen pic_id's werden zur weiteren Verwendung in ein Array geschrieben:
+						$p_i_arr[] = $pic_id;
 					}
 				}
-				//zeitl. Sortierung der pic_id's:
-				$arr_werte = count($p_i_arr);
-				//echo $arr_werte;
-				IF($arr_werte !== 0)
+				ELSE
 				{
-					IF($arr_werte == 1)
-					{
-						$bed = "WHERE pic_id = $p_i_arr[0]";
-					}
-					ELSE
-					{
-						FOR($k=0; $k<$arr_werte; $k++)
-						{
-							IF($k==0)
-							{
-								$bed = "WHERE pic_id = $p_i_arr[$k]";
-							}
-							ELSE
-							{
-								$bed .= " OR pic_id = $p_i_arr[$k]";
-							}
-						}
-					}
-					//echo $bed;
-					$result99 = mysql_query("SELECT * FROM $table2 $bed AND aktiv = '1' ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
-					@$num99 = mysql_num_rows($result99);
-					FOR($i99=0; $i99<$num99; $i99++)
-					{
-						$pic_id_arr[] = mysql_result($result99, $i99, 'pic_id');
-					}
+					//echo "Punkt ist N I C H T im Kreis ".$pic_id."<BR>";
 				}
 			}
-	//######################################################################### 
+			//zeitl. Sortierung der pic_id's:
+			$arr_werte = count($p_i_arr);
 			IF($arr_werte !== 0)
 			{
-				function generateGeoImageArray($pic_id_arr, $userName, $uID, $softwareRoot)
+				IF($arr_werte == 1)
 				{
-					//$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
-					//flush();
-					include $softwareRoot.'/bin/share/db_connect1.php';
-					$res = "";
-					$num_pic = count($pic_id_arr);	//Gesamtzahl der gefundenen Bilder
-					for ($imageArrayIndex = 0; $imageArrayIndex < $num_pic; $imageArrayIndex++)
+					$bed = "WHERE pic_id = $p_i_arr[0]";
+				}
+				ELSE
+				{
+					FOR($k=0; $k<$arr_werte; $k++)
 					{
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
-						
-						$res1 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
-						//$res2 = mysql_query("SELECT * FROM $table14 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
-						
-						$fileName = mysql_result($res1, 0, 'FileName');
-						$fileNamePrefix = str_replace('.jpg', '', $fileName);
-						$ratio = (mysql_result($res1, 0, 'ExifImageWidth') / mysql_result($res1, 0, 'ExifImageHeight'));
-						if (mysql_result($res1, 0, 'Orientation') >= '5')
+						IF($k==0)
 						{
-							$ratio = 1.0 / $ratio;
-						}
-						$downloadStatus = 0;
-						//Erzeugung der Download-Icons:
-						$Owner = mysql_result($res1, 0, 'Owner');
-						
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
-						
-						$check = fileExists($fileNamePrefix, $uID);
-						IF($check > 0)
-						{
-							//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-							$downloadStatus = 100;
+							$bed = "WHERE pic_id = $p_i_arr[$k]";
 						}
 						ELSE
 						{
-							//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-							IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
+							$bed .= " OR pic_id = $p_i_arr[$k]";
+						}
+					}
+				}
+				//echo $bed;
+				$result99 = mysql_query("SELECT * FROM $table2 $bed AND aktiv = '1' ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
+				@$num99 = mysql_num_rows($result99);
+				FOR($i99=0; $i99<$num99; $i99++)
+				{
+					$pic_id_arr[] = mysql_result($result99, $i99, 'pic_id');
+				}
+			}
+		}
+
+		IF($arr_werte !== 0)
+		{
+			function generateGeoImageArray($pic_id_arr, $userName, $uID, $softwareRoot)
+			{
+				//$start1 = microtime();					//Startzeit-Variable zur Laufzeitermittlung
+				//flush();
+				include $softwareRoot.'/bin/share/db_connect1.php';
+				$res = "";
+				$num_pic = count($pic_id_arr);	//Gesamtzahl der gefundenen Bilder
+				for ($imageArrayIndex = 0; $imageArrayIndex < $num_pic; $imageArrayIndex++)
+				{		
+					$res1 = mysql_query("SELECT * FROM $table2 WHERE pic_id = '$pic_id_arr[$imageArrayIndex]'");
+					
+					$fileName = mysql_result($res1, 0, 'FileName');
+					$fileNamePrefix = str_replace('.jpg', '', $fileName);
+					$ratio = (mysql_result($res1, 0, 'ExifImageWidth') / mysql_result($res1, 0, 'ExifImageHeight'));
+					if (mysql_result($res1, 0, 'Orientation') >= '5')
+					{
+						$ratio = 1.0 / $ratio;
+					}
+					$downloadStatus = 0;
+					//Erzeugung der Download-Icons:
+					$Owner = mysql_result($res1, 0, 'Owner');		
+					
+					$check = fileExists($fileNamePrefix, $uID);
+					IF($check > 0)
+					{
+						//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
+						$downloadStatus = 100;
+					}
+					ELSE
+					{
+						//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
+						IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
+						{
+							IF(directDownload($uID, $softwareRoot))
 							{
-								IF(directDownload($uID, $softwareRoot))
-								{
-									$downloadStatus = 1;
-								}
-								ELSE
-								{
-									$downloadStatus = 2;
-								}
+								$downloadStatus = 1;
 							}
 							ELSE
 							{
-								$downloadStatus = 0;
+								$downloadStatus = 2;
 							}
 						}
-						$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.$fileNamePrefix.'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
-						';
+						ELSE
+						{
+							$downloadStatus = 0;
+						}
 					}
-					/*
-					$end1 = microtime();
-					list($start1msec, $start1sec) = explode(" ",$start1);
-					list($end1msec, $end1sec) = explode(" ",$end1);
-					$runtime1 = ($end1sec + $end1msec) - ($start1sec + $start1msec);
-					echo "Zeit f&uuml;r Bildsuche: ".$runtime1." Sekunden<BR>";
-					*/
-					return $res;
+					$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.$fileNamePrefix.'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
+					';
 				}
-						
+				return $res;
+			}
 					
-				$previewLayerHtml .= '
-				<script language="javascript">
-				var imageArray = new Array();
-				self.getImageArray = function getImageArray()
-				{
-					imageArray = [];';
-					$previewLayerHtml .= generateGeoImageArray($pic_id_arr, $username, $uid, $sr);
-					$previewLayerHtml .= '
-					  return imageArray;
-				}
-				</script>';
-			//##########################################################################	
-				
-				$statement = $pic_id_arr;
-				$kml_statement = '';
-				FOR($x=0; $x<count($pic_id_arr); $x++)
-				{
-					$kml_statement .= " ".$pic_id_arr[$x];
-				}
-				$kml_cod_statement = urlencode(substr($kml_statement, 1)); // wird bei der Erzeugung der kml-Datei verwendet
-				//echo $kml_cod_statement;
-				$pdf_statement = urlencode(substr($kml_statement, 1));
-				$num6_1 = count($pic_id_arr);
-				echo "<div id='tooltip1'>Es wurde(n) ".$num6_1." Bild(er) gefunden.";
-			}
-			ELSE
+			$previewLayerHtml .= '
+			<script language="javascript">
+			var imageArray = new Array();
+			self.getImageArray = function getImageArray()
 			{
-				$pic_id_arr = NULL;
-				$pdf_statement = '';
-				$num6_1 = 0;
+				imageArray = [];';
+				$previewLayerHtml .= generateGeoImageArray($pic_id_arr, $username, $uid, $sr);
+				$previewLayerHtml .= '
+				  return imageArray;
 			}
-			break;
+			</script>';
 			
-//###################################################################################
+			$statement = $pic_id_arr;
+			$kml_statement = '';
+			FOR($x=0; $x<count($pic_id_arr); $x++)
+			{
+				$kml_statement .= " ".$pic_id_arr[$x];
+			}
+			$kml_cod_statement = urlencode(substr($kml_statement, 1)); // wird bei der Erzeugung der kml-Datei verwendet
+			$pdf_statement = urlencode(substr($kml_statement, 1));
+			$num6_1 = count($pic_id_arr);
+			echo "<div id='tooltip1'>Es wurde(n) ".$num6_1." Bild(er) gefunden.";
+		}
+		ELSE
+		{
+			$pic_id_arr = NULL;
+			$pdf_statement = '';
+			$num6_1 = 0;
+		}
+		break;
+			
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 
 		CASE 'desc':
 		//Bereinigung der Text-Eingabe-Felder:
@@ -1347,7 +1168,6 @@ SWITCH ($modus)
 			SWITCH($bed1)
 			{
 				CASE '0':
-				//echo "Ausf&uuml;hrung der Abfrage: '".$statement."' nach erstem Kriterium";
 				break;
 				
 				CASE '1':
@@ -1368,7 +1188,6 @@ SWITCH ($modus)
 			SWITCH($bed2)
 			{
 				CASE '0':
-				//echo "Ausf&uuml;hrung der Abfrage: '".$statement."' nach zweitem Kriterium";
 				break;
 				
 				CASE '1':
@@ -1389,7 +1208,6 @@ SWITCH ($modus)
 			SWITCH($bed3)
 			{
 				CASE '0':
-				//echo "Ausf&uuml;hrung der Abfrage: '".$statement."' nach drittem Kriterium";
 				break;
 				
 				CASE '1':
@@ -1410,7 +1228,6 @@ SWITCH ($modus)
 			SWITCH($bed4)
 			{
 				CASE '0':
-				//echo "Ausf&uuml;hrung der Abfrage: '".$statement."' nach viertem Kriterium";
 				break;
 				
 				CASE '1':
@@ -1427,12 +1244,10 @@ SWITCH ($modus)
 				}
 				break;
 			}
-			//$statement .= " AND aktiv = '1'";	
 			IF($bewertung !== '6')
 			{
 				//Bewertungskriterium wird in Vergleichsoperator und Wert zerlegt:
 				//Groesser-Zeichen bedeutet: Der Notenwert ist hoeher, d.h die Note ist schlechter!
-				
 				$vgl_op = substr($bewertung,0,strlen($bewertung) - 1);
 				IF($vgl_op == '<=')
 				{
@@ -1446,76 +1261,21 @@ SWITCH ($modus)
 				$krit2 = "AND $table2.note $vgl_op '$wert'";
 				$stat_all = $statement." ".$krit2;
 				$pdf_statement = urlencode($stat_all);
-//				echo "Zeile 1413, stat_all: ".$stat_all."<BR><BR>";
 				$stat_ref = $stat_all.") 
 				AND (City <>'Ortsbezeichnung' OR City <>'') 
 				$krit2 
 				ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
-//				echo "Zeile 1418: ".$stat_ref."<BR><BR>";
 			}
 			ELSE
 			{
 				$stat_all = $statement;
 				$pdf_statement = urlencode($stat_all);
-//				echo "PDF-Statement Z. 1424: ".$pdf_statement."<BR>";
 				$stat_ref = $stat_all.") 
 				AND (City <>'Ortsbezeichnung' OR City <>'') 
 				ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
 			}
-//			echo $bewertung.", ".$stat_all.")<BR>";
 			$result6_1 = mysql_query( $stat_all.") ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
 			
-//#########################################################################
-/*			
-			function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
-			{
-				$res = "";
-				$sqlResultNumRows = mysql_num_rows($sqlResult);
-				for ($imageArrayIndex = 0; $imageArrayIndex < $sqlResultNumRows; $imageArrayIndex++)
-				{
-					$fileName = mysql_result($sqlResult, $imageArrayIndex, 'FileName');
-					$fileNamePrefix = str_replace('.jpg', '', $fileName);
-					$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
-					if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
-					{
-						$ratio = 1.0 / $ratio;
-					}
-					$downloadStatus = 0;
-					//Erzeugung der Download-Icons:
-					$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-					$check = fileExists($fileName, $uID);
-					IF($check > 0)
-					{
-						//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-						$downloadStatus = 100;
-					}
-					ELSE
-					{
-					//echo $Owner.", ".$user_id;
-						//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-						IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
-						{
-							IF(directDownload($uID, $softwareRoot))
-							//IF($direkt_download > '0')
-							{
-								$downloadStatus = 1;
-							}
-							ELSE
-							{
-								$downloadStatus = 2;
-							}
-						}
-						ELSE
-						{
-							$downloadStatus = 0;
-						}
-					}
-					$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.mysql_result($sqlResult, $imageArrayIndex, 'pic_id').'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
-					';
-				}
-				return $res;
-			}			
-*/	
 			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder		
 			$previewLayerHtml .= '
 			<script language="javascript">
@@ -1523,32 +1283,18 @@ SWITCH ($modus)
 			self.getImageArray = function getImageArray()
 			{
 				  imageArray = [];';
-				/*for ($imageArrayIndex = 0; $imageArrayIndex < $num6_1; $imageArrayIndex++)
-				{
-					$fileNamePrefix = str_replace('.jpg', '', mysql_result($result6_1, $imageArrayIndex, 'FileName'));
-					$ratio = (mysql_result($result6_1, $imageArrayIndex, 'ExifImageWidth') / mysql_result($result6_1, $imageArrayIndex, 'ExifImageHeight'));
-					if (mysql_result($result6_1, $imageArrayIndex, 'Orientation') >= '5')
-					{
-						$ratio = 1.0 / $ratio;
-					}
-					$previewLayerHtml .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.'});
-					';
-				}*/
 				$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
 				$previewLayerHtml .= '
 				  return imageArray;
 			}
 			</script>';
-//##########################################################################		
-			
-			//echo $stat_ref.")<BR>";
+
 			$kml_cod_statement = urlencode($stat_ref); // wird bei der Erzeugung der kml-Datei verwendet
 			$result8 = mysql_query( $stat_ref);
 			@$num8 = mysql_num_rows($result8);
 			//echo "Gesamtanzahl der georeferenzierten Bilder: ".$num8." Treffer<BR>";
 			//echo mysql_error();
 			$krit1 = substr($stat_all,22).")";
-//			echo "Zeile 1470: ".$krit1."<BR>";
 			IF ($num6_1 == '0')
 			{
 				echo "<p class='gross' style='color:green; text-align:center;'>Es gibt keine Bilder, die den gew&auml;hlten Suchbegriffen entsprechen!</p>";
@@ -1566,7 +1312,6 @@ SWITCH ($modus)
 			return;
 		}
 		$statement = "$stat_all) ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount, $table2.DateInsert";
-		//echo "Zeile 1533: ".$statement."<BR><BR>";
 		$pdf_statement = urlencode($statement);
 		break;
 //###################################################################################	
@@ -1577,13 +1322,11 @@ SWITCH ($modus)
 			//echo $zw1."<BR>";;
 			IF($bedingung1 == 'LIKE')
 			{
-				//echo $zw1;
 				$krit1 = "WHERE ".$table2.".".$zusatz1." LIKE '%".$zw1."%'";
 			}
 			ELSE
 			{
 				$krit1 = "WHERE ".$table2.".".$zusatz1." ".$bedingung1." '".$zw1."'";
-				//echo $krit1;
 			}
 			
 			$statement = "SELECT DateTimeOriginal, ShutterCount, DateInsert, ExifImageHeight, ExifImageWidth, Orientation, note, pic_id, FileNameV, FileNameHQ, FileName, aktiv, $zusatz1 
@@ -1592,7 +1335,6 @@ SWITCH ($modus)
 			$krit2 
 			AND aktiv = '1' 
 			ORDER BY DateTimeOriginal, ShutterCount, DateInsert";
-//			echo "Z. 1560: ".$statement;
 			$pdf_statement = urlencode($statement);
 			$result6_1 = mysql_query( "SELECT DateTimeOriginal, ShutterCount, DateInsert, ExifImageHeight, ExifImageWidth, Orientation, note, pic_id, Owner, FileName, aktiv, $zusatz1 
 			FROM $table2 
@@ -1601,7 +1343,7 @@ SWITCH ($modus)
 			AND aktiv = '1' 
 			ORDER BY DateTimeOriginal, ShutterCount, DateInsert");
 			echo mysql_error();
-			//$result8 liefert die Anz. georef. Bilder entspr. Kriterium:
+			// $result8 liefert die Anz. georef. Bilder entspr. Kriterium:
 			$kml_statement = "SELECT * FROM $table2 
 			$krit1 
 			AND aktiv = '1'
@@ -1609,93 +1351,41 @@ SWITCH ($modus)
 			AND City <> '' 
 			$krit2";
 			$kml_cod_statement = urlencode($kml_statement); // wird bei der Erzeugung der kml-Datei verwendet
-			$result8 = mysql_query( "$kml_statement");
-			@$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
-			$num6_1 = mysql_num_rows($result6_1);  	//Gesamtzahl der gefundenen Bilder
-//#########################################################
-/*			
-		function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
-		{
-			$res = "";
-			$sqlResultNumRows = mysql_num_rows($sqlResult);
-			for ($imageArrayIndex = 0; $imageArrayIndex < $sqlResultNumRows; $imageArrayIndex++)
+			$result8 = mysql_query( "$kml_statement");		
+			@$num8 = mysql_num_rows($result8);				// Anzahl der geo-referenzierten Bilder
+			$num6_1 = mysql_num_rows($result6_1);  			// Gesamtzahl der gefundenen Bilder
+
+			$previewLayerHtml .= '
+			<script language="javascript">
+			
+			var imageArray = new Array();
+			
+			self.getImageArray = function getImageArray()
 			{
-				$fileName = mysql_result($sqlResult, $imageArrayIndex, 'FileName');
-				$fileNamePrefix = str_replace('.jpg', '', $fileName);
-				$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
-				if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
-				{
-					$ratio = 1.0 / $ratio;
-				}
-				$downloadStatus = 0;
-				//Erzeugung der Download-Icons:
-				$Owner = mysql_result($sqlResult, $imageArrayIndex, 'Owner');
-				$check = fileExists($fileName, $uID);
-				IF($check > 0)
-				{
-					//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-					$downloadStatus = 100;
-				}
-				ELSE
-				{
-				//echo $Owner.", ".$user_id;
-					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-					IF(($uID == $Owner AND hasPermission($uID, 'downloadmypics', $softwareRoot)) OR hasPermission($uID, 'downloadallpics', $softwareRoot))
-					{
-						IF(directDownload($uID, $softwareRoot))
-						//IF($direkt_download > '0')
-						{
-							$downloadStatus = 1;
-						}
-						ELSE
-						{
-							$downloadStatus = 2;
-						}
-					}
-					ELSE
-					{
-						$downloadStatus = 0;
-					}
-				}
-				$res .= 'imageArray.push({fileName: "'.$fileNamePrefix.'", ratio: '.$ratio.', id: "'.mysql_result($sqlResult, $imageArrayIndex, 'pic_id').'", downloadStatus: '.$downloadStatus.', Owner: '.$Owner.'});
-				';
+			  imageArray = [];
+			';
+			$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
+			$previewLayerHtml .= '
+			  return imageArray;
 			}
-			return $res;
-		}			
-*/		
-		$previewLayerHtml .= '
-		<script language="javascript">
-		
-		var imageArray = new Array();
-		
-		self.getImageArray = function getImageArray()
-		{
-		  imageArray = [];
-		';
-		$previewLayerHtml .= generateImageArray($result6_1, $username, $uid, $sr);
-		$previewLayerHtml .= '
-		  return imageArray;
-		}
-		</script>
-		';
-		
-//		@$num8 = mysql_num_rows($result8);	//Anzahl der geo-referenzierten Bilder
-		SWITCH ($num6_1)
-		{
-			CASE '0':
-			$text1 = "";
-			//echo "Pos.: ".$position."Jahr: ".$jahr.", Monat: ".$month_number.", mod: ".$mod.". Modus: ".$modus."BaseFile: ".$base_file.", Bewertung: ".$bewertung;
-			break;
+			</script>
+			';
 			
-			CASE '1':
-			$text1 = "<div id='tooltip1'>Es wurde ein Bild gefunden.";
-			break;
-			
-			default:
-			$text1 = "<div id='tooltip1'>Es wurden ".$num6_1." Bilder gefunden.";
-			break;
-		}
-		//echo "Es wurden ".$num6_1." Bilder gefunden, davon ".$num8." referenzierte.&#160;&#160;";
+			SWITCH ($num6_1)
+			{
+				CASE '0':
+				$text1 = "";
+				//echo "Pos.: ".$position."Jahr: ".$jahr.", Monat: ".$month_number.", mod: ".$mod.". Modus: ".$modus."BaseFile: ".$base_file.", Bewertung: ".$bewertung;
+				break;
+				
+				CASE '1':
+				$text1 = "<div id='tooltip1'>Es wurde ein Bild gefunden.";
+				break;
+				
+				default:
+				$text1 = "<div id='tooltip1'>Es wurden ".$num6_1." Bilder gefunden.";
+				break;
+			}
 		break;
 //#################################################################################################################
 		CASE'expert_k':
@@ -2036,23 +1726,6 @@ SWITCH ($modus)
 		break;
 		
 		CASE 'geo':
-		/*
-		IF($num6_1 > '0')
-		{
-			$zusatz = "
-			(Diese(s) in <a href='$inst_path/pic2base/userdata/$username/kml_files/$file'><img src=\"$inst_path/pic2base/bin/share/images/googleearth-icon.png\" width=\"12\" height=\"12\" border=\"0\" />
-			<span>
-			<strong>Zur Anzeige der Fotos in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
-			<br />
-			Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
-			</span>
-			</a>darstellen)";
-		}
-		ELSE
-		{
-			$zusatz='';
-		}
-		*/
 		IF($form_name == 'geo_rech1')
 		{
 			$action_2 = "getGeoPreview1(\"$LONG\", \"$LAT\", \"$ALT\", \"$RADIUS1\", \"$einheit1\", \"$mod\", \"$modus\", \"$base_file\", \"geo_rech1\", \"$bewertung\",\"$position\",-2)";
@@ -2090,8 +1763,7 @@ SWITCH ($modus)
 		break;
 	}
 	//Link zum pdf-Druck (Ausdruck bis max. 1000 Bilder!)
-
-	IF($num6_1 < '1001')
+	IF($num6_1 < '1001' AND $N == '') //$N == '' bedeutet: fuer Neuzugaenge wird keine Galerie angeboten
 	{
 		$pdf_link = "&#160;&#160;&#160;<span id='pdf_icon'>Galerie vorbereiten: <a href='#' style='cursor:pointer;' onClick='createPdfFile(\"$pdf_statement\",\"$sr\",\"$mod\",\"$num6_1\")'><img src=\"$inst_path/pic2base/bin/share/images/acroread_grey.png\" width=\"12\" height=\"12\" border=\"0\"  title='pdf-Datei erzeugen' /></a><span>";
 	}
@@ -2161,7 +1833,7 @@ SWITCH ($modus)
 	{
 		$krit3 = '';
 	}
-//	echo "Z 2155 ".$krit3;
+	
 	SWITCH($mod)
 	{
 		CASE 'zeit':
@@ -2173,19 +1845,6 @@ SWITCH ($modus)
 			ORDER BY DateTimeOriginal, ShutterCount, DateInsert $krit3");
 		break;
 		
-		// fehlerhafte Fassung, in der keine Vorschaubilder fuer die Neuzugaenge bei der Suche nach Kategorien angezeigt werden: ~~~~~~~~~~~~~
-		CASE 'kat':
-			$statement = "SELECT $table2.*, $table10.* 
-			FROM $table2, $table10 
-			WHERE ($table2.pic_id = $table10.pic_id 
-			AND $table10.kat_id = '$ID'
-			AND $table2.aktiv = '1' $krit2) 
-			ORDER BY $table2.DateTimeOriginal, $table2.ShutterCount, $table2.DateInsert $krit3";
-//			echo "<BR>".$statement."<BR>";
-			$result6 = mysql_query($statement);	
-		break;
-		// Reparaturversuch: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		/*
 		CASE 'kat':
 		IF($N>='0')
 		{
@@ -2208,8 +1867,7 @@ SWITCH ($modus)
 			$result6 = mysql_query($statement);
 		}
 		break;
-		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		*/
+		
 		CASE 'desc':
 			$stat = "SELECT * FROM $table2 $krit1 $krit2 AND aktiv = '1' ORDER BY DateTimeOriginal, ShutterCount, DateInsert $krit3";
 //			echo "Zeile 2138: ".$stat."<BR>Krit.1: ".$krit1.", Krit2: ".$krit2.", Krit 3: ".$krit3."<BR>";
@@ -2268,37 +1926,31 @@ SWITCH ($modus)
 		break;
 		
 	}
-	//echo "get_preview, Zeile 1345: ".$steps.", ".$position;
 	$num6 = mysql_num_rows($result6); 
-//	echo $num6;
-//	$N = $num6;
 		
 //#############   Aufbau des Filmstreifens:   #############################################################################################
 	//$N: Anz. der Bilder ohne Kat.-Zuweisung
-	//
-	// fehlerhafte Fassung, in der keine Vorschaubilder fuer die Neuzugaenge bei der Suche nach Kategorien angezeigt werden: ~~~~~~~~~~~~~~
-	//
 	IF ($N >= '0' AND $mod == 'kat')
 	{
 		//Anzeige der Bilder ohne Kategorie-Zuweisung:
-		if ( isset($text1) )
+		if ( !isset($text1) )
 		{
-			echo $text1;
+			$text1='';
 		}
-		echo "	<TABLE border='0' align='center'>
+		echo $text1.$zusatz."	
+		<TABLE border='0' align='center' width='780px'>
 		<TR>";
-		
-		$j = '0';	//Zaehlvariable fuer den Array-Index der Download-Icons
+		$rest = $step - $num6; 	//wenn weniger als $step Bilder gefunden wurden: Anzahl der aufzufuellenden Zellen
+		$j = '0';				//Zaehlvariable fuer den Array-Index der Download-Icons
 
-		FOR($i6_1='0'; $i6_1<$num6_1; $i6_1++)
+		FOR($i6='0'; $i6<$num6; $i6++)
 		{
 			//echo $pic_id."<BR>";
-			$pic_id = mysql_result($result6_1, $i6_1, 'pic_id');
-			$result4 = mysql_query( "SELECT * FROM $table2 WHERE (pic_id = '$pic_id')");
-			$FileName = mysql_result($result4, isset($i4), 'FileName');
-			$FileNameHQ = mysql_result($result4, isset($i4), 'FileNameHQ');
-			$FileNameV = mysql_result($result4, isset($i4), 'FileNameV');
-			$FileSize = mysql_result($result4, isset($i4), 'FileSize');
+			$pic_id = mysql_result($result6, $i6, 'pic_id');
+			$FileName = mysql_result($result6, isset($i6), 'FileName');
+			$FileNameHQ = mysql_result($result6, isset($i6), 'FileNameHQ');
+			$FileNameV = mysql_result($result6, isset($i6), 'FileNameV');
+			$FileSize = mysql_result($result6, isset($i6), 'FileSize');
 			//abgeleitete Groessen:
 			IF ($FileNameV == '')
 			{
@@ -2323,15 +1975,15 @@ SWITCH ($modus)
 				$hoehe_neu = $fs_hoehe;
 				$breite_neu = $fs_hoehe * $breite / $hoehe;
 			}
-			
+			$kat_id = 1;	//Erfordernis kontrollieren!!  *********************************************************
 			echo "<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
 					<div id='pic$pic_id'>";
 					getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
-					echo "</div>
+			echo "</div>
 			</TD>";
 		
 			//Erzeugung der Download-Icons:
-			$Owner = mysql_result($result6_1, $i6_1, 'Owner');
+			$Owner = mysql_result($result6, $i6, 'Owner');
 			$check = fileExists($FileName, $uid);
 			IF($check > '0')
 			{
@@ -2346,32 +1998,69 @@ SWITCH ($modus)
 			}
 			ELSE
 			{
-				//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
 				IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
 				{
 					IF(directDownload($uid, $sr))
-					//IF($direkt_download > '0')
 					{
-						$icon[$j] = "
-						<TD align='center' width='43'>
-						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&c_username=$username&pic_id=$pic_id\")'>
-						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/>
-						</SPAN>
-						</div>	
-						</TD>";
+						IF(hasPermission($uid, 'rotatepicture', $sr))
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+							
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+							<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
+							
+							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
+							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+							
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+							<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+							
+							</div>
+							</TD>";
+						}
+						ELSE
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+
+							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
+							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+							
+							</div>
+							</TD>";
+						}
 					}
 					ELSE
 					{
-						$icon[$j] = "
-						<TD align='center' width='43'>
-						<div id='box$pic_id'>
-						<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$user_id\",\"$pic_id\")'>
-						<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/>
-						</SPAN>
-						</div>	
-						</TD>";
+						IF(hasPermission($uid, 'rotatepicture', $sr))
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+							
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
+							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+							
+							</div>	
+							</TD>";
+						}
+						ELSE
+						{
+							$icon[$i6] = "
+							<TD align='center' width='43'>
+							<div id='box$pic_id'>
+							
+							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
+							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+							
+							</div>	
+							</TD>";
+						}
 					}
 				}
 				ELSE
@@ -2380,6 +2069,14 @@ SWITCH ($modus)
 				}
 			}
 			$j++;
+		}
+		//Leer-Raum mit Leer-Zellen auffuellen (Zelle mit Dummy-Bild zur Streckung gefuellt), wenn Bilder gefunden wurden:
+		IF($num6 > '0')
+		{
+			FOR($i_r = '0'; $i_r<$rest; $i_r++)
+			{
+				echo "<TD align='center' colspan='1'><img src='$inst_path/pic2base/bin/share/images/no_pic.gif' width='124' height='10' /></TD>";
+			}
 		}
 		
 		echo "	
@@ -2395,27 +2092,33 @@ SWITCH ($modus)
 		}
 		echo "
 		</TR>
-		</div>
+		</div>";
+		
+		//Tabellenzeile zur Anzeige des gewaehlten, 'aktiven' Bildes:
+		echo "<TR>";
+		FOR ($i6=0; $i6<$num6; $i6++)
+		{
+			$pic_id = mysql_result($result6, $i6, 'pic_id');
+			echo "<TD align='center'><div id = 'picture_$pic_id' style='display:none';><img src='$inst_path/pic2base/bin/share/images/green.gif' width=\"50\" height=\"2\" /></div></TD>";
+		}
+		FOR($i_re = '0'; $i_re < $rest; $i_re++)
+		{
+			echo "<TD align='left' width='43'></TD>";
+		}
+		echo "</TR>";
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		
+		echo "<TR><TD colspan='6'></TD></TR>";	//leere Slider-Zeile
+		echo "
 		</TABLE>";
 	}
-	//
-	// Reparaturversuch: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
-	/*
-	if()
-	{
-		// korrigierter Code...
-	}
-	 */
 	ELSE //################################################################################################################
 	{
 		//normale Anzeige der Bilder lt. Suchkriterium:
-		//echo $text1;
 		IF(!isset($text1))
 		{
 			$text1 = '';
 		}
-		//echo "Z 1594; Num 6-1: ".$num6_1.", Num 8: ".$num8."<BR>";
 		echo $text1.$zusatz."	
 		<TABLE border='0' align='center' width='780px'>
 		<TR style='background-color:RGB(120,120,120,);' >";
@@ -2478,12 +2181,10 @@ SWITCH ($modus)
 			}
 			ELSE
 			{
-				//echo $Owner.", ".$user_id;
 				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
 				IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
 				{
 					IF(directDownload($uid, $sr))
-					//IF($direkt_download > '0')
 					{
 						IF(hasPermission($uid, 'rotatepicture', $sr))
 						{
@@ -2590,8 +2291,7 @@ SWITCH ($modus)
 			echo "<TD align='left' width='43'></TD>";
 		}
 		echo "</TR>";
-		
-		
+//00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 		//Wenn mehr als 18 Bilder gefunden wurden, wird der Slider angezeigt:
 		IF($num6_1 > 18 AND $num6_1 < 600)
 		{
@@ -2677,8 +2377,8 @@ SWITCH ($modus)
 		}
 		ELSE
 		{
-			//Slider-Tabellenzeile:
-			echo "<TR><TD></TD></TR>";
+			//leere Slider-Tabellenzeile:
+			echo "<TR><TD colspan='6'></TD></TR>";
 		}
 		echo "</TABLE>";
 	}

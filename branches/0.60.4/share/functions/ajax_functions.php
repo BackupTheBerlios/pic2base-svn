@@ -150,7 +150,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
       		$Hoehe = $max_size;
       		$Breite = number_format(($Hoehe * $breite_v / $hoehe_v),0,',','.');
       	}
-	echo "<a href='' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori', '');return false\"  title='Ansicht in optimaler Qualit&auml;t'><div class='shadow_1'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5' border='0'></div></a>";
+	echo "<a href='#' onclick=\"ZeigeBild('$bildname', '$Width', '$Height', '$ratio_pic', 'ori', '');return false\"  title='Ansicht in optimaler Qualit&auml;t'><div class='shadow_1'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width=$Breite height=$Hoehe z='5' border='0'></div></a>";
 }
 
 function getShortFS($FileSize)

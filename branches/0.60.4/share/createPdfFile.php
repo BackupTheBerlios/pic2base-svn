@@ -39,7 +39,8 @@ IF($num6_1 < '1001')
 	if (!isset($pdf_statement))
 	{
 		$pdf_statement = '';
-	}	
+	}
+	//echo "Mod: ".$mod.", PDF-Statement: ".$pdf_statement.", UID: ".$uid.", Bild: ".$bild;
 	createContentFile($mod,$pdf_statement,$uid,$bild);
 }
 

@@ -216,6 +216,7 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
 {
   divLargeImageElement = document.createElement("divLargeImage");
   //alert("<?php echo $_SERVER['SCRIPT_FILENAME']; ?>");
+  //alert(currentPreviewImageIndex);
   divLargeImageElement.innerHTML = 
 	  '<div id="divImageLarge" style="position:fixed; left:0px; top:0px; width:100%; height:100%; background-color:#333333; z-index:500;">'+
       '<table border=0 width="100%" height="100%">'+
