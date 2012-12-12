@@ -14,23 +14,19 @@ $kat_ID = array();
 $obj = new stdClass();
 FOREACH ($_POST AS $key => $post)
 {
-	//echo "Schluessel / Wert: ".$key." / ".$post."<BR>";
 	IF (substr($key,0,3) == 'pic')
 	{
-		//echo substr($key,7,strlen($key)-7)."<BR>";
 		$pic_ID[] = substr($key,7,strlen($key)-7);
 	}
 	
 	IF (substr($key,0,3) == 'kat')
 	{
-		//echo substr($key,3,strlen($key)-3)."<BR>";
 		$kat_ID[] = substr($key,3,strlen($key)-3);
 	}
 }
 if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
-	//echo "mod: ".$mod."<BR>"; 
 }
 $obj->mod = $mod;
 $obj->pic_anzahl = count($pic_ID);
@@ -107,13 +103,10 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
-/*
-$result1 = mysql_query( "SELECT id FROM $table1 WHERE username = '$c_username' AND aktiv = '1'"); echo mysql_error();
-$user_id = mysql_result($result1, isset($i), 'id');
-*/
+
 echo "
 <div class='page'>
-	<p id='kopf'>pic2base :: Kategorie-Zuweisung - &Auml;nderungen speichern<span class='klein'>(User: ".$username.")</span></p>
+	<p id='kopf'>pic2base :: Kategorie-Zuweisung - &Auml;nderungen speichern <span class='klein'>(User: ".$username.")</span></p>
 		
 	<div class='navi' style='clear:right;'>
 		<div class='menucontainer'>
