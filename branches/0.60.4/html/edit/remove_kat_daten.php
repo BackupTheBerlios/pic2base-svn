@@ -16,14 +16,12 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
-	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
 </HEAD>
 <script language="JavaScript">
 <!--
@@ -96,7 +94,7 @@ if(!isset($ID))
 
 echo "
 <div class='page'>
-	<FORM name='kat-aufhebung', method='post' action='remove_kat_daten_action.php?kat_id=$kat_id&mod=$mod'>
+	<FORM name='kat-aufhebung', method='post' action='remove_kat_daten_action2.php?kat_id=$kat_id&mod=$mod'>
 	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Kategorie-Zuweisungen entfernen) <span class='klein'>(User: $username)</span></p>
 	
 	<div class='navi' style='clear:right;'>
@@ -115,8 +113,6 @@ echo "
 			$modus='edit';
 			$mod='kat';
 			$base_file = 'remove_kat_daten';
-			// $modus='complete_view';
-			// echo $ID;
 			include $sr.'/bin/share/kat_treeview.php';
 			echo "
 			</div>";
