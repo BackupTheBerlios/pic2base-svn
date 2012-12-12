@@ -1,8 +1,8 @@
 <?php
 //[Programm-Version]
-$version = "0.70.0"; // 
-$rel = "25112012.1";
-$vom = "(25.11.2012)";
+$version = "0.70.0";
+$rel = "12122012.1";
+$vom = "(12.12.2012)";
 
 //[copyright-Vermerk in der Fusszeile]
 $cr = "<FONT COLOR=#7b7d8e>______</FONT>2006 - 2012";
@@ -37,24 +37,23 @@ $table20 = 'tag_trans';				//Uebersetzungen der Metadaten
 $table21 = 'doubletten';			//temporaer mit Doubletten belegt
 $table22 = 'IVE_V_pic_kat_dubls';	//temporaer bei der DB-Wartung verwendet
 
-$myhost=$db_server;
-$myuser=$user;
-$mypw=$PWD;
-$mydb = $db;
-
-@$database = mysql_pconnect($myhost,$myuser,$mypw);
+@$database = mysql_pconnect($db_server,$user,$PWD);
 if (!$database) 
 {
-	//echo "##ERROR##, could not connect to host $myhost<br>\n";
-	//echo "##MySQL ERRNO: " . mysql_errno() . "<br>\n";
-	//echo "##MySQL ERROR: " . mysql_error() . "<br>\n";
+	
+	echo "##ERROR##, could not connect to host $db_server<br>\n";
+	echo "##MySQL ERRNO: " . mysql_errno() . "<br>\n";
+	echo "##MySQL ERROR: " . mysql_error() . "<br>\n";
+	
 	return;
 }
-if (!mysql_select_db($mydb)) 
+if (!mysql_select_db($db)) 
 {
-	//echo "##ERROR##, could not select database $mydb<br>\n";
-	//echo "##MySQL ERRNO: " . mysql_errno() . "<br>\n";
-	//echo "##MySQL ERROR: " . mysql_error() . "<br>\n";
+	
+	echo "##ERROR##, could not select database $db<br>\n";
+	echo "##MySQL ERRNO: " . mysql_errno() . "<br>\n";
+	echo "##MySQL ERROR: " . mysql_error() . "<br>\n";
+	
 	return;
 }
 
@@ -63,3 +62,4 @@ mysql_query("SET CHARACTER SET utf8");
 $key = '0815';
 //echo phpinfo();
 ?>
+
