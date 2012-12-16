@@ -121,6 +121,9 @@ function convertFile($sr,$data_logger,$info,$geo_file_name,$uid,$timezone)
 	//include $sr.'/bin/share/functions/main_functions.php';
 	
 	$gpsbabel = buildGpsbabelCommand($sr);
+	$v_gb = shell_exec("gpsbabel -V");
+	$gb_version = substr($v_gb,18,5);
+	echo $gb_version;
 	
 	$error = 0;
 	//var_dump($info);
