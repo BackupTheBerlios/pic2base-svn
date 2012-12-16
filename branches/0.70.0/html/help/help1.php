@@ -34,7 +34,7 @@ else
  * Project: pic2base
  * File: help1.php
  *
- * Copyright (c) 2003 - 2005 Klaus Henneberg
+ * Copyright (c) 2003 - 2012 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -494,9 +494,8 @@ echo "
 		<a href='#5_ortsnamen'>Ortsnamen</a><BR>
 		<a href='#5_ftp'>FTP-Statistik</a><BR>
 		<a href='#5_log'>P2b-Log</a><BR>
-		<!--<a href='#5_md5'>md5-Check</a><BR>-->
-		<a href='#5_hist'>Histogramme</a><BR>
 		<a href='#5_db_wartung'>Datenbank-Wartung</a><BR>
+		<a href='#5_db_export'>Datenbank-Export</a><BR>
 		<a href='#5_loeschen'>Bilder endg&uuml;ltig l&ouml;schen</a><BR>
 		<a href='#5_mp'>Meta-Protect</a><BR>
 		<a href='#5_mv'>Meta-View</a><BR>
@@ -573,13 +572,19 @@ echo "
 		Bei der Datenbank-Wartung werden grundlegende Kontrollen ausgef&uuml;hrt, die sicherstellen, da&szlig; die Kategoriezuordnungen korrekt erfolgten und alle erforderlichen Vorschaubilder vorhanden sind. Am Ende dieser Kontrolle wird die Dublettenpr&uuml;fung ausgef&uuml;hrt, mit der man die M&ouml;glichkeit hat, doppelte Eintr&auml;ge in der Datenbank zu finden und ggf. zu korrigieren.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
+		<a name='5_db_export'><b>Datenbank-Export</b></a><BR><BR>
+		
+		Mit Hilfe des Datenbank-Exports ist es m&ouml;glich, die komplette pic2base-Datenbank als XML- oder SQL-Datei zu exportieren. Dies ist hilfreich, wenn man sich z.B. mit der Absicht tr&auml;gt, die vorhandene Installation auf neue Hardware zu &uuml;bertragen.<BR>
+		Siehe hierzu auch: <a href='http://www.pic2base.de/tipps1.php' target='top'>pic2base-Tipps</a><BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
 		<a name='5_loeschen'><b>Bilder endg&uuml;ltig l&ouml;schen</b></a><BR><BR>
 		
 		Um zu verhindern, da&szlig; nicht versehentlich Bilder aus der Datenbank gel&ouml;scht werden, haben nur die Mitglieder der Administratorengruppe die M&ouml;glichkeit, Datens&auml;tze endg&uuml;ltig zu l&ouml;schen. Wenn ein normaler Benutzer ein Bild l&ouml;schen m&ouml;chte, wird dies nur inaktiv gesetzt und im Bestand nicht mehr angezeigt.<BR>
-		&Uuml;ber den Punkt \"Bilder l&ouml;schen\" k&ouml;nnen diese vorgemerkten Bilder von einem Administrator betrachtet, wieder hergestellt oder gel&ouml;scht werden.<BR>
+		&Uuml;ber den Punkt \"Bilder l&ouml;schen\" k&ouml;nnen diese vorgemerkten Bilder von einem Administrator betrachtet, wieder hergestellt oder endg&uuml;ltig gel&ouml;scht werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_mp'><b>Meta-Protect</b></a><BR><BR>
+		<a name='5_mp'><b>Meta-Protect</b></a> (Meta-Daten-Schutz)<BR><BR>
 		
 		Im Arbeitsbereich Meta-Protect kann eingestellt werden, welche Meta-Daten von berechtigten Usern nachtr&auml;glich manuell modifiziert werden d&uuml;rfen.
 		Diese Einstellungen sollten mit gr&ouml;&#223;ter Sorgfalt erfolgen.
@@ -595,11 +600,12 @@ echo "
 		<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		Hilfreich kann die Editier-Freigabe jedoch sein, wenn z.B. die interne Kamera-Uhr falsch gestellt war und das Aufnahme-Datum korrigiert werden soll. Aber auch die nachtr&auml;gliche Vergabe von Copyright-Vermerken l&auml;&#223;t sich &uuml;ber gezielte Freigabe-Einstellungen erm&ouml;glichen.<BR>
 		Die zur Auswahl angebotene Anzahl Datenfelder kann sehr unterschiedlich sein, da pic2base nur diejenigen Felder zur Ansicht oder Bearbeitung anbietet, die die in der Datenbank befindlichen Bilder mitbrachten.
-		Diese Ma&szlig;nahme soll verhindern, da&szlig; die komplette Datenfeld-Liste angezeigt wird (sie w&uuml;rde sehr lang sein!), obwohl nur wenige Felder mit Inhalt gef&uuml;llt waren.
-		M&ouml;chte jemand bestimmte IPTC-Datenfelder editieren, die seine Bilder aber bisher nicht mitbrachten, kann <a href='http://www.pic2base.de/download/meta_test.jpg'>hier</a> ein Demo-Bild heruntergeladen werden, das mit dem (nahezu) vollst&auml;ndigen Satz IPTC-Felder ausgestattet ist.<BR>
+		Diese Ma&szlig;nahme soll verhindern, da&szlig; die komplette Datenfeld-Liste angezeigt wird (sie w&uuml;rde sehr lang sein!), obwohl nur wenige Felder mit Inhalt gef&uuml;llt waren.<BR>
+		M&ouml;chte jemand bestimmte IPTC-Datenfelder editieren, die seine Bilder aber bisher nicht mitbrachten, kann <a href='http://www.pic2base.de/download/meta_test.jpg' target='top'>hier</a> ein Demo-Bild heruntergeladen werden, das mit dem (nahezu) vollst&auml;ndigen Satz IPTC-Felder ausgestattet ist.<BR>
+		Dieses Bild ist einfach in der Datenbank zu erfassen. Wenn man sich nun die vollst&auml;ndige Ansicht der detaillierten Bildinformationen aufruft, werden alle mitgelieferten IPTC-Datenfelder dieses Bildes in die Datenbank &uuml;bernommen und stehen auch f&uuml;r andere Bilder zur Bearbeitung zur Verf&uuml;gung.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_mv'><b>Meta-View</b></a></a><BR><BR>
+		<a name='5_mv'><b>Meta-View</b></a> (Meta-Daten-Ansicht)<BR><BR>
 		
 		Im Arbeitsbereich Meta-View kann eingestellt werden, welche Meta-Daten in der Kompakt-Ansicht der Bilddetails angezeigt werden.<BR>
 		Sollte es sich also f&uuml;r zweckm&auml;&szlig;ig erweisen, f&uuml;r bestimmte Recherche-Arbeiten immer sofort zu wissen, mit welcher Brennweite das Bild aufgenommen wurde,
@@ -609,7 +615,7 @@ echo "
 		Die Anzahl der angezeigten Datenfelder ist von den gleichen Bedingungen abh&auml;ngig, wie dies bereits im vorigen <a href='#5_mp'>Absatz</a> beschrieben wurde.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
-		<a name='5_sw'><b>Software-Check</b></a></a><BR><BR>
+		<a name='5_sw'><b>Software-Check</b></a><BR><BR>
 		
 		Mit dem Software-Check kontrolliert pic2base, ob alle ben&ouml;tigten externen Hilfsprogramme auf dem Server vorhanden sind. In der Regel wird dieses Tool nur w&auml;hrend der Erstinstallation von pic2base, bei der Installation von Updates
 		oder nach Konfigurationsarbeiten (Software-Installationen / Deinstallationen) auf dem Server ben&ouml;tigt.<BR>
