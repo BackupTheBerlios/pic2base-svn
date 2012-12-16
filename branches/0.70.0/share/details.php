@@ -423,7 +423,8 @@ IF($view == 'all')
 	}
 	
 	//liegen Tagebucheintraege zu diesem Bild vor?
-	//echo mysql_get_server_info();
+	//echo mysql_get_server_info()."<BR>";
+	/*
 	IF(mysql_get_server_info() <= 5.1)
 	{
 		//echo "Version < 5.1";
@@ -448,6 +449,14 @@ IF($view == 'all')
 		@$diary_info = mysql_result($result5, isset($i5), 'info');
 		@$datum = date('d.m.Y', strtotime(mysql_result($result5, isset($i5), 'datum')));
 	}
+	*/
+	
+	$result5 = mysql_query("SELECT DateTimeOriginal FROM $table2 WHERE pic_id = '$pic_id'");
+	$dat = date('Y-m-d', strtotime(mysql_result($result5, 0, 'DateTimeOriginal')));
+	$res6 = mysql_query("SELECT * FROM $table3 WHERE datum = '$dat'");
+	//echo mysql_error();
+	@$diary_info = mysql_result($res6, isset($i6), 'info');
+	@$datum = date('d.m.Y', strtotime(mysql_result($res6, isset($i6), 'datum')));
 	
 	IF($diary_info != '')
 	{
