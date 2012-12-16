@@ -100,7 +100,7 @@ echo "
 		<input type='hidden' name='method' value='xml'>
 		</FORM>
 	</fieldset>
-	
+	<!--
 	<fieldset style='width:390px; background-color:lightyellow; margin-top:10px;'>
 	<legend style='color:blue; font-weight:bold;'>CSV-Export</legend>
 		<FORM name = 'db_export' method='post' action='db_export_action.php'>
@@ -114,7 +114,7 @@ echo "
 		<input type='hidden' name='method' value='csv'>
 		</FORM>
 	</fieldset>
-	
+	-->
 	</div>	
 		
 	<DIV id='spalte2'>
