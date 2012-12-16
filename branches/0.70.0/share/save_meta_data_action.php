@@ -43,6 +43,7 @@ FOR($i0='0'; $i0<$num0; $i0++)
 }
 //print_r($row_arr);
 
+$error = 0;		//Initialisierung des Fehler-Zaehlers
 FOREACH($_POST AS $key => $value)
 {
 	//Festlegung: Kleinschreibung: Original-Werte; Grossschreibung: formatierte Werte
@@ -122,14 +123,26 @@ FOREACH($_POST AS $key => $value)
 	//Wenn das Metadaten-Feld auch in der Tabelle pictures enthalten ist, wird auch dies aktualisiert:
 	IF(in_array($KEY_db, $row_arr))
 	{
-		$result1 = mysql_query( "UPDATE $table2 SET $KEY_db = '$VALUE_db' WHERE pic_id = '$pic_id'");
-		echo mysql_error()."<BR>";
+		@$result1 = mysql_query( "UPDATE $table2 SET $KEY_db = '$VALUE_db' WHERE pic_id = '$pic_id'");
+		//echo mysql_error()."<BR>";
 	}
 	
 	//Aktualisierung der Meta-Daten des Bildes:
-	$command = $exiftool. " -".$KEY."='$VALUE' ".$FN." -overwrite_original";
-//	echo $command."<BR><BR>";
-	shell_exec($command);
+	if($KEY !== 'pic_id')
+	{
+		$command = $exiftool. " -".$KEY."='$VALUE' ".$FN." -overwrite_original";
+		$return_value = shell_exec($command);
+		if($return_value == '')
+		{
+			echo "<font color='red'><b>Fehler bei</b></font><BR>";
+			echo "Key: ".$KEY.", Wert: ".$VALUE."<BR>";
+			$error ++;
+		}
+	}
+}
+if($error !== 0)
+{
+	echo "<BR>Bitte beachten Sie die Formatierungsvorschriften f&uuml;r die eingetragenen Werte!";
 }
 
 flush();
@@ -137,7 +150,12 @@ sleep(0);
 ?>
 
 <script language="JavaScript">
-window.close();
+var error;
+error=<?php echo $error;?>;
+if(error==0)
+{
+	window.close();
+}
 </script>
 
 </body>
