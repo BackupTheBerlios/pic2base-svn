@@ -603,6 +603,8 @@ echo "
 		Diese Ma&szlig;nahme soll verhindern, da&szlig; die komplette Datenfeld-Liste angezeigt wird (sie w&uuml;rde sehr lang sein!), obwohl nur wenige Felder mit Inhalt gef&uuml;llt waren.<BR>
 		M&ouml;chte jemand bestimmte IPTC-Datenfelder editieren, die seine Bilder aber bisher nicht mitbrachten, kann <a href='http://www.pic2base.de/download/meta_test.jpg' target='top'>hier</a> ein Demo-Bild heruntergeladen werden, das mit dem (nahezu) vollst&auml;ndigen Satz IPTC-Felder ausgestattet ist.<BR>
 		Dieses Bild ist einfach in der Datenbank zu erfassen. Wenn man sich nun die vollst&auml;ndige Ansicht der detaillierten Bildinformationen aufruft, werden alle mitgelieferten IPTC-Datenfelder dieses Bildes in die Datenbank &uuml;bernommen und stehen auch f&uuml;r andere Bilder zur Bearbeitung zur Verf&uuml;gung.<BR>
+		<u>Hinweis:</u><BR>
+		Bei der Verwendung der zus&auml;tzlichen IPTC-Datenfelder beachten Sie bitte die <a href='http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/IPTC.html' target='top'>Festlegungen zur Formatierung</a>.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name='5_mv'><b>Meta-View</b></a> (Meta-Daten-Ansicht)<BR><BR>

@@ -308,12 +308,14 @@ FOREACH($info_arr AS $IA)
 			IF(in_array($tag,$viewable_fields))
 			{
 				$result7 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-				@$dummy = mysql_result($result7, isset($i7), $tag);
-				IF(!mysql_error() AND $dummy !== NULL AND $dummy !== '')
-				{
+//				@$dummy = mysql_result($result7, isset($i7), $tag);
+				$tag_name = mysql_result($result7, isset($i7), $tag);
+//				IF(!mysql_error() AND $dummy !== NULL AND $dummy !== '')
+//				{
 					//echo "Uebersetzung vorhanden<BR>";
-				}
-				ELSE
+//				}
+//				ELSE
+				IF(mysql_error() OR $tag_name == NULL OR $tag_name == '')
 				{
 					//usersprachliche Meta-Tag-Uebersetzung
 					$exif_daten_transl = shell_exec($exiftool." -".$tag." -lang ".$lang." -x 'Directory' ".$file);
@@ -333,8 +335,7 @@ FOREACH($info_arr AS $IA)
 					$result10 = mysql_query("UPDATE $table20 SET `$tag` = '$iat0' WHERE lang = '$lang'");
 					$result11 = mysql_query("INSERT INTO $table5 (field_name, writable, viewable) VALUES ('$tag', '0', '0')");
 				}
-				$result12 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-				$tag_name = mysql_result($result12, isset($i12), $tag);
+
 				echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>";
 				echo "<TD class='liste2' style='width:225px;'><FONT COLOR='$color'>".$tag_name."</FONT></TD>
 				<TD class='liste2' style='width:225px;'>".$value."</TD>
@@ -344,12 +345,8 @@ FOREACH($info_arr AS $IA)
 			
 			case 'all':
 				$result7 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-				@$dummy = mysql_result($result7, isset($i7), $tag);
-				IF(!mysql_error() AND $dummy !== 'NULL' AND $dummy !== '')
-				{
-					//echo "Uebersetzung vorhanden";
-				}
-				ELSE
+				@$tag_name = mysql_result($result7, isset($i7), $tag);
+				IF(mysql_error() OR $tag_name == 'NULL' OR $tag_name == '')
 				{
 					//echo "keine Uebersetzung fuer ".$tag." vorhanden.<BR>";
 					//usersprachliche Meta-Tag-Uebersetzung
@@ -370,8 +367,7 @@ FOREACH($info_arr AS $IA)
 					$result10 = mysql_query("UPDATE $table20 SET `$tag` = '$iat0' WHERE lang = '$lang'");
 					$result11 = mysql_query("INSERT INTO $table5 (field_name, writable, viewable) VALUES ('$tag', '0', '0')");
 				}
-				$result12 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-				@$tag_name = mysql_result($result12, isset($i12), $tag);
+
 				if($tag_name != '')//Fallunterscheidung, ob Tag-Uebersetzung existiert
 				{
 					echo "<TR class='normal' style='height:3px;' bgcolor = '$bgcolor';>
