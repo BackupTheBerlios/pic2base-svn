@@ -1,0 +1,54 @@
+ div#tooltip1 a span
+ {
+  display:none;
+ }
+
+ div#tooltip1 a:hover
+ {
+  background-color:#FFFFFF;
+ }
+
+div#tooltip1 a:hover span
+ {
+  display:block;
+  text-decoration :none;
+  position:absolute;
+  top:385px;
+  left:125px;
+  width:300px;
+  padding:5px;
+  margin:4px;
+  z-index:100;
+  color:black;
+  background:#EEEEEE;
+  border:1px solid blue;
+  font-size:12px;
+ }
+ 
+ div#tooltip2 a span
+ {
+  display:none;
+ }
+
+/*verwendet im Loeschformular fuer vorgemerkte Bilder*/
+ div#tooltip2 a:hover
+ {
+  background-color:#FFFFFF;
+ }
+
+div#tooltip2 a:hover span
+ {
+  display:block;
+  text-decoration :none;
+  position:absolute;
+  top:100px;
+  left:525px;
+  width:300px;
+  padding:5px;
+  margin:4px;
+  z-index:100;
+  color:black;
+  background:#EEEEEE;
+  border:1px solid blue;
+  font-size:12px;
+ }
