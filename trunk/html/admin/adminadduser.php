@@ -40,7 +40,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='3'></TD>
 	</TR>
 	
 	<tr>
@@ -245,7 +245,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 		
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='3'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='3'></TD>
 	</TR>
 	
 	</table>

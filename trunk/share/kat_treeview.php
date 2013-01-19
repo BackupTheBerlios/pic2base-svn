@@ -58,21 +58,22 @@ if(!isset($bewertung))
 	$bewertung = '';
 }
 
-	//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
-	$knoten_arr[]=$kat_id;
-	
-	WHILE ($kat_id > '1')
-	{
-		$res0 = mysql_query("SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
-		echo mysql_error();
-		$kat_id = mysql_result($res0, isset($i0), 'parent');
-		//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
-		$knoten_arr[]=$kat_id;
-	}
-	$knoten_arr = array_reverse($knoten_arr);
+//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Ermittlung aller 'Knoten-Elemente' (Elemente, an denen in die Tiefe verzweigt wird)
+$knoten_arr[]=$kat_id;
 
-	echo "<TABLE id='kat'>";
+WHILE ($kat_id > '1')
+{
+	$res0 = mysql_query("SELECT parent FROM $table4 WHERE kat_id='$kat_id'");
+	echo mysql_error();
+	$kat_id = mysql_result($res0, isset($i0), 'parent');
+	//echo "Kat-ID in der Funktion: ".$kat_id."<BR>";
+	$knoten_arr[]=$kat_id;
+}
+$knoten_arr = array_reverse($knoten_arr);
+
+echo "
+	<TABLE id='kat'>";
 	//echo $bewertung;
 	function getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung)
 	{
@@ -120,7 +121,7 @@ if(!isset($bewertung))
 			{
 				$treestatus = 'minus';
 				$img = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='eine Ebene nach oben gehen'>";
-				echo 	"<TR id='kat'>
+				echo "<TR id='kat'>
 					<TD id='kat1'>
 					".$space."<a href='$ziel?kat_id=$parent&mod=$mod&pic_id=0'>".$img."</a>&#160;";
 				
@@ -130,8 +131,7 @@ if(!isset($bewertung))
 					echo "<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")' title='Hier klicken, um alle Bilder der Kategorie $kategorie anzuzeigen'>".$kategorie."</span></TD>";
 					$sel_one = $book;
 					echo "
-					<TD>
-					<span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
+					<TD><span style='cursor:pointer;' onClick='showKatInfo(\"$kat_id\")'>".$sel_one."</SPAN></TD>
 					<TD></TD>
 					<TD></TD>
 					</TR>";
@@ -140,15 +140,11 @@ if(!isset($bewertung))
 				{
 					echo "<span style='cursor:pointer;' onClick=\"showKatInfo('$kat_id')\" title='Informationen zur Kategorie $kategorie' alt='Info' />".$kategorie."</span></TD>";
 					echo "
-					<TD>
-					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
-					<TD>
-					<SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN></TD>
+					<TD><SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",0,0,0,\"$treestatus\")'>".$sel_one."</SPAN></TD>
+					<TD><SPAN style='cursor:pointer;' onClick='getPreview(\"$KAT_ID\",\"$kat_id\",\"$mod\",0,\"$modus\",\"$base_file\",\"$bewertung\",1,0,0,\"$treestatus\")'>".$sel_all."</SPAN></TD>
 					<TD></TD>
 					</TR>";
 				}
-				
-					
 				getElements($kat_id, $knoten_arr, $KAT_ID, $ID, $mod, $modus, $base_file, $bewertung);
 			}
 			ELSE
@@ -161,14 +157,14 @@ if(!isset($bewertung))
 				{
 					$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='Unterkategorien anzeigen'>";
 					echo 	"<TR id='kat'>
-					<TD id='kat1'>
+					<TD id='kat1'  style='background-color:RGB(125,0,10); color:white;'>
 					".$space."<a href='$ziel?kat_id=$kat_id&mod=$mod&pic_id=0'>".$img."</a>&#160;";
 				}
 				ELSE
 				{
 					$img = "<IMG src='$inst_path/pic2base/bin/share/images/platzhalter.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 					echo 	"<TR id='kat'>
-					<TD id='kat1'>
+					<TD id='kat1'  style='background-color:RGB(125,0,10); color:white;'>
 					".$space."".$img."&#160;";
 				}
 				
@@ -194,16 +190,15 @@ if(!isset($bewertung))
 					<TD style='font-size:12px;text-align:right;'>".getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)."</TD>
 					</TR>";
 				}
-				
 			}
 		}
 	}
-//Beginn des Baum-Aufbaus:	
-IF($KAT_ID=='' OR $KAT_ID == '0')
-{
-	$KAT_ID = '1';
-	//echo $KAT_ID.", ".$modus;
-}
+	//Beginn des Baum-Aufbaus:	
+	IF($KAT_ID=='' OR $KAT_ID == '0')
+	{
+		$KAT_ID = '1';
+		//echo $KAT_ID.", ".$modus;
+	}
 	$result10 = mysql_query("SELECT * FROM $table4 WHERE kat_id='$KAT_ID'");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)

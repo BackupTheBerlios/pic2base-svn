@@ -8,6 +8,7 @@ else
 {
 	$uid = $_COOKIE['uid'];
 }
+
 //soll verhindern, dass nachtraeglich installierte Software immer noch nicht gefunden wird: 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Datum aus Vergangenheit
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -18,7 +19,7 @@ header("Pragma: no-cache"); // HTTP/1.0
  * Project: pic2base
  * File: check_software0.php
  *
- * Copyright (c) 2006 - 2012 Klaus Henneberg
+ * Copyright (c) 2006 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -36,21 +37,28 @@ header("Pragma: no-cache"); // HTTP/1.0
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Software-Check</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+		jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>	
+	
 	<style type="text/css">
 	<!--
 	.tablenormal	{
 			width:450px;
-			margin-left:175px;
+			margin-left:0px;
 			}
 			
 	.trflach	{
 			height:3px;
-			background-color:#FF9900
+			background-color:darkred
 			}
 			
 	.tdleft	{
@@ -66,7 +74,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 	</style>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY>
 
 <CENTER>
 
@@ -77,34 +85,43 @@ header("Pragma: no-cache"); // HTTP/1.0
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/css/initial_layout_settings.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
 
 echo "
-	<div class='page'>
+	<div class='page' id='page'>
 	
-		<p id='kopf'>pic2base :: Software-Kontrolle <span class='klein'>(User: ".$username.")</span></p>
+		<div class='head' id='head'>
+			pic2base :: Software-Kontrolle <span class='klein'>(User: ".$username.")</span>
+		</div>
 		
-		<div class='navi' style='clear:right;'>
+		<div class='navi' id='navi'>
 			<div class='menucontainer'>";
 			include $sr.'/bin/html/admin/adminnavigation.php';
 			echo "
 			</div>
 		</div>
 		
-		<div class='content'>
-		<p style='margin-top:120px; margin-left:10px; text-align:center'>";
-		checkSoftware($sr);
-		echo "</p>
+		<div class='content' id='content'>
+			<p id='check_result' style='margin-top:120px; margin-left:10px; text-align:center'>
+				Die erforderlichen Software-Komponenten werden gesucht.<br/><br/>Bitte warten Sie einen Moment...
+			</p>
 		</div>
-		<br style='clear:both;' />
+		
+		<div class='foot' id='foot'>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
 	
-		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr." </p>
-	
-	</div>
+	</div>";
+
+?>
 </DIV>
 </CENTER>
 </BODY>
-</HTML>";
-?>
+</HTML>
+
+<script language="Javascript">
+document.getElementById("check_result").innerHTML=<?php checkSoftware($sr); ?>;
+</script>

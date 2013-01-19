@@ -452,7 +452,7 @@ function getTimeTreeview(pic_id, mod, s_m, bewertung)
 	var url = '../../share/time_treeview.php';
 	var params = 'pic_id=' + pic_id + '&mod=' + mod + '&show_mod=' + s_m + '&bewertung=' + bewertung;
 	//alert("Parameter: "+params);
-	var target = 'spalte1F';
+	var target = 'scrollbox0';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
@@ -462,7 +462,7 @@ function getTimeTreeview2(pic_id, mod, s_m)
 	var url = '../../share/time_treeview2.php';
 	var params = 'pic_id=' + pic_id + '&mod=' + mod + '&show_mod=' + s_m;
 	//alert("Parameter: "+params);
-	var target = 'spalte1F';
+	var target = 'scrollbox0';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 

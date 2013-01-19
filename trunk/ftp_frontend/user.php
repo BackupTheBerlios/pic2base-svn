@@ -31,94 +31,42 @@ switch($_GET['user'])
 </TABLE>
 <br><br>
 Der Username muss mindestens 4 und darf maximal 12 Zeichen lang sein.<br>
-Das Gleich gilt für das Passwort nur mit mindestens 6 Zeichen!<br>
-Der Pfad muss existieren und die benötigten Rechte haben!<br>
+Das Gleich gilt fuer das Passwort nur mit mindestens 6 Zeichen!<br>
+Der Pfad muss existieren und die benoetigten Rechte haben!<br>
 Aktiv/Inaktiv legt fest ob der User sich einloggen darf oder nicht.
 <br><br>
 </FORM>
 	<?PHP
 	break;
 
-// ---------------------------------------------------------
-	/*
-	case user2add:
-
-	include('function.php');
-	
-	if(!empty($_POST['username'])) {
-	if(chuser($_POST['username']) == "0")	{
-	echo "<span id=\"text\">Der Username ist zukurz!</span>";
-	}
-	else{
-	echo "<span id=\"text\">Username: OK<BR></span>";
-	if(!empty($_POST['passwort1']) AND !empty($_POST['passwort2'])) {
-	if(chpass($_POST['passwort1'], $_POST['passwort2']) == "0" or chpass($_POST['passwort1'], $_POST['passwort2']) == "2") {
-	echo "<span id=\"text\">Kein g&uuml;ltiges Passwort!<BR></span>";
-	}
-	else{
-	echo "<span id=\"text\">Passwort: OK<BR></span>";
-	if(!empty($_POST['pfad'])) {
-	if(is_dir($_POST['pfad']) == "0") {
-	echo "<span id=\"text\">Das ist kein Verzeichnis oder der Pfad ist nicht g&uuml;ltig</span>";
-	}
-	else{
-	echo "<span id=\"text\">Pfad: OK<BR></span>";
-	include('config.inc.php');
-	mysql_connect($sql_server, $sql_user, $sql_pw) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error()); 
-	mysql_select_db($sql_db) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
-	 if(exist_user($_POST['username']) == "0"){
-	adduser($_POST['username'],$_POST['passwort1'], $_POST['pfad'], $_POST['aktive']);
-	echo "<span id=\"text\">F&uuml;ge User hinzu! <BR><BR> <a href=\"?\">Weiter...</A></span>";
-	mysql_close();
-	}
-	else{
-	echo "<span id=\"text\">Der Username existiert bereits! Abbruch....</span>";
-	}
-	}
-	}
-	else{
-	echo "<span id=\"text\">Bitte gebe einen Pfad an!</span>";
-	}	
-	}
-	}
-	else{
-	echo "<span id=\"text\">Bitte gebe dein Passwort in beiden Feldern ein! </span>";
-	}
-	}
-	}
-	else{
-	echo "<span id=\"text\">Bitte gebe einen Usernamen ein!</span>";
-	}
-
-	break;
-	*/
-// ----------------------------------------------------------	
-
 	case showuser:
-	include('config.inc.php');
-	include('function.php');
-	mysql_connect($sql_server, $sql_user, $sql_pw) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error()); 
-	mysql_select_db($sql_db) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
-	$user = get_user();
-	echo "<TABLE width=\"300\" align=\"center\" border=\"0\"><TR><TD valign=\"top\">
-	<span id=\"text\">W&auml;hle den User aus:<br><br>\n";
-	if(isset($_GET['del_user']))	
-	{	
-	foreach ($user as $value) {
-	echo "<a href=\"?action=user&amp;user=deluser&amp;user_to_del=$value\">$value</A>\n ";
-	}
-	echo "<br><br><br><B>Es folgt keine weitere Sicherheitsabfrage ob der User wirklich gel&ouml;scht werden soll!</B><br><br>
-	Das l&ouml;schen eines User bewirkt auch das der von ihm verursachte Traffic nicht mehr mit angezeigt wird.<br><br>
-	</span>";
-	}
-	else{
-	foreach ($user as $value) {
-	echo "<a href=\"?action=user&amp;user=detailuser&amp;detailuser=$value\">$value</A> \n";
-	}
-	}
-	
-	echo "</TD></TR></TABLE>\n";
-	mysql_close();
+		include('config.inc.php');
+		include('function.php');
+		mysql_connect($sql_server, $sql_user, $sql_pw) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error()); 
+		mysql_select_db($sql_db) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());
+		$user = get_user();
+		echo "<TABLE width=\"300\" align=\"center\" border=\"0\"><TR><TD valign=\"top\">
+		<span id=\"text\">W&auml;hle den User aus:<br><br>\n";
+		if(isset($_GET['del_user']))	
+		{	
+			foreach ($user as $value) 
+			{
+				echo "<a href=\"?action=user&amp;user=deluser&amp;user_to_del=$value\">$value</A>\n ";
+			}
+			echo "<br><br><br><B>Es folgt keine weitere Sicherheitsabfrage ob der User wirklich gel&ouml;scht werden soll!</B><br><br>
+			Das l&ouml;schen eines User bewirkt auch das der von ihm verursachte Traffic nicht mehr mit angezeigt wird.<br><br>
+			</span>";
+		}
+		else
+		{
+			foreach ($user as $value) 
+			{
+				echo "<a href=\"?action=user&amp;user=detailuser&amp;detailuser=$value\">$value</A> \n";
+			}
+		}
+		
+		echo "</TD></TR></TABLE>\n";
+		mysql_close();
 	break;
 	
 // ----------------------------------------------------------
@@ -133,13 +81,15 @@ Aktiv/Inaktiv legt fest ob der User sich einloggen darf oder nicht.
 	$info[5] = number_format(round($info[5],2) /1024 / 1024,2,".",","); 
 	$newstatus = "";
 	$text = "";
-	if($info[2] == "1") {
-	$newstatus = "0";
-	$text = "Account Sperren";
+	if($info[2] == "1") 
+	{
+		$newstatus = "0";
+		$text = "Account Sperren";
 	}
-	else{
-	$newstatus = "1";
-	$text = "Account Freischalten";
+	else
+	{
+		$newstatus = "1";
+		$text = "Account Freischalten";
 	}
 	?>
 	<TABLE id="text">
@@ -190,22 +140,6 @@ Aktiv/Inaktiv legt fest ob der User sich einloggen darf oder nicht.
 	echo "<span id=\"text\">Status wurde ge&auml;ndert!<BR><BR><a href=\"?\">Weiter... </A></span>";
 	mysql_close();
 	break;
-
-
-// ----------------------------------------------------------	
-	/*
-	case deluser:
-	include('config.inc.php');
-	include('function.php');
-	mysql_connect($sql_server, $sql_user, $sql_pw) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error()); 
-	mysql_select_db($sql_db) or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());	
-	mysql_query("DELETE FROM ftp_users WHERE username = '".$_GET['user_to_del']."'")  or die ("DB-Fehler-Nummer" .mysql_errno(). "|| Meldung: ". mysql_error());	
-	?>
-	<DIV id="text">User wurde gel&ouml;scht!<BR><A HREF="?">Weiter....</A></DIV>
-	<?PHP
-	mysql_close();
-	break;
-	*/
 
 }
 

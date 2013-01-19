@@ -69,13 +69,10 @@ $KAT_ID = $kat_id;
 			$knoten_arr[] = '';
 			FOREACH($kat_id_arr AS $KATID)
 			{
-				//echo $KATID.", ";
 				FOREACH($parent_arr AS $PID)
 				{
-					//echo $PID.", ";
 					IF ($KATID == $PID AND !in_array($PID,$knoten_arr))
 					{
-						//echo $PID.", ";
 						$knoten_arr[] = $PID;
 					}
 				}
@@ -83,7 +80,10 @@ $KAT_ID = $kat_id;
 			$knoten_arr[] = array_reverse($knoten_arr);
 		break;
 	}
-	echo "<TABLE id='kat'>";
+	
+	echo "
+	<center>
+	<TABLE id='kat_b'>";
 	
 	function getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color)
 	{
@@ -136,26 +136,30 @@ $KAT_ID = $kat_id;
 				
 				//echo $kat_id_back;
 				$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-				echo 	"<TR id='kat' style='background-color:$bg_color;'>
-					<TD id='kat1'>
+				echo "<TR style='background-color:$bg_color;'>
+					<TD id='kat1_b'>
 					".$space.$img."&#160;".$kategorie."
 					</TD>
-					<TD>
+					
+					<TD id='kat2_b'>
 					<INPUT type='checkbox' name='kat$kat_id'>
 					</TD>
+					
 					</TR>";
 				getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color);
 			}
 			ELSE
 			{
 				$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-				echo 	"<TR id='kat' style='background-color:$bg_color;'>
-					<TD id='kat1'>
+				echo "<TR style='background-color:$bg_color;'>
+					<TD id='kat1_b'>
 					".$space.$img."&#160;".$kategorie."
 					</TD>
-					<TD>
+					
+					<TD id='kat2_b'>
 					<INPUT type='checkbox' name='kat$kat_id'>
 					</TD>
+					
 					</TR>";
 			}
 		}
@@ -206,30 +210,31 @@ $KAT_ID = $kat_id;
 			//echo "Space: ".$space."<BR>";
 			//echo $kat_id_back;
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-			echo 	"<TR id='kat' style='background-color:$bg_color;'>
-				<TD id='kat1'>
-				".$space.$img."&#160;".$kategorie."
-				</TD>
-				<TD>
-				
-				</TD>
-				</TR>";
+			echo 	"<TR style='background-color:$bg_color;'>
+					<TD id='kat1_b'>
+					".$space.$img."&#160;".$kategorie."
+					</TD>
+					
+					<TD id='kat2_b'>
+					</TD>
+					</TR>";
 			getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color);
 		}
 		ELSE
 		{
 			//echo "Space: ".$space."|<BR>";
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-			echo 	"<TR id='kat' style='background-color:$bg_color;'>
-				<TD id='kat1'>
-				".$space.$img."&#160;".$kategorie."
-				<BR>
-				</TD>
-				<TD>
-				<INPUT type='checkbox' name='kat$kat_id'>
-				</TD>
-				</TR>";
+			echo 	"<TR style='background-color:$bg_color;'>
+					<TD id='kat1_b'>
+					".$space.$img."&#160;".$kategorie."
+					</TD>
+					
+					<TD id='kat2_b'>
+					<INPUT type='checkbox' name='kat$kat_id'>
+					</TD>
+					</TR>";
 		}
 	}
-	echo "</TABLE>";
+	echo "</TABLE>
+	</center>";
 ?>

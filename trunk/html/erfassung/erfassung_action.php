@@ -16,15 +16,20 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Datenerfassung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict()
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
-
-<DIV>
+<BODY>
 
 <DIV Class="klein">
 
@@ -42,8 +47,6 @@ else
  *
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
 */
 //################################################################################################################################
 /*
@@ -105,26 +108,26 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 				break;
 		} 		
 		echo "
-		<div class='page'>
-		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span></p>
-			<div class='navi' style='clear:right;'>
+		<div class='page' id='page'>
+			<div class='head' id='head'>
+				pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span>
+			</div>
+		
+			<div class='navi' id='navi'>
 				<div class='menucontainer'>
-				<!--<a class='navi' href='erfassung1.php'>Erfassung</a>
-				<a class='navi' href='recherche1.php'>Recherche</a>
-				<a class='navi' href='vorschau.php'>Bearbeitung</a>
-				<a class='navi' href='hilfe1.php'>Hilfe</a>
-				<a class='navi' href='index.php'>Logout</a>-->
 				</div>
 			</div>
 		
-			<div class='content'>
-			<p style='margin:80px 0px; text-align:center; color:red;'>".$fehler."<p style='text-align:center; color:black;'>
-			Bitte w&auml;hlen Sie eine andere Bilddatei aus!<BR><BR>
-			<INPUT TYPE='button' value='Zur&uuml;ck' onclick=\"location.href='javascript:history.back()'\"></P>
-			</p>
+			<div class='content' id='content'>
+				<p style='margin:80px 0px; text-align:center; color:red;'>".$fehler."<p style='text-align:center; color:black;'>
+				Bitte w&auml;hlen Sie eine andere Bilddatei aus!<BR><BR>
+				<INPUT TYPE='button' value='Zur&uuml;ck' onclick=\"location.href='javascript:history.back()'\"></P>
+				</p>
 			</div>
-			<br style='clear:both;' />
-			<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+			
+			<div class='foot' id='foot'>
+				<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+			</div>
 		</div>";
 	}
 	else
@@ -135,27 +138,24 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 		clearstatcache();
 	
 		echo "
-		<div class='page'>
-			<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span></p>
+		<div class='page' id='page'>
+			<div class='head' id='head'>
+				pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span>
+			</div>
 		
-			<div class='navi' style='clear:right;'>
+			<div class='navi' id='navi'>
 				<div class='menucontainer'>
-				<!--<a class='navi' href='erfassung1.php'>Erfassung</a>
-				<a class='navi' href='recherche1.php'>Recherche</a>
-				<a class='navi' href='vorschau.php'>Bearbeitung</a>
-				<a class='navi' href='hilfe1.php'>Hilfe</a>
-				<a class='navi' href='index.php'>Logout</a>-->
 				</div>
 			</div>
 		
-			<div class='content'>
-			<p style='margin:70px 0px; text-align:center'>".isset($meldung)."<BR></p>
-			<p style='margin:70px 0px; text-align:center; color:green;'>".$datei_name.isset($hinweis)." wurde erfolgreich hochgeladen.<BR></p>";
-		
-			echo "
+			<div class='content' id='content'>
+				<p style='margin:70px 0px; text-align:center'>".isset($meldung)."<BR></p>
+				<p style='margin:70px 0px; text-align:center; color:green;'>".$datei_name.isset($hinweis)." wurde erfolgreich hochgeladen.<BR></p>
 			</div>
-			<br style='clear:both;' />
-			<p id='fuss'>".$cr."</p>
+			
+			<div class='foot' id='foot'>
+				<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+			</div>
 		</div>
 		<meta http-equiv='Refresh' Content='1; URL=stapel2.php?ordner=$ftp_path/$uid/uploads'>";
 	}
@@ -163,31 +163,30 @@ IF ($datei_name != "" && $datei_name !='.' && $datei_name != '..')
 ELSE
 {
 	echo "
-	<div class='page'>
-		<p id='kopf'>pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span></p>
+	<div class='page' id='page'>
+		<div class='head' id='head'>
+			pic2base :: Hinweis  <span class='klein'>(User: ".$username.")</span>
+		</div>
 		
-		<div class='navi' style='clear:right;'>
+		<div class='navi' id='navi'>
 			<div class='menucontainer'>
-			<!--<a class='navi' href='erfassung1.php'>Erfassung</a>
-			<a class='navi' href='recherche1.php'>Recherche</a>
-			<a class='navi' href='vorschau.php'>Bearbeitung</a>
-			<a class='navi' href='hilfe1.php'>Hilfe</a>
-			<a class='navi' href='index.php'>Logout</a>-->
 			</div>
 		</div>
 		
-		<div class='content'>
-		<p style='margin:80px 0px; text-align:center'>
-		Bitte w&auml;hlen Sie eine Bilddatei aus!<BR><BR>
-		<INPUT TYPE='button' value='Zur&uuml;ck' onclick=\"location.href='javascript:history.back()'\"></P>
-		</p>
+		<div class='content' id='content'>
+			<p style='margin:80px 0px; text-align:center'>
+			Bitte w&auml;hlen Sie eine Bilddatei aus!<BR><BR>
+			<INPUT TYPE='button' value='Zur&uuml;ck' onclick=\"location.href='javascript:history.back()'\"></P>
+			</p>
 		</div>
-		<br style='clear:both;' />
-		<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+		
+		<div class='foot' id='foot'>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
 	</div>";
 }
 mysql_close($conn);
 ?>
-</DIV></CENTER>
+</DIV>
 </BODY>
 </HTML>

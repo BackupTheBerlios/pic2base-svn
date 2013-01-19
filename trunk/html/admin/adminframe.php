@@ -13,14 +13,21 @@ $Uid = $_COOKIE['uid'];
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Administration</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="Eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+		jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY>
 
 <CENTER>
 
@@ -39,27 +46,31 @@ $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s').": Adminbereich wurde von ".$username." aufgerufen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 fclose($fh);
 
-echo "<div class='page'>
+echo "<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Admin-Bereich</p>
+	<div class='head' id='head'>
+		pic2base :: Admin-Bereich
+		</div>
 
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		  include 'adminnavigation.php';
 		echo "</div>
 	</div>
 
-	<div class='content'>
+	<div class='content' id='content'>
 		<p style='margin:30px 0px; text-align:center'>";
 			include 'admincontent.php';
 	echo "</p>
 	</div>
 	
-	<br style='clear:both;' />
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	<div class='foot' id='foot'>
+	<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+	
 </div>
-</DIV>";
-?>
+</DIV>
 </CENTER>
 </BODY>
-</HTML>
+</HTML>";
+?>

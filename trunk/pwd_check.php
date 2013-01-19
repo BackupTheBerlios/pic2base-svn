@@ -7,6 +7,7 @@ else
 {
 	include 'share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	
 	$success = "<CENTER>
 	<p class='mittel'>Zugangspr&uuml;fung l&auml;uft...</p>
 	<img src='share/images/loading.gif' width='20' height='20' />
@@ -55,11 +56,18 @@ else
 
 <head>
   <title>pic2base - Zugangskontrolle</title>
-  <meta name="GENERATOR" content="Quanta Plus">
+  <meta name="GENERATOR" content="Eclipse">
   <meta name="AUTHOR" content="k. henneberg">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel=stylesheet type='text/css' href='css/format1.css'>
+  <link rel=stylesheet type='text/css' href='css/format2.css'>
   <link rel="shortcut icon" href="share/images/favicon.ico">
+  <script language="JavaScript" src="share/functions/resize_elements.js"></script>
+  <script language="JavaScript" src="share/functions/jquery-1.8.2.min.js"></script>
+  <script language="JavaScript">
+  	jQuery.noConflict()
+	jQuery(document).ready(checkWindowSize);
+	jQuery(window).resize(checkWindowSize); 
+  </script>
 </head>
 
 <body>
@@ -70,7 +78,7 @@ else
  * Project: pic2base
  * File: pwd_check.php
  *
- * Copyright (c) 2005 - 2012 Klaus Henneberg
+ * Copyright (c) 2005 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -81,26 +89,30 @@ else
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
+include $sr.'/bin/css/initial_layout_settings.php';
+
 echo "<DIV Class='klein'>
-		<div class='page'>
+		<div class='page' id='page'>
 	
-			<p id='kopf'>pic2base :: Zugangskontrolle</p>
+			<div class='head' id='head'>
+			pic2base :: Zugangskontrolle
+			</div>
 			
-			<div class='navi' style='clear:right;'>
+			<div class='navi' id='navi'>
 				<div class='menucontainer'>
 				</div>
 			</div>
 			
-			<div class='content'>
+			<div class='content' id='content'>
 				<p style='margin:80px 0px; text-align:center'>".$meldung."</p>
 			</div>
-			<br style='clear:both;'' />
 		
-			<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+			<div class='foot' id='foot'>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+			</div>
 	
-	</div>
-</DIV>";
+		</div>
+	</DIV>";
 ?>
-
 </body>
 </html>

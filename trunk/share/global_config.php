@@ -8,6 +8,8 @@ $inst_path = "";											//Pfad zwischen DocumentRoot und pic2base
 $p2b_path = $doc_root.$inst_path."/";						//Pfad zur p2b-Wurzel
 $sr = $_SERVER['DOCUMENT_ROOT'].$inst_path."/pic2base";		//Software-root
 $fs_hoehe = '76';											//Hoehe der Bilder im Filmstreifen in px
+$step = 6;													//Anzahl der Bilder im Filmstreifen (Standard: 6)
+$slider_width = 500;										//Breite des Slider-Bereichs (Standard: 500)
 //############################################################################################################
 // [Benutzerspezifische Pfade]
 if(!isset($uid))

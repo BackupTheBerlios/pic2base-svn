@@ -623,7 +623,7 @@ SWITCH ($modus)
 //##################################################################################################################
 	
 	CASE 'recherche':
-		$step = 6;	//Anzahl der im Filmstreifen dargestellten Bilder (Schrittweite)
+//		$step = 6;	//Anzahl der im Filmstreifen dargestellten Bilder (Schrittweite)
 		IF($bewertung !== '6')
 		{
 			//Bewertungskriterium wird in Vergleichsoperator und Wert zerlegt:
@@ -1152,11 +1152,11 @@ SWITCH ($modus)
 
 		CASE 'desc':
 		//Bereinigung der Text-Eingabe-Felder:
-		$desc1 = strip_tags($desc1);
-		$desc2 = strip_tags($desc2);
-		$desc3 = strip_tags($desc3);
-		$desc4 = strip_tags($desc4);
-		$desc5 = strip_tags($desc5);
+		$desc1 = trim(strip_tags($desc1));
+		$desc2 = trim(strip_tags($desc2));
+		$desc3 = trim(strip_tags($desc3));
+		$desc4 = trim(strip_tags($desc4));
+		$desc5 = trim(strip_tags($desc5));
 		
 		//Montage des SQL-Statements:
 		$statement = 'SELECT * FROM '.$table2.' WHERE aktiv = "1" AND (Caption_Abstract LIKE ';
@@ -2297,10 +2297,12 @@ SWITCH ($modus)
 		{
 			echo "<TR><TD colspan = '6' align=center>";
 			//Anzahl der Steps ist Anzahl der Bilder / 6:
-			$steps = $num6_1/6;
+//			$steps = $num6_1/6;
+			$steps = $num6_1/$step;
 			//es werden $steps Elemente zur Slider-bar zusammengefuegt, deren Gesamtbreite rund 500 Pixel betraegt:
 			//Breite eines Slider-Elements:
-			$sl_width = 600 / $steps;
+//			$sl_width = 600 / $steps;
+			$sl_width = $slider_width / $steps;
 			FOR($s='0'; $s<$steps; $s++)
 			{
 				$ziel = $s*6 + 1;

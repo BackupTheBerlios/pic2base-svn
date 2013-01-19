@@ -79,7 +79,12 @@ ELSE
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
 fwrite($fh,date('d.m.Y H:i:s').": Beschreibung von Bild ".$pic_id." wurde von ".$username." modifiziert. (Zugriff von ".$_SERVER['REMOTE_ADDR']."\nalt: ".$description_old.", neu: ".$description."\n");
 fclose($fh);
+echo "
+<fieldset style='color:red; background-color:lightyellow; margin-top:10px;'>
+<legend 'style='color:red; font-weight:normal;'>Die &Auml;nderungen wurden &uuml;bernommen.</legend>
+	
+			<textarea name='description' wordwrap style='width:".$_COOKIE['desc_textarea_width']."px; height:".$_COOKIE['desc_textarea_height']."px; background-color:#eFEFFf; font-size:9pt; font-family:Helvitica,Arial;'>".$description."</textarea>
+		
+</fieldset>";
 
-echo "<FONT COLOR='red'>OK!</FONT>";
-echo "<textarea name='description' wordwrap style='width:380px; height:90px; background-color:#DFEFFf; font-size:9pt; font-family:Helvitica,Arial;'>".$description."</textarea>";
 ?>

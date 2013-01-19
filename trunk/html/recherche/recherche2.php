@@ -39,14 +39,21 @@ ELSE
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Datensatz-Recherche</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<META http-equiv="Content-Style-Type" content="text/css">
 	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
 	<META http-equiv="cache-control" content="no-cache">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
 <!--
@@ -54,7 +61,7 @@ ELSE
  * Project: pic2base
  * File: recherche2.php
  *
- * Copyright (c) 2006 - 2011 Klaus Henneberg
+ * Copyright (c) 2006 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -67,10 +74,10 @@ ELSE
 
 <script language="javascript" type="text/javascript" src="../../share/calendar.js"></script>
 <script language="javascript" type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
-<script language="javascript" type="text/javascript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+<!-- <script language="javascript" type="text/javascript" src="../../share/functions/jquery-1.8.2.min.js"></script> -->
 
 <script language="JavaScript">
-jQuery.noConflict();
+//jQuery.noConflict();
 <!--
 
 function showAllDetails(mod, pic_id)
@@ -149,105 +156,139 @@ function showDiary(aufn_dat)
 	Fenster1.focus();
 }
 
+
+function checkValues () 
+{
+  
+	if((document.geo_rech1.radius1.value > 50) && (document.geo_rech1.einheit1.value == 1000))
+	{
+		alert("Der Umfang darf max. 50 km betragen\nBitte korrigieren Sie die Eingabe.");
+		document.getElementById('radius1').value = "";
+	}
+	else
+	if((document.geo_rech2.radius2.value > 50) && (document.geo_rech2.einheit2.value == 1000))
+	{
+		alert("Der Umfang darf max. 50 km betragen\nBitte korrigieren Sie die Eingabe.");
+		document.getElementById('radius2').value = "";
+	}
+	return true;
+}
+
+
 -->
 </script>
 
-<BODY LANG="de-DE" scroll = "auto" onload="javascript:CloseWindow()">
+<BODY onload="javascript:var anotherWindow; if(anotherWindow != null){CloseWindow()}">
 
 <CENTER>
 
 <DIV Class="klein">
 
-<?php 
-
-IF (array_key_exists('bewertung', $_COOKIE))
-{
-	list($bewertung) = preg_split('#,#',$_COOKIE['bewertung']);
-}
-ELSE
-{
-	$bewertung = '';
-}
-//echo "Kontrolle: Bewertung: ".$bewertung."<BR>";
-IF($bewertung == '')
-{
-	$bewertung = '6';
-}
-
-include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/main_functions.php';
-
-$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = mysql_result($result0, isset($i0), 'username');
-
-if ( array_key_exists('pic_id',$_GET) )
-{
-	$pic_id = $_GET['pic_id'];
-}
-if ( array_key_exists('kat_id',$_GET) )
-{
-	$kat_id = $_GET['kat_id'];
-}
-if ( array_key_exists('mod',$_GET) )
-{
-	$mod = $_GET['mod'];
-}
-if ( array_key_exists('s_m',$_GET) )
-{
-	$s_m = $_GET['s_m'];
-}
-
-$stat = createStatement($bewertung);
-//echo $stat;
-//Ermittlung der Usersprache:
-$result1 = mysql_query("SELECT language FROM $table1 WHERE id = '$uid'");
-$language = mysql_result($result1, isset($i1), 'language');
-
-$base_file = 'recherche2';
-
-echo "
-<div class='page'>
-	<p id='kopf'>pic2base :: Datensatz-Recherche <span class='klein'>(User: $username; eingestellte Bewertung: ".showBewertung($bewertung).")</span></p>
+	<?php 
 	
-	<div class='navi' style='clear:right;'>
+	IF (array_key_exists('bewertung', $_COOKIE))
+	{
+		list($bewertung) = preg_split('#,#',$_COOKIE['bewertung']);
+	}
+	ELSE
+	{
+		$bewertung = '';
+	}
+	//echo "Kontrolle: Bewertung: ".$bewertung."<BR>";
+	IF($bewertung == '')
+	{
+		$bewertung = '6';
+	}
+	
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	include $sr.'/bin/share/functions/main_functions.php';
+//	include $sr.'/bin/css/initial_layout_settings.php';
+	
+	$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+	$username = mysql_result($result0, isset($i0), 'username');
+	
+	if ( array_key_exists('pic_id',$_GET) )
+	{
+		$pic_id = $_GET['pic_id'];
+	}
+	if ( array_key_exists('kat_id',$_GET) )
+	{
+		$kat_id = $_GET['kat_id'];
+	}
+	if ( array_key_exists('mod',$_GET) )
+	{
+		$mod = $_GET['mod'];
+	}
+	if ( array_key_exists('s_m',$_GET) )
+	{
+		$s_m = $_GET['s_m'];
+	}
+	
+	$stat = createStatement($bewertung);
+	//echo $stat;
+	//Ermittlung der Usersprache:
+	$result1 = mysql_query("SELECT language FROM $table1 WHERE id = '$uid'");
+	$language = mysql_result($result1, isset($i1), 'language');
+	
+	$base_file = 'recherche2';
+
+	echo "
+	<div class='page' id='page'>
+	
+	<div class='head' id='head'>
+			pic2base :: Datensatz-Recherche <span class='klein'>(User: $username; eingestellte Bewertung: ".showBewertung($bewertung).")</span>
+		</div>
+		
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 			createNavi2_1($uid);
 		echo "</div>
 	</div>";
-//################################################################################################################
-SWITCH ($mod)
+	//################################################################################################################
+	SWITCH ($mod)
 	{
 		CASE 'zeit':
-		echo "
-		<div id='spalte1F'>";
-		$ziel = "../../html/recherche/recherche2.php";
-		$base_file = 'recherche2';
-		$mod='zeit';
-		$modus='recherche';
-		include '../../share/time_treeview.php';
-		echo "
-		</div>";
+		echo "<div id='spalte1F'>
+				<center>
+					<fieldset  style='background-color:none; margin-top:10px;'>
+					<legend style='color:blue; font-weight:bold;'>Bildsuche nach Aufnahmedatum</legend>
+						<div id='scrollbox0' style='overflow-y:scroll;'>";
+						$ziel = "../../html/recherche/recherche2.php";
+						$base_file = 'recherche2';
+						$mod='zeit';
+						$modus='recherche';
+						include '../../share/time_treeview.php';
+						echo "</div>
+					</fieldset>
+				</center>
+			</div>";
 		break;
 	//#####################################################################################################################	
 		CASE 'kat':
-		echo "
-		<div id='spalte1F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach Kategorien<BR>";
-		$ziel = "../../html/recherche/recherche2.php";
-		$base_file = 'recherche2';
-		$mod='kat';
-		$modus='recherche';
-		include '../../share/kat_treeview.php';
-		echo "
-		</div>";
+		echo "<div id='spalte1F'>
+				<center>
+				<fieldset  style='background-color:none; margin-top:10px;'>
+				<legend style='color:blue; font-weight:bold;'>Bildsuche nach Kategorien</legend>
+					<div id='scrollbox0' style='overflow-y:scroll;'>";
+					$ziel = "../../html/recherche/recherche2.php";
+					$base_file = 'recherche2';
+					$mod='kat';
+					$modus='recherche';
+					include '../../share/kat_treeview.php';
+					echo "</div>
+				</fieldset>
+				</center>
+			</div>";
 		break;
 	//#####################################################################################################################		
 		CASE 'desc':
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		echo "
 		<div id='spalte1F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach Beschreibungs-Text<BR>";
+		<fieldset id='kat_tree_fieldset' style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Bildsuche nach Beschreibungs-Text</legend>";
+			
 		$ziel = "../../html/recherche/recherche2.php";
 		$base_file = 'recherche2';
 		$modus='recherche';
@@ -256,7 +297,7 @@ SWITCH ($mod)
 		echo "<FORM name=\"descr1\" method=\"POST\">
 		<TABLE id='desc'>
 		<TR id='desc'>
-			<TD id='desc' colspan='2' style='background-color:#ff9900;'>Die Bildbeschreibung enth&auml;lt folgende Textfragmente:</TD>
+			<TD id='desc' colspan='2'  style='background-color:RGB(180,80,80); color:white;'>Die Bildbeschreibung enth&auml;lt folgende Textfragmente:</TD>
 		</TR>
 		
 		<TR id='desc'>
@@ -267,51 +308,51 @@ SWITCH ($mod)
 			<TD id='desc1'><INPUT type=\"text\" name=\"desc1\" class='Feld250'></TD>
 			<TD id='desc2'>
 			<SELECT name=\"bed1\">
-                    		<option value='0'></option>
-                   	 	<option value = '1'>und</option>
-                    		<option value = '2'>oder</option>
-                  	</SELECT>
-                  	</TD>
+                   <option value='0'></option>
+                   <option value = '1'>und</option>
+                   <option value = '2'>oder</option>
+            </SELECT>
+            </TD>
 		</TR>
 		
 		<TR id='desc'>
 			<TD id='desc1'><INPUT type=\"text\" name=\"desc2\" class='Feld250'></TD>
 			<TD id='desc2'>
 			<SELECT name=\"bed2\">
-                    		<option value='0'></option>
-                   	 	<option value = '1'>und</option>
-                    		<option value = '2'>oder</option>
+                    <option value='0'></option>
+                   	<option value = '1'>und</option>
+                    <option value = '2'>oder</option>
                   	</SELECT>
-                  	</TD>
+            </TD>
 		</TR>
 		
 		<TR id='desc'>
 			<TD id='desc1'><INPUT type=\"text\" name=\"desc3\" class='Feld250'></TD>
 			<TD id='desc2'>
 			<SELECT name=\"bed3\">
-                    		<option value='0'></option>
-                   	 	<option value = '1'>und</option>
-                    		<option value = '2'>oder</option>
-                  	</SELECT>
-                  	</TD>
+                    <option value='0'></option>
+                   	<option value = '1'>und</option>
+                    <option value = '2'>oder</option>
+            </SELECT>
+            </TD>
 		</TR>
 		
 		<TR id='desc'>
 			<TD id='desc1'><INPUT type=\"text\" name=\"desc4\" class='Feld250'></TD>
 			<TD id='desc2'>
 			<SELECT name=\"bed4\">
-                    		<option value='0'></option>
-                   	 	<option value = '1'>und</option>
-                    		<option value = '2'>oder</option>
-                  	</SELECT>
-                  	</TD>
+                    <option value='0'></option>
+                   	<option value = '1'>und</option>
+                    <option value = '2'>oder</option>
+            </SELECT>
+            </TD>
 		</TR>
 		
 		<TR id='desc'>
 			<TD id='desc1'><INPUT type=\"text\" name=\"desc5\" class='Feld250'></TD>
 			<TD id='desc2'>
 			&nbsp;
-                  	</TD>
+            </TD>
 		</TR>
 		
 		<TR id='desc'>
@@ -319,12 +360,23 @@ SWITCH ($mod)
 		</TR>
 		
 		<TR id='desc'>
-			<TD id='desc' colspan='2' style='text-align:center;'>
+			<TD id='desc' colspan='2' style='text-align:center; border-style:none;'>
 			<INPUT type=\"button\" value=\"Suchen\" class='button1' onClick='getDescPreview1(descr1.desc1.value, descr1.bed1.value, descr1.desc2.value, descr1.bed2.value, descr1.desc3.value,  descr1.bed3.value, descr1.desc4.value, descr1.bed4.value, descr1.desc5.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",0,0)'>
 			</TD>
 		</TR>
+		
+		<TR id='desc'>
+			<TD id='desc' colspan='2' style='border-style:none;'>&nbsp;</TD>
+		</TR>
+		
+		<TR class='normal' style='height:3px;'>
+			<TD class='normal'  style='background-color:RGB(180,80,80);' colspan='2'>
+			</TD>
+		</TR>
+			
 		 </FORM>
-		 </TABLE>";
+		 </TABLE>
+		 </fieldset>";
 		
 		echo "
 		</div>";
@@ -334,16 +386,19 @@ SWITCH ($mod)
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		echo "
 		<div id='spalte1F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach geografischen Koordinaten<BR>";
+		<fieldset id='kat_tree_fieldset' style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Bildsuche nach geografischen Koordinaten</legend>";
 		$ziel = "../../html/recherche/recherche2.php";
 		$base_file = 'recherche2';
 		$mod='geo';
 		$modus='recherche';
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		echo "<FORM name=\"geo_rech1\" method=\"POST\">
+		echo "
+		<center>
+		<FORM name=\"geo_rech1\" method=\"POST\">
 		<TABLE id='geo'>
 		<TR id='geo'>
-			<TD id='geo' colspan='2' style='background-color:#ff9900;'>Suche nach geogr. Koordinaten und Umkreis</TD>
+			<TD id='geo' colspan='2' style='background-color:RGB(125,0,10); color:white;'>Suche nach geogr. Koordinaten und Umkreis</TD>
 		</TR>
 		
 		<TR id='geo'>
@@ -361,7 +416,7 @@ SWITCH ($mod)
 		</TR>
 		
 		<TR id='geo'>
-			<TD id='geo1'>Ort liegt h&ouml;her als (m .NN)</TD>";
+			<TD id='geo1'>Ort liegt h&ouml;her als (m &uuml;.NN)</TD>";
 			IF( !(isset($alt)) OR $alt == '')
 			{
 				$alt = '0';
@@ -372,8 +427,8 @@ SWITCH ($mod)
 		
 		<TR id='geo'>
 			<TD id='geo1'>Umkreis</TD>
-			<TD id='geo2'><INPUT type=\"text\" name=\"radius1\" maxlength=\"6\" size=\"4\" value = '1' style='height:16px; vertical-align:bottom;'>
-			<SELECT name=\"einheit1\" class='Auswahl' style='height:20px';>
+			<TD id='geo2'><INPUT type=\"text\" name=\"radius1\" id='radius1' maxlength=\"4\" size=\"4\" value = '1' style='height:12px; vertical-align:bottom;'  onkeyup='checkValues(this.value)';>
+			<SELECT name=\"einheit1\" id='einheit1' class='Auswahl' style='height:20px';>
 			<option value = '1'>m</option>
 			<option value = '1000' selected>km</option>
 			</SELECT>
@@ -385,24 +440,31 @@ SWITCH ($mod)
 		</TR>
 		
 		<TR id='geo'>
-			<TD id='geo' colspan='2' style='text-align:center;'>
+			<TD id='geo' colspan='2' style='text-align:center; border:none;'>
 			<INPUT type=\"button\" value=\"Nach Geo-Koordinaten suchen\" class='button4' onClick='getGeoPreview1(geo_rech1.long.value, geo_rech1.lat.value, geo_rech1.alt.value, geo_rech1.radius1.value, geo_rech1.einheit1.value,  \"$mod\", \"$modus\", \"$base_file\", \"geo_rech1\", \"$bewertung\",0,0)'>
 			</TD>
 		</TR>
+		
+		<TR id='geo'>
+			<TD id='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
+		</TR>
+		
+		<TR class='normal' style='height:3px;'>
+			<TD class='normal'  style='background-color:RGB(125,0,10);' colspan='2'>
+			</TD>
+		</TR>
+		
 		</TABLE>
 		 </FORM>";
 		 
 		 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		 
 		 echo "
-		 <TABLE id='geo'>
-		 <TR id='geo'>
-			<TD id='geo' colspan='2' style='border-style:none; height:30px;'>&nbsp;</TD>
-		</TR>
+		 <TABLE id='geo' style='margin-top:30px;'>
 		
 		<FORM name=\"geo_rech2\" method=\"POST\">
 		<TR id='geo'>
-			<TD id='geo' colspan='2' style='background-color:#ff9900;'>Suche nach Ortsbezeichnung und Umkreis</TD>
+			<TD id='geo' colspan='2' style='background-color:RGB(125,0,10); color:white;'>Suche nach Ortsbezeichnung und Umkreis</TD>
 		</TR>
 		
 		<TR id='geo'>
@@ -420,7 +482,6 @@ SWITCH ($mod)
 				{
 					$city = mysql_result($result9, $i9, 'City');
 					$result11 = mysql_query( "SELECT * FROM $table2 WHERE location='$city'");
-					//$loc_id = mysql_result($result11, $i11, 'loc_id');
 					echo "<option value=\"$city\">".$city."</option>";
 				}
                 echo "</SELECT>
@@ -429,8 +490,8 @@ SWITCH ($mod)
 		
 		<TR id='geo'>
 			<TD id='geo1'>Umkreis</TD>
-			<TD id='geo2'><INPUT type=\"text\" name=\"radius2\" maxlength=\"4\" size=\"4\" value=\"1\"style='height:16px; vertical-align:bottom;'>
-			<SELECT name=\"einheit2\" class='Auswahl' style='height:20px;'>
+			<TD id='geo2'><INPUT type=\"text\" name=\"radius2\" id='radius2' maxlength=\"4\" size=\"4\" value=\"1\"style='height:12px; vertical-align:bottom;' onkeyup='checkValues(this.value)';>
+			<SELECT name=\"einheit2\" id='einheit2' class='Auswahl' style='height:20px;'>
 			<option value = '1'>m</option>
 			<option value = '1000' selected>km</option>
             </SELECT>
@@ -442,11 +503,23 @@ SWITCH ($mod)
 		</TR>
 		
 		<TR id='geo'>
-			<TD id='geo' colspan='2' style='text-align:center;'>
+			<TD id='geo' colspan='2' style='text-align:center; border:none;'>
 			<INPUT type=\"button\" value=\"Nach Ortsbezeichnung suchen\" class='button4' onClick='getGeoPreview2(geo_rech2.ort.value, geo_rech2.radius2.value, geo_rech2.einheit2.value, \"$mod\", \"$modus\", \"$base_file\", \"geo_rech2\", \"$bewertung\",0,0)'></TD>
 		</TR>
+		
+		<TR id='geo'>
+			<TD id='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
+		</TR>
+		
+		<TR class='normal' style='height:3px;'>
+			<TD class='normal'  style='background-color:RGB(125,0,10);' colspan='2'>
+			</TD>
+		</TR>
+		
 		 </FORM>
-		</TABLE>";
+		</TABLE>
+		</center>
+		</fieldset>";
 	//~~~~~~~~~~~~~~~~~~~~~~~
 		echo "
 		</div>";
@@ -461,13 +534,16 @@ SWITCH ($mod)
 		$modus='recherche';
 		echo "
 		<div id='spalte1F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach Meta-Daten<BR>
+		
+		<fieldset id='kat_tree_fieldset' style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Bildsuche nach Meta-Daten</legend>
+		
 		<FORM name= \"exif_param\" method='POST'>
 
 		<TABLE id='geo' align='center' border = '0'>
 				
 			<TR class='normal' style='height:3px;'>
-				<TD class='normal' bgcolor='#FF9900' colspan='2'>
+				<TD class='normal' style='background-color:RGB(180,80,80);' colspan='2'>
 				</TD>
 			</TR>
 			
@@ -532,7 +608,7 @@ SWITCH ($mod)
 			</TR>
 			
 			<TR class='normal' style='height:3px;'>
-				<TD class='normal' bgcolor='#FF9900' colspan='2'>
+				<TD class='normal'  style='background-color:RGB(180,80,80);' colspan='2'>
 				</TD>
 			</TR>
 			
@@ -540,6 +616,7 @@ SWITCH ($mod)
 		</TABLE>
 		
 		</FORM>
+		</fieldset>
 		</div>";
 		break;
 	//#####################################################################################################################
@@ -658,25 +735,25 @@ SWITCH ($mod)
 //###############################################################################################################
 	echo "
 	<div id='spalte2F'>
-		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'>
-		<b>Hinweis zur Anzeige der Bilder:</b>
-		<BR><BR>Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, 
-		indem Sie auf das Datum (Jahr, Monat oder Tag) oder den Kategorienamen klicken.<BR>
-		Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
-		Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie in der rechten oberen 
-		Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf ein Bild in dem Filmstreifen, gelangen 
-		Sie in den \"Bl&auml;tter\"-Modus.<BR>
-		In diesem Modus haben Sie die M&ouml;glichkeit, sehr schnell alle gefundenen Bilder zu betrachten, sich das entsprechenden Bild in Originalqualit&auml;t
-		anzusehen, oder - die entsprechende Berechtigung vorausgesetzt - das gesuchte Bild herunterzuladen.<BR> 
-		Wenn Sie den \"Bl&auml;tter\"-Modus verlassen, gelangen Sie innerhalb der Filmstreifen-Ansicht an die Stelle,
-		an der sich das zuletzt betrachtete Bild befindet.<BR>Dieses wird dann auch in der Detailansicht dargestellt.
-		</p>
 		
-		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'>
-		<b>Hilfe zu den Suchm&ouml;glichkeiten:</b><BR><BR>
-		Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der 
+		<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Hinweis zur Anzeige der Bilder</legend>
+		
+			Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, 
+			indem Sie auf das Datum (Jahr, Monat oder Tag) oder den Kategorienamen klicken.<BR>
+			Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
+			Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie in der rechten oberen 
+			Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf ein Bild in dem Filmstreifen, gelangen 
+			Sie in den \"Bl&auml;tter\"-Modus.<BR>
+			In diesem Modus haben Sie die M&ouml;glichkeit, sehr schnell alle gefundenen Bilder zu betrachten, sich das entsprechenden Bild in Originalqualit&auml;t
+			anzusehen, oder - die entsprechende Berechtigung vorausgesetzt - das gesuchte Bild herunterzuladen.<BR> 
+			Wenn Sie den \"Bl&auml;tter\"-Modus verlassen, gelangen Sie innerhalb der Filmstreifen-Ansicht an die Stelle,
+			an der sich das zuletzt betrachtete Bild befindet.<BR>Dieses wird dann auch in der Detailansicht dargestellt.<br><br>
+			Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der 
 		Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
-	  	</p>
+		
+		</fieldset>
+		
 	  </div>";
 //###############################################################################################################	
 	echo "
@@ -710,13 +787,15 @@ SWITCH ($mod)
 	</div>";
 //###############################################################################################################	
 	echo "
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
-	
+	<div class='foot' id='foot'>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+
 </div>
 
 <div id='blend' style='display:none; z-index:99;'>
-<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:100%;' />
-<img src=\"../../share/images/loading.gif\" style='position:absolute; top:30%; left:50%; width:20px; z-index:101;' />
+	<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:100%;' />
+	<img src=\"../../share/images/loading.gif\" style='position:absolute; top:30%; left:50%; width:20px; z-index:101;' />
 </div>";
 
 mysql_close($conn);

@@ -14,13 +14,20 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - DB-Export</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict()
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY>
 
 <CENTER>
 
@@ -32,7 +39,7 @@ else
  * Project: pic2base
  * File: db_export_action.php
  *
- * Copyright (c) 2003 - 2012 Klaus Henneberg
+ * Copyright (c) 2003 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -65,11 +72,13 @@ $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"
 $username = mysql_result($result0, isset($i0), 'username');
 
 echo "
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Admin-Bereich - Datenbank-Export</p>
+	<div class='head' id='head'>
+		pic2base :: Admin-Bereich - Datenbank-Export
+	</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		 include '../../html/admin/adminnavigation.php';
 		echo "</div>
@@ -79,11 +88,7 @@ echo "
 	
 	<font color='green'>
 		<p style='margin-top:20px;'>
-		<b>pic2base - Export</b>
-		</p>
-	
-		<p style='margin-top:20px;'>
-		<!--<b>Die Datenbank wird exportiert...</b>-->
+		<b>Export - Ergebnis</b>
 		</p>
 	</font>";
 //	echo "User: ".$db_user.", PWD: ".$pwd.", Methode: ".$method."<BR><BR>";
@@ -94,7 +99,13 @@ echo "
 			system($statement, $fp);
 			if ($fp==0)
 			{
-				echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.sql'>hier</a>.</font>";
+				echo "
+				<fieldset style='background-color:none; margin-top:10px;'>
+				<legend style='color:green; font-weight:bold;'>Gratulation!</legend>
+					Der Export verlief erfolgreich.<BR>
+					<BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.sql'>hier</a>.
+				</fieldset>";
+				
 				//log-file schreiben:
 				$fh_log = fopen($p2b_path.'pic2base/log/p2b.log','a');
 				fwrite($fh_log,date('d.m.Y H:i:s').": Die pic2base-DB wurde von ".$username." als SQL exportiert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
@@ -102,7 +113,12 @@ echo "
 			}
 			else
 			{
-				echo "<BR><font color='red'>Es ist ein Fehler aufgetreten.<BR>Bitte kontrollieren Sie Ihre Zugangsdaten.<BR>Achten Sie besonders darauf, einen MySQL-Benutzer<BR>mit <b>Admin-Rechten</b> einzutragen.</font>"; 
+				echo "
+				<fieldset style='background-color:none; margin-top:10px;'>
+				<legend style='color:red; font-weight:bold;'>Fehler!</legend>
+					Es ist ein Fehler aufgetreten.<BR>Bitte kontrollieren Sie Ihre Zugangsdaten.<BR>
+				Achten Sie besonders darauf, einen MySQL-Benutzer<BR>mit <b>Admin-Rechten</b> einzutragen.
+				</fieldset>";
 			}
 		break;
 		
@@ -170,7 +186,11 @@ echo "
 			 $fh = fopen($kml_dir.'/pic2base.xml','r');
 			 if($fh)
 			 {
-			 	echo "<BR><font color='green'>Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.xml'>hier</a>.</font>";
+			 	echo "
+			 	<fieldset style='background-color:none; margin-top:10px;'>
+				<legend style='color:green; font-weight:bold;'>Gratulation!</legend>
+					Der Export verlief erfolgreich.<BR><BR>F&uuml;r den Download der Export-Datei<BR>(rechts-)klicken Sie bitte <a href='../../../userdata/$uid/kml_files/pic2base.xml'>hier</a>.</font>
+				</fieldset>"; 
 			 	//log-file schreiben:
 				$fh_log = fopen($p2b_path.'pic2base/log/p2b.log','a');
 				fwrite($fh_log,date('d.m.Y H:i:s').": Die pic2base-DB wurde von ".$username." als XML exportiert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
@@ -178,7 +198,11 @@ echo "
 			 }
 			 else
 			 {
-			 	echo "<BR><font color='red'>Es ist ein Fehler aufgetreten.<BR>Bitte kontaktieren Sie Ihren Systemadministrator.</font>"; 
+			 	echo "
+			 	<fieldset style='background-color:none; margin-top:10px;'>
+				<legend style='color:red; font-weight:bold;'>Fehler!</legend>
+					Es ist ein Fehler aufgetreten.<BR>Bitte kontaktieren Sie Ihren Systemadministrator.
+				</fieldset>"; 
 			 }
 			
 		break;
@@ -193,11 +217,21 @@ echo "
 	</div>	
 	
 	<DIV id='spalte2'>
-		<p id='elf' style='background-color:white; padding: 5px; width: 395px; margin-top: 54px; margin-left: 5px;'>Wenn der Export erfolgreich war, liegt die Datei nun in Ihrem FTP-Bereich im Ordner \"kml_files\".<BR><BR>
-		Alternativ k&ouml;nnen Sie die Datei auch &uuml;ber den Link in der linken Spalte herunterladen.</p>
+	
+		<font color='#efeff7'>
+			<p  style='margin-top:20px;'>.</p>
+		</font>
+		<fieldset style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Hinweis</legend>
+			Wenn der Export erfolgreich war, liegt die Datei nun in Ihrem FTP-Bereich im Ordner \"kml_files\".<BR><BR>
+		Alternativ k&ouml;nnen Sie die Datei auch &uuml;ber den Link in der linken Spalte herunterladen.
+		</fieldset>
+		
 	</DIV>
 	
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
 
 </div>
 </CENTER>

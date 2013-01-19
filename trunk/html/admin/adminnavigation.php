@@ -6,6 +6,7 @@ IF (!$_COOKIE['uid'])
   	header('Location: ../../../index.php');
 }
 $uid = $_COOKIE['uid'];
+$columns = $_COOKIE['columns'];
 
 if(array_key_exists('item',$_GET))
 {
@@ -94,8 +95,8 @@ IF($item !== 'admineditlocationnameaction')
 		<a class='navi' href='$inst_path/pic2base/bin/admin/admin/db_export1.php' title='Datenbank-Export als CSV-Datei'>DB-Export</a>
 		<a class='navi' href='$inst_path/pic2base/bin/admin/admin/del_pics1.php' title='Vorgemerkte Datens&auml;tze l&ouml;schen'>Bilder l&ouml;schen</a>
 		<a class='navi_blind'></a>
-		<a class='navi' href='$inst_path/pic2base/bin/admin/admin/protect_metadata0.php' title='Festlegung editierbarer Meta-Daten'>Meta-Protect</a>
-		<a class='navi' href='$inst_path/pic2base/bin/admin/admin/kompactview_metadata0.php' title='Welche Meta-Daten werden in der kompakten Detailansicht gezeigt?'>Meta-View</a>
+		<a class='navi' href='$inst_path/pic2base/bin/admin/admin/protect_metadata0.php?columns=$columns' title='Festlegung editierbarer Meta-Daten'>Meta-Protect</a>
+		<a class='navi' href='$inst_path/pic2base/bin/admin/admin/kompactview_metadata0.php?columns=$columns' title='Welche Meta-Daten werden in der kompakten Detailansicht gezeigt?'>Meta-View</a>
 		<a class='navi' href='$inst_path/pic2base/bin/admin/admin/check_software0.php' title='&uuml;berpr&uuml;ft, ob erforderliche Software installiert ist'>Software-Check</a>";
     }
     ELSE

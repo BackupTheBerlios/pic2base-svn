@@ -59,7 +59,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 		<table class='tablenormal' border='0'>
 		
 		<tr style='height:3px;'>
-		<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+		<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 		</TR>
 		
 		<tr>
@@ -67,7 +67,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 		</tr>
 		
 		<tr style='height:3px;'>
-		<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+		<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 		</TR>
 			
 		<tr>
@@ -103,7 +103,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
     </tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>";
     
 	$col_groups = 2;	//2 Spaltengruppen ; je Gruppe eine Spalte Parameter und eine Spalte Erlaubnis
@@ -113,7 +113,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 		
 	<tr>
@@ -166,7 +166,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 	
 	<tr style='height:30px;'>
@@ -181,7 +181,7 @@ IF($del == '1')
   	echo "
   	
 	<TR style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 	
 	<tr>
@@ -221,7 +221,7 @@ IF($del == '1')
 	</tr>
   	
   	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>";
 }
 ?>

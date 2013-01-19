@@ -18,7 +18,7 @@ IF (!$_COOKIE['uid'])
 	</tr>
 	
 	<TR style='height:3px;'>
-	<TD class='normal' align='center' bgcolor='#FF9900' colspan='6'></TD>
+	<TD class='normal' align='center' bgcolor='darkred' colspan='6'></TD>
 	</TR>
 	
 	<tr>
@@ -115,7 +115,7 @@ IF (!$_COOKIE['uid'])
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='6'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='6'></TD>
 	</TR>
 	</table>
 	</center>";

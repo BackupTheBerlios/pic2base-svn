@@ -16,16 +16,21 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Admin-Bereich</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
-
+<BODY LANG="de-DE">
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -35,18 +40,20 @@ include $sr.'/bin/share/db_connect1.php';
 
 echo "
 
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Admin-Bereich - Neuanlage einer Benutzergruppe</p>
-
-	<div class='navi' style='clear:right;'>
+	<div class='head' id='head'>
+		pic2base :: Admin-Bereich - Neuanlage einer Benutzergruppe
+	</div>
+	
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		  include 'adminnavigation.php';
 		echo "
 		</div>
 	</div>
 
-	<div class='content'>
+	<div class='content' id='content'>
 		<p style='margin:70px 0px; text-align:center'>";
 				
 		$groupname = $_POST['groupname'];
@@ -73,9 +80,10 @@ echo "
 		echo "
 		</p>
 	</div>
-	<br style='clear:both;' />
-
-	<p id='fuss'>".$cr."></p>
+	
+	<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
 </div>
 </DIV></CENTER>
 </BODY>

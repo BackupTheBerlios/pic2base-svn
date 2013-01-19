@@ -16,11 +16,18 @@ else
 
 <head>
   <title>pic2base - Dublettenpr&uuml;fung</title>
-  <meta name="GENERATOR" content="Quanta Plus">
+  <meta name="GENERATOR" content="eclipse">
   <meta name="AUTHOR" content="k. henneberg">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel=stylesheet type="text/css" href="../../css/format1.css">
+  <link rel=stylesheet type="text/css" href="../../css/format2.css">
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
+  <script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+  <script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+  <script language="JavaScript">
+  	jQuery.noConflict()
+	jQuery(document).ready(checkWindowSize);
+	jQuery(window).resize(checkWindowSize); 
+  </script>
 </head>
 
 <!--
@@ -37,8 +44,6 @@ else
  *
  * All files of this project are licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
  -->
 <script type = text/javascript>
@@ -52,7 +57,7 @@ function showDelWarning(FileName, uid, pic_id)
 }
 </script>
 
-<BODY LANG="de-DE">
+<BODY>
 <DIV Class="klein">
 <?php
 include '../../share/global_config.php';
@@ -88,11 +93,13 @@ ELSE
 }
 //echo $navi;
 echo "
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Doublettenpr&uuml;fung <span class='klein'>(User: $username)</span></p>
+	<div class='head' id='head'>
+		pic2base :: Doublettenpr&uuml;fung <span class='klein'>(User: $username)</span>
+	</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		IF(strstr($quelle, "edit_start.php") OR strstr($quelle, "stapel2.php") OR strstr($quelle, "doublettenliste1.php"))
 		{
@@ -105,7 +112,7 @@ echo "
 		echo "</div>
 	</div>
 	
-	<div class='content'>
+	<div class='content' id='content'>
 		<center>
 		<table class='liste1'>
 		<tbody>";
@@ -261,12 +268,14 @@ echo "
 		
 		</center>
 	</div>
-	<br style='clear:both;' />
-
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
-</div>";
-?>
+	
+	<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+	
+</div>
 
 </div>
 </body>
-</html>
+</html>";
+?>

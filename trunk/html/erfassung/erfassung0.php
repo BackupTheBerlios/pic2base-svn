@@ -13,11 +13,18 @@ $uid = $_COOKIE['uid'];
 
 <head>
   <title>pic2base - Erfassung</title>
-  <meta name="GENERATOR" content="Quanta Plus">
+  <meta name="GENERATOR" content="eclipse">
   <meta name="AUTHOR" content="k. henneberg">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel=stylesheet type="text/css" href="../../css/format1.css">
+  <link rel=stylesheet type="text/css" href="../../css/format2.css">
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
+  <script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+  <script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+  <script language="JavaScript">
+  	jQuery.noConflict()
+	jQuery(document).ready(checkWindowSize);
+	jQuery(window).resize(checkWindowSize); 
+  </script>
 </head>
 
 <!--
@@ -25,7 +32,7 @@ $uid = $_COOKIE['uid'];
  * Project: pic2base
  * File: erfassung0.php
  *
- * Copyright (c) 2005 - 2012 Klaus Henneberg
+ * Copyright (c) 2005 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -34,12 +41,10 @@ $uid = $_COOKIE['uid'];
  *
  * All files of this project are licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
- *
- * @license http://www.opensource.org/licenses/osl-2.1.php Open Software License
  */
  -->
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY>
 <DIV Class="klein">
 <?php
 
@@ -54,17 +59,19 @@ $result1 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"
 $username = mysql_result($result1, isset($i1), 'username');
 
 echo "
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Bilddaten-Erfassung <span class='klein'>(User: $username)</span></p>
+	<div class='head' id='head'>
+	pic2base :: Bilddaten-Erfassung <span class='klein'>(User: $username)</span>
+	</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		createNavi1($uid);
 		echo "</div>
 	</div>
 	
-	<div class='content'>
+	<div class='content' id='content'>
 		<center>
 		<table class='normal' style='background-color:rgb(255,250,150); color:black; margin-top:80px; margin-bottom:40px; border-style:solid; border-width:2px; border-color:#FF9900;'>
 		<tbody>
@@ -82,9 +89,10 @@ echo "
 		<INPUT type='button' class='button1' value='Zum Einzelbild-Upload' onclick=location.href='erfassung1.php'><BR><BR><BR>
 		</center>
 	</div>
-	<br style='clear:both;' />
-
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	
+	<div class='foot' id='foot'>
+	<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
 </div>";
 ?>
 

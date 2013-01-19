@@ -25,12 +25,13 @@ div#tooltip1 a:hover span
   font-size:12px;
  }
  
+ 
+ /*verwendet im Loeschformular fuer vorgemerkte Bilder*/
  div#tooltip2 a span
  {
   display:none;
  }
 
-/*verwendet im Loeschformular fuer vorgemerkte Bilder*/
  div#tooltip2 a:hover
  {
   background-color:#FFFFFF;
@@ -51,4 +52,30 @@ div#tooltip2 a:hover span
   background:#EEEEEE;
   border:1px solid blue;
   font-size:12px;
+ }
+ 
+ /*verwendet auf der Startseite zur Vergroesserung der top-ten*/
+ div#tooltip3 a span
+ {
+  display:none;
+ }
+
+ div#tooltip3 a:hover
+ {
+  background-color:#FFFFFF;
+ }
+
+div#tooltip3 a:hover span
+ {
+  display:block;
+  text-decoration :none;
+  position:absolute;
+  top:25px;
+  left:25px;
+  height:400px;
+  padding:5px;
+  margin:4px;
+  z-index:100;
+  background:#EEEEEE;
+  border:2px solid RGB(125,0,10);
  }

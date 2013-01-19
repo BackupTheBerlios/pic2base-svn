@@ -29,7 +29,7 @@ IF($num1 == '0')
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 	
 	<tr>
@@ -46,7 +46,7 @@ IF($num1 == '0')
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
   
 	</table>
@@ -61,7 +61,7 @@ ELSE
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 	
 	<tr>
@@ -82,7 +82,7 @@ ELSE
   	
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
   
 	</table>

@@ -60,13 +60,12 @@ $Min_DT = mysql_result($result2, isset($i2), 'MIN_DTO');
 $Max_DT = mysql_result($result2, isset($i2), 'MAX_DTO');
 //echo "Fr&uuml;hestes Jahr: ".$Min_DT.", sp&auml;testes Jahr: ".$Max_DT."<BR>";
 
-echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildsuche nach Aufnahmedatum<BR>
-	<TABLE id='kat'>
-	<TR id='kat'>
-	<TD id='kat1'>Jahr / Monat / Tag</TD>
-	<TD id='kat2'>Info</TD>
-	<TD id='kat2'>Anz.</TD>
-	</TR>";
+echo "	<TABLE id='kat'>
+		<TR id='kat'>
+		<TD id='kat1'>Jahr / Monat / Tag</TD>
+		<TD id='kat2'>Info</TD>
+		<TD id='kat2'>Anz.</TD>
+		</TR>";
 
 $runtime_sum = 0;
 
@@ -112,7 +111,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 		$img_minus = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='3' vspace='0' border='0'>";
 		echo "
 		<TR id='kat'>
-		<TD id='kat1' style='background-color:#ff9900;'>
+		<TD id='kat1' style='background-color:RGB(125,0,10); color:white;'>
 		<SPAN style='cursor:pointer;' onClick='getTimeTreeview(\"$pic_id\",\"$mod\",\"$s_m\",\"$bewertung\")'  title='Monatsansicht f&uuml;r $jahr &ouml;ffnen / schlie&szlig;en'>".$tree_img."</SPAN>
 		<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$jahr\",0,0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='alle Bilder des Jahres $jahr anzeigen'>".$jahr."</SPAN>
 		</TD>
@@ -253,7 +252,7 @@ echo "<TR id='kat'>
 <TD id='kat2'></TD>
 </TR>
 <TR id='kat'>
-<TD id='kat1' style=' background-color:#ff9900;'><SPAN style='cursor:pointer; margin-left:22px' onClick='getTimePreview(0000,0,0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='Bilder anzeigen'>Bilder ohne Datumsangabe</SPAN></TD>
+<TD id='kat1' style='background-color:RGB(125,0,10); color:white;'><SPAN style='cursor:pointer; margin-left:22px' onClick='getTimePreview(0000,0,0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='Bilder anzeigen'>Bilder ohne Datumsangabe</SPAN></TD>
 <TD id='kat2'></TD>
 <TD id='kat2'>".$num7."</TD>
 </TR>

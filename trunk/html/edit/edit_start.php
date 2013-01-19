@@ -16,13 +16,20 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Datensatz-Bearbeitung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict()
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
+<BODY>
 <CENTER>
 <DIV Class="klein">
 
@@ -32,7 +39,7 @@ else
  * Project: pic2base
  * File: edit_start.php
  *
- * Copyright (c) 2003 - 2012 Klaus Henneberg
+ * Copyright (c) 2003 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -50,11 +57,13 @@ $result1 = mysql_query("SELECT username FROM $table1 WHERE id = '$uid'");
 $username = mysql_result($result1, isset($i1), 'username');
 
 echo "
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Datensatz-Bearbeitung <span class='klein'>(User: ".$username.")</span></p>
+	<div class='head' id='head'>
+		pic2base :: Datensatz-Bearbeitung <span class='klein'>(User: ".$username.")</span>
+	</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		createNavi3($uid);
 		echo "</div>
@@ -62,6 +71,9 @@ echo "
 	
 	<div id='spalte1'>
 		<center>
+		<fieldset style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>W&auml;hlen Sie hier die gew&uuml;nschte Bearbeitungsm&ouml;glichkeit</legend>
+		<a class='subnavi_blind'></a>
 		<a class='subnavi' href='edit_geo_daten.php?pic_id=0&mod=kat' title='Standortbestimmung mittels aufgezeichneter Trackdaten'>Geo-Referenzierung</a>
 		<a class='subnavi' href='edit_bewertung.php?pic_id=0&mod=kat' title='Bilder qualitativ bewerten, Noten vergeben'>Bilder bewerten / Bewertung &auml;ndern</a>
 		<a class='subnavi' href='edit_beschreibung.php?pic_id=0&mod=kat' title='mehreren Bildern eine gemeinsame Beschreibung zuweisen'>Beschreibungen zuweisen</a>
@@ -69,17 +81,24 @@ echo "
 		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=zeit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Aufnahmedatum'>Kategorie-Zuweisung - Auswahl nach Datum</a>
 		<a class='subnavi' href='remove_kat_daten.php?pic_id=0&mod=edit_remove' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>
 		<a class='subnavi_blind'></a>
-		<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$uid'>Doubletten-Pr&uuml;fung</a>
+		<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$uid' title='Pr&uuml;fung auf mehrfache Vorkommen'>Doubletten-Pr&uuml;fung</a>
 		<a class='subnavi' href='generate_quickpreview0.php?num=X' title='Service-Funktion'>Quick-Preview hochformatiger Bilder erzeugen</a>
+		</fieldset>
 		</center>
 	</div>
 	
-	<div id='spalte2'><p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 4px; margin-left: 10px;'><b>Hinweise zu den Bearbeitungsm&ouml;glichkeiten:</b><BR><BR>
-	Ausf&uuml;hrliche Hilfe zu den Bearbeitungsm&ouml;glichkeiten finden Sie &uuml;ber die Navigationsleiste in der <a href='../help/help1.php?page=3'>Online-Hilfe</a>.
-	</p>
+	<div id='spalte2'>
+		<fieldset style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Hinweise zu den Bearbeitungsm&ouml;glichkeiten</legend>
+			Ausf&uuml;hrliche Hilfe zu den Bearbeitungsm&ouml;glichkeiten finden Sie &uuml;ber die Navigationsleiste in der <a href='../help/help1.php?page=3'>Online-Hilfe</a>.
+		</fieldset>
+		
 	</div>
 
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+	
 </div>";
 
 mysql_close($conn);

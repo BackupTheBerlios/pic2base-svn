@@ -18,7 +18,7 @@ Neue Benutzergruppe hinzuf&uuml;gen
 </FORM>
 
 <tr style='height:3px;'>
-<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+<td class='normal' align='center' bgcolor='darkred' colspan='2'></TD>
 </TR>
 
 <tr>
@@ -46,7 +46,7 @@ Neue Benutzergruppe hinzuf&uuml;gen
 </tr>
 
 <tr style='height:3px;'>
-<td class='normal' align='center' bgcolor='#FF9900' colspan='2'></TD>
+<td class='normal' align='center' bgcolor='darkred' colspan='2'></TD>
 </TR>
 
 </table>

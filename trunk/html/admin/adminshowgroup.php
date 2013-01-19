@@ -52,7 +52,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	
 	echo "<table class='tablenormal' border='0'>
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 	
 	<tr>
@@ -60,7 +60,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 		
 	<tr>
@@ -120,7 +120,7 @@ if (hasPermission($uid, 'adminlogin', $sr))
 		$content = $content."</TR>";
 	}
 	echo $content."<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>";
 }
 
@@ -154,7 +154,7 @@ if (hasPermission($uid, 'showusers', $sr))
 	}
 	echo "
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 	
 	<tr style='height:30px;'>

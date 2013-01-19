@@ -1,0 +1,43 @@
+if(Weite>1000)
+{
+	pagebreite = Weite - 40;
+	contentbreite = Weite - 168;
+	headbreite = Weite - 106;
+	footbreite = Weite - 46;
+	document.getElementById("page").style.width = pagebreite + 'px';
+	document.getElementById("content").style.width = contentbreite + 'px';
+	document.getElementById("foot").style.width = footbreite + 'px';
+}
+else
+{
+	pagebreite = 950;	
+	contentbreite=823;
+	headbreite = 944;
+	footbreite = 944;
+	document.getElementById("page").style.width = pagebreite + 'px';
+	document.getElementById("content").style.width = contentbreite + 'px';
+	document.getElementById("foot").style.width = footbreite + 'px';
+}
+
+if(Hoehe>743)
+{
+	pagehoehe = Hoehe - 40
+	contenthoehe = Hoehe - 130;
+	navihoehe = Hoehe - 121;
+	footposition = Hoehe - 79;
+	document.getElementById("page").style.height = pagehoehe + 'px';
+	document.getElementById("content").style.height = contenthoehe + 'px';
+	document.getElementById("navi").style.height = navihoehe + 'px';
+	document.getElementById("foot").style.top = footposition + 'px';
+}
+else
+{
+	pagehoehe = 703;
+	contenthoehe = 612;
+	navihoehe = 622;
+	footposition = 664;
+	document.getElementById("page").style.height = pagehoehe + 'px';
+	document.getElementById("content").style.height = contenthoehe + 'px';
+	document.getElementById("navi").style.height = navihoehe + 'px';
+	document.getElementById("foot").style.top = footposition + 'px';
+}

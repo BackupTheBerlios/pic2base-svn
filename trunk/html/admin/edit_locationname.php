@@ -34,7 +34,7 @@ echo "
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
 	
 	<tr>
@@ -66,7 +66,7 @@ echo "
 	</tr>
 	
 	<tr style='height:3px;'>
-	<td class='normal' align='center' bgcolor='#FF9900' colspan='4'></TD>
+	<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
 	</TR>
   
   	<TR>

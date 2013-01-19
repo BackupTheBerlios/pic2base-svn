@@ -15,17 +15,22 @@ else
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<TITLE>pic2base - Hilfe</TITLE>
+	<META NAME="GENERATOR" CONTENT="Eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+		jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto">
-
+<BODY>
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -34,7 +39,7 @@ else
  * Project: pic2base
  * File: help1.php
  *
- * Copyright (c) 2003 - 2012 Klaus Henneberg
+ * Copyright (c) 2003 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -54,9 +59,7 @@ $username = mysql_result($result0, isset($i0), 'username');
 $conv = buildConvertCommand($sr);
 $identify = str_replace('convert', 'identify', $conv);
 
-$sup_ft_arr = explode(chr(10),shell_exec($identify." -list format"));
-//$sup_ft_arr = explode(chr(10),$sup_ft);
-//print_r($sup_ft_arr);
+$sup_ft_arr = explode(chr(10),shell_exec($identify." -list format"));  //unterstuetzte Dateiformate
 
 $page = $_GET['page']; 
 
@@ -83,59 +86,71 @@ $datum = str_replace($needle, "", $vom);
 
 echo "
 
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Online-Hilfe</p>
+		<div class='head' id='head'>
+			pic2base :: Online-Hilfe
+		</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		createNavi4_1($uid);
 		echo "
 		</div>
 	</div>
 	
-	<div class='content'>";
+	<div class='content' id='content'>";
 	SWITCH($page)
 	{
 		CASE '0':
-		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>Hinweise zur Startseite:</b><BR><BR>
-		Das pic2base-Fenster unterteilt sich im wesentlichen in 3 Bereiche:<BR><BR>
+		echo "
+		<fieldset id='fieldset_help0'>
+		<legend style='color:blue; font-weight:bold;'>Hinweise zur Startseite</legend>
+		
+		Das pic2base-Fenster unterteilt sich fast immer in 3 Bereiche:<BR><BR>
 		<u>Kopfzeile</u><BR>
 		Hier findet der Benutzer Hinweise zur gerade aufgerufenen Seite, unter wessen Namen er arbeitet und ggf. welche Suchkriterien ausgew&auml;hlt wurden.<BR><BR>
 		<u>Navigations-Leiste</u><BR>
-		Am linken Fensterrand ist die Navigations-Leiste angeordnet. Je nach erteilten Benutzer-Rechten stehen die unterschiedlichen Men&uuml;-Buttons zur Auswahl: jeweils f&uuml;r die System-Administration, pers&ouml;nliche Einstellungen, Erfassung, Bearbeitung, Suche, Hilfe und / oder Abmeldung vom pic2base-Server.<BR><BR>
+		Am linken Fensterrand ist die Navigations-Leiste angeordnet. Je nach erteilten Benutzer-Rechten stehen die unterschiedlichen Men&uuml;-Buttons zur Auswahl:
+		<ul> jeweils f&uuml;r die <li>System-Administration</li>
+		<li>pers&ouml;nliche Einstellungen</li>
+		<li>Erfassung</li>
+		<li>Bearbeitung</li>
+		<li>Suche</li>
+		<li>Hilfe</li>
+		<li>und / oder Abmeldung vom pic2base-Server</li>
+		</ul>
+		<BR>
 		<u>Daten-Bereich</u><BR>
-		Den gr&ouml;&#223;ten Platz nimmt der Datenbereich ein. Hier werden alle Auswahl-Men&uuml;s, Vorschau-Bilder oder Detail-Informationen dargestellt. Das Aussehen des Datenbereichs variiert je nach gew&auml;hlter Programm-Funktion bzw. Berechtigung des Benutzers.<BR>
+		Den gr&ouml;&#223;ten Platz nimmt der Datenbereich ein. Hier werden alle Auswahl-Men&uuml;s, Vorschau-Bilder oder Detail-Informationen dargestellt.<br />
+		Das Aussehen des Datenbereichs variiert je nach gew&auml;hlter Programm-Funktion bzw. Berechtigung des Benutzers.<BR>
 		Weitere themenbezogene Hilfe erhalten Sie direkt in dem gew&auml;hlten Programm-Fenster.
-		</p>
-		<p style='margin:20px 150px; text-align:left; width:400px;'>
+		<br /><br />
 		<b>Hilfreiche Tipps zur Arbeit mit pic2base:</b><BR><BR>
-		Die folgende Reihenfolge der Arbeitsschritte hat sich f&uuml;r eine effektive Daten-Erfassung als zweckm&auml;&szlig;ig erwiesen:<BR>
-		1) Bilder auf den Server laden,<BR>
-    		   (Alle neuen Bilder liegen nun in der Kategorie \"Neuzug&auml;nge\")<BR>
+		Die folgende Reihenfolge der Arbeitsschritte hat sich f&uuml;r eine effektive Daten-Erfassung als zweckm&auml;&szlig;ig erwiesen:<br /><br />
+		1) Bilder per FTP oder Einzelbild-Upload auf den Server laden, von der Startseite aus die Erfassung starten<BR>
+    	(Alle neuen Bilder liegen nun in der Kategorie \"Neuzug&auml;nge\")<BR>
 		2) falls Track-Daten vorliegen: Bilder georeferenzieren,<BR>
 		3) Beschreibungen editieren; dabei die bei der Geo-Referenzierung ggf. hinzugef&uuml;gten Ortsbezeichnungen ber&uuml;cksichtigen<BR>
 		4) Qualit&auml;ts-Bewertung vornehmen,<BR>
 		(damit sind die individuellen Informationen zugewiesen)<BR>
-		5) im letzten Schritt Kategorien zuweisen<BR>
+		5) im letzten Schritt Kategorien zuweisen<br /><br />
 		Mit dieser Reihenfolge ist sichergestellt, da&szlig; alle unbearbeiteten Bilder in der Kategorie \"Neuzug&auml;nge\" zu finden sind, bis sie im letzten Schritt in die einzelnen Unterkategorien verteilt werden.<BR>
 		Sollen gr&ouml;ssere Mengen an Bildern erfasst werden, ist es zweckm&auml;&szlig;ig, nicht mehr als etwa 100 Bilder in einem Durchgang zu verarbeiten.<BR>
 		Damit werden die Ladezeiten der einzelnen Bearbeitungsseiten kurz gehalten und die Arbeit geht insgesamt fl&uuml;ssiger vonstatten.
-		</p>
-		<p style='margin:20px 150px; text-align:left'>
+		<br /><br />
 		<b>Aktuelle Informationen</B><BR><BR>
 		Weitere Informationen zu pic2base erhalten Sie auf unserer <A HREF='http://www.pic2base.de'>Homepage</A>.<BR>
-		<p style='margin:20px 150px; text-align:left'>
+		<br /><br />
 		<b>&Uuml;ber pic2base</B><BR><BR>
-		installierte Version: ".$version." (Release ".$rel.") vom ".$datum."<BR><BR>
+		Auf Ihrem Server ist die Version: ".$version." (Release ".$rel.") vom ".$datum." installiert.<BR><BR>
 		<b>Entwickler:</b><BR><BR>
 		Klaus Henneberg, <a href='mailto:info@pic2base.de?subject=Supportanfrage zur Version .$version.'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
 		Holger R&ouml;mer, <a href='mailto:hr@roemix.eu'><img src = \"../../share/images/letter.gif\" height=\"15\" border='0' title = 'Mail senden' align='top'></a><BR>
 		Jens Henneberg<BR>
 		Daniel Richter<BR>
-		
-		<TABLE style='margin-left:150px;' border='0'>
+		<br /><br />
+		<TABLE style='margin-left:5px;' border='0'>
 			<TR>
 				<TD colspan='5'><b>Dieses Projekt verwendet u.a. die folgenden Komponenten:</b></TD>
 			</TR>
@@ -165,12 +180,15 @@ echo "
 				<TD colspan='5' style='background-color:#FF9900;'></TD>
 			</TR>
 		</TABLE>
-		</p>";
+		
+		</fieldset>";
 		break;
 		
 		CASE '1':
-		echo "<p style='margin:80px 150px; text-align:justify; width:400px;'>
-		<b>Hinweise zum Bild-Upload per FTP (Batch-Prozess):</b><BR><BR>
+		echo "
+		<fieldset id='fieldset_help1'>
+		<legend style='color:blue; font-weight:bold;'>Hinweise zum Bild-Upload per FTP (Batch-Prozess)</legend>
+		
 		Derzeit (Software-Version ".$version.") werden die folgenden Datei-Typen von pic2base unterst&uuml;tzt:<BR>";
 		$i='0';
 		FOREACH($supported_filetypes AS $sft)
@@ -191,26 +209,28 @@ echo "
 		
 		echo "
 		<BR><BR>
-		Unter Windows verwenden Sie einen geeigneten FTP-Client (z.B. WS-FTP) um Ihre Bilder auf den pic2base-Server hochzuladen. 
+		Unter Windows verwenden Sie einen geeigneten FTP-Client (z.B. FileZilla, WS-FTP) um Ihre Bilder auf den pic2base-Server hochzuladen.<br /> 
 		LINUX-Benutzer k&ouml;nnen z.B. den Konqueror f&uuml;r den Upload benutzen, wobei sich eine zweigeteilte Fenster-Ansicht als 
-		vorteilhaft erwiesen hat.<BR>
+		vorteilhaft erwiesen hat.<br /><br />
 		Die Adresse des pic2base-FTP-Servers lautet ".$_SERVER['SERVER_NAME'].". 
 		Melden Sie sich mit Ihren pers&ouml;nlichen Zugangsdaten (Benutzername: ".$username." und entsprechendem Passwort) an und 
 		kopieren Ihre Bild-Dateien in Ihren <b>UPLOAD</b>-Ordner. Wenn Sie nun zu pic2base zur&uuml;ckkehren erhalten Sie 
-		einen Hinweis, da&#223; Bilddateien in Ihrem Upload-Ordner liegen. Klicken Sie zur &Uuml;bernahme auf den Button 'Upload starten'. 
+		einen Hinweis, da&#223; Bilddateien in Ihrem Upload-Ordner liegen. Klicken Sie zur &Uuml;bernahme der Bilder in die Datenbank auf den Button 'Upload starten'. 
 		Je nach Anzahl der Bilder und deren Dateigr&ouml;&#223;e kann der Upload eine Weile dauern.<BR>
-		Am Ende des Uploads erfolgt eine automatische Dublettenkontrolle. Damit soll sichergestellt werden, da&szlig; nicht versehentlich Bilder mehrfach erfa&szlig;t werden.<BR>Im Anschlu&#223; daran werden Sie aufgefordert, 
+		Am Ende des Uploads erfolgt eine automatische Dublettenkontrolle. Damit wird sichergestellt, da&szlig; identische Bilder nicht versehentlich mehrfach erfa&szlig;t werden.<BR>Im Anschlu&#223; daran werden Sie aufgefordert, 
 		den soeben &uuml;bernommenen Bildern weitere Informationen hinzuzuf&uuml;gen (Geo.Koordinaten, Bewertung, Beschreibung) und abschlie&#223;end 
-		allen Bildern Kategorien zuzuweisen. Dies ist f&uuml;r die sp&auml;tere Recherche wichtig.<BR>
-		Beachten Sie weiterhin, da&szlig; der Dateiname eines hochzuladenden Bildes <b>keine ung&uuml;ltigen Zeichen</b> (Umlaute, Leerzeichen, &szlig; etc.) enth&auml;lt. Erlaubte Zeichen sind Ziffern, alle Buchstaben des angels&auml;chsischen Alphabets und der Unterstrich. Anderenfalls wird die Erfassung mit einem entsprechenden Hinweis abgebrochen.
-		</p>";
+		allen Bildern Kategorien zuzuweisen. Eine sorgf&auml;ltige Anreicherung der Bilder mit Zusatzinformationen ist f&uuml;r die sp&auml;tere Recherche sehr von Vorteil.<br /><br />
+		Beachten Sie weiterhin, da&szlig; der Dateiname eines hochzuladenden Bildes <b>keine ung&uuml;ltigen Zeichen</b> (Umlaute, Leerzeichen, &szlig; etc.; siehe hierzu auch: <a href='http://de.wikipedia.org/wiki/Dateiname' target='top'>Wikipedia zum Thema \"Dateiname\"</a>) enth&auml;lt. Erlaubte Zeichen sind Ziffern, alle Buchstaben des angels&auml;chsischen Alphabets und der Unterstrich. Anderenfalls wird die Erfassung mit einem entsprechenden Hinweis abgebrochen.
+		
+		</fieldset>";
 		break;
 		
 		CASE '2':
-		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>Hilfe zu den Suchm&ouml;glichkeiten</b><BR><BR>
-		
-		Inhalt:<BR>
+		echo "<a name='top'></a>
+		<fieldset id='fieldset_help2'>
+		<legend style='color:blue; font-weight:bold;'>Hilfe zu den Suchm&ouml;glichkeiten</legend>
+
+		<br /><b><u>Inhalt:</u></b><br /><br />
 		<a href='#2_bewertung'>Auswahl der Bild-Bewertung</a><BR>
 		<a href='#2_zeit'>Suche nach Aufnahmedatum</a><BR>
 		<a href='#2_kat'>Suche nach Kategorien</a><BR>
@@ -302,8 +322,19 @@ echo "
 		Wenn georeferenzierte Bilder dabei sind, wird weiter rechts die M&ouml;glichkeit angeboten, sich die Standorte in GooglEarth anzeigen zu lassen. Dazu wird zun&auml;chst die kml-Datei durch einen Klick auf das graue GoogleEarth-Icon angelegt.
 		Danach &auml;ndert das Icon sein Aussehen -es wird farbig dargestellt.  Mit einem Klick auf das nun farbige Icon k&ouml;nnen die georeferenzierten Bilder in GoogleEarth dargestellt werden.<BR>(Fragen Sie Ihren Administrator, falls GoogleEarth nicht auf Ihrem Rechner installiert ist.)<BR><BR>
 		Rechts daneben befindet sich ein Icon mit der Beschriftung \"Galerie vorbereiten\". Mit einem Klick darauf wird eine PDF-Datei mit der verkleinerten Darstellung aller gefundenen Bilder erzeugt, die man mit einem beliebigen PDF-Reader ansehen kann.<BR><BR>
-		Den gr&ouml;&szlig;ten Teil der Filmstreifens nimmt die Darstellung der Bilder ein. Wenn Sie ein Bild mit dem Mauszeiger &uuml;berfahren, werden im rechten oberen Fensterbereich weitere Details zu dem gerade &uuml;berfahrenen Bild gezeigt. Gleichzeitig wird dieses Bild mit einem gr&uuml;nen Balken unterhalb des Download-Icons als \"aktiv\" markiert. Dies erleichtert die Orientierung innerhalb der Filmstreifen-Navigation.<BR>Klicken Sie hingegen in ein Bild im Filmstreifen, gelangen Sie in den \"Bl&auml;tter-Modus\".<BR>
+		Den gr&ouml;&szlig;ten Teil der Filmstreifens nimmt die Darstellung der Bilder ein. Wenn Sie ein Bild mit dem Mauszeiger &uuml;berfahren, werden im rechten oberen Fensterbereich des Hauptfensters weitere Details zu dem gerade &uuml;berfahrenen Bild gezeigt. Gleichzeitig wird dieses Bild mit einem gr&uuml;nen Balken unterhalb des Download-Icons als \"aktiv\" markiert. Dies erleichtert die Orientierung innerhalb der Filmstreifen-Navigation.<BR>Klicken Sie hingegen in ein Bild im Filmstreifen, gelangen Sie in den \"Bl&auml;tter-Modus\".<BR>
 		Hier haben Sie die M&ouml;glichkeit, sich in einer vergr&ouml;&szlig;erten Ansicht rasch durch alle gefundenen Bilder zu bewegen oder einzelne Bilder in Originalqualit&auml;t zu betrachten.<BR>
+		Im Bl&auml;tter-Modus k&ouml;nnen Sie sowohl mit der Maus, als auch mit der Tastatur durch die gefundenen Bilder navigieren.<br />
+		Wenn Sie die Tastatur benutzen, stehen Ihnen die folgenden Tasten zur Verf&uuml;gung:<br />
+		<ul>
+		<li>Pfeil rechts - ein Bild vor</li>
+		<li>Pfeil runter - zehn Bilder zur&uuml;ck</li>
+		<li>Pfeil links - ein Bild zur&uuml;ck</li>
+		<li>Pfeil hoch - zehn Bilder vor</li>
+		<li>F-Taste - Wechsel in die Vollbild-Ansicht</li>
+		<li>F10 - Vollbild-Ansicht beenden</li>
+		</ul>
+		
 		Wenn Sie den Bl&auml;tter-Modus durch Klick auf das Schlie&szlig;en-Icon verlassen, befinden Sie sich in der Filmstreifen-Ansicht an der Stelle des zuletzt betrachteten Bildes. Dies ist mit dem gr&uuml;nen Balken als \"aktiv\" markiert.<BR><BR>
 		Unter jedem Bild befindet sich ein Download-Icon. Die entsprechende Berechtigung vorausgesetzt, k&ouml;nnen Sie hier&uuml;ber die gew&uuml;nschten Bilder herunterladen. Je nach Ihren pers&ouml;nlichen Einstellungen, wird das gew&uuml;nschte Bild in Ihren Download-Ordner kopiert oder Sie bekommen einen Datei-Auswahl-Dialog angezeigt.<BR><BR>
 		Wenn das Suchergebnis mehr als 18 Bilder lieferte, sehen Sie in der Zeile unter den Download-Icons eine Reihe orangfarbener Rechtecke. Sie repr&auml;sentieren die Anzahl der Filmstreifen-Elemente und k&ouml;nnen durch einen Klick darauf direkt aufgerufen werden.<BR>
@@ -311,16 +342,15 @@ echo "
 		<BR><BR><a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name = '2_edit'></a><b>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse</b><BR><BR>
-		
 		Wenn der angemeldete Benutzer berechtigt ist, Eigenschaften der gefundenen Bilder zu bearbeiten, stehen ihm die folgenden M&ouml;glichkeiten zur Verf&uuml;gung:<BR></p>
-		<ul style='margin:20px 150px; text-align:justify; width:350px;'>
+		<ul style='margin:20px 15px; text-align:justify;'>
 		<li>&Uuml;bertragung der Bild-Eigent&uuml;merschaft auf einen anderen User: <img src='../../share/images/change_owner.gif' height='12px' />
 		<li>l&ouml;schen des Bildes: <img src='../../share/images/trash.gif' height='12px' />
 		<li>Korrektur der Vorschau-Ansicht bei RAW-Bildern: <img src='../../share/images/reload.png' height='12px' />
 		<li>manuelle Georeferenzierung bzw. Korrektur der bereits erfolgten automatischen Geo-Referenzierung: <img src='../../share/images/del_geo_ref.gif' height='12px' />
 		<li>manuelle Bearbeitung freigegebener Meta-Daten: <img src='../../share/images/info.gif' height='12px' />
 		</ul>
-		<p style='margin:20px 150px; text-align:justify; width:400px;'>
+
 		Bei entsprechender Berechtigung k&ouml;nnen die o.g. Funktionen &uuml;ber die jeweiligen Icons aufgerufen werden. (siehe Abb.)<BR><BR>
 		<img src='img/recherche1.png'></img><BR><BR>
 		Weiterhin besteht bei entsprechender Berechtigung die M&ouml;glichkeit, die Bildbeschreibung zu &auml;ndern. Hierzu Nehmen Sie die &Auml;nderung direkt in dem angezeigten Textfeld vor und speichern diese dann durch einen Klick auf den Button \"&Auml;nderungen speichern\".<BR><BR>
@@ -330,14 +360,16 @@ echo "
 		Der Inhalt des Kategorielexikons und des Fototagebuchs werden bei den betreffenden Bildern jeweils mit in der Komplett-Ansicht der Detailinformationen ausgegeben. (siehe Abb.)<BR><BR>
 		<img src='img/recherche2.png' width='400px'></img><BR><BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
-		</p>";
+		
+		</fieldset>";
 		break;
 		
 		CASE '3':
-		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>&Uuml;bersicht &uuml;ber die Bearbeitungsm&ouml;glichkeiten</b><BR><BR>
+		echo "<a name='top'></a>
+		<fieldset id='fieldset_help3'>
+		<legend style='color:blue; font-weight:bold;'>&Uuml;bersicht &uuml;ber die Bearbeitungsm&ouml;glichkeiten</legend>
 		
-		Inhalt:<BR>
+		<br /><b><u>Inhalt:</u></b><br /><br />
 		<a href='#3_georef'>Geo-Referenzierung</a><BR>
 		<a href='#3_bewertung'>Bild-Bewertung</a><BR>
 		<a href='#3_desc'>Beschreibungen zuweisen</a><BR>
@@ -377,8 +409,8 @@ echo "
 		
 		<a name = '3_dubletten'><b>Dubletten-Pr&uuml;fung</b></a><BR><BR>
 		pic2base bietet eine einfache M&ouml;glichkeit zu ermitteln, ob Dubletten in den Datenbestand aufgenommen wurden.<BR>
-		Dazu wird bereits w&auml;hrend des Datei-Uploads kontrolliert, ob sich bereits eine Bilddatei mit dem gleichen Original-Dateinamen oder der gleichen Pr&uuml;fsumme im Datenbestand befindet.
-		Wenn dieser Fall zutrifft, werden am Ende des Uploadprozesses alle Dubletten angezeigt und der Benutzer kann entscheiden, ob das doppelte Bild dennoch in die Datenbank aufgenommen werden soll, oder nicht.
+		Dazu wird bereits w&auml;hrend des Datei-Uploads kontrolliert, ob sich bereits ein identisches Bild im Datenbestand befindet.
+		Wenn dieser Fall zutrifft, werden am Ende des Uploadprozesses alle Dubletten angezeigt und der Benutzer kann entscheiden, ob das doppelte Bild dennoch in die Datenbank aufgenommen werden soll, oder nicht.<br />
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name = '3_qp'><b>Quick-Preview hochformatiger Bilder erzeugen</b></a><BR><BR>
@@ -386,14 +418,15 @@ echo "
 		Hinweis: Dieser Vorgang kann - je nach Anzahl der zu drehenden Bilder - erheblichen Rechenaufwand erfordern!<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		Weiterf&uuml;hrende Informationen erhalten Sie auf den entsprechenden Bearbeitungs-Seiten.<BR>
-		</p>";
+		</fieldset>";
 		break;
 		
 		CASE '4':
-		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>Hilfe zu den Bearbeitungsm&ouml;glichkeiten</b><BR><BR>
+		echo "<a name='top'></a>
+		<fieldset id='fieldset_help3'>
+		<legend style='color:blue; font-weight:bold;'>Hilfe zu den Bearbeitungsm&ouml;glichkeiten</legend>
 		
-		Inhalt:<BR>
+		<br /><b><u>Inhalt:</u></b><br /><br />
 		<a href='#4_georef'>Geo-Referenzierung</a><BR>
 		<a href='#4_bewertung'>Bild-Bewertung</a><BR>
 		<a href='#4_desc'>Beschreibungen zuweisen</a><BR>
@@ -405,7 +438,7 @@ echo "
 		<a name = '4_georef'><b>Geo-Referenzierung</b></a><BR><BR>
 		Welchen Vorteil bietet die Georeferenzierung?<BR>
 		Bei der Geo-Referenzierung wird zu jedem Bild der Kamerastandort zum jeweiligen Aufnahmezeitpunkt vermerkt. Sp&auml;ter kann man dann nach Bildern suchen,
-		die an einem bestimmten Standort entstanden, oder innerhalb eines bestimmten Umkreises um diesen Standort herum.<BR>
+		die an einem bestimmten Standort entstanden sind, oder innerhalb eines bestimmten Umkreises um diesen Standort herum aufgenommen worden.<BR>
 		Die Geo-Referenzierung anhand vorhandener Track-Aufzeichnungen geschieht folgenderma&szlig;en:<BR>
 		W&auml;hlen Sie zuerst Ihren Daten-Logger und die gew&uuml;nschte Track-Datei aus. Nun k&ouml;nnen Sie entscheiden, ob Sie sich den gew&auml;hlten Track vorab in GoogleEarth anzeigen lassen (Klick auf \"Track ansehen\") oder gleich mit der Referenzierung beginnen (Klick auf \"Los!\") <BR>
 		Im Ergebnis der Referenzierung werden Ihnen in der rechten Spalte alle Bilder aufgelistet, bei denen es eine &Uuml;bereinstimmung der Daten gab.<BR>
@@ -479,14 +512,15 @@ echo "
 		Zur schnelleren Darstellung hochformatiger Bilder m&uuml;ssen diese einmalig vor der ersten Betrachtung in pic2base gedreht und als Kopie angelegt werden. Dies geschieht normalerweise beim ersten &Uuml;berfahren des entsprechenden Bildes mit dem Mauszeiger in der Filmstreifen-Ansicht, kostet aber entsprechend Rechenzeit auf dem Server. Dieser Vorgang kann aber auch f&uuml;r alle Bilder, f&uuml;r welche es noch kein entsprechend gedrehtes Vorschau-Bild gibt, auf einmal durchgef&uuml;hrt werden.<BR>
 		Hinweis: Dieser Vorgang kann - je nach Anzahl der zu drehenden Bilder - erheblichen Rechenaufwand erfordern und sollte deshalb in einer lastarmen Zeit erfolgen!<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
-		</p>";
+		</fieldset>";
 		break;
 		
 		CASE '5':
-		echo "<a name='top'></a><p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>Hilfe zum Administrations-Bereich:</b><BR><BR>
+		echo "<a name='top'></a>
+		<fieldset id='fieldset_help3'>
+		<legend style='color:blue; font-weight:bold;'>Hilfe zum Administrations-Bereich</legend>
 		
-		Inhalt:<BR>
+		<br /><b><u>Inhalt:</u></b><br /><br />
 		<a href='#5_kat'>Kategotien</a><BR>
 		<a href='#5_user'>Benutzer</a><BR>
 		<a href='#5_groups'>Gruppen</a><BR>
@@ -504,13 +538,12 @@ echo "
 		<a name = '5_kat'><b>Kategorien</b></a><BR><BR>
 
 		Im Arbeitsbereich Kategorien kann der Kategoriebaum gepflegt werden:
-		Es k&ouml;nnen Kategorien</p>
-		<ul style='margin:20px 150px; text-align:justify; width:350px;'>
+		Es k&ouml;nnen Kategorien<br />
+		<ul style='margin:20px 5px; text-align:justify; width:350px;'>
 		<li>erzeugt oder gel&ouml;scht werden,
 		<li>umbenannt werden,
 		<li>umsortiert werden.
 		</ul>
-		<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		Beim Aufruf des Kategorie-Arbeitsbereichs gelangt man zun&auml;chst in die Kategorie-Verwaltungsansicht. Von hier k&ouml;nnen die Bereiche Sortierung und Wartung aufgerufen werden.
 		Weiterf&uuml;hrende Informationen stehen direkt auf den jeweiligen Seiten zur Verf&uuml;gung.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
@@ -559,13 +592,13 @@ echo "
 		<!--<a name='5_md5'><b>md5-Check</b></a><BR><BR>
 		
 		Mit Hilfe des md5-Checks kann kontrolliert werden, ob zu jeder Bilddatei eine Pr&uuml;fsumme erzeugt wurde. Diese kann sp&auml;ter zur Identifikation von Dubletten herangezogen werden.<BR>
-		<a href='#top'>Zum Seitenanfang</a><BR><BR>-->
+		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name='5_hist'><b>Histogramme</b></a><BR><BR>
 		
 		Der Arbeitsbereich Histogramme bietet die M&ouml;glichkeit zu pr&uuml;fen, ob zu jedem in der Datenbank befindlichen Bild die entsprechenden Histogramme (R,G,B,Grey) existieren. Wenn nicht, werden diese &uuml;ber den Aufruf des Men&uuml;punktes Histogramme erzeugt. Normalerweise ist diese Kontrolle nicht erforderlich, da die Histogramme von pic2base (ab Version 0.40) bereits bei der Bild-Erfassung automatisch erzeugt werden bzw. beim Aufruf der Bilddetail-Infoseite diese Kontrolle nochmals erfolgt. Existieren die Histogramme f&uuml;r das betrachtete Bild nicht (z.B. wenn Bilder mit einer &auml;lteren Version von pic2base erfa&#223;t wurden), w&uuml;rden sie nun nachtr&auml;glich erzeugt werden. Dies erfordert jedoch zus&auml;tzlichen Rechenaufwand, der die Darstellung der Detail-Informationen verz&ouml;gert. Mit diesem Werkzeug ist der Administrator in der Lage, die Histogramm-Erzeugung in einer lastarmen Zeit durchzuf&uuml;hren.
 		HINWEIS: Dieser Vorgang kann je nach Rechner-Leistung und Bildbestand erhebliche Zeit beanspruchen!<BR>
-		<a href='#top'>Zum Seitenanfang</a><BR><BR>
+		<a href='#top'>Zum Seitenanfang</a><BR><BR> -->
 		
 		<a name='5_db_wartung'><b>Datenbank-Wartung</b></a><BR><BR>
 		
@@ -589,7 +622,7 @@ echo "
 		Im Arbeitsbereich Meta-Protect kann eingestellt werden, welche Meta-Daten von berechtigten Usern nachtr&auml;glich manuell modifiziert werden d&uuml;rfen.
 		Diese Einstellungen sollten mit gr&ouml;&#223;ter Sorgfalt erfolgen.
 		Bereits mit den Grundeinstellungen von pic2base (alle Meta-Datenfelder sind abgew&auml;hlt) werden die folgenden Meta-Datenfelder trotzdem automatisch durch pic2base aktuell gehalten:</p>
-		<ul style='margin:20px 150px; text-align:justify; width:350px;'>
+		<ul style='margin:20px 5px; text-align:justify; width:550px;'>
 		<li>Keywords: beinhaltet neben vorhandenen Daten die neu zugewiesenen Kategorien<BR>
 		<li>Caption-Abstract: beinhaltet neben vorhandenen Daten die neu zugewiesene Bildbeschreibung<BR>
 		<li>GPSLongitude: beinhaltet die GPS-L&auml;nge<BR>
@@ -597,7 +630,6 @@ echo "
 		<li>GPSAltitude: beinhaltet die GPS-H&ouml;he<BR>
 		<li>City, GPSPosition: beinhaltet die Ortsbezeichnung des Aufnahmestandortes
 		</ul>
-		<p style='margin:20px 150px; text-align:justify; width:400px;'>
 		Hilfreich kann die Editier-Freigabe jedoch sein, wenn z.B. die interne Kamera-Uhr falsch gestellt war und das Aufnahme-Datum korrigiert werden soll. Aber auch die nachtr&auml;gliche Vergabe von Copyright-Vermerken l&auml;&#223;t sich &uuml;ber gezielte Freigabe-Einstellungen erm&ouml;glichen.<BR>
 		Die zur Auswahl angebotene Anzahl Datenfelder kann sehr unterschiedlich sein, da pic2base nur diejenigen Felder zur Ansicht oder Bearbeitung anbietet, die die in der Datenbank befindlichen Bilder mitbrachten.
 		Diese Ma&szlig;nahme soll verhindern, da&szlig; die komplette Datenfeld-Liste angezeigt wird (sie w&uuml;rde sehr lang sein!), obwohl nur wenige Felder mit Inhalt gef&uuml;llt waren.<BR>
@@ -624,24 +656,26 @@ echo "
 		Ab Version 0.41 startet das Tool automatisch beim ersten Start von pic2base nach der Installation und dann so lange, bis mindestens ein Bild in die Datenbank gestellt wurde.<BR>
 		Dieser Check kann je nach Rechner-Ausstattung einige Zeit in Anspruch nehmen, stellt aber sicher, zuverl&auml;ssige Informationen &uuml;ber die notwendigen Softwarekomponenten zu erhalten.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
-		</p>";
+		</fieldset>";
 		break;
 		
 		CASE '6':
-		echo "<p style='margin:20px 150px; text-align:justify; width:400px;'>
-		<b>Hilfe zu den pers&ouml;nlichen Einstellungen</b><BR><BR>
+		echo "
+		<fieldset id='fieldset_help3'>
+		<legend style='color:blue; font-weight:bold;'>Hilfe zu den pers&ouml;nlichen Einstellungen</legend>
 		Auf dieser Seite haben Sie die M&ouml;glichkeit, pers&ouml;nliche Einstellungen anzupassen sowie Passworte zu &auml;ndern.<BR>
-		Es kann auch festgelegt werden, wie der Download der gefundenen Bilde erfolgen soll, per FTP oder als Direkt-Download.<BR><BR>
+		Es kann auch festgelegt werden, wie der Download der gefundenen Bilder erfolgen soll, per FTP oder als Direkt-Download.<BR><BR>
 		Je nach erteilter Berechtigung, k&ouml;nnen Sie dies f&uuml;r Ihr eigenes Konto oder aber auch f&uuml;r die Konten der anderen Benutzer tun.<BR><BR>
-		Weitere Hinweise finden Sie auf der Einstellungen-Seite.
-		</p>";
+		Weitere Hinweise finden Sie direkt auf der Einstellungen-Seite.
+		</fielsdet>";
 		break;
 	}
 	echo "
 	</div>
-	<br style='clear:both;' />
-
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	
+	<div class='foot' id='foot'>
+	<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
 
 </div>";
 
@@ -649,5 +683,6 @@ mysql_close($conn);
 ?>
 </DIV>
 </CENTER>
+<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
 </BODY>
 </HTML>

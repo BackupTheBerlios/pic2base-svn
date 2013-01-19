@@ -20,23 +20,24 @@ else
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize);
+		function showKatInfo(kat_id)
+		{
+			Fenster1 = window.open('../../share/edit_kat_info.php?kat_id='+kat_id, 'Kategorie-Informationen', "width=675,height=768,scrollbars,resizable=no,");
+			Fenster1.focus();
+		} 
+	</script>
 </HEAD>
-<script language="JavaScript">
-<!--
-function showKatInfo(kat_id)
-{
-	Fenster1 = window.open('../../share/edit_kat_info.php?kat_id='+kat_id, 'Kategorie-Informationen', "width=675,height=768,scrollbars,resizable=no,");
-	Fenster1.focus();
-}
--->
-</script>
 
-<BODY LANG="de-DE" scroll = "auto">
-
+<BODY LANG="de-DE">
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -45,7 +46,7 @@ function showKatInfo(kat_id)
  * Project: pic2base
  * File: remove_kat_daten.php
  *
- * Copyright (c) 2003 - 2012 Klaus Henneberg
+ * Copyright (c) 2003 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -93,14 +94,17 @@ if(!isset($ID))
 }
 
 echo "
-<div class='page'>
+<div class='page' id='page'>
 	<FORM name='kat-aufhebung', method='post' action='remove_kat_daten_action2.php?kat_id=$kat_id&mod=$mod'>
-	<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Kategorie-Zuweisungen entfernen) <span class='klein'>(User: $username)</span></p>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='head' id='head'>
+		pic2base :: Datensatz-Bearbeitung (Kategorie-Zuweisungen entfernen) <span class='klein'>(User: $username)</span>
+	</div>
+	
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 			createNavi3_1($uid);
-			echo "<INPUT type='submit' class='button3' value = 'Speichern'><BR><INPUT type='button' class='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
+			echo "<INPUT type='submit' id='button3' value = 'Speichern'><BR><INPUT type='button' id='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
 		</div>
 	</div>";
 			
@@ -108,29 +112,43 @@ echo "
 	{
 		CASE "edit_remove":
 			echo "<div id='spalte1F'>
-			<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildauswahl nach Kategorien<BR></p>";
-			$ziel = '../../html/edit/remove_kat_daten.php';
-			$modus='edit';
-			$mod='kat';
-			$base_file = 'remove_kat_daten';
-			include $sr.'/bin/share/kat_treeview.php';
-			echo "
+				<center>
+					<fieldset  style='background-color:none; margin-top:10px;'>
+					<legend style='color:blue; font-weight:bold;'>Bildauswahl nach Kategorien</legend>
+						<div id='scrollbox0' style='overflow-y:scroll;'>";
+						$ziel = '../../html/edit/remove_kat_daten.php';
+						$modus='edit';
+						$mod='kat';
+						$base_file = 'remove_kat_daten';
+						include $sr.'/bin/share/kat_treeview.php';
+						echo "
+						</div>
+					</fieldset>
+				</center>
 			</div>";
 		break;
 	}
 
 	echo "
 	<div id='spalte2F'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hier k&ouml;nnen Sie Kategoriezuweisungen wieder aufheben.<BR><BR>
-		W&auml;hlen Sie dazu links die gew&uuml;nschte Kategorie aus und legen Sie in der Filmstreifenansicht fest, welches Bild aus dieser Kategorie entfernt werden soll, indem Sie unter dem jeweiligen Bild die Checkbox ausw&auml;hlen.<BR><BR>
-		Die gew&uuml;nschten &Auml;nderungen werden durch einen Klick auf den Speichern-Button &uuml;bernommen.</p>
+		<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Hinweis</legend>
+			Hier k&ouml;nnen Sie Kategoriezuweisungen wieder aufheben.<BR><BR>
+			W&auml;hlen Sie dazu links die gew&uuml;nschte Kategorie aus und legen Sie in der Filmstreifenansicht fest, welches Bild aus dieser Kategorie entfernt werden soll, indem Sie unter dem jeweiligen Bild die Checkbox ausw&auml;hlen.<BR><BR>
+			Die ausgew&auml;hlten Bilder werden aus der aktuellen Kategorie entfernt und aus allen zu dieser Kategorie geh&ouml;renden Unterkategorien.<br /><br />
+			Die gew&uuml;nschten &Auml;nderungen werden durch einen Klick auf den Speichern-Button &uuml;bernommen.
+		</fieldset>
 	</div>
 	
 	<div id='filmstreifen'>";
 	$modus='edit_remove';
 	echo "
 	</div>
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	
+	<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+	
 </div>
 </FORM>
 

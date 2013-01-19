@@ -23,11 +23,11 @@ else
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
 	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
 	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
-	  <script language="JavaScript">
+	<script language="JavaScript">
 	  	jQuery.noConflict()
 		jQuery(document).ready(checkWindowSize);
 		jQuery(window).resize(checkWindowSize); 
-	  </script>
+	</script>
 	<style type="text/css">
 	<!--
 	.tablenormal	{
@@ -63,7 +63,7 @@ else
 
 /*
  * Project: pic2base
- * File: protect_metadata0.php
+ * File: kompactview_metadata0.php
  *
  * Copyright (c) 2006 - 2013 Klaus Henneberg
  *
@@ -77,9 +77,9 @@ else
  *Formular zur Freigabe/Sperrung der Editierbarkeit von Metadaten
  */
 
-// welche Meta-Daten sind in der Tabelle pictures enthalten?
-// sind diese als Felder in der Tabelle exif_protect enthalten? -> ggf. Aktualisierung
-// Darstellung aller Meta-Daten-Felder in tabellarischer Form mit der Option diese writable zu schalten / zu sperren
+//welche Meta-Daten sind in der Tabelle pictures enthalten?
+//sind diese als Felder in der Tabelle meta_protect enthalten? -> ggf. Aktualisierung
+//Darstellung aller Meta-Daten-Felder in tabellarischer Form mit der Option diese writable zu schalten / zu sperren
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -89,10 +89,10 @@ if(array_key_exists('columns', $_GET))
 {
 	$col_groups = $_GET['columns'];	//n Spaltengruppen ; je Gruppe eine Spalte field_name und eine Spalte writable
 }
-
 $exiftool = buildExiftoolCommand($sr);
 
-//Ermittlung von Username, User-Sprache zur Uebersetzung der Meta-Tags
+//####################################################################################################
+//Ermittlung von Username und User-Sprache zur Uebersetzung der Meta-Tags
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
 $lang = mysql_result($result0, isset($i0), 'language');
@@ -153,20 +153,21 @@ FOR ($k1=0 ; $k1<count($xmp_tags);$k1++)
 }
 
 //Ermittlung aller Metadaten-Felder anhand der Tabelle meta_protect
-$result1 = mysql_query( "SELECT field_name, lfdnr, writable, viewable FROM $table5 GROUP BY field_name");
+//$result1 = mysql_query( "SELECT * FROM $table5");
+$result1 = mysql_query("SELECT field_name, lfdnr, writable, viewable FROM $table5 GROUP BY field_name");
 $num1 = mysql_num_rows($result1);
 $ed_fieldname = array();
 FOR($i1='0'; $i1<$num1; $i1++)
 {
 	$field_name = mysql_result($result1, $i1, 'field_name');
-	$ed_fieldname[$i1] = $field_name;		// allgem. vorh. Tabellen-Feldname in der Tabelle meta_protect (nur Metadatenfelder)
+	$ed_fieldname[$i1] = $field_name;	//vorh. Tabellen-Feldname in der Tabelle meta_protect (nur Metadatenfelder)
 }
 
 $elements_number = count($ed_fieldname);
 
 //Berechnung der Zeilenzahl bei 2n Spalten (entspr. n Feldwerten + n Checkboxen):
 $rows = ceil($elements_number / $col_groups);
-
+//echo $elements_number." Felder ergeben ".$rows." Zeilen<BR>";
 $content = "<center>
 		<TABLE class = 'tablenormal' border='0'>
 		<TR class='trflach'>
@@ -174,7 +175,7 @@ $content = "<center>
 		</TR>
 		
 		<TR>
-		<TD colspan = ".($col_groups * 2)." align='center'><FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT>&#160;&#160;Hier legen Sie fest, welche Meta-Daten manuell ver&auml;ndert werden d&uuml;rfen&#160;&#160;<FONT COLOR='red'>NUR F&Uuml;R EXPERTEN!</FONT></TD>
+		<TD colspan = ".($col_groups * 2)." align='center'>Hier legen Sie fest, welche Meta-Daten in der kompakten Detailansicht des Info-Fensters sichtbar sind:</TD>
 		</TR>
 		
 		<TR>
@@ -184,7 +185,7 @@ $content = "<center>
 		<TR class='trflach'>
 		<TD colspan = ".($col_groups * 2)."></TD>
 		</TR>";
-
+//$result2 = mysql_query( "SELECT * FROM $table5");
 FOR($r='0'; $r<$rows; $r++)
 {
 	$content = $content."<TR>";
@@ -192,14 +193,13 @@ FOR($r='0'; $r<$rows; $r++)
 	{
 		$i1 = ($r * $col_groups) + $cg;
 		@$lfdnr = mysql_result($result1, $i1, 'lfdnr');
-		@$field_name = (string)mysql_result($result1, $i1, 'field_name');
-		//echo $field_name."<BR>";
-		@$writable = mysql_result($result1, $i1, 'writable');
-		IF($writable == '1')
+		@$field_name = mysql_result($result1, $i1, 'field_name');
+		@$viewable = mysql_result($result1, $i1, 'viewable');
+		IF($viewable == '1')
 		{
 			$checked = 'checked';
 		}
-		ELSEIF($writable == '0')
+		ELSEIF($viewable == '0')
 		{
 			$checked = '';
 		}
@@ -209,36 +209,34 @@ FOR($r='0'; $r<$rows; $r++)
 			IF(in_array($field_name, $iptc_tags))
 			{
 				$color = 'green';
-				$title = 'IPTC-Tag, kann zur Bearbeitung freigegeben werden';
+				$title = 'IPTC-Tag';
 			}
-			
 			ELSEIF(in_array($field_name, $exif_tags))
 			{
 				$color = 'red';
-				$title = 'EXIF-Tag, sollte nicht ver&auml;ndert werden!';
+				$title = 'EXIF-Tag';
 			}
-			
 			ELSEIF(in_array($field_name, $xmp_tags))
 			{
 				$color = 'blue';
-				$title = 'XMP-Tag, sollte nicht ver&auml;ndert werden!';
+				$title = 'XMP-Tag';
 			}
-			
 			ELSE
 			{
 				$color = 'black';
-				$title = 'sonstige Angabe, sollte nicht ver&auml;ndert werden!';
+				$title = 'sonstige Angabe';
 			}
-
+			
 			//Uebersetzung des Metadaten-Feldes in die Benutzersprache:
 			$result2 = mysql_query("SELECT `$field_name` FROM $table20 WHERE lang = '$lang'");
-			@$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated; in die Sprache des angemeldeten Users uebersetzter Feldname
+			@$fnt = mysql_result($result2, isset($i2), `$field_name`); // $fnt: field_name_translated
+			
 			if($fnt != '')
 			{
 				$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$fnt."</a></TD>
 				<TD class='tdschmal'>
 				<div id='$lfdnr'>
-				<INPUT TYPE=CHECKBOX $checked name='cb' value='$writable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
+				<INPUT TYPE=CHECKBOX $checked name='cb' value='$viewable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
 				</div>
 				</TD>";
 			}
@@ -247,7 +245,7 @@ FOR($r='0'; $r<$rows; $r++)
 				$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$field_name."</a></TD>
 				<TD class='tdschmal'>
 				<div id='$lfdnr'>
-				<INPUT TYPE=CHECKBOX $checked name='cb' value='$writable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
+				<INPUT TYPE=CHECKBOX $checked name='cb' value='$viewable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
 				</div>
 				</TD>";
 			}
@@ -268,7 +266,7 @@ echo "
 	<div class='page' id='page'>
 	
 		<div class='head' id='head'>
-			pic2base :: Meta-Daten-Freigabe <span class='klein'>(User: ".$username.")</span>
+			pic2base :: Meta-Daten-Ansicht <span class='klein'>(User: ".$username.")</span>
 		</div>	
 		
 		<div class='navi' id='navi'>
@@ -290,6 +288,7 @@ echo "
 		</div>
 	
 	</div>
+
 </DIV>
 </CENTER>
 </BODY>

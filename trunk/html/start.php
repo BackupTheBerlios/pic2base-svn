@@ -8,6 +8,7 @@ else
 {
 	$uid = $_COOKIE['uid'];
 }
+$actual_time = time();
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,36 +16,22 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="Eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../css/format2.css'>
+	<link rel=stylesheet type="text/css" href='../css/tooltips.css'>
 	<link rel="shortcut icon" href="../share/images/favicon.ico">
-	<style type="text/css">
-	<!--
-	.tablenormal	{
-			width:450px;
-			margin-left:175px;
-			}
-			
-	.trflach	{
-			height:3px;
-			background-color:#FF9900
-			}
-			
-	.tdleft	{
-			width:120px;
-			text-align:left;
-			}
-			
-	.tdright	{
-			width:280px;
-			text-align:left;
-			}
-	-->
-	</style>
+	<script language="javascript" type="text/javascript" src="../share/functions/ShowPicture.js"></script>
+	<script language="JavaScript" src="../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../share/functions/jquery-1.8.2.min.js"></script>
+  <script language="JavaScript">
+  	jQuery.noConflict();
+	jQuery(document).ready(checkWindowSize);
+	jQuery(window).resize(checkWindowSize); 
+  </script>
 </HEAD>
 
-<script language="javascript" type="text/javascript" src="../share/functions/ShowPicture.js"></script>
+
 <script language="JavaScript">
 <!--
 function delAllMetadata(uid)
@@ -55,9 +42,7 @@ function delAllMetadata(uid)
 -->
 </SCRIPT>
 
-<BODY LANG="de-DE" scroll = "auto">
-
-<CENTER>
+<BODY>
 
 <DIV Class="klein">
 
@@ -67,7 +52,7 @@ function delAllMetadata(uid)
  * Project: pic2base
  * File: start.php
  *
- * Copyright (c) 2006 - 2012 Klaus Henneberg
+ * Copyright (c) 2006 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -82,6 +67,7 @@ include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
+include $sr.'/bin/css/initial_layout_settings.php';
 
 IF(array_key_exists('check',$_GET))
 {
@@ -95,7 +81,7 @@ if(!isset($hinweis))
 {
 	$hinweis = '';
 }
-
+/*
 //===================================================================================================
 // Zur Performance-Optimierung wird ab Version 0.60 eine neue DB-Struktur verwendet
 // In dieser befindet sich der Inhalt der bisherigen Tabellen pictures, meta_data und locations zusammen
@@ -114,37 +100,49 @@ ELSE
 	//echo "Die neue DB-Struktur ist bereits vorhanden.<BR><BR>";
 } 
 //===================================================================================================
-
+*/
 //wenn angemeldeter User Mitgl. der Admin-Gruppe ist, Pruefung, ob eine neuere Version verfuegbar ist und Kontrolle, ob Bilder zum Loeschen vorliegen:
 IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 {
-	$file1 = 'http://www.pic2base.de/includes/conf.inc.php';
-	@$fh = fopen($file1,'r');
-	IF(!$fh)
+	$last_checktime = $_COOKIE['last_check'];
+	$diff = $actual_time - $last_checktime;
+	//nur, wenn die Zeitdifferenz zw. letztem Software-Check und dem folgenden Seitenaufruf / Seitengroessen-Aenderung groesser als 300 Sekunden ist, wird erneut auf Updates geprueft:
+	if($diff > 300)
 	{
-		$ol_text = "";
-		$online_hinweis = "Es konnte keine &Uuml;berpr&uuml;fung auf Online-Updates erfolgen.<BR>M&ouml;glicherweise haben Sie keinen Internet-Zugang.";
-	}
-	ELSE
-	{
-		@$html = join('',file($file1));
-		$needle_1 = "aktuelle Version:<BR>";
-		$var1 = stristr($html,$needle_1);
-		$var2 = substr($var1,21,6);
-		$V2 = str_replace('.','',$var2);
-		$install_ver = substr($version,0,6);
-		$IV = str_replace('.','',$install_ver);
-		//echo "verwendete Version: ".$install_ver." (".$IV."); aktuelle Version: ".$var2." (".$V2.")<BR>";
-		$ol_text = "Online-Updates:";
-		IF($V2 > $IV)
+		setcookie('last_check',$actual_time,0,'/');
+		$file1 = 'http://www.pic2base.de/includes/conf.inc.php';
+		@$fh = fopen($file1,'r');
+		IF(!$fh)
 		{
-			$online_hinweis = "Es ist ein Online-Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
+			$ol_text = "";
+			$online_hinweis = "Es konnte keine &Uuml;berpr&uuml;fung auf Online-Updates erfolgen.<BR>M&ouml;glicherweise haben Sie keinen Internet-Zugang.";
 		}
 		ELSE
 		{
-			$online_hinweis = "<FONT COLOR='green'>Es sind keine Online-Updates verf&uuml;gbar.</font>";
+			@$html = join('',file($file1));
+			$needle_1 = "aktuelle Version:<BR>";
+			$var1 = stristr($html,$needle_1);
+			$var2 = substr($var1,21,6);
+			$V2 = str_replace('.','',$var2);
+			$install_ver = substr($version,0,6);
+			$IV = str_replace('.','',$install_ver);
+			//echo "verwendete Version: ".$install_ver." (".$IV."); aktuelle Version: ".$var2." (".$V2.")<BR>";
+			$ol_text = "Online-Updates:";
+			IF($V2 > $IV)
+			{
+				$online_hinweis = "Es ist ein Online-Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
+			}
+			ELSE
+			{
+				$online_hinweis = "<FONT COLOR='green'>Es sind keine Online-Updates verf&uuml;gbar.</font>";
+			}
+			fclose($fh);
 		}
-		fclose($fh);
+	}
+	else
+	{
+		$ol_text = '';
+		$online_hinweis = '';
 	}
 	// Der DB-Wartungs-Hinweis wird falsch angezeigt, wenn von 0.60.3 auf 0.60.4 aktualisiert werden soll, da das Feld 'aktiv' vor der Aktualisierung noch nicht vorhanden ist,
 	// auf der Startseite aber verwendet werden soll. Deshalb erfolgt hier die besondere Behandlung:
@@ -356,334 +354,344 @@ ELSE
 $result4 = mysql_query("SELECT * FROM $table2 WHERE ranking <>'' AND ranking >'0' AND aktiv = '1' ORDER BY ranking DESC LIMIT 10");
 @$num4 = mysql_num_rows($result4);
 
-echo "<div class='page'>
-
-	<p id='kopf'>pic2base :: Startseite <span class='klein'>(User: ".$username.", ID: ".$uid.")</span></p>
+echo "<div class='page' id='page'>
 	
-	<div class='navi' style='clear:right;'>
-		<div class='menucontainer'>";
-		createNavi0($uid);
-		echo "</div>
-	</div>
+		<div class='head' id='head'>
+		pic2base :: Startseite <span class='klein'>(User: ".$username.", ID: ".$uid.")</span>
+		</div>
 	
-	<div class='content'>
-	<span style='font-size:14px;'>";
-	//$num2		Summe der Bilder des Users
-	//$m		Dateien im Download-Ordner
-	//$n		Dateien im Upload-Ordner
-	//$num_pic	Bilder ohne Kat-Zuweisung
-	//echo $m.", ".$n.", ".$num2.", ".$num_pic.", ".$num_user."<BR>";
+		<div class='navi' id='navi'>
+			<div class='menucontainer'>";
+			createNavi0($uid);
+			echo "</div>
+		</div>
 	
-	IF($num_pic > '0' OR $n > '0' OR $m > '0' OR $num2 > '0' OR $num_user > '2')
-	{
-		$p_info = pathinfo($_SERVER['PHP_SELF']);
-		//$file_name = $p_info['basename'];
-		echo "<BR><CENTER>
-			<TABLE class='liste1' border='0'>
-			<tbody>
+		<div class='content' id='content'>
+		<span style='font-size:14px;'>";
+		//$num2		Summe der Bilder des Users
+		//$m		Dateien im Download-Ordner
+		//$n		Dateien im Upload-Ordner
+		//$num_pic	Bilder ohne Kat-Zuweisung
+		//echo $m.", ".$n.", ".$num2.", ".$num_pic.", ".$num_user."<BR>";
+		
+		IF($num_pic > '0' OR $n > '0' OR $m > '0' OR $num2 > '0' OR $num_user > '2')
+		{
+			$p_info = pathinfo($_SERVER['PHP_SELF']);
+			//$file_name = $p_info['basename'];
+			//echo "Z. 362: ".$actual_time.", ".$last_checktime;
+			echo "<center>
+				<TABLE class='liste1' border='0' style='margin-top:30px;'>
+				<tbody>
+				
+				<TR class='normal' style='height:3px;'>
+				<TD class='normal' align='center' bgcolor='darkred' colspan='10'>
+				</TD>
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' style='height:50px;' colspan='3'></TD>
+				<TD class='normal' align='center' style='height:50px;' colspan='7'>
+				<p style='color:RGB(80,80,80); text-align:left; padding-left:0px;'>Informationen zum Datenbestand:</p>
+				</TD>
+				</TR>
+				
+				<TR class='normal' style='height:3px;'>
+				<TD class='normal' align='center' bgcolor='darkred' colspan='10'></TD>
+				</TR>
+				
+				<tr class='normal'>
+				<td class='normal' align='center' colspan='10'>&nbsp;</TD>
+				</TR>
+				
+				<tr class='normal'>
+	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Gesamter Datenbestand:</TD>
+				<td class='normal' align='left' valign='top' colspan='7'>".$hinweis10."</TD>
+				</TR>";
+				
+				IF(hasPermission($uid, 'addpic', $sr))
+				{
+					echo "
+					<tr class='normal'>
+		 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Ihr Datenbestand:</TD>
+					<td class='normal' align='left' valign='top' colspan='7'>".$hinweis0."</TD>
+					</TR>";
+				}
+				ELSE
+				{
+					echo "
+					<tr class='normal'>
+		 			<TD class='normal' align='left' valign='top' width='243' colspan='3'><BR></TD>
+					<td class='normal' align='left' valign='top' colspan='7'><BR></TD>
+					</TR>";
+				}
+				echo "
+				<tr class='normal'>
+				<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
+				</tr>";
+	
 			
-			<TR class='normal' style='height:3px;'>
-			<TD class='normal' align='center' bgcolor='#FF9900' colspan='10'>
-			</TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD class='normal' align='center' style='height:50px;' colspan='3'></TD>
-			<TD class='normal' align='center' style='height:50px;' colspan='7'>
-			<p style='color:RGB(80,80,80); text-align:left; padding-left:0px;'>Informationen zum Datenbestand:</p>
-			</TD>
-			</TR>
-			
-			<TR class='normal' style='height:3px;'>
-			<TD class='normal' align='center' bgcolor='#FF9900' colspan='10'></TD>
-			</TR>
-			
-			<tr class='normal'>
-			<td class='normal' align='center' colspan='10'>&nbsp;</TD>
-			</TR>
-			
-			<tr class='normal'>
- 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Gesamter Datenbestand:</TD>
-			<td class='normal' align='left' valign='top' colspan='7'>".$hinweis10."</TD>
-			</TR>
-			
-			";
-			
-			IF(hasPermission($uid, 'addpic', $sr))
+			IF ($num_pic > '0' AND hasPermission($uid, 'addpic', $sr))
 			{
 				echo "
 				<tr class='normal'>
-	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Ihr Datenbestand:</TD>
-				<td class='normal' align='left' valign='top' colspan='7'>".$hinweis0."</TD>
-				</TR>";
+	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Bearbeitungsstatus:</TD>
+				<TD class='normal' align='left' valign='top' colspan='7'>".$hinweis."</TD>
+				</tr>
+				
+				<tr class='normal'>
+				<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
+				</tr>";
 			}
 			ELSE
 			{
 				echo "
 				<tr class='normal'>
 	 			<TD class='normal' align='left' valign='top' width='243' colspan='3'><BR></TD>
-				<td class='normal' align='left' valign='top' colspan='7'><BR></TD>
+				<TD class='normal' align='left' valign='top' colspan='7'><BR></TD>
+				</tr>
+				
+				<tr class='normal'>
+				<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
 				</TR>";
 			}
-			echo "
-			<tr class='normal'>
-			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
-			</TR>";
-
 		
-		IF ($num_pic > '0' AND hasPermission($uid, 'addpic', $sr))
-		{
-			echo "
-			<tr class='normal'>
- 			<TD class='normal' align='left' valign='top' width='243' colspan='3'>Bearbeitungsstatus:</TD>
-			<TD class='normal' align='left' valign='top' colspan='7'>".$hinweis."</TD>
-			</TR>
-			
-			<tr class='normal'>
-			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
-			</TR>";
-		}
-		ELSE
-		{
-			echo "
-			<tr class='normal'>
- 			<TD class='normal' align='left' valign='top' width='243' colspan='3'><BR></TD>
-			<TD class='normal' align='left' valign='top' colspan='7'><BR></TD>
-			</TR>
-			
-			<tr class='normal'>
-			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
-			</TR>";
-		}
-	
-		IF($n > '0' AND hasPermission($uid, 'addpic', $sr))
-		{
-			echo "
-			<Form name='folder' method='post' action='erfassung/stapel2.php'>
-			
-			<tr class='normal' style='height:25px;'>
-			<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
-			<td class='normal' align='left' valign='top' colspan='7'>".$hinweis2."</TD>
-			</TR>
-			
-			<TR>";
-			if($warning == '')
-			{
-				echo "<TD class='normal' align='center' colspan='10'><INPUT type='submit' name='upload' value='Upload starten'></TD>";
-			}
-			else
-			{
-				echo "<TD class='normal' align='left' colspan='3'></td>
-				<TD class='normal' align='left' colspan='7'><b><u>Bitte korrigieren Sie die oben genannten Probleme!</u></b></TD>";
-			}
-			echo "
-			</TR>
-			
-			<INPUT type='hidden' name='ordner' value='$ftp_path/$uid/uploads' size='70'>
-			
-			<tr class='normal'>
-			<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;
-			</TD>
-			</TR>
-			
-			</FORM>";
-		}
-		ELSE
-		{
-			IF(hasPermission($uid, 'addpic', $sr))
+			IF($n > '0' AND hasPermission($uid, 'addpic', $sr))
 			{
 				echo "
-				<TR class='normal' style='height:15px;'>
+				<Form name='folder' method='post' action='erfassung/stapel2.php'>
+				
+				<tr class='normal' style='height:25px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
-				<td class='normal' align='left' valign='top' colspan='7' style='color:green'>Ihr Upload-Ordner ist leer.</TD>
+				<td class='normal' align='left' valign='top' colspan='7'>".$hinweis2."</TD>
 				</TR>
 				
-				<TR>
-				<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
+				<TR>";
+				if($warning == '')
+				{
+					echo "<TD class='normal' align='center' colspan='10'><INPUT type='submit' name='upload' value='Upload starten'></TD>";
+				}
+				else
+				{
+					echo "<TD class='normal' align='left' colspan='3'></td>
+					<TD class='normal' align='left' colspan='7'><b><u>Bitte korrigieren Sie die oben genannten Probleme!</u></b></TD>";
+				}
+				echo "
 				</TR>
 				
-				<INPUT type='hidden' name='ordner' value='$ftp_path/$uid/uploads' size='70' readonly>
+				<INPUT type='hidden' name='ordner' value='$ftp_path/$uid/uploads' size='70'>
 				
-				<TR class='normal'>
-				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
-				</TR>";
+				<tr class='normal'>
+				<td class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;
+				</TD>
+				</TR>
+				
+				</FORM>";
 			}
 			ELSE
 			{
-				echo "
-				<TR class='normal' style='height:15px;'>
-				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
-				<td class='normal' align='left' valign='top' colspan='7' style='color:green'><BR></TD>
-				</TR>
-				
-				<TR>
-				<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
-				</TR>
-				
-				<TR class='normal'>
-				<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
-				</TR>";
+				IF(hasPermission($uid, 'addpic', $sr))
+				{
+					echo "
+					<TR class='normal' style='height:15px;'>
+					<TD class='normal' align='left' valign='top' colspan='3'>Uploads:</TD>
+					<td class='normal' align='left' valign='top' colspan='7' style='color:green'>Ihr Upload-Ordner ist leer.</TD>
+					</TR>
+					
+					<TR>
+					<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
+					</TR>
+					
+					<INPUT type='hidden' name='ordner' value='$ftp_path/$uid/uploads' size='70' readonly>
+					
+					<TR class='normal'>
+					<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
+					</TR>";
+				}
+				ELSE
+				{
+					echo "
+					<TR class='normal' style='height:15px;'>
+					<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
+					<td class='normal' align='left' valign='top' colspan='7' style='color:green'><BR></TD>
+					</TR>
+					
+					<TR>
+					<TD class='normal' align='center' colspan='10' style='height:30px;'><BR></TD>
+					</TR>
+					
+					<TR class='normal'>
+					<TD class='normal' align='center' style='height:20px;' colspan='10'>&nbsp;</TD>
+					</TR>";
+				}
 			}
-		}
-		
-		IF($m > '0' AND (hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($uid, $sr))
-		{
-			$download_path = 'ftp://'.$username."@".$_SERVER['SERVER_NAME'].'/downloads/';
-			$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$uid.'/downloads/';
-			//echo $download_path;
-			echo "
-			<tr class='normal' style='height:30px;'>
-			<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
-			<td class='normal' align='left' valign='top' colspan='7' style='color:red';>".$hinweis3."
-			<a href=".$download_path." target='_blank'>".$download_path."</a>
-			</style></TD>
-			</TR>
 			
-			<TR class='normal'>
-			<TD class='normal' align='left' valign='top' colspan='3'></TD>
-			<TD class='normal' align='left' colspan='7'>
-			<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$uid\")'>
-			</TD>
-			</TR>";
-		}
-		ELSE
-		{
-			IF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($uid, $sr))
-			{	
+			IF($m > '0' AND (hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($uid, $sr))
+			{
+				$download_path = 'ftp://'.$username."@".$_SERVER['SERVER_NAME'].'/downloads/';
+				$html_path = 'http://'.$_SERVER['SERVER_NAME'].$inst_path."/pic2base/userdata/".$uid.'/downloads/';
+				//echo $download_path;
 				echo "
 				<tr class='normal' style='height:30px;'>
 				<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
-				<TD class='normal' align='left' valign='top' colspan='7' style='color:green'>Ihr Download-Ordner ist leer.</style></TD>
+				<td class='normal' align='left' valign='top' colspan='7' style='color:red';>".$hinweis3."
+				<a href=".$download_path." target='_blank'>".$download_path."</a>
+				</style></TD>
 				</TR>
 				
 				<TR class='normal'>
-				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
-				</TR>";
-			}
-			ELSEIF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND directDownload($uid, $sr))
-			{
-				echo "
-				<tr class='normal' style='height:30px;'>
-				<TD class='normal' align='left' valign='top' colspan='3'>Download-Modus:</TD>
-				<TD class='normal' align='left' valign='top' colspan='7' style='color:green'>Direkter Download</style></TD>
-				</TR>
-				
-				<TR class='normal'>
-				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
+				<TD class='normal' align='left' valign='top' colspan='3'></TD>
+				<TD class='normal' align='left' colspan='7'>
+				<INPUT type='button' tabindex='1' VALUE='Hier klicken, um alle Meta-Informationen aus diesen Dateien vor dem Download zu entfernen' onClick='delAllMetadata(\"$uid\")'>
+				</TD>
 				</TR>";
 			}
 			ELSE
 			{
-				echo "
-				<tr class='normal' style='height:30px;'>
-				<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
-				<TD class='normal' align='left' valign='top' colspan='7' style='color:green'><BR></style></TD>
+				IF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND !directDownload($uid, $sr))
+				{	
+					echo "
+					<tr class='normal' style='height:30px;'>
+					<TD class='normal' align='left' valign='top' colspan='3'>Downloads:</TD>
+					<TD class='normal' align='left' valign='top' colspan='7' style='color:green'>Ihr Download-Ordner ist leer.</style></TD>
+					</TR>
+					
+					<TR class='normal'>
+					<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
+					</TR>";
+				}
+				ELSEIF((hasPermission($uid, 'downloadmypics', $sr) OR hasPermission($uid, 'downloadallpics', $sr)) AND directDownload($uid, $sr))
+				{
+					echo "
+					<tr class='normal' style='height:30px;'>
+					<TD class='normal' align='left' valign='top' colspan='3'>Download-Modus:</TD>
+					<TD class='normal' align='left' valign='top' colspan='7' style='color:green'>Direkter Download</style></TD>
+					</TR>
+					
+					<TR class='normal'>
+					<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
+					</TR>";
+				}
+				ELSE
+				{
+					echo "
+					<tr class='normal' style='height:30px;'>
+					<TD class='normal' align='left' valign='top' colspan='3'><BR></TD>
+					<TD class='normal' align='left' valign='top' colspan='7' style='color:green'><BR></style></TD>
+					</TR>
+					
+					<TR class='normal'>
+					<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
+					</TR>";
+				}
+			}
+			
+			echo "	<TR class='normal' style='height:35px;'>
+				<TD class='normal' align='left' valign='top' colspan='3'>".$ol_text."</TD>
+				<TD class='normal' align='left' valign='top' colspan='7'>".$online_hinweis."</TD>
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='left' valign='top' colspan='3'>".$loesch_text."</TD>
+				<TD class='normal' align='left' valign='top' colspan='7'>".$loesch_hinweis."</TD>
 				</TR>
 				
 				<TR class='normal'>
 				<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
-				</TR>";
-			}
+				</TR>
+			
+				<TR class='normal' style='height:3px;'>
+				<TD class='normal' align='center' bgcolor='darkred' colspan='10'>
+				</TD>
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' colspan='10'>&nbsp;
+				</TD>
+				</TR>
+				
+				<tr class='normal'>
+				<td class='normal' align='left' colspan='3'>Die pic2base - TopTen:</TD>
+				<td class='normal' align='center' colspan='7'></TD>
+				</TR>
+				
+				<tr class='normal'>
+				<td class='normal' align='center' colspan='10'>&nbsp;
+				</TD>
+				</TR>
+				
+				<tr class='normal'>";
+				FOR($i4='0'; $i4<$num4; $i4++)
+				{
+					$file = mysql_result($result4, $i4, 'FileNameHQ');
+					$ranking = mysql_result($result4, $i4, 'ranking');
+					//$bild = $pic_hq_path."/".$file;
+					$bild = "http://".$_SERVER['SERVER_NAME']."".$inst_path."/pic2base/images/vorschau/hq-preview/".$file;
+					$param = getimagesize($pic_hq_path."/".$file);
+					$width = $param[0];
+					$height = $param[1];
+					//echo $bild;
+					$hoehe = 40;
+					$breite = $hoehe / $height * $width;
+					
+					//echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><div class='shadow5'><div class='shadow4'><div class='shadow3'><div class='shadow2'><div class='shadow'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0'></div></div></div></div></div></a></TD></span>";
+					echo "
+					<td class='normal' style='width:80px;'align='center'>
+					<div id='tooltip3'>
+						<a href='' style='text-decoration:none';><div class='shadow5'><div class='shadow4'><div class='shadow3'><div class='shadow2'><div class='shadow'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0', title='$ranking Downloads'></div></div></div></div></div>
+						<span style='text-align:left;'>
+						<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', height='400', border='0'>
+						</span>
+						</a>
+					</div>
+					</td>";
+				}
+				//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
+				FOR($x='0'; $x<(10-$num4); $x++)
+				{
+					echo "<TD class='normal' style='width:80px;'></TD>";
+				}
+				
+				echo "
+				</TR>
+				
+				<TR class='normal'>
+				<TD class='normal' align='center' colspan='10'>&nbsp;
+				</TD>
+				</TR>
+				
+				<TR class='normal' style='height:3px;'>
+				<TD class='normal' align='center' bgcolor='darkred' colspan='10'>
+				</TD>
+				</TR>
+				
+				</TBODY>
+				</TABLE>
+				";
+		}
+		ELSE
+		{
+			//so lange keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
+			echo "<p style='margin-top:120px; margin-left:10px; text-align:center'>";
+			checkSoftware($sr);
+			echo "</p>";
+	//		echo "</p><br style='clear:both;' />";
 		}
 		
-		echo "	<TR class='normal' style='height:35px;'>
-			<TD class='normal' align='left' valign='top' colspan='3'>".$ol_text."</TD>
-			<TD class='normal' align='left' valign='top' colspan='7'>".$online_hinweis."</TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD class='normal' align='left' valign='top' colspan='3'>".$loesch_text."</TD>
-			<TD class='normal' align='left' valign='top' colspan='7'>".$loesch_hinweis."</TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD class='normal' align='center' colspan='10'>&nbsp;</TD>
-			</TR>
+		//log-file schreiben:
+		$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+		fwrite($fh,date('d.m.Y H:i:s').": Startseite wurde von ".$username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n");
+		fclose($fh);
+		mysql_close($conn);
 		
-			<TR class='normal' style='height:3px;'>
-			<TD class='normal' align='center' bgcolor='#FF9900' colspan='10'>
-			</TD>
-			</TR>
-			
-			<TR class='normal'>
-			<TD class='normal' align='center' colspan='10'>&nbsp;
-			</TD>
-			</TR>
-			
-			<tr class='normal'>
-			<td class='normal' align='left' colspan='3'>Die pic2base - TopTen:</TD>
-			<td class='normal' align='center' colspan='7'></TD>
-			</TR>
-			
-			<tr class='normal'>
-			<td class='normal' align='center' colspan='10'>&nbsp;
-			</TD>
-			</TR>
-			
-			<tr class='normal'>";
-			FOR($i4='0'; $i4<$num4; $i4++)
-			{
-				$file = mysql_result($result4, $i4, 'FileNameHQ');
-				$ranking = mysql_result($result4, $i4, 'ranking');
-				//$bild = $pic_hq_path."/".$file;
-				$bild = "http://".$_SERVER['SERVER_NAME']."".$inst_path."/pic2base/images/vorschau/hq-preview/".$file;
-				$param = getimagesize($pic_hq_path."/".$file);
-				$width = $param[0];
-				$height = $param[1];
-				//echo $bild;
-				$hoehe = 40;
-				$breite = $hoehe / $height * $width;
-				
-				echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><div class='shadow5'><div class='shadow4'><div class='shadow3'><div class='shadow2'><div class='shadow'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0'></div></div></div></div></div></a></TD></span>";
-			}
-			//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
-			FOR($x='0'; $x<(10-$num4); $x++)
-			{
-				echo "<TD class='normal' style='width:80px;'></TD>";
-			}
-			
-			echo "
-			</TR>
-			
-			<TR class='normal'>
-			<TD class='normal' align='center' colspan='10'>&nbsp;
-			</TD>
-			</TR>
-			
-			<TR class='normal' style='height:3px;'>
-			<TD class='normal' align='center' bgcolor='#FF9900' colspan='10'>
-			</TD>
-			</TR>
-			
-			</TBODY>
-			</TABLE>
-			</CENTER>";
-	}
-	ELSE
-	{
-		//so lange keine Bilder in der DB sind, wird bei jedem Start geprueft, ob alle notwendigen Applikationen verfuegbar sind! Das kann dauern...
-		echo "<p style='margin-top:120px; margin-left:10px; text-align:center'>";
-		checkSoftware($sr);
-		echo "</p><br style='clear:both;' />";
-	}
-	
-	//log-file schreiben:
-	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-	fwrite($fh,date('d.m.Y H:i:s').": Startseite wurde von ".$username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n");
-	fclose($fh);
-	mysql_close($conn);
-	
-	echo "</span>
-	</p>
+		echo "</span>	
+		</div>
+		
+		<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
 	
 	</div>
-	<br style='clear:both;' />
-
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
-
-</div>
-</DIV>
-</CENTER>
-</BODY>
-</HTML>";
+</div>";
 ?>
+</BODY>
+</HTML>

@@ -66,7 +66,7 @@ IF($uid === $owner)
 	echo "<FORM name='n_owner' method='post' action='change_owner_action.php'>
 	<TABLE border = '0' style='width:750px; height:400px; background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>
 	
@@ -77,7 +77,7 @@ IF($uid === $owner)
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>
 	
@@ -88,7 +88,7 @@ IF($uid === $owner)
 	
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#EEEEAA' colspan = '2'></TD>
-		<TD class='normal' bgcolor='#FF9900'></TD>
+		<TD class='normal' bgcolor='darkred'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
@@ -128,7 +128,7 @@ IF($uid === $owner)
 	
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='#EEEEAA' colspan = '2'></TD>
-		<TD class='normal' bgcolor='#FF9900'></TD>
+		<TD class='normal' bgcolor='darkred'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -145,7 +145,7 @@ IF($uid === $owner)
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>
 	</TABLE>

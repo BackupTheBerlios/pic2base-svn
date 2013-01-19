@@ -1926,16 +1926,17 @@ function checkSoftware($sr)
 	$apache_uid = posix_getuid();
 	$apache_gid = posix_getgid();
 	
-	echo "	<TABLE class='tablenormal' border='0'>
-		<TR>
-		<TD colspan='2'>Ergebnis der Software-Kontrolle:</TD>
-		</TR>
-		
-		<TR class='trflach'>
-		<TD colspan='2'></TD>
-		</TR>";
-	flush();
-	sleep(1);
+	echo "	<center>
+			<TABLE class='tablenormal' border='0'>
+			<TR>
+			<TD colspan='2'>Ergebnis der Software-Kontrolle:</TD>
+			</TR>
+			
+			<TR class='trflach'>
+			<TD colspan='2'></TD>
+			</TR>";
+//	flush();
+//	sleep(1);
 	$error_count = 0;
 	IF($et == NULL)
 	{
@@ -2029,8 +2030,8 @@ function checkSoftware($sr)
 		<TD class='tdright'><FONT COLOR='green'>ist in ".$md." installiert (Ver. ".substr($v_md,23,3).")</FONT></TD>
 		</TR>";
 	}
-	flush();
-	sleep(1);
+//	flush();
+//	sleep(1);
 	
 	// es wird kontrolliert, ob die aktuelle Version installiert ist. 
 	// Hierzu wird versucht, die p2b_version aus der Tabelle pfade auszulesen. 
@@ -2044,47 +2045,47 @@ function checkSoftware($sr)
 	$text = "";
 	IF(($p2b_version == 'NULL' OR $p2b_version == '' OR $p2b_version == '0.00.0') AND ($version == '0.60.0'))
 	{
-		$text = "Es liegen Software-Updates vor.<BR>";
-		$text .= "<BR>Sie verwenden jedoch noch die Version ".$version."<BR>";
-		$text .= "Diese Version ist zu alt, um direkt ein Update auf Version ".$version." durchzuf&uuml;hren.<BR>";
+		$text = "Es liegen Software-Updates vor.<BR/>";
+		$text .= "<BR/>Sie verwenden jedoch noch die Version ".$version."<BR/>";
+		$text .= "Diese Version ist zu alt, um direkt ein Update auf Version ".$version." durchzuf&uuml;hren.<BR/>";
 		$text .= "Kontaktieren Sie f&uuml;r weitere Informationen bitte den <a href='http://www.pic2base.de/impressum1.php'>Hersteller</a>.";
 		
 	}
 	ELSEIF($p2b_version == '0.60.1' AND $version == '0.60.2')
 	{
-		$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR><BR>
-		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR><BR>
-		Klicken Sie <a href='../../html/db_update_0601_to_0602.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR>";
+		$text = "<BR/><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR/><BR/>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR/><BR/>
+		Klicken Sie <a href='../../html/db_update_0601_to_0602.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR/>";
 	}
 	ELSEIF($p2b_version == '0.60.1' AND $version > '0.60.2')
 	{
-		$text = "<BR><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR><BR>";
-		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR>
-		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR>";
-		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.2 durch.</FONT><BR>";
+		$text = "<BR/><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR/><BR/>";
+		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR/>
+		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR/>";
+		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.2 durch.</FONT><BR/>";
 	}
 	ELSEIF($p2b_version == '0.60.2' AND $version == '0.60.3')
 	{
-		$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR><BR>
-		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR><BR>
-		Klicken Sie <a href='../../html/db_update_0602_to_0603.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR>";
+		$text = "<BR/><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR/><BR/>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR/><BR/>
+		Klicken Sie <a href='../../html/db_update_0602_to_0603.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR/>";
 	}
 	ELSEIF($p2b_version == '0.60.3' AND $version == '0.60.4')
 	{
-		$text = "<BR><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR><BR>
-		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR><BR>
-		Klicken Sie <a href='../../html/db_update_0603_to_0604.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR>";
+		$text = "<BR/><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR/><BR/>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR/><BR/>
+		Klicken Sie <a href='../../html/db_update_0603_to_0604.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR/>";
 	}
 	ELSEIF($p2b_version == '0.60.2' AND $version > '0.60.3')
 	{
-		$text = "<BR><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR><BR>";
-		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR>
-		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR>";
-		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.3 durch.</FONT><BR>";
+		$text = "<BR/><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR/><BR/>";
+		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR/>
+		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR/>";
+		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.3 durch.</FONT><BR/>";
 	}
 	ELSEIF($p2b_version == $version)
 	{
-		$text = "<BR><FONT COLOR='green'>Es ist kein Datenbank-Update erforderlich.</FONT><BR>";
+		$text = "<BR/><FONT COLOR='green'>Es ist kein Datenbank-Update erforderlich.</FONT><BR/>";
 	}
 	
 	//Speicherung der Software-Pfade in der Tabelle 'pfade':
@@ -2095,9 +2096,13 @@ function checkSoftware($sr)
 	VALUES ('$dc', '$conv', '$et', '$gb', '$md', '$apache_uid', '$apache_gid', '$p2b_version')");
 	
 	echo "	<TR class='trflach'>
-		<TD colspan='2'></TD>
-		</TR>
-		</TABLE>";
+			<TD colspan='2'></TD>
+			</TR>
+			</TABLE>
+			";
+	
+	//#######################################################################
+	
 	IF($error_count !== 0)
 	{
 		echo "<CENTER>
@@ -2128,7 +2133,7 @@ function checkSoftware($sr)
 			echo "<CENTER>
 			<TABLE style='width:500px; text-align:center;'>
 			<TR>
-			<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR><font color='red'>Legen Sie nun bitte den ersten Benutzer mit Admin-Berechtigung an.</font><BR><BR>
+			<TD><BR/><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><BR/>".$text."<BR/><font color='red'>Legen Sie nun bitte den ersten Benutzer mit Admin-Berechtigung an.</font><BR/><BR/>
 			<input type='button' value='Ersten Benutzer anlegen' onClick=\"location.href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminadduser'\">
 			</TD>
 			</TR>
@@ -2137,12 +2142,12 @@ function checkSoftware($sr)
 		}
 		elseif($num3 > 1 AND $num4 == 0)		//wenn es mehrere User gibt, aber keine Bilder in der DB
 		{
-			$text = "<BR>Beginnen Sie nun bitte mit der Datenerfassung, indem Sie Bilder per Einzelbild-Erfassung in die Datenbank stellen<BR>
-			oder den Weg &uuml;ber den <a href='$inst_path/pic2base/bin/html/help/help1.php?page=1'>FTP-Upload</a> w&auml;hlen.<BR>";
+			$text = "<BR/>Beginnen Sie nun bitte mit der Datenerfassung, indem Sie Bilder per Einzelbild-Erfassung in die Datenbank stellen<BR/>
+			oder den Weg &uuml;ber den <a href='$inst_path/pic2base/bin/html/help/help1.php?page=1'>FTP-Upload</a> w&auml;hlen.<BR/>";
 			 echo "<CENTER>
 			<TABLE style='width:500px; text-align:center;'>
 			<TR>
-			<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR>
+			<TD><BR/><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><BR/>".$text."<BR/>
 			<input type='button' value='Zur Einzelbild-Erfassung' onClick=\"location.href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'\"> 
 			</TD>
 			</TR>
@@ -2151,17 +2156,20 @@ function checkSoftware($sr)
 		}
 		elseif($num3 > 1 AND $num4 > 0)			// der Normalfall: es gibt mehrere User und es gibt bereits Bilder in der DB
 		{
+			
 			echo "<CENTER>
-			<TABLE style='width:500px; text-align:center;'>
-			<TR>
-			<TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</font><BR>".$text."<BR>
-			<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\"> 
-			</TD>
-			</TR>
-			</TABLE>
-			</CENTER>";
+					<TABLE style=\"width:500px; text-align:center;\">
+						<TR>
+							<TD><br/><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><br/>".$text."<br/>
+							<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\"/></TD>
+						</TR>
+					</TABLE>
+				</CENTER>";
+			
 		}
 	}
+	
+	echo "</center>";
 }
 
 function directDownload($uid, $sr)

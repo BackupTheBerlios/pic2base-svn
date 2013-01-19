@@ -14,13 +14,20 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - DB-Wartung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
-<BODY LANG="de-DE" scroll = "auto" onLoad = 'getMissingFiles()'>
+<BODY onLoad = 'getMissingFiles()'>
 
 <CENTER>
 
@@ -67,18 +74,25 @@ if($memory_value > $memory_avail)
 $user_id = $uid;
 
 echo "
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Admin-Bereich - Datenbank-Wartung</p>
+	<div class='head' id='head'>
+		pic2base :: Admin-Bereich - Datenbank-Wartung
+	</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		//echo $navigation."
 		 include $sr.'/bin/html/admin/adminnavigation.php';
 		echo "</div>
 	</div>
 	
-	<div id='spalte1'>";
+	<div id='spalte1'>
+		<font color='#efeff7'>
+			<p  style='margin-top:20px;'>.</p>
+		</font>
+		<fieldset style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Status der Wartungsarbeiten</legend>";
 //########################################################################################################
 		echo "<p style='margin-top:50px;'><u>Test 1: Kontrolle auf mehrfache Kategoriezuweisungen</u></p>";
 		
@@ -124,18 +138,28 @@ echo "
 		<p id='meldung_0' style='color:green; margin-top:50px;'>".$meldung_0."</p>
 	
 		<p id='meldung_1' style='color:green; margin-top:50px;'>".$meldung_1."</p>
+		</fieldset>
 	</div>	
 		
 	<DIV id='spalte2'>
-		<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;'>Hinweis:<BR><BR>
-		Auf der linken Seite sehen Sie das Ergebnis der &Uuml;berpr&uuml;fung.<BR><BR>
-		Bevor Sie weitere Schritte unternehmen, sollten Sie abschlie&szlig;end die Doublettenpr&uuml;fung vornehmen.<BR>
-		Dies dauert nur einen Moment, stellt aber sicher, da&szlig; Sie keine Datens&auml;tze doppelt erfa&szlig;t haben.<BR><BR>
-		Nach Abschlu&szlig; der Kontrolle klicken Sie hierzu auf diesen Button:</p>
+	
+		<font color='#efeff7'>
+			<p  style='margin-top:20px;'>.</p>
+		</font>
+		<fieldset style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Hinweis</legend>
+			Auf der linken Seite sehen Sie das Ergebnis der &Uuml;berpr&uuml;fung.<BR><BR>
+			Bevor Sie weitere Schritte unternehmen, sollten Sie abschlie&szlig;end die Doublettenpr&uuml;fung vornehmen.<BR>
+			Dies dauert nur einen Moment, stellt aber sicher, da&szlig; Sie keine Datens&auml;tze doppelt erfa&szlig;t haben.<BR><BR>
+			Nach Abschlu&szlig; der Kontrolle klicken Sie hierzu auf diesen Button:
+		</fieldset>
+		
 		<p align='center' id='button'><input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'></p>
 	</DIV>
 	
-	<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
 
 </div>
 </CENTER>

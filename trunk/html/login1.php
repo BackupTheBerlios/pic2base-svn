@@ -3,13 +3,19 @@
 
 <head>
   <title>Willkommen bei pic2base</title>
-  <meta name="GENERATOR" content="Quanta Plus">
+  <meta name="GENERATOR" content="eclipse">
   <meta name="AUTHOR" content="k. henneberg">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel=stylesheet type='text/css' href='../css/format1.css'>
-  <link rel="stylesheet" href="../css/lightbox.css" type="text/css" media="screen" />
+  <link rel=stylesheet type='text/css' href='../css/format2.css'>
   <link rel="shortcut icon" href="../share/images/favicon.ico">
   <meta http-equiv="Refresh" content="200; URL=../../index.php">
+  <script language="JavaScript" src="../share/functions/resize_elements.js"></script>
+  <script language="JavaScript" src="../share/functions/jquery-1.8.2.min.js"></script>
+  <script language="JavaScript">
+  	jQuery.noConflict();
+	jQuery(document).ready(checkWindowSize);
+	jQuery(window).resize(checkWindowSize); 
+  </script>
 </head>
 
 <body>
@@ -20,7 +26,7 @@
  * Project: pic2base
  * File: login1.php
  *
- * Copyright (c) 2005 - 2012 Klaus Henneberg
+ * Copyright (c) 2005 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Klaus Henneberg
@@ -31,13 +37,13 @@
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-
 echo "
 <DIV Class='klein'>";
 $ACTION = $_SERVER['PHP_SELF'];
 $link = "http://{$_SERVER['SERVER_NAME']}$ACTION";
 include '../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/css/initial_layout_settings.php';
 
 IF($cr == NULL OR $inst_path == '/')
 {
@@ -52,47 +58,50 @@ IF($cr == NULL OR $inst_path == '/')
 }
 
 echo "
-	<div class='page'>
+	<div class='page' id='page'>
 	
-		<p id='kopf'>pic2base :: Login</p>
+		<div class='head' id='head'>
+		pic2base :: Anmeldung
+		</div>
 		
-		<div class='navi' style='clear:right;'>
+		<div class='navi' id='navi'>
 			<div class='menucontainer'>
 			<BR>
 			</div>
 		</div>
 		
-		<div class='content'>
-		<p style='margin:70px 0px; text-align:center'>
-	
-		<FORM action='../pwd_check.php' method='POST' name='pwd'>
-		<p class='mittel' align='left'>Bitte geben Sie hier Ihren Benutzernamen und Ihr Passwort ein:</p>
-		<table class='schmal' border='0' align='center'>
-		<tbody>
-		<tr>
-		<td class='normal'>Benutzername:  </td>
-		<td class='normal'><input type='text' class='Feld150' name='username' size=12 tabindex='1'></td>
-		</tr>
-		<tr>
-		<td class='normal'>Ihr Passwort:  </td>
-		<td class='normal'><input type='password' class='Feld150' name='passwd' size=12 tabindex='2'></td>
-		</tr>
-		<tr>
-		<td class='normal'><BR></td>
-		<td class='normal'></td>
-		</tr>
-		<tr>
-		<td class='normal'><input type='submit' value='Login' tabindex='3' style='width:80px;'></td>
-		<td class='normal'><INPUT TYPE=button VALUE='Abbrechen' onclick=\"location.href='../../index.php'\" tabindex='4' style='width:80px;'></td>
-		</tr>
-		</tbody>
-		</table>
-		</FORM>
-		</p>
+		<div class='content' id='content'>
+			<p style='margin:100px 0px; text-align:center'>
+		
+			<FORM action='../pwd_check.php' method='POST' name='pwd'>
+			<p class='mittel' align='center'>Bitte geben Sie hier Ihren Benutzernamen und Ihr Passwort ein:</p>
+			<table class='schmal' border='0' align='center' style='margin-top:50px;'>
+			<tbody>
+			<tr>
+			<td class='normal'>Benutzername:  </td>
+			<td class='normal'><input type='text' class='Feld150' name='username' size=12 tabindex='1'></td>
+			</tr>
+			<tr>
+			<td class='normal'>Ihr Passwort:  </td>
+			<td class='normal'><input type='password' class='Feld150' name='passwd' size=12 tabindex='2'></td>
+			</tr>
+			<tr>
+			<td class='normal'><BR></td>
+			<td class='normal'></td>
+			</tr>
+			<tr>
+			<td class='normal'><input type='submit' value='Anmelden' tabindex='3' style='width:80px;'></td>
+			<td class='normal'><INPUT TYPE=button VALUE='Abbrechen' onclick=\"location.href='../../index.php'\" tabindex='4' style='width:80px;'></td>
+			</tr>
+			</tbody>
+			</table>
+			</FORM>
+			</p>
 		</div>
-		<br style='clear:both;' />
 	
-		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+		<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
 	
 	</div>
 </DIV>";
