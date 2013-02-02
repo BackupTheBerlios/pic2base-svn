@@ -32,11 +32,15 @@ else
 	</script>
 </HEAD>
 
-<BODY LANG="de-DE">
-<CENTER>
-<DIV Class="klein">
-
 <?php
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
+
+echo "<BODY onLoad=\"getKatTreeview('0','0','kat','0','edit','edit_beschreibung')\">
+<CENTER>
+<DIV Class='klein'>";
 
 /*
  * Project: pic2base
@@ -48,10 +52,6 @@ else
  * Dipl.-Ing. Klaus Henneberg
  * 38889 Blankenburg, BRD
  */
-
-include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/main_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
@@ -113,8 +113,8 @@ echo "
 	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 			createNavi3_1($uid);
-			echo "<INPUT type='submit' id='button3' value='Speichern'>
-			<INPUT type='button' id='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
+			echo "<INPUT type='submit' class='button3' id='button3' value='Speichern'>
+			<INPUT type='button' class='button3a' id='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
 		</div>
 	</div>
 	
@@ -127,9 +127,6 @@ echo "
 				$modus='edit';
 				$mod='kat';
 				$base_file = 'edit_beschreibung';
-				//$modus='complete_view';
-				//echo $ID;
-				include $sr.'/bin/share/kat_treeview.php';
 				echo "
 				</div>
 			</fieldset>

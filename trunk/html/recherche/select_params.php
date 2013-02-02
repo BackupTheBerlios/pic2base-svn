@@ -165,7 +165,7 @@ IF(array_key_exists('params', $_COOKIE))
 	echo "<FORM name='params'>
 	<TABLE border = '0' style='width:750px; background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>
 	
@@ -176,7 +176,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>
 	
@@ -186,8 +186,8 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>	
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
-		<TD class='normal' bgcolor='#FF9900'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -201,7 +201,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -210,7 +210,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -219,7 +219,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -228,7 +228,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -240,7 +240,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -252,7 +252,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -264,7 +264,7 @@ IF(array_key_exists('params', $_COOKIE))
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal' style='height:22px;'>
@@ -294,7 +294,7 @@ ELSE
 	echo "<FORM name='params'>
 	<TABLE border = '0' style='width:750px; background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>
 	
@@ -305,7 +305,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>
 	
@@ -315,8 +315,8 @@ ELSE
 	</TR>	
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
-		<TD class='normal' bgcolor='#FF9900'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -348,7 +348,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -369,7 +369,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -389,7 +389,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -407,7 +407,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -430,7 +430,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -446,7 +446,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -462,7 +462,7 @@ ELSE
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -502,8 +502,8 @@ echo "	<TR class='normal' style='height:180px;'>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'></TD>
-		<TD class='normal' bgcolor='#FF9900'></TD>
+		<TD class='normal' bgcolor='darkred' colspan = '2'></TD>
+		<TD class='normal' bgcolor='darkred'></TD>
 	</TR>
 	
 	<TR class='normal'>
@@ -516,7 +516,7 @@ echo "	<TR class='normal' style='height:180px;'>
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '3'>
+		<TD class='normal' bgcolor='darkred' colspan = '3'>
 		</TD>
 	</TR>";
 

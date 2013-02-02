@@ -51,39 +51,39 @@ else
 
 <style type="text/css">
 
-.page	{
+#page	{
 			width:<?php echo $page_breite; ?>;
 			height:<?php echo $page_hoehe; ?>;
 		}
 		
-.head	{
+#head	{
 			width:<?php echo $head_breite; ?>;
 		}
 		
-.navi	{
+#navi	{
 			height:<?php echo $navi_hoehe; ?>;
 		}
 		
-.content{
+#content{
 			width:<?php echo $content_breite; ?>;
 			height:<?php echo $content_hoehe; ?>;
 		}
 		
-.spalte1{
+#spalte1{
 			width:<?php echo $spalte1_breite; ?>;
 			height:<?php echo $spalte1_hoehe; ?>;
 		}
 		
-.spalte2{
+#spalte2{
 			width:<?php echo $spalte2_breite; ?>;
 			height:<?php echo $spalte2_hoehe; ?>;
 		}
 		
-.foot	{
+#foot	{
 			width:<?php echo $foot_breite; ?>;
 		}
 		
-.logframe{
+#logframe{
 			width:<?php echo $logframe_breite; ?>;
 			height:<?php echo $logframe_hoehe; ?>;
 		}

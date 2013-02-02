@@ -3,16 +3,21 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict()
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
-
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -39,6 +44,7 @@ IF ($_COOKIE['uid'])
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/permissions.php';
+include $sr.'/bin/css/initial_layout_settings.php';
 
 IF(hasPermission($uid, 'editkattree', $sr))
 {
@@ -130,21 +136,24 @@ ELSE
 	header('Location: ../../../index.php');
 }
 echo "
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base :: Admin-Bereich - Kategorie l&ouml;schen</p>
+	<div class='head' id='head'>
+		pic2base :: Admin-Bereich - Kategorie l&ouml;schen
+	</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>". $navigation."</div>
 	</div>
 	
-	<div class='content'>
-	<p style='margin:20px 0px; text-align:center'>Die folgenden Kategorien wurden gel&ouml;scht:<BR><BR>".$u_kategorie."<BR><BR>".
-	count($pic_arr)." Bildzuordnung(en) wurde(n) aufgehoben.</p>
+	<div class='content' id='content'>
+		<p style='margin:20px 0px; text-align:center'>Die folgenden Kategorien wurden gel&ouml;scht:<BR><BR>".$u_kategorie."<BR><BR>".
+		count($pic_arr)." Bildzuordnung(en) wurde(n) aufgehoben.</p>
 	</div>
-	<br style='clear:both;' />
-
-	<p id='fuss'><?php echo $cr; ?></p>
+	
+	<div class='foot' id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
 
 </div>";
 

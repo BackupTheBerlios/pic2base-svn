@@ -3,17 +3,22 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
-
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -22,7 +27,7 @@
  * Project: pic2base
  * File: kat_ausw1.php
  *
- * Copyright (c) 2003 - 2010 Klaus Henneberg
+ * Copyright (c) 2003 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -44,51 +49,66 @@ include $sr.'/bin/share/functions/main_functions.php';
 include_once $sr.'/bin/share/functions/ajax_functions.php';
 
 echo "
-<div class='page'>
+<div class='page' id='page'>
 <FORM name='kat-zuweisung' method='post' action='kat_sort_action.php'>
-	<p id='kopf'>pic2base :: Admin-Bereich - Kategorie-Sortierung</p>
 	
-	<div class='navi' style='clear:right;'>
+	<div id='head'>
+		pic2base :: Admin-Bereich - Kategorie-Sortierung
+	</div>
+	
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		createNavi5_1($uid);
-		echo "<INPUT type='submit' class='button3' value = 'Speichern'><BR>
-		<INPUT type='button' class='button3a' value='Abbrechen' OnClick='location.href=\"$inst_path/pic2base/bin/html/admin/adminframe.php\"'>
+		echo "<INPUT type='submit' class='button3' id='button3' value = 'Speichern'><BR>
+		<INPUT type='button' class='button3a' id='button3a' value='Abbrechen' OnClick='location.href=\"$inst_path/pic2base/bin/html/admin/adminframe.php\"'>
 		</div>
 	</div>
 	
 	<div  id='spalte1'>
-	<TABLE id='kat'>
-		<TR>
-		<TD>Quell-Kategorie</TD>
-		</TR>";
-	
-	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
-	$kategorie = mysql_result($result10, isset($i10), 'kategorie');
-	$kat_id_s = mysql_result($result10, isset($i10), 'kat_id');
-		
-	$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-	echo "<TR id='kat'>
-	
-		<TD id='kat1'>
-		<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
-		</TD>
-		
-		<TD id='kat2'><BR></TD>
-		
-		</TR>
-	</TABLE>
+		<fieldset style='background-color:none; margin-top:10px;'>
+		<legend style='color:blue; font-weight:bold;'>Quell-Kategorie</legend>
+			<div id='scrollbox0' style='overflow-y:scroll;'>
+				<center>
+					<TABLE class='kat'>";
+					
+						$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
+						$kategorie = mysql_result($result10, isset($i10), 'kategorie');
+						$kat_id_s = mysql_result($result10, isset($i10), 'kat_id');
+						
+						$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+						echo "<TR class='kat'>
+					
+						<TD class='kat1'>
+						<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
+						</TD>
+						
+						<TD class='kat2'><BR></TD>
+						
+						</TR>
+					</TABLE>
+				</center>
+			</div>
+		</fieldset>
 	</div>";
 //############################################################################################################################
 	
 	echo "
 	<DIV id='spalte2'>
-	<p id='elf' style='background-color:white; padding: 5px; width: 365px; margin-top: 20px; margin-left: 20px;'>Hinweis:<BR><BR>
-	W&auml;hlen Sie hier zun&auml;chst in der linken Spalte die Quell-Kategorie aus.<BR><BR>
-	Wenn Sie den entsprechenden Auswahlknopf gedr&uuml;ckt haben, erscheint in der rechten Spalte das Auswahlmen&uuml; f&uuml;r die Ziel-Kategorie.<BR><BR>
-	Wenn Sie auch diese ausgew&auml;hlt haben, best&auml;tigen Sie Ihre Auswahl mit einem Klick auf den Button \"Speichern\".<BR>
-	</p>
+		<fieldset style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Zielkategorie</legend>
+				<div id='scrollbox1' style='overflow-y:scroll;'>
+			
+				W&auml;hlen Sie hier zun&auml;chst in der linken Spalte die Quell-Kategorie aus.<BR><BR>
+				Wenn Sie den entsprechenden Auswahlknopf gedr&uuml;ckt haben, erscheint hier in der rechten Spalte das Auswahlmen&uuml; f&uuml;r die Ziel-Kategorie.<BR><BR>
+				Wenn Sie auch diese ausgew&auml;hlt haben, best&auml;tigen Sie Ihre Auswahl mit einem Klick auf den Button \"Speichern\".<BR>
+				</div>
+		</fieldset>
 	</DIV>
-<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+	
+	<div id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+	
 </div>
 </FORM>
 

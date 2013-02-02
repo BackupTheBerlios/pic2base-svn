@@ -38,11 +38,15 @@ else
 	</script>
 </HEAD>
 
-<BODY LANG="de-DE">
-<CENTER>
-<DIV Class="klein">
-
 <?php
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
+
+echo "<BODY onLoad=\"getKatTreeview('0','0','kat','0','edit','edit_bewertung')\">
+<CENTER>
+<DIV Class='klein'>";
 
 /*
  * Project: pic2base
@@ -75,10 +79,6 @@ if(!isset($ID))
 	$ID = '';
 }
 
-include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/main_functions.php';
-
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
 
@@ -106,7 +106,6 @@ echo "
 				$modus='edit';
 				$mod='kat';
 				$base_file = 'edit_bewertung';
-				include $sr.'/bin/share/kat_treeview.php';
 				echo "
 				</div>
 			</fieldset>

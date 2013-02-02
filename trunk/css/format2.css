@@ -143,9 +143,6 @@ p#fuss_right {
 	border-top:1px solid #eeeeee;
 	}
 	
-	
-	
-	
 p#kopf0 {
 	font-size: 150.01%;
 	color: white;	
@@ -156,6 +153,7 @@ p#kopf0 {
 	background-color:#7b7d8e;
 	/*background-image:url(../share/images/kopf_bg.gif); background-repeat:repeat-x;*/
 	}
+	
 p#fuss0 {
 	font-size: 75.01%;		
 	background-color:#7b7d8e;
@@ -217,7 +215,7 @@ TABLE.normal {
   
 /*Tabelle fuer Kategorie-Verwaltung; Spalte1*/
   
-TD#kat1 {
+TD.kat1 {
   		width: 340px;
   		height: 16px;
     	font-size:10pt;
@@ -230,7 +228,7 @@ TD#kat1 {
     	border-style:solid;
   	}
   
-TD#kat2 {
+TD.kat2 {
 		width: 20px;
 		height: 16px;
     	font-size:10pt;
@@ -243,7 +241,7 @@ TD#kat2 {
     	text-align: right;
   }
   
-TD#kat3 {
+TD.kat3 {
   		width: 320px;
   		height: 16px;
     	font-size:10pt;
@@ -257,7 +255,7 @@ TD#kat3 {
   	}
 
 
-TABLE#kat {
+TABLE.kat {
     	width:360px;
     	border-width:1px;
     	border-color:#DDDDFF;
@@ -270,7 +268,7 @@ TABLE#kat {
   	
 /*Tabelle fuer Kategorie-Verwaltung; Spalte2*/
   
-TD#kat1_b {
+TD.kat1_b {
   		width: 340px;
   		height: 16px;
     	font-size:10pt;
@@ -283,7 +281,7 @@ TD#kat1_b {
     	border-style:solid;
   	}
   
-TD#kat2_b {
+TD.kat2_b {
 		width: 20px;
 		height: 16px;
     	font-size:10pt;
@@ -296,7 +294,7 @@ TD#kat2_b {
     	text-align: right;
   }
   
-TD#kat3_b {
+TD.kat3_b {
   		width: 320px;
   		height: 16px;
     	font-size:10pt;
@@ -310,7 +308,7 @@ TD#kat3_b {
   	}
 
 
-TABLE#kat_b {
+TABLE.kat_b {
     	width:360px;
     	border-width:1px;
     	border-color:#DDDDFF;
@@ -323,7 +321,7 @@ TABLE#kat_b {
   	
 /*Tabelle fuar Geo-Recherche*/
   
-TD#geo {
+TD.geo {
   	width: 360px;
     	font-size:10pt;
     	font-family:Helvitica,Arial;
@@ -335,7 +333,7 @@ TD#geo {
     	border-style:solid;
   	}
 
-TD#geo1 {
+TD.geo1 {
   	width: 180px;
     	font-size:10pt;
     	font-family:Helvitica,Arial;
@@ -347,7 +345,7 @@ TD#geo1 {
     	border-style:solid;
   	}
   
-TD#geo2 {
+TD.geo2 {
 	width: 180px;
     	font-size:10pt;
     	font-family:Helvitica,Arial;
@@ -357,12 +355,12 @@ TD#geo2 {
   }
 
 
-TR#geo {
+TR.geo {
     	height:11pt;
   	}
 
 
-TABLE#geo {
+TABLE.geo {
     	width:360px;
     	border-width:1px;
     	border-color:#DDDDFF;
@@ -375,7 +373,7 @@ TABLE#geo {
   	
 /*Tabelle fuer Description-Recherche*/
   
-TD#desc {
+TD.desc {
   	width: 360px;
     	font-size:10pt;
     	font-family:Helvitica,Arial;
@@ -387,7 +385,7 @@ TD#desc {
     	border-style:solid;
   	}
 
-TD#desc1 {
+TD.desc1 {
   	width: 250px;
     	font-size:10pt;
     	font-family:Helvitica,Arial;
@@ -399,7 +397,7 @@ TD#desc1 {
     	border-style:solid;
   	}
   
-TD#desc2 {
+TD.desc2 {
 	width: 110px;
     	font-size:10pt;
     	font-family:Helvitica,Arial;
@@ -412,12 +410,12 @@ TD#desc2 {
   }
 
 
-TR#desc {
+TR.desc {
     	height:11pt;
   	}
 
 
-TABLE#desc {
+TABLE.desc {
     	width:360px;
     	border-width:1px;
     	border-color:#DDDDFF;
@@ -569,7 +567,7 @@ TABLE.liste2 {
   }
 
 /*Speichern-Button im Bearbeitungs-Bereich*/
-#button3 {
+.button3 {
     font-family: Arial, Helvetica, sans-serif;
     font-size:10pt;
     width:100px;
@@ -577,7 +575,7 @@ TABLE.liste2 {
   }
   
 /*Abbrechen-Button im Bearbeitungs-Bereich*/
-#button3a {
+.button3a {
     font-family: Arial, Helvetica, sans-serif;
     font-size:10pt;
     width:100px;

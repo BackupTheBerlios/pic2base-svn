@@ -19,24 +19,22 @@ ELSE
 	}
 }
 //########################################################################
-
-//var_dump($_COOKIE);
-IF( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )
+// gibt es eine eingestellte Bewertung?###################################
+if(!$_COOKIE['bewertung'])
 {
-	setcookie('bewertung',$_POST['bewertung']);
-}
-else if ( array_key_exists('bewertung',$_COOKIE) )
+	if( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )
 	{
-		$bewertung = $_COOKIE['bewertung'];
+		$bewertung = $_POST['bewertung'];
+		setcookie('bewertung',$_POST['bewertung']);
 	}
 	else
 	{
 		$bewertung = '';
 		setcookie('bewertung',$bewertung);
 	}
+}
+//########################################################################
 ?>
-
-
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
@@ -78,7 +76,6 @@ else if ( array_key_exists('bewertung',$_COOKIE) )
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-//include $sr.'/bin/share/functions/ajax_functions.php';
 include $sr.'/bin/css/initial_layout_settings.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");

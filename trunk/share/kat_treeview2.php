@@ -83,7 +83,7 @@ $KAT_ID = $kat_id;
 	
 	echo "
 	<center>
-	<TABLE id='kat_b'>";
+	<TABLE class='kat_b' id='kat_b'>";
 	
 	function getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color)
 	{
@@ -137,11 +137,11 @@ $KAT_ID = $kat_id;
 				//echo $kat_id_back;
 				$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 				echo "<TR style='background-color:$bg_color;'>
-					<TD id='kat1_b'>
+					<TD class='kat1_b' id='kat1_b'>
 					".$space.$img."&#160;".$kategorie."
 					</TD>
 					
-					<TD id='kat2_b'>
+					<TD class='kat2_b'>
 					<INPUT type='checkbox' name='kat$kat_id'>
 					</TD>
 					
@@ -152,11 +152,11 @@ $KAT_ID = $kat_id;
 			{
 				$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 				echo "<TR style='background-color:$bg_color;'>
-					<TD id='kat1_b'>
+					<TD class='kat1_b'>
 					".$space.$img."&#160;".$kategorie."
 					</TD>
 					
-					<TD id='kat2_b'>
+					<TD class='kat2_b'>
 					<INPUT type='checkbox' name='kat$kat_id'>
 					</TD>
 					
@@ -211,11 +211,11 @@ $KAT_ID = $kat_id;
 			//echo $kat_id_back;
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR style='background-color:$bg_color;'>
-					<TD id='kat1_b'>
+					<TD class='kat1_b'>
 					".$space.$img."&#160;".$kategorie."
 					</TD>
 					
-					<TD id='kat2_b'>
+					<TD class='kat2_b'>
 					</TD>
 					</TR>";
 			getAllElements($kat_id, $knoten_arr, $KAT_ID, $bg_color);
@@ -225,11 +225,11 @@ $KAT_ID = $kat_id;
 			//echo "Space: ".$space."|<BR>";
 			$img = "<IMG src='$inst_path/pic2base/bin/share/images/arrow.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
 			echo 	"<TR style='background-color:$bg_color;'>
-					<TD id='kat1_b'>
+					<TD class='kat1_b'>
 					".$space.$img."&#160;".$kategorie."
 					</TD>
 					
-					<TD id='kat2_b'>
+					<TD class='kat2_b'>
 					<INPUT type='checkbox' name='kat$kat_id'>
 					</TD>
 					</TR>";

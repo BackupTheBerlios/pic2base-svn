@@ -74,10 +74,8 @@ ELSE
 
 <script language="javascript" type="text/javascript" src="../../share/calendar.js"></script>
 <script language="javascript" type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
-<!-- <script language="javascript" type="text/javascript" src="../../share/functions/jquery-1.8.2.min.js"></script> -->
 
 <script language="JavaScript">
-//jQuery.noConflict();
 <!--
 
 function showAllDetails(mod, pic_id)
@@ -134,15 +132,7 @@ function rotatePictureSet(orientation, pic_id)
 }
 
 //alert("Bildhoehe: "+screen.height);
-function CloseWindow()
-{
-   //anotherWindow = window.open("", "bildfenster", "");
-   // Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
-   if (anotherWindow != null)
-   {
-   	anotherWindow.close();
-   }
-}
+
 
 function showKatInfo(kat_id)
 {
@@ -155,7 +145,6 @@ function showDiary(aufn_dat)
 	Fenster1 = window.open('../../share/edit_diary.php?aufn_dat='+aufn_dat, 'Tagebuch-Eintrag', "width=675,height=768,scrollbars,resizable=no,");
 	Fenster1.focus();
 }
-
 
 function checkValues () 
 {
@@ -174,15 +163,19 @@ function checkValues ()
 	return true;
 }
 
+function CloseWindow()
+{
+	// Wird bereits ein Bild in der "Grossansicht" angezeigt? - dann wird es geschlossen:
+	if (anotherWindow != null)
+	{
+		anotherWindow.close();
+	}
+}
 
 -->
 </script>
 
-<BODY onload="javascript:var anotherWindow; if(anotherWindow != null){CloseWindow()}">
 
-<CENTER>
-
-<DIV Class="klein">
 
 	<?php 
 	
@@ -194,7 +187,7 @@ function checkValues ()
 	{
 		$bewertung = '';
 	}
-	//echo "Kontrolle: Bewertung: ".$bewertung."<BR>";
+//	echo "Kontrolle: Bewertung: ".$bewertung."<BR>";
 	IF($bewertung == '')
 	{
 		$bewertung = '6';
@@ -203,7 +196,7 @@ function checkValues ()
 	include '../../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	include $sr.'/bin/share/functions/main_functions.php';
-//	include $sr.'/bin/css/initial_layout_settings.php';
+	include $sr.'/bin/css/initial_layout_settings.php';
 	
 	$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 	$username = mysql_result($result0, isset($i0), 'username');
@@ -230,10 +223,24 @@ function checkValues ()
 	//Ermittlung der Usersprache:
 	$result1 = mysql_query("SELECT language FROM $table1 WHERE id = '$uid'");
 	$language = mysql_result($result1, isset($i1), 'language');
-	
 	$base_file = 'recherche2';
-
+	
+	switch($mod)
+	{
+		case 'zeit':
+			include $sr.'/bin/share/functions/ajax_functions.php';
+			echo "<BODY onLoad=\"getTimeTreeview('0','zeit','J','$bewertung')\">";
+		break;
+		
+		case 'kat':
+			include $sr.'/bin/share/functions/ajax_functions.php';
+			echo "<BODY onLoad=\"getKatTreeview('0','0','kat','$bewertung','recherche','recherche2')\">";
+		break;
+	}
+	
 	echo "
+	<CENTER>
+	<DIV Class='klein'>
 	<div class='page' id='page'>
 	
 	<div class='head' id='head'>
@@ -254,11 +261,11 @@ function checkValues ()
 					<fieldset  style='background-color:none; margin-top:10px;'>
 					<legend style='color:blue; font-weight:bold;'>Bildsuche nach Aufnahmedatum</legend>
 						<div id='scrollbox0' style='overflow-y:scroll;'>";
-						$ziel = "../../html/recherche/recherche2.php";
-						$base_file = 'recherche2';
-						$mod='zeit';
-						$modus='recherche';
-						include '../../share/time_treeview.php';
+//						$ziel = "../../html/recherche/recherche2.php";
+//						$base_file = 'recherche2';
+//						$mod='zeit';
+//						$modus='recherche';	//echo $bewertung;
+						//include '../../share/time_treeview.php';
 						echo "</div>
 					</fieldset>
 				</center>
@@ -271,11 +278,11 @@ function checkValues ()
 				<fieldset  style='background-color:none; margin-top:10px;'>
 				<legend style='color:blue; font-weight:bold;'>Bildsuche nach Kategorien</legend>
 					<div id='scrollbox0' style='overflow-y:scroll;'>";
-					$ziel = "../../html/recherche/recherche2.php";
-					$base_file = 'recherche2';
-					$mod='kat';
-					$modus='recherche';
-					include '../../share/kat_treeview.php';
+//					$ziel = "../../html/recherche/recherche2.php";
+//					$base_file = 'recherche2';
+//					$mod='kat';
+//					$modus='recherche';
+					//include '../../share/kat_treeview.php';
 					echo "</div>
 				</fieldset>
 				</center>
@@ -294,88 +301,91 @@ function checkValues ()
 		$modus='recherche';
 		$mod='desc';
 		
-		echo "<FORM name=\"descr1\" method=\"POST\">
-		<TABLE id='desc'>
-		<TR id='desc'>
-			<TD id='desc' colspan='2'  style='background-color:RGB(180,80,80); color:white;'>Die Bildbeschreibung enth&auml;lt folgende Textfragmente:</TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc' colspan='2' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc1'><INPUT type=\"text\" name=\"desc1\" class='Feld250'></TD>
-			<TD id='desc2'>
-			<SELECT name=\"bed1\">
-                   <option value='0'></option>
-                   <option value = '1'>und</option>
-                   <option value = '2'>oder</option>
-            </SELECT>
-            </TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc1'><INPUT type=\"text\" name=\"desc2\" class='Feld250'></TD>
-			<TD id='desc2'>
-			<SELECT name=\"bed2\">
-                    <option value='0'></option>
-                   	<option value = '1'>und</option>
-                    <option value = '2'>oder</option>
-                  	</SELECT>
-            </TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc1'><INPUT type=\"text\" name=\"desc3\" class='Feld250'></TD>
-			<TD id='desc2'>
-			<SELECT name=\"bed3\">
-                    <option value='0'></option>
-                   	<option value = '1'>und</option>
-                    <option value = '2'>oder</option>
-            </SELECT>
-            </TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc1'><INPUT type=\"text\" name=\"desc4\" class='Feld250'></TD>
-			<TD id='desc2'>
-			<SELECT name=\"bed4\">
-                    <option value='0'></option>
-                   	<option value = '1'>und</option>
-                    <option value = '2'>oder</option>
-            </SELECT>
-            </TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc1'><INPUT type=\"text\" name=\"desc5\" class='Feld250'></TD>
-			<TD id='desc2'>
-			&nbsp;
-            </TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc' style='border-style:none; height:15px;'></TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc' colspan='2' style='text-align:center; border-style:none;'>
-			<INPUT type=\"button\" value=\"Suchen\" class='button1' onClick='getDescPreview1(descr1.desc1.value, descr1.bed1.value, descr1.desc2.value, descr1.bed2.value, descr1.desc3.value,  descr1.bed3.value, descr1.desc4.value, descr1.bed4.value, descr1.desc5.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",0,0)'>
-			</TD>
-		</TR>
-		
-		<TR id='desc'>
-			<TD id='desc' colspan='2' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR class='normal' style='height:3px;'>
-			<TD class='normal'  style='background-color:RGB(180,80,80);' colspan='2'>
-			</TD>
-		</TR>
-			
-		 </FORM>
-		 </TABLE>
+			echo "
+			<center>
+				<FORM name=\"descr1\" method=\"POST\">
+					<TABLE class='desc'>
+						<TR class='desc'>
+							<TD class='desc' colspan='2'  style='background-color:RGB(180,80,80); color:white;'>Die Bildbeschreibung enth&auml;lt folgende Textfragmente:</TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc' colspan='2' style='border-style:none;'>&nbsp;</TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc1'><INPUT type=\"text\" name=\"desc1\" class='Feld250'></TD>
+							<TD class='desc2'>
+							<SELECT name=\"bed1\">
+				                   <option value='0'></option>
+				                   <option value = '1'>und</option>
+				                   <option value = '2'>oder</option>
+				            </SELECT>
+				            </TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc1'><INPUT type=\"text\" name=\"desc2\" class='Feld250'></TD>
+							<TD class='desc2'>
+							<SELECT name=\"bed2\">
+				                    <option value='0'></option>
+				                   	<option value = '1'>und</option>
+				                    <option value = '2'>oder</option>
+				                  	</SELECT>
+				            </TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc1'><INPUT type=\"text\" name=\"desc3\" class='Feld250'></TD>
+							<TD class='desc2'>
+							<SELECT name=\"bed3\">
+				                    <option value='0'></option>
+				                   	<option value = '1'>und</option>
+				                    <option value = '2'>oder</option>
+				            </SELECT>
+				            </TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc1'><INPUT type=\"text\" name=\"desc4\" class='Feld250'></TD>
+							<TD class='desc2'>
+							<SELECT name=\"bed4\">
+				                    <option value='0'></option>
+				                   	<option value = '1'>und</option>
+				                    <option value = '2'>oder</option>
+				            </SELECT>
+				            </TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc1'><INPUT type=\"text\" name=\"desc5\" class='Feld250'></TD>
+							<TD class='desc2'>
+							&nbsp;
+				            </TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc' style='border-style:none; height:15px;'></TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc' colspan='2' style='text-align:center; border-style:none;'>
+							<INPUT type=\"button\" value=\"Suchen\" class='button1' onClick='getDescPreview1(descr1.desc1.value, descr1.bed1.value, descr1.desc2.value, descr1.bed2.value, descr1.desc3.value,  descr1.bed3.value, descr1.desc4.value, descr1.bed4.value, descr1.desc5.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",0,0)'>
+							</TD>
+						</TR>
+						
+						<TR class='desc'>
+							<TD class='desc' colspan='2' style='border-style:none;'>&nbsp;</TD>
+						</TR>
+						
+						<TR class='normal' style='height:3px;'>
+							<TD class='normal'  style='background-color:RGB(180,80,80);' colspan='2'>
+							</TD>
+						</TR>
+					</TABLE>
+				</FORM>
+			 </center>
+			 
 		 </fieldset>";
 		
 		echo "
@@ -386,142 +396,137 @@ function checkValues ()
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		echo "
 		<div id='spalte1F'>
-		<fieldset id='kat_tree_fieldset' style='background-color:none; margin-top:10px;'>
-			<legend style='color:blue; font-weight:bold;'>Bildsuche nach geografischen Koordinaten</legend>";
-		$ziel = "../../html/recherche/recherche2.php";
-		$base_file = 'recherche2';
-		$mod='geo';
-		$modus='recherche';
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		echo "
-		<center>
-		<FORM name=\"geo_rech1\" method=\"POST\">
-		<TABLE id='geo'>
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='background-color:RGB(125,0,10); color:white;'>Suche nach geogr. Koordinaten und Umkreis</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo1'>geogr. L&auml;nge (in Dez.-Grad)</TD>
-			<TD id='geo2'><INPUT type=\"text\" name=\"long\" maxlength=\"12\" value = '10,982466667' class='Feld175'></TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo1'>geogr. Breite (in Dez.-Grad)</TD>
-			<TD id='geo2'><INPUT type=\"text\" name=\"lat\" maxlength=\"12\" value = '51,79835' class='Feld175'></TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo1'>Ort liegt h&ouml;her als (m &uuml;.NN)</TD>";
-			IF( !(isset($alt)) OR $alt == '')
-			{
-				$alt = '0';
-			}
-			echo "
-			<TD id='geo2'><INPUT type=\"text\" name=\"alt\" maxlength=\"4\" value = '$alt' class='Feld175'></TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo1'>Umkreis</TD>
-			<TD id='geo2'><INPUT type=\"text\" name=\"radius1\" id='radius1' maxlength=\"4\" size=\"4\" value = '1' style='height:12px; vertical-align:bottom;'  onkeyup='checkValues(this.value)';>
-			<SELECT name=\"einheit1\" id='einheit1' class='Auswahl' style='height:20px';>
-			<option value = '1'>m</option>
-			<option value = '1000' selected>km</option>
-			</SELECT>
-                        </TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='text-align:center; border:none;'>
-			<INPUT type=\"button\" value=\"Nach Geo-Koordinaten suchen\" class='button4' onClick='getGeoPreview1(geo_rech1.long.value, geo_rech1.lat.value, geo_rech1.alt.value, geo_rech1.radius1.value, geo_rech1.einheit1.value,  \"$mod\", \"$modus\", \"$base_file\", \"geo_rech1\", \"$bewertung\",0,0)'>
-			</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR class='normal' style='height:3px;'>
-			<TD class='normal'  style='background-color:RGB(125,0,10);' colspan='2'>
-			</TD>
-		</TR>
-		
-		</TABLE>
-		 </FORM>";
-		 
-		 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		 
-		 echo "
-		 <TABLE id='geo' style='margin-top:30px;'>
-		
-		<FORM name=\"geo_rech2\" method=\"POST\">
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='background-color:RGB(125,0,10); color:white;'>Suche nach Ortsbezeichnung und Umkreis</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo1' style='width:60px;'>Ortsname</TD>
-			<TD id='geo2'>
-				<SELECT name=\"ort\" class='Auswahl270'>";
-				$result9 = mysql_query( "SELECT DISTINCT City FROM $table2 WHERE City <>'Ortsbezeichnung' AND City <> '' ORDER BY City");
-				echo mysql_error();
-				$num9 = mysql_num_rows($result9);
-				FOR ($i9=0; $i9<$num9; $i9++)
-				{
-					$city = mysql_result($result9, $i9, 'City');
-					$result11 = mysql_query( "SELECT * FROM $table2 WHERE location='$city'");
-					echo "<option value=\"$city\">".$city."</option>";
-				}
-                echo "</SELECT>
-			</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo1'>Umkreis</TD>
-			<TD id='geo2'><INPUT type=\"text\" name=\"radius2\" id='radius2' maxlength=\"4\" size=\"4\" value=\"1\"style='height:12px; vertical-align:bottom;' onkeyup='checkValues(this.value)';>
-			<SELECT name=\"einheit2\" id='einheit2' class='Auswahl' style='height:20px;'>
-			<option value = '1'>m</option>
-			<option value = '1000' selected>km</option>
-            </SELECT>
-            </TD>
-		</TR>
-				
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='text-align:center; border:none;'>
-			<INPUT type=\"button\" value=\"Nach Ortsbezeichnung suchen\" class='button4' onClick='getGeoPreview2(geo_rech2.ort.value, geo_rech2.radius2.value, geo_rech2.einheit2.value, \"$mod\", \"$modus\", \"$base_file\", \"geo_rech2\", \"$bewertung\",0,0)'></TD>
-		</TR>
-		
-		<TR id='geo'>
-			<TD id='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
-		</TR>
-		
-		<TR class='normal' style='height:3px;'>
-			<TD class='normal'  style='background-color:RGB(125,0,10);' colspan='2'>
-			</TD>
-		</TR>
-		
-		 </FORM>
-		</TABLE>
-		</center>
-		</fieldset>";
-	//~~~~~~~~~~~~~~~~~~~~~~~
-		echo "
+			<fieldset id='kat_tree_fieldset' style='background-color:none; margin-top:10px;'>
+				<legend style='color:blue; font-weight:bold;'>Bildsuche nach geografischen Koordinaten</legend>";
+				$ziel = "../../html/recherche/recherche2.php";
+				$base_file = 'recherche2';
+				$mod='geo';
+				$modus='recherche';
+			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				echo "
+				<center>
+					<FORM name=\"geo_rech1\" method=\"POST\">
+						<TABLE class='geo'>
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='background-color:RGB(125,0,10); color:white;'>Suche nach geogr. Koordinaten und Umkreis</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo1'>geogr. L&auml;nge (in Dez.-Grad)</TD>
+								<TD class='geo2'><INPUT type=\"text\" name=\"long\" maxlength=\"12\" value = '10,982466667' class='Feld175'></TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo1'>geogr. Breite (in Dez.-Grad)</TD>
+								<TD class='geo2'><INPUT type=\"text\" name=\"lat\" maxlength=\"12\" value = '51,79835' class='Feld175'></TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo1'>Ort liegt h&ouml;her als (m &uuml;.NN)</TD>";
+								IF( !(isset($alt)) OR $alt == '')
+								{
+									$alt = '0';
+								}
+								echo "
+								<TD class='geo2'><INPUT type=\"text\" name=\"alt\" maxlength=\"4\" value = '$alt' class='Feld175'></TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo1'>Umkreis</TD>
+								<TD class='geo2'><INPUT type=\"text\" name=\"radius1\" id='radius1' maxlength=\"4\" size=\"4\" value = '1' style='height:12px; vertical-align:bottom;'  onkeyup='checkValues(this.value)';>
+								<SELECT name=\"einheit1\" id='einheit1' class='Auswahl' style='height:20px';>
+								<option value = '1'>m</option>
+								<option value = '1000' selected>km</option>
+								</SELECT>
+					                        </TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo' style='border-style:none;'>&nbsp;</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='text-align:center; border:none;'>
+								<INPUT type=\"button\" value=\"Nach Geo-Koordinaten suchen\" class='button4' onClick='getGeoPreview1(geo_rech1.long.value, geo_rech1.lat.value, geo_rech1.alt.value, geo_rech1.radius1.value, geo_rech1.einheit1.value,  \"$mod\", \"$modus\", \"$base_file\", \"geo_rech1\", \"$bewertung\",0,0)'>
+								</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
+							</TR>
+							
+							<TR class='normal' style='height:3px;'>
+								<TD class='normal'  style='background-color:RGB(125,0,10);' colspan='2'>
+								</TD>
+							</TR>
+						</TABLE>
+					</FORM>";
+					 
+					 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+					 
+					 echo "
+					<FORM name=\"geo_rech2\" method=\"POST\">
+						<TABLE class='geo' style='margin-top:30px;'>
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='background-color:RGB(125,0,10); color:white;'>Suche nach Ortsbezeichnung und Umkreis</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo1' style='width:60px;'>Ortsname</TD>
+								<TD class='geo2'>
+									<SELECT name=\"ort\" class='Auswahl270'>";
+									$result9 = mysql_query( "SELECT DISTINCT City FROM $table2 WHERE City <>'Ortsbezeichnung' AND City <> '' ORDER BY City");
+									echo mysql_error();
+									$num9 = mysql_num_rows($result9);
+									FOR ($i9=0; $i9<$num9; $i9++)
+									{
+										$city = mysql_result($result9, $i9, 'City');
+										$result11 = mysql_query( "SELECT * FROM $table2 WHERE location='$city'");
+										echo "<option value=\"$city\">".$city."</option>";
+									}
+					                echo "</SELECT>
+								</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo1'>Umkreis</TD>
+								<TD class='geo2'><INPUT type=\"text\" name=\"radius2\" id='radius2' maxlength=\"4\" size=\"4\" value=\"1\"style='height:12px; vertical-align:bottom;' onkeyup='checkValues(this.value)';>
+								<SELECT name=\"einheit2\" id='einheit2' class='Auswahl' style='height:20px;'>
+								<option value = '1'>m</option>
+								<option value = '1000' selected>km</option>
+					            </SELECT>
+					            </TD>
+							</TR>
+									
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='text-align:center; border:none;'>
+								<INPUT type=\"button\" value=\"Nach Ortsbezeichnung suchen\" class='button4' onClick='getGeoPreview2(geo_rech2.ort.value, geo_rech2.radius2.value, geo_rech2.einheit2.value, \"$mod\", \"$modus\", \"$base_file\", \"geo_rech2\", \"$bewertung\",0,0)'></TD>
+							</TR>
+							
+							<TR class='geo'>
+								<TD class='geo' colspan='2' style='border-style:none;'>&nbsp;</TD>
+							</TR>
+							
+							<TR class='normal' style='height:3px;'>
+								<TD class='normal'  style='background-color:RGB(125,0,10);' colspan='2'>
+								</TD>
+							</TR>
+						</TABLE>
+					</FORM>
+				</center>
+			</fieldset>
 		</div>";
 		break;
 	//#####################################################################################################################
@@ -534,89 +539,82 @@ function checkValues ()
 		$modus='recherche';
 		echo "
 		<div id='spalte1F'>
-		
-		<fieldset id='kat_tree_fieldset' style='background-color:none; margin-top:10px;'>
-		<legend style='color:blue; font-weight:bold;'>Bildsuche nach Meta-Daten</legend>
-		
-		<FORM name= \"exif_param\" method='POST'>
-
-		<TABLE id='geo' align='center' border = '0'>
-				
-			<TR class='normal' style='height:3px;'>
-				<TD class='normal' style='background-color:RGB(180,80,80);' colspan='2'>
-				</TD>
-			</TR>
-			
-			<TR>
-				<TD width = 100% align = 'center' colspan='2'><BR></TD>
-			</TR>
-			
-			<TR>
-				<TD align='left' style='height:22px; font-size:12px;'>
-				Meta-Daten-Feld:
-				</TD>
-				<TD align = 'right'>
-				<SELECT name='zusatz1' class='Auswahl200' OnChange='getZusatzwert(document.exif_param.zusatz1.value, \"$bewertung\")'>";
-				OptionFields($language);
-				echo "</SELECT>
-				</TD>
-			</TR>
-			
-			<TR>
-				<TD align='left' style='height:22px; font-size:12px;'>
-				Bedingung:
-				</TD>
-				<TD align = 'right'>				
-				<SELECT name='bedingung1' class='Auswahl200'>
-					<OPTION VALUE='=' selected>ist gleich</OPTION>
-					<OPTION VALUE='<>'>ist ungleich</OPTION>
-					<OPTION VALUE='>'>ist gr&ouml;sser</OPTION>
-					<OPTION VALUE='<'>ist kleiner</OPTION>
-					<OPTION VALUE='LIKE'>enth&auml;lt</OPTION>
-				</SELECT>
-				</TD>
-			</TR>
-			
-			<TR>
-				<TD align='left' style='height:22px; font-size:12px;'>
-				Kriterium:
-				</TD>
-				<TD align = 'right'>
-				<div id='zw1'></div>
-				</TD>
-			</TR>
-			
-			<TR>
-				<TD width = 100% align = 'center' colspan='3'><BR></TD>
-			</TR>
-			
-			<TR>
-				<TD width = 100% align = 'center' colspan='3'><INPUT type=\"button\" value=\"Suchen\" class='button1' onClick='getExifPreview(exif_param.zusatz1.value, exif_param.bedingung1.value, exif_param.zusatzwert1.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",0,0)'>&#160;&#160;&#160;
-				<INPUT TYPE='button' VALUE = 'Abbrechen' OnClick=\"location.href='recherche0.php'\">		
-				</TD>
-			</TR>
-			
-			<TR>
-				<TD width = 100% align = 'center' colspan='2'><BR></TD>
-			</TR>
-			
-			<TR>
-				<TD width = 100% align = 'left' colspan='2'><p style='FONT-SIZE:8pt; color:blue;'>Beachten Sie bitte:<BR><BR>
-				Nicht in jedem Fall ist es zweckm&auml;ssig, die Abfrage-Bedingung 'ist gr&ouml;sser' oder 'ist kleiner' zu w&auml;hlen.<BR>
-				Liefert die Auswahl des Meta-Daten-Felds Zahlenwerte als Kriterium, kann man sehr wohl nach Vorkommen suchen, bei denen der Wert gr&ouml;sser oder kleiner als das ausgew&auml;hlte Kriterium ist.<BR>
-				Liefert die Auswahl des Meta-Daten-Felds hingegen eine Zeichenkette, sollte die Bedingung 'ist gleich' oder 'enth&auml;lt' lauten, um zu nachvollziehbaren Treffern zu gelangen.</p></TD>
-			</TR>
-			
-			<TR class='normal' style='height:3px;'>
-				<TD class='normal'  style='background-color:RGB(180,80,80);' colspan='2'>
-				</TD>
-			</TR>
-			
-		
-		</TABLE>
-		
-		</FORM>
-		</fieldset>
+			<fieldset id='kat_tree_fieldset' style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Bildsuche nach Meta-Daten</legend>
+				<FORM name= \"exif_param\" method='POST'>
+					<TABLE class='geo' align='center' border = '0'>
+						<TR class='normal' style='height:3px;'>
+							<TD class='normal' style='background-color:RGB(180,80,80);' colspan='2'>
+							</TD>
+						</TR>
+						
+						<TR>
+							<TD width = 100% align = 'center' colspan='2'><BR></TD>
+						</TR>
+						
+						<TR>
+							<TD align='left' style='height:22px; font-size:12px;'>
+							Meta-Daten-Feld:
+							</TD>
+							<TD align = 'right'>
+							<SELECT name='zusatz1' class='Auswahl200' OnChange='getZusatzwert(document.exif_param.zusatz1.value, \"$bewertung\")'>";
+							OptionFields($language);
+							echo "</SELECT>
+							</TD>
+						</TR>
+						
+						<TR>
+							<TD align='left' style='height:22px; font-size:12px;'>
+							Bedingung:
+							</TD>
+							<TD align = 'right'>				
+							<SELECT name='bedingung1' class='Auswahl200'>
+								<OPTION VALUE='=' selected>ist gleich</OPTION>
+								<OPTION VALUE='<>'>ist ungleich</OPTION>
+								<OPTION VALUE='>'>ist gr&ouml;sser</OPTION>
+								<OPTION VALUE='<'>ist kleiner</OPTION>
+								<OPTION VALUE='LIKE'>enth&auml;lt</OPTION>
+							</SELECT>
+							</TD>
+						</TR>
+						
+						<TR>
+							<TD align='left' style='height:22px; font-size:12px;'>
+							Kriterium:
+							</TD>
+							<TD align = 'right'>
+							<div id='zw1'></div>
+							</TD>
+						</TR>
+						
+						<TR>
+							<TD width = 100% align = 'center' colspan='3'><BR></TD>
+						</TR>
+						
+						<TR>
+							<TD width = 100% align = 'center' colspan='3'><INPUT type=\"button\" value=\"Suchen\" class='button1' onClick='getExifPreview(exif_param.zusatz1.value, exif_param.bedingung1.value, exif_param.zusatzwert1.value, \"$mod\", \"$modus\", \"$base_file\", \"$bewertung\",0,0)'>&#160;&#160;&#160;
+							<INPUT TYPE='button' VALUE = 'Abbrechen' OnClick=\"location.href='recherche0.php'\">		
+							</TD>
+						</TR>
+						
+						<TR>
+							<TD width = 100% align = 'center' colspan='2'><BR></TD>
+						</TR>
+						
+						<TR>
+							<TD width = 100% align = 'left' colspan='2'><p style='FONT-SIZE:8pt; color:blue;'>Beachten Sie bitte:<BR><BR>
+							Nicht in jedem Fall ist es zweckm&auml;ssig, die Abfrage-Bedingung 'ist gr&ouml;sser' oder 'ist kleiner' zu w&auml;hlen.<BR>
+							Liefert die Auswahl des Meta-Daten-Felds Zahlenwerte als Kriterium, kann man sehr wohl nach Vorkommen suchen, bei denen der Wert gr&ouml;sser oder kleiner als das ausgew&auml;hlte Kriterium ist.<BR>
+							Liefert die Auswahl des Meta-Daten-Felds hingegen eine Zeichenkette, sollte die Bedingung 'ist gleich' oder 'enth&auml;lt' lauten, um zu nachvollziehbaren Treffern zu gelangen.</p></TD>
+						</TR>
+						
+						<TR class='normal' style='height:3px;'>
+							<TD class='normal'  style='background-color:RGB(180,80,80);' colspan='2'>
+							</TD>
+						</TR>
+					</TABLE>
+				</FORM>
+			</fieldset>
 		</div>";
 		break;
 	//#####################################################################################################################
@@ -801,6 +799,11 @@ function checkValues ()
 mysql_close($conn);
 
 ?>
+<!-- 
+<script language="Javascript">
+	getTimeTreeview(<?php echo $pic_id;?>,<?php echo "\".$mod.\"";?>,<?php echo "\".$s_m.\"";?>,<?php echo "\".$bewertung.\"";?>);
+</script>
+-->
 </DIV>
 </CENTER>
 </BODY>

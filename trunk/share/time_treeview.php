@@ -14,6 +14,7 @@ include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 include_once $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/css/initial_layout_settings.php';
 //Ermittlung des Anfangs (min.) und Enddatums (max):
 
 //var_dump($_REQUEST);
@@ -59,12 +60,12 @@ WHERE YEAR(DateTimeOriginal) <> '0000'");
 $Min_DT = mysql_result($result2, isset($i2), 'MIN_DTO');
 $Max_DT = mysql_result($result2, isset($i2), 'MAX_DTO');
 //echo "Fr&uuml;hestes Jahr: ".$Min_DT.", sp&auml;testes Jahr: ".$Max_DT."<BR>";
-
-echo "	<TABLE id='kat'>
-		<TR id='kat'>
-		<TD id='kat1'>Jahr / Monat / Tag</TD>
-		<TD id='kat2'>Info</TD>
-		<TD id='kat2'>Anz.</TD>
+//########################################################################################################
+echo "	<TABLE class='kat'>
+		<TR class='kat'>
+		<TD class='kat1'>Jahr / Monat / Tag</TD>
+		<TD class='kat2'>Info</TD>
+		<TD class='kat2'>Anz.</TD>
 		</TR>";
 
 $runtime_sum = 0;
@@ -110,14 +111,14 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 		$img_plus = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='3' vspace='0' border='0'>";
 		$img_minus = "<IMG src='$inst_path/pic2base/bin/share/images/minus.gif' width='11' height='11' hspace='3' vspace='0' border='0'>";
 		echo "
-		<TR id='kat'>
-		<TD id='kat1' style='background-color:RGB(125,0,10); color:white;'>
+		<TR class='kat'>
+		<TD class='kat1' style='background-color:RGB(125,0,10); color:white;'>
 		<SPAN style='cursor:pointer;' onClick='getTimeTreeview(\"$pic_id\",\"$mod\",\"$s_m\",\"$bewertung\")'  title='Monatsansicht f&uuml;r $jahr &ouml;ffnen / schlie&szlig;en'>".$tree_img."</SPAN>
 		<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$jahr\",0,0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='alle Bilder des Jahres $jahr anzeigen'>".$jahr."</SPAN>
 		</TD>
-		<TD id='kat2'>
+		<TD class='kat2'>
 		</TD>
-		<TD id='kat2'>".$num3."</TD>
+		<TD class='kat2'>".$num3."</TD>
 		</TR>";
 		
 		IF(substr($show_mod,0,4) == $jahr)
@@ -143,8 +144,8 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 					
 					$anz = mysql_result($result9, $i9, COUNT('*'));
 					$month_number = date('m', strtotime(mysql_result($result9, $i9, 'DateTimeOriginal')));
-					echo "<TR id='kat'>
-					<TD id='kat1'>&#160;&#160;";
+					echo "<TR class='kat'>
+					<TD class='kat1'>&#160;&#160;";
 					$modus = 'recherche';
 					$zeit = getMonthName($month_number)." ".$jahr;
 					//echo $zeit;
@@ -156,8 +157,8 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 						<SPAN style='cursor:pointer;' onClick='getTimeTreeview(\"$pic_id\",\"$mod\",\"$s_m\",\"$bewertung\")'  title='Tagesauswahl f&uuml;r ".getMonthName($month_number)." &ouml;ffnen'>".$img_plus."</SPAN>
 						<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$jahr\",\"$month_number\",0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='alle Bilder vom ".getMonthName($month_number)." / ".$jahr." anzeigen'>".getMonthName($month_number)."</SPAN>
 						</TD>
-						<TD id='kat2'></TD>
-						<TD id='kat2'>".$anz."</TD>
+						<TD class='kat2'></TD>
+						<TD class='kat2'>".$anz."</TD>
 						</TR>";
 					}
 					ELSEIF(substr($show_mod,0,4) == $jahr AND substr($show_mod,5,2) == $month_number)
@@ -172,7 +173,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 							echo "
 							<SPAN style='cursor:pointer;' onClick='getTimeTreeview(\"$pic_id\",\"$mod\",\"$s_m\",\"$bewertung\")' title='Tagesansicht schlie&szlig;en'>".$img_minus."</SPAN>".getMonthName($month_number)."
 							</TD>
-							<TD id='kat2' colspan='2'></TD>
+							<TD class='kat2' colspan='2'></TD>
 							</TR>";
 							
 							$result12 = mysql_query( "SELECT DATE_FORMAT(DateTimeOriginal,'%Y-%m-%d'), COUNT(*), pic_id, note, DateTimeOriginal, aktiv 
@@ -209,13 +210,13 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 								//Ermittlung der an diesem Tag gemachten Bilder:
 								$anz12 = mysql_result($result12, $i12, COUNT('*'));
 								
-								echo "<TR id='kat'>
-								<TD id='kat1'> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$jahr\",\"$month_number\",\"$T\",0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='alle Bilder vom $aufn_dat anzeigen'>".$aufn_dat."</span></TD>";
+								echo "<TR class='kat'>
+								<TD class='kat1'> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$jahr\",\"$month_number\",\"$T\",0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='alle Bilder vom $aufn_dat anzeigen'>".$aufn_dat."</span></TD>";
 								echo "
-								<TD id='kat2'>
+								<TD class='kat2'>
 								<span style='cursor:pointer;' onClick=\"showDiary('$aufn_DAT')\" />".$book."</SPAN>
 								</TD>
-								<TD id='kat2'>".$anz12."</TD>
+								<TD class='kat2'>".$anz12."</TD>
 								</TR>";
 							}
 						}
@@ -224,12 +225,12 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 							$s_m = $jahr."_".$month_number;
 							echo "<SPAN style='cursor:pointer;' onClick='location.href=\"recherche2.php?pic_id=$pic_id&mod=$mod&show_mod=$s_m\"'>".getMonthName($month_number)."</SPAN>
 							</TD>
-							<TD id='kat2'>
+							<TD class='kat2'>
 							<SPAN style='cursor:pointer;' onClick='getTimePreview(\"$jahr\",\"$month_number\",0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)'>
 							<img src='../../share/images/ok.gif' width='15' height='15' title='Bilder anzeigen' />
 							</SPAN>
 							</TD>
-							<TD id='kat2'>".$num5."</TD></TR>";
+							<TD class='kat2'>".$num5."</TD></TR>";
 						}
 					}
 				}	
@@ -246,19 +247,20 @@ AND aktiv = '1'
 AND $stat");
 
 $num7 = mysql_num_rows($result7);
-echo "<TR id='kat'>
-<TD id='kat1'>Sonstige Bilder</TD>
-<TD id='kat2'></TD>
-<TD id='kat2'></TD>
+echo "<TR class='kat'>
+<TD class='kat1'>Sonstige Bilder</TD>
+<TD class='kat2'></TD>
+<TD class='kat2'></TD>
 </TR>
-<TR id='kat'>
-<TD id='kat1' style='background-color:RGB(125,0,10); color:white;'><SPAN style='cursor:pointer; margin-left:22px' onClick='getTimePreview(0000,0,0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='Bilder anzeigen'>Bilder ohne Datumsangabe</SPAN></TD>
-<TD id='kat2'></TD>
-<TD id='kat2'>".$num7."</TD>
+<TR class='kat'>
+<TD class='kat1' style='background-color:RGB(125,0,10); color:white;'><SPAN style='cursor:pointer; margin-left:22px' onClick='getTimePreview(0000,0,0,0,\"$mod\",\"$modus\",\"$base_file\",\"$bewertung\",0,0)' title='Bilder anzeigen'>Bilder ohne Datumsangabe</SPAN></TD>
+<TD class='kat2'></TD>
+<TD class='kat2'>".$num7."</TD>
 </TR>
 </TABLE>";
 $end99 = microtime();
 list($end99msec,$end99sec) = explode(" ",$end99);
 $runtime99 = number_format((($end99msec + $end99sec) - ($start1msec + $start1sec)),2,'.',',');
 echo "<font color='lightgrey'>Skript-Laufzeit: ".$runtime99." Sek.</font>";
+//########################################################################################################
 ?>

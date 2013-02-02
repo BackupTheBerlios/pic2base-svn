@@ -11,9 +11,9 @@ IF (!$_COOKIE['uid'])
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 </HEAD>
 
@@ -52,17 +52,81 @@ WHILE ($kat_id_s > '1')
 }
 $knoten_arr_s = array_reverse($knoten_arr_s);
 
-echo "<TABLE id='kat'>
-	<TR>
-	<TD>Quell-Kategorie</TD>
-	</TR>";
+echo "<center>
+<TABLE class='kat'>";
 
-function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
-{
-	include 'db_connect1.php';
-	INCLUDE 'global_config.php';
-	include_once $sr.'/bin/share/functions/ajax_functions.php';
-	$result10 = mysql_query( "SELECT * FROM $table4 WHERE parent='$kat_id_s' ORDER BY kategorie");
+	function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
+	{
+		include 'db_connect1.php';
+		INCLUDE 'global_config.php';
+		include_once $sr.'/bin/share/functions/ajax_functions.php';
+		$result10 = mysql_query( "SELECT * FROM $table4 WHERE parent='$kat_id_s' ORDER BY kategorie");
+		$num10 = mysql_num_rows($result10);
+		FOR ($i10=0; $i10<$num10; $i10++)
+		{
+			$kategorie = mysql_result($result10, $i10, 'kategorie');
+			$parent = mysql_result($result10, $i10, 'parent');
+			$level = mysql_result($result10, $i10, 'level');
+			$kat_id_s = mysql_result($result10, $i10, 'kat_id');
+			$space='';
+			FOR ($N=0; $N<$level; $N++)
+			{
+				$space .="&#160;&#160;&#160;";
+			}
+			
+			$kat_id_s_pos = array_search($kat_id_s, $knoten_arr_s);
+			if($kat_id_s_pos > 0 )
+			{
+				$kat_id_s_back = $knoten_arr_s[$kat_id_s_pos - 1];
+			}
+			IF (in_array($kat_id_s, $knoten_arr_s))
+			{
+				//echo $kat_id_s_back;
+				$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+				echo 	"<TR class='kat'>
+					<TD class='kat1'>
+					".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s_back\")'>".$img."</span>&#160;".$kategorie."
+					</TD>";
+					
+					IF($kat_id_s !== '1')
+					{
+						echo "
+						<TD class='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
+						</TD>";
+					}
+					ELSE
+					{
+						echo "<TD class='kat2'><BR></TD>";
+					}
+					
+					echo "</TR>";
+				getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S);
+			}
+			ELSE
+			{
+				$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
+				echo 	"<TR class='kat'>
+					<TD class='kat1'>
+					".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
+					</TD>";
+					
+					IF($kat_id_s !== '1')
+					{
+						echo "
+						<TD class='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
+						</TD>";
+					}
+					ELSE
+					{
+						echo "<TD class='kat2'><BR></TD>";
+					}
+					
+					echo "</TR>";
+			}
+		}
+	}
+
+	$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
 	$num10 = mysql_num_rows($result10);
 	FOR ($i10=0; $i10<$num10; $i10++)
 	{
@@ -71,34 +135,34 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 		$level = mysql_result($result10, $i10, 'level');
 		$kat_id_s = mysql_result($result10, $i10, 'kat_id');
 		$space='';
+		//echo $level;
 		FOR ($N=0; $N<$level; $N++)
 		{
 			$space .="&#160;&#160;&#160;";
 		}
 		
-		$kat_id_s_pos = array_search($kat_id_s, $knoten_arr_s);
-		if($kat_id_s_pos > 0 )
-		{
-			$kat_id_s_back = $knoten_arr_s[$kat_id_s_pos - 1];
-		}
+		//Link fuer den Ruecksprung erzeugen, d.h. naechst hoeheren Knoten aufrufen:
+		$kat_id_s_back = array_search($kat_id_s, $knoten_arr_s);
 		IF (in_array($kat_id_s, $knoten_arr_s))
 		{
+			
+			//echo "Space: ".$space."<BR>";
 			//echo $kat_id_s_back;
 			$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-			echo 	"<TR id='kat'>
-				<TD id='kat1'>
+			echo 	"<TR class='kat'>
+				<TD class='kat1'>
 				".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s_back\")'>".$img."</span>&#160;".$kategorie."
 				</TD>";
-				
+					
 				IF($kat_id_s !== '1')
 				{
 					echo "
-					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
+					<TD class='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 					</TD>";
 				}
 				ELSE
 				{
-					echo "<TD id='kat2'><BR></TD>";
+					echo "<TD class='kat2'><BR></TD>";
 				}
 				
 				echo "</TR>";
@@ -106,94 +170,29 @@ function getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S)
 		}
 		ELSE
 		{
+			//echo "Space: ".$space."|<BR>";
 			$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-			echo 	"<TR id='kat'>
-				<TD id='kat1'>
+			echo 	"<TR class='kat'>
+				<TD class='kat1'>
 				".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
 				</TD>";
-				
+					
 				IF($kat_id_s !== '1')
 				{
 					echo "
-					<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
+					<TD class='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
 					</TD>";
 				}
 				ELSE
 				{
-					echo "<TD id='kat2'><BR></TD>";
+					echo "<TD class='kat2'><BR></TD>";
 				}
-				
 				echo "</TR>";
 		}
 	}
-}
 
-$result10 = mysql_query( "SELECT * FROM $table4 WHERE kat_id='1'");
-$num10 = mysql_num_rows($result10);
-FOR ($i10=0; $i10<$num10; $i10++)
-{
-	$kategorie = mysql_result($result10, $i10, 'kategorie');
-	$parent = mysql_result($result10, $i10, 'parent');
-	$level = mysql_result($result10, $i10, 'level');
-	$kat_id_s = mysql_result($result10, $i10, 'kat_id');
-	$space='';
-	//echo $level;
-	FOR ($N=0; $N<$level; $N++)
-	{
-		$space .="&#160;&#160;&#160;";
-	}
-	
-	//Link f�r den R�cksprung erzeugen, d.h. n�chst h�heren Knoten aufrufen:
-	$kat_id_s_back = array_search($kat_id_s, $knoten_arr_s);
-	IF (in_array($kat_id_s, $knoten_arr_s))
-	{
-		
-		//echo "Space: ".$space."<BR>";
-		//echo $kat_id_s_back;
-		$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-		echo 	"<TR id='kat'>
-			<TD id='kat1'>
-			".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s_back\")'>".$img."</span>&#160;".$kategorie."
-			</TD>";
-				
-			IF($kat_id_s !== '1')
-			{
-				echo "
-				<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
-				</TD>";
-			}
-			ELSE
-			{
-				echo "<TD id='kat2'><BR></TD>";
-			}
-			
-			echo "</TR>";
-		getElementsS($kat_id_s, $knoten_arr_s, $KAT_ID_S);
-	}
-	ELSE
-	{
-		//echo "Space: ".$space."|<BR>";
-		$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-		echo 	"<TR id='kat'>
-			<TD id='kat1'>
-			".$space."<span style='cursor:pointer;' onClick='reloadSourceTree(\"$kat_id_s\")'>".$img."</span>&#160;".$kategorie."
-			</TD>";
-				
-			IF($kat_id_s !== '1')
-			{
-				echo "
-				<TD id='kat2'><input type='radio' name='kat_source' value=$kat_id_s title=$kat_id_s onChange='reloadDestTree(1, \"$kat_id_s\")'>
-				</TD>";
-			}
-			ELSE
-			{
-				echo "<TD id='kat2'><BR></TD>";
-			}
-			echo "</TR>";
-	}
-}
-
-echo "</TABLE>";
+echo "</TABLE>
+</center>";
 ?>
 </BODY>
 </HTML>

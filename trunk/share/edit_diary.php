@@ -3,7 +3,7 @@ IF (!$_COOKIE['uid'])
 {
 	include '../share/global_config.php';
 	//var_dump($sr);
-	 header('Location: ../../index.php');
+  	header('Location: ../../index.php');
 }
 else
 {
@@ -15,7 +15,7 @@ else
 <html>
 
 <head>
-  <title>Kategorie-Informationen bearbeiten</title>
+  <title>Tagebuch-Eintrag bearbeiten</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
@@ -24,11 +24,11 @@ else
 </head>
 <body style='background-color:#999999'>
 <?php
-// verwendet als Popup-Fenster mit den Kategorie-Infos
+// verwendet als Popup-Fenster mit dem Tagebuch-Eintrag
 
-if(array_key_exists('kat_id',$_GET))
+if(array_key_exists('aufn_dat',$_GET))
 {
-	$kat_id = $_GET['kat_id'];
+	$aufn_dat = $_GET['aufn_dat'];
 }
 
 include_once 'global_config.php';
@@ -37,17 +37,16 @@ include_once $sr.'/bin/share/functions/main_functions.php';
 include_once $sr.'/bin/share/functions/permissions.php';
 include_once("fckeditor/fckeditor.php");
 
-$result0 = mysql_query( "SELECT $table4.kat_id, $table4.kategorie, $table11.info, $table11.kat_id  
-FROM $table4 INNER JOIN $table11 
-ON $table4.kat_id = '$kat_id' 
-AND $table4.kat_id = $table11.kat_id");
+$result0 = mysql_query("SELECT * FROM $table3 WHERE datum = '$aufn_dat'");
 echo mysql_error();
 $num0 = mysql_num_rows($result0);
 $row = mysql_fetch_array($result0);
-$kategorie = $row['kategorie'];
+//var_dump($row);
+$aufn_DAT = explode('-', $aufn_dat); //lesbare Formatierung
+$AD = $aufn_DAT[2].".".$aufn_DAT[1].".".$aufn_DAT[0];
 $info = $row['info'];
 
-IF(hasPermission($uid, 'editkatlex', $sr))	//berechtigte User duerfen das Kat.-Lexikon editieren
+IF(hasPermission($uid, 'editdiary', $sr))	//berechtigte User duerfen das Tagebuch editieren
 {
 	$editable = '1';
 	$view = 'Default';
@@ -57,7 +56,7 @@ ELSE
 	$view = 'Readonly';
 }
 
-echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post'>
+echo "	<FORM action='edit_diary_action.php?aufn_dat=$aufn_dat' method='post'>
 	<TABLE border = '0' style='width:650px;background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='darkred' colspan = '2'>
@@ -66,7 +65,7 @@ echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post'>
 	
 	<TR class='normal'>
 		<TD class='normal' colspan = '2'>
-		Vorhandene Informationen zur Kategorie \"".$kategorie."\"
+		Vorhandener Tagebucheintrag zum ".$AD."
 		</TD>
 	</TR>
 	
@@ -89,6 +88,7 @@ echo "	<FORM action='edit_kat_info_action.php?kat_id=$kat_id' method='post'>
 		</TD>
 	</TR>
 
+	
 	<TR class='normal' style='height:3px;'>
 		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>

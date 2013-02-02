@@ -68,7 +68,7 @@ echo "<FORM name='edit_details' method='post' action='save_meta_data_action.php'
 
 	<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>
 	
@@ -79,7 +79,7 @@ echo "<FORM name='edit_details' method='post' action='save_meta_data_action.php'
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>
 	
@@ -325,7 +325,7 @@ echo "
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>
 	
@@ -335,7 +335,7 @@ echo "
 	</TR>
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>
 </TABLE>

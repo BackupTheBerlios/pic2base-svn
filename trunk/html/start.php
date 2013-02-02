@@ -275,7 +275,7 @@ ELSE
 					$exiftool = buildExiftoolCommand($sr);
 					$cmd = $exiftool." -S -FileType ".$bild;
 					$ft = preg_split('/ /', shell_exec($cmd));
-					$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
+					@$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
 					// Bei jpg-Dateien wird der Dateityp 'jpeg' identifiziert. Dies wuerde bedeuten, dass praktisch jedes jpg-Bild umbenannt werden muss
 					// Zur Vereinfachung wird hier eine Ausnahme hinzugefuegt: jpg-Bilder werden nicht zu jpeg umbenannt!
 					if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')

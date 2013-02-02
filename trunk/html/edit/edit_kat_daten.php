@@ -37,34 +37,8 @@ else
 	</script>
 </HEAD>
 
-<BODY LANG="de-DE">
-<CENTER>
-<DIV Class="klein">
-
 <?php
 
-/*
- * Project: pic2base
- * File: edit_kat_daten.php
- *
- * Copyright (c) 2003 - 2013 Klaus Henneberg
- *
- * Project owner:
- * Dipl.-Ing. Klaus Henneberg
- * 38889 Blankenburg, BRD
- *
- * This file is licensed under the terms of the Open Software License
- * http://www.opensource.org/licenses/osl-2.1.php
- */
- 
-include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/main_functions.php';
-
-$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
-$username = mysql_result($result0, isset($i0), 'username');
-
-//var_dump($_REQUEST);
 if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
@@ -94,6 +68,46 @@ if(!isset($ID))
 	$ID = '';
 }
 
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+
+$base_file = 'edit_kat_daten';
+
+if($mod == 'kat')
+{
+	include $sr.'/bin/share/functions/ajax_functions.php';
+	echo "<BODY onLoad=\"getKatTreeview('0','0','kat','6','edit','edit_kat_daten')\">";
+}
+elseif($mod == 'zeit')
+{
+	include $sr.'/bin/share/functions/ajax_functions.php';
+	echo "<BODY onLoad=\"getTimeTreeview('0','zeit','J','6')\">";
+}
+
+echo "
+<CENTER>
+<DIV Class='klein'>";
+
+/*
+ * Project: pic2base
+ * File: edit_kat_daten.php
+ *
+ * Copyright (c) 2003 - 2013 Klaus Henneberg
+ *
+ * Project owner:
+ * Dipl.-Ing. Klaus Henneberg
+ * 38889 Blankenburg, BRD
+ *
+ * This file is licensed under the terms of the Open Software License
+ * http://www.opensource.org/licenses/osl-2.1.php
+ */
+
+$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
+$username = mysql_result($result0, isset($i0), 'username');
+
+
+
 echo "
 <div class='page' id='page'>
 	<FORM name='kat-zuweisung', method='post' action='edit_kat_daten_action2.php?kat_id=$kat_id&mod=$mod&ID=$ID'>
@@ -105,23 +119,18 @@ echo "
 	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 			createNavi3_1($uid);
-			echo "<INPUT type='submit' id='button3' value = 'Speichern'><BR><INPUT type='button' id='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
+			echo "<INPUT type='submit' class='button3' id='button3' value = 'Speichern'><BR><INPUT type='button' class='button3a' id='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
 		</div>
 	</div>";
 			
 	SWITCH($mod)
 	{
-		CASE "edit":
+		CASE "kat":
 			echo "<div id='spalte1F'>
 				<center>
 					<fieldset  style='background-color:none; margin-top:10px;'>
 					<legend style='color:blue; font-weight:bold;'>Bildauswahl nach Kategorien</legend>
 						<div id='scrollbox0' style='overflow-y:scroll;'>";
-						$ziel = '../../html/edit/edit_kat_daten.php';
-						$modus='edit';
-						$mod='kat';
-						$base_file = 'edit_kat_daten';
-						include $sr.'/bin/share/kat_treeview.php';
 						echo "</div>
 					</fieldset>
 					</center>
@@ -134,11 +143,6 @@ echo "
 				<fieldset  style='background-color:none; margin-top:10px;'>
 				<legend style='color:blue; font-weight:bold;'>Bildauswahl nach Aufnahmedatum</legend>
 					<div id='scrollbox0' style='overflow-y:scroll;'>";
-					$ziel = '../../html/edit/edit_kat_daten.php';
-					$modus='edit';
-					$mod='zeit';
-					$base_file = 'edit_kat_daten';
-					include $sr.'/bin/share/time_treeview2.php';
 					echo "</div>
 				</fieldset>
 				</center>

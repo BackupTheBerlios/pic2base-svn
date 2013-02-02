@@ -94,7 +94,7 @@ echo "
 		<fieldset style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Auswahl der Track-Datei</legend>
 			<center>
-			<table id='kat'>
+			<table class='kat'>
 	
 				<tr>
 					<td align='center' colspan = '2'><p style='text-align:left; margin-left:12px;'>

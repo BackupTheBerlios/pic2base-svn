@@ -36,11 +36,16 @@ else
 	</script>
 </HEAD>
 
-<BODY LANG="de-DE">
-<CENTER>
-<DIV Class="klein">
-
 <?php
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
+
+echo "
+<BODY LANG='de-DE' onLoad=\"getKatTreeview('0','0','edit_remove','6','edit','remove_kat_daten')\">
+<CENTER>
+<DIV Class='klein'>";
 
 /*
  * Project: pic2base
@@ -55,10 +60,6 @@ else
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  */
-
-include '../../share/global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/main_functions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
@@ -104,7 +105,7 @@ echo "
 	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 			createNavi3_1($uid);
-			echo "<INPUT type='submit' id='button3' value = 'Speichern'><BR><INPUT type='button' id='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
+			echo "<INPUT type='submit' class='button3' id='button3' value = 'Speichern'><BR><INPUT type='button' class='button3a' id='button3a' value='Abbrechen' OnClick='location.href=\"edit_start.php\"'>
 		</div>
 	</div>";
 			
@@ -120,7 +121,6 @@ echo "
 						$modus='edit';
 						$mod='kat';
 						$base_file = 'remove_kat_daten';
-						include $sr.'/bin/share/kat_treeview.php';
 						echo "
 						</div>
 					</fieldset>

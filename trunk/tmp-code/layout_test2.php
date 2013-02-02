@@ -64,10 +64,14 @@ echo "
 			<font color='#efeff7'>
 				<p  style='margin-top:20px;'>.</p>
 			</font>
-			
+		
 			<fieldset style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Hinweise</legend>
-				Text
+			<div id='scrollbox0' style='overflow-y:scroll;'>";
+				$bewertung='6';
+				include '../share/time_treeview.php';
+			echo "
+			</div>
 			</fieldset>
 		</div>
 		

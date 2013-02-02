@@ -86,7 +86,8 @@ IF ( isset($pic_id) AND count($pic_id) > 0 AND $description !== "")
 
 	$FN = $pic_path."/".restoreOriFilename($bild_id, $sr);
 	$desc = $Description;
-	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &");
+//	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original > /dev/null &"); //schnelle Variante, treibt aber den Server an die Grenze!
+	shell_exec($exiftool." -IPTC:Caption-Abstract=\"$desc\" ".$FN." -overwrite_original");
 			
 	IF (mysql_errno() == '0')
 	{

@@ -25,7 +25,7 @@ else
 	<script language="JavaScript">
 	  	jQuery.noConflict()
 		jQuery(document).ready(checkWindowSize);
-		jQuery(window).resize(checkWindowSize); 
+		jQuery(window).resize(checkWindowSize);
 	</script>
 </HEAD>
 
@@ -77,7 +77,7 @@ echo "
 		<a class='subnavi' href='edit_geo_daten.php?pic_id=0&mod=kat' title='Standortbestimmung mittels aufgezeichneter Trackdaten'>Geo-Referenzierung</a>
 		<a class='subnavi' href='edit_bewertung.php?pic_id=0&mod=kat' title='Bilder qualitativ bewerten, Noten vergeben'>Bilder bewerten / Bewertung &auml;ndern</a>
 		<a class='subnavi' href='edit_beschreibung.php?pic_id=0&mod=kat' title='mehreren Bildern eine gemeinsame Beschreibung zuweisen'>Beschreibungen zuweisen</a>
-		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=edit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Kategorien'>Kategorie-Zuweisung - Auswahl nach Kategorien</a>
+		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=kat' title='Kategorien zuweisen, Bildauswahl erfolgt nach Kategorien'>Kategorie-Zuweisung - Auswahl nach Kategorien</a>
 		<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=zeit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Aufnahmedatum'>Kategorie-Zuweisung - Auswahl nach Datum</a>
 		<a class='subnavi' href='remove_kat_daten.php?pic_id=0&mod=edit_remove' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>
 		<a class='subnavi_blind'></a>

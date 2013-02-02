@@ -270,7 +270,8 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 	}
 	//echo "Modus: ".$modus.", User-ID: ".$uid."<BR>";
 	//echo $treestatus;
-	include '../../share/global_config.php';
+//	include '../../share/global_config.php';
+	include 'global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
 	$kat_arr[] = $kat_id;		//Kategorie-Nummern-Container
 //	$result0 = mysql_query("SELECT * FROM $table1 WHERE username = '$c_username'");
@@ -295,6 +296,7 @@ function getNumberOfPictures($kat_id, $modus, $bewertung, $treestatus)
 	{
 		IF($modus == 'edit')
 		{
+			include_once $sr.'/bin/share/functions/permissions.php';
 			//fuer die Oberkategorie (mit Minus) werden nur diejenigen Bilder angezeigt,
 			//die keiner weiteren Unterkategorie zugeordnert sind.
 			//Fuer Unterkategorien (mit Plus) werden die Bilder in dieser und aller weiteren Unterkategorien angezeigt

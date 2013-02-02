@@ -3,10 +3,17 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Startseite</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
 <BODY>
@@ -38,15 +45,18 @@ $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"
 $username = mysql_result($result0, isset($i0), 'username');
 
 echo "
-<div class='page'>
-	<p id='kopf'>pic2base :: Stapelverarbeitung Kategorie-Umbenennung <span class='klein'>(User: ".$username.")</span></p>
+<div class='page' id='page'>
+
+	<div id='head'>
+		pic2base :: Stapelverarbeitung Kategorie-Umbenennung <span class='klein'>(User: ".$username.")</span>
+	</div>
 		
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>
 		</div>
 	</div>
 		
-	<div class='content'>
+	<div class='content' id='content'>
 		<span style='font-size:12px;'>
 		<p style='margin:120px 0px; text-align:center'>
 		
@@ -61,8 +71,11 @@ echo "
 		</p>
 		</span>
 	</div>
-	<br style='clear:both;' />
-	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+	
+	<div id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+	
 </div>";
 
 ob_flush();

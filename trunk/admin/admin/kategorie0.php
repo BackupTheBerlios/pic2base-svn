@@ -116,7 +116,7 @@ echo "
 		
 		echo "
 		<center>
-		<TABLE id='kat'>";
+		<TABLE class='kat'>";
 		
 		function getElements($kat_id, $knoten_arr, $KAT_ID)
 		{
@@ -146,24 +146,24 @@ echo "
 					
 					//echo $kat_id_back;
 					$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-					echo 	"<TR id='kat'>
-						<TD id='kat3'>
+					echo 	"<TR class='kat'>
+						<TD class='kat3'>
 						".$space."<a href='kategorie0.php?kat_id=$kat_id_back'>".$img."</a>&#160;
 						<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
 						</TD>
 						
-						<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
+						<TD class='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
 						</TD>";
 						
 						IF($kat_id !== '1')
 						{
 							echo "
-							<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
+							<TD class='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
 							</TD>";
 						}
 						ELSE
 						{
-							echo "<TD id='kat2'><BR></TD>";
+							echo "<TD class='kat2'><BR></TD>";
 						}
 						
 						echo "
@@ -174,24 +174,24 @@ echo "
 				ELSE
 				{
 					$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-					echo 	"<TR id='kat'>
-						<TD id='kat3'>
+					echo 	"<TR class='kat'>
+						<TD class='kat3'>
 						".$space."<a href='kategorie0.php?kat_id=$kat_id'>".$img."</a>&#160;
 						<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
 						</TD>
 						
-						<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
+						<TD class='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
 						</TD>";
 						
 						IF($kat_id !== '1')
 						{
 							echo "
-							<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
+							<TD class='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
 							</TD>";
 						}
 						ELSE
 						{
-							echo "<TD id='kat2'><BR></TD>";
+							echo "<TD class='kat2'><BR></TD>";
 						}
 						
 						echo "
@@ -224,24 +224,24 @@ echo "
 				//echo "Space: ".$space."<BR>";
 				//echo $kat_id_back;
 				$img = "<IMG src='../../share/images/minus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-				echo 	"<TR id='kat'>
-					<TD id='kat3'>
+				echo 	"<TR class='kat'>
+					<TD class='kat3'>
 					".$space."<a href='kategorie0.php?kat_id=$kat_id_back'>".$img."</a>&#160;
 					<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
 					</TD>
 					
-					<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
+					<TD class='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
 					</TD>";
 						
 					IF($kat_id !== '1')
 					{
 						echo "
-						<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
+						<TD class='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
 						</TD>";
 					}
 					ELSE
 					{
-						echo "<TD id='kat2'><BR></TD>";
+						echo "<TD class='kat2'><BR></TD>";
 					}
 					
 					echo "
@@ -253,24 +253,24 @@ echo "
 			{
 				//echo "Space: ".$space."|<BR>";
 				$img = "<IMG src='../../share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0'>";
-				echo 	"<TR id='kat'>
-					<TD id='kat3'>
+				echo 	"<TR class='kat'>
+					<TD class='kat3'>
 					".$space."<a href='kategorie0.php?kat_id=$kat_id'>".$img."</a>&#160;
 					<a href='kat_add.php?kat_id=$KAT_ID&level=$level&ID=$kat_id' title='Neue Unterkategorie einf&uuml;gen' id='std'>".$kategorie."</a>
 					</TD>
 					
-					<TD id='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
+					<TD class='kat2'><a href='kat_edit.php?kat_id=$KAT_ID&ID=$kat_id' title='Kategorie bearbeiten'><img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'></a>
 					</TD>";
 						
 					IF($kat_id !== '1')
 					{
 						echo "
-						<TD id='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
+						<TD class='kat2'><a href='kat_delete.php?kat_id=$kat_id&ID=$kat_id' title='Kategorie l&ouml;schen'><img src=\"../../share/images/delete.gif\" width=\"11\" height=\"11\" hspace=\"0\" vspace=\"0\" border=\"0\" alt='Delete-Icon' /></a>
 						</TD>";
 					}
 					ELSE
 					{
-						echo "<TD id='kat2'><BR></TD>";
+						echo "<TD class='kat2'><BR></TD>";
 					}
 						
 					echo "
@@ -287,6 +287,7 @@ echo "
 	<DIV id='spalte2'>
 		<fieldset style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Hinweis</legend>
+			<div id='scrollbox1' style='overflow-y:scroll;'>
 			Mit einem Klick auf einen Kategorie-Namen f&uuml;gen Sie eine neue Unter-Kategorie unterhalb der gew&auml;hlten Kategorie ein.<BR><BR>
 			Mit einem Klick auf das Bearbeiten-Icon &#160;<img src='../../share/images/edit.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Edit-Icon'>&#160; k&ouml;nnen Sie die Bezeichnung f&uuml;r die ausgew&auml;hlte Kategorie &auml;ndern.<BR><BR>
 			Mit einem Klick auf das L&ouml;schen-Icon &#160;<img src='../../share/images/delete.gif' style='border:none;' width='11' height='11' hspace='0' vspace='0' border='0' alt='Delete-Icon'>&#160; k&ouml;nnen Sie die ausgew&auml;hlte Kategorie l&ouml;schen.<BR>
@@ -296,6 +297,7 @@ echo "
 			Werden Kategorien gel&ouml;scht oder neu sortiert, hat dies auch Auswirkungen auf die darin befindlichen Bilder. In diesem Fall m&uuml;ssen die jeweiligen Meta-Daten konsistent gehalten werden, was - je nach Anzahl der Bilder und der Rechenleistung des Servers - einige Zeit in Anspruch nehmen kann.<BR><BR>
 			Mit dem Men&uuml;punkt \"Wartung\" haben Sie die M&ouml;glichkeit, die Tabelle der Bild-Kategorie-Zuweisungen auf fehlerhafte Eintr&auml;ge zu &uuml;berpr&uuml;fen und ggf. zu reparieren. Die Aktion wird sofort nach Klick auf den Button gestartet und kann eine Weile dauern.<BR>
 			Am Ende der Wartung wird Ihnen ein Bericht &uuml;ber den Zustand der Tabelle angezeigt.
+			</div>
 		</fieldset>
 	</DIV>
 	

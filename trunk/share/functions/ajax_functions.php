@@ -189,14 +189,11 @@ currImageState = new ImageState( 0, "", "" );
 getDetailsAjax = null;
 
 function getPreview(kat_id, ID, mod, pic_id, modus, base_file, bewertung, auswahl, position, jump, treestatus)
-{
-	//confirm("kat_id: " + kat_id + ", ID: "+ID+", mod: "+mod+", pic_id: "+pic_id+", modus: "+modus+", base_file: "+base_file +", bewertung: "+bewertung +", Auswahl: "+auswahl +", Position: "+position +", Sprung-Richtung: "+jump +", Treestatus: "+treestatus);
-	
+{	
 	var url = '../../share/get_preview.php';
 	var params ='kat_id=' + kat_id + '&ID=' + ID + '&mod=' + mod + '&pic_id=' + pic_id + '&modus=' + modus + '&base_file=' + base_file + '&bewertung=' + bewertung + '&auswahl=' + auswahl + '&position=' + position + '&jump=' + jump + '&treestatus=' + treestatus;
 	var target = 'filmstreifen';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
-	
 }
 
 function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, position, jump)
@@ -212,13 +209,11 @@ function getTimePreview(j, m, t, pic_id, mod, modus, base_file, bewertung, posit
 
 function getTimePreview2(j, m, t, pic_id, mod, modus, base_file, sr)
 {
-	//confirm("Jahr: " + j + ", Monat: "+ m +", Tag: "+ t +", mod: " + mod + ", pic_id: " + pic_id+", modus: "+modus+", base_file: "+base_file+", Software-root: "+sr);
 	var url = '../../share/get_preview.php';
 	var params ='j=' + j + '&m=' + m + '&t=' + t + '&pic_id=' + pic_id + '&mod=' + mod + '&modus=' + modus + '&base_file=' + base_file;
 	//alert("Parameter: "+params);
 	var target = 'filmstreifen';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: filmstreifen_geladen});
-	
 }
 
 function getFormElements(formular)
@@ -431,19 +426,21 @@ function getZusatzwert(zusatz1, bewertung)
 
 function reloadDestTree(kat_id_d, kat_id_s)
 {
+	//wird bei der Kategorie-Umsortierung verwendet
 	var url = '../../share/reload_dest_tree.php';
 	var params = 'kat_id_d=' + kat_id_d +'&kat_id_s=' + kat_id_s;
 	//alert("Parameter: "+params);
-	var target = 'spalte2';
+	var target = 'scrollbox1';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
 function reloadSourceTree(kat_id_s)
 {
+	//wird bei der Kategorie-Umsortierung verwendet
 	var url = '../../share/reload_source_tree.php';
 	var params = 'kat_id_s=' + kat_id_s;
 	//alert("Parameter: "+params);
-	var target = 'spalte1';
+	var target = 'scrollbox0';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
@@ -461,6 +458,15 @@ function getTimeTreeview2(pic_id, mod, s_m)
 	//wird verwendet, wenn Bilder bearbeitet werden sollen und die Auswahl nach Aufnahmedatum erfolgt
 	var url = '../../share/time_treeview2.php';
 	var params = 'pic_id=' + pic_id + '&mod=' + mod + '&show_mod=' + s_m;
+	//alert("Parameter: "+params);
+	var target = 'scrollbox0';
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+}
+
+function getKatTreeview(kat_id, pic_id, mod, bewertung, modus, base_file)
+{
+	var url = '../../share/kat_treeview.php';
+	var params = 'kat_id=' + kat_id + '&pic_id=' + pic_id + '&mod=' + mod + '&bewertung=' + bewertung + '&modus=' + modus + '&base_file=' + base_file;
 	//alert("Parameter: "+params);
 	var target = 'scrollbox0';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});

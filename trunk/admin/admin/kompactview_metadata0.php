@@ -236,7 +236,7 @@ FOR($r='0'; $r<$rows; $r++)
 				$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$fnt."</a></TD>
 				<TD class='tdschmal'>
 				<div id='$lfdnr'>
-				<INPUT TYPE=CHECKBOX $checked name='cb' value='$viewable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
+				<INPUT TYPE=CHECKBOX $checked name='cb' value='$viewable' onClick='changeViewable(\"$lfdnr\",\"$checked\",\"$sr\")'>
 				</div>
 				</TD>";
 			}
@@ -245,7 +245,7 @@ FOR($r='0'; $r<$rows; $r++)
 				$content = $content."<TD class='tdbreit'><a href=# title = \"$title\", style=\"color:".$color."; text-decoration:none;\">".$field_name."</a></TD>
 				<TD class='tdschmal'>
 				<div id='$lfdnr'>
-				<INPUT TYPE=CHECKBOX $checked name='cb' value='$viewable' onClick='changeWritable(\"$lfdnr\",\"$checked\",\"$sr\")'>
+				<INPUT TYPE=CHECKBOX $checked name='cb' value='$viewable' onClick='changeViewable(\"$lfdnr\",\"$checked\",\"$sr\")'>
 				</div>
 				</TD>";
 			}

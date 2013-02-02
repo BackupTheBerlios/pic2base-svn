@@ -147,7 +147,7 @@ function checkWindowSize()
         
         /*Hoehe der Scrollbox um den vollst. Kategoriebaum; Bearbeitung, Kat. zuweisen nach Kat.*/
         jQuery("#scrollbox1").css({"height":(jQuery(window).height() - 311) + "px"});
-        //alert( preview_height );
+        //alert( (jQuery(window).height() - 40) + "px" );
     } 
     else 
     { 

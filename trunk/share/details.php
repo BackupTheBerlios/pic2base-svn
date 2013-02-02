@@ -92,7 +92,7 @@ $ed = trim(shell_exec($exiftool." ".$file));	//$ed = exifdaten, leer oder nicht
 
 echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = 'center'>
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>";
 	
@@ -125,7 +125,7 @@ echo "<TABLE border = '0' style='width:450px;background-color:#FFFFFF' align = '
 	
 	echo "
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>
 	
@@ -499,7 +499,7 @@ echo "
 	-->
 	
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>";
 	//echo count($writable_fields);
@@ -530,7 +530,7 @@ echo "
 	}
 	echo "
 	<TR class='normal' style='height:3px;'>
-		<TD class='normal' bgcolor='#FF9900' colspan = '2'>
+		<TD class='normal' bgcolor='darkred' colspan = '2'>
 		</TD>
 	</TR>
 </TABLE>";

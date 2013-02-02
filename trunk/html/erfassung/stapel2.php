@@ -202,16 +202,23 @@ function processFile( fileList )
 
 function countDown()
 {
-	document.getElementById( "counter" ).innerHTML = "Sie werden in " + timeout.toString() + " Sekunden zur Doublettenpr&uuml;fung weitergeleitet.";
-	timeout --;
 	if( timeout < 0 )
 	{
 		window.location='doublettenliste1.php?user_id=' + <?php echo $user_id; ?>;
 	}
 	else
 	{
+		if( timeout > 0 )
+		{
+			document.getElementById( "counter" ).innerHTML = "Sie werden in " + timeout.toString() + " Sekunden zur Doublettenpr&uuml;fung weitergeleitet.";
+		}
+		else if(timeout == 0)
+		{
+			document.getElementById( "counter" ).innerHTML = "Doublettenpr&uuml;fung l&auml;ft...";
+		}
 		setTimeout( "countDown()", 1000 );	
 	}
+	timeout --;
 }
 </script>
 

@@ -18,14 +18,12 @@ include '../../share/global_config.php';
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
 	<script language="javascript" type="text/javascript" src="../../share/calendar.js"></script>
 	<script type="text/javascript" src="../../share/functions/ShowPicture.js"></script>
 </HEAD>
 
 
 <script language="JavaScript" type="text/javascript">
-<!--
 function showAllDetails(mod, pic_id)
 {
 Fenster1 = window.open('../../share/details.php?view=kompact&pic_id='+pic_id, 'Details', "width=550,height=768,scrollbars,resizable=no,");
@@ -36,7 +34,6 @@ function saveChanges(pic_id, desc, aufn_dat)
 {
 Fenster1 = window.open('../../share/save_changes.php?pic_id='+pic_id + '&description=' + desc + '&aufn_dat=' + aufn_dat, 'Speicherung', "width=10,height=10,scrollbars,resizable=no,");
 }
-//-->
 </script>
 
 <BODY LANG="de-DE" scroll = "auto" onload="javascript:CloseWindow()">
@@ -95,12 +92,12 @@ SWITCH ($mod)
 		echo "
 		<div id='spalte1F'>
 		
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildauswahl nach Kategorien<BR>";
-		$ziel = "../../html/edit/edit_remove_kat.php";
-		$base_file = 'edit_remove_kat';
-		$mod='kat';
-		$modus='edit';
-		include $sr.'/bin/share/kat_treeview.php';
+			<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Bildauswahl nach Kategorien<BR>";
+			$ziel = "../../html/edit/edit_remove_kat.php";
+			$base_file = 'edit_remove_kat';
+			$mod='kat';
+			$modus='edit';
+			include $sr.'/bin/share/kat_treeview.php';
 		
 		echo "
 		</div>";
