@@ -472,6 +472,15 @@ function getKatTreeview(kat_id, pic_id, mod, bewertung, modus, base_file)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
 }
 
+function getKatTreeview2(kat_id, pic_id, mod, bewertung, modus, base_file)
+{
+	var url = '../../share/kat_treeview2.php';
+	var params = 'kat_id=' + kat_id + '&pic_id=' + pic_id + '&mod=' + mod + '&bewertung=' + bewertung + '&modus=' + modus + '&base_file=' + base_file;
+	//alert("Parameter: "+params);
+	var target = 'scrollbox1';
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+}
+
 function createNewPreview(pic_id, hl, gamma, targ_color, col_inter, rota, wb, hsi, contrast, FileNameRaw, modus, Orientation)
 {
 	var url = '../../share/create_new_previews.php';

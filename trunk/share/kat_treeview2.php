@@ -31,6 +31,11 @@ else
 	}
 }
 
+if(array_key_exists('modus',$_GET))
+{
+	$modus = $_GET['modus'];
+}
+
 $KAT_ID = $kat_id;
 
 	SWITCH ($modus)

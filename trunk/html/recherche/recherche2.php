@@ -200,6 +200,7 @@ function CloseWindow()
 	
 	$result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 	$username = mysql_result($result0, isset($i0), 'username');
+	$language = mysql_result($result0, isset($i0), 'language');
 	
 	if ( array_key_exists('pic_id',$_GET) )
 	{
@@ -220,9 +221,7 @@ function CloseWindow()
 	
 	$stat = createStatement($bewertung);
 	//echo $stat;
-	//Ermittlung der Usersprache:
-	$result1 = mysql_query("SELECT language FROM $table1 WHERE id = '$uid'");
-	$language = mysql_result($result1, isset($i1), 'language');
+	
 	$base_file = 'recherche2';
 	
 	switch($mod)
@@ -243,15 +242,15 @@ function CloseWindow()
 	<DIV Class='klein'>
 	<div class='page' id='page'>
 	
-	<div class='head' id='head'>
+		<div class='head' id='head'>
 			pic2base :: Datensatz-Recherche <span class='klein'>(User: $username; eingestellte Bewertung: ".showBewertung($bewertung).")</span>
 		</div>
 		
-	<div class='navi' id='navi'>
-		<div class='menucontainer'>";
-			createNavi2_1($uid);
-		echo "</div>
-	</div>";
+		<div class='navi' id='navi'>
+			<div class='menucontainer'>";
+				createNavi2_1($uid);
+			echo "</div>
+		</div>";
 	//################################################################################################################
 	SWITCH ($mod)
 	{
@@ -261,11 +260,6 @@ function CloseWindow()
 					<fieldset  style='background-color:none; margin-top:10px;'>
 					<legend style='color:blue; font-weight:bold;'>Bildsuche nach Aufnahmedatum</legend>
 						<div id='scrollbox0' style='overflow-y:scroll;'>";
-//						$ziel = "../../html/recherche/recherche2.php";
-//						$base_file = 'recherche2';
-//						$mod='zeit';
-//						$modus='recherche';	//echo $bewertung;
-						//include '../../share/time_treeview.php';
 						echo "</div>
 					</fieldset>
 				</center>
@@ -278,11 +272,6 @@ function CloseWindow()
 				<fieldset  style='background-color:none; margin-top:10px;'>
 				<legend style='color:blue; font-weight:bold;'>Bildsuche nach Kategorien</legend>
 					<div id='scrollbox0' style='overflow-y:scroll;'>";
-//					$ziel = "../../html/recherche/recherche2.php";
-//					$base_file = 'recherche2';
-//					$mod='kat';
-//					$modus='recherche';
-					//include '../../share/kat_treeview.php';
 					echo "</div>
 				</fieldset>
 				</center>
@@ -731,79 +720,73 @@ function CloseWindow()
 		break;
 	}
 //###############################################################################################################
-	echo "
-	<div id='spalte2F'>
-		
-		<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:10px;'>
-		<legend style='color:blue; font-weight:bold;'>Hinweis zur Anzeige der Bilder</legend>
-		
-			Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, 
-			indem Sie auf das Datum (Jahr, Monat oder Tag) oder den Kategorienamen klicken.<BR>
-			Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
-			Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie in der rechten oberen 
-			Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf ein Bild in dem Filmstreifen, gelangen 
-			Sie in den \"Bl&auml;tter\"-Modus.<BR>
-			In diesem Modus haben Sie die M&ouml;glichkeit, sehr schnell alle gefundenen Bilder zu betrachten, sich das entsprechenden Bild in Originalqualit&auml;t
-			anzusehen, oder - die entsprechende Berechtigung vorausgesetzt - das gesuchte Bild herunterzuladen.<BR> 
-			Wenn Sie den \"Bl&auml;tter\"-Modus verlassen, gelangen Sie innerhalb der Filmstreifen-Ansicht an die Stelle,
-			an der sich das zuletzt betrachtete Bild befindet.<BR>Dieses wird dann auch in der Detailansicht dargestellt.<br><br>
-			Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der 
-		Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
-		
-		</fieldset>
-		
-	  </div>";
+		echo "
+		<div id='spalte2F'>
+			
+			<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Hinweis zur Anzeige der Bilder</legend>
+			
+				Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, 
+				indem Sie auf das Datum (Jahr, Monat oder Tag) oder den Kategorienamen klicken.<BR>
+				Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
+				Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie in der rechten oberen 
+				Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf ein Bild in dem Filmstreifen, gelangen 
+				Sie in den \"Bl&auml;tter\"-Modus.<BR>
+				In diesem Modus haben Sie die M&ouml;glichkeit, sehr schnell alle gefundenen Bilder zu betrachten, sich das entsprechenden Bild in Originalqualit&auml;t
+				anzusehen, oder - die entsprechende Berechtigung vorausgesetzt - das gesuchte Bild herunterzuladen.<BR> 
+				Wenn Sie den \"Bl&auml;tter\"-Modus verlassen, gelangen Sie innerhalb der Filmstreifen-Ansicht an die Stelle,
+				an der sich das zuletzt betrachtete Bild befindet.<BR>Dieses wird dann auch in der Detailansicht dargestellt.<br><br>
+				Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der 
+			Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
+			</fieldset>
+			
+		  </div>";
 //###############################################################################################################	
-	echo "
-	<div id='filmstreifen'>";
-	
-	SWITCH($mod)
-	{
-		CASE 'zeit':
-		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend angepasst wird
-		$mod='zeit';
-		break;
+		echo "
+		<div id='filmstreifen'>";
 		
-		CASE 'kat':
-		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
-		$base_file = 'recherche2';
-		$mod='kat';
-		break;
+		SWITCH($mod)
+		{
+			CASE 'zeit':
+			$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend angepasst wird
+			$mod='zeit';
+			break;
+			
+			CASE 'kat':
+			$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
+			$base_file = 'recherche2';
+			$mod='kat';
+			break;
+			
+			CASE 'desc':
+			$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
+			$mod='desc';		
+			break;
+			
+			CASE 'geo':
+			$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
+			$mod='geo';		
+			break;
+		}
 		
-		CASE 'desc':
-		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
-		$mod='desc';		
-		break;
-		
-		CASE 'geo':
-		$modus='recherche';	//bedeutet, dass keine Checkboxen angezeigt werden und der Hinweistext entsprechend	angepasst wird
-		$mod='geo';		
-		break;
-	}
-	
-	echo "
-	</div>";
+		echo "
+		</div>";
 //###############################################################################################################	
-	echo "
-	<div class='foot' id='foot'>
-			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		echo "
+		<div class='foot' id='foot'>
+				<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
+	
 	</div>
-
-</div>
-
-<div id='blend' style='display:none; z-index:99;'>
-	<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:100%;' />
-	<img src=\"../../share/images/loading.gif\" style='position:absolute; top:30%; left:50%; width:20px; z-index:101;' />
-</div>";
+	
+	<div id='blend' style='display:none; z-index:99;'>
+		<IMG src='../../share/images/grey.png' style='z-index:100; position:absolute; top:0px; left:0px; width:100%; height:100%;' />
+		<img src=\"../../share/images/loading.gif\" style='position:absolute; top:30%; left:50%; width:20px; z-index:101;' />
+	</div>";
 
 mysql_close($conn);
 
 ?>
-<!-- 
-<script language="Javascript">
-	getTimeTreeview(<?php echo $pic_id;?>,<?php echo "\".$mod.\"";?>,<?php echo "\".$s_m.\"";?>,<?php echo "\".$bewertung.\"";?>);
-</script>
--->
 </DIV>
 </CENTER>
 </BODY>

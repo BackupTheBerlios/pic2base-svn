@@ -19,7 +19,7 @@ ELSE
 	}
 }
 //########################################################################
-// gibt es eine eingestellte Bewertung?###################################
+//############## gibt es eine eingestellte Bewertung? ####################
 if(!$_COOKIE['bewertung'])
 {
 	if( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )

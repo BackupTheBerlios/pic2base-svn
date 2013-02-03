@@ -1039,8 +1039,7 @@ function createNavi5_1($uid)
 	}
 	IF(hasPermission($uid, 'adminlogin', $sr) OR hasPermission($uid, 'editkattree', $sr))
 	{
-		$navigation = "<a class='navi_blind' href='#'>Sortierung</a>
-		<a class='navi' href='db_wartung1.php'>DB-Wartung</a>";
+		$navigation = "<a class='navi_blind' href='#'>Sortierung</a>";
 	}
 	ELSE
 	{
