@@ -20,7 +20,7 @@ ELSE
 }
 //########################################################################
 //############## gibt es eine eingestellte Bewertung? ####################
-if(!$_COOKIE['bewertung'])
+if(!isset($_COOKIE['bewertung']))
 {
 	if( array_key_exists('bewertung',$_POST) AND !empty($_POST['bewertung']) )
 	{
@@ -176,26 +176,28 @@ echo "
 			Finde alle Bilder, f&uuml;r die gilt: Es sind ...<br><br>
 			
 			<center>
-			<form name='quality' action=$action method='post'>
-			<select name = 'bewertung' size = '1' class='Auswahl250' style='width:304px;' OnChange='switchBewertung(quality.bewertung.value)'>
-			<option value = '=1' $sel1>sehr gute Bilder</option>
-			<option value = '=2' $sel2>gute Bilder</option>
-			<option value = '=3' $sel3>befriedigende Bilder</option>
-			<option value = '=4' $sel4>gen&uuml;gende Bilder</option>
-			<option value = '=5' $sel5>ungen&uuml;gende Bilder</option>
-			<option value = '>=2' $sel21>gute oder bessere Bilder</option>
-			<option value = '<=2' $sel22>gute oder schlechtere Bilder</option>
-			<option value = '>=3' $sel31>befriedigende oder bessere Bilder</option>
-			<option value = '<=3' $sel32>befriedigende oder schlechtere Bilder</option>
-			<option value = '>=4' $sel41>gen&uuml;gende oder bessere Bilder</option>
-			<option value = '<=4' $sel42>gen&uuml;gende oder schlechtere Bilder</option>
-			<option value = '6' $sel6>alle Bilder</option>
-			</select>
-			</FORM>
+				<form name='quality' action=$action method='post'>
+				<select name = 'bewertung' size = '1' class='Auswahl250' style='width:304px;' OnChange='switchBewertung(quality.bewertung.value)'>
+				<option value = '=1' $sel1>sehr gute Bilder</option>
+				<option value = '=2' $sel2>gute Bilder</option>
+				<option value = '=3' $sel3>befriedigende Bilder</option>
+				<option value = '=4' $sel4>gen&uuml;gende Bilder</option>
+				<option value = '=5' $sel5>ungen&uuml;gende Bilder</option>
+				<option value = '>=2' $sel21>gute oder bessere Bilder</option>
+				<option value = '<=2' $sel22>gute oder schlechtere Bilder</option>
+				<option value = '>=3' $sel31>befriedigende oder bessere Bilder</option>
+				<option value = '<=3' $sel32>befriedigende oder schlechtere Bilder</option>
+				<option value = '>=4' $sel41>gen&uuml;gende oder bessere Bilder</option>
+				<option value = '<=4' $sel42>gen&uuml;gende oder schlechtere Bilder</option>
+				<option value = '6' $sel6>alle Bilder</option>
+				</select>
+				</FORM>
+				<br>
 			</center>
+			
 		</fieldset>
 			
-		<fieldset style='background-color:none; margin-top:10px;'>
+		<fieldset style='background-color:none; margin-top:20px;'>
 		<legend style='color:blue; font-weight:bold;'>Auswahl der Suchoption</legend>
 			<center>
 			<br>

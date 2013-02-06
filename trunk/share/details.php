@@ -308,17 +308,17 @@ FOREACH($info_arr AS $IA)
 			IF(in_array($tag,$viewable_fields))
 			{
 				$result7 = mysql_query("SELECT `$tag` FROM $table20 WHERE lang = '$lang'");
-//				@$dummy = mysql_result($result7, isset($i7), $tag);
+				@$dummy = mysql_result($result7, isset($i7), $tag);
 				$tag_name = mysql_result($result7, isset($i7), $tag);
-//				IF(!mysql_error() AND $dummy !== NULL AND $dummy !== '')
-//				{
-					//echo "Uebersetzung vorhanden<BR>";
-//				}
-//				ELSE
+				IF(!mysql_error() AND $dummy !== NULL AND $dummy !== '')
+				{
+//					echo "Uebersetzung vorhanden<BR>";
+				}
+				ELSE
 				IF(mysql_error() OR $tag_name == NULL OR $tag_name == '')
 				{
 					//usersprachliche Meta-Tag-Uebersetzung
-					$exif_daten_transl = shell_exec($exiftool." -".$tag." -lang ".$lang." -x 'Directory' ".$file);
+					$exif_daten_transl = shell_exec($exiftool." -".$tag." -lang ".$lang." -x 'Directory' ".$file);echo $exif_daten_transl;
 					$info_arr_transl = explode(':', $exif_daten_transl);
 					$iat0 = $info_arr_transl[0];
 					// englische Meta-Tag-Bezeichnung
@@ -329,6 +329,7 @@ FOREACH($info_arr AS $IA)
 					$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` VARCHAR( 50 ) NOT NULL ");
 					if(mysql_error() !== '')
 					{
+						echo "<br>".mysql_error()."<BR>";
 						$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` text NOT NULL ");
 					}
 					$result9 = mysql_query("UPDATE $table20 SET `$tag` = '$iat1' WHERE lang = 'en'");

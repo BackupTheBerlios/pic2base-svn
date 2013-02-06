@@ -3,11 +3,18 @@
 
 <head>
   <title>pic2base - Einstellungen speichern</title>
-  <meta name="GENERATOR" content="Quanta Plus">
+  <meta name="GENERATOR" content="eclipse">
   <meta name="AUTHOR" content="k. henneberg">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel=stylesheet type='text/css' href='../../css/format1.css'>
+  <link rel=stylesheet type='text/css' href='../../css/format2.css'>
   <link rel="shortcut icon" href="../share/images/favicon.ico">
+  <script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+  <script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+  <script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+  </script>
 </head>
 
 <!--
@@ -71,16 +78,18 @@ $mod = $_REQUEST['mod'];
 $u_name = $_POST['u_name'];			
 
 echo "
-<div class='page'>
+<div class='page' id='page'>
 
-	<p id='kopf'>pic2base - &Auml;nderung der pers&ouml;nlichen Einstellungen</p>
+	<div id='head'>
+			pic2base :: &Auml;nderung der pers&ouml;nlichen Einstellungen
+		</div>
 	
-	<div class='navi' style='clear:right;'>
+	<div class='navi' id='navi'>
 		<div class='menucontainer'>
 		</div>
 	</div>
 	
-	<div class='content'>
+	<div class='content' id='content'>
 	<p style='margin:170px 0px; text-align:center'>";
 	
 	include '../../share/global_config.php';
@@ -159,8 +168,11 @@ echo "
 	echo "
 	</p>
 	</div>
-	<br style='clear:both;' />
-	<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+	
+	<div id='foot'>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+	</div>
+	
 </div>
 </DIV>
 </body>

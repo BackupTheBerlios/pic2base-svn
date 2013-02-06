@@ -3,16 +3,21 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Pers&ouml;nliche Einstellungen</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
-
 <CENTER>
-
 <DIV Class="klein">
 
 <?php
@@ -66,218 +71,231 @@ IF(hasPermission($uid, 'editallprofiles', $sr))
 	$direkt_download = mysql_result($result1, isset($i1), 'direkt_download');
 	
 	echo "
-	<div class='page'>
+	<div class='page' id='page'>
 	
-		<p id='kopf'>pic2base :: Benutzerdaten anpassen <span class='klein'>(User: $username)</span></p>
+		<div id='head'>
+			pic2base :: Benutzerdaten anpassen <span class='klein'>(User: $username)</span>
+		</div>
 			
-		<div class='navi' style='clear:right;'>
+		<div class='navi' id='navi'>
 			<div class='menucontainer'>";
 			createNavi5($uid);
 			echo "</div>
 		</div>
 		
 		<div id='spalte1'>
-		<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Pers. Einstellungen f&uuml;r ".$vorname." ".$name." (".$u_name."):<BR>
-		<FORM name = 'pwd' method = post action = 'save_pwd1.php?mod=all'>
-		<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:none;padding:0px;margin-top:6px;margin-bottom:0px;
-	    	text-align:center;'>
-		<TR id='kat' style='height:3px;'>
-			<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
-		</TR>
+			<fieldset style='background-color:none; margin-top:10px;'>
+				<legend style='color:blue; font-weight:bold;'>Pers. Einstellungen f&uuml;r ".$vorname." ".$name." (".$u_name."):</legend>
+				<div id='scrollbox0' style='overflow-y:scroll;'>
 		
-		<TR id='kat'>
-			<TD id='kat1'>Titel:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='titel' value = '$titel' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Name:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='name' value = '$name' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Vorname:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='vorname' value = '$vorname' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Strasse:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='strasse' value = '$strasse' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>PLZ:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='plz' value = '$plz' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Ort:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='ort' value = '$ort' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Telefon:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='tel' value = '$tel' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>eMail:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='email' value = '$email' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Internet:</TD>
-			<TD id='kat1' colspan='2'><input type='text' name='internet' value = '$internet' style='width:200px;'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Sprache:</TD>
-			<TD id='kat1' colspan='2'>
-			<SELECT name='language' style='width:200px;'>";
-			SWITCH($language)
-			{
-				CASE 'de':
-					$de = 'selected';
-				break;
+				<FORM name = 'pwd' method = post action = 'save_pwd1.php?mod=all'>
+				<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:none;padding:0px;margin-top:6px;margin-bottom:0px;
+			    	text-align:center;'>
+				<TR class='kat' style='height:3px;'>
+					<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
+				</TR>
 				
-				CASE 'en':
-					$en = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Titel:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='titel' value = '$titel' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'ru':
-					$ru = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Name:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='name' value = '$name' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'cs':
-					$cs = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Vorname:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='vorname' value = '$vorname' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'es':
-					$es = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Strasse:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='strasse' value = '$strasse' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'fr':
-					$fr = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>PLZ:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='plz' value = '$plz' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'it':
-					$it = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Ort:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='ort' value = '$ort' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'ja':
-					$ja = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Telefon:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='tel' value = '$tel' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'ko':
-					$ko = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>eMail:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='email' value = '$email' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'nl':
-					$nl = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Internet:</TD>
+					<TD class='kat1' colspan='2'><input type='text' name='internet' value = '$internet' style='width:200px;'></TD>
+				</TR>
 				
-				CASE 'pl':
-					$pl = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Sprache:</TD>
+					<TD class='kat1' colspan='2'>
+					<SELECT name='language' style='width:200px;'>";
+					SWITCH($language)
+					{
+						CASE 'de':
+							$de = 'selected';
+						break;
+						
+						CASE 'en':
+							$en = 'selected';
+						break;
+						
+						CASE 'ru':
+							$ru = 'selected';
+						break;
+						
+						CASE 'cs':
+							$cs = 'selected';
+						break;
+						
+						CASE 'es':
+							$es = 'selected';
+						break;
+						
+						CASE 'fr':
+							$fr = 'selected';
+						break;
+						
+						CASE 'it':
+							$it = 'selected';
+						break;
+						
+						CASE 'ja':
+							$ja = 'selected';
+						break;
+						
+						CASE 'ko':
+							$ko = 'selected';
+						break;
+						
+						CASE 'nl':
+							$nl = 'selected';
+						break;
+						
+						CASE 'pl':
+							$pl = 'selected';
+						break;
+						
+						CASE 'sv':
+							$sv = 'selected';
+						break;
+						
+						CASE 'tr':
+							$tr = 'selected';
+						break;
+					}
+					
+						echo "
+						<option value='de' $de>Deutsch</option>
+						<option value='en' $en>English</option>
+						<option value='ru' $ru>Russisch</option>
+						<option value='cs' $cs>Czech</option>
+						<option value='es' $es>Espanol</option>
+						<option value='fr' $fr>Francias</option>
+						<option value='it' $it>Italiano</option>
+						<option value='ja' $ja>Japanese</option>
+						<option value='ko' $ko>Korean</option>
+						<option value='nl' $nl>Nederlands</option>
+						<option value='pl' $pl>Polski</option>
+						<option value='sv' $sv>Svenska</option>
+						<option value='tr' $tr>T&uuml;rkce</option>";
+					
+					echo "
+					</TD>
+				</TR>
 				
-				CASE 'sv':
-					$sv = 'selected';
-				break;
+				<TR class='kat'>
+					<TD class='kat1'>Bild-Download:</TD>
+					<TD class='kat1' colspan='2'>
+					<SELECT name='direkt_download' style='width:200px;'>";
+					IF($direkt_download == '0')
+					{
+						echo "
+						<option value='0' selected>per FTP</option>
+						<option value='1'>Direkt-Download</option>";
+					}
+					ELSEIF($direkt_download == '1')
+					{
+						echo "
+						<option value='0'>per FTP</option>
+						<option value='1' selected>Direkt-Download</option>";
+					}
+					
+					echo "
+					</TD>
+				</TR>
 				
-				CASE 'tr':
-					$tr = 'selected';
-				break;
-			}
-			
-				echo "
-				<option value='de' $de>Deutsch</option>
-				<option value='en' $en>English</option>
-				<option value='ru' $ru>Russisch</option>
-				<option value='cs' $cs>Czech</option>
-				<option value='es' $es>Espanol</option>
-				<option value='fr' $fr>Francias</option>
-				<option value='it' $it>Italiano</option>
-				<option value='ja' $ja>Japanese</option>
-				<option value='ko' $ko>Korean</option>
-				<option value='nl' $nl>Nederlands</option>
-				<option value='pl' $pl>Polski</option>
-				<option value='sv' $sv>Svenska</option>
-				<option value='tr' $tr>T&uuml;rkce</option>";
-			
-			echo "
-			</TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Bild-Download:</TD>
-			<TD id='kat1' colspan='2'>
-			<SELECT name='direkt_download' style='width:200px;'>";
-			IF($direkt_download == '0')
-			{
-				echo "
-				<option value='0' selected>per FTP</option>
-				<option value='1'>Direkt-Download</option>";
-			}
-			ELSEIF($direkt_download == '1')
-			{
-				echo "
-				<option value='0'>per FTP</option>
-				<option value='1' selected>Direkt-Download</option>";
-			}
-			
-			echo "
-			</TD>
-		</TR>
-		
-		<TR id='normal'>
-			<TD id='kat1' colspan='3'>Passwort &auml;ndern</TD>
-		</TR>
-		
-		<!--<TR id='kat'>
-			<TD id='kat1'>Altes Passwort:</TD>
-			<TD id='kat1' colspan='2'><input type='password' name='old_pwd' style='width:200px;'></TD>
-		</TR>-->
-		
-		<TR id='kat'>
-			<TD id='kat1'>Neues Passwort:</TD>
-			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_1' style='width:200px;' value='$u_name'></TD>
-		</TR>
-		
-		<TR id='kat'>
-			<TD id='kat1'>Passwort wiederholen:</TD>
-			<TD id='kat1' colspan='2'><input type='password' name='new_pwd_2' style='width:200px;' value='$u_name'></TD>
-		</TR>
-		
-		<TR id='normal' style='height:10px;>
-			<TD id='normal' colspan='3'></TD>
-		</TR>
-		<input type='hidden' name='u_name' value = '$u_name' style='width:200px;'>
-		<input type='hidden' name='id' value = '$id' style='width:200px;'>
-		<TR id='kat'>
-			<TD id='kat1' colspan='3' style='text-align:center;'><INPUT type=\"submit\" value=\"Speichern\" style='margin-right:20px;'><INPUT type=\"button\" value=\"Abbrechen\" onClick=\"javascript:history.back()\"></TD>
-		</TR>
-		
-		<TR id='kat' style='height:3px;'>
-			<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
-		</TR>
-		
-		</TABLE>
-		</FORM>
+				<TR class='normal'>
+					<TD class='kat1' colspan='3'>Passwort &auml;ndern</TD>
+				</TR>
+				
+				<!--<TR class='kat'>
+					<TD class='kat1'>Altes Passwort:</TD>
+					<TD class='kat1' colspan='2'><input type='password' name='old_pwd' style='width:200px;'></TD>
+				</TR>-->
+				
+				<TR class='kat'>
+					<TD class='kat1'>Neues Passwort:</TD>
+					<TD class='kat1' colspan='2'><input type='password' name='new_pwd_1' style='width:200px;' value='$u_name'></TD>
+				</TR>
+				
+				<TR class='kat'>
+					<TD class='kat1'>Passwort wiederholen:</TD>
+					<TD class='kat1' colspan='2'><input type='password' name='new_pwd_2' style='width:200px;' value='$u_name'></TD>
+				</TR>
+				
+				<TR class='normal' style='height:10px;>
+					<TD class='normal' colspan='3'></TD>
+				</TR>
+				<input type='hidden' name='u_name' value = '$u_name' style='width:200px;'>
+				<input type='hidden' name='id' value = '$id' style='width:200px;'>
+				<TR class='kat'>
+					<TD class='kat1' colspan='3' style='text-align:center;'><INPUT type=\"submit\" value=\"Speichern\" style='margin-right:20px;'><INPUT type=\"button\" value=\"Abbrechen\" onClick=\"javascript:history.back()\"></TD>
+				</TR>
+				
+				<TR class='kat' style='height:3px;'>
+					<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
+				</TR>
+				
+				</TABLE>
+				</FORM>
+			</div>
+			</fieldset>
 		</div>
 		
 		<div id='spalte2'>
-		<p id='elf' style='background-color:white; padding: 5px; width: 385px; margin-top: 4px; margin-left: 10px;'><b>Hilfe zu den Bearbeitungsm&ouml;glichkeiten:</b><BR><BR>
-		Sie k&ouml;nnen die pers&ouml;nlichen Angaben unver&auml;ndert lassen und nur das Passwort &auml;ndern.<BR>
-		F&uuml;llen Sie hierzu lediglich die beiden unteren Eingabefelder aus.<BR>
-		Standardm&auml;&szlig;ig ist hier der betreffende Benutzername als Passwort vorbelegt.<BR><BR>
-		Wenn Sie nur die pers&ouml;nlichen Daten ver&auml;ndern wollen, m&uuml;ssen Sie die &Auml;nderungen mit dem Passwort des betreffenden Benutzers best&auml;tigen.<BR>
-		Dies gilt auch, wenn Sie nur die Downloadoption &auml;ndern wollen.<BR><BR>
-		F&uuml;llen Sie hierzu - nachdem Sie die entsprechenden &Auml;nderungen an den pers&ouml;nlichen Daten vorgenommen haben - die beiden unteren Passwort-Felder mit dem bisherigen Passwort des betreffenden Benutzers aus.<BR>
-		Anderenfalls wird das bisherige Passwort durch den Benutzernamen des betreffenden Benutzers ersetzt.<BR>
-		Dies ist die Voreinstellung.</p>
+			<fieldset style='background-color:none; margin-top:10px;'>
+				<legend style='color:blue; font-weight:bold;'>Hilfe zu den Bearbeitungsm&ouml;glichkeiten:</legend>
+				<div id='scrollbox1' style='overflow-y:scroll;'>
+				Sie k&ouml;nnen die pers&ouml;nlichen Angaben unver&auml;ndert lassen und nur das Passwort &auml;ndern.<BR>
+				F&uuml;llen Sie hierzu lediglich die beiden unteren Eingabefelder aus.<BR>
+				Standardm&auml;&szlig;ig ist hier der betreffende Benutzername als Passwort vorbelegt.<BR><BR>
+				Wenn Sie nur die pers&ouml;nlichen Daten ver&auml;ndern wollen, m&uuml;ssen Sie die &Auml;nderungen mit dem Passwort des betreffenden Benutzers best&auml;tigen.<BR>
+				Dies gilt auch, wenn Sie nur die Downloadoption &auml;ndern wollen.<BR><BR>
+				F&uuml;llen Sie hierzu - nachdem Sie die entsprechenden &Auml;nderungen an den pers&ouml;nlichen Daten vorgenommen haben - die beiden unteren Passwort-Felder mit dem bisherigen Passwort des betreffenden Benutzers aus.<BR>
+				Anderenfalls wird das bisherige Passwort durch den Benutzernamen des betreffenden Benutzers ersetzt.<BR>
+				Dies ist die Voreinstellung.
+				</div>
+			</fieldset>
 		</div>
 	
-		<p id='fuss'><A style='margin-right:745px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank' title='pic2base im Web'>www.pic2base.de</A>".$cr."</p>
+		<div id='foot'>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
 	
 	</div>";
 }

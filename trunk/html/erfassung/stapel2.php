@@ -214,7 +214,7 @@ function countDown()
 		}
 		else if(timeout == 0)
 		{
-			document.getElementById( "counter" ).innerHTML = "Doublettenpr&uuml;fung l&auml;ft...";
+			document.getElementById( "counter" ).innerHTML = "Doublettenpr&uuml;fung l&auml;uft...";
 		}
 		setTimeout( "countDown()", 1000 );	
 	}
