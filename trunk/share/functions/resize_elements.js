@@ -16,22 +16,26 @@ function checkWindowSize()
         jQuery("#foot").css({"width":(jQuery(window).width() - 46) + "px"});
         jQuery("#log_frame").css({"width":(jQuery(window).width() - 200) + "px"});
         
-        //Cookie für Anzahl der Spalten in protect_metadata0.php und kompactview_metadata0.php setzen:
+        //Cookie für Anzahl der Spalten in protect_metadata0.php und kompactview_metadata0.php sowie Bildanzahl im Filmstreifen setzen:
     	if( jQuery(window).width() >1000 && jQuery(window).width() <=1100)
     	{
     		document.cookie="columns=4; path=/";
+    		document.cookie="step=6; path=/";
     	}
     	else if( jQuery(window).width() >1100 && jQuery(window).width() <=1420)
     	{
     		document.cookie="columns=5; path=/";
+    		document.cookie="step=7; path=/";
     	}
     	else if( jQuery(window).width() >1420 && jQuery(window).width() <=1600)
     	{
     		document.cookie="columns=6; path=/";
+    		document.cookie="step=10; path=/";
     	}
     	else if( jQuery(window).width() >1600)
     	{
     		document.cookie="columns=7; path=/";
+    		document.cookie="step=12; path=/";
     	}
     	
     	/*Breite der Textfelder in get_details.php*/
@@ -103,8 +107,9 @@ function checkWindowSize()
         jQuery("#kat_b").css({"width":"350px"}); 
         jQuery("#kat1_b").css({"width":"340px"});
     	
-    	//Cookie für Anzahl der Spalten in protect_metadata0.php und kompactview_metadata0.php setzen:
+    	//Cookie für Anzahl der Spalten in protect_metadata0.php und kompactview_metadata0.php sowie Bildanzahl im Filmstreifen setzen:
     	document.cookie="columns=3; path=/";
+    	document.cookie="step=6; path=/";
     } 
     
     if ( jQuery(window).height() > 743 ) 

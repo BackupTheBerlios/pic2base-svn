@@ -248,6 +248,12 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/permissions.php';
 
+//Anzahl der Vorschaubilder im Filmstreifen:
+if(isset($_COOKIE['step']))
+{
+	$step = $_COOKIE['step'];
+}
+
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
 $user_id = $uid;
@@ -1812,7 +1818,7 @@ SWITCH ($modus)
 	self.gotoFilmstreifenPosition = function gotoFilmstreifenPosition(newPosition, picId)
 	{
 		currImageState.picId = picId;
-		".$filmstreifenUpdateFunc." (Math.floor((newPosition) / 6) + 0), 99);
+		".$filmstreifenUpdateFunc." (Math.floor((newPosition) / ".$step.") + 0), 99);
 	}
 	</script>";
 	
@@ -1947,10 +1953,11 @@ SWITCH ($modus)
 		{
 			//echo $pic_id."<BR>";
 			$pic_id = mysql_result($result6, $i6, 'pic_id');
-			$FileName = mysql_result($result6, isset($i6), 'FileName');
-			$FileNameHQ = mysql_result($result6, isset($i6), 'FileNameHQ');
-			$FileNameV = mysql_result($result6, isset($i6), 'FileNameV');
-			$FileSize = mysql_result($result6, isset($i6), 'FileSize');
+			$FileName = mysql_result($result6, $i6, 'FileName');
+			$FileNameHQ = mysql_result($result6, $i6, 'FileNameHQ');
+			$FileNameV = mysql_result($result6, $i6, 'FileNameV');
+			$FileSize = mysql_result($result6, $i6, 'FileSize');
+			
 			//abgeleitete Groessen:
 			IF ($FileNameV == '')
 			{
@@ -1960,7 +1967,7 @@ SWITCH ($modus)
 			{
 				@$parameter_v=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
 			}
-			$size = ceil($FileSize / 1024);
+			$size = round($FileSize / 1024);		
 			$breite = $parameter_v[0];
 			$hoehe = $parameter_v[1];
 			$breite_v = $breite;
@@ -1973,14 +1980,16 @@ SWITCH ($modus)
 			ELSE
 			{
 				$hoehe_neu = $fs_hoehe;
-				$breite_neu = $fs_hoehe * $breite / $hoehe;
+				$breite_neu = number_format(($fs_hoehe * $breite / $hoehe),0,',','.');
 			}
-			$kat_id = 1;	//Erfordernis kontrollieren!!  *********************************************************
+			//echo "Breite: ".$breite_neu.", H&ouml;he: ".$hoehe_neu;
 			echo "<TD align='center' colspan='1' width = '130px' style= 'padding-top:2px; padding-bottom:2px;'>
-					<div id='pic$pic_id'>";
-					getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
-			echo "</div>
+			<div id='pic$pic_id'>";
+			getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, isset($kat_id), $mod, $form_name);
+			echo "
+			</div>
 			</TD>";
+			//####################################################################################
 		
 			//Erzeugung der Download-Icons:
 			$Owner = mysql_result($result6, $i6, 'Owner');
@@ -2099,7 +2108,7 @@ SWITCH ($modus)
 		FOR ($i6=0; $i6<$num6; $i6++)
 		{
 			$pic_id = mysql_result($result6, $i6, 'pic_id');
-			echo "<TD align='center'><div id = 'picture_$pic_id' style='display:none';><img src='$inst_path/pic2base/bin/share/images/green.gif' width=\"50\" height=\"2\" /></div></TD>";
+			echo "<TD align='center'><div style='width:100px;'><div id = 'picture_$pic_id' style='display:none';><img src='$inst_path/pic2base/bin/share/images/green.gif' width=\"50\" height=\"2\" /></div></div></TD>";
 		}
 		FOR($i_re = '0'; $i_re < $rest; $i_re++)
 		{
@@ -2108,7 +2117,7 @@ SWITCH ($modus)
 		echo "</TR>";
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
-		echo "<TR><TD colspan='6'></TD></TR>";	//leere Slider-Zeile
+		echo "<TR><TD colspan=".$step."></TD></TR>";	//leere Slider-Zeile
 		echo "
 		</TABLE>";
 	}
@@ -2284,7 +2293,7 @@ SWITCH ($modus)
 		FOR ($i6=0; $i6<$num6; $i6++)
 		{
 			$pic_id = mysql_result($result6, $i6, 'pic_id');
-			echo "<TD align='center'><div id = 'picture_$pic_id' style='display:none';><img src='$inst_path/pic2base/bin/share/images/green.gif' width=\"50\" height=\"2\" /></div></TD>";
+			echo "<TD align='center'><div style='width:100px';><div id = 'picture_$pic_id' style='display:none;'><img src='$inst_path/pic2base/bin/share/images/green.gif' width=\"50\" height=\"2\" /></div></div></TD>";
 		}
 		FOR($i_re = '0'; $i_re < $rest; $i_re++)
 		{
@@ -2295,7 +2304,7 @@ SWITCH ($modus)
 		//Wenn mehr als 18 Bilder gefunden wurden, wird der Slider angezeigt:
 		IF($num6_1 > 18 AND $num6_1 < 600)
 		{
-			echo "<TR><TD colspan = '6' align=center>";
+			echo "<TR><TD colspan = ".$step." align=center>";
 			//Anzahl der Steps ist Anzahl der Bilder / 6:
 //			$steps = $num6_1/6;
 			$steps = $num6_1/$step;
@@ -2303,10 +2312,11 @@ SWITCH ($modus)
 			//Breite eines Slider-Elements:
 //			$sl_width = 600 / $steps;
 			$sl_width = $slider_width / $steps;
+			$sl_width = 10;
 			FOR($s='0'; $s<$steps; $s++)
 			{
-				$ziel = $s*6 + 1;
-				$ziel_ende = $ziel + 5;
+				$ziel = $s*$step + 1;
+				$ziel_ende = $ziel + ($step - 1);
 				IF($ziel_ende > $num6_1)
 				{
 					$ziel_ende = $num6_1;
@@ -2321,7 +2331,7 @@ SWITCH ($modus)
 				{
 					$slider_img = $inst_path."/pic2base/bin/share/images/slider_1.gif";
 				}
-				$position = floor($ziel/6);
+				$position = floor($ziel / $step);
 				SWITCH ($mod)
 				{
 					CASE 'kat':
