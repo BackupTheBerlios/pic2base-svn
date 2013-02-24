@@ -27,7 +27,11 @@ $row = mysql_fetch_array($result1);
 IF($row['datum'] == '')
 {
 	$result2 = mysql_query( "INSERT INTO $table3 (info, datum) VALUES(\"$FCKeditor1\", '$aufn_dat')");
-	echo mysql_error();
+	if(mysql_error() !== '')
+	{
+		echo "Insert-Fehler in Tabelle diary!<br>";
+		echo mysql_error();
+	}
 }
 ELSE
 {
