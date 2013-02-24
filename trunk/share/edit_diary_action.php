@@ -36,7 +36,11 @@ IF($row['datum'] == '')
 ELSE
 {
 	$result2 = mysql_query( "UPDATE $table3 SET info = \"$FCKeditor1\" WHERE datum = '$aufn_dat'");
-	echo mysql_error();
+	if(mysql_error() !== '')
+	{
+		echo "UPDATE-Fehler in Tabelle diary!<br>";
+		echo mysql_error();
+	}
 }
 
 ?>
