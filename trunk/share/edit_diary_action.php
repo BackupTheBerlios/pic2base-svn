@@ -26,24 +26,36 @@ $result1 = mysql_query("SELECT datum FROM $table3 WHERE datum = '$aufn_dat'");
 $row = mysql_fetch_array($result1);
 IF($row['datum'] == '')
 {
-	$result2 = mysql_query( "INSERT INTO $table3 (info, datum) VALUES(\"$FCKeditor1\", '$aufn_dat')");
+	$result2 = mysql_query( "INSERT INTO $table3 (info, datum) VALUES('$FCKeditor1', '$aufn_dat')");
 	if(mysql_error() !== '')
 	{
 		echo "Insert-Fehler in Tabelle diary!<br>";
 		echo mysql_error();
 	}
+	else
+	{
+		?>
+		<script language="JavaScript">
+		history.back();
+		</script>
+		<?php 
+	}
 }
 ELSE
 {
-	$result2 = mysql_query( "UPDATE $table3 SET info = \"$FCKeditor1\" WHERE datum = '$aufn_dat'");
+	$result2 = mysql_query( "UPDATE $table3 SET info = '$FCKeditor1' WHERE datum = '$aufn_dat'");
 	if(mysql_error() !== '')
 	{
 		echo "UPDATE-Fehler in Tabelle diary!<br>";
 		echo mysql_error();
 	}
+	else
+	{
+		?>
+		<script language="JavaScript">
+		history.back();
+		</script>
+		<?php 
+	}
 }
-
 ?>
-<script language="JavaScript">
-history.back();
-</script>
