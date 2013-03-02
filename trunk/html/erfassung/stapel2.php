@@ -158,6 +158,7 @@ function processFile( fileList )
 			{
 				var result = JSON.parse( client.responseText );
 				
+				
 				if( result.errorCode != 0 )
 				{
 					alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
