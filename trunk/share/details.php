@@ -205,7 +205,7 @@ IF($num4 > '0')
 //print_r($writable_fields);
 //dann werden alle in der Kompakt-Ansicht lesbaren Meta-Datenfelder ermittelt und in ein Array geschrieben:
 $result5 = mysql_query("SELECT field_name FROM $table5 WHERE viewable = '1'");
-echo mysql_error();
+//echo mysql_error();
 $num5 = mysql_num_rows($result5);
 $viewable_fields = array();
 IF($num5 > '0')
@@ -329,7 +329,7 @@ FOREACH($info_arr AS $IA)
 					$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` VARCHAR( 50 ) NOT NULL ");
 					if(mysql_error() !== '')
 					{
-						echo "<br>".mysql_error()."<BR>";
+//						echo "<br>".mysql_error()."<BR>";
 						$result8 = mysql_query("ALTER TABLE $table20 ADD `$tag` text NOT NULL ");
 					}
 					$result9 = mysql_query("UPDATE $table20 SET `$tag` = '$iat1' WHERE lang = 'en'");
@@ -398,7 +398,7 @@ IF($view == 'all')
 	AND $table10.kat_id = $table11.kat_id 
 	AND $table4.kat_id = $table10.kat_id
 	AND $table11.info <>''");
-	echo mysql_error();
+	//echo mysql_error();
 	$num4 = mysql_num_rows($result4);
 	//echo $num4." Treffer<BR>";
 	FOR($i4='0'; $i4<$num4; $i4++)
