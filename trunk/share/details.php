@@ -318,7 +318,7 @@ FOREACH($info_arr AS $IA)
 				IF(mysql_error() OR $tag_name == NULL OR $tag_name == '')
 				{
 					//usersprachliche Meta-Tag-Uebersetzung
-					$exif_daten_transl = shell_exec($exiftool." -".$tag." -lang ".$lang." -x 'Directory' ".$file);echo $exif_daten_transl;
+					$exif_daten_transl = shell_exec($exiftool." -".$tag." -lang ".$lang." -x 'Directory' ".$file);//echo $exif_daten_transl;
 					$info_arr_transl = explode(':', $exif_daten_transl);
 					$iat0 = $info_arr_transl[0];
 					// englische Meta-Tag-Bezeichnung
@@ -419,35 +419,7 @@ IF($view == 'all')
 		}
 	}
 	
-	//liegen Tagebucheintraege zu diesem Bild vor?
-	//echo mysql_get_server_info()."<BR>";
-	/*
-	IF(mysql_get_server_info() <= 5.1)
-	{
-		//echo "Version < 5.1";
-		$result5 = mysql_query("SELECT DateTimeOriginal FROM $table2 WHERE pic_id = '$pic_id'");
-		$dat = date('Y-m-d', strtotime(mysql_result($result5, 0, 'DateTimeOriginal')));
-		$res6 = mysql_query("SELECT * FROM $table3 WHERE datum = '$dat'");
-		//echo mysql_error();
-		@$diary_info = mysql_result($res6, isset($i6), 'info');
-		@$datum = date('d.m.Y', strtotime(mysql_result($res6, isset($i6), 'datum')));
-	}
-	ELSE
-	{
-		//echo "Version > 5.1";
-		//Abfrage-Syntax ist erst ab mysql-Version 5.1 ferfuegbar:
-		$result5 = mysql_query("SELECT $table3.datum, $table3.info, $table2.pic_id, $table2.DateTimeOriginal 
-		FROM $table2, $table3 
-		WHERE (year($table2.DateTimeOriginal) = year($table3.datum) 
-		AND month($table2.DateTimeOriginal) = month($table3.datum) 
-		AND day($table2.DateTimeOriginal) = day($table3.datum) 
-		AND $table2.pic_id = '$pic_id')");
-		echo mysql_error();
-		@$diary_info = mysql_result($result5, isset($i5), 'info');
-		@$datum = date('d.m.Y', strtotime(mysql_result($result5, isset($i5), 'datum')));
-	}
-	*/
-	
+	//liegen Tagebucheintraege zu diesem Bild vor?	
 	$result5 = mysql_query("SELECT DateTimeOriginal FROM $table2 WHERE pic_id = '$pic_id'");
 	$dat = date('Y-m-d', strtotime(mysql_result($result5, 0, 'DateTimeOriginal')));
 	$res6 = mysql_query("SELECT * FROM $table3 WHERE datum = '$dat'");
