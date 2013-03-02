@@ -1926,7 +1926,6 @@ function checkSoftware($sr)
 	$md = shell_exec("which md5sum");
 	$apache_uid = posix_getuid();
 	$apache_gid = posix_getgid();
-	
 	echo "	<center>
 			<TABLE class='tablenormal' border='0'>
 			<TR>
