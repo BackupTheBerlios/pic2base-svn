@@ -89,10 +89,11 @@ echo "
 		echo "</div>
 	</div>
 	
-	<div id='spalte1F'>
+	<div id='spalte1'>
 		
 		<fieldset style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Auswahl der Track-Datei</legend>
+			<div id='scrollbox0' style='overflow-y:scroll;'>
 			<center>
 			<table class='kat'>
 	
@@ -222,18 +223,18 @@ echo "
 				</tr>
 			</table>
 			</center>
+			</div>
 		</fieldset>
 	</div>
 	
-	<div id='spalte2F'>
+	<div id='spalte2'>
 		
 		<fieldset style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Hinweis</legend>
+			<div id='scrollbox1' style='overflow-y:scroll;'>
 			Hilfe zur Geo-Referenzierung finden Sie in der <a href='../help/help1.php?page=4'>Online-Hilfe</a>.
+			</div>
 		</fieldset>
-	</div>
-	
-	<div id='filmstreifen'>
 	</div>
 	
 	<div class='foot' id='foot'>

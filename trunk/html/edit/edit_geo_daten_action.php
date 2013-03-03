@@ -16,13 +16,19 @@ else
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>pic2base - Geo-Referenzierung</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format1.css'>
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
 	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
 	<link rel="shortcut icon" href="../../share/images/favicon.ico">
 	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<!--<script type="text/javascript" src="../../ajax/inc/vorschau.js"></script>-->
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
 </HEAD>
 
 <BODY LANG="de-DE" scroll = "auto">
@@ -35,7 +41,7 @@ else
  * Project: pic2base
  * File: edit_geo_daten_action.php
  *
- * Copyright (c) 2005 - 2012 Klaus Henneberg
+ * Copyright (c) 2005 - 2013 Klaus Henneberg
  *
  * Project owner:
  * Dipl.-Ing. Klaus Henneberg
@@ -189,39 +195,50 @@ SWITCH($ge)
 	}
 	
 	echo "
-	<div class='page'>
-		<p id='kopf'>pic2base :: Datensatz-Bearbeitung (Geo-Referenzierung) <span class='klein'>(User: $username)</span></p>
+	<div class='page' id='page'>
 		
-		<div class='navi' style='clear:right;'>
-		<div class='menucontainer'>";
-			createNavi3_1($uid);
-		echo "</div>
+		<div id='head'>
+			pic2base :: Datensatz-Bearbeitung (Geo-Referenzierung) <span class='klein'>(User: $username)</span>
 		</div>
 		
-		<div id='spalte1F'>
-			<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Details zur Track-Datei<BR></p>";
+		<div class='navi' id='navi'>
+			<div class='menucontainer'>";
+				createNavi3_1($uid);
+			echo "</div>
+		</div>
+		
+		<div id='spalte1'>
+		
+			<fieldset style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Details zur Track-Datei</legend>
+				<div id='scrollbox0' style='overflow-y:scroll; padding-top:50px;'>
+					Name der Track-Datei: ".($_FILES['geo_file']['name'])."<BR>
+					Trackdatei-Gr&ouml;sse: ".($_FILES['geo_file']['size'])." Byte<BR>".
+					$error.$hinweis1."
+				</div>
+			</fieldset>
 			
-			echo "Name der Track-Datei: ".($_FILES['geo_file']['name'])."<BR>";
-			//echo "tmp. Datei: ".$geo_file."<BR>";
-			echo "Trackdatei-Gr&ouml;sse: ".($_FILES['geo_file']['size'])." Byte<BR>";
-			echo $error;
-			echo $hinweis1;
-		echo "
 		</div>
 		
-		<div id='spalte2F'>
-			<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hinweise zur Referenzierung<BR></p>";
+		<div id='spalte2'>
+		
+			<fieldset style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Hinweise zur Referenzierung</legend>
+				<div id='scrollbox1' style='overflow-y:scroll; padding-top:50px; text-align:center;'>";
+					//Wenn alle Bilder referenziert wurden, werden die benutzereignen Datens&auml;tze aus der temp. Tabelle 'geo_tmp' gel&ouml;scht und nochmals alle Bilder dargestellt, damit den Koordinaten eine Ortsbezeichnung hinzugefgt werden kann:
+					$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$uid'");
+					echo "Die Geo-Referenzierung wurde im ersten Schritt abgeschlossen.<BR>
+					Klicken Sie auf \"Weiter\", um zur Ortzuweisung zu gelangen.<BR><BR>
+					<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p><BR>
+					Ergebnis der Koordinaten-Zuweisung:<BR><BR>".$hinweis2."
+				</div>
+			</fieldset>
 			
-			//Wenn alle Bilder referenziert wurden, werden die benutzereignen Datens&auml;tze aus der temp. Tabelle 'geo_tmp' gel&ouml;scht und nochmals alle Bilder dargestellt, damit den Koordinaten eine Ortsbezeichnung hinzugefgt werden kann:
-			$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$uid'");
-			echo "Die Geo-Referenzierung wurde abgeschlossen.<BR>Die Zusammenfassung des Ergebnisses finden Sie unter dem Button \"Weiter\", mit dem Sie zur Ortzuweisung gelangen.<BR><BR>";
-			echo "<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p><BR>Zusammenfassung der Koordinaten-Zuweisung:<BR><BR>".$hinweis2."
-		</div>
-		
-		<div id='filmstreifen'>
 		</div>
 
-		<p id='fuss'>".$cr."</p>
+		<div id='foot'>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
 	
 	</div>
 	</FORM>";
@@ -292,50 +309,51 @@ SWITCH($ge)
 	$result9 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$uid'");
 	
 	echo "
-	<div class='page'>
-		<p id='kopf'>pic2base :: Track-Darstellung in GoogleEarth (User: $username)</p>
+	<div class='page' id='page'>
 		
-				<div class='navi' style='clear:right;'>
-		<div class='menucontainer'>";
-			createNavi3_1($uid);
-		echo "</div>
+		<div id='head'>
+			pic2base :: Track-Darstellung in GoogleEarth <span class='klein'>(User: $username)</span>
 		</div>
-		
-		<div id='spalte1F'>
-			<div id='tooltip1'><p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Streckenverlauf in <a href='../../../userdata/$uid/kml_files/$file'>GoogleEarth 
-			<span>
-			<strong>Zur Anzeige des Streckenverlaufs in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
-			<br />
-			Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
-			</span>
-			</a>darstellen
-			</p></div>
-		</div>
-		
-		<div id='spalte2F'>
-			<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; text-align:center;'>Hinweise<BR></p>
-			<SPAN style='text-align:center';>
-			<table id='kat'>
-				<tr>
-					<td align='left'>
-						<div align=\"justify\">Klicken Sie in der linken Spalte auf 'GoogleEarth' um den ausgew&auml;hlten Track in GoogleEarth darzustellen.
-						</div>
-					</td>
-				</tr>
 				
-				<tr>
-					<td>
-						
-					</td>
-				</tr>
-			</table>
-			</SPAN>
+		<div class='navi' id='navi'>
+			<div class='menucontainer'>";
+				createNavi3_1($uid);
+			echo "</div>
 		</div>
 		
-		<div id='filmstreifen'>
+		<div id='spalte1'>
+		
+			<fieldset style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Zur Ansicht in GoogleEarth</legend>
+				<div id='scrollbox0' style='overflow-y:scroll; padding-top:50px;'>
+					<div id='tooltip1'>Streckenverlauf in <a href='../../../userdata/$uid/kml_files/$file'>GoogleEarth 
+						<span>
+						<strong>Zur Anzeige des Streckenverlaufs in GoogleEarth ist es erforderlich, da&#223; GoogleEarth auf Ihrem Rechner installiert ist.</strong><br />
+						<br />
+						Ein kostenfreier Download steht unter http://earth.google.de zur Verf&uuml;gung.
+						</span>
+						</a>darstellen
+					</div>
+				</div>
+			</fieldset>
+			
+			
+		</div>
+		
+		<div id='spalte2'>
+		
+			<fieldset style='background-color:none; margin-top:10px;'>
+			<legend style='color:blue; font-weight:bold;'>Hinweise</legend>
+				<div id='scrollbox1' style='overflow-y:scroll; padding-top:50px; text-align:center;'>
+					Klicken Sie in der linken Spalte auf 'GoogleEarth' um den ausgew&auml;hlten Track in GoogleEarth darzustellen.
+				</div>
+			</fieldset>
+
 		</div>
 	
-		<p id='fuss'><A style='margin-right:745px;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>".$cr."</p>
+		<div id='foot'>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		</div>
 	
 	</div>";
 	break;

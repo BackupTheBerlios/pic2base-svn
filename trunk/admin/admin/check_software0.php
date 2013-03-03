@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
 IF (!$_COOKIE['uid'])
 {
@@ -32,7 +33,7 @@ header("Pragma: no-cache"); // HTTP/1.0
  */
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -115,7 +116,8 @@ echo "
 		</div>
 	
 	</div>";
-
+$sw_check = checkSoftware($sr);
+echo "<input type='hidden' id = 'erg' value = \"$sw_check\">";
 ?>
 </DIV>
 </CENTER>
@@ -123,5 +125,5 @@ echo "
 </HTML>
 
 <script language="Javascript">
-document.getElementById("check_result").innerHTML=<?php checkSoftware($sr); ?>;
+document.getElementById("check_result").innerHTML=document.getElementById("erg").value;
 </script>

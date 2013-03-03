@@ -1926,109 +1926,71 @@ function checkSoftware($sr)
 	$md = shell_exec("which md5sum");
 	$apache_uid = posix_getuid();
 	$apache_gid = posix_getgid();
-	echo "	<center>
-			<TABLE class='tablenormal' border='0'>
-			<TR>
-			<TD colspan='2'>Ergebnis der Software-Kontrolle:</TD>
-			</TR>
-			
-			<TR class='trflach'>
-			<TD colspan='2'></TD>
-			</TR>";
+	$output = "<center><TABLE class='tablenormal' border='0'><TR><TD colspan='2'>Ergebnis der Software-Kontrolle:</TD></TR><TR class='trflach'><TD colspan='2'></TD></TR>";
 //	flush();
 //	sleep(1);
 	$error_count = 0;
 	IF($et == NULL)
 	{
-		echo "<TR>
-		<TD class='tdleft'>ExifTool</TD>
-		<TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html' target='_blank'>wurde nicht gefunden</a></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>ExifTool</TD><TD class='tdright'><a href='http://www.sno.phy.queensu.ca/~phil/exiftool/index.html' target='_blank'>wurde nicht gefunden</a></TD></TR>";
 		$error_count++;
 	}
 	ELSE
 	{
 		$v_et = shell_exec("exiftool -ver");
-		echo "<TR>
-		<TD class='tdleft'>ExifTool</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$et." installiert (Ver. ".$v_et.")</FONT></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>ExifTool</TD><TD class='tdright'><FONT COLOR='green'>ist in ".$et." installiert (Ver. ".$v_et.")</FONT></TD></TR>";
 	}
 	flush();
 	sleep(1);
 	
 	IF($conv == NULL)
 	{
-		echo "<TR>
-		<TD class='tdleft'>ImageMagick</TD>
-		<TD class='tdright'><a href='http://www.imagemagick.org/script/download.php' target='_blank'>wurde nicht gefunden</a></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>ImageMagick</TD><TD class='tdright'><a href='http://www.imagemagick.org/script/download.php' target='_blank'>wurde nicht gefunden</a></TD></TR>";
 		$error_count++;
 	}
 	ELSE
 	{
 		$v_conv = shell_exec("convert -version");
-		echo "<TR>
-		<TD class='tdleft'>Convert</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$conv." installiert (Ver. <a href='#' title = '$v_conv'>".substr($v_conv,20,6)."</a>)</FONT></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>Convert</TD><TD class='tdright'><FONT COLOR='green'>ist in ".$conv." installiert (Ver. <a href='#' title = '$v_conv'>".substr($v_conv,20,6)."</a>)</FONT></TD></TR>";
 	}
 	flush();
 	sleep(1);
 	
 	IF($dc == NULL)
 	{
-		echo "<TR>
-		<TD class='tdleft'>dcraw</TD>
-		<TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c' target='_blank'>wurde nicht gefunden</a></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>dcraw</TD><TD class='tdright'><a href='http://www.cybercom.net/~dcoffin/dcraw/dcraw.c' target='_blank'>wurde nicht gefunden</a></TD></TR>";
 		$error_count++;
 	}
 	ELSE
 	{
 		$v_dc = shell_exec("dcraw");
-		echo "<TR>
-		<TD class='tdleft'>dcraw</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$dc." installiert (Ver. ".substr($v_dc,28,4).")</FONT></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>dcraw</TD><TD class='tdright'><FONT COLOR='green'>ist in ".$dc." installiert (Ver. ".substr($v_dc,28,4).")</FONT></TD></TR>";
 	}
 	flush();
 	sleep(1);
 	
 	IF($gb == NULL)
 	{
-		echo "<TR>
-		<TD class='tdleft'>GPSBabel</TD>
-		<TD class='tdright'><a href='http://www.gpsbabel.org/download.html' target='_blank'>wurde nicht gefunden</a></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>GPSBabel</TD><TD class='tdright'><a href='http://www.gpsbabel.org/download.html' target='_blank'>wurde nicht gefunden</a></TD></TR>";
 		$error_count++;
 	}
 	ELSE
 	{
 		$v_gb = shell_exec("gpsbabel -V");
-		echo "<TR>
-		<TD class='tdleft'>GPSBabel</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$gb." installiert (Ver. ".substr($v_gb,18,5).")</FONT></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>GPSBabel</TD><TD class='tdright'><FONT COLOR='green'>ist in ".$gb." installiert (Ver. ".substr($v_gb,18,5).")</FONT></TD></TR>";
 	}
 	flush();
 	sleep(1);
 	
 	IF($md == NULL)
 	{
-		echo "<TR>
-		<TD class='tdleft'>md5sum</TD>
-		<TD class='tdright'><a href='http://www.gnu.org/software/coreutils/' target='_blank'>wurde nicht gefunden</a></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>md5sum</TD><TD class='tdright'><a href='http://www.gnu.org/software/coreutils/' target='_blank'>wurde nicht gefunden</a></TD></TR>";
 		$error_count++;
 	}
 	ELSE
 	{
 		$v_md = shell_exec("md5sum --version");
-		echo "<TR>
-		<TD class='tdleft'>md5sum</TD>
-		<TD class='tdright'><FONT COLOR='green'>ist in ".$md." installiert (Ver. ".substr($v_md,23,3).")</FONT></TD>
-		</TR>";
+		$output .= "<TR><TD class='tdleft'>md5sum</TD><TD class='tdright'><FONT COLOR='green'>ist in ".$md." installiert (Ver. ".substr($v_md,23,3).")</FONT></TD></TR>";
 	}
 //	flush();
 //	sleep(1);
@@ -2045,47 +2007,47 @@ function checkSoftware($sr)
 	$text = "";
 	IF(($p2b_version == 'NULL' OR $p2b_version == '' OR $p2b_version == '0.00.0') AND ($version == '0.60.0'))
 	{
-		$text = "Es liegen Software-Updates vor.<BR/>";
-		$text .= "<BR/>Sie verwenden jedoch noch die Version ".$version."<BR/>";
-		$text .= "Diese Version ist zu alt, um direkt ein Update auf Version ".$version." durchzuf&uuml;hren.<BR/>";
+		$text = "Es liegen Software-Updates vor.<br>";
+		$text .= "<br>Sie verwenden jedoch noch die Version ".$version."<br>";
+		$text .= "Diese Version ist zu alt, um direkt ein Update auf Version ".$version." durchzuf&uuml;hren.<br>";
 		$text .= "Kontaktieren Sie f&uuml;r weitere Informationen bitte den <a href='http://www.pic2base.de/impressum1.php'>Hersteller</a>.";
 		
 	}
 	ELSEIF($p2b_version == '0.60.1' AND $version == '0.60.2')
 	{
-		$text = "<BR/><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR/><BR/>
-		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR/><BR/>
-		Klicken Sie <a href='../../html/db_update_0601_to_0602.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR/>";
+		$text = "<br><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><br><br>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<br><br>
+		Klicken Sie <a href='../../html/db_update_0601_to_0602.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><br>";
 	}
 	ELSEIF($p2b_version == '0.60.1' AND $version > '0.60.2')
 	{
-		$text = "<BR/><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR/><BR/>";
-		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR/>
-		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR/>";
-		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.2 durch.</FONT><BR/>";
+		$text = "<br><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><br><br>";
+		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<br>
+		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<br>";
+		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.2 durch.</FONT><br>";
 	}
 	ELSEIF($p2b_version == '0.60.2' AND $version == '0.60.3')
 	{
-		$text = "<BR/><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR/><BR/>
-		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR/><BR/>
-		Klicken Sie <a href='../../html/db_update_0602_to_0603.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR/>";
+		$text = "<br><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><br><br>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<br><br>
+		Klicken Sie <a href='../../html/db_update_0602_to_0603.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><br>";
 	}
 	ELSEIF($p2b_version == '0.60.3' AND $version == '0.60.4')
 	{
-		$text = "<BR/><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><BR/><BR/>
-		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<BR/><BR/>
-		Klicken Sie <a href='../../html/db_update_0603_to_0604.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><BR/>";
+		$text = "<br><FONT COLOR='red'>Es ist ein Datenbank-Update erforderlich.</b><br><br>
+		Momentan ist die Version ".$p2b_version." installiert, die mit dem Update auf die Version ".$version." aktualisiert werden kann.<br><br>
+		Klicken Sie <a href='../../html/db_update_0603_to_0604.php'>hier</a>, um das Update auszuf&uuml;hren.</FONT><br>";
 	}
 	ELSEIF($p2b_version == '0.60.2' AND $version > '0.60.3')
 	{
-		$text = "<BR/><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><BR/><BR/>";
-		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<BR/>
-		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<BR/>";
-		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.3 durch.</FONT><BR/>";
+		$text = "<br><FONT COLOR='red'><b>Es liegt ein Update-Problem vor.</b><br><br>";
+		$text .= "Updates &uuml;ber mehrere Versionen sind leider nicht m&ouml;glich.<br>
+		Momentan ist die Version ".$p2b_version." installiert. Von dieser k&ouml;nnen Sie nicht direkt auf Version ".$version." updaten.<br>";
+		$text .= "Bitte f&uuml;hren Sie zuerst das Update auf Version 0.60.3 durch.</FONT><br>";
 	}
 	ELSEIF($p2b_version == $version)
 	{
-		$text = "<BR/><FONT COLOR='green'>Es ist kein Datenbank-Update erforderlich.</FONT><BR/>";
+		$text = "<BR><FONT COLOR='green'>Es ist kein Datenbank-Update erforderlich.</FONT><BR>";
 	}
 	
 	//Speicherung der Software-Pfade in der Tabelle 'pfade':
@@ -2095,30 +2057,19 @@ function checkSoftware($sr)
 	$result2 = mysql_query("INSERT INTO $table16 (dcraw_path, conv_path, et_path, gpsb_path, md5sum_path, apache_uid, apache_gid, p2b_version) 
 	VALUES ('$dc', '$conv', '$et', '$gb', '$md', '$apache_uid', '$apache_gid', '$p2b_version')");
 	
-	echo "	<TR class='trflach'>
-			<TD colspan='2'></TD>
-			</TR>
-			</TABLE>
-			";
+	$output .= "<TR class='trflach'><TD colspan='2'></TD></TR></TABLE>";
 	
 	//#######################################################################
 	
 	IF($error_count !== 0)
 	{
-		echo "<CENTER>
-		<TABLE style='width:500px; text-align:center;'>
-		<TR>
-		<TD><BR><u>WICHTIGER HINWEIS:</u><BR>Sollte eine der gelisteten Software-Komponenten nicht installiert sein, 
+		$output .= "<CENTER><TABLE style='width:500px; text-align:center;'><TR><TD><BR><u>WICHTIGER HINWEIS:</u><BR>Sollte eine der gelisteten Software-Komponenten nicht installiert sein, 
 		holen Sie dies bitte <b>VOR</b> der ersten Benutzung von pic2base nach.<BR>
 		Anderenfalls werden einige Funktionen fehlen oder fehlerhaft sein!<BR><BR>
 		Sollte eine Software-Komponente hier als \"nicht installiert\" angezeigt werden,<BR>obwohl Sie sicher sind, da&szlig; sie vorhanden ist,<BR>
 		kann es in wenigen Ausnahmef&auml;llen erforderlich sein,<BR>den pic2base-Server neu zu starten.<BR>
 		Dies kann vor allem dann auftreten,<BR>wenn erforderliche Software-Komponenten nicht &uuml;ber den <BR>
-		Paketmanager hinzugef&uuml;gt wurden.
-		</TD>
-		</TR>
-		</TABLE>
-		</CENTER>";
+		Paketmanager hinzugef&uuml;gt wurden.</TD></TR></TABLE></CENTER>";
 	}
 	ELSE
 	{
@@ -2130,46 +2081,23 @@ function checkSoftware($sr)
 		$username = mysql_result($result3, isset($i3), 'username');
 		if($num3 == 1 AND $username == 'pb')	//wenn es nur einen User gibt und dieser pb ist:
 		{
-			echo "<CENTER>
-			<TABLE style='width:500px; text-align:center;'>
-			<TR>
-			<TD><BR/><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><BR/>".$text."<BR/><font color='red'>Legen Sie nun bitte den ersten Benutzer mit Admin-Berechtigung an.</font><BR/><BR/>
-			<input type='button' value='Ersten Benutzer anlegen' onClick=\"location.href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminadduser'\">
-			</TD>
-			</TR>
-			</TABLE>
-			</CENTER>";
+			$output .= "<CENTER><TABLE style='width:500px; text-align:center;'><TR><TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><BR>".$text."<BR><font color='red'>Legen Sie nun bitte den ersten Benutzer mit Admin-Berechtigung an.</font><BR><BR><input type='button' value='Ersten Benutzer anlegen' onClick=location.href='$inst_path/pic2base/bin/html/admin/adminframe.php?item=adminadduser'></TD></TR></TABLE></CENTER>";
 		}
 		elseif($num3 > 1 AND $num4 == 0)		//wenn es mehrere User gibt, aber keine Bilder in der DB
 		{
-			$text = "<BR/>Beginnen Sie nun bitte mit der Datenerfassung, indem Sie Bilder per Einzelbild-Erfassung in die Datenbank stellen<BR/>
-			oder den Weg &uuml;ber den <a href='$inst_path/pic2base/bin/html/help/help1.php?page=1'>FTP-Upload</a> w&auml;hlen.<BR/>";
-			 echo "<CENTER>
-			<TABLE style='width:500px; text-align:center;'>
-			<TR>
-			<TD><BR/><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><BR/>".$text."<BR/>
-			<input type='button' value='Zur Einzelbild-Erfassung' onClick=\"location.href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'\"> 
-			</TD>
-			</TR>
-			</TABLE>
-			</CENTER>";
+			$text = "<BR>Beginnen Sie nun bitte mit der Datenerfassung, indem Sie Bilder per Einzelbild-Erfassung in die Datenbank stellen<BR>oder den Weg &uuml;ber den <a href='$inst_path/pic2base/bin/html/help/help1.php?page=1'>FTP-Upload</a> w&auml;hlen.<BR>";
+			 $output .= "<CENTER><TABLE style='width:500px; text-align:center;'><TR><TD><BR><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><BR>".$text."<BR><input type='button' value='Zur Einzelbild-Erfassung' onClick=location.href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php'></TD></TR></TABLE></CENTER>";
 		}
 		elseif($num3 > 1 AND $num4 > 0)			// der Normalfall: es gibt mehrere User und es gibt bereits Bilder in der DB
 		{
 			
-			echo "<CENTER>
-					<TABLE style=\"width:500px; text-align:center;\">
-						<TR>
-							<TD><br/><FONT COLOR='green'>Die erforderlichen Software-Komponenten sind installiert.</FONT><br/>".$text."<br/>
-							<input type='button' value='Zur Startseite' onClick=\"location.href='$inst_path/pic2base/bin/html/start.php'\"/></TD>
-						</TR>
-					</TABLE>
-				</CENTER>";
-			
+			$output .= "<CENTER><TABLE style='width:500px; text-align:center;'><TR><TD><FONT COLOR='green'><br>Alle erforderlichen Software-Komponenten sind installiert.</FONT><br>".$text."<br><input type='button' value='Zur Startseite' onClick=location.href='$inst_path/pic2base/bin/html/start.php' /></TD></TR></TABLE></CENTER>";
 		}
 	}
 	
-	echo "</center>";
+	$output .= "</center>";
+	//$output = "Test";
+	return $output;
 }
 
 function directDownload($uid, $sr)
