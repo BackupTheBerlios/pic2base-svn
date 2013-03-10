@@ -288,7 +288,9 @@ IF(hasPermission($uid, 'editallprofiles', $sr))
 				Dies gilt auch, wenn Sie nur die Downloadoption &auml;ndern wollen.<BR><BR>
 				F&uuml;llen Sie hierzu - nachdem Sie die entsprechenden &Auml;nderungen an den pers&ouml;nlichen Daten vorgenommen haben - die beiden unteren Passwort-Felder mit dem bisherigen Passwort des betreffenden Benutzers aus.<BR>
 				Anderenfalls wird das bisherige Passwort durch den Benutzernamen des betreffenden Benutzers ersetzt.<BR>
-				Dies ist die Voreinstellung.
+				Dies ist die Voreinstellung.<br><br>
+				Die Auswahl der Sprache bezieht sich derzeit lediglich auf die Darstellung der Metadaten-Feldnamen im Info-Fenster zu dem jeweiligen Bild.<br>
+				Sp&auml;ter wird sich hier&uuml;ber auch die Sprache der Benutzeroberfl&auml;che einstellen lassen.
 				</div>
 			</fieldset>
 		</div>

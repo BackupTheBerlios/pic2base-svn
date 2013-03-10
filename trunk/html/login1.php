@@ -60,17 +60,17 @@ IF($cr == NULL OR $inst_path == '/')
 echo "
 	<div class='page' id='page'>
 	
-		<div class='head' id='head'>
+		<div id='head'>
 		pic2base :: Anmeldung
 		</div>
 		
-		<div class='navi' id='navi'>
+		<div id='navi'>
 			<div class='menucontainer'>
 			<BR>
 			</div>
 		</div>
 		
-		<div class='content' id='content'>
+		<div id='content'>
 			<p style='margin:100px 0px; text-align:center'>
 		
 			<FORM action='../pwd_check.php' method='POST' name='pwd'>
@@ -99,7 +99,7 @@ echo "
 			</p>
 		</div>
 	
-		<div class='foot' id='foot'>
+		<div id='foot'>
 		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
 		</div>
 	

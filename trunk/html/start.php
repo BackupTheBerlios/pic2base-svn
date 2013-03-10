@@ -115,7 +115,7 @@ IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 		IF(!$fh)
 		{
 			$ol_text = "";
-			$online_hinweis = "Es konnte keine &Uuml;berpr&uuml;fung auf Online-Updates erfolgen.<BR>M&ouml;glicherweise haben Sie keinen Internet-Zugang.";
+			$online_hinweis = translateLabel("online_hinweis1",$sr,$uid);
 		}
 		ELSE
 		{
@@ -130,11 +130,12 @@ IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 			$ol_text = "Online-Updates:";
 			IF($V2 > $IV)
 			{
-				$online_hinweis = "Es ist ein Online-Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
+//				$online_hinweis = "Es ist ein Online-Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
+				$online_hinweis = translateLabel("online_hinweis2",$sr,$uid);
 			}
 			ELSE
 			{
-				$online_hinweis = "<FONT COLOR='green'>Es sind keine Online-Updates verf&uuml;gbar.</font>";
+				$online_hinweis = translateLabel("online_hinweis3",$sr,$uid);
 			}
 			fclose($fh);
 		}
@@ -151,21 +152,25 @@ IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 	IF(mysql_error() == '')
 	{
 		$num0 = mysql_num_rows($result0);
-		$loesch_text = "Hinweis zur Datenbank-Wartung:";
+//		$loesch_text = "Hinweis zur Datenbank-Wartung:";
+		$loesch_text = translateLabel('loesch_text',$sr,$uid);
 		IF($num0 > 0)
 		{
 			IF($num0 == 1)
 			{
-				$loesch_hinweis = "<FONT COLOR='red'>Es wurde ein Bild zum L&ouml;schen vorgemerkt.</FONT";
+//				$loesch_hinweis = "<FONT COLOR='red'>Es wurde ein Bild zum L&ouml;schen vorgemerkt.</FONT>";
+				$loesch_hinweis = translateLabel('loesch_hinweis1',$sr,$uid);
 			}
 			ELSE
 			{
-				$loesch_hinweis = "<FONT COLOR='red'>Es wurden ".$num0." Bilder zum L&ouml;schen vorgemerkt.</FONT";
+//				$loesch_hinweis = "<FONT COLOR='red'>Es wurden ".$num0." Bilder zum L&ouml;schen vorgemerkt.</FONT>";
+				$loesch_hinweis = translateLabel('loesch_hinweis2',$sr,$uid).": ".$num0;
 			}
 		}
 		ELSE
 		{
-			$loesch_hinweis = "<FONT COLOR='green'>Es wurden keine Bilder zum L&ouml;schen vorgemerkt.</FONT>";
+//			$loesch_hinweis = "<FONT COLOR='green'>Es wurden keine Bilder zum L&ouml;schen vorgemerkt.</FONT>";
+			$loesch_hinweis = translateLabel('loesch_hinweis3',$sr,$uid);
 		}
 	}
 }
