@@ -300,7 +300,7 @@ echo "
 							ELSE
 							{
 								echo '
-								<SELECT name="ort" id="ort" SIZE="1" style = "width:203px;">
+								<SELECT name="ort" id="ort" SIZE="1" style = "width:303px;">
 								<OPTION VALUE = "">neuen Ort anlegen</OPTION>';
 								$zv = 0;									// $zv - Zaehlvariable
 								FOREACH($abstand AS $ABST)
@@ -337,7 +337,7 @@ echo "
 						{
 							//Variante, wenn ein euer Ort angelegt werden soll:
 							echo "
-							<INPUT TYPE = 'text' name='ort' id='ort' maxlength='50' style = 'width:200px;' />";
+							<INPUT TYPE = 'text' name='ort' id='ort' maxlength='50' style = 'width:300px;' />";
 						}
 						elseif($stat !== 'new' AND $stat == 'skip')
 						{
