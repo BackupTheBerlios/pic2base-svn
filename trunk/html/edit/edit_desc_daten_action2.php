@@ -73,9 +73,9 @@ include $sr.'/bin/share/functions/main_functions.php';
 
 $exiftool = buildExiftoolCommand($sr);
 
-if ( array_key_exists('kat_id',$_GET) )
+if ( array_key_exists('kat_id',$_POST) )
 {
-	$kat_id = $_GET['kat_id'];
+	$kat_id = $_POST['kat_id'];
 }
 else
 {
@@ -91,8 +91,8 @@ if ( array_key_exists('art',$_GET) )
 }
 
 //Variablen-Umbenennung fuer die Ruecksprung-Adresse:
-$kat_back = $kat_id;
-$ID_back = $ID;
+// $kat_back = $kat_id;
+// $ID_back = $ID;
 
 echo "
 <div class='page' id='page'>

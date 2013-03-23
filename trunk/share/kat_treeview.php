@@ -181,7 +181,7 @@ echo "
 				$num11 = mysql_num_rows($result11);
 				IF($num11 > 0)
 				{
-					$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='Unterkategorien anzeigen (Z178)'>";
+					$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='Unterkategorien anzeigen (".$kat_id.")'>";
 					echo "<TR id='kat'><TD class='kat1'  style='background-color:RGB(125,0,10); color:white;'>".$space."<span style='cursor:pointer' onClick='getKatTreeview(\"$kat_id\", 0, \"$mod\", \"$bewertung\", \"$modus\",\"$base_file\")'>".$img."</span>&#160;";
 				}
 				ELSE
@@ -303,7 +303,7 @@ echo "
 		ELSE
 		{
 			$treestatus = 'plus';
-			$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='Unterkategorien anzeigen'>";
+			$img = "<IMG src='$inst_path/pic2base/bin/share/images/plus.gif' width='11' height='11' hspace='0' vspace='0' border='0' title='Unterkategorien anzeigen (".$kat_id.")'>";
 			echo 	"<TR id='kat'>
 				<TD class='kat1'>";
 			IF(!isset($space))
@@ -348,5 +348,7 @@ echo "
 			}
 		}
 	}
-	echo "</TABLE>";
+	echo "
+	<input type='hidden' name='kat_id' value='$kat_id'>
+	</TABLE>";
 ?>

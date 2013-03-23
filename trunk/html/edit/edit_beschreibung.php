@@ -38,9 +38,7 @@ include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
 
-echo "<BODY onLoad=\"getKatTreeview('0','0','kat','0','edit','edit_beschreibung')\">
-<CENTER>
-<DIV Class='klein'>";
+
 
 /*
  * Project: pic2base
@@ -62,6 +60,18 @@ if(array_key_exists('pic_id',$_GET))
 	$pic_id = $_GET['pic_id'];
 }
 
+if(array_key_exists('kat_id',$_GET))
+{
+	$kat_id = $_GET['kat_id'];
+}
+else
+{
+	if(!isset($kat_id))
+	{
+		$kat_id = 0;
+	}
+}
+
 if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
@@ -79,18 +89,6 @@ else
 	}
 }
 
-if(array_key_exists('kat_id',$_GET))
-{
-	$kat_id = $_GET['kat_id'];
-}
-else
-{
-	if(!isset($kat_id))
-	{
-		$kat_id = 0;
-	}
-}
-
 if(array_key_exists('ID',$_REQUEST))
 {
 	$ID = $_REQUEST['ID'];
@@ -103,9 +101,13 @@ else
 	}
 }
 
+echo "<BODY onLoad=\"getKatTreeview($kat_id,'0','kat','0','edit','edit_beschreibung')\">
+<CENTER>
+<DIV Class='klein'>";
+
 echo "
 <div class='page' id='page'>
-	<FORM name='desc-zuweisung', method='post' action='edit_desc_daten_action2.php?kat_id=$kat_id&ID=$ID&art=$art'>
+	<FORM name='desc-zuweisung', method='post' action='edit_desc_daten_action2.php?ID=$ID&art=$art'>
 	<div class='head' id='head'>
 		pic2base :: Datensatz-Bearbeitung (Beschreibung bearbeiten) <span class='klein'>(User: $username)</span>
 	</div>
