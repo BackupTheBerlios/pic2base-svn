@@ -129,7 +129,7 @@ echo "
 		<p style='margin:120px 0px; text-align:center'>
 		
 		<center>
-			<p id = 'headline'>Status der Kategorie-Zuweisung f&uuml;r Kategorie ".$source_kat_id."</p>
+			<p id = 'headline'>Status der Kategorie-Zuweisung</p>
 			<p id='zaehler'></p>
 			<div id='prog_bar' style='border:solid; border-color:red; width:500px; height:12px; margin-top:30px; margin-bottom:30px; text-align:left; vertical-align:middle'>
 				<img src='../../share/images/green.gif' name='bar' />
