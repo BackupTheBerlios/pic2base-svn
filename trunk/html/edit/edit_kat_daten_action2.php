@@ -75,14 +75,15 @@ $output = json_encode($obj);
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-if(array_key_exists('kat_id',$_GET))
+//$source_kat_id: die Kategorie, deren Bilder bearbeitet werden sollen
+if(array_key_exists('source_kat_id',$_POST))
 {
-	$kat_id = $_GET['kat_id'];
+	$source_kat_id = $_POST['source_kat_id'];
 	//echo "kat_id: ".$kat_id."<BR>"; 
 }
 else
 {
-	$kat_id = 0;
+	$source_kat_id = 0;
 }
 if(array_key_exists('ID',$_GET))
 {
@@ -128,7 +129,7 @@ echo "
 		<p style='margin:120px 0px; text-align:center'>
 		
 		<center>
-			<p id = 'headline'>Status der Kategorie-Zuweisung</p>
+			<p id = 'headline'>Status der Kategorie-Zuweisung f&uuml;r Kategorie ".$source_kat_id."</p>
 			<p id='zaehler'></p>
 			<div id='prog_bar' style='border:solid; border-color:red; width:500px; height:12px; margin-top:30px; margin-bottom:30px; text-align:left; vertical-align:middle'>
 				<img src='../../share/images/green.gif' name='bar' />
@@ -170,7 +171,7 @@ function picKatList( params )
 	else
 	{
 		alert( "Es sind keine Dateien zu bearbeiten.\nBitte legen Sie Bilder und Kategorien fest, die diesen zugeordnet werden sollen." );
-		window.location='edit_kat_daten.php?kat_id=' + <?php echo $kat_id;?> + '&mod=' + params.mod + '&pic_id=0';
+		window.location='edit_kat_daten.php?kat_id=' + <?php echo $source_kat_id;?> + '&mod=' + params.mod + '&pic_id=0';
 	}	
 }
 
@@ -185,7 +186,7 @@ function showReady( avgTime,mod )
 	document.bar.height = '0';
 	//Fertigmeldung ausgeben:
 	alert( "Die Bearbeitung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
-	window.location='edit_kat_daten.php?kat_id=' + <?php echo $kat_id;?> + '&mod=' + mod + '&pic_id=0';
+	window.location='edit_kat_daten.php?kat_id=' + <?php echo $source_kat_id;?> + '&mod=' + mod + '&pic_id=0';
 }
 
 function processFile( pic_array, kat_array, mod )

@@ -348,7 +348,21 @@ echo "
 			}
 		}
 	}
-	echo "
-	<input type='hidden' name='kat_id' value='$kat_id'>
-	</TABLE>";
+	if($base_file == 'edit_beschreibung')
+	{
+		echo "
+		<input type='hidden' name='kat_id' value='$kat_id'>
+		</TABLE>";
+	}
+	elseif($base_file == 'edit_kat_daten')
+	{
+		echo "
+		<input type='hidden' name='source_kat_id' value='$kat_id'>
+		</TABLE>";
+	}
+	else
+	{
+		echo "
+		</TABLE>";
+	}
 ?>

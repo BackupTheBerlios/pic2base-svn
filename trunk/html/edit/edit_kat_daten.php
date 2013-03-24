@@ -92,7 +92,7 @@ $base_file = 'edit_kat_daten';
 if($mod == 'kat')
 {
 	include $sr.'/bin/share/functions/ajax_functions.php';
-	echo "<BODY onLoad=\"getKatTreeview('0','0','kat','6','edit','edit_kat_daten'); getKatTreeview2('0','0','kat','6','complete_view','edit_kat_daten');\">";
+	echo "<BODY onLoad=\"getKatTreeview($kat_id,'0','kat','6','edit','edit_kat_daten'); getKatTreeview2('0','0','kat','6','complete_view','edit_kat_daten');\">";
 }
 elseif($mod == 'zeit')
 {
