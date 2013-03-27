@@ -602,14 +602,17 @@ a.navi {
     text-decoration:none;
     height:16px;
     width: 100px;
-    border-bottom: 1px solid #888888;
+    border-top: 1px solid RGB(125,0,10);
+    border-bottom: 1px solid RGB(125,0,10);
   }
 
 
 a.navi:hover {
     /*color:#737994;*/
-    color:RGB(120,120,120);
-    background-color:#eeeeee;
+    color:RGB(255,255,255);
+    background-color:RGB(125,0,10);
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
   }
   
 /*fuer 'blinde' Navigations-Links (Platzhalter):*/
@@ -626,7 +629,8 @@ a.navi_blind {
     text-decoration:none;
     height:16px;
     width: 100px;
-    border-bottom: 1px solid #888888;
+    border-top: 1px solid RGB(125,0,10);
+    border-bottom: 1px solid RGB(125,0,10);
   }
  /*fuer inaktive Navigations-Links:*/
 a.navi_dummy {
@@ -641,7 +645,8 @@ a.navi_dummy {
     text-decoration:none;
     height:16px;
     width: 100px;
-    border-bottom: 1px solid #888888;
+    border-top: 1px solid RGB(125,0,10);
+    border-bottom: 1px solid RGB(125,0,10);
   }
     
 a.subnavi {
@@ -657,11 +662,15 @@ a.subnavi {
     text-decoration:none;
     height:16px;
     width: 304px;
+    border-top: 1px solid #efeff7;
+    border-bottom: 1px solid #efeff7;
   }
   
 a.subnavi:hover {
     color:RGB(0,0,0);
     background-color:#efeff7;
+    border-top: 1px solid RGB(125,0,10);
+    border-bottom: 1px solid RGB(125,0,10);
   }
   
 a.subnavi_blind {
@@ -785,8 +794,8 @@ div#content {
 	background-color:#efeff7;
   	border:1px solid #efeff7;
 	/*float:left;*/
-	/*height:627px;
-  	width: 822px;*/ 
+	/*height:627px;*/
+  	/*width: 822px;*/ 
 	overflow:auto;
   }
   
