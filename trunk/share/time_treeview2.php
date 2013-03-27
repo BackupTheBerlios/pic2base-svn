@@ -50,6 +50,7 @@ ELSE
 {
 	$bewertung = '';
 }
+
 if(array_key_exists('show_mod',$_GET))
 {
 	$show_mod = $_GET['show_mod'];
@@ -58,7 +59,7 @@ else
 {
 	if(!isset($show_mod))
 	{
-		$show_mod = 0;
+		$show_mod = 'J';
 	}
 }
 
@@ -273,7 +274,8 @@ echo "<TR class='kat'>
 		<TD class='kat2'><SPAN style='cursor:pointer;' onClick='getTimePreview2(0000,0,0,1,\"$mod\",\"$modus\",\"$base_file\")' title='Bilder anzeigen'>".$sel_all."</SPAN></TD>
 		<TD class='kat2'>".$num7."</TD>
 	</TR>
-</TABLE>";
+</TABLE>
+<input type='hidden' name='show_mod' value='$show_mod'>";
 $end99 = microtime();
 list($end99msec,$end99sec) = explode(" ",$end99);
 $runtime99 = number_format((($end99msec + $end99sec) - ($start1msec + $start1sec)),2,'.',',');

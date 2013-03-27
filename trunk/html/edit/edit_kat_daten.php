@@ -63,6 +63,15 @@ if(array_key_exists('mod',$_GET))
 	$mod = $_GET['mod'];
 }
 
+if(array_key_exists('show_mod',$_GET))
+{
+	$show_mod = $_GET['show_mod'];
+}
+else
+{
+	$show_mod="J";
+}
+
 if(array_key_exists('pic_id',$_GET))
 {
 	$pic_id = $_GET['pic_id'];
@@ -97,7 +106,7 @@ if($mod == 'kat')
 elseif($mod == 'zeit')
 {
 	include $sr.'/bin/share/functions/ajax_functions.php';
-	echo "<BODY onLoad=\"getTimeTreeview2('0','zeit','J','6'); getKatTreeview2('0','0','kat','6','complete_view','edit_kat_daten');\">";
+	echo "<BODY onLoad=\"getTimeTreeview2('0','zeit','$show_mod','6'); getKatTreeview2('0','0','kat','6','complete_view','edit_kat_daten');\">";
 }
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");

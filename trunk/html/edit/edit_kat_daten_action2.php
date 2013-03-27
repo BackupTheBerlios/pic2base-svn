@@ -28,6 +28,7 @@ if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
 }
+
 $obj->mod = $mod;
 $obj->pic_anzahl = count($pic_ID);
 $obj->pic_array = $pic_ID;
@@ -79,7 +80,6 @@ $output = json_encode($obj);
 if(array_key_exists('source_kat_id',$_POST))
 {
 	$source_kat_id = $_POST['source_kat_id'];
-	//echo "kat_id: ".$kat_id."<BR>"; 
 }
 else
 {
@@ -88,7 +88,6 @@ else
 if(array_key_exists('ID',$_GET))
 {
 	$ID = $_GET['ID'];
-	//echo "ID: ".$ID."<BR>"; 
 }
 else
 {
@@ -97,11 +96,19 @@ else
 if(array_key_exists('mod',$_GET))
 {
 	$mod = $_GET['mod'];
-	//echo "mod: ".$mod."<BR>"; 
 }
 else
 {
 	$mod = 0;
+}
+
+if(array_key_exists('show_mod',$_POST))
+{
+	$show_mod = $_POST['show_mod'];
+}
+else
+{
+	$show_mod = 'J';
 }
 
 include '../../share/global_config.php';
@@ -152,13 +159,13 @@ echo "
 </CENTER>
 </BODY>";
 ?>
-
 <script type = text/javascript>
 var timeout = 1;
 var gesamtanzahl;
 var starttime = new Date();
 var avgTime;
 var mod = "<?php echo $mod;?>";
+var show_mod = "<?php echo $show_mod;?>";
 
 function picKatList( params )
 {
@@ -171,7 +178,7 @@ function picKatList( params )
 	else
 	{
 		alert( "Es sind keine Dateien zu bearbeiten.\nBitte legen Sie Bilder und Kategorien fest, die diesen zugeordnet werden sollen." );
-		window.location='edit_kat_daten.php?kat_id=' + <?php echo $source_kat_id;?> + '&mod=' + params.mod + '&pic_id=0';
+		window.location='edit_kat_daten.php?kat_id=' + <?php echo $source_kat_id;?> + '&mod=' + params.mod + '&pic_id=0&show_mod=' + show_mod;
 	}	
 }
 
@@ -186,7 +193,7 @@ function showReady( avgTime,mod )
 	document.bar.height = '0';
 	//Fertigmeldung ausgeben:
 	alert( "Die Bearbeitung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
-	window.location='edit_kat_daten.php?kat_id=' + <?php echo $source_kat_id;?> + '&mod=' + mod + '&pic_id=0';
+	window.location='edit_kat_daten.php?kat_id=' + <?php echo $source_kat_id;?> + '&mod=' + mod + '&pic_id=0&show_mod=' + show_mod;
 }
 
 function processFile( pic_array, kat_array, mod )
