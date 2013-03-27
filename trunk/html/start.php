@@ -24,11 +24,11 @@ $actual_time = time();
 	<script language="javascript" type="text/javascript" src="../share/functions/ShowPicture.js"></script>
 	<script language="JavaScript" src="../share/functions/resize_elements.js"></script>
 	<script language="JavaScript" src="../share/functions/jquery-1.8.2.min.js"></script>
-  <script language="JavaScript">
-  	jQuery.noConflict();
-	jQuery(document).ready(checkWindowSize);
-	jQuery(window).resize(checkWindowSize); 
-  </script>
+  	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+  	</script>
 </HEAD>
 
 
@@ -638,16 +638,26 @@ echo "<div class='page' id='page'>
 					$hoehe = 40;
 					$breite = $hoehe / $height * $width;
 					
-					//echo "<SPAN style='cursor:pointer;'><td class='normal' style='width:80px;'align='center'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$width', '$height', '', 'HQ', 'start');return false\"  title='$ranking Downloads; zur vergr&ouml;&#223;erten Ansicht'><div class='shadow5'><div class='shadow4'><div class='shadow3'><div class='shadow2'><div class='shadow'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0'></div></div></div></div></div></a></TD></span>";
 					echo "
 					<td class='normal' style='width:80px;'align='center'>
-					<div id='tooltip3'>
-						<a href='' style='text-decoration:none';><div class='shadow5'><div class='shadow4'><div class='shadow3'><div class='shadow2'><div class='shadow'><img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0', title='$ranking Downloads'></div></div></div></div></div>
-						<span style='text-align:left;'>
-						<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', height='400', border='0'>
-						</span>
-						</a>
-					</div>
+						<div id='tooltip3'>
+							<a href='' style='text-decoration:none';>
+								<div class='shadow5'>
+									<div class='shadow4'>
+										<div class='shadow3'>
+											<div class='shadow2'>
+												<div class='shadow'>
+													<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0', title='$ranking Downloads'>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<span style='text-align:left;'>
+									<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', height='400', border='0'>
+								</span>
+							</a>
+						</div>
 					</td>";
 				}
 				//Leer-Raum affuellen, wenn weniger als 10 Bilder bisher heruntergeladen wurden:
@@ -670,8 +680,7 @@ echo "<div class='page' id='page'>
 				</TR>
 				
 				</TBODY>
-				</TABLE>
-				";
+				</TABLE>";
 		}
 		ELSE
 		{
@@ -679,7 +688,6 @@ echo "<div class='page' id='page'>
 			echo "<p style='margin-top:120px; margin-left:10px; text-align:center'>";
 			checkSoftware($sr);
 			echo "</p>";
-	//		echo "</p><br style='clear:both;' />";
 		}
 		
 		//log-file schreiben:
@@ -692,7 +700,7 @@ echo "<div class='page' id='page'>
 		</div>
 		
 		<div class='foot' id='foot'>
-		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
 		</div>
 	
 	</div>
