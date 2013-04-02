@@ -34,6 +34,11 @@ if(!isset($_COOKIE['bewertung']))
 	}
 }
 //########################################################################
+//############## sind wir evtl. im Kollektions-Modus? ####################
+if($_COOKIE['search_modus'])
+{
+	$search_modus = $_COOKIE['search_modus'];	//echo $search_modus;
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -85,12 +90,24 @@ $result2 = mysql_query("SELECT * FROM $table2");
 $num2 = mysql_num_rows($result2);
 
 echo "
-<div class='page' id='page'>
+<div class='page' id='page'>";
 
-	<div class='head' id='head'>
-		pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: ".$username.")</span>
-	</div>
+	if($search_modus !== 'collection')
+	{
+		echo "
+		<div class='head' id='head'>
+			pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: ".$username.")</span>
+		</div>";
+	}
+	else
+	{
+		echo "
+		<div class='head' id='head'>
+			pic2base :: Recherche-&Uuml;bersicht <span class='klein'>(User: ".$username.")</span> Sie befinden sich im Suchmodus f&uuml;r Kollektionen! <input type='button' style='vertical-align:middle;' value='Zum Normalmodus' onCLick='document.cookie = \"search_modus=normal; path=/\"; location.reload();'>
+		</div>";
+	}
 	
+	echo "
 	<div class='navi' id='navi'>
 		<div class='menucontainer'>";
 		createNavi2($uid);
@@ -206,9 +223,9 @@ echo "
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=exif'>Suche nach Meta-Daten</a>
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=desc'>Suche nach Beschreibungstext</a>
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=geo'>Suche nach Geo-Daten</a>
-			<!--<a class='subnavi_blind'></a>
-			<a class='subnavi' href='recherche2.php?pic_id=0&mod=expert_k'>Experten-Suche (nach Kategorien)</a>
-			<a class='subnavi' href='recherche2.php?pic_id=0&mod=expert_d'>Experten-Suche (nach Aufnahme-Datum)</a>
+			<a class='subnavi_blind'></a>
+			<a class='subnavi' href='recherche2.php?pic_id=0&mod=collection'>Suche nach Kollektionen</a>
+			<!--<a class='subnavi' href='recherche2.php?pic_id=0&mod=expert_d'>Experten-Suche (nach Aufnahme-Datum)</a>
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=expert_kd'>Experten-Suche (nach Kategorie u. Datum)</a>-->
 			<BR>
 			</center>
@@ -242,7 +259,8 @@ echo "
 			<center>
 			<br>
 			Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button 'Hilfe' in der linken Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
-			<br>
+			<br><br>
+			Wenn Sie sich im Suchmodus f&uuml;r Kollektionen befinden, werden ausgew&auml;hlte Bilder der aktiven Kollektion zugeordnet. Es erfolgt kein Download der Bilder.<br>
 			</center>
 		</fieldset>
 	

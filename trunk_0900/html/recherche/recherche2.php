@@ -9,6 +9,19 @@ else
 	$uid = $_COOKIE['uid'];
 }
 
+if($_COOKIE['search_modus'])
+{
+	$search_modus = $_COOKIE['search_modus'];
+	if($_COOKIE['coll_id'])
+	{
+		$coll_id = $_COOKIE['coll_id'];
+	}
+}
+else
+{
+	$search_modus = 'normal';
+}
+
 unset($parameter);
 IF(array_key_exists('parameter', $_COOKIE))
 {
@@ -53,6 +66,7 @@ ELSE
 	  	jQuery.noConflict();
 		jQuery(document).ready(checkWindowSize);
 		jQuery(window).resize(checkWindowSize); 
+//		alert("recherche2; Hier soll auf coll_name fokussiert werden");
 	</script>
 </HEAD>
 
@@ -175,8 +189,6 @@ function CloseWindow()
 -->
 </script>
 
-
-
 	<?php 
 	
 	IF (array_key_exists('bewertung', $_COOKIE))
@@ -235,17 +247,51 @@ function CloseWindow()
 			include $sr.'/bin/share/functions/ajax_functions.php';
 			echo "<BODY onLoad=\"getKatTreeview('0','0','kat','$bewertung','recherche','recherche2')\">";
 		break;
+		
+		case 'collection':
+			include $sr.'/bin/share/functions/ajax_functions.php';
+			echo "<BODY onLoad=\"getCollections('$uid','recherche','recherche2')\">";
+			?>
+			<script type="text/javascript">
+				function searchCollection(wert, parameter, modus)
+				{
+					//alert("Suche..." + wert + " / " + parameter + " / " + modus);
+					refreshCollList(wert, parameter, modus)
+					if (parameter == 'coll_name')
+					{
+						document.getElementById('coll_name').focus();
+					}
+					else if (parameter == 'coll_description')
+					{
+						document.getElementById('coll_description').focus();
+					}
+				}
+			</script>
+			<?php 
+		break;
 	}
 	
 	echo "
 	<CENTER>
 	<DIV Class='klein'>
-	<div class='page' id='page'>
+	<div class='page' id='page'>";
 	
-		<div class='head' id='head'>
-			pic2base :: Datensatz-Recherche <span class='klein'>(User: $username; eingestellte Bewertung: ".showBewertung($bewertung).")</span>
-		</div>
-		
+		if($search_modus == 'normal')
+		{
+			echo "
+			<div class='head' id='head'>
+				pic2base :: Datensatz-Recherche <span class='klein'>(User: $username; eingestellte Bewertung: ".showBewertung($bewertung).")</span>
+			</div>";
+		}
+		elseif($search_modus == 'collection')
+		{
+			echo "
+			<div class='head' id='head'>
+				pic2base :: Datensatz-Recherche <span class='klein'>(User: $username; eingestellte Bewertung: ".showBewertung($bewertung).")</span> im Kollektions-Modus! <input type='button' style='vertical-align:middle;' value='Zum Normalmodus' onCLick='document.cookie = \"search_modus=normal; path=/\"; location.reload();'>
+			</div>";
+		}
+	
+		echo "
 		<div class='navi' id='navi'>
 			<div class='menucontainer'>";
 				createNavi2_1($uid);
@@ -607,6 +653,18 @@ function CloseWindow()
 		</div>";
 		break;
 	//#####################################################################################################################
+		CASE 'collection':
+		echo "<div id='spalte1F'>
+				<center>
+					<fieldset  style='background-color:none; margin-top:10px;'>
+					<legend style='color:blue; font-weight:bold;'>Suche nach Kollektionen</legend>
+						<div id='scrollbox0' style='overflow-y:scroll;'>";
+						echo "</div>
+					</fieldset>
+				</center>
+			</div>";	
+		break;
+	//#####################################################################################################################
 		CASE 'expert_k':
 		include $sr.'/bin/share/functions/ajax_functions.php';
 		$base_file = 'recherche2';
@@ -726,9 +784,9 @@ function CloseWindow()
 			<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Hinweis zur Anzeige der Bilder</legend>
 			
-				Bei der Suche von Bildern nach dem Aufnahmedatum oder einer Kategorie gelangen Sie zum Suchergebnis, 
+				Bei der Suche von Bildern nach dem <b>Aufnahmedatum</b> oder einer <b>Kategorie</b> gelangen Sie zum Suchergebnis, 
 				indem Sie auf das Datum (Jahr, Monat oder Tag) oder den Kategorienamen klicken.<BR>
-				Bei den anderen Suchm&ouml;glichkeiten f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
+				Bei den <b>anderen Suchm&ouml;glichkeiten</b> f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
 				Wenn Sie ein Bild in der Filmstreifen-Ansicht mit der Maus &uuml;berfahren, erhalten Sie in der rechten oberen 
 				Spalte einige Details zu diesem Bild angezeigt.<BR>Klicken Sie auf ein Bild in dem Filmstreifen, gelangen 
 				Sie in den \"Bl&auml;tter\"-Modus.<BR>
@@ -736,8 +794,13 @@ function CloseWindow()
 				anzusehen, oder - die entsprechende Berechtigung vorausgesetzt - das gesuchte Bild herunterzuladen.<BR> 
 				Wenn Sie den \"Bl&auml;tter\"-Modus verlassen, gelangen Sie innerhalb der Filmstreifen-Ansicht an die Stelle,
 				an der sich das zuletzt betrachtete Bild befindet.<BR>Dieses wird dann auch in der Detailansicht dargestellt.<br><br>
+				Bei der Suche nach <b>Kollektionen</b> haben Sie die M&ouml;glichkeit, duch Eingabe eine Suchbegriffs in eines der beiden Textfelder (Name oder 
+				Beschreibung der Kollektion) die Liste der angezeigten Kollektionen entsprechend einzugrenzen.<br>
+				Mit einem Klick auf den Button \"Ansicht\" k&ouml;nnen Sie sich die gew&uuml;nschte Kollektion anschauen.<br>
+				Das eingestellte Bewertungskriterium (Benotung) wird bei dieser Suche nicht ber&uuml;cksichtigt.
+				<br><br>
 				Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der 
-			Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
+				Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
 			</fieldset>
 			
 		  </div>";
