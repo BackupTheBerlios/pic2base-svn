@@ -10,7 +10,7 @@
     } 
     else
     {
-      echo "Der Benutzer ist nicht berechtig, sich in den Admin-Bereich einzuloggen!";
+      echo "Der Benutzer ist nicht berechtigt, sich in den Admin-Bereich einzuloggen!";
     }
   } 
   else

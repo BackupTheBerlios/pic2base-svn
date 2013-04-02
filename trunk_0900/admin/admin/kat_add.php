@@ -247,7 +247,7 @@ echo "
 				echo "<FORM name='kat_neu' action='kat_add_action1.php?kat_id=$KAT_ID&level=$level&ID=$ID' method='POST'>
 				<INPUT type='hidden' name='parent' value='$ID'>
 				<INPUT type='hidden' name='level' value='$level_neu'>
-				<INPUT type='text' name='kategorie' value='' size='30' maxlength='30' onkeydown='countChars(this.value)'>&#160;
+				<INPUT type='text' name='kategorie' value='' size='30' maxlength='30' onkeydown='countChars(this.value)'>&#160;<BR><BR>
 				<input type='hidden' value='0' readonly='readonly' size='3' name='Kontrolle'>
 				<INPUT type='submit' value='Speichern'>&#160;
 				<INPUT TYPE = 'button' VALUE = 'Abbrechen' OnClick='location.href=\"kategorie0.php?kat_id=0\"'>

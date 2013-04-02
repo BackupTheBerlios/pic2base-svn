@@ -9,7 +9,7 @@ Gruppe:
     echo mysql_result ($result, 0, "description");
   } else
   {
-    echo "[keine Gruppe gew�hlt]";
+    echo "[keine Gruppe gew&auml;hlt]";
   }
 ?>
 <table><tr><td width=150>Parameter</td><td width=100 align=right>Erlaubnis</td></tr>

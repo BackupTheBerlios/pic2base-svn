@@ -1,4 +1,4 @@
-<center><h2>Rechtevergabe für Benutzergruppe</h2></center>
+<center><h2>Rechtevergabe f&uuml;r Benutzergruppe</h2></center>
 <center>
 Gruppe: 
 <?php
@@ -9,7 +9,7 @@ Gruppe:
     echo mysql_result ($result, 0, "description");
   } else
   {
-    echo "[keine Gruppe gewählt]";
+    echo "[keine Gruppe gew&auml;hlt]";
   }
 ?>
 <table><tr><td width=150>Parameter</td><td width=100 align=right>Erlaubnis</td></tr>

@@ -1,9 +1,16 @@
-<center><h2>Benutzer</h2></center>
+<center>
+<h2>Benutzer</h2>
+</center>
 <?php
   mysql_connect ($db_host, $db_username, $db_password);
   $result = mysql_query("select * from users ORDER BY name");
   $num = mysql_num_rows($result);
-  echo "<center><table><tr><td>Benutzername</td><td>Gruppe</td></tr>";
+  echo "<center>
+  <table>
+  <tr>
+  <td>Benutzername</td>
+  <td>Gruppe</td>
+  </tr>";
   for ($i = 0; $i < $num; $i++)
   {
     echo "<tr>";
@@ -15,5 +22,6 @@
     }
     echo "</tr>";
   }
-  echo "</table></center>";
+  echo "</table>
+  </center>";
 ?>
