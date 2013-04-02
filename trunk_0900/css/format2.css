@@ -211,7 +211,29 @@ TABLE.normal {
     padding:0px;
     margin:0px;
   }
+
+/*Tabelle im Bereich Kollektionen bearbeiten:*/
+
+TD.coll {
+    font-size:10pt;
+    font-family:Helvitica,Arial;
+    margin:0px;
+    padding:0px;
+    vertical-align:top;
+  }
+
+TR.coll {
+    height:1pt;
+  }
   
+TABLE.coll {
+    width:750px;
+    border-width:2px;
+    border-color:#DDDDFF;
+    border-style:solid;
+    padding:0px;
+    margin-top:20px;
+  }
   
 /*Tabelle fuer Kategorie-Verwaltung; Spalte1*/
   

@@ -79,3 +79,29 @@ div#tooltip3 a:hover span
   background:#EEEEEE;
   border:2px solid RGB(125,0,10);
  }
+ 
+ /*verwendet bei der Vorschau der in einer Kollektion enthaltenen Bilder (edit_selected_collection.php)*/
+ div.tooltip4 p span
+ {
+  display:none;
+ }
+
+ div.tooltip4 p:hover
+ {
+  background-color:#EEEEEE;
+ }
+
+div.tooltip4 p:hover span
+ {
+  display:block;
+  text-decoration :none;
+  position:absolute;
+  top:0px;
+  left:0px;
+  height:300px;
+  padding:5px;
+  margin:4px;
+  z-index:100;
+  background:#EEEEEE;
+  border:2px solid RGB(125,0,10);
+ }
