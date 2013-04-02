@@ -10,6 +10,20 @@ else
 	$uid = $_COOKIE['uid'];
 }
 
+// suchen wir fuer einen Download (normal) oder eine Kollektion (collection)?
+if($_COOKIE['search_modus'])
+{
+	$search_modus = $_COOKIE['search_modus'];
+	if($_COOKIE['coll_id'])
+	{
+		$coll_id = $_COOKIE['coll_id'];
+	}
+}
+else
+{
+	$search_modus = 'normal';
+}
+
 //==============================================
 //											   |
 //* Skript generiert die Filmstreifen-Ansicht  |
@@ -1990,94 +2004,128 @@ SWITCH ($modus)
 			</div>
 			</TD>";
 			//####################################################################################
-		
+//			echo $search_modus;		
 			//Erzeugung der Download-Icons:
-			$Owner = mysql_result($result6, $i6, 'Owner');
-			$check = fileExists($FileName, $uid);
-			IF($check > '0')
-			{
-				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-				$icon[$j] = "<TD align='center' width='43'>
-				<div id='box$pic_id'>
-				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$username\",\"$pic_id\")'>
-				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/>
-				</SPAN>	
-				</div>
-				</TD>";
-			}
-			ELSE
-			{
-				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
+			//Im normal-Modus wird der Download (direkt oder ueber den Download-Ordner des Users) behandelt, 
+			//im collection-Modus wird die Tabelle pic_coll fuer die gewaehlte Kollektion bedient
+			if($search_modus == 'normal')
+			{	//###########################  normal-Suche  #####################################
+				$Owner = mysql_result($result6, $i6, 'Owner');
+				$check = fileExists($FileName, $uid);
+				IF($check > '0')
 				{
-					IF(directDownload($uid, $sr))
+					//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
+					$icon[$j] = "<TD align='center' width='43'>
+					<div id='box$pic_id'>
+					<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$username\",\"$pic_id\")'>
+					<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0'/>
+					</SPAN>	
+					</div>
+					</TD>";
+				}
+				ELSE
+				{
+					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
+					IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
 					{
-						IF(hasPermission($uid, 'rotatepicture', $sr))
+						IF(directDownload($uid, $sr))
 						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-							<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
-							
-							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
-							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
-							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-							<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
-							
-							</div>
-							</TD>";
+							IF(hasPermission($uid, 'rotatepicture', $sr))
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+								
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+								<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
+								
+								<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
+								<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+								
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+								<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+								
+								</div>
+								</TD>";
+							}
+							ELSE
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+	
+								<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
+								<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+								
+								</div>
+								</TD>";
+							}
 						}
 						ELSE
 						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-
-							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
-							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
-							
-							</div>
-							</TD>";
+							IF(hasPermission($uid, 'rotatepicture', $sr))
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+								
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
+								<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+								
+								</div>	
+								</TD>";
+							}
+							ELSE
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+								
+								<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
+								<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+								
+								</div>	
+								</TD>";
+							}
 						}
 					}
 					ELSE
 					{
-						IF(hasPermission($uid, 'rotatepicture', $sr))
-						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
-							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
-							
-							</div>	
-							</TD>";
-						}
-						ELSE
-						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-							
-							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
-							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
-							
-							</div>	
-							</TD>";
-						}
+						$icon[$j] = "<TD align='center' width='43'><BR></TD>";
 					}
 				}
-				ELSE
+				$j++;
+			}
+			elseif($search_modus == 'collection')
+			{
+				//##################  collection_suche  ######################################
+				//die Icons zur Rotation der Bilder werden in collection-Modus nicht dargestellt
+				$result100 = mysql_query("SELECT * FROM $table25 WHERE pic_id = '$pic_id' AND coll_id = '$coll_id'");
+				if(mysql_num_rows($result100) == 1)
 				{
-					$icon[$j] = "<TD align='center' width='43'><BR></TD>";
+					//echo "Das Bild ".$pic_id." geh&ouml;rt zur Kollektion ".$coll_id;
+					$icon[$i6] = "
+					<TD align='center' width='43'>
+					<div id='box$pic_id'>
+					<SPAN style='cursor:pointer;' onClick='removePicture(\"$coll_id\",\"$pic_id\",\"$username\")'>
+					<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus der Kollektion entfernen' />
+					</SPAN>	
+					</div>
+					</TD>";
+				}
+				else
+				{
+					$icon[$i6] = "
+					<TD align='center' width='43'>
+					<div id='box$pic_id'>
+					<SPAN style='cursor:pointer;' onClick='addPicture(\"$coll_id\",\"$pic_id\",\"$username\")'>
+					<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild zur Kollektion hinzuf&uuml;gen' />
+					</SPAN>
+					</div>
+					</TD>";
 				}
 			}
-			$j++;
 		}
 		//Leer-Raum mit Leer-Zellen auffuellen (Zelle mit Dummy-Bild zur Streckung gefuellt), wenn Bilder gefunden wurden:
 		IF($num6 > '0')
@@ -2174,90 +2222,124 @@ SWITCH ($modus)
 			</TD>";
 			
 			//Erzeugung der Download-Icons:
-			$Owner = mysql_result($result6, $i6, 'Owner');
-			//Pruefung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur Loesch-Routine:
-			$check = fileExists($FileName, $uid);
-			IF($check > '0')
-			{
-				//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
-				$icon[$i6] = "
-				<TD align='center' width='43'>
-				<div id='box$pic_id'>
-				<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
-				<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus dem FTP-Download-Ordner entfernen' /></SPAN>	
-				</div>
-				</TD>";
-			}
-			ELSE
-			{
-				//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
-				IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
+			//Im normal-Modus wird der Download (direkt oder ueber den Download-Ordner des Users) behandelt, 
+			//im collection-Modus wird die Tabelle pic_coll fuer die gewaehlte Kollektion bedient
+			if($search_modus == 'normal')
+			{	//###########################  normal-Suche  #####################################
+				$Owner = mysql_result($result6, $i6, 'Owner');
+				//Pruefung, ob diese Datei bereits im Download-Ordner des angemeldeten Users liegt. Wenn nicht: Download-Icon mit link zur Kopier-Routine; wenn ja: selected-Icon mit Link zur Loesch-Routine:
+				$check = fileExists($FileName, $uid);
+				IF($check > '0')
 				{
-					IF(directDownload($uid, $sr))
+					//Die Datei befindet sich im Download-Ordner des Users und wird mit Klick auf das Icon geloescht:
+					$icon[$i6] = "
+					<TD align='center' width='43'>
+					<div id='box$pic_id'>
+					<SPAN style='cursor:pointer;' onClick='delPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
+					<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus dem FTP-Download-Ordner entfernen' /></SPAN>	
+					</div>
+					</TD>";
+				}
+				ELSE
+				{
+					//Die Datei befindet sich nicht im Download-Ordner des Users und wird mit Klick auf das Icon dort hin kopiert:
+					IF(($user_id == $Owner AND hasPermission($uid, 'downloadmypics', $sr)) OR hasPermission($uid, 'downloadallpics', $sr))
 					{
-						IF(hasPermission($uid, 'rotatepicture', $sr))
+						IF(directDownload($uid, $sr))
 						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-							<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
-							
-							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
-							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
-							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
-							<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
-							
-							</div>
-							</TD>";
+							IF(hasPermission($uid, 'rotatepicture', $sr))
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+								
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+								<img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:10px;' title='Vorschaubild 90&#176; links drehen' /></span>
+								
+								<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
+								<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+								
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'>
+								<img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:10px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+								
+								</div>
+								</TD>";
+							}
+							ELSE
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+	
+								<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
+								<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
+								
+								</div>
+								</TD>";
+							}
 						}
 						ELSE
 						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-
-							<SPAN style='cursor:pointer;' onClick='window.open(\"$inst_path/pic2base/bin/share/download_picture.php?FileName=$FileName&pic_id=$pic_id\")'>
-							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild direkt herunterladen'/></SPAN>
-							
-							</div>
-							</TD>";
+							IF(hasPermission($uid, 'rotatepicture', $sr))
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+								
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
+								<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+								<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
+								
+								</div>	
+								</TD>";
+							}
+							ELSE
+							{
+								$icon[$i6] = "
+								<TD align='center' width='43'>
+								<div id='box$pic_id'>
+								
+								<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
+								<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
+								
+								</div>	
+								</TD>";
+							}
 						}
 					}
 					ELSE
 					{
-						IF(hasPermission($uid, 'rotatepicture', $sr))
-						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-							
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"8\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-ccw.gif\" width=\"8\" height=\"8\" style='margin-right:5px;' title='Vorschaubild 90&#176; links drehen' /></span>
-							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'><img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
-							<SPAN style='cursor:pointer;' onClick='rotPrevPic(\"6\", \"$FileNameV\", \"$pic_id\", \"$fs_hoehe\")'><img src=\"$inst_path/pic2base/bin/share/images/90-cw.gif\" width=\"8\" height=\"8\" style='margin-left:5px;' title='Vorschaubild 90&#176; rechts drehen' /></span>
-							
-							</div>	
-							</TD>";
-						}
-						ELSE
-						{
-							$icon[$i6] = "
-							<TD align='center' width='43'>
-							<div id='box$pic_id'>
-							
-							<SPAN style='cursor:pointer;' onClick='copyPicture(\"$FileName\",\"$uid\",\"$pic_id\")'>
-							<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild in den FTP-Download-Ordner kopieren'/></SPAN>
-							
-							</div>	
-							</TD>";
-						}
+						$icon[$i6] = "<TD align='center' width='43'><BR></TD>";
 					}
 				}
-				ELSE
+			}
+			elseif($search_modus == 'collection')
+			{
+				//##################  collection_suche  ######################################
+				//die Icons zur Rotation der Bilder werden in collection-Modus nicht dargestellt
+				$result100 = mysql_query("SELECT * FROM $table25 WHERE pic_id = '$pic_id' AND coll_id = '$coll_id'");
+				if(mysql_num_rows($result100) == 1)
 				{
-					$icon[$i6] = "<TD align='center' width='43'><BR></TD>";
+					//echo "Das Bild ".$pic_id." geh&ouml;rt zur Kollektion ".$coll_id;
+					$icon[$i6] = "
+					<TD align='center' width='43'>
+					<div id='box$pic_id'>
+					<SPAN style='cursor:pointer;' onClick='removePicture(\"$coll_id\",\"$pic_id\",\"$username\")'>
+					<img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus der Kollektion entfernen' />
+					</SPAN>	
+					</div>
+					</TD>";
+				}
+				else
+				{
+					$icon[$i6] = "
+					<TD align='center' width='43'>
+					<div id='box$pic_id'>
+					<SPAN style='cursor:pointer;' onClick='addPicture(\"$coll_id\",\"$pic_id\",\"$username\")'>
+					<img src='$inst_path/pic2base/bin/share/images/download.gif' width='12' height='12' hspace='0' vspace='0' title='Bild zur Kollektion hinzuf&uuml;gen' />
+					</SPAN>
+					</div>
+					</TD>";
 				}
 			}
 		}

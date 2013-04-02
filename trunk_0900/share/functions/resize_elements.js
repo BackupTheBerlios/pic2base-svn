@@ -65,6 +65,13 @@ function checkWindowSize()
         /*Zellenbreite des vollstaendigen Kategorie-Baumes; Spalte2*/
         jQuery("#kat_b").css({"width":((jQuery(window).width() - 0) / 3) + "px"}); //290
         jQuery("#kat1_b").css({"width":((jQuery(window).width() - 0) / 3) + "px"}); //350
+        
+        /*Breite des Vorschaustreifens im Kollektion-Bearbeiten-Fenster (edit_selected_collection.php)*/
+        jQuery("#coll").css({"width":(jQuery(window).width() - 250) + "px"});
+        
+        /*Breite der Button-Zeile (und damit der oberen Tabelle) im Kollektion-Bearbeiten-Fenster (edit_selected_collection.php)*/
+        jQuery("#button_bar").css({"width":(jQuery(window).width() - 250) + "px"});
+        
     	
         //alert( ((jQuery(window).width() - 162) / 2) );
     } 
@@ -106,6 +113,12 @@ function checkWindowSize()
         /*Zellenbreite des vollstaendigen Kategorie-Baumes; Spalte2*/
         jQuery("#kat_b").css({"width":"350px"}); 
         jQuery("#kat1_b").css({"width":"340px"});
+        
+        /*Breite des Vorschaubereichs im Kollektion-Bearbeiten-Fenster (edit_selected_collection.php)*/
+        jQuery("#coll").css({"width":"740px"});
+        
+        /*Breite der Button-Zeile (und damit der oberen Tabelle) im Kollektion-Bearbeiten-Fenster (edit_selected_collection.php)*/
+        jQuery("#button_bar").css({"width":"740px"});
     	
     	//Cookie für Anzahl der Spalten in protect_metadata0.php und kompactview_metadata0.php sowie Bildanzahl im Filmstreifen setzen:
     	document.cookie="columns=3; path=/";
@@ -153,6 +166,9 @@ function checkWindowSize()
         /*Hoehe der Scrollbox um den vollst. Kategoriebaum; Bearbeitung, Kat. zuweisen nach Kat.*/
         jQuery("#scrollbox1").css({"height":(jQuery(window).height() - 311) + "px"});
         //alert( (jQuery(window).height() - 40) + "px" );
+        
+        /*Hoehe der Scrollbox um die vollst. Kollektions-Auflistung; edit_collection.php*/
+        jQuery("#scrollbox2").css({"height":(jQuery(window).height() - 171) + "px"});
     } 
     else 
     { 
@@ -194,6 +210,9 @@ function checkWindowSize()
         
         /*Hoehe der Scrollbox um den vollst. Kategoriebaum; Bearbeitung, Kat. zuweisen nach Kat.*/
         jQuery("#scrollbox1").css({"height":"432px"});
+        
+        /*Hoehe der Scrollbox um die vollst. Kollektions-Auflistung; edit_collection.php*/
+        jQuery("#scrollbox2").css({"height":"572px"});
     }
     
     //alert( jQuery(window).height() );

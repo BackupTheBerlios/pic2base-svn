@@ -299,7 +299,9 @@ ELSE
 			(17, 549, 'alle Bilder geo-referenzieren', 'georefallpics'),
 			(18, 639, 'Tagebuch bearbeiten', 'editdiary'),
 			(19, 649, 'Kategorielexikon bearbeiten', 'editkatlex'),
-			(20, 889, 'Ortsnamen bearbeiten', 'editlocationname');");
+			(20, 889, 'Ortsnamen bearbeiten', 'editlocationname'),
+			(21, 429, 'alle Kollektionen bearbeiten', 'editallcolls'),
+			(22, 419, 'eigene Kollektionen bearbeiten', 'editmycolls');");
 			IF(mysql_error() !== '')
 			{
 				echo "Fehler bei der Bef&uuml;llung der Tabelle \"permissions\"<BR>";
@@ -789,6 +791,44 @@ ELSE
 			ELSE
 			{
 				//echo "Tabelle \"ICE_V_pic_kat_dubls\" wurde angelegt.<BR>";
+			}
+			
+			//Tabelle der Kollektionen
+			$res27 = mysql_query("CREATE TABLE IF NOT EXISTS `collections` (
+				`coll_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Kollektions-ID',
+				`coll_name` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name der Sammlung',
+				`coll_description` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Beschreibung der Sammlung',
+				`coll_owner` INT NOT NULL COMMENT 'Eigentuemer der Sammlung',
+				INDEX ( `coll_name` )
+				) ENGINE = MYISAM COMMENT = 'Kollektions-Tabelle';");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"collections\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				//echo "Tabelle \"collections\" wurde angelegt.<BR>";
+			}
+			
+			//Tabelle der Bild-Kollektions-Zuweisungen
+			$res27 = mysql_query("CREATE TABLE IF NOT EXISTS `pic_coll` (
+				`id` INT NOT NULL AUTO_INCREMENT COMMENT 'Datensatz-ID',
+				`coll_id` INT NOT NULL COMMENT 'Sammlungs-ID',
+				`pic_id` INT NOT NULL COMMENT 'Bild_id',
+				`duration` INT NOT NULL COMMENT 'Anzeigedauer in Sekunden',
+				`position` INT NOT NULL COMMENT 'Position innerhalb der Show',
+				`transition_id` INT NOT NULL COMMENT 'Uebergangs-ID',
+				PRIMARY KEY ( `id` )
+				) ENGINE = MYISAM COMMENT = 'Tabelle der Bild-Sammlungs-Zuordnung';");
+			IF(mysql_error() !== '')
+			{
+				echo "Fehler bei der Anlage der Tabelle \"pic_coll\"<BR>";
+				$err_count++;
+			}
+			ELSE
+			{
+				//echo "Tabelle \"pic_coll\" wurde angelegt.<BR>";
 			}
 			
 			if(!isset($titel))

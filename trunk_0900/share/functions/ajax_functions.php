@@ -330,6 +330,37 @@ function delPicture(FileName, uid, pic_id, waitUntilDeleted)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, asynchronous: !waitUntilDeleted});
 }
 
+function removePicture(coll_id, pic_id, uid)
+{
+	//entfernt Bild-Zuordnung aus der Tabelle pic_coll ueber den Filmstreifen im Recherche-Modul
+	var url = '../../share/rem_picture.php';
+	var params = 'coll_id=' + coll_id + '&pic_id=' + pic_id + '&uid=' + uid;
+	//alert("Parameter: "+params);
+	var target = 'box' + pic_id;
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
+function removePicture2(coll_id, pic_id, uid)
+{
+	//entfernt Bild-Zuordnung aus der Tabelle pic_coll ueber die Kollektions-Ansicht im Edit-Modul (edit_selected_collection.php)
+	var url = '../../share/rem_picture2.php';
+	var params = 'coll_id=' + coll_id + '&pic_id=' + pic_id + '&uid=' + uid;
+	//alert("Parameter in AJAX-Fkt: "+params);
+	var target = 'coll';
+	//alert("Ziel im aufrufenden Skript: " + target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, evalSripts:true});
+}
+
+function addPicture(coll_id, pic_id, uid)
+{
+	//fuegt neue Bild-Zuordnung in Tabelle pic_coll ein
+	var url = '../../share/add_picture.php';
+	var params = 'coll_id=' + coll_id + '&pic_id=' + pic_id + '&uid=' + uid;
+	//alert("Parameter: "+params);
+	var target = 'box' + pic_id;
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
 function copyPicture(FileName, uid, pic_id, waitUntilCopyed)
 {
 	var url = '../../share/copy_picture.php';
@@ -479,6 +510,15 @@ function getKatTreeview2(kat_id, pic_id, mod, bewertung, modus, base_file)
 	//alert("Parameter: "+params);
 	var target = 'scrollbox1';
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus});
+}
+
+function getCollections(uid,mod,base_file)
+{
+	var url = '../../share/get_collections.php';
+	var params = 'uid=' + uid + '&mod=' + mod + '&base_file=' + base_file;
+	//alert("Parameter: "+params);
+	var target = 'scrollbox0';
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params, onCreate: blende_ein, onComplete: blende_aus, evalScripts:true});
 }
 
 function createNewPreview(pic_id, hl, gamma, targ_color, col_inter, rota, wb, hsi, contrast, FileNameRaw, modus, Orientation)
@@ -661,6 +701,28 @@ function getMissingFiles()
 									}
 								};
 	client.send( null );
+}
+
+function createNewCollection(uid)
+{
+	//oeffnet den Dialog zur Anlage einer neuen Kollektion im Fenster /html/edit/edit_collection.php
+	var url = '../../share/create_new_collection.php';
+	var params = 'uid=' + uid;
+	//alert("Parameter: "+params);
+	var target = 'content';
+	//alert(target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
+function refreshCollList(wert, parameter, modus)
+{
+	//aktualisiert die Liste der Kollektionen bei Eingabe eines Suchbegriffs im Fenster /html/recherche/recherche2.php - Suche nach Kollektionen
+	var url = '../../share/refresh_coll_list.php';
+	var params = 'wert=' + wert + '&parameter=' + parameter + '&modus=' + modus;
+	//alert("Parameter: "+params);
+	var target = 'search_result';
+	//alert(target);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});	
 }
 
 -->

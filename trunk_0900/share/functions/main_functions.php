@@ -30,7 +30,8 @@ function formatValues()										verwendet in generate_exifdata0,
 function restoreOriFilename									verwendet in details, generate_exifdata0, 
 function extractExifData									verwendet 			Z 2060
 function directDownload										verwendet in get_previev	Z 1933
-function showCheckboxes										verwendet in get_preview	
+function showCheckboxes										verwendet in get_preview
+function translateLabel										verwendet in allen Skripten, die Texte ausheben	
 
 */
 
@@ -2256,5 +2257,30 @@ function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 		';
 	}
 	return $res;
+}
+
+function translateLabel($label_name,$sr,$uid)
+{
+	include $sr.'/bin/share/db_connect1.php';
+	$result1 = mysql_query("SELECT $table1.id, $table1.language, $table23.label_name, $table23.language, $table23.value
+	FROM $table1, $table23
+	WHERE $table1.id = $uid
+	AND $table23.label_name = '$label_name'
+	AND $table1.language = $table23.language");
+	echo mysql_error();
+	$label_value = mysql_result($result1,$i1,'value');
+	if($label_value != '')
+	{
+		return $label_value;
+	}
+	else
+	{
+		$result2 = mysql_query("SELECT label_name, language, value
+		FROM $table23
+		WHERE label_name = '$label_name'
+		AND language = 'de'");
+		$label_value = mysql_result($result2,$i2,'value');
+		return $label_value;
+	}
 }
 ?>

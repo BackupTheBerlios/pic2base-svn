@@ -1,8 +1,8 @@
 <?php
 //[Programm-Version]
-$version = "0.80.0";
-$rel = "02032013.1";
-$vom = "Pre 8 (02.03.2013)";
+$version = "0.90.0";
+$rel = "29032013.1";
+$vom = "Pre 1 (29.03.2013)";
 
 //[copyright-Vermerk in der Fusszeile]
 $cr = "<FONT COLOR=#7b7d8e>______</FONT>2006 - 2012";
@@ -14,28 +14,31 @@ $PWD = 'pic_base';
 $db = 'pic2base';
 
 @$conn = mysql_connect($db_server,$user,$PWD);
-$table1 = 'users';					//Benutzerverzeichnis
-$table2 = 'pictures';				//Tabelle der Bilddaten
-$table3 = 'diary';					//Tabelle der Tagebuch-Eintraege
-$table4 = 'kategorien';				//Kategorie-Tabelle;
-$table5 = 'meta_protect';			//Tabelle der Schreib- und Leserechte auf die Meta-Daten der Bilder
-$table6 = 'grouppermissions';		//Gruppenrechte
-$table7 = 'userpermissions';		//Benutzerrechte
-$table8 = 'permissions';			//Zugriffsrechte
-$table9 = 'usergroups';				//Benutzergruppen
-$table10 = 'pic_kat';				//Bild-Kategorie-Zuordnung
-$table11 = 'kat_lex';				//Kategorie-Lexikon
-$table12 = 'locations';				//Aufnahmestandorte
-$table13 = 'geo_tmp';				//wird bei der automat. Georeferenzierung verwendet
-$table14 = 'meta_data';				//Metadaten der Bilder, wird ab V 0.60.0 nicht mehr verwendet
-$table15 = 'tmp_tree';				//wird bei der Kategoriebaum-Umstrukturierung verwendet
-$table16 = 'pfade';					//speichert die Pfade zu den Hilfsprogrammen
-$table17 = 'fileformats';			//enthaelt die von ImageMagick unterstuetzten Dateiformate
-$table18 = 'data_logger';			//speichert unterstuetzte Logger-Typen
-$table19 = 'timezone';				//Tabelle der Zeitzonen
-$table20 = 'tag_trans';				//Uebersetzungen der Metadaten
-$table21 = 'doubletten';			//temporaer mit Doubletten belegt
-$table22 = 'IVE_V_pic_kat_dubls';	//temporaer bei der DB-Wartung verwendet
+$table1 = 'users';					// Benutzerverzeichnis
+$table2 = 'pictures';				// Tabelle der Bilddaten
+$table3 = 'diary';					// Tabelle der Tagebuch-Eintraege
+$table4 = 'kategorien';				// Kategorie-Tabelle;
+$table5 = 'meta_protect';			// Tabelle der Schreib- und Leserechte auf die Meta-Daten der Bilder
+$table6 = 'grouppermissions';		// Gruppenrechte
+$table7 = 'userpermissions';		// Benutzerrechte
+$table8 = 'permissions';			// Zugriffsrechte
+$table9 = 'usergroups';				// Benutzergruppen
+$table10 = 'pic_kat';				// Bild-Kategorie-Zuordnung
+$table11 = 'kat_lex';				// Kategorie-Lexikon
+$table12 = 'locations';				// Aufnahmestandorte
+$table13 = 'geo_tmp';				// wird bei der automat. Georeferenzierung verwendet
+$table14 = 'meta_data';				// Metadaten der Bilder, wird ab V 0.60.0 nicht mehr verwendet
+$table15 = 'tmp_tree';				// wird bei der Kategoriebaum-Umstrukturierung verwendet
+$table16 = 'pfade';					// speichert die Pfade zu den Hilfsprogrammen
+$table17 = 'fileformats';			// enthaelt die von ImageMagick unterstuetzten Dateiformate
+$table18 = 'data_logger';			// speichert unterstuetzte Logger-Typen
+$table19 = 'timezone';				// Tabelle der Zeitzonen
+$table20 = 'tag_trans';				// Uebersetzungen der Metadaten
+$table21 = 'doubletten';			// temporaer mit Doubletten belegt
+$table22 = 'IVE_V_pic_kat_dubls';	// temporaer bei der DB-Wartung verwendet
+$table23 = 'label_translation';		// Tabelle der Label / Text-Uebersetzungen (Mehrsprachigkeit)
+$table24 = 'collections';			// Tabelle der Sammlungen / Kollektionen
+$table25 = 'pic_coll';				// Tabelle der Bild-Sammlungs-Zuordnungen
 
 @$database = mysql_pconnect($db_server,$user,$PWD);
 if (!$database) 
@@ -62,4 +65,3 @@ mysql_query("SET CHARACTER SET utf8");
 $key = '0815';
 //echo phpinfo();
 ?>
-
