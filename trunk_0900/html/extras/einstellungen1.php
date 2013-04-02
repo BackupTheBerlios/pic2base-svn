@@ -90,7 +90,7 @@ IF(hasPermission($uid, 'editmyprofile', $sr) AND !hasPermission($uid, 'editallpr
 				<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:none;padding:0px;margin-top:6px;margin-bottom:0px;
 			    	text-align:center;'>
 				<TR class='kat' style='height:3px;'>
-					<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
+					<TD class='normal' style='background-color:darkred;' colspan = '3'></TD>
 				</TR>
 				
 				<TR class='kat'>
@@ -265,7 +265,7 @@ IF(hasPermission($uid, 'editmyprofile', $sr) AND !hasPermission($uid, 'editallpr
 				</TR>
 				
 				<TR class='kat' style='height:3px;'>
-					<TD class='normal' style='background-color:#ff9900;' colspan = '3'></TD>
+					<TD class='normal' style='background-color:darkred;' colspan = '3'></TD>
 				</TR>
 				
 				</TABLE>
@@ -322,7 +322,7 @@ ELSEIF(hasPermission($uid, 'editallprofiles', $sr))
 				<TABLE align=center style='width:90%;border-width:1px;border-color:#DDDDFF;border-style:none;padding:0px;margin-top:6px;margin-bottom:0px;
 			    	text-align:center;'>
 				<TR class='kat' style='height:3px;'>
-					<TD class='normal' style='background-color:#ff9900;' colspan = '4'></TD>
+					<TD class='normal' style='background-color:darkred;' colspan = '4'></TD>
 				</TR>
 				<TR class='normal' style='height:10px;>
 					<TD class='normal' colspan='3'></TD>
@@ -354,7 +354,7 @@ ELSEIF(hasPermission($uid, 'editallprofiles', $sr))
 				</TR>
 				
 				<TR class='kat' style='height:3px;'>
-					<TD class='normal' style='background-color:#ff9900;' colspan = '4'></TD>
+					<TD class='normal' style='background-color:darkred;' colspan = '4'></TD>
 				</TR>
 				
 				</TABLE>
