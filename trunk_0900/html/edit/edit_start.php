@@ -82,6 +82,8 @@ echo "
 			<a class='subnavi' href='edit_kat_daten.php?pic_id=0&mod=zeit' title='Kategorien zuweisen, Bildauswahl erfolgt nach Aufnahmedatum'>Kategorie-Zuweisung - Auswahl nach Datum</a>
 			<a class='subnavi' href='remove_kat_daten.php?pic_id=0&mod=edit_remove' title='Bilder aus zugewiesenen Kategorien entfernen'>Kategorie-Zuweisungen aufheben</a>
 			<a class='subnavi_blind'></a>
+			<a class='subnavi' href='edit_collection.php' title='Neue Kollektion anlegen, vorhandene Kollektion neu arrangieren, Bilder hinzuf&uuml;gen oder l&ouml;schen oder Kollektion entfernen'>Kollektion anlegen / bearbeiten / arrangieren / l&ouml;schen</a>
+			<a class='subnavi_blind'></a>
 			<a class='subnavi' href='../erfassung/doublettenliste1.php?user_id=$uid' title='Pr&uuml;fung auf mehrfache Vorkommen'>Doubletten-Pr&uuml;fung</a>
 			<a class='subnavi' href='generate_quickpreview0.php?num=X' title='Service-Funktion'>Quick-Preview hochformatiger Bilder erzeugen</a>
 		</div>
