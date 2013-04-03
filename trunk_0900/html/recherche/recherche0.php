@@ -39,6 +39,10 @@ if($_COOKIE['search_modus'])
 {
 	$search_modus = $_COOKIE['search_modus'];	//echo $search_modus;
 }
+else
+{
+	$search_modus = 'normal';
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

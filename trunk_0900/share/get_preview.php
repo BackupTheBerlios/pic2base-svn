@@ -11,7 +11,7 @@ else
 }
 
 // suchen wir fuer einen Download (normal) oder eine Kollektion (collection)?
-if($_COOKIE['search_modus'])
+if(array_key_exists('search_modus', $_COOKIE))
 {
 	$search_modus = $_COOKIE['search_modus'];
 	if($_COOKIE['coll_id'])

@@ -184,7 +184,36 @@ echo "<div class='page' id='page'>
 			}
 			else
 			{
-				echo "Es wurden noch keine Kollektionen angelegt.";
+				echo "
+				<center>
+					<table class='coll' border='0'>
+						
+						<TR class='coll'>
+								<TD colspan = '5'></TD>
+							</TR>	
+						
+						<TR class='coll'>
+							<TD style='background-color:darkred;' colspan = '5'></TD>
+						</TR>
+						
+						<TR class='coll' style='height:10px;'>
+							<TD colspan = '5'><b>Es ist noch keine Kollektion vorhanden</b></TD>
+						</TR>
+						
+						<TR class='coll' style='height:10px;'>
+							<TD class='coll' colspan = '5'></TD>
+						</TR>
+						
+						<TR class='coll'>
+							<TD style='background-color:darkred;' colspan = '5'></TD>
+						</TR>
+						
+						<tr>
+							<td colspan='5' style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Neue Kollektion anlegen' title='Eine neue (leere) Kollektion anlegen' onClick='createNewCollection(\"$uid\")'></td>
+						</tr>
+					
+					</table>
+				</center>";
 			}
 			
 		echo "
