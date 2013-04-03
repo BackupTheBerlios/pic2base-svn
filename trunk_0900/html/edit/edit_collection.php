@@ -85,137 +85,139 @@ echo "<div class='page' id='page'>
 			}
 			else
 			{
-				echo "<p style='margin-top:150px;'>Sie haben keine Berechtigung, Kollektionen zu bearbeiten.</p>";
+				echo "<p style='margin-top:150px; text-align:center; font-size:14px; font-weight:bold; color:red; text-decoration:underline'>Sie haben leider keine Berechtigung, Kollektionen zu bearbeiten.</p>
+				<p style='text-align:center; margin-top:30px;'><input type='button' value=' Zur&uuml;ck' onclick='location.href=\"edit_start.php\"' />";
 			}
-			
-			$num1 = mysql_num_rows($result1);
-			if($num1 > 0)
-			{
-				echo "
-				<center>
-				<table class='coll' border='0' style='margin-top:25px;'>
-	
-					<TR class='coll'>
-						<TD colspan = '5'><b>Suche nach</b></TD>
-					</TR>
-				
-					<TR class='coll'>
-						<TD style='background-color:darkred;' colspan = '5'></TD>
-					</TR>
-				
-					<tr>
-						<td style='width:25%'>Name</td>
-						<td style='width:63%'>Beschreibung</td>
-						<td style='width:12%' align='center'>Aktion</td>
-					</tr>
+			if(isset($result1))
+			{		
+				$num1 = mysql_num_rows($result1);
+				if($num1 > 0)
+				{
+					echo "
+					<center>
+					<table class='coll' border='0' style='margin-top:25px;'>
+		
+						<TR class='coll'>
+							<TD colspan = '5'><b>Suche nach</b></TD>
+						</TR>
 					
-					<TR class='coll'>
-						<TD style='background-color:darkred;' colspan = '5'></TD>
-					</TR>
-				
-					<tr>
-						<td style='text-align:left;'><input type='text' name='coll_name' id='coll_name' style='width:175px;' onkeyup='refreshCollList(this.value, \"coll_name\", \"edit\")'></td>
-						<td style='text-align:left;'><input type='text' name='coll_description' id='coll_description' style='width:450px;' onkeyup='refreshCollList(this.value, \"coll_description\", \"edit\")'></td>
-						<td></td>
-					</tr>
+						<TR class='coll'>
+							<TD style='background-color:darkred;' colspan = '5'></TD>
+						</TR>
 					
-					<TR class='coll'>
-						<TD style='background-color:darkred;' colspan = '5'></TD>
-					</TR>
-					
-				</table>
-				
-				<div id='search_result'>
-					<table class='coll' border='0'>
+						<tr>
+							<td style='width:25%'>Name</td>
+							<td style='width:63%'>Beschreibung</td>
+							<td style='width:12%' align='center'>Aktion</td>
+						</tr>
 						
 						<TR class='coll'>
-								<TD colspan = '5'><b>Suchergebnis</b></TD>
-							</TR>	
+							<TD style='background-color:darkred;' colspan = '5'></TD>
+						</TR>
+					
+						<tr>
+							<td style='text-align:left;'><input type='text' name='coll_name' id='coll_name' style='width:175px;' onkeyup='refreshCollList(this.value, \"coll_name\", \"edit\")'></td>
+							<td style='text-align:left;'><input type='text' name='coll_description' id='coll_description' style='width:450px;' onkeyup='refreshCollList(this.value, \"coll_description\", \"edit\")'></td>
+							<td></td>
+						</tr>
 						
 						<TR class='coll'>
 							<TD style='background-color:darkred;' colspan = '5'></TD>
 						</TR>
 						
-						<TR class='coll' style='height:10px;'>
-							<TD colspan = '5'></TD>
-						</TR>";
+					</table>
 					
-						for($i1=0; $i1<$num1; $i1++)
-						{
-							$coll_id = mysql_result($result1, $i1, 'coll_id');
-							$coll_name = mysql_result($result1, $i1, 'coll_name');
-							$coll_description = mysql_result($result1, $i1, 'coll_description');
+					<div id='search_result'>
+						<table class='coll' border='0'>
+							
+							<TR class='coll'>
+									<TD colspan = '5'><b>Suchergebnis</b></TD>
+								</TR>	
+							
+							<TR class='coll'>
+								<TD style='background-color:darkred;' colspan = '5'></TD>
+							</TR>
+							
+							<TR class='coll' style='height:10px;'>
+								<TD colspan = '5'></TD>
+							</TR>";
+						
+							for($i1=0; $i1<$num1; $i1++)
+							{
+								$coll_id = mysql_result($result1, $i1, 'coll_id');
+								$coll_name = mysql_result($result1, $i1, 'coll_name');
+								$coll_description = mysql_result($result1, $i1, 'coll_description');
+								
+								echo "
+								<tr>
+									<td style='width:25%'>".$coll_name."</td>
+									<td style='width:63%'>".$coll_description."</td>
+									<td style='width:12%' colspan='3'><span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
+									<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick=''></span>
+									<span style='cursor:pointer;'><img src='../../share/images/trash.gif' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span></td>
+								</tr>";
+								
+								if($i1 < ($num1 - 1))
+								{
+									echo "
+									<TR class='coll'>
+									<TD style='background-color:lightgrey;' colspan = '5'></TD>
+									</TR>";
+								}
+							}
 							
 							echo "
-							<tr>
-								<td style='width:25%'>".$coll_name."</td>
-								<td style='width:63%'>".$coll_description."</td>
-								<td style='width:12%' colspan='3'><span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
-								<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick=''></span>
-								<span style='cursor:pointer;'><img src='../../share/images/trash.gif' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span></td>
-							</tr>";
+							<TR class='coll' style='height:10px;'>
+								<TD class='coll' colspan = '5'></TD>
+							</TR>
 							
-							if($i1 < ($num1 - 1))
-							{
-								echo "
-								<TR class='coll'>
-								<TD style='background-color:lightgrey;' colspan = '5'></TD>
-								</TR>";
-							}
-						}
+							<TR class='coll'>
+								<TD style='background-color:darkred;' colspan = '5'></TD>
+							</TR>
+							
+							<tr>
+								<td colspan='5' style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Neue Kollektion anlegen' title='Eine neue (leere) Kollektion anlegen' onClick='createNewCollection(\"$uid\")'></td>
+							</tr>
 						
-						echo "
-						<TR class='coll' style='height:10px;'>
-							<TD class='coll' colspan = '5'></TD>
-						</TR>
+						</table>
 						
-						<TR class='coll'>
-							<TD style='background-color:darkred;' colspan = '5'></TD>
-						</TR>
+					</div>
+					</center>";
+				}
+				else
+				{
+					echo "
+					<center>
+						<table class='coll' border='0'>
+							
+							<TR class='coll'>
+									<TD colspan = '5'></TD>
+								</TR>	
+							
+							<TR class='coll'>
+								<TD style='background-color:darkred;' colspan = '5'></TD>
+							</TR>
+							
+							<TR class='coll' style='height:10px;'>
+								<TD colspan = '5'><b>Es ist noch keine Kollektion vorhanden</b></TD>
+							</TR>
+							
+							<TR class='coll' style='height:10px;'>
+								<TD class='coll' colspan = '5'></TD>
+							</TR>
+							
+							<TR class='coll'>
+								<TD style='background-color:darkred;' colspan = '5'></TD>
+							</TR>
+							
+							<tr>
+								<td colspan='5' style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Neue Kollektion anlegen' title='Eine neue (leere) Kollektion anlegen' onClick='createNewCollection(\"$uid\")'></td>
+							</tr>
 						
-						<tr>
-							<td colspan='5' style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Neue Kollektion anlegen' title='Eine neue (leere) Kollektion anlegen' onClick='createNewCollection(\"$uid\")'></td>
-						</tr>
-					
-					</table>
-					
-				</div>
-				</center>";
+						</table>
+					</center>";
+				}
 			}
-			else
-			{
-				echo "
-				<center>
-					<table class='coll' border='0'>
-						
-						<TR class='coll'>
-								<TD colspan = '5'></TD>
-							</TR>	
-						
-						<TR class='coll'>
-							<TD style='background-color:darkred;' colspan = '5'></TD>
-						</TR>
-						
-						<TR class='coll' style='height:10px;'>
-							<TD colspan = '5'><b>Es ist noch keine Kollektion vorhanden</b></TD>
-						</TR>
-						
-						<TR class='coll' style='height:10px;'>
-							<TD class='coll' colspan = '5'></TD>
-						</TR>
-						
-						<TR class='coll'>
-							<TD style='background-color:darkred;' colspan = '5'></TD>
-						</TR>
-						
-						<tr>
-							<td colspan='5' style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Neue Kollektion anlegen' title='Eine neue (leere) Kollektion anlegen' onClick='createNewCollection(\"$uid\")'></td>
-						</tr>
-					
-					</table>
-				</center>";
-			}
-			
 		echo "
 		</div>
 		</fieldset>
