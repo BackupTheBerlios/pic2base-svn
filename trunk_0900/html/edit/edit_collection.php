@@ -33,6 +33,18 @@ $uid = $_COOKIE['uid'];
 				location.href='../../share/del_coll_action.php?coll_id=' + coll_id;
 			}
 		}
+
+		function searchCollection(wert, feld, modus)
+		{
+			if(wert === "")
+			{
+				location.reload();
+			}
+			else
+			{
+				refreshCollList(wert, feld, modus);
+			}
+		}
 		
 	</script>	
 </HEAD>
@@ -116,8 +128,8 @@ echo "<div class='page' id='page'>
 						</TR>
 					
 						<tr>
-							<td style='text-align:left;'><input type='text' name='coll_name' id='coll_name' style='width:175px;' onkeyup='refreshCollList(this.value, \"coll_name\", \"edit\")'></td>
-							<td style='text-align:left;'><input type='text' name='coll_description' id='coll_description' style='width:450px;' onkeyup='refreshCollList(this.value, \"coll_description\", \"edit\")'></td>
+							<td style='text-align:left;'><input type='text' name='coll_name' id='coll_name' style='width:175px;' onkeyup='searchCollection(this.value, \"coll_name\", \"edit\")'></td>
+							<td style='text-align:left;'><input type='text' name='coll_description' id='coll_description' style='width:450px;' onkeyup='searchCollection(this.value, \"coll_description\", \"edit\")'></td>
 							<td></td>
 						</tr>
 						

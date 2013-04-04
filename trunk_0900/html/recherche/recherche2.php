@@ -66,7 +66,6 @@ ELSE
 	  	jQuery.noConflict();
 		jQuery(document).ready(checkWindowSize);
 		jQuery(window).resize(checkWindowSize); 
-//		alert("recherche2; Hier soll auf coll_name fokussiert werden");
 	</script>
 </HEAD>
 
@@ -256,7 +255,14 @@ function CloseWindow()
 				function searchCollection(wert, parameter, modus)
 				{
 					//alert("Suche..." + wert + " / " + parameter + " / " + modus);
-					refreshCollList(wert, parameter, modus)
+					if(wert === "")
+					{
+						location.reload();
+					}
+					else
+					{
+						refreshCollList(wert, parameter, modus)
+					}
 					if (parameter == 'coll_name')
 					{
 						document.getElementById('coll_name').focus();

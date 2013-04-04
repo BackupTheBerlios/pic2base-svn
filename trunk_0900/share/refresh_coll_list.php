@@ -57,10 +57,10 @@ if(mysql_num_rows($result1) > 0)
 	$num1 = mysql_num_rows($result1);
 	if($modus == 'recherche')
 	{
-		echo "<table border='0' style='margin-top:25px; width:100%;'>
+		echo "<table class='coll' border='0' style='margin-top:25px; width:100%;'>
 		
 				<TR class='coll'>
-					<TD colspan = '5'><b>Suchergebnis</b></TD>
+					<TD colspan = '5' class='coll'><b>Suchergebnis</b></TD>
 				</TR>
 			
 				<TR class='coll'>
@@ -71,14 +71,40 @@ if(mysql_num_rows($result1) > 0)
 			$coll_id = mysql_result($result1, $i1, 'coll_id');
 			$coll_name = mysql_result($result1, $i1, 'coll_name');
 			$coll_description = mysql_result($result1, $i1, 'coll_description');
-			$username = mysql_result($result1, $i1, 'username');
+			$coll_owner = mysql_result($result1, $i1, 'coll_owner');
+			//Anzahl der Bilder der Kollektion:
+			$result2 = mysql_query("SELECT * FROM $table25 WHERE coll_id = '$coll_id'");
+			$num2 = mysql_num_rows($result2);
 			
 			
 			echo "
 			<tr style='vertical-align:top;'>
-				<td style='width:25%'>".$coll_name."</td>
-				<td style='width:65%'>".$coll_description."</td>
-				<td style='width:10%'><a href='#' title='Kollektion ansehen'>".$username."</a></td>
+				<td style='width:25%' class='coll'>".$coll_name."</td>
+				<td style='width:65%' class='coll'>".$coll_description."</td>
+				<td style='width:10%' class='coll'>
+					<span style='cursor:pointer;'>
+						<img src='../../share/images/eye.gif' title='Kollektion ansehen' onClick=''>
+					</span>";
+					if(hasPermission($uid, 'downloadallpics',$sr ))
+					{
+						echo "
+						<span style='cursor:pointer;'>
+							<img src='../../share/images/eye.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
+						</span>";
+					}
+					elseif(hasPermission($uid, 'downloadmypics',$sr ) AND ($coll_owner == $uid))
+					{
+						echo "
+						<span style='cursor:pointer;'>
+							<img src='../../share/images/download.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
+						</span>";
+					}
+					else
+					{
+						echo "";
+					}
+				echo "
+				</td>
 			</tr>";
 		
 			if($i1 < ($num1 - 1))
@@ -101,7 +127,7 @@ if(mysql_num_rows($result1) > 0)
 		<table class='coll' border='0'>
 	
 			<TR class='coll'>
-				<TD colspan = '5'><b>Suchergebnis</b></TD>
+				<TD colspan = '5' class='coll'><b>Suchergebnis</b></TD>
 			</TR>
 		
 			<TR class='coll'>
@@ -117,9 +143,9 @@ if(mysql_num_rows($result1) > 0)
 			
 			echo "
 			<tr style='vertical-align:top;'>
-				<td style='width:25%'>".$coll_name."</td>
-				<td style='width:63%'>".$coll_description."</td>
-				<td style='width:12%' colspan='3'><span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
+				<td style='width:25%' class='coll'>".$coll_name."</td>
+				<td style='width:63%' class='coll'>".$coll_description."</td>
+				<td style='width:12%' colspan='3' class='coll'><span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
 				<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick=''></span>
 				<span style='cursor:pointer;'><img src='../../share/images/trash.gif' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span></td>
 			</tr>";	

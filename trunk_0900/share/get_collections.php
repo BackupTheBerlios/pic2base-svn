@@ -18,13 +18,9 @@ include $sr.'/bin/share/functions/permissions.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
-
 IF(hasPermission($uid, 'searchpic', $sr))
 {
-	$result1 = mysql_query("SELECT $table24.coll_id, $table24.coll_name, $table24.coll_description, $table24.coll_owner, $table1.id, $table1.username 
-	FROM $table24, $table1
-	WHERE $table24.coll_owner = $table1.id");
-	
+	$result1 = mysql_query("SELECT * FROM $table24");
 }
 else
 {
@@ -36,10 +32,10 @@ if(mysql_num_rows($result1) > 0)
 {
 	$num1 = mysql_num_rows($result1);
 	echo "
-	<table border='0' style='margin-top:25px; width:100%;'>
+	<table class='coll' border='0' style='margin-top:25px; width:100%;'>
 	
 		<TR class='coll'>
-			<TD colspan = '5'><b>Suche nach</b></TD>
+			<TD colspan = '5' class='coll'><b>Suche nach</b></TD>
 		</TR>
 	
 		<TR class='coll'>
@@ -47,9 +43,9 @@ if(mysql_num_rows($result1) > 0)
 		</TR>
 	
 		<tr>
-			<td style='width:25%'>Name</td>
-			<td style='width:65%'>Beschreibung</td>
-			<td style='width:10%'>Aktion</td>
+			<td style='width:25%' class='coll'>Name</td>
+			<td style='width:65%' class='coll'>Beschreibung</td>
+			<td style='width:10%' class='coll'>Aktion</td>
 		</tr>
 		
 		<TR class='coll'>
@@ -57,8 +53,8 @@ if(mysql_num_rows($result1) > 0)
 		</TR>
 	
 		<tr>
-			<td style='text-align:left;'><input type='text' name='coll_name' id='coll_name' onkeyup='searchCollection(this.value, \"coll_name\", \"recherche\")'></td>
-			<td style='text-align:left;'><input type='text' name='coll_description' id='coll_description' onkeyup='searchCollection(this.value, \"coll_description\", \"recherche\")'></td>
+			<td style='text-align:left;' class='coll'><input type='text' name='coll_name' id='coll_name' onkeyup='searchCollection(this.value, \"coll_name\", \"recherche\")'></td>
+			<td style='text-align:left;' class='coll'><input type='text' name='coll_description' id='coll_description' onkeyup='searchCollection(this.value, \"coll_description\", \"recherche\")'></td>
 			<td></td>
 		</tr>
 		
@@ -69,10 +65,10 @@ if(mysql_num_rows($result1) > 0)
 	</table>
 	
 	<div id='search_result'>
-		<table border='0' style='margin-top:25px;'>
+		<table border='0' style='margin-top:25px; width:100%' >
 		
 			<TR class='coll'>
-				<TD colspan = '5'><b>Suchergebnis</b></TD>
+				<TD colspan = '5' class='coll'><b>Suchergebnis</b></TD>
 			</TR>
 		
 			<TR class='coll'>
@@ -84,14 +80,39 @@ if(mysql_num_rows($result1) > 0)
 			$coll_id = mysql_result($result1, $i1, 'coll_id');
 			$coll_name = mysql_result($result1, $i1, 'coll_name');
 			$coll_description = mysql_result($result1, $i1, 'coll_description');
-			$username = mysql_result($result1, $i1, 'username');
-			
+			$coll_owner = mysql_result($result1, $i1, 'coll_owner');
+			//Anzahl der Bilder der Kollektion:
+			$result2 = mysql_query("SELECT * FROM $table25 WHERE coll_id = '$coll_id'");
+			$num2 = mysql_num_rows($result2);
 			
 			echo "
 			<tr style='vertical-align:top;'>
-				<td style='width:25%'>".$coll_name."</td>
-				<td style='width:65%'>".$coll_description."</td>
-				<td style='width:10%'><span style='cursor:pointer;'><img src='../../share/images/eye.gif' title='Kollektion ansehen' onClick=''></span></td>
+				<td style='width:25%' class='coll'>".$coll_name."</td>
+				<td style='width:65%' class='coll'>".$coll_description."</td>
+				<td style='width:10%' class='coll'>
+					<span style='cursor:pointer;'>
+						<img src='../../share/images/eye.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
+					</span>";
+					if(hasPermission($uid, 'downloadallpics',$sr ))
+					{
+						echo "
+						<span style='cursor:pointer;'>
+							<img src='../../share/images/eye.gif' title='Kollektion herunterladen' onClick=''>
+						</span>";
+					}
+					elseif(hasPermission($uid, 'downloadmypics',$sr ) AND ($coll_owner == $uid))
+					{
+						echo "
+						<span style='cursor:pointer;'>
+							<img src='../../share/images/download.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
+						</span>";
+					}
+					else
+					{
+						echo "";
+					}
+				echo "
+				</td>
 			</tr>";
 		
 			if($i1 < ($num1 - 1))
