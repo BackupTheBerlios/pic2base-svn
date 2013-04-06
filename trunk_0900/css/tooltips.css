@@ -81,7 +81,7 @@ div#tooltip3 a:hover span
  }
  
  /*verwendet bei der Vorschau der in einer Kollektion enthaltenen Bilder (edit_selected_collection.php)*/
- div.tooltip4 p span
+ div.tooltip4 p span#tt
  {
   display:none;
  }
@@ -91,17 +91,35 @@ div#tooltip3 a:hover span
   background-color:#EEEEEE;
  }
 
-div.tooltip4 p:hover span
+div.tooltip4 p:hover span#tt
  {
   display:block;
   text-decoration :none;
   position:absolute;
-  top:0px;
-  left:0px;
-  height:300px;
+  top:7px;
+  left:7px;
+  height:334px;
   padding:5px;
   margin:4px;
   z-index:100;
   background:#EEEEEE;
   border:2px solid RGB(125,0,10);
+ }
+ 
+ /*Info-Bereich rechts neben dem vergroesserten Vorschaubild in edit_selected_collection.php*/
+ span.ttinfo
+ {
+  width:274px;
+  /*width:96%;*/
+  height:334px;
+  margin-left:20px;
+  margin-top:-7px;
+  padding-left:10px;
+  position:absolute;
+  background-color:#EEEEEE;
+  text-align:left;
+  padding:5px;
+  border:2px solid RGB(125,0,10);
+  overflow-y:visible;
+  overflow-x:auto;
  }

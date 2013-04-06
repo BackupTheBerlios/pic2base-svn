@@ -4,7 +4,7 @@
 //
 
 $fenster_breite = $_COOKIE['window_width'];
-$fenster_hoehe = $_COOKIE['window_height'];
+$fenster_hoehe = $_COOKIE['window_height'];	//echo $fenster_hoehe;
 
 if($fenster_breite > 1000)
 {
