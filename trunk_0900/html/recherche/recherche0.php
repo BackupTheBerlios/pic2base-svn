@@ -1,3 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>pic2base - Recherche</TITLE>
+	<META NAME="GENERATOR" CONTENT="eclipse">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
+	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize);
+		
+		function switchBewertung(bewertung)
+		{
+			document.cookie = "bewertung=" + bewertung;
+		} 
+		
+	</script>
+</HEAD>
+
 <?php
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -45,27 +69,7 @@ else
 }
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>pic2base - Recherche</TITLE>
-	<META NAME="GENERATOR" CONTENT="eclipse">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
-	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
-	<script language="JavaScript">
-	  	jQuery.noConflict();
-		jQuery(document).ready(checkWindowSize);
-		jQuery(window).resize(checkWindowSize);
-		function switchBewertung(bewertung)
-		{
-			document.cookie = "bewertung=" + bewertung;
-		} 
-	</script>
-</HEAD>
+
 
 <BODY>
 <DIV Class="klein">
@@ -85,7 +89,7 @@ else
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-include $sr.'/bin/css/initial_layout_settings.php';
+//include $sr.'/bin/css/initial_layout_settings.php';
 
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
@@ -118,7 +122,7 @@ echo "
 		echo "
 		</div>
 	</div>
-	
+
 	<div id='spalte1'>";
 	
 	IF( array_key_exists('bewertung',$_COOKIE) )
@@ -260,12 +264,11 @@ echo "
 		</font>	
 		<fieldset style='background-color:none; margin-top:10px;'>
 		<legend style='color:blue; font-weight:bold;'>Hilfe zu den Suchm&ouml;glichkeiten</legend>
-			<center>
-			<br>
+			<div id='help' style='padding-top:10px;'>
 			Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button 'Hilfe' in der linken Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
 			<br><br>
 			Wenn Sie sich im Suchmodus f&uuml;r Kollektionen befinden, werden ausgew&auml;hlte Bilder der aktiven Kollektion zugeordnet. Es erfolgt kein Download der Bilder.<br>
-			</center>
+			</div>
 		</fieldset>
 	
 	</div>

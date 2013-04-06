@@ -101,12 +101,16 @@ fclose($fh);
 						echo "<p style='margin-top:150px;'>Sie haben keine Berechtigung, Kollektionen zu bearbeiten.</p>";
 					}
 					
-					$result2 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ
+					$result2 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.DateTimeOriginal, $table2.Caption_Abstract, $table2.City, $table2.Keywords
 					FROM $table2, $table25
 					WHERE $table25.coll_id = '$coll_id'
 					AND $table25.pic_id = $table2.pic_id
 					ORDER BY $table25.position");
 					echo mysql_error();
+					
+					$coll_owner = mysql_result($result1, isset($i1), 'coll_owner');
+					$result3 = mysql_query("SELECT vorname, name FROM $table1 WHERE id = '$coll_owner'");
+					$coll_creator = mysql_result($result3, isset($i3), 'vorname')." ".mysql_result($result3, isset($i3), 'name');
 					
 					$num1 = mysql_num_rows($result1);
 					$num2 = mysql_num_rows($result2);	//echo $num2;
@@ -116,6 +120,17 @@ fclose($fh);
 						$coll_id = mysql_result($result1, isset($i1), 'coll_id');
 						$coll_name = mysql_result($result1, isset($i1), 'coll_name');
 						$coll_description = mysql_result($result1, isset($i1), 'coll_description');
+						$created = date('d.m.Y H:i:s', strtotime(mysql_result($result1, isset($i1), 'created')));
+						$last_modification = date('d.m.Y H:i:s', strtotime(mysql_result($result1, isset($i1), 'last_modification')));
+						$locked = mysql_result($result1, isset($i1), 'locked');
+						if($locked == '0')
+						{
+							$status = 'checked';
+						}
+						elseif($locked == '1')
+						{
+							$status = '';
+						}
 						
 						echo "
 						<form name='collection' method='post' action='save_collection_changes.php?coll_id=$coll_id'>
@@ -126,26 +141,49 @@ fclose($fh);
 										<TD style='background-color:darkred;' colspan = '2'></TD>
 									</TR>
 								
-									<tr>
-										<td style='width:30%'>Name</td>
-										<td style='width:70%'>Beschreibung</td>
+									<tr class='coll'>
+										<td style='text-align:right; padding-right: 20px; width:150px'>Eigent&uuml;mer:</td>
+										<td>".$coll_creator."</td>
 									</tr>
 									
-									<TR class='coll'>
-										<TD style='background-color:darkred;' colspan = '2'></TD>
-									</TR>
-								
+									<tr class='coll'>
+										<td style='text-align:right; padding-right: 20px; width:150px'>Erstellt:</td>
+										<td>".$created."</td>
+									</tr>
+									
+									<tr class='coll'>
+										<td style='text-align:right; padding-right: 20px; width:150px'>Letzte &Auml;nderung:</td>
+										<td>".$last_modification."</td>
+									</tr>
+									
+									<tr>
+										<td style='text-align:right; padding-right: 20px; width:150px'>Kollektions-Name:</td>
+										<td style='text-align:left;'><input type='text' name='coll_name' style='width:95%;' value='$coll_name'></td>
+									</tr>
+									
+									<TR style='vertical-align:top;'>
+										<td style='text-align:right; padding-right: 20px; width:150px'>Beschreibung:</td>
+										<td style='text-align:left;'><textarea name='coll_description' style='width:95%; height:120px;' value=''>".$coll_description."</textarea></td>
+									</tr>
+									
+									<tr>
+										<td style='text-align:right; padding-right: 20px; width:150px'>Freigabe:</td>
+										<td style='text-align:leftt;'><input type='checkbox' style='margin-right:25px; vertical-align:middle;' name='coll_edit_right' ".$status."> (freigegeben f&uuml;r die Bearbeitung durch andere Benutzer)</td>
+									</tr>
+									
+								<!--
 									<tr style='vertical-align:top;'>
-										<td style='text-align:left;'><input type='text' name='coll_name' style='width:200px;' value='$coll_name'></td>
-										<td style='text-align:left;'><textarea name='coll_description' style='width:500px; height:100px;' value=''>".$coll_description."</textarea></td>
+										<td style='text-align:left;'><input type='text' name='coll_name' style='width:95%;' value='$coll_name'></td>
+										<td style='text-align:left;'><textarea name='coll_description' style='width:95%; height:120px;' value=''>".$coll_description."</textarea></td>
+										<td style='text-align:right;'><input type='checkbox' style='margin-right:25px;' name='coll_edit_right' ".$status."></td>
 									</tr>
-									
+								-->
 									<TR class='coll'>
 										<TD style='background-color:darkred;' colspan = '2'></TD>
 									</TR>
 									
 									<tr>
-										<td colspan='2' style='text-align:center;'>
+										<td colspan='3' style='text-align:center;'>
 											<div id='button_bar'>
 												<input type='submit' style='margin-top:10px; margin-bottom:10px;' value='&Auml;nderungen speichern' title=''><input type='button' style='margin-left:10px;' value='Ohne &Auml;nderungen zur vorhergehenden Seite' onClick='location.href=\"edit_collection.php\"'>
 											</div>
@@ -159,7 +197,7 @@ fclose($fh);
 						
 						echo "
 						<center>
-						<table class='coll' border='0' style='margin-top:70px;'>
+						<table class='coll' border='0' style='margin-top:20px;'>
 							
 							<tr class='coll'>
 								<td style='background-color:darkred;'></TD>
@@ -183,13 +221,48 @@ fclose($fh);
 												$pic_id = mysql_result($result2, $i2, 'pic_id');
 												$FileNameV = mysql_result($result2, $i2, 'FileNameV');		//echo $FileNameV." / ";
 												$FileNameHQ = mysql_result($result2, $i2, 'FileNameHQ');	//echo $FileNameHQ." / ";
+												$dto = date('d.m.Y, H:i:s', strtotime(mysql_result($result2, $i2, 'DateTimeOriginal')));
+												$Caption_Abstract = mysql_result($result2, $i2, 'Caption_Abstract');
+												$City = mysql_result($result2, $i2, 'City');
+												$Keywords = mysql_result($result2, $i2, 'Keywords');
+												
+												$infotext = "<b>Bild-ID:</b> ".$pic_id."</br>";
+												
+												if(mysql_result($result2, $i2, 'DateTimeOriginal') !== '0000-00-00 00:00:00')
+												{
+													$infotext .= "</br><b>Aufnahmedatum:</b></br>".$dto."</br>";
+												}
+												if($Caption_Abstract !== '')
+												{
+													$infotext .= "</br><b>Bildbeschreibung:</b></br>".$Caption_Abstract."</br>";
+												}
+												
+												if($City !== '')
+												{
+													$infotext .= "</br><b>Aufnahmestandort:</b></br>".$City."</br>";
+												}
+												
+												if($Keywords !== '')
+												{
+													$infotext .= "</br><b>Kategorien:</b></br>".$Keywords."</br>";
+												}
+												
 												echo "
 												<td>
 													<div class='tooltip4' style='float:left;'>
 														<p style='margin:0px; cursor:pointer;'>
 														<img src='../../../images/vorschau/thumbs/$FileNameV' style='margin-right:5px; margin-bottom:5px; margin-top:5px; height:145px;' title='Hier klicken, um das Bild ".$pic_id." aus der Kollektion ".$coll_id." zu entfernen' onclick='sicher(\"$coll_id\", \"$pic_id\", \"$uid\");' />
-															<span style='text-align:center; margin:0px;'>
-																<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='height:300px; margin-right:0px; margin-bottom:0px; margin-top:0px;' />
+															<span id='tt' style='text-align:center; margin:0px;'>
+															
+																<span style='float:left'>
+																	<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='height:334px; margin-right:0px; margin-bottom:0px; margin-top:0px;' />
+																</span>
+																
+																<span class='ttinfo'>
+																	<b><u>Informationen zum Bild</u></b></br></br>
+																	".$infotext."
+																</span>
+																
 															</span>
 														</p>
 													</div>
@@ -208,8 +281,13 @@ fclose($fh);
 									<TD style='background-color:darkred;'></TD>
 								</TR>
 								
-								<tr>
-									<td style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Weitere Bilder hinzuf&uuml;gen / Bilder entfernen' onClick='document.cookie = \"search_modus=collection; path=/\"; document.cookie = \"coll_id=$coll_id; path=/\"; location.href=\"../recherche/recherche0.php\"'></td>
+								<tr>";
+									if(hasPermission($uid, 'searchpic', $sr))
+									{
+										echo "
+										<td style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Weitere Bilder hinzuf&uuml;gen / Bilder entfernen' onClick='document.cookie = \"search_modus=collection; path=/\"; document.cookie = \"coll_id=$coll_id; path=/\"; location.href=\"../recherche/recherche0.php\"'></td>";
+									}
+								echo "
 								</tr>
 							
 						</table>

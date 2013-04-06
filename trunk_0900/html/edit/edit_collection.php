@@ -89,11 +89,12 @@ echo "<div class='page' id='page'>
 		
 			if(hasPermission($uid, 'editallcolls', $sr))
 			{
-				$result1 = mysql_query("SELECT * FROM $table24");
+				$result1 = mysql_query("SELECT * FROM $table24 WHERE (locked = '0' OR coll_owner = '$uid') ORDER BY coll_id");
+				//$result1 = mysql_query("SELECT * FROM $table24 ORDER BY coll_id");
 			}
 			elseif(hasPermission($uid, 'editmycolls', $sr))
 			{
-				$result1 = mysql_query("SELECT * FROM $table24 WHERE coll_owner = '$uid'");
+				$result1 = mysql_query("SELECT * FROM $table24 WHERE coll_owner = '$uid' ORDER BY coll_id");
 			}
 			else
 			{
@@ -159,14 +160,25 @@ echo "<div class='page' id='page'>
 								$coll_id = mysql_result($result1, $i1, 'coll_id');
 								$coll_name = mysql_result($result1, $i1, 'coll_name');
 								$coll_description = mysql_result($result1, $i1, 'coll_description');
-								
+								$locked = mysql_result($result1, $i1, 'locked');
+								if($locked == 1)
+								{
+									$button1 = "<span style='cursor:pointer;'><img src='../../share/images/forbidden.gif' title='Diese Kollektion ist zur Bearbeitung durch andere Benutzer gesperrt'></span>";
+								}
+								else
+								{
+									$button1 = "<span style='cursor:pointer;'><img src='../../share/images/allowed.gif' title='Diese Kollektion ist zur Bearbeitung durch andere Benutzer freigegeben'></span>";
+								}
 								echo "
 								<tr>
 									<td style='width:25%'>".$coll_name."</td>
-									<td style='width:63%'>".$coll_description."</td>
-									<td style='width:12%' colspan='3'><span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
+									<td style='width:61%'>".$coll_description."</td>
+									<td style='width:14%' colspan='3'>
+									<span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
 									<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick=''></span>
-									<span style='cursor:pointer;'><img src='../../share/images/trash.gif' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span></td>
+									<span style='cursor:pointer;'><img src='../../share/images/trash.gif'  style='margin-right:5px;' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span>
+									".$button1."
+									</td>
 								</tr>";
 								
 								if($i1 < ($num1 - 1))

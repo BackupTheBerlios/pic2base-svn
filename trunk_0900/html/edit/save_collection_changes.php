@@ -35,7 +35,7 @@ $uid = $_COOKIE['uid'];
 <DIV Class="klein">
 
 <?php
-
+var_dump($_POST);
 if(array_key_exists('coll_id', $_GET))
 {
 	$coll_id = $_GET['coll_id'];
@@ -53,6 +53,23 @@ if(array_key_exists('coll_name', $_POST))
 if(array_key_exists('coll_description', $_POST))
 {
 	$coll_description = $_POST['coll_description'];
+}
+
+if(array_key_exists('coll_edit_right', $_POST))
+{
+	$coll_edit_right = $_POST['coll_edit_right'];
+	if($coll_edit_right == 'on')
+	{
+		$locked = 0;
+	}
+	else
+	{
+		$locked = 1;
+	}
+}
+else
+{
+	$locked = 1;
 }
 
 include '../../share/global_config.php';
@@ -84,18 +101,22 @@ echo "<div class='page' id='page'>
 		<fieldset style='background-color:none; margin-top:10px;'>
 		<legend style='color:blue; font-weight:bold;'>&Auml;nderungen werden gespeichert</legend>
 		<div id='scrollbox2' style='overflow-y:scroll;'>";
-			//echo $coll_name."<BR><BR>".$coll_description."<BR>";
-			$result1 = mysql_query("UPDATE $table24 SET coll_name='$coll_name', coll_description='$coll_description' WHERE coll_id = '$coll_id'");
+			//echo "Coll-Name: ".$coll_name."<BR><BR>Beschreibung: ".$coll_description."<BR>Locked: ".$locked;
+			$result1 = mysql_query("UPDATE $table24 SET coll_name='$coll_name', coll_description='$coll_description', locked = '$locked' WHERE coll_id = '$coll_id'");
 			echo mysql_error();
 			if(mysql_error() == "")
 			{
-				echo "<meta http-equiv='refresh', content='0; url=edit_selected_collection.php?coll_id=$coll_id'>";
+				echo "
+				<center>
+					<p style='margin-top:150px;'>Die &Auml;nderungen werden gespeichert.</p>
+				</center>
+				<meta http-equiv='refresh', content='0; url=edit_selected_collection.php?coll_id=$coll_id'>";
 			}
 			else
 			{
 				echo "
 				<center>
-					<p style='margin-top:50px;'>Es trat ein Fehler auf.<br><br>
+					<p style='margin-top:150px;'>Es trat ein Fehler auf.<br><br>
 					Die &Auml;nderungen konnten nicht gespeichert werden.<br><br>
 					Bitte benachrichtigen Sie den Administrator.</p>
 				</center>";
@@ -106,7 +127,7 @@ echo "<div class='page' id='page'>
 	</div>
 	
 	<div class='foot' id='foot'>
-	<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
+		<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
 	</div>
 	
 </div>

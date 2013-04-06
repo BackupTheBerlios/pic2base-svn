@@ -1,3 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>pic2base - Datensatz-Recherche</TITLE>
+	<META NAME="GENERATOR" CONTENT="eclipse">
+	<META http-equiv="Content-Style-Type" content="text/css">
+	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+	<META http-equiv="cache-control" content="no-cache">
+	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
+	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
+	<link rel="shortcut icon" href="../../share/images/favicon.ico">
+	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
+	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
+	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
+	<script language="JavaScript">
+	  	jQuery.noConflict();
+		jQuery(document).ready(checkWindowSize);
+		jQuery(window).resize(checkWindowSize); 
+	</script>
+</HEAD>
+
 <?php
 IF (!$_COOKIE['uid'])
 {
@@ -47,27 +69,7 @@ ELSE
 //echo "Parameter: ".$parameter.", Breite: ".$lat.", Laenge: ".$long.", Ort: ".$ort."<BR>";
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>pic2base - Datensatz-Recherche</TITLE>
-	<META NAME="GENERATOR" CONTENT="eclipse">
-	<META http-equiv="Content-Style-Type" content="text/css">
-	<META HTTP-EQUIV="pragma" CONTENT="no-cache">
-	<META http-equiv="cache-control" content="no-cache">
-	<link rel=stylesheet type="text/css" href='../../css/format2.css'>
-	<link rel=stylesheet type="text/css" href='../../css/tooltips.css'>
-	<link rel="shortcut icon" href="../../share/images/favicon.ico">
-	<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
-	<script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
-	<script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
-	<script language="JavaScript">
-	  	jQuery.noConflict();
-		jQuery(document).ready(checkWindowSize);
-		jQuery(window).resize(checkWindowSize); 
-	</script>
-</HEAD>
+
 
 <!--
 /***********************************************************************************
@@ -789,7 +791,7 @@ function CloseWindow()
 			
 			<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Hinweis zur Anzeige der Bilder</legend>
-			
+				<div id='help' style='height:500px; overflow-y:scroll;'>
 				Bei der Suche von Bildern nach dem <b>Aufnahmedatum</b> oder einer <b>Kategorie</b> gelangen Sie zum Suchergebnis, 
 				indem Sie auf das Datum (Jahr, Monat oder Tag) oder den Kategorienamen klicken.<BR>
 				Bei den <b>anderen Suchm&ouml;glichkeiten</b> f&uuml;llen Sie zuerst das entsprechende Formular aus.<BR>
@@ -804,9 +806,12 @@ function CloseWindow()
 				Beschreibung der Kollektion) die Liste der angezeigten Kollektionen entsprechend einzugrenzen.<br>
 				Mit einem Klick auf den Button \"Ansicht\" k&ouml;nnen Sie sich die gew&uuml;nschte Kollektion anschauen.<br>
 				Das eingestellte Bewertungskriterium (Benotung) wird bei dieser Suche nicht ber&uuml;cksichtigt.
-				<br><br>
+				<br>
+				Die entsprechende Berechtigung vorausgesetzt, k&ouml;nnen Sie mit einem Klick auf den Download-Button alle Bilder einer Kollektion in Ihren Download-Ordner kopieren.<br>
+				Die Ansichts- und Download-Funktion steht selbstverst&auml;ndlich nur zur Verf&uuml;gung, wenn sich mindestens ein Bild in der Kollektion befindet. Anderenfalls werden die genannten Icons nicht angezeigt.<br><br>
 				Ausf&uuml;hrliche Hilfe zu den Suchm&ouml;glichkeiten finden Sie &uuml;ber den Button \"Hilfe\" in der 
 				Navigationsleiste oder direkt <a href='../help/help1.php?page=2'>hier</a>.
+				</div>
 			</fieldset>
 			
 		  </div>";

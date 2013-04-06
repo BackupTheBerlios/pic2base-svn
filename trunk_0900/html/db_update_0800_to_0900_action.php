@@ -126,6 +126,9 @@ echo "
 	`coll_name` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name der Sammlung',
 	`coll_description` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Beschreibung der Sammlung',
 	`coll_owner` INT NOT NULL COMMENT 'Eigentuemer der Sammlung',
+	`created` DATETIME NOT NULL,
+	`last_modification` TIMESTAMP NOT NULL,
+	`locked` INT NOT NULL DEFAULT '1' COMMENT '1 - gesperrt fuer die Bearbeitung durch andere User',
 	INDEX ( `coll_name` )
 	) ENGINE = MYISAM COMMENT = 'Kollektions-Tabelle';");
 
