@@ -90,6 +90,9 @@ echo "
 </tr>
 </table>";
 
+//letzte Aenderung in Tabelle collections speichern:
+$update_date_time = date('Y-m-d H:i:s', time());	//echo $update_date_time;
+$result6 = mysql_query("UPDATE $table24 SET last_modification = '$update_date_time' WHERE coll_id = '$coll_id'");
 
 //Log-Datei schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');

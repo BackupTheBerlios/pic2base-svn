@@ -44,7 +44,12 @@ else
 // duration und transition sind willkuerlich gewaehlt:
 $result2 = mysql_query( "INSERT INTO $table25 (coll_id, pic_id, position, duration, transition_id) VALUES ('$coll_id', '$pic_id', '$position', '5', '1')" );
 echo mysql_error();
+
 echo "<SPAN style='cursor:pointer;' onClick='removePicture(\"$coll_id\",\"$pic_id\",\"$uid\")'><img src='$inst_path/pic2base/bin/share/images/selected.gif' width='12' height='12' hspace='0' vspace='0' title='Bild aus der Kollektion entfernen' /></SPAN>";
+
+//letzte Aenderung in Tabelle collections speichern:
+$update_date_time = date('Y-m-d H:i:s', time());
+$result3 = mysql_query("UPDATE $table24 SET last_modification = '$update_date_time' WHERE coll_id = '$coll_id'");
 
 //Log-Datei schreiben:
 $fh = fopen($p2b_path.'pic2base/log/p2b.log','a');

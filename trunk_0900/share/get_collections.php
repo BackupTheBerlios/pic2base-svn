@@ -1,3 +1,8 @@
+<script language="JavaScript">
+  	jQuery.noConflict();
+	jQuery(document).ready(checkWindowSize);
+	jQuery(window).resize(checkWindowSize); 
+</script>
 <?php
 IF (!$_COOKIE['uid'])
 {
@@ -89,18 +94,22 @@ if(mysql_num_rows($result1) > 0)
 			<tr style='vertical-align:top;'>
 				<td style='width:25%' class='coll'>".$coll_name."</td>
 				<td style='width:65%' class='coll'>".$coll_description."</td>
-				<td style='width:10%' class='coll'>
-					<span style='cursor:pointer;'>
-						<img src='../../share/images/eye.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
-					</span>";
-					if(hasPermission($uid, 'downloadallpics',$sr ))
+				<td style='width:10%; padding-left:20px;' class='coll'>";
+					if($num2 > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>
-							<img src='../../share/images/eye.gif' title='Kollektion herunterladen' onClick=''>
+							<img src='../../share/images/eye.gif' title='Kollektion ansehen' onClick=''>
 						</span>";
 					}
-					elseif(hasPermission($uid, 'downloadmypics',$sr ) AND ($coll_owner == $uid))
+					if(hasPermission($uid, 'downloadallpics',$sr ) AND $num2 > 0)
+					{
+						echo "
+						<span style='cursor:pointer;'>
+							<img src='../../share/images/eye.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
+						</span>";
+					}
+					elseif(hasPermission($uid, 'downloadmypics',$sr ) AND ($coll_owner == $uid) AND $num2 > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>

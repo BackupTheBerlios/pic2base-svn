@@ -39,13 +39,14 @@ if($coll_name == "" OR $coll_description == "")
 	history.back();
 	</script>
 	<?php
-	//echo "<meta http-equiv='refresh', content='2; URL=../html/edit/edit_collection.php'>";
 }
 else
 {
 	include 'global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
-	$result1 = mysql_query("INSERT INTO $table24 (coll_name, coll_description, coll_owner) VALUES ('$coll_name', '$coll_description', '$uid')");
+	$create_date = date('Y-m-d H:i:s', time());
+	//echo $create_date;
+	$result1 = mysql_query("INSERT INTO $table24 (coll_name, coll_description, coll_owner, created, locked) VALUES ('$coll_name', '$coll_description', '$uid', '$create_date', '1')");
 	
 	if(mysql_error() == "")
 	{
