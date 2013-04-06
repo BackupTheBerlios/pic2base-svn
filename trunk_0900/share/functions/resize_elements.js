@@ -3,7 +3,7 @@ function checkWindowSize()
 {   
     var preview_height;
     var preview_width;
-	
+	//alert(jQuery("#tt").css({width})));
 	if ( jQuery(window).width() > 1000 ) 
     { 
         jQuery("#page").css({"width":(jQuery(window).width() - 40) + "px"});
@@ -72,6 +72,13 @@ function checkWindowSize()
         /*Breite der Button-Zeile (und damit der oberen Tabelle) im Kollektion-Bearbeiten-Fenster (edit_selected_collection.php)*/
         jQuery("#button_bar").css({"width":(jQuery(window).width() - 250) + "px"});
         
+        /*Breite des Bild-Infobereichs rechts neben dem vergroesserten Vorschaubild (tooltip4) im Bearbeiten-Fenster (edit_selected_collection.php)*/
+        jQuery(".ttinfo").css({"width":(jQuery(window).width() - 756) + "px"});
+        /*jQuery(".ttinfo").css({"width":"90%"});*/
+        
+        /*Breite des Suchfeldes (Kollektion-Beschreibung) in recherche2.php*/
+        jQuery("#coll_description").css({"width":((jQuery(window).width() - 750) / 2) + "px"});
+        
     	
         //alert( ((jQuery(window).width() - 162) / 2) );
     } 
@@ -119,6 +126,12 @@ function checkWindowSize()
         
         /*Breite der Button-Zeile (und damit der oberen Tabelle) im Kollektion-Bearbeiten-Fenster (edit_selected_collection.php)*/
         jQuery("#button_bar").css({"width":"740px"});
+        
+        /*Breite des Bild-Infobereichs rechts neben dem vergroesserten Vorschaubild (tooltip4) im Bearbeiten-Fenster (edit_selected_collection.php)*/
+        jQuery(".ttinfo").css({"width":"274px"});
+        
+        /*Breite des Suchfeldes (Kollektion-Beschreibung) in recherche2.php*/
+        jQuery("#coll_description").css({"width":"130px"});
     	
     	//Cookie für Anzahl der Spalten in protect_metadata0.php und kompactview_metadata0.php sowie Bildanzahl im Filmstreifen setzen:
     	document.cookie="columns=3; path=/";
@@ -165,10 +178,13 @@ function checkWindowSize()
         
         /*Hoehe der Scrollbox um den vollst. Kategoriebaum; Bearbeitung, Kat. zuweisen nach Kat.*/
         jQuery("#scrollbox1").css({"height":(jQuery(window).height() - 311) + "px"});
-        //alert( (jQuery(window).height() - 40) + "px" );
+        //alert( jQuery(window).height() + "px" );
         
         /*Hoehe der Scrollbox um die vollst. Kollektions-Auflistung; edit_collection.php*/
         jQuery("#scrollbox2").css({"height":(jQuery(window).height() - 171) + "px"});
+        
+        /*Hoehe einer umfangreichen Hilfe-Box; recherche2.php*/
+        jQuery("#help").css({"height":(jQuery(window).height() - 310) + "px"});
     } 
     else 
     { 
@@ -213,6 +229,11 @@ function checkWindowSize()
         
         /*Hoehe der Scrollbox um die vollst. Kollektions-Auflistung; edit_collection.php*/
         jQuery("#scrollbox2").css({"height":"572px"});
+        
+        /*Hoehe einer umfangreichen Hilfe-Box; recherche2.php*/
+        jQuery("#help").css({"height":"430px"});
+        
+        //alert( jQuery(window).height() + "px" );
     }
     
     //alert( jQuery(window).height() );
