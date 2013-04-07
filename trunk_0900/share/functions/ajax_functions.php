@@ -725,5 +725,22 @@ function refreshCollList(wert, parameter, modus)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});	
 }
 
+function getCollectionDownloadFiles(coll_id)
+{
+	var url = '../../share/get_collection_download_files.php?coll_id=' + coll_id;	
+	//var params = 'coll_id=' + coll_id;
+	//alert("Coll-ID: " + coll_id);
+	var client = new XMLHttpRequest();
+	client.open("GET", url, true);
+	client.onreadystatechange = function()
+								{
+									if( client.readyState == 4 )
+									{
+										fileListReceived( client.responseText );
+									}
+								};
+	client.send( null );
+}
+
 -->
 </SCRIPT>

@@ -106,14 +106,14 @@ if(mysql_num_rows($result1) > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>
-							<img src='../../share/images/eye.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
+							<img src='../../share/images/eye.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../html/recherche/copy_coll_pictures.php?coll_id=$coll_id\"'>
 						</span>";
 					}
 					elseif(hasPermission($uid, 'downloadmypics',$sr ) AND ($coll_owner == $uid) AND $num2 > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>
-							<img src='../../share/images/download.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../share/copy_coll_pictures.php?coll_id=$coll_id\"'>
+							<img src='../../share/images/download.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../html/recherche/copy_coll_pictures.php?coll_id=$coll_id\"'>
 						</span>";
 					}
 					else
