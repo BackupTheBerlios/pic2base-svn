@@ -103,7 +103,7 @@ echo "<div class='page' id='page'>
 			}
 			if(isset($result1))
 			{		
-				$num1 = mysql_num_rows($result1);
+				@$num1 = mysql_num_rows($result1);
 				if($num1 > 0)
 				{
 					echo "
