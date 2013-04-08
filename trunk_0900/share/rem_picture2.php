@@ -58,7 +58,7 @@ if($num3 > 0)
 }
 
 // Refresh des aktuellen Kollektionsbestandes in edit_selected_collection.php:
-$result5 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ
+$result5 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileNameV, $table2.FileNameHQ, $table2.DateTimeOriginal, $table2.Caption_Abstract, $table2.City, $table2.Keywords
 FROM $table2, $table25
 WHERE $table25.coll_id = '$coll_id'
 AND $table25.pic_id = $table2.pic_id
@@ -74,13 +74,47 @@ for($i5=0; $i5<$num5; $i5++)
 	$new_pic_id = mysql_result($result5, $i5, 'pic_id');
 	$FileNameV = mysql_result($result5, $i5, 'FileNameV');		//echo $FileNameV." / ";
 	$FileNameHQ = mysql_result($result5, $i5, 'FileNameHQ');	//echo $FileNameHQ." / ";
+	$dto = date('d.m.Y, H:i:s', strtotime(mysql_result($result5, $i5, 'DateTimeOriginal')));
+	$Caption_Abstract = mysql_result($result5, $i5, 'Caption_Abstract');
+	$City = mysql_result($result5, $i5, 'City');
+	$Keywords = mysql_result($result5, $i5, 'Keywords');
+	
+	$infotext = "<b>Bild-ID:</b> ".$pic_id."</br>";
+	
+	if(mysql_result($result5, $i5, 'DateTimeOriginal') !== '0000-00-00 00:00:00')
+	{
+		$infotext .= "</br><b>Aufnahmedatum:</b></br>".$dto."</br>";
+	}
+	if($Caption_Abstract !== '')
+	{
+		$infotext .= "</br><b>Bildbeschreibung:</b></br>".$Caption_Abstract."</br>";
+	}
+	
+	if($City !== '')
+	{
+		$infotext .= "</br><b>Aufnahmestandort:</b></br>".$City."</br>";
+	}
+	
+	if($Keywords !== '')
+	{
+		$infotext .= "</br><b>Kategorien:</b></br>".$Keywords."</br>";
+	}
 	echo "
 	<td>
 		<div class='tooltip4' style='float:left;'>
 			<p style='margin:0px; cursor:pointer;'>
 			<img src='../../../images/vorschau/thumbs/$FileNameV' style='margin-right:5px; margin-bottom:5px; margin-top:5px; height:145px;' title='Hier klicken, um das Bild ".$new_pic_id." aus der Kollektion ".$coll_id." zu entfernen' onClick='sicher(\"$coll_id\", \"$new_pic_id\", \"$uid\")'; />
-				<span style='text-align:left;'>
-					<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='height:300px; margin-right:0px; margin-bottom:0px; margin-top:0px;' />
+				<span id='tt' style='text-align:center; margin:0px;'>
+															
+					<span style='float:left'>
+						<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='height:300px; margin-right:0px; margin-bottom:0px; margin-top:0px;' />
+					</span>
+					
+					<span class='ttinfo'>
+						<b><u>Informationen zum Bild</u></b></br></br>
+						".$infotext."
+					</span>
+				
 				</span>
 			</p>
 		</div>
@@ -103,5 +137,4 @@ if(mysql_error() !== "")
 {
 	echo "Konnte die Dateizuordnung nicht l&ouml;schen!<BR>";
 }
-
 ?>
