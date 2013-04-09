@@ -89,7 +89,7 @@ if(mysql_num_rows($result1) > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>
-							<img src='../../share/images/eye.gif' title='Kollektion ansehen' onClick=''>
+							<img src='../../share/images/eye.gif' title='Kollektion ansehen' onClick='location.href=\"view_collection.php?coll_id=$coll_id\"'>
 						</span>";
 					}
 					if(hasPermission($uid, 'downloadallpics',$sr ) AND $num2 > 0)

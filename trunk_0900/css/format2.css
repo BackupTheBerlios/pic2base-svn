@@ -815,9 +815,6 @@ div#content {
   	padding: 5px;
 	background-color:#efeff7;
   	border:1px solid #efeff7;
-	/*float:left;*/
-	/*height:627px;*/
-  	/*width: 822px;*/ 
 	overflow:auto;
   }
   
@@ -829,6 +826,14 @@ div.content_center {
     padding:0px 10px;
     text-align:center;
   }
+  
+div#scrollbox4 {
+	width:100%;
+	height:20px;
+	overflow-y:scroll;
+	padding:0px;
+	margin:0px;
+	}
  
 div#spalte1 {
   	position:relative;

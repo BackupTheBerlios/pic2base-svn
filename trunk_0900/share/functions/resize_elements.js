@@ -183,6 +183,9 @@ function checkWindowSize()
         /*Hoehe der Scrollbox um die vollst. Kollektions-Auflistung; edit_collection.php*/
         jQuery("#scrollbox2").css({"height":(jQuery(window).height() - 171) + "px"});
         
+        /*Hoehe der Scrollbox in der Kollektions-Ansicht; recherche/view_collection.php*/
+        jQuery("#scrollbox3").css({"height":(jQuery(window).height() - 211) + "px"});
+        
         /*Hoehe einer umfangreichen Hilfe-Box; recherche2.php*/
         jQuery("#help").css({"height":(jQuery(window).height() - 310) + "px"});
     } 
@@ -230,10 +233,13 @@ function checkWindowSize()
         /*Hoehe der Scrollbox um die vollst. Kollektions-Auflistung; edit_collection.php*/
         jQuery("#scrollbox2").css({"height":"572px"});
         
+        /*Hoehe der Scrollbox in der Kollektions-Ansicht; recherche/view_collection.php*/
+        jQuery("#scrollbox3").css({"height":"532px"});
+        
         /*Hoehe einer umfangreichen Hilfe-Box; recherche2.php*/
         jQuery("#help").css({"height":"430px"});
         
-        //alert( jQuery(window).height() + "px" );
+        //alert( jQuery(scrollbox3).height() + "px" );
     }
     
     //alert( jQuery(window).height() );
