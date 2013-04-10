@@ -780,6 +780,69 @@ function createNavi2_1($uid)
 	echo $navigation;
 }
 
+function createNavi2_2($uid)
+{
+	//Navigationsstruktur der Kollektions-Suche-Unter-Seite (recherche/view_collection.php)
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	include $sr.'/bin/share/functions/permissions.php';
+	if(!isset($navigation))
+	{
+		$navigation = '';
+	}
+	IF(hasPermission($uid, 'adminlogin', $sr) OR hasPermission($uid, 'editkattree', $sr) OR hasPermission($uid, 'editlocationname', $sr))
+	{
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	
+	IF(hasPermission($uid, 'editmyprofile', $sr))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($uid, 'addpic', $sr))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($uid, 'editmypics', $sr))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($uid, 'searchpic', $sr))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
+	$navigation .= "<a class='navi' href='recherche2.php?pic_id=0&mod=collection' title='zur Kollektions-&Uuml;bersicht'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=2' title='Online-Hilfe aufrufen'>Hilfe</a>
+			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
+	echo $navigation;
+}
+
 function createNavi3($uid)
 {
 	//Navigationsstruktur der Edit-Startseite

@@ -54,7 +54,7 @@ if(array_key_exists('coll_id', $_GET))
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/main_functions.php';
-include $sr.'/bin/share/functions/permissions.php';
+//include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/css/initial_layout_settings.php';
 
 $max_size = 200;	//max. Ausdehnung des Vorschaubildbereichs in px
@@ -83,7 +83,7 @@ echo "
 		
 		<div id='navi'>
 			<div class='menucontainer'>";
-			createNavi2($uid);
+			createNavi2_2($uid);
 			echo "
 			</div>
 		</div>

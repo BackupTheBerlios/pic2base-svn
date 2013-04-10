@@ -212,7 +212,7 @@ echo "
 	
 
 //	6)
-/*
+
 	$result10 = mysql_query("UPDATE $table16 SET p2b_version='$version'");
 	if(mysql_error() !== "")
 	{
@@ -225,12 +225,12 @@ echo "
 	else
 	{
 		$fh = fopen($p2b_path.'pic2base/log/'.$log_file,'a');
-		fwrite($fh,date('d.m.Y H:i:s').": Update der Pfade-Tabelle; Version wurde auf 0.70.0 aktualisiert.\n");
+		fwrite($fh,date('d.m.Y H:i:s').": Update der Pfade-Tabelle; Version wurde auf 0.90.0 aktualisiert.\n");
 		fclose($fh);
 	}
 	echo "In der Tabelle 'pfade' wurde die pic2base-Version aktualisiert.<BR>";
 
-*/
+
 // 	7) Auswertung des Update-Verlaufs
 
 	if($error !== 0)
