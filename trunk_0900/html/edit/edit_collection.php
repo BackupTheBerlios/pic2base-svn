@@ -175,7 +175,7 @@ echo "<div class='page' id='page'>
 									<td style='width:61%'>".$coll_description."</td>
 									<td style='width:14%' colspan='3'>
 									<span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
-									<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick=''></span>
+									<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick='location.href=\"arrange_collection.php?coll_id=$coll_id\"'></span>
 									<span style='cursor:pointer;'><img src='../../share/images/trash.gif'  style='margin-right:5px;' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span>
 									".$button1."
 									</td>

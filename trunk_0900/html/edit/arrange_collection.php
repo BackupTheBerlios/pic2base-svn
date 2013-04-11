@@ -82,7 +82,7 @@ echo "
 		
 		<div id='navi'>
 			<div class='menucontainer'>";
-			createNavi2_2($uid);
+			createNavi3_2($uid);
 			echo "
 			</div>
 		</div>
