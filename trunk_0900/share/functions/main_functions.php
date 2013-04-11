@@ -965,6 +965,69 @@ function createNavi3_1($uid)
 	echo $navigation;
 }
 
+function createNavi3_2($uid)
+{
+	//Navigationsstruktur der Edit-Unter-Seite
+	include '../../share/global_config.php';
+	include $sr.'/bin/share/db_connect1.php';
+	include $sr.'/bin/share/functions/permissions.php';
+	if(!isset($navigation))
+	{
+		$navigation = '';
+	}
+	IF(hasPermission($uid, 'adminlogin', $sr) OR hasPermission($uid, 'editkattree', $sr) OR hasPermission($uid, 'editlocationname', $sr))
+	{
+		$navigation = "<a class='navi' href='$inst_path/pic2base/bin/html/admin/adminframe.php' title='zum Administrationsbereich'>Administration</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Administration</a>";
+	}
+	
+	IF(hasPermission($uid, 'editmyprofile', $sr))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/extras/einstellungen1.php' title='pers&ouml;nliche Einstellungen anpassen'>Einstellungen</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Einstellungen</a>";
+	}
+	
+	IF(hasPermission($uid, 'addpic', $sr))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/erfassung/erfassung0.php' title='Bilder erfassen'>Erfassung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Erfassung</a>";
+	}
+	
+	IF(hasPermission($uid, 'editmypics', $sr))
+	{
+		$navigation .= "<a class='navi_blind' href='$inst_path/pic2base/bin/html/edit/edit_start.php' title='Bilddateien bearbeiten'>Bearbeitung</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Bearbeitung</a>";
+	}
+	
+	IF(hasPermission($uid, 'searchpic', $sr))
+	{
+		$navigation .= "<a class='navi' href='$inst_path/pic2base/bin/html/recherche/recherche0.php' title='nach Bilddateien suchen'>Suche</a>";
+	}
+	ELSE
+	{
+		$navigation .= "<a class='navi_dummy' href='#' title='nicht verf&uuml;gbar'>Suche</a>";
+	}
+	
+	$navigation .= "<a class='navi' href='edit_collection.php' title='zur Kollektions-&Uuml;bersicht'>Zur&uuml;ck</a>
+			<a class='navi_blind'></a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/start.php'>zur Startseite</a>
+			<a class='navi' href='$inst_path/pic2base/bin/html/help/help1.php?page=4' title='Online-Hilfe aufrufen'>Hilfe</a>
+ 			<a class='navi' href='$inst_path/pic2base/index.php' title='vom Server abmelden'>Logout</a>";
+	echo $navigation;
+}
+
 function createNavi4_1($uid)
 {
 	//Navigationsstruktur der Hilfe-Seite
@@ -2130,7 +2193,7 @@ function checkSoftware($sr)
 		$output .= "<CENTER><TABLE style='width:500px; text-align:center;'><TR><TD><BR><u>WICHTIGER HINWEIS:</u><BR>Sollte eine der gelisteten Software-Komponenten nicht installiert sein, 
 		holen Sie dies bitte <b>VOR</b> der ersten Benutzung von pic2base nach.<BR>
 		Anderenfalls werden einige Funktionen fehlen oder fehlerhaft sein!<BR><BR>
-		Sollte eine Software-Komponente hier als \"nicht installiert\" angezeigt werden,<BR>obwohl Sie sicher sind, da&szlig; sie vorhanden ist,<BR>
+		Sollte eine Software-Komponente hier als \'nicht installiert\' angezeigt werden,<BR>obwohl Sie sicher sind, da&szlig; sie vorhanden ist,<BR>
 		kann es in wenigen Ausnahmef&auml;llen erforderlich sein,<BR>den pic2base-Server neu zu starten.<BR>
 		Dies kann vor allem dann auftreten,<BR>wenn erforderliche Software-Komponenten nicht &uuml;ber den <BR>
 		Paketmanager hinzugef&uuml;gt wurden.</TD></TR></TABLE></CENTER>";
