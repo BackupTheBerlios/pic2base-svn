@@ -75,7 +75,7 @@ SWITCH($filetype)
 				$error_code = "Fehler bei Bild ".$pic_id.", konnte Original nicht durch Thumbs-Vorschau ersetzen.";
 			}
 		}
-/*		else
+		else
 		{
 			//wenn weder Original noch eines der Vorschaubilder existiert, wird der betreffende Datensatz komplett geloescht
 				
@@ -159,8 +159,7 @@ SWITCH($filetype)
 			fwrite($fh,date('d.m.Y H:i:s').": > > > DB-Wartung > > > Der Datensatz zum Bild ".$pic_id." (Beschreibung: ".$CaptionAbstract.", Kategorie: ".$keywords.") wurde entfernt! (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 			fclose($fh);
 			$error_code = "Datensatz f&uuml;r Bild ".$pic_id.", musste entfernt werden.";
-		}
-*/			
+		}			
 		
 		$obj1 = new stdClass();
 		$obj1->errorCode = $error_code;
