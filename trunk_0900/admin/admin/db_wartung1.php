@@ -129,6 +129,7 @@ echo "
 		</div>
 		</center>
 		
+		<p id='ori' style='color:green; margin-top:20px;'></p>
 		<p id='hq' style='color:green; margin-top:20px;'></p>
 		<p id='thumbs' style='color:green; margin-top:0px;'></p>
 		<p id='mono_hist' style='color:green; margin-top:0px;'></p>
@@ -186,18 +187,27 @@ function missingFilesReceived( responseText )
 		gesamtzahl = missingFiles.anzahl;
 		anzahl_v = missingFiles.v_files_array.length;
 		anzahl_hq = missingFiles.hq_files_array.length;
+		anzahl_ori = missingFiles.ori_files_array.length;
 		anzahl_hist_mono = missingFiles.hist_mono_files_array.length;
-//		alert( "Es sind " + gesamtzahl + " Dateien neu zu erzeugen.\nDavon Thumbs: " + anzahl_v + "\nHQ: " + anzahl_hq + "\nMono/Hist: " + anzahl_hist_mono);
-		if(	anzahl_hq > 0)
+		alert( "Es sind " + gesamtzahl + " Dateien neu zu erzeugen.\nDavon Originale: " + anzahl_ori + "\nThumbs: " + anzahl_v + "\nHQ: " + anzahl_hq + "\nMono/Hist: " + anzahl_hist_mono);
+		if(	anzahl_ori > 0)
 		{
+//			alert("erzeuge fehlende Original-Dateien...");
+			processFile( missingFiles, "ori" );
+		}
+		else if( anzahl_hq > 0)
+		{
+//			alert("erzeuge fehlende hq-Dateien...");
 			processFile( missingFiles, "hq" );
 		}
 		else if( anzahl_v > 0)
 		{
+//			alert("erzeuge fehlende v-Dateien...");
 			processFile( missingFiles, "v" );
 		}
 		else if( anzahl_hist_mono > 0)
 		{
+//			alert("erzeuge fehlende hist-Dateien...");
 			processFile( missingFiles, "hist_mono" );
 		}
 	}
@@ -215,7 +225,11 @@ function processFile( missingFiles, filetype )
 {
 	var client = new XMLHttpRequest();
 	
-	if( filetype == "hq" )
+	if( filetype == "ori" )
+	{
+		arrayToEdit = missingFiles.ori_files_array;
+	}
+	else if( filetype == "hq" )
 	{
 		arrayToEdit = missingFiles.hq_files_array;
 	}
@@ -236,16 +250,23 @@ function processFile( missingFiles, filetype )
 	{
 		if( client.readyState == 4 )
 		{
+//			alert("db_wartung1.php, processFile: " + client.responseText);
 			var result = JSON.parse( client.responseText );
 			
 			if( result.errorCode != 0 )
 			{
-				alert( "Fehler: Datei wurde nicht korrekt erzeugt." );
+//				alert( "Fehler: Datei wurde nicht korrekt erzeugt." );
 			}
 					
 			if( arrayToEdit.length > 0 )
 			{
-				if( filetype == "hq" )
+				if( filetype == "ori" )
+				{
+					document.getElementById("ori").innerHTML = "Es werden die fehlenden Original-Bilder erstellt...";
+					document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
+					soll = anzahl_hq;
+				}
+				else if( filetype == "hq" )
 				{
 					document.getElementById("hq").innerHTML = "Es werden die fehlenden HQ-Vorschaubilder erstellt...";
 					document.getElementById("button").innerHTML = "<input type='button' value='zur Doublettenpr&uuml;fung' onClick='location.href=\"#\"' style='color:lightgrey;'>";
@@ -280,7 +301,12 @@ function processFile( missingFiles, filetype )
 			}
 			else
 			{
-				if( filetype == "hq" )
+				if( filetype == "ori" )
+				{
+					document.getElementById("ori").innerHTML = "Die fehlenden Original-Bilder wurden erstellt...";
+					getMissingFiles();
+				}
+				else if( filetype == "hq" )
 				{
 					document.getElementById("hq").innerHTML = "Die fehlenden HQ-Vorschaubilder wurden erstellt...";
 					getMissingFiles();
