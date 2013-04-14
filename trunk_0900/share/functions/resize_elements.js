@@ -248,6 +248,6 @@ function checkWindowSize()
     
     /*Cookies fuer die max. hor./vert. Ausdehnung des Vorschaubildes bei der Bewertung von Bildern*/
 	document.cookie="vert_preview_size=" + preview_height + "; path=/";
-	document.cookie="hor_preview_size=" + preview_width + "; path=/";    
+	document.cookie="hor_preview_size=" + preview_width + "; path=/";
    
 }

@@ -27,23 +27,24 @@ div#tooltip1 a:hover span
  
  
  /*verwendet im Loeschformular fuer vorgemerkte Bilder*/
- div#tooltip2 a span
+ div#tooltip2 p span
  {
   display:none;
  }
 
- div#tooltip2 a:hover
+ div#tooltip2 p:hover
  {
   background-color:#FFFFFF;
+  cursor:pointer;
  }
 
-div#tooltip2 a:hover span
+div#tooltip2 p:hover span
  {
   display:block;
   text-decoration :none;
-  position:absolute;
-  top:100px;
-  left:525px;
+  position:fixed;
+/*  top:100px;
+  left:525px;*/
   width:300px;
   padding:5px;
   margin:4px;

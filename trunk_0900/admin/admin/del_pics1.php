@@ -24,10 +24,31 @@ else
   <script type="text/javascript" src="../../ajax/inc/prototype.js"></script>
   <script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
   <script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
-  <script language="JavaScript">
-  	jQuery.noConflict()
-	jQuery(document).ready(checkWindowSize);
+  
+  <script type="text/javascript">
+  	jQuery.noConflict();
+	jQuery(document).ready( function()
+	{
+		checkWindowSize();
+		
+	   	//document.body.onmousemove = function(e)
+	   	document.getElementById("content").onmousemove = function(e)
+	    {
+	    	//$('status').innerHTML = e.pageX +', '+ jQuery(window).height() + ' / ' + e.pageY;
+	    	jQuery("#tooltip2 p:hover span").css({"left":(e.pageX + 100) +  "px"});
+	    	if ( e.pageY > (jQuery(window).height() - 150 ))
+	        { 
+	    		jQuery("#tooltip2 p:hover span").css({"top":(e.pageY - 200) + "px"});
+	        }
+	    	else
+	    	{
+	    		jQuery("#tooltip2 p:hover span").css({"top":(e.pageY - 100) + "px"});
+	    	}
+	   	};
+	});
+
 	jQuery(window).resize(checkWindowSize); 
+		
   </script>
 </head>
 
@@ -155,10 +176,10 @@ echo "
 					<TR id = 'picture$pic_id'>
 					<TD style='width=30px; text-align: center;'>
 						<div id='tooltip2'>
-							<a href='' style='text-decoration:none';>".$pic_id."<span style='text-align:left;'>
+							<p style='text-decoration:none';>".$pic_id."<span style='text-align:left;'>
 							<img src='$image' width='300px' />
 							</span>
-							</a>
+							</p>
 						</div>
 					</TD>
 					<TD style='width=30px; text-align: center;'><SPAN style='cursor:pointer;' onClick=\"manage_picture('$pic_id', 'save')\"><img src='../../share/images/ok.gif' title='Bild $pic_id in der Datenbank belassen' /></span></TD>
@@ -195,6 +216,11 @@ echo "
 		echo "
 		</tbody>
 		</table>
+		<!--
+		<h2 id='status'>
+		0, 0
+		</h2>
+		-->
 		</center>
 	</div>
 	
