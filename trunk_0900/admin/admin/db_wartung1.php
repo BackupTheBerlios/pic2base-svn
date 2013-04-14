@@ -130,7 +130,7 @@ echo "
 		</center>
 		
 		<p id='ori' style='color:green; margin-top:20px;'></p>
-		<p id='hq' style='color:green; margin-top:20px;'></p>
+		<p id='hq' style='color:green; margin-top:0px;'></p>
 		<p id='thumbs' style='color:green; margin-top:0px;'></p>
 		<p id='mono_hist' style='color:green; margin-top:0px;'></p>
 		
@@ -189,7 +189,7 @@ function missingFilesReceived( responseText )
 		anzahl_hq = missingFiles.hq_files_array.length;
 		anzahl_ori = missingFiles.ori_files_array.length;
 		anzahl_hist_mono = missingFiles.hist_mono_files_array.length;
-		alert( "Es sind " + gesamtzahl + " Dateien neu zu erzeugen.\nDavon Originale: " + anzahl_ori + "\nThumbs: " + anzahl_v + "\nHQ: " + anzahl_hq + "\nMono/Hist: " + anzahl_hist_mono);
+//		alert( "Es sind " + gesamtzahl + " Dateien neu zu erzeugen.\nDavon Originale: " + anzahl_ori + "\nThumbs: " + anzahl_v + "\nHQ: " + anzahl_hq + "\nMono/Hist: " + anzahl_hist_mono);
 		if(	anzahl_ori > 0)
 		{
 //			alert("erzeuge fehlende Original-Dateien...");
@@ -256,6 +256,12 @@ function processFile( missingFiles, filetype )
 			if( result.errorCode != 0 )
 			{
 //				alert( "Fehler: Datei wurde nicht korrekt erzeugt." );
+//				Wenn der Datensatz entfernt werden musste, muss die Seite neu geladen werden, da die Berechnung der fehlenden Bilder aktualisiert werden muss!:
+				if (result.errorCode == 99)
+				{
+					alert("Es musste ein Bild aus der Datenbank entfernt werden.\n\nWeitere Informationen entnehmen Sie bitte der Log-Datei.");
+					location.href='db_wartung1.php';
+				}
 			}
 					
 			if( arrayToEdit.length > 0 )
