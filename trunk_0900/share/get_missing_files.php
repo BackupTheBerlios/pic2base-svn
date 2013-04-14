@@ -3,19 +3,20 @@
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 
-//bei 50000 Datensaetzen waren 250M erforderlich, daher wird hier vorsorglich auf 300M erhoeht: 
-if(ini_get('memory_limit') < 300)
+//bei 50000 Datensaetzen waren 250M erforderlich, daher wird hier vorsorglich auf 350M erhoeht: 
+if(ini_get('memory_limit') < 350)
 {
-	ini_set('memory_limit', '300M');
+	ini_set('memory_limit', '350M');
 }
+ini_set('max_execution_time', '60');
 
-//Ermittlung der Anzahl fehlender Dateien im Rahmen der DB-Wartung (Vorschau, Hist, Mono):
+//Ermittlung der Anzahl fehlender Dateien im Rahmen der DB-Wartung (Originale, Vorschau, Hist, Mono):
 //temporaer genutzte Tabelle wird geleert:
 $result21 = mysql_query("TRUNCATE `ICE_V_pic_kat_dubls`");
 echo mysql_error();
 //#########################	
 //es wird fuer alle Eintraege in der tabelle pictures geprueft, ob die Vorschaubilder
-//FileNameHQ, FileNameV, FileNameHist, FileNameHist_r, FileNameHist_g, FileNameHost_b und FileNameMono vorhanden sind. 
+//FileName, FileNameHQ, FileNameV, FileNameHist, FileNameHist_r, FileNameHist_g, FileNameHost_b und FileNameMono vorhanden sind. 
 //Wenn nicht, werden die fehlenden Bilder ermittelt
 
 //In der Tabelle pictures werden Felder, in denen eigentlich ein Dateiname stehen muesste, mit dem vorgesehenen Eintrag belegt, damit es weiter unten zu einer Differenbildung kommen kann:
@@ -27,9 +28,9 @@ $result26 = mysql_query("UPDATE $table2 SET FileNameHist_r = CONCAT(pic_id,'_his
 $result27 = mysql_query("UPDATE $table2 SET FileNameHist_g = CONCAT(pic_id,'_hist_g.gif') WHERE FileNameHist_g = ''");
 $result28 = mysql_query("UPDATE $table2 SET FileNameHist_b = CONCAT(pic_id,'_hist_b.gif') WHERE FileNameHist_b = ''");
 $result29 = mysql_query("UPDATE $table2 SET FileNameMono = CONCAT(pic_id,'_mono.jpg') WHERE FileNameMono = ''");
-echo mysql_error();
+//echo mysql_error();
 $result30 = mysql_query( "SELECT * FROM $table2");
-echo mysql_error();
+//echo mysql_error();
 
 $ori_files_soll = array();
 $hq_files_soll = array();

@@ -50,7 +50,7 @@ else
  *
  */
 
-INCLUDE '../../share/global_config.php';
+include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 //include $sr.'/bin/share/functions/permissions.php';
 include $sr.'/bin/share/functions/main_functions.php';
@@ -172,6 +172,7 @@ echo "
 
 var missingFiles = null;
 var gesamtzahl;
+var anzahl_ori;
 var anzahl_v;
 var anzahl_hq;
 var anzahl_hist_mono;

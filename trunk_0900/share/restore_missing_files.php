@@ -30,7 +30,8 @@ SWITCH($filetype)
 		// Das Ergebnis wird in die Log-Datei geschrieben.
 		// ##########################################################################################################################################################
 		
-		$result311 = mysql_query("SELECT FileNameHQ, FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
+		$result311 = mysql_query("SELECT FileName, FileNameHQ, FileNameV FROM $table2 WHERE pic_id = '$pic_id'");
+		$FileName = mysql_result($result311, isset($i311), 'FileName');
 		$FileNameHQ = mysql_result($result311, isset($i311), 'FileNameHQ');
 		$FileNameV = mysql_result($result311, isset($i311), 'FileNameV');
 		$FILE_HQ = $pic_hq_path."/".$FileNameHQ;
@@ -40,7 +41,7 @@ SWITCH($filetype)
 		if($fh_hq)
 		{
 			$datei = $FILE_HQ;
-			$target = $pic_path."/".$pic_id.".jpg";
+			$target = $pic_path."/".$FileName;
 			if(@copy($datei,$target))
 			{
 				$ca_text = "Original-Bild wurde durch HQ-Vorschau ersetzt.";
@@ -59,7 +60,7 @@ SWITCH($filetype)
 		elseif($fh_v)
 		{
 			$datei = $FILE_V;
-			$target = $pic_path."/".$pic_id.".jpg";
+			$target = $pic_path."/".$FileName;
 			if(@copy($datei,$target))
 			{
 				$ca_text = "Original-Bild wurde durch Thumbs-Vorschau ersetzt.";
