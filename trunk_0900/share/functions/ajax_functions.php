@@ -23,9 +23,9 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	$ext = strtolower(isset($FileNameOri_ext[1]));//Extension des Original-Bildes	
 	
 	//abgeleitete Groessen:
-	$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
-	$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
-	$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
+	@$parameter_v=getimagesize($sr.'/images/vorschau/thumbs/'.$FileNameV);
+	@$parameter_hq=getimagesize($sr.'/images/vorschau/hq-preview/'.$FileNameHQ);
+	@$parameter_o=getimagesize($sr.'/images/originale/'.$FileName);
 	
 	SWITCH($quality)
 	{
@@ -119,7 +119,15 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 		break;
 	}
 	
-	$ratio_pic = $breite / $hoehe;
+	if($hoehe !== 0 AND $hoehe !== NULL)
+	{
+		$ratio_pic = $breite / $hoehe;
+	}
+	else
+	{
+		$ratio_pic = 1;
+		// hier ggf. Mail an Admin versenden
+	}
 	
 	SWITCH($Orientation)
 	{

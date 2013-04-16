@@ -2346,10 +2346,25 @@ function generateImageArray($sqlResult, $userName, $uID, $softwareRoot)
 	{
 		$fileName = mysql_result($sqlResult, $imageArrayIndex, 'FileName');
 		$fileNamePrefix = str_replace('.jpg', '', $fileName);
+		/*
 		$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
 		if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
 		{
 			$ratio = 1.0 / $ratio;
+		}
+		*/
+		if(mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight') !== '0')
+		{
+			$ratio = (mysql_result($sqlResult, $imageArrayIndex, 'ExifImageWidth') / mysql_result($sqlResult, $imageArrayIndex, 'ExifImageHeight'));
+			if (mysql_result($sqlResult, $imageArrayIndex, 'Orientation') >= '5')
+			{
+				$ratio = 1.0 / $ratio;
+			}
+		}
+		else
+		{
+			$ratio = 1;
+			// hier ggf. Mail an Admin versenden
 		}
 		$downloadStatus = 0;
 		//Erzeugung der Download-Icons:
