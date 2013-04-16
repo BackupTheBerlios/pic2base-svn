@@ -162,7 +162,7 @@ function checkWindowSize()
         jQuery("#kat_tree_fieldset").css({"height":(jQuery(window).height() - 297) + "px"});
         
         /*Hoehe des fieldsets in der rechten Spalte (allgemeine Verwendung)*/
-        jQuery("#fieldset_spalte2").css({"height":(jQuery(window).height() - 297) + "px"});//297
+        jQuery("#fieldset_spalte2").css({"height":(jQuery(window).height() - 297) + "px"});//298
         
         /*Hoehe des Vorschaubildes bei der Bild-Bewertung (in Spalte2)*/
         preview_height = jQuery(window).height() - 320; //hoehe spalte2 - 54 px
@@ -216,7 +216,7 @@ function checkWindowSize()
         jQuery("#kat_tree_fieldset").css({"height":"446px"});
         
         /*Hoehe des fieldsets in der rechten Spalte (allgemeine Verwendung)*/
-        jQuery("#fieldset_spalte2").css({"height":"446px"});//446
+        jQuery("#fieldset_spalte2").css({"height":"445px"});//445
         
         /*Hoehe des Vorschaubildes bei der Bild-Bewertung (in Spalte2)*/
         preview_height = 350;
@@ -254,6 +254,5 @@ function checkWindowSize()
     
     /*Cookies fuer die max. hor./vert. Ausdehnung des Vorschaubildes bei der Bewertung von Bildern*/
 	document.cookie="vert_preview_size=" + preview_height + "; path=/";
-	document.cookie="hor_preview_size=" + preview_width + "; path=/";
-   
+	document.cookie="hor_preview_size=" + preview_width + "; path=/";   
 }
