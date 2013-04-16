@@ -231,8 +231,16 @@ echo "
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=exif'>Suche nach Meta-Daten</a>
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=desc'>Suche nach Beschreibungstext</a>
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=geo'>Suche nach Geo-Daten</a>
-			<a class='subnavi_blind'></a>
-			<a class='subnavi' href='recherche2.php?pic_id=0&mod=collection'>Suche nach Kollektionen</a>
+			<a class='subnavi_blind'></a>";
+			if($search_modus == 'normal')
+			{
+				echo "<a class='subnavi' href='recherche2.php?pic_id=0&mod=collection'>Suche nach Kollektionen</a>";
+			}
+			elseif($search_modus == 'collection')
+			{
+				echo "<a class='subnavi_blind'></a>";
+			}
+			echo "
 			<!--<a class='subnavi' href='recherche2.php?pic_id=0&mod=expert_d'>Experten-Suche (nach Aufnahme-Datum)</a>
 			<a class='subnavi' href='recherche2.php?pic_id=0&mod=expert_kd'>Experten-Suche (nach Kategorie u. Datum)</a>-->
 			<BR>
