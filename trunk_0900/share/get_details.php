@@ -1,6 +1,15 @@
 <html>
 <head>
-<meta http-equiv=’Content-Type’ content=’text/html; charset=UTF-8′ />
+  <meta http-equiv=’Content-Type’ content=’text/html; charset=UTF-8′ />
+  <link rel=stylesheet type='text/css' href='../css/format2.css'>
+  <link rel="shortcut icon" href="../share/images/favicon.ico">
+  <script language="JavaScript" src="../share/functions/resize_elements.js"></script>
+  <script language="JavaScript" src="../share/functions/jquery-1.8.2.min.js"></script>
+  <script language="JavaScript">
+  	jQuery.noConflict();
+	jQuery(document).ready(checkWindowSize);
+	jQuery(window).resize(checkWindowSize); 
+  </script>
 </head>
 <body>
 
@@ -65,15 +74,13 @@ IF ($pic_id !=='0')
 	WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	IF(mysql_num_rows($result8) > '0')
-	{
-//		echo "<p id='elf' style='background-color:white; padding: 5px; margin-top: 4px; margin-left: 0px; margin-right: 20px; text-align:center;'>Details zum ausgew&auml;hlten Bild:<BR>";
-		
+	{		
 		echo "
 		<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:10px; padding:5px;'>
 		<legend style='color:blue; font-weight:bold;'>Details zum ausgew&auml;hlten Bild</legend>
 			<center>
 			<FORM name = beschr method=post accept-encoding=”UTF-8>";
-			
+			//echo $fieldset_spalte2_height;
 			$DateTimeOriginal = mysql_result($result8, isset($i8), 'DateTimeOriginal');
 			$FileName = mysql_result($result8, isset($i8), 'FileName');
 			$FileNameOri = mysql_result($result8, isset($i8), 'FileNameOri');
@@ -355,7 +362,7 @@ IF ($pic_id !=='0')
 			ELSE
 			{
 				$symb4 = "<SPAN style='cursor:pointer;'>
-				<img src=\"$inst_path/pic2base/bin/share/images/no_del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title='keine Berechtigung' />
+				<img src=\"$inst_path/pic2base/bin/share/images/no_del_geo_ref.gif\" width=\"15\" height=\"15\" hspace=\"0\" vspace=\"0\" title='Sie haben keine Berechtigung, die Geo-Referenzierung zu &auml;ndern.' />
 				</span>";
 			}
 			
@@ -382,7 +389,7 @@ IF ($pic_id !=='0')
 			//wenn der User Bilder loeschen darf, wird das Trash-Icon angezeigt:
 			IF($owner == $uid AND (hasPermission($uid, 'deletemypics', $sr)) OR ($owner !== $uid AND (hasPermission($uid, 'deleteallpics', $sr))))
 			{
-				//nur wenn das Bild nicht Bestandteil einer Kollektion ist, wird der Button zum loeschen angeboten:
+				//nur wenn das Bild NICHT Bestandteil einer Kollektion ist, wird der Button zum loeschen angeboten:
 				$result12 = mysql_query("SELECT * FROM $table25 WHERE pic_id = '$pic_id'");
 				if(mysql_num_rows($result12) == 0)
 				{
