@@ -382,12 +382,23 @@ IF ($pic_id !=='0')
 			//wenn der User Bilder loeschen darf, wird das Trash-Icon angezeigt:
 			IF($owner == $uid AND (hasPermission($uid, 'deletemypics', $sr)) OR ($owner !== $uid AND (hasPermission($uid, 'deleteallpics', $sr))))
 			{
-				$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus dem Archiv l&ouml;schen\" /></A>";
+				//nur wenn das Bild nicht Bestandteil einer Kollektion ist, wird der Button zum loeschen angeboten:
+				$result12 = mysql_query("SELECT * FROM $table25 WHERE pic_id = '$pic_id'");
+				if(mysql_num_rows($result12) == 0)
+				{
+					$symb2 = "<A HREF = '#' onClick=\"showDelWarning('$pic_id')\";><img src='$inst_path/pic2base/bin/share/images/trash.gif' style='width:15px; height:15px; border:none;' title=\"Bild aus der Datenbank l&ouml;schen\" /></A>";
+				}
+				elseif(mysql_num_rows($result12) > 0)
+				{
+					$symb2 = "<SPAN style='cursor:pointer;'>
+					<img src='$inst_path/pic2base/bin/share/images/notrash.gif' style='width:15px; height:15px; border:none;' title='Das Bild ist Bestandteil einer Kollektion und kann daher nicht gel&ouml;sch werden.' />
+					</span>";
+				}
 			}
 			ELSE
 			{
 				$symb2 = "<SPAN style='cursor:pointer;'>
-				<img src='$inst_path/pic2base/bin/share/images/notrash.gif' style='width:15px; height:15px; border:none;' title='keine Berechtigung' />
+				<img src='$inst_path/pic2base/bin/share/images/notrash.gif' style='width:15px; height:15px; border:none;' title='Sie haben keine Berechtigung, das Bild zu l&ouml;schen' />
 				</span>";
 			}
 			
