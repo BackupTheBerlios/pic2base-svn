@@ -237,6 +237,7 @@ echo "
 		<a href='#2_meta'>Suche nach ausgew&auml;hlten Meta-Daten</a><BR>
 		<a href='#2_desc'>Suche nach Beschreibungstext</a><BR>
 		<a href='#2_geo'>Suche nach Geo-Daten</a><BR>
+		<a href='#2_coll'>Suche nach Kollektionen</a><BR>
 		<a href='#2_film'>Was kann der Filmstreifen?</a><BR>
 		<a href='#2_edit'>Bearbeitungsm&ouml;glichkeiten der Suchergebnisse</a><BR><BR>
 		
@@ -314,6 +315,18 @@ echo "
 		In beiden Suchm&ouml;glichkeiten kann als maximaler Umkreis eine Entfernung von 50 km angegeben werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
+		<a name = '2_coll'></a><b>Suche nach Kollektionen</b><BR><BR>
+		Wenn Sie nach Kollektionen suchen wollen, k&ouml;nnen sie dies &uuml;ber diesen Men&uuml;punkt erledigen.<BR>
+		Im Kopf der Tabelle auf der folgenden Seite k&ouml;nnen Sie nach dem Kollektionsnamen oder der Kollektionsbeschreibung recherchieren, indem Sie in das entsprechende Eigabefeld den Suchbegriff eintippen.<BR>
+		Die Liste der verf&uuml;gbaren Kollektionen verk&uuml;rzt sich entsprechend der Treffer auf Ihre Suchanfrage.<BR>
+		In der rechten Spalte jeder Kollektions-Zeile befinden sich zwei Icons:<br>
+		Mit einem Klick auf das \"Auge\" k&ouml;nnen Sie sich alle Bilder der Kollektion in der sogenannten Leucht-Tisch-Ansicht darstellen lassen.<br>
+		Die Berechtigung vorausgesetzt, k&ouml;nnen Sie mit einem Klick auf das Download-Icon alle Bilder der gew&auml;hlten Kollektion in Ihren Download-Ordner kopieren.<br>
+		Alle Bild-Dateien werden dabei mit einem Dateinamen versehen, der den Kollektionsnamen und die Position des Bildes innerhalb der Kollektion beinhaltet.<br>
+		Damit ist es m&ouml;glich, die einmal vorsortierten Bilder komfortabel in externen Anwendungen weiter zu verarbeiten.
+		
+		<BR><BR><a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
 		<a name = '2_film'></a><b>Was kann der Filmstreifen?</b><BR><BR>
 		Im unteren Bereich des Arbeitsfensters befindet sich der sogenannte Filmstreifen. Hier werden die gefundenen Bilder und einige zus&auml;tzliche Informationen dazu dargestellt.<BR>
 		(siehe Abb:)<BR><BR>
@@ -375,6 +388,7 @@ echo "
 		<a href='#3_desc'>Beschreibungen zuweisen</a><BR>
 		<a href='#3_kat'>Kategorie-Zuweisung</a><BR>
 		<a href='#3_del_kat'>Kategorie-Zuweisungen aufheben</a><BR>
+		<a href='#3_edit_coll'>Kollektion anlegen / bearbeiten / arrangieren / löschen</a><br>
 		<a href='#3_dubletten'>Dubletten-Pr&uuml;fung</a><BR>
 		<a href='#3_qp'>Quick-Preview hochformatiger Bilder erstellen</a><BR><BR>
 		
@@ -407,6 +421,22 @@ echo "
 		Sollte versehentlich einem Bild eine falsche Kategorie zugewiesen worden sein, kann &uuml;ber diesen Men&uuml;punkt diese Zuweisung wieder r&uuml;ckg&auml;ngig gemacht werden.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
+		
+		<a name = '3_edit_coll'><b>Kollektion anlegen / bearbeiten / arrangieren / löschen</b></a><br><br>
+		Mit der Anlage einer Kollektion haben Sie die komfortable M&ouml;glichkeit, Ihre Suchergebnisse dauerhaft zu speichern.<br>
+		Dazu legen Sie zun&auml;chst &uuml;ber diesen Men&uuml;punkt eine neue Kollektion an, indem Sie in dem Anlage-Formular einen Kollektions-Namen und eine Beschreibung hinterlegen.<br>
+		Der Kollektions-Name sollte kurz aber verst&auml;ndlich sein, w&auml;hrend Sie in der Beschreibung ausf&uuml;hrliche Angaben zum Inhalt der Kollektion hinterlegen k&ouml;nnen.<br>
+		Wenn Sie nun zur Kollektions-Auswahlseite im Bearbeiten-Men&uuml; zur&uuml;ckkehren, finden Sie in der Liste der verf&uuml;gbaren Kollektionen Ihre soeben angelegte Kollektion wieder.<BR>
+		In der rechten Spalte jeder aufgef&uuml;hrten Kollektion finden Sie vier Symbole, die von links beginnend die folgenden Funktionen erm&ouml;glichen:<br>
+		<ul>
+		<li>Kollektion bearbeiten</li>
+		<li>Kollektion arrangieren</li>
+		<li>Kollektion l&ouml;schen</li>
+		<li>Information zum Freigabe-Status der Kollektion</li>
+		</ul>
+		Weitere Informationen zur Bearbeitung der Kollektionen erhalten Sie auf der entsprechenden Unterseite.
+		<br><a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
 		<a name = '3_dubletten'><b>Dubletten-Pr&uuml;fung</b></a><BR><BR>
 		pic2base bietet eine einfache M&ouml;glichkeit zu ermitteln, ob Dubletten in den Datenbestand aufgenommen wurden.<BR>
 		Dazu wird bereits w&auml;hrend des Datei-Uploads kontrolliert, ob sich bereits ein identisches Bild im Datenbestand befindet.
@@ -432,6 +462,7 @@ echo "
 		<a href='#4_desc'>Beschreibungen zuweisen</a><BR>
 		<a href='#4_kat'>Kategorien zuweisen</a><BR>
 		<a href='#4_del_kat'>Kategorie-Zuweisungen aufheben</a><BR>
+		<a href='#4_edit_coll'>Kollektion anlegen / bearbeiten / arrangieren / löschen</a><br>
 		<a href='#4_dubletten'>Dubletten-Pr&uuml;fung</a><BR>
 		<a href='#4_qp'>Quick-Preview hochformatiger Bilder erstellen</a><BR><BR>
 		
@@ -496,6 +527,33 @@ echo "
 		Die Aufhebung der Kategorie-Zuweisung erfolgt mit einem Klick auf den Button \"Speichern\".<BR>
 		Gleichzeitig werden auch alle Zuordnung zu den Unterkategorien der gew&auml;hlten Kategorie aufgehoben.<BR>
 		<a href='#top'>Zum Seitenanfang</a><BR><BR>
+		
+		<a name = '4_edit_coll'><b>Kollektion anlegen / bearbeiten / arrangieren / löschen</b></a><br>
+		Bevor Sie mit den Kollektionen arbeiten k&ouml;nnen, m&uuml;ssen sie mindestens eine neue angelegt haben.<br>
+		Klicken Sie hierzu auf den Button \"Neue Kollektion anlegen\" und f&uuml;llen Sie in dem folgenden Formular die Felder \"Name der Kollektion\" und \"Beschreibung\" aus.<BR>
+		Der Kollektions-Name sollte kurz aber verst&auml;ndlich sein, w&auml;hrend Sie in der Beschreibung ausf&uuml;hrliche Angaben zum Inhalt der Kollektion hinterlegen k&ouml;nnen.<br>
+		Speichern Sie Ihre Eingaben ab.<br>
+		Wenn Sie nun zur Kollektions-Auswahlseite im Bearbeiten-Men&uuml; zur&uuml;ckkehren, finden Sie in der Liste der verf&uuml;gbaren Kollektionen Ihre soeben angelegte Kollektion wieder.<BR>
+		In der rechten Spalte jeder aufgef&uuml;hrten Kollektion finden Sie vier Symbole, die von links beginnend die folgenden Funktionen erm&ouml;glichen:<br>
+		<ul>
+		<li>Kollektion bearbeiten<br>
+		&Uuml;ber diesen Button haben Sie die M&ouml;glichkeit, den Namen der Kollektion oder deren Beschreibung zu &auml;ndern, weitere Bilder hinzuzuf&uuml;gen oder Bilder aus bestehenden Kollektionen zu entfernen.</li>
+		Weitere Bilder f&uuml;gen Sie einer bestehenden Kollektion zu, indem Sie den Button \"Weitere Bilder hinzuf&uuml;gen / Bilder entfernen\" anklicken und in dem sich dann &ouml;ffnenden Suchbereich die gew&uuml;nschten Bilder ausw&auml;hlen, wie Sie es vom normalen Download her gewohnt sind.<br>
+		Bereits in der Kollektion befindliche Bilder sind im Filmstreifen mit dem gr&uuml;nen H&auml;ckchen gekennzeichnet und k&ouml;nnen durch erneutes Anklicken wieder aus der Kollektion entfernt werden.<br>
+		Eine andere M&ouml;glichkeit, ein Bild aus der Kollektion zu entfernen besteht darin, im Fenster \"Ausgew&auml;hlte Kollektion bearbeiten\" auf das betreffende Bild in der Bilder-Leiste zu klicken. Nach entsprechender Beantwortung der Sicherheits-Abfrage wird das Bild aus der Kollektion gel&ouml;scht.
+		<li>Kollektion arrangieren<br>
+		Diese Button bietet die M&ouml;glichkeit, die Reihenfolge der Bilder innerhalb der Kollektion neu festzulegen. (Noch nicht verf&uuml;gbar!)</li>
+		<li>Kollektion l&ouml;schen<br>
+		Wenn Sie &uuml;ber die entsprechende Berechtigung verf&uuml;gen, k&ouml;nnen Sie an dieser Stelle Kollektionen l&ouml;schen.<br>
+		Dabei werden lediglich die Kollektionen, nicht aber die darin enthaltenen Bilder gel&ouml;scht!</li>
+		<li>Information zum Freigabe-Status der Kollektion<br>
+		Wenn Sie eine Kollektion neu anlegen, k&ouml;nnen zun&auml;chst nur Sie diese bearbeiten. Ansehen k&ouml;nnen sie auch andere Benutzer, sofern sie die Berechtigung dazu haben.<br>
+		Wollen Sie jedoch, da&szlig; auch andere Benutzer Ihre Kollektion bearbeiten k&ouml;nnen, m&uuml;ssen sie die entsprechende Freigabe &uuml;ber den Men&uuml;punkt \"Kollektion bearbeiten\"<br>
+		und hier durch setzen des H&auml;ckchens \"Freigabe\" erteilen.<br>
+		Wurde die Freigabe erteilt, zeigt dies der blaue Pfeil an. Anderenfalls weist der rote Kreis auf eine nicht erteilte Freigabe hin.</li>
+		</ul>
+		<b>Beachten Sie bitte:</b> Bei keiner der genannten Bearbeitungsm&ouml;glichkeiten f&uuml;r Kollektionen wird der eigentliche Bild-Datenbestand ver&auml;ndert!
+		<br><br><a href='#top'>Zum Seitenanfang</a><BR><BR>
 		
 		<a name = '4_dubletten'><b>Dubletten-Pr&uuml;fung</b></a><BR><BR>
 		pic2base bietet eine einfache M&ouml;glichkeit zu ermitteln, ob Dubletten in den Datenbestand aufgenommen wurden.<BR>
