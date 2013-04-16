@@ -188,6 +188,9 @@ function checkWindowSize()
         
         /*Hoehe einer umfangreichen Hilfe-Box; recherche2.php*/
         jQuery("#help").css({"height":(jQuery(window).height() - 310) + "px"});
+        
+        /*vertikaler Abstand zwischen den beiden tabellen in edit_selected_collection.php*/
+        jQuery("#picture_list").css({"margin-top":((jQuery(window).height() - 700) / 3) + "px"});
     } 
     else 
     { 
@@ -238,6 +241,9 @@ function checkWindowSize()
         
         /*Hoehe einer umfangreichen Hilfe-Box; recherche2.php*/
         jQuery("#help").css({"height":"430px"});
+        
+        /*vertikaler Abstand zwischen den beiden tabellen in edit_selected_collection.php*/
+        jQuery("#picture_list").css({"margin-top":"15px"});
         
         //alert( jQuery(scrollbox3).height() + "px" );
     }
