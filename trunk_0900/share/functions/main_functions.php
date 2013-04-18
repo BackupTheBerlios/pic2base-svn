@@ -2424,4 +2424,12 @@ function translateLabel($label_name,$sr,$uid)
 		return $label_value;
 	}
 }
+
+function writeLog($message, $sr)
+{
+	include $sr.'/bin/share/global_config.php';
+	$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
+	fwrite($fh,date('d.m.Y H:i:s').": ".$message);
+	fclose($fh);
+}
 ?>
