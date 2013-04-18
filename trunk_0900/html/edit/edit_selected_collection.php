@@ -66,9 +66,8 @@ $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'"
 $username = mysql_result($result0, isset($i0), 'username');
 
 //log-file schreiben:
-$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-fwrite($fh,date('d.m.Y H:i:s').": Kollektions-Bearbeitung wurde von ".$username." aufgerufen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
-fclose($fh);
+$message = "Kollektions-Bearbeitung wurde von ".$username." aufgerufen. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n";
+writeLog($message, $sr);
 
 	echo "
 	<div class='page' id='page'>
@@ -185,7 +184,7 @@ fclose($fh);
 									<tr>
 										<td colspan='3' style='text-align:center;'>
 											<div id='button_bar'>
-												<input type='submit' style='margin-top:10px; margin-bottom:10px;' value='&Auml;nderungen speichern' title=''><input type='button' style='margin-left:10px;' value='Ohne &Auml;nderungen zur vorhergehenden Seite' onClick='location.href=\"edit_collection.php\"'>
+												<input type='submit' style='margin-top:5px; margin-bottom:0px;' value='&Auml;nderungen speichern' title=''>
 											</div>
 										</td>
 									</tr>
@@ -197,7 +196,7 @@ fclose($fh);
 						
 						echo "
 						<center>
-						<table class='coll' border='0' style='margin-top:20px;'>
+						<table class='coll' id='picture_list' border='0' style='margin-top:10px;'>
 							
 							<tr class='coll'>
 								<td style='background-color:darkred;'></TD>
@@ -251,11 +250,11 @@ fclose($fh);
 												<td>
 													<div class='tooltip4' style='float:left;'>
 														<p style='margin:0px; cursor:pointer;'>
-														<img src='../../../images/vorschau/thumbs/$FileNameV' style='margin-right:5px; margin-bottom:5px; margin-top:5px; height:145px;' title='Hier klicken, um das Bild ".$pic_id." aus der Kollektion ".$coll_id." zu entfernen' onclick='sicher(\"$coll_id\", \"$pic_id\", \"$uid\");' />
+														<img src='../../../images/vorschau/thumbs/$FileNameV' style='margin-right:5px; margin-bottom:5px; margin-top:5px; height:145px; border-radius:8px;' title='Hier klicken, um das Bild ".$pic_id." aus der Kollektion ".$coll_id." zu entfernen' onclick='sicher(\"$coll_id\", \"$pic_id\", \"$uid\");' />
 															<span id='tt' style='text-align:center; margin:0px;'>
 															
 																<span style='float:left'>
-																	<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='height:334px; margin-right:0px; margin-bottom:0px; margin-top:0px;' />
+																	<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='height:334px; margin-right:0px; margin-bottom:0px; margin-top:0px; border-radius:10px;' />
 																</span>
 																
 																<span class='ttinfo'>
@@ -285,7 +284,10 @@ fclose($fh);
 									if(hasPermission($uid, 'searchpic', $sr))
 									{
 										echo "
-										<td style='text-align:center;'><input type='button' style='margin-top:10px; margin-bottom:10px;' value='Weitere Bilder hinzuf&uuml;gen / Bilder entfernen' onClick='document.cookie = \"search_modus=collection; path=/\"; document.cookie = \"coll_id=$coll_id; path=/\"; location.href=\"../recherche/recherche0.php\"'></td>";
+										<td style='text-align:center;'>
+										<input type='button' style='margin-top:5px; margin-bottom:0px;' value='Weitere Bilder hinzuf&uuml;gen / Bilder entfernen' onClick='document.cookie = \"search_modus=collection; path=/\"; document.cookie = \"coll_id=$coll_id; path=/\"; location.href=\"../recherche/recherche0.php\"'>
+										<input type='button' style='margin-left:10px;' value='Ohne &Auml;nderungen zur vorhergehenden Seite' onClick='location.href=\"edit_collection.php\"'>
+										</td>";
 									}
 								echo "
 								</tr>
