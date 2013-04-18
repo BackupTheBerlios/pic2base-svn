@@ -6,6 +6,7 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	//Qualitaeten: 1 - Vorschaubild; 2 - HQ-Bild; 3 - Original-Bild
 	include '../share/global_config.php';
 	include $sr.'/bin/share/db_connect1.php';
+	//include $sr.'/bin/share/functions/main_functions.php';
 	
 	$exiftool = buildExiftoolCommand($sr);
 	
@@ -121,12 +122,14 @@ function createPreviewAjax($pic_id, $max_size, $quality)
 	
 	if($hoehe !== 0 AND $hoehe !== NULL)
 	{
-		$ratio_pic = $breite / $hoehe;
+		$ratio_pic = $breite / $hoehe;	
 	}
 	else
 	{
 		$ratio_pic = 1;
-		// hier ggf. Mail an Admin versenden
+		// Log-Datei im Fehlerfall schreiben:
+		$message = "F E H L E R ! - Fuer Bild ".$pic_id." / ".$FileName." konnte die Hoehe / Breite nicht bestimmt werden. (Quelle: ajax_functions.php, Z. 128)\n";
+		writeLog($message, $sr);	
 	}
 	
 	SWITCH($Orientation)
