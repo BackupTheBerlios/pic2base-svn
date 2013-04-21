@@ -65,7 +65,7 @@ echo "
 				
 				<tr>
 					<td colspan='2'></td>
-					<td colspan='3' style='text-align:center;' class='coll'><input type='submit' value='Speichern'><input type='button' value='Abbrechen' onClick='location.href=\"javascript:history.back()\"'></td>
+					<td colspan='3' style='text-align:center;' class='coll'><input type='submit' value='Speichern'><input type='button' value='Abbrechen' onClick='location.href=\"edit_collection.php\"'></td>
 				</tr>
 				
 				<TR class='coll' style='height:10px;'>
