@@ -60,7 +60,7 @@ if(mysql_num_rows($result1) > 0)
 		<tr>
 			<td style='text-align:left;' class='coll'><input type='text' name='coll_name' id='coll_name' onkeyup='searchCollection(this.value, \"coll_name\", \"recherche\")'></td>
 			<td style='text-align:left;' class='coll'><input type='text' name='coll_description' id='coll_description' onkeyup='searchCollection(this.value, \"coll_description\", \"recherche\")'></td>
-			<td></td>
+			<td><img src='../../share/images/no_pic.gif' style='height:1px; width:50px;'></td>
 		</tr>
 		
 		<TR class='coll'>
@@ -73,11 +73,12 @@ if(mysql_num_rows($result1) > 0)
 		<table border='0' style='margin-top:25px; width:100%' >
 		
 			<TR class='coll'>
-				<TD colspan = '5' class='coll'><b>Suchergebnis</b></TD>
+				<TD colspan = '2' class='coll'><b>Suchergebnis</b></TD>
+				<TD class='coll'><img src='../../share/images/no_pic.gif' style='height:1px; width:56px;'></TD>
 			</TR>
 		
 			<TR class='coll'>
-				<TD style='background-color:darkred;' colspan = '5'></TD>
+				<TD style='background-color:darkred;' colspan = '3'></TD>
 			</TR>";
 
 		for($i1=0; $i1<$num1; $i1++)
@@ -99,14 +100,14 @@ if(mysql_num_rows($result1) > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>
-							<img src='../../share/images/eye.gif' title='Kollektion ansehen' onClick='location.href=\"view_collection.php?coll_id=$coll_id\"'>
+							<img src='../../share/images/glass.png' title='Kollektion ansehen' style='width:16px;' onClick='location.href=\"view_collection.php?coll_id=$coll_id\"'>
 						</span>";
 					}
 					if(hasPermission($uid, 'downloadallpics',$sr ) AND $num2 > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>
-							<img src='../../share/images/eye.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../html/recherche/copy_coll_pictures.php?coll_id=$coll_id\"'>
+							<img src='../../share/images/download.gif' title='Kollektion in Ihren Downloadordner herunterladen (".$num2." Bilder)' onClick='location.href=\"../../html/recherche/copy_coll_pictures.php?coll_id=$coll_id\"'>
 						</span>";
 					}
 					elseif(hasPermission($uid, 'downloadmypics',$sr ) AND ($coll_owner == $uid) AND $num2 > 0)
@@ -128,14 +129,14 @@ if(mysql_num_rows($result1) > 0)
 			{
 				echo "
 				<TR class='coll'>
-				<TD style='background-color:lightgrey;' colspan = '5'></TD>
+				<TD style='background-color:lightgrey;' colspan = '3'></TD>
 				</TR>";
 			}
 		}
 		
 		echo "
 			<TR class='coll'>
-				<TD style='background-color:darkred;' colspan = '5'></TD>
+				<TD style='background-color:darkred;' colspan = '3'></TD>
 			</TR>
 		</table>
 	</div>";
