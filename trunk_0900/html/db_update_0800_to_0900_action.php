@@ -83,7 +83,7 @@ IF($user == '' OR $pwd == '')
 // (Voraussetzung: /bin-Ordner wurde bereits durch die aktuelle Version ersetzt)
 //
 // 1) Tabelle 'collections' anlegen
-// 2) Tabelle der Bild-Sammlungs-Zuordnung anlegen
+// 2) Tabelle der Bild-Sammlungs-Zuordnung ('pic_coll') anlegen
 // 3) Neue Rechte editmycolls/419 und editallcolls/429 einrichten (Meine bzw. alle Kollektionen bearbeiten)
 //
 // Tabelle 'pfade':
@@ -197,7 +197,8 @@ echo "
 		$fh = fopen($p2b_path.'pic2base/log/'.$log_file,'a');
 		fwrite($fh,date('d.m.Y H:i:s').": Tabelle permissions wurde aktualisiert.\n");
 		fclose($fh);
-		echo "Die Tabelle 'permissions' wurde aktualisiert.<BR>";
+		echo "Die Tabelle 'permissions' wurde aktualisiert.<BR><BR>
+		<font color='red'><b>Nach dem Datenbank-Update m&uuml;ssen Sie die Gruppen- und Benutzerrechte auf die korrekte Vergabe des Rechts zum Anlegen / Suchen von Kollektionen pr&uuml;fen!</b></font><br><br>";
 	}
 	
 	
@@ -213,7 +214,7 @@ echo "
 
 //	6)
 
-	$result10 = mysql_query("UPDATE $table16 SET p2b_version='$version'");
+	$result10 = mysql_query("UPDATE $table16 SET p2b_version='0.90.0'");
 	if(mysql_error() !== "")
 	{
 		echo mysql_error();
