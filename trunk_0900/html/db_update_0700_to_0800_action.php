@@ -83,7 +83,7 @@ IF($user == '' OR $pwd == '')
 // (Voraussetzung: /bin-Ordner wurde bereits durch die aktuelle Version ersetzt)
 //
 // 1) Tabelle 'label_translation' anlegen
-// 
+// 2) Tabelle 'label_translation' mit Werten vorbelegen
 //
 // Tabelle 'pfade':
 // 6) version auf 0.80.0 setzen																			OK
@@ -119,16 +119,7 @@ echo "
 	$error = 0;		//Zaehlvariable fuer Fehlermeldungen
 	
 //	1)
-/*
-	$result1 = mysql_query("CREATE TABLE `pic2base`.`label_translation` (
-	`id` INT NOT NULL AUTO_INCREMENT ,
-	`label_name` VARCHAR( 50 ) NOT NULL COMMENT 'eindeutiger Labelname',
-	`value_de` TEXT NOT NULL COMMENT 'Labelbeschriftung deutsch',
-	`value_en` TEXT NOT NULL COMMENT 'Labelbeschriftung english',
-	`used_in` VARCHAR( 100 ) NOT NULL COMMENT 'verwendet in welchem Skript',
-	PRIMARY KEY ( `id` )
-	) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT = 'Tabelle der Label-Übersetzungen';");
-*/	
+
 	$result1 = mysql_query("CREATE TABLE `pic2base`.`label_translation` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`label_name` VARCHAR( 100 ) NOT NULL ,
@@ -136,7 +127,7 @@ echo "
 	`value` TEXT NOT NULL COMMENT 'Inhalt des Labels / Textes',
 	`used_in` VARCHAR( 100 ) NOT NULL COMMENT 'verwendet in welchem Skript',
 	PRIMARY KEY ( `id` )
-	) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT = 'Tabelle der Label-Übersetzungen';");
+	) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT = 'Tabelle der Label-Uebersetzungen';");
 
 	if(mysql_error() !== "")
 	{
@@ -156,7 +147,33 @@ echo "
 
 //	2)
 
+	$result2 = mysql_query("INSERT INTO `label_translation` (`id`, `label_name`, `language`, `value`, `used_in`) VALUES
+	(1, 'online_hinweis1', 'de', 'Es konnte keine &Uuml;berpr&uuml;fung auf Online-Updates erfolgen.<BR>M&ouml;glicherweise haben Sie keinen Internet-Zugang.', '/bin/html/start.php'),
+	(2, 'online_hinweis1', 'en', 'It wasn''t possible to check for online updates.<br>May be there is no online connection.', '/bin/html/start.php'),
+	(3, 'online_hinweis3', 'de', '<FONT COLOR=''green''>Es sind keine Online-Updates verf&uuml;gbar.</font>', '/bin/html/start.php'),
+	(4, 'online_hinweis3', 'en', '<FONT COLOR=''green''>There are no updates available.</font>', '/bin/html/start.php'),
+	(5, 'loesch_text', 'de', 'Hinweis zur Datenbank-Wartung:', '/bin/html/start.php'),
+	(6, 'loesch_hinweis1', 'de', '<FONT COLOR=''red''>Es wurde ein Bild zum L&ouml;schen vorgemerkt.</FONT>', '/bin/html/start.php'),
+	(7, 'loesch_hinweis2', 'de', '<FONT COLOR=''red''>Zum L&ouml;schen vorgemerkte Bilder</FONT>', '/bin/html/start.php'),
+	(8, 'loesch_hinweis3', 'de', '<FONT COLOR=''green''>Es wurden keine Bilder zum L&ouml;schen vorgemerkt.</FONT>', '/bin/html/start.php'),
+	(9, 'loesch_hinweis3', 'en', '<FONT COLOR=''green''>There are no pictures marked for deleting.</FONT>', '/bin/html/start.php'),
+	(10, 'loesch_hinweis2', 'en', '<FONT COLOR=''red''>Marked pictures for deleting</font>', '/bin/html/start.php');");
 	
+	if(mysql_error() !== "")
+	{
+		$fh = fopen($p2b_path.'pic2base/log/'.$log_file,'a');
+		fwrite($fh,date('d.m.Y H:i:s').": Fehler: Tabelle label_translation konnte nicht mit Inhalt befuellt werden.\n");
+		fclose($fh);
+		echo "Die Tabelle 'label_translation' wurde N I C H T mit Inhalt befuellt.<BR>";
+		$error++;
+	}
+	else
+	{
+		$fh = fopen($p2b_path.'pic2base/log/'.$log_file,'a');
+		fwrite($fh,date('d.m.Y H:i:s').": Tabelle label_translation wurden mit Inhalt befuellt.\n");
+		fclose($fh);
+		echo "Die Tabelle 'label_translation' wurde mit Inhalt befuellt.<BR>";
+	}
 	
 	
 //	3)
@@ -174,8 +191,8 @@ echo "
 	
 
 //	6)
-/*
-	$result10 = mysql_query("UPDATE $table16 SET p2b_version='$version'");
+
+	$result10 = mysql_query("UPDATE $table16 SET p2b_version='0.80.0'");
 	if(mysql_error() !== "")
 	{
 		echo mysql_error();
@@ -192,7 +209,7 @@ echo "
 	}
 	echo "In der Tabelle 'pfade' wurde die pic2base-Version aktualisiert.<BR>";
 
-*/
+
 // 	7) Auswertung des Update-Verlaufs
 
 	if($error !== 0)
