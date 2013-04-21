@@ -693,10 +693,8 @@ echo "<div class='page' id='page'>
 		}
 		
 		//log-file schreiben:
-		$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-		fwrite($fh,date('d.m.Y H:i:s').": Startseite wurde von ".$username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n");
-		fclose($fh);
-		mysql_close($conn);
+		$message = "Startseite wurde von ".$username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n";
+		writeLog($message, $sr);
 		
 		echo "</span>	
 		</div>
