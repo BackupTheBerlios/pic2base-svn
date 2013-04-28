@@ -103,7 +103,7 @@ for($i5=0; $i5<$num5; $i5++)
 	<td>
 		<div class='tooltip4' style='float:left;'>
 			<p style='margin:0px; cursor:pointer;'>
-			<img src='../../../images/vorschau/thumbs/$FileNameV' style='margin-right:5px; margin-bottom:5px; margin-top:5px; height:145px;' title='Hier klicken, um das Bild ".$new_pic_id." aus der Kollektion ".$coll_id." zu entfernen' onClick='sicher(\"$coll_id\", \"$new_pic_id\", \"$uid\")'; />
+			<img src='../../../images/vorschau/thumbs/$FileNameV' style='margin-right:5px; margin-bottom:5px; margin-top:5px; height:145px; border-radius:8px;' title='Hier klicken, um das Bild ".$new_pic_id." aus der Kollektion ".$coll_id." zu entfernen' onClick='sicher(\"$coll_id\", \"$new_pic_id\", \"$uid\")'; />
 				<span id='tt' style='text-align:center; margin:0px;'>
 															
 					<span style='float:left'>
