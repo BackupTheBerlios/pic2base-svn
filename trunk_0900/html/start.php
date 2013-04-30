@@ -106,8 +106,8 @@ IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 {
 	$last_checktime = $_COOKIE['last_check'];
 	$diff = $actual_time - $last_checktime;
-	//nur, wenn die Zeitdifferenz zw. letztem Software-Check und dem folgenden Seitenaufruf / Seitengroessen-Aenderung groesser als 300 Sekunden ist, wird erneut auf Updates geprueft:
-	if($diff > 3600)
+	//nur, wenn die Zeitdifferenz zw. letztem Software-Check und dem folgenden Seitenaufruf / Seitengroessen-Aenderung groesser als ein Tag ist, wird erneut auf Updates geprueft:
+	if($diff > 86400)
 	{
 		setcookie('last_check',$actual_time,0,'/');
 		$file1 = 'http://www.pic2base.de/includes/conf.inc.php';
