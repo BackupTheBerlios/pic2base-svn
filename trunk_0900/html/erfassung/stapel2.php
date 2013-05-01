@@ -141,10 +141,10 @@ function showReady(avgTime)
 function processFile( fileList )
 {
 	var client = new XMLHttpRequest();
-	//alert(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß|\s/));
-	if(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß| |\s/) !== -1)
+	alert(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß| |[\.{2,}]|\s/)); //Umlaute, SZ, Leerzeichen, mind. zwei Punkte, Steuerzeichen 
+	if(fileList.file_array[0].search(/ä|Ä|ö|Ö|ü|Ü|ß| |[\.{2,}]|\s/) !== -1)
 	{
-		alert("Es ist ein Fehler aufgetreten!\n\nDer Dateiname "+ fileList.file_array[0] + " beinhaltet unerlaubte Zeichen (Umlaute, Leerzeichen etc.).\nDie Erfassung wird abgebrochen.\nBitte korrigieren Sie den Dateinamen und starten dann die Erfassung neu.\nFragen Sie ggf. Ihren Administrator.");
+		alert("Es ist ein Fehler aufgetreten!\n\nDer Dateiname "+ fileList.file_array[0] + " beinhaltet unerlaubte Zeichen (Umlaute, Leerzeichen, mehrere Punkte etc.).\nDie Erfassung wird abgebrochen.\nBitte korrigieren Sie den Dateinamen und starten dann die Erfassung neu.\nFragen Sie ggf. Ihren Administrator.");
 		//alert(fileList.file_array[0]);
 		location.href='../start.php';
 	}
@@ -157,8 +157,7 @@ function processFile( fileList )
 			if( client.readyState == 4 )
 			{
 				var result = JSON.parse( client.responseText );
-				
-				
+								
 				if( result.errorCode != 0 )
 				{
 					alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
