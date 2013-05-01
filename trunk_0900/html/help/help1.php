@@ -220,7 +220,7 @@ echo "
 		Am Ende des Uploads erfolgt eine automatische Dublettenkontrolle. Damit wird sichergestellt, da&szlig; identische Bilder nicht versehentlich mehrfach erfa&szlig;t werden.<BR>Im Anschlu&#223; daran werden Sie aufgefordert, 
 		den soeben &uuml;bernommenen Bildern weitere Informationen hinzuzuf&uuml;gen (Geo.Koordinaten, Bewertung, Beschreibung) und abschlie&#223;end 
 		allen Bildern Kategorien zuzuweisen. Eine sorgf&auml;ltige Anreicherung der Bilder mit Zusatzinformationen ist f&uuml;r die sp&auml;tere Recherche sehr von Vorteil.<br /><br />
-		Beachten Sie weiterhin, da&szlig; der Dateiname eines hochzuladenden Bildes <b>keine ung&uuml;ltigen Zeichen</b> (Umlaute, Leerzeichen, &szlig; etc.; siehe hierzu auch: <a href='http://de.wikipedia.org/wiki/Dateiname' target='top'>Wikipedia zum Thema \"Dateiname\"</a>) enth&auml;lt. Erlaubte Zeichen sind Ziffern, alle Buchstaben des angels&auml;chsischen Alphabets und der Unterstrich. Anderenfalls wird die Erfassung mit einem entsprechenden Hinweis abgebrochen.
+		Beachten Sie weiterhin, da&szlig; der Dateiname eines hochzuladenden Bildes <b>keine ung&uuml;ltigen Zeichen</b> (Umlaute, Leerzeichen, &szlig;, mehrere Punkte etc.; siehe hierzu auch: <a href='http://de.wikipedia.org/wiki/Dateiname' target='top'>Wikipedia zum Thema \"Dateiname\"</a>) enth&auml;lt. Erlaubte Zeichen sind Ziffern, alle Buchstaben des angels&auml;chsischen Alphabets und der Unterstrich. Anderenfalls wird die Erfassung mit einem entsprechenden Hinweis abgebrochen.
 		
 		</fieldset>";
 		break;
