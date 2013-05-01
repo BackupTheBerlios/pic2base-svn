@@ -273,7 +273,7 @@ ELSE
 			if($datei != "." && $datei != "..")
 			{
 				//pruefung auf gueltigen Dateinamen:
-				if(!preg_match("/ä|Ä|ö|Ö|ü|Ü|ß| |\s/",$datei))
+				if(!preg_match("/ä|Ä|ö|Ö|ü|Ü|ß| |[\.{2,}]|\s/",$datei))
 				{
 					$info = pathinfo($datei);
 					$extension_0 = strtolower($info['extension']);	//Dateiendung, die das Bild mitbringt
@@ -313,7 +313,7 @@ ELSE
 				else
 				{
 					$n++;
-					$warning .= "<BR>Der Dateiname <u>".$datei."</u> enth&auml;lt <a href='help/help1.php?page=1'>unerlaubte</a> Zeichen (Umlaute, Leerzeichen etc.).";
+					$warning .= "<BR>Der Dateiname <u>".$datei."</u> enth&auml;lt <a href='help/help1.php?page=1'>unerlaubte</a> Zeichen (Umlaute, Leerzeichen, mehrere Punkte etc.).";
 				}
 			}
 		}
