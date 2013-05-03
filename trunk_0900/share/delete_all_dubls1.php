@@ -13,7 +13,7 @@ $uid = $_COOKIE['uid'];
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
 	<TITLE>pic2base - Dubletten l&ouml;schen...</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="Eclipse">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<link rel=stylesheet type="text/css" href='../css/format1.css'>
 	<link rel="shortcut icon" href="images/favicon.ico">
@@ -37,14 +37,6 @@ include 'functions/permissions.php';
 $result0 = mysql_query("SELECT * FROM $table1 WHERE id = '$uid' AND aktiv = '1'");
 $username = mysql_result($result0, isset($i0), 'username');
 
-//var_dump($_GET);
-//var_dump($_POST);
-/*
-if ( array_key_exists('c_username',$_GET) )
-{
-	$c_username = $_GET['c_username'];
-}
-*/
 if(array_key_exists('method',$_GET))
 {
 	$method = $_GET['method']; 
@@ -59,10 +51,7 @@ ELSE
 if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpics', $sr)) 
 {
 	//Bestimmung der user_id:
-//	$result100 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
-//	$user_id = mysql_result($result100, isset($i1), 'id');
 	$user_id = $uid;
-//	echo "User-ID: ".$user_id."<BR>";
 	
 	//Bestimmung aller erkannter Dubletten:
 	IF($method == 'all')
@@ -225,15 +214,7 @@ if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpi
 					}
 				}
 			}
-			/*
-			//falls es zu dem geloeschten Bild einen Eintrag in der Tabelle21 (doubletten) gab, wird dieser entfernt:
-			$result6 = mysql_query("DELETE FROM $table21 WHERE new_pic_id = '$pic_id'");
-			echo mysql_error();
-			//log-file im Klartext schreiben:
-			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht.\n");
-			fclose($fh);
-			*/
+			
 			//falls es zu dem geloeschten Bild einen Eintrag in der Tabelle21 (doubletten) gab, wird dieser entfernt:
 			//echo "Bild-ID: ".$pic_id."<BR>";
 			$num6 = 0;
@@ -252,14 +233,14 @@ if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpi
 			{
 				//es wurde eine Doublette entfernt
 				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".$FileNameOri." zum Original ".$FileNameOri_ori." wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".$FileNameOri." zum Original ".$FileNameOri_ori." wurde von ".$username." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
 				fclose($fh);
 			}
 			else
 			{
 				//es wurde ein normales Bild geloescht
 				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
 				fclose($fh);
 			}
 			echo "<BR>Die Original-Datei wurde gel&ouml;scht.<BR></p>";
