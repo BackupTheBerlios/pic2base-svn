@@ -115,7 +115,7 @@ IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 		IF(!$fh)
 		{
 			$ol_text = "";
-			$online_hinweis = "Es konnte keine &Uuml;berpr&uuml;fung auf Online-Updates erfolgen.<BR>M&ouml;glicherweise haben Sie keinen Internet-Zugang.";
+			$online_hinweis = "Es konnte keine &Uuml;berpr&uuml;fung auf Software-Updates erfolgen.<BR>M&ouml;glicherweise haben Sie keinen Internet-Zugang.";
 //			$online_hinweis = translateLabel("online_hinweis1",$sr,$uid);
 		}
 		ELSE
@@ -128,15 +128,15 @@ IF(hasPermission($uid, 'adminlogin', $sr) AND $check == '1')
 			$install_ver = substr($version,0,6);
 			$IV = str_replace('.','',$install_ver);
 			//echo "verwendete Version: ".$install_ver." (".$IV."); aktuelle Version: ".$var2." (".$V2.")<BR>";
-			$ol_text = "Online-Updates:";
+			$ol_text = "Software-Updates:";
 			IF($V2 > $IV)
 			{
-				$online_hinweis = "Es ist ein Online-Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
+				$online_hinweis = "Es ist ein Update auf Version ".$var2." verf&uuml;gbar.<BR>F&uuml;r weitere Informationen klicken Sie bitte <A HREF='http://www.pic2base.de/downloads1.php' target='blank'>hier.</A>";
 //				$online_hinweis = translateLabel("online_hinweis2",$sr,$uid);
 			}
 			ELSE
 			{
-				$online_hinweis = "<FONT COLOR='green'>Es sind keine Online-Updates verf&uuml;gbar.</font>";
+				$online_hinweis = "<FONT COLOR='green'>Es sind keine Updates verf&uuml;gbar.</font>";
 //				$online_hinweis = translateLabel("online_hinweis3",$sr,$uid);
 			}
 			fclose($fh);
