@@ -105,14 +105,14 @@ echo "
 					if($pic_breite > $pic_hoehe)
 					{
 						$oberer_abstand = ($max_size - (176 / $pic_breite) * $pic_hoehe) / 2;
-						echo "<div style='width:".$max_size."px; height:".$max_size."px; background-color:#222222; float:left; margin:2px; text-align:center; border-radius:10px;'>					
+						echo "<div style='width:".$max_size."px; height:".$max_size."px; background-color:#333333; float:left; margin:2px; text-align:center; border-radius:10px;'>					
 						<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='width:176px; margin-top:".$oberer_abstand."px; border-radius:5px;' />
 						</div>";
 					}
 					else
 					{
 						$oberer_abstand = ($max_size - 176) / 2;
-						echo "<div style='width:".$max_size."px; height:".$max_size."px; background-color:#222222; float:left; margin:2px; text-align:center; border-radius:10px;'>					
+						echo "<div style='width:".$max_size."px; height:".$max_size."px; background-color:#333333; float:left; margin:2px; text-align:center; border-radius:10px;'>					
 						<img src='../../../images/vorschau/hq-preview/$FileNameHQ' style='height:176px; margin-top:".$oberer_abstand."px; border-radius:5px;' />
 						</div>";
 					}
