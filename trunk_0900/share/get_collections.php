@@ -100,7 +100,7 @@ if(mysql_num_rows($result1) > 0)
 					{
 						echo "
 						<span style='cursor:pointer;'>
-							<img src='../../share/images/glass.png' title='Kollektion ansehen' style='width:16px;' onClick='location.href=\"view_collection.php?coll_id=$coll_id\"'>
+							<img src='../../share/images/glass.png' title='Kollektion ansehen, Pr&auml;sentation zeigen' style='width:16px;' onClick='location.href=\"view_collection.php?coll_id=$coll_id\"'>
 						</span>";
 					}
 					if(hasPermission($uid, 'downloadallpics',$sr ) AND $num2 > 0)
