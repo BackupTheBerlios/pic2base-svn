@@ -161,6 +161,9 @@ echo "<div class='page' id='page'>
 								$coll_name = mysql_result($result1, $i1, 'coll_name');
 								$coll_description = mysql_result($result1, $i1, 'coll_description');
 								$locked = mysql_result($result1, $i1, 'locked');
+								// beinhaltet die Kollektion bereits Bilder?
+								$result2 = mysql_query("SELECT * FROM $table25 WHERE coll_id = '$coll_id'");
+								$num2 = mysql_num_rows($result2);
 								if($locked == 1)
 								{
 									$button1 = "<span style='cursor:pointer;'><img src='../../share/images/forbidden.gif' title='Diese Kollektion ist zur Bearbeitung durch andere Benutzer gesperrt'></span>";
@@ -174,8 +177,16 @@ echo "<div class='page' id='page'>
 									<td style='width:25%'>".$coll_name."</td>
 									<td style='width:61%'>".$coll_description."</td>
 									<td style='width:14%' colspan='3'>
-									<span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
-									<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick='location.href=\"arrange_collection.php?coll_id=$coll_id\"'></span>
+									<span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>";
+									if($num2 > 0)
+									{
+										echo "<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Zum Sortiertisch, Pr&auml;sentation anzeigen' onClick='location.href=\"arrange_collection.php?coll_id=$coll_id\"'></span>";
+									}
+									else
+									{
+										echo "<span style='cursor:pointer;'><img src='../../share/images/arrange_disabled.gif' style='margin-right:5px;' title='Kollektion beinhaltet noch keine Bilder'></span>";
+									}
+									echo "
 									<span style='cursor:pointer;'><img src='../../share/images/trash.gif'  style='margin-right:5px;' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span>
 									".$button1."
 									</td>

@@ -64,7 +64,7 @@ else
  * http://www.opensource.org/licenses/osl-2.1.php
  */
 
-include '../share/global_config.php';
+include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/css/initial_layout_settings.php';
 
@@ -100,8 +100,6 @@ echo "
 				}
 				else
 				{
-					include 'global_config.php';
-					include $sr.'/bin/share/db_connect1.php';
 					$create_date = date('Y-m-d H:i:s', time());
 					//echo $create_date;
 					$result1 = mysql_query("INSERT INTO $table24 (coll_name, coll_description, coll_owner, created, locked) VALUES ('$coll_name', '$coll_description', '$uid', '$create_date', '1')");

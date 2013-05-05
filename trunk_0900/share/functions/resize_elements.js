@@ -77,7 +77,13 @@ function checkWindowSize()
         /*jQuery(".ttinfo").css({"width":"90%"});*/
         
         /*Breite des Suchfeldes (Kollektion-Beschreibung) in recherche2.php*/
-        jQuery("#coll_description").css({"width":((jQuery(window).width() - 750) / 2) + "px"});
+        jQuery("#coll_description").css({"width":((jQuery(window).width() - 780) / 2) + "px"});
+        
+        /*Breite des Sortierbereichs (Kollektion-Bearbeitung) in arrange_collection.php*/
+        jQuery("#sortable").css({"width":(jQuery(window).width() - 240) + "px"});
+        
+        /*Breite der Dia-Show in show_presentation.php*/
+        jQuery("#galleria").css({"width":(jQuery(window).width() - 20) + "px"});
         
     	
         //alert( ((jQuery(window).width() - 162) / 2) );
@@ -132,6 +138,12 @@ function checkWindowSize()
         
         /*Breite des Suchfeldes (Kollektion-Beschreibung) in recherche2.php*/
         jQuery("#coll_description").css({"width":"130px"});
+        
+        /*Breite des Sortierbereichs (Kollektion-Bearbeitung) in arrange_collection.php*/
+        jQuery("#sortable").css({"width":"740px"});
+        
+        /*Breite der Dia-Show in show_presentation.php*/
+        jQuery("#galleria").css({"width":"980px"});
     	
     	//Cookie für Anzahl der Spalten in protect_metadata0.php und kompactview_metadata0.php sowie Bildanzahl im Filmstreifen setzen:
     	document.cookie="columns=3; path=/";
@@ -189,6 +201,9 @@ function checkWindowSize()
         /*Hoehe einer umfangreichen Hilfe-Box; recherche2.php*/
         jQuery("#help").css({"height":(jQuery(window).height() - 310) + "px"});
         
+        /*Hoehe der Dia-Show in show_presentation.php*/
+        jQuery("#galleria").css({"height":(jQuery(window).height() - 20) + "px"});
+        
         /*vertikaler Abstand zwischen den beiden tabellen in edit_selected_collection.php*/
         jQuery("#picture_list").css({"margin-top":((jQuery(window).height() - 700) / 3) + "px"});
     } 
@@ -244,6 +259,9 @@ function checkWindowSize()
         
         /*vertikaler Abstand zwischen den beiden tabellen in edit_selected_collection.php*/
         jQuery("#picture_list").css({"margin-top":"15px"});
+        
+        /*Hoehe der Dia-Show in show_presentation.php*/
+        jQuery("#galleria").css({"height":"723px"});
         
         //alert( jQuery(scrollbox3).height() + "px" );
     }

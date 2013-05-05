@@ -122,12 +122,13 @@ echo "
 			</div>
 			</fieldset>
 			
-			<fieldset style='background-color:none; margin-top:10px;'>
-			<!--<legend style='color:blue; font-weight:bold;'>Aktion</legend>-->
-			<div id='scrollbox4' style='overflow-y:scroll;'>";
-				echo "<p style='margin-top:5px;'>Menueleiste</p>";
-			echo "
-			</div>
+			<fieldset style='background-color:none; margin-top:1px;'>
+			<legend style='color:blue; font-weight:bold;'>Aktion</legend>
+				<div id='scrollbox4' style='overflow-y:scroll;'><center>
+					<input type='button' name='slideshow' value='Dia-Show' style='width:180px; margin-right:10px;' title='Dia-Show starten' onclick='location.href=\"../edit/show_presentation.php?coll_id=$coll_id\"'>
+					<input type='button' name='cancel' value='Abbrechen und zur&uuml;ck' style='width:180px;' title='Die Sortierung wird verworfen' onclick='location.href=\"recherche2.php?pic_id=0&mod=collection\"'>
+					</center>
+				</div>
 			</fieldset>
 			
 		</div>
