@@ -272,8 +272,8 @@ ELSE
 		{
 			if($datei != "." && $datei != "..")
 			{
-				//pruefung auf gueltigen Dateinamen:
-				echo $datei."<br>";
+				//Pruefung auf gueltigen Dateinamen:
+				//echo $datei."<br>";
 				//if(!preg_match("/ä|Ä|ö|Ö|ü|Ü|ß| |\s/",$datei))
 				if(preg_match("/^[\w|-]{1,}[.]{1}[\w]{2,4}$/",$datei))	//mind ein a-zA-Z0-9 oder Bindestrich, genau ein Punkt, zwei bis vier a-zA-Z0-9
 				{
