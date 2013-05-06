@@ -1,3 +1,12 @@
+<?php 
+IF (!$_COOKIE['uid'])
+{
+	include '../../share/global_config.php';
+	//var_dump($sr);
+	header('Location: ../../../index.php');
+}
+$uid = $_COOKIE['uid'];
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -52,25 +61,85 @@ if(array_key_exists('coll_id', $_GET))
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/css/initial_layout_settings.php';
+//phpinfo();
+
+$result0 = mysql_query("SELECT name, vorname FROM $table1 WHERE id = '$uid'");
+$presentation_author = mysql_result($result0, isset($i0), 'vorname')." ".mysql_result($result0, isset($i0), 'name');
 
 echo "
 		<div id='galleria'>";
-		$result1 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.Caption_Abstract
-		FROM $table25, $table2
+		$result1 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.Caption_Abstract, $table2.owner, $table1.id, $table1.vorname, $table1.name
+		FROM $table25, $table2, $table1
 		WHERE $table25.coll_id = '$coll_id'
 		AND $table25.pic_id = $table2.pic_id
+		AND $table2.owner = $table1.id
 		ORDER BY $table25.position");
 		echo mysql_error();
-		$num1 = mysql_num_rows($result1); 
+		$num1 = mysql_num_rows($result1);
+		
+		$result2 = mysql_query("SELECT coll_name FROM $table24 WHERE coll_id = '$coll_id'");
+		$coll_name = utf8_decode(mysql_result($result2, isset($i2), 'coll_name'));
+		
+		// Vorspann-Bild erzeugen  #############################################
+		// Titel der Kollektion, p2b-logo; Format: 1000 x 750, weiss auf schwarz 
+		$image = ImageCreate(1000, 750);
+		$background_color = ImageColorAllocate($image, 0, 0, 0);
+		$font_color = ImageColorAllocate($image, 240, 240, 240);
+//		ImageFilledRectangle($image, 50, 10, 150, 40, $font_color);
+//		ImageString($image, 5, 100, 100, $coll_name, $font_color); // Variante mit GD-Schriftarten
+		ImageTTFText($image, 18, 0, 100, 575, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', 'pic2base präsentiert:');
+		ImageTTFText($image, 24, 0, 100, 650, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', $coll_name);
+//		header('Content-type: image/png');
+		ImagePNG($image, $p2b_path.'pic2base/tmp/vorspann.png'); //muss noch benutzerspezifisch gemacht werden.
+		echo "<img src='../../../tmp/vorspann.png'>";
+		$pic_owner = array();
 		for($i1=0; $i1<$num1; $i1++)
 		{
 			$FileName = mysql_result($result1, $i1, 'FileName');
 			$FileNameHQ = mysql_result($result1, $i1, 'FileNameHQ');
 			$FileNameV = mysql_result($result1, $i1, 'FileNameV');
 			$description = mysql_result($result1, $i1, 'Caption_Abstract');
+			$owner = mysql_result($result1, $i1, 'vorname')." ".mysql_result($result1, $i1, 'name');
+			if(!in_array($owner, $pic_owner))
+			{
+				$pic_owner[] = $owner;
+			}
 			//echo "<img src='../../../images/originale/$FileName'>";
 			echo "<a href='../../../images/vorschau/hq-preview/$FileNameHQ'><img src='../../../images/vorschau/thumbs/$FileNameV' data-big='../../../images/originale/$FileName' data-title='' data-description='$description'></a>";
 		}
+		
+		// Abspann-Bild erzeugen   ##############################################
+		// Ersteller der Präsentation, Autoren aller Bilder, Erstellungsdatum, weiss auf schwarz
+		$image = ImageCreate(1000, 750);
+		$background_color = ImageColorAllocate($image, 0, 0, 0);
+		$font_color = ImageColorAllocate($image, 240, 240, 240);
+		// bei Textgroesse 18 werden fuer jede Zeile 30px veranschlagt
+		
+		if(count($pic_owner) == 1)
+		{
+			ImageTTFText($image, 18, 0, 10, 670, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', 'Diese Präsentation wurde angefertigt von '.$presentation_author);
+			ImageTTFText($image, 18, 0, 10, 700, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', '(C) '.$pic_owner[0]);
+		}
+		else
+		{
+			$n = count($pic_owner);
+			
+			ImageTTFText($image, 14, 0, 10, (700 - ($n * 30) - 60), $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', 'Für die Präsentation wurde Bildmaterial u.a. der folgenden Autoren verwendet:');
+			$y = 690 - ($n * 30);
+			for($x=0; $x < 21; $x++)
+			{
+				ImageTTFText($image, 18, 0, 10, $y, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', $pic_owner[$x]);
+				$y =$y + 30;
+			}
+			if($n > 20)
+			{
+				ImageTTFText($image, 18, 0, 10, 720, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', 'u.v.a.');
+			}
+			
+		}
+		ImagePNG($image, $p2b_path.'pic2base/tmp/abspann.png'); //muss noch benutzerspezifisch gemacht werden.
+		echo "<img src='../../../tmp/abspann.png'>";
+		
 		
 		echo "
        	</div>";
