@@ -125,8 +125,9 @@ echo "
 			<fieldset style='background-color:none; margin-top:1px;'>
 			<legend style='color:blue; font-weight:bold;'>Aktion</legend>
 				<div id='scrollbox4' style='overflow-y:scroll;'><center>
-					<input type='button' name='slideshow' value='Dia-Show' style='width:180px; margin-right:10px;' title='Dia-Show starten' onclick='location.href=\"../edit/show_presentation.php?coll_id=$coll_id\"'>
-					<input type='button' name='cancel' value='Abbrechen und zur&uuml;ck' style='width:180px;' title='Die Sortierung wird verworfen' onclick='location.href=\"recherche2.php?pic_id=0&mod=collection\"'>
+					<input type='button' name='slideshow' value='Dia-Show (HQ-Modus)' style='width:180px; margin-right:10px;' title='Dia-Show in hoher Qualit&auml;t starten' onclick='location.href=\"../edit/show_presentation.php?coll_id=$coll_id&qual=hq\"'>
+					<input type='button' name='slideshow' value='Dia-Show (LQ-Modus)' style='width:180px; margin-right:10px;' title='Dia-Show in Normal-Qualit&auml;t starten' onclick='location.href=\"../edit/show_presentation.php?coll_id=$coll_id&qual=lq\"'>
+					<input type='button' name='cancel' value='Abbrechen und zur&uuml;ck' style='width:180px;' title='Zur&uuml;ck zur Kollektionen-Auswahl' onclick='location.href=\"recherche2.php?pic_id=0&mod=collection\"'>
 					</center>
 				</div>
 			</fieldset>

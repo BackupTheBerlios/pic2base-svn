@@ -153,7 +153,7 @@ echo "
 				<div id='scrollbox4' style='overflow-y:scroll;'><center>
 					<input type='button' name='save' value='Neue Sortierung speichern' style='width:180px; margin-right:10px;' title='Speichert die neue Sortier-Reihenfolge dieser Kollektion' onclick='saveChanges($num1, $coll_id, \"save\")'>
 					<input type='button' name='save_as' value='Sortierung speichern unter' style='width:180px; margin-right:10px;' title='Die umsortierte Kollektion wird unter einem neuen Namen gespeichert' onclick='saveChanges($num1, $coll_id, \"save_as\")'>
-					<input type='button' name='slideshow' value='Dia-Show' style='width:180px; margin-right:10px;' title='Dia-Show starten' onclick='location.href=\"show_presentation.php?coll_id=$coll_id\"'>
+					<input type='button' name='slideshow' value='Dia-Show (Vorschau)' style='width:180px; margin-right:10px;' title='Dia-Show starten' onclick='location.href=\"show_presentation.php?coll_id=$coll_id&qual=lq\"'>
 					<input type='button' name='cancel' value='Abbrechen und zur&uuml;ck' style='width:180px;' title='Die Sortierung wird verworfen' onclick='location.href=\"edit_collection.php\"'>
 					</center>
 				</div>
