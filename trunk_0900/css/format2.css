@@ -1107,8 +1107,8 @@ P 	{
 
 	DIV.shadow, DIV.shadow2, DIV.shadow3, DIV.shadow4, DIV.shadow5 {
 	   padding: 1px;
-	   border-radius: 5px;
-	   -moz-border-radius: 5px;
+	   border-radius: 8px;
+	   -moz-border-radius: 8px;
 	   }
 	DIV.shadow5:hover DIV.shadow,
 	DIV.shadow5:hover DIV.shadow2,

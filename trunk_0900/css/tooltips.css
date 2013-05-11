@@ -79,6 +79,7 @@ div#tooltip3 a:hover span
   z-index:100;
   background:#EEEEEE;
   border:2px solid RGB(125,0,10);
+  border-radius:12px;
  }
  
  /*verwendet bei der Vorschau der in einer Kollektion enthaltenen Bilder (edit_selected_collection.php)*/
@@ -105,6 +106,7 @@ div.tooltip4 p:hover span#tt
   z-index:100;
   background:#EEEEEE;
   border:2px solid RGB(125,0,10);
+  border-radius:12px;
  }
  
  /*Info-Bereich rechts neben dem vergroesserten Vorschaubild in edit_selected_collection.php*/
@@ -121,6 +123,7 @@ div.tooltip4 p:hover span#tt
   text-align:left;
   padding:5px;
   border:2px solid RGB(125,0,10);
+  border-radius:12px;
   overflow-y:visible;
   overflow-x:auto;
  }
