@@ -199,7 +199,7 @@ self.showFullscreenImage = function showFullscreenImage(imagePath)
 	'<div id="divImageLarge" style="position:fixed; left:0px; top:0px; width:100%; height:100%; background-color:#333333; z-index:600; overflow: hidden;">'+
     '<center>'+
     '<a href="javascript:hideFullscreenImage()" title=\"[Mausklick schlie&szlig;t Fenster!]\";>'+
-    '<img id="imgFullscreen" src="' + imagePath + result + imageArray[currentPreviewImageIndex].fileName + '.jpg" height='+h+' style="max-width:100%;" border=0>'+
+    '<img id="imgFullscreen" src="' + imagePath + result + imageArray[currentPreviewImageIndex].fileName + '.jpg" height='+h+' style="max-width:100%; border-radius:15px;" border=0>'+
     '</a>'+
     '</center>'+
     '</div>';
@@ -226,7 +226,7 @@ self.showFullscreenOverlay = function showFullscreenOverlay(imagePath, imageArra
       '<table border=0 cellspacing=0>'+
       '<tr><td colspan=2 style="margin:0px;" align=center>'+
       '<div id="divOverlayContent" align=left style="margin:0px">' +
-      '<img id="imgPreview" src="' + imagePath + 'vorschau/hq-preview/' + imageArray[currentPreviewImageIndex].fileName + '_hq.jpg">' +
+      '<img id="imgPreview" src="' + imagePath + 'vorschau/hq-preview/' + imageArray[currentPreviewImageIndex].fileName + '_hq.jpg" style=\'border-radius:12px;\'>' +
       '' +
       '</div>'+
       '</td></tr>'+

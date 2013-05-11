@@ -651,14 +651,14 @@ echo "<div class='page' id='page'>
 										<div class='shadow3'>
 											<div class='shadow2'>
 												<div class='shadow'>
-													<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0', title='$ranking Downloads'>
+													<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', width='$breite', height='$hoehe' border='0', style='border-radius:5px;' title='$ranking Downloads'>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 								<span style='text-align:left;'>
-									<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', height='400', border='0'>
+									<img src='../../images/vorschau/hq-preview/$file' alt='Vorschaubild', height='400', border='0' style='border-radius:10px;'>
 								</span>
 							</a>
 						</div>

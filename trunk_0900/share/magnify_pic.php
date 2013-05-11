@@ -36,7 +36,7 @@ echo "<fieldset id='fieldset_spalte2' style='background-color:none; margin-top:1
 			$Breite = number_format($Hoehe * $ratio,0,'.',',');
 		}
 		echo "<CENTER>
-		<img src='$inst_path/pic2base/images/vorschau/hq-preview/$FileNameHQ' alt='$FileNameHQ' width='$Breite', height='$Hoehe'>
+		<img src='$inst_path/pic2base/images/vorschau/hq-preview/$FileNameHQ' alt='$FileNameHQ' width='$Breite', height='$Hoehe' style='border-radius:8px;'>
 		</CENTER>
 	</fieldset>";
 ?>

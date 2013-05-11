@@ -2558,7 +2558,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			}
 			IF(file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 			{
-				echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".$description."</span></a></div>";
+				echo "<div id='tooltip1'><a href='#'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' style='border:none; border-radius:3px;'><span style='text-align:left;'>vorhandene Bildbeschreibung:<BR>".$description."</span></a></div>";
 			}
 		break;
 		
@@ -2571,14 +2571,14 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			}
 			IF(file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 			{
-				echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><div class='shadow_2'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0'></div></a></span>";
+				echo "<SPAN style='cursor:pointer;'><a target=\"vollbild\" OnMouseOver=\"magnifyPic('$pic_id')\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><IMG SRC='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild' width='$breite_neu', height='$hoehe_neu' border='0' style='border-radius:3px;'></a></span>";
 			}
 		break;
 		
 		CASE 'recherche2':
 			IF(file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 			{
-				echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'><a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.", gotoFilmstreifenPosition);' title='zur vergr&ouml;sserten Vorschau'><div id='shadow_2$pic_id'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu', border='0'/></div></a></span>";
+				echo "<SPAN style='cursor:pointer;' onMouseOver='getDetails(\"$pic_id\",\"$base_file\",\"$mod\",\"$form_name\")'><a href='JavaScript:openPreview(".'"../../../images/"'.", getImageArray, ".'"'.$FileName.'"'.", gotoFilmstreifenPosition);' title='zur vergr&ouml;sserten Vorschau'><div id='shadow_2$pic_id'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu', border='0' style='border-radius:3px;'/></div></a></span>";
 			}
 		break;
 		
@@ -2600,7 +2600,7 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			}
 			IF(file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 			{
-				echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' style='border:none;'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
+				echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' style='border:none; border-radius:3px;'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
 			}
 		break;
 	}
