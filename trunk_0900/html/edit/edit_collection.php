@@ -111,11 +111,11 @@ echo "<div class='page' id='page'>
 					<table class='coll' border='0' style='margin-top:25px;'>
 		
 						<TR class='coll'>
-							<TD colspan = '5'><b>Suche nach</b></TD>
+							<TD colspan = '3'><b>Suche nach</b></TD>
 						</TR>
 					
 						<TR class='coll'>
-							<TD style='background-color:darkred;' colspan = '5'></TD>
+							<TD style='background-color:darkred;' colspan = '3'></TD>
 						</TR>
 					
 						<tr>
@@ -125,17 +125,17 @@ echo "<div class='page' id='page'>
 						</tr>
 						
 						<TR class='coll'>
-							<TD style='background-color:darkred;' colspan = '5'></TD>
+							<TD style='background-color:darkred;' colspan = '3'></TD>
 						</TR>
 					
 						<tr>
 							<td style='text-align:left;'><input type='text' name='coll_name' id='coll_name' style='width:175px;' onkeyup='searchCollection(this.value, \"coll_name\", \"edit\")'></td>
-							<td style='text-align:left;'><input type='text' name='coll_description' id='coll_description' style='width:450px;' onkeyup='searchCollection(this.value, \"coll_description\", \"edit\")'></td>
+							<td style='text-align:left;'><input type='text' name='coll_description' id='edit_coll_description' style='width:450px;' onkeyup='searchCollection(this.value, \"coll_description\", \"edit\")'></td>
 							<td></td>
 						</tr>
 						
 						<TR class='coll'>
-							<TD style='background-color:darkred;' colspan = '5'></TD>
+							<TD style='background-color:darkred;' colspan = '3'></TD>
 						</TR>
 						
 					</table>

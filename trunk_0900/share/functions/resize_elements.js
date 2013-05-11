@@ -76,7 +76,7 @@ function checkWindowSize()
         jQuery(".ttinfo").css({"width":(jQuery(window).width() - 756) + "px"});
         /*jQuery(".ttinfo").css({"width":"90%"});*/
         
-        /*Breite des Suchfeldes (Kollektion-Beschreibung) in recherche2.php*/
+        /*Breite des Suchfeldes (Kollektion-Beschreibung) in recherche2.php, edit/edit_collection.php*/
         jQuery("#coll_description").css({"width":((jQuery(window).width() - 780) / 2) + "px"});
         
         /*Breite des Sortierbereichs (Kollektion-Bearbeitung) in arrange_collection.php*/
@@ -138,6 +138,9 @@ function checkWindowSize()
         
         /*Breite des Suchfeldes (Kollektion-Beschreibung) in recherche2.php*/
         jQuery("#coll_description").css({"width":"130px"});
+        
+        /*Breite des Suchfeldes (Kollektion-Beschreibung) in edit/edit_collection.php*/
+        jQuery("#edit_coll_description").css({"width":"450px"});
         
         /*Breite des Sortierbereichs (Kollektion-Bearbeitung) in arrange_collection.php*/
         jQuery("#sortable").css({"width":"740px"});
