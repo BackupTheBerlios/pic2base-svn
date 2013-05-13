@@ -19,9 +19,7 @@ $uid = $_COOKIE['uid'];
   <link rel="shortcut icon" href="../../share/images/favicon.ico">
   <script language="JavaScript" src="../../share/functions/resize_elements.js"></script>
   <script language="JavaScript" src="../../share/functions/jquery-1.8.2.min.js"></script>
-  <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>-->
   <script language="JavaScript" src="../../share/galleria/galleria-1.2.9.min.js"></script>
-<!-- <script language="JavaScript" src="../../share/galleria/themes/classic/galleria.classic.min.js"></script>-->
   
   <script language="JavaScript">
 //  	jQuery.noConflict();
@@ -75,21 +73,30 @@ include $sr.'/bin/css/initial_layout_settings.php';
 $result0 = mysql_query("SELECT name, vorname FROM $table1 WHERE id = '$uid'");
 $presentation_author = mysql_result($result0, isset($i0), 'vorname')." ".mysql_result($result0, isset($i0), 'name');
 */
+
+$result1 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.Caption_Abstract, $table2.owner, $table1.id, $table1.vorname, $table1.name
+FROM $table25, $table2, $table1
+WHERE $table25.coll_id = '$coll_id'
+AND $table25.pic_id = $table2.pic_id
+AND $table2.owner = $table1.id
+ORDER BY $table25.position");
+echo mysql_error();
+$num1 = mysql_num_rows($result1);
+
+$result2 = mysql_query("SELECT * FROM $table24 WHERE coll_id = '$coll_id'");
+$coll_name = utf8_decode(mysql_result($result2, isset($i2), 'coll_name'));
+$created = date('d.m.Y', strtotime(mysql_result($result2, isset($i2), 'created')));
+$last_modification = date('d.m.Y', strtotime(mysql_result($result2, isset($i2), 'last_modification')));
+
 echo "
 		<div id='galleria'>";
-		$result1 = mysql_query("SELECT $table25.pic_id, $table25.coll_id, $table25.position, $table2.pic_id, $table2.FileName, $table2.FileNameHQ, $table2.FileNameV, $table2.Caption_Abstract, $table2.owner, $table1.id, $table1.vorname, $table1.name
-		FROM $table25, $table2, $table1
-		WHERE $table25.coll_id = '$coll_id'
-		AND $table25.pic_id = $table2.pic_id
-		AND $table2.owner = $table1.id
-		ORDER BY $table25.position");
-		echo mysql_error();
-		$num1 = mysql_num_rows($result1);
-		
-		$result2 = mysql_query("SELECT * FROM $table24 WHERE coll_id = '$coll_id'");
-		$coll_name = utf8_decode(mysql_result($result2, isset($i2), 'coll_name'));
-		$created = date('d.m.Y', strtotime(mysql_result($result2, isset($i2), 'created')));
-		$last_modification = date('d.m.Y', strtotime(mysql_result($result2, isset($i2), 'last_modification')));
+
+		// fast-Schwarz-Bild erzeugen  #########################################
+		$image = ImageCreate(1200, 750);
+		$background_color = ImageColorAllocate($image, 20, 20, 20);
+		ImagePNG($image, $p2b_path.'pic2base/userdata/'.$uid.'/kml_files/black.png');
+		echo "<img src='../../../userdata/$uid/kml_files/black.png'>";
+		//  ####################################################################
 		
 		// Vorspann-Bild erzeugen  #############################################
 		// Titel der Kollektion, Format: 1000 x 750, weiss auf schwarz 
@@ -99,18 +106,21 @@ echo "
 //		ImageString($image, 5, 100, 100, $coll_name, $font_color); // Variante mit GD-Schriftarten
 		ImageTTFText($image, 18, 0, 100, 575, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', 'pic2base präsentiert:');
 		ImageTTFText($image, 24, 0, 100, 650, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', $coll_name);
-		ImagePNG($image, $p2b_path.'pic2base/tmp/vorspann.png'); //  ################# muss noch benutzerspezifisch gemacht werden. ##############
-		echo "<img src='../../../tmp/vorspann.png'>";
+		ImagePNG($image, $p2b_path.'pic2base/userdata/'.$uid.'/kml_files/vorspann.png');
+		echo "<img src='../../../userdata/$uid/kml_files/vorspann.png'>";
 		// Vorspann Ende  ######################################################
 		
 		$pic_owner = array();
 		for($i1=0; $i1<$num1; $i1++)
 		{
+			// Angaben zum anzuzeigenden Bild:
 			$FileName = mysql_result($result1, $i1, 'FileName');
 			$FileNameHQ = mysql_result($result1, $i1, 'FileNameHQ');
 			$FileNameV = mysql_result($result1, $i1, 'FileNameV');
 			$description = mysql_result($result1, $i1, 'Caption_Abstract');
 			$owner = mysql_result($result1, $i1, 'vorname')." ".mysql_result($result1, $i1, 'name');
+			
+			
 			
 			if(!in_array($owner, $pic_owner))
 			{
@@ -118,11 +128,15 @@ echo "
 			}
 			if($quality == 'lq')
 			{
-				echo "<a href='../../../images/vorschau/hq-preview/$FileNameHQ'><img src='../../../images/vorschau/thumbs/$FileNameV' data-big='../../../images/originale/$FileName' data-title='' data-description='$description'></a>";
+				echo "<a href='../../../images/vorschau/hq-preview/$FileNameHQ'>
+						<img src='../../../images/vorschau/thumbs/$FileNameV' data-big='../../../images/originale/$FileName' data-title='' data-description='$description'>
+					  </a>";
 			}
 			elseif($quality == 'hq')
 			{
-				echo "<a href='../../../images/originale/$FileName'><img src='../../../images/vorschau/thumbs/$FileNameV' data-big='../../../images/originale/$FileName' data-title='' data-description='$description'></a>";
+				echo "<a href='../../../images/originale/$FileName'>
+						<img src='../../../images/vorschau/thumbs/$FileNameV' data-big='../../../images/originale/$FileName' data-title='' data-description='$description'>
+					  </a>";
 			}
 		}
 		
@@ -135,7 +149,6 @@ echo "
 		
 		if(count($pic_owner) == 1)
 		{
-			//ImageTTFText($image, 18, 0, 10, 670, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', 'Diese Präsentation wurde angefertigt von '.$presentation_author);
 			ImageTTFText($image, 18, 0, 10, 700, $font_color, '/usr/share/fonts/truetype/DejaVuSerif.ttf', '(C) '.$pic_owner[0].', '.$created.' / '.$last_modification);
 		}
 		else
@@ -155,23 +168,38 @@ echo "
 			}
 			
 		}
-		ImagePNG($image, $p2b_path.'pic2base/tmp/abspann.png'); //  ##############  muss noch benutzerspezifisch gemacht werden.  ######################
-		echo "<img src='../../../tmp/abspann.png'>";
+		ImagePNG($image, $p2b_path.'pic2base/userdata/'.$uid.'/kml_files/abspann.png');
+		echo "<img src='../../../userdata/$uid/kml_files/abspann.png'>";
+		echo "<img src='../../../userdata/$uid/kml_files/black.png'>";
 		// Abspann Ende  #########################################################
+		
 		echo "
        	</div>";
        	?>
 		<script>
+		//	Galleria.ready(function(){
+		//	    this.bind('image',function(e){
+		//	        if( e.index == this.getDataLength()-1 ){
+		//	            this.pause();
+		//	        }
+		//	    });
+		//	});
+			
 			Galleria.configure({
+				preload: 2,			// all, 0
+			//	easing: 'galleriaIn',
 			//	imageCrop: true,
-				transition: 'fade',	//fade, flash, pulse, slide, fadeslide
+				transition: 'flash',	//fade, flash, pulse, slide, fadeslide
 				transitionSpeed: 400,
 			//	lightbox: true,
 				showCounter: true,
 				clicknext: true,
-				autoplay: false		// true oder Zeit in ms
+				autoplay: false,		// true oder Zeit in ms
+			//	idleMode: false
 				});
+			
    			Galleria.loadTheme('../../share/galleria/themes/classic/galleria.classic.min.js');
+   			
    			Galleria.run('#galleria');
    		</script>
 </body>
