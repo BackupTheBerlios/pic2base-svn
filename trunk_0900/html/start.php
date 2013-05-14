@@ -279,12 +279,13 @@ ELSE
 				{
 					$info = pathinfo($datei);
 					$extension_0 = strtolower($info['extension']);	//Dateiendung, die das Bild mitbringt
-					//$bild = $ftp_path."/".$uid."/uploads/".$datei;
+					//$warning .= $extension_0;
 					$bild = $up_dir."/".$datei;
 					$exiftool = buildExiftoolCommand($sr);
 					$cmd = $exiftool." -S -FileType ".$bild;
 					$ft = preg_split('/ /', shell_exec($cmd));
 					@$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
+					
 					// Bei jpg-Dateien wird der Dateityp 'jpeg' identifiziert. Dies wuerde bedeuten, dass praktisch jedes jpg-Bild umbenannt werden muss
 					// Zur Vereinfachung wird hier eine Ausnahme hinzugefuegt: jpg-Bilder werden nicht zu jpeg umbenannt!
 					if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
@@ -317,6 +318,7 @@ ELSE
 					$n++;
 					$warning .= "<BR>Der Dateiname <u>".$datei."</u> enth&auml;lt <a href='help/help1.php?page=1'>unerlaubte</a> Zeichen (Umlaute, Leerzeichen, mehrere Punkte etc.).";
 				}
+				//$n++;
 			}
 		}
 		IF($n > 0)
