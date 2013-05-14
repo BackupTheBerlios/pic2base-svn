@@ -166,7 +166,7 @@ function showReady( avgTime,mod )
 	document.bar.width = '0';
 	document.bar.height = '0';
 	//Fertigmeldung ausgeben:
-	alert( "Die Bearbeitung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
+	//alert( "Die Bearbeitung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
 	window.location='edit_beschreibung.php?kat_id=' + <?php echo $kat_id;?> + '&pic_id=0';
 }
 
@@ -222,7 +222,7 @@ function processFile( pic_array, description )
 				document.bar.src = '../../share/images/green.gif';
 				document.bar.width = laenge;
 				document.bar.height = '11';
-				setTimeout("showReady(avgTime)", 1000);
+				setTimeout("showReady(avgTime)", 500);
 				//showReady(avgTime,mod)
 			}
 		}
