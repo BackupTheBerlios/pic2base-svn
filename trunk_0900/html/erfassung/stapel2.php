@@ -134,66 +134,56 @@ function showReady(avgTime)
 	document.bar.width = '0';
 	document.bar.height = '0';
 	//Fertigmeldung ausgeben:
-	alert( "Die Erfassung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
+	//alert( "Die Erfassung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
 	countDown();
 }
 
 function processFile( fileList )
 {
 	var client = new XMLHttpRequest();
-	//alert(fileList.file_array[0].search(/^[\w|-]{1,}[.]{1}[\w]{2,4}$/)); //Umlaute, SZ, Leerzeichen, mind. zwei Punkte, Steuerzeichen 
-	if(fileList.file_array[0].search(/^[\w|-]{1,}[.]{1}[\w]{2,4}$/) == -1)
+	client.open("GET", "stapel2_action.php?file=" + fileList.file_array[0], true);
+	fileList.file_array.splice( 0, 1 );
+	client.onreadystatechange = function()
 	{
-		alert("Es ist ein Fehler aufgetreten!\n\nDer Dateiname "+ fileList.file_array[0] + " beinhaltet unerlaubte Zeichen (Umlaute, Leerzeichen, mehrere Punkte etc.).\nDie Erfassung wird abgebrochen.\nBitte korrigieren Sie den Dateinamen und starten dann die Erfassung neu.\nFragen Sie ggf. Ihren Administrator.");
-		//alert(fileList.file_array[0]);
-		location.href='../start.php';
-	}
-	else
-	{
-		client.open("GET", "stapel2_action.php?file=" + fileList.file_array[0], true);
-		fileList.file_array.splice( 0, 1 );
-		client.onreadystatechange = function()
+		if( client.readyState == 4 )
 		{
-			if( client.readyState == 4 )
+			var result = JSON.parse( client.responseText );
+							
+			if( result.errorCode != 0 )
 			{
-				var result = JSON.parse( client.responseText );
-								
-				if( result.errorCode != 0 )
+				alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
+			}
+					
+			if( fileList.file_array.length > 0 )
+			{
+				if( fileList.file_array.length > 1)
 				{
-					alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
-				}
-						
-				if( fileList.file_array.length > 0 )
-				{
-					if( fileList.file_array.length > 1)
-					{
-						document.getElementById("meldung").innerHTML = "...es verbleiben noch " + fileList.file_array.length + " Bilder...";
-					}
-					else
-					{
-						document.getElementById("meldung").innerHTML = "...es verbleibt noch " + fileList.file_array.length + " Bild...";
-					}
-					var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
-					document.bar.src = '../../share/images/green.gif';
-					document.bar.width = laenge;
-					document.bar.height = '11';
-					processFile( fileList );
+					document.getElementById("meldung").innerHTML = "...es verbleiben noch " + fileList.file_array.length + " Bilder...";
 				}
 				else
 				{
-					//Bearbeitung ist abgeschlossen
-					//Berechnung der durchschnittlichen Bearbeitungszeit pro Bild:
-					var endtime = new Date();
-					var runtime = (endtime.getTime() - starttime.getTime()) / 1000;
-					avgTime = Math.round((runtime / gesamtanzahl) * 100) / 100;
-					document.getElementById("meldung").innerHTML = "Alle Bilder wurden erfasst.";
-					//Aktualisierung des Fortschrittsbalkens auf 100%:
-					var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
-					document.bar.src = '../../share/images/green.gif';
-					document.bar.width = laenge;
-					document.bar.height = '11';
-					setTimeout("showReady(avgTime)", 2000);
+					document.getElementById("meldung").innerHTML = "...es verbleibt noch " + fileList.file_array.length + " Bild...";
 				}
+				var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
+				document.bar.src = '../../share/images/green.gif';
+				document.bar.width = laenge;
+				document.bar.height = '11';
+				processFile( fileList );
+			}
+			else
+			{
+				//Bearbeitung ist abgeschlossen
+				//Berechnung der durchschnittlichen Bearbeitungszeit pro Bild:
+				var endtime = new Date();
+				var runtime = (endtime.getTime() - starttime.getTime()) / 1000;
+				avgTime = Math.round((runtime / gesamtanzahl) * 100) / 100;
+				document.getElementById("meldung").innerHTML = "Alle Bilder wurden erfasst.";
+				//Aktualisierung des Fortschrittsbalkens auf 100%:
+				var laenge = (gesamtanzahl - fileList.file_array.length) / gesamtanzahl * 500;
+				document.bar.src = '../../share/images/green.gif';
+				document.bar.width = laenge;
+				document.bar.height = '11';
+				setTimeout("showReady(avgTime)", 500);
 			}
 		}
 	};
