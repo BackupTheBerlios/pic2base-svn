@@ -2592,15 +2592,15 @@ function getHQPreviewNow($pic_id, $hoehe_neu, $breite_neu, $base_file, $kat_id, 
 			{
 				$kat_id = mysql_result($result16, $i16, 'kat_id');
 				$result17 = mysql_query( "SELECT * FROM $table4 WHERE kat_id = '$kat_id'");
-				$kategorie = mysql_result($result17, isset($i17), 'kategorie');
+				@$kategorie = mysql_result($result17, isset($i17), 'kategorie');
 				IF($kat_id !== '1')
 				{
-				$zugew_kat .= $kategorie."<BR>";
+					$zugew_kat .= $kategorie."<BR>";
 				}
 			}
 			IF(file_exists($sr.'/images/vorschau/thumbs/'.$FileNameV))
 			{
-				echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' style='border:none; border-radius:3px;'><span style='text-align:left;'>bereits zugewiesene Kategorien::<BR>".$zugew_kat."</span></a></div>";
+				echo "<div id='tooltip1'><a href='#' target=\"vollbild\" onclick=\"ZeigeBild('$bild', '$breite', '$hoehe', '$ratio_pic', 'HQ', '');return false\"  title='Vergr&ouml;&#223;erte Ansicht'><img src='$inst_path/pic2base/images/vorschau/thumbs/$FileNameV' alt='Vorschaubild', width='$breite_neu', height='$hoehe_neu' style='border:none; border-radius:3px;'><span style='text-align:left;'>bereits zugewiesene Kategorien:<BR>".$zugew_kat."</span></a></div>";
 			}
 		break;
 	}
