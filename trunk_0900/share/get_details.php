@@ -398,7 +398,7 @@ IF ($pic_id !=='0')
 				elseif(mysql_num_rows($result12) > 0)
 				{
 					$symb2 = "<SPAN style='cursor:pointer;'>
-					<img src='$inst_path/pic2base/bin/share/images/notrash.gif' style='width:15px; height:15px; border:none;' title='Das Bild ist Bestandteil einer Kollektion und kann daher nicht gel&ouml;sch werden.' />
+					<img src='$inst_path/pic2base/bin/share/images/notrash.gif' style='width:15px; height:15px; border:none;' title='Das Bild ist Bestandteil einer Kollektion und kann daher nicht gel&ouml;scht werden.' />
 					</span>";
 				}
 			}
