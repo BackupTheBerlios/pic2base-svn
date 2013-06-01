@@ -50,7 +50,7 @@ include_once $sr.'/bin/share/functions/ajax_functions.php';
 
 echo "
 <div class='page' id='page'>
-<FORM name='kat-zuweisung' method='post' action='kat_sort_action.php'>
+<FORM name='kat-zuweisung' method='post' action='kat_sort_action2.php'>
 	
 	<div id='head'>
 		pic2base :: Admin-Bereich - Kategorie-Sortierung
@@ -95,7 +95,7 @@ echo "
 	echo "
 	<DIV id='spalte2'>
 		<fieldset style='background-color:none; margin-top:10px;'>
-			<legend style='color:blue; font-weight:bold;'>Zielkategorie</legend>
+			<legend style='color:blue; font-weight:bold;'>Ziel-Kategorie</legend>
 				<div id='scrollbox1' style='overflow-y:scroll;'>
 			
 				W&auml;hlen Sie hier zun&auml;chst in der linken Spalte die Quell-Kategorie aus.<BR><BR>
