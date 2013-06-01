@@ -197,7 +197,7 @@ function showReady( avgTime,mod )
 	document.bar.width = '0';
 	document.bar.height = '0';
 	//Fertigmeldung ausgeben:
-	alert( "Die Bearbeitung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
+	//alert( "Die Bearbeitung ist abgschlossen.\nDie durchschnittliche Bearbeitungszeit pro Bild betrug " + avgTime + " Sekunden.");
 	window.location='remove_kat_daten.php?kat_id=' + <?php echo $parent;?> + '&mod=' + mod + '&pic_id=0';
 }
 
@@ -254,7 +254,7 @@ function processFile( pic_array, kat_id, mod )
 				document.bar.width = laenge;
 				document.bar.height = '11';
 				setTimeout("showReady(avgTime,mod)", 1000);
-				//showReady(avgTime,mod)
+				showReady(avgTime,mod)
 			}
 		}
 	};
