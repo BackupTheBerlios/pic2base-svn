@@ -37,12 +37,17 @@
  * This file is licensed under the terms of the Open Software License
  * http://www.opensource.org/licenses/osl-2.1.php
  *
+ * Skript wird bei der Umsortierung des Kategoriebaumes OHNE Anzeige des Fortschrittsbalkens verwendet (bis Mai 2013)
  */
 
 IF ($_COOKIE['uid'])
 {
 	$uid = $_COOKIE['uid'];
 }
+
+@$kat_source = $_POST['kat_source'];		// diese Kategorie soll samt aller unterkategorien umgehaengt werden
+@$kat_dest = $_POST['kat_dest'];			// unter diese Kategorie soll der Zweig eingehaengt werden
+
 echo "
 	<div id='page'>
 	
@@ -100,8 +105,8 @@ echo "
 		
 		// 1)
 		
-		@$kat_source = $_POST['kat_source'];		// diese Kategorie soll samt aller unterkategorien umgehaengt werden
-		@$kat_dest = $_POST['kat_dest'];			// unter diese Kategorie soll der Zweig eingehaengt werden
+//		@$kat_source = $_POST['kat_source'];		// diese Kategorie soll samt aller unterkategorien umgehaengt werden
+//		@$kat_dest = $_POST['kat_dest'];			// unter diese Kategorie soll der Zweig eingehaengt werden
 		$exiftool = buildExiftoolCommand($sr);
 		//$result0 = mysql_query("SELECT id FROM $table1 WHERE username = '$c_username'");
 		//$user_id = mysql_result($result0, isset($i0), 'id');
@@ -239,6 +244,7 @@ echo "
 		
 		// 5)
 			// Bestimmung aller von der Umstrukturierung betroffenen Bilder:
+			$pic_arr = array();
 			$result10 = mysql_query("SELECT * FROM $table10 WHERE kat_id = '$kat_source'");
 			$num10 = mysql_num_rows($result10);
 			IF($num10 > 0)
@@ -247,6 +253,7 @@ echo "
 				FOR($i10=0; $i10<$num10; $i10++)
 				{
 					$bildnr = mysql_result($result10, $i10, 'pic_id');
+					$pic_arr[] = $bildnr;	// neu
 		//			echo "... verarbeite Bild: ".$bildnr."<BR>";
 					FOREACH($kat_del AS $kd)
 					{
@@ -262,7 +269,7 @@ echo "
 					FOREACH($kat_add AS $ka)
 					{
 		//				echo "hinzugefuegt: ".$ka."<BR>";
-						$result12 = mysql_query("INSERT INTO $table10 (pic_id, kat_id) VALUES ('$bildnr', '$ka')");
+						$result12 = mysql_query("INSERT INTO $table10 (pic_id, kat_id) VALUES ('$bildnr', '$ka')");  //Tabelle pic_kat aktualisieren
 						//Ein INSERT nur ausführen, falls es die betreffende Kombination pic_id, kat_id nicht bereits existiert (2012.04.24/ICE)
 		//				$result12 = mysql_query("INSERT INTO $table10 (pic_id, kat_id) SELECT ('$bildnr', '$ka') FROM $table10 WHERE NOT EXISTS(SELECT * FROM $table10 WHERE pic_id = '$bildnr' and kat_id = '$ka' LIMIT 1, 1 ");
 						// Test in MySQL:
@@ -278,11 +285,12 @@ echo "
 					}
 				}
 		// 7)
-				FOR($i10=0; $i10<$num10; $i10++)
+				//FOR($i10=0; $i10<$num10; $i10++)
+				FOREACH($pic_arr AS $bildnr)
 				{
-					$bildnr = mysql_result($result10, $i10, 'pic_id');
+					//$bildnr = mysql_result($result10, $i10, 'pic_id');
 					$FN = strtolower($pic_path."/".restoreOriFilename($bildnr, $sr));
-					// alten keywords-Eintrag entfernen:
+					// alten keywords-Eintrag aus dem Bild entfernen:
 					$command = $exiftool." -IPTC:Keywords='' -overwrite_original ".$FN;
 					shell_exec($command);
 					
@@ -303,14 +311,11 @@ echo "
 						$keyword_string.= " -IPTC:Keywords=\"$sel_kategorie\"";
 					}
 					
-		// weiter mit 7)
-		//			echo "pictures.Kategorien wird fuer Bild ".$bildnr." mit ".$kategorie." belegt.<BR>";
+					//echo "pictures.Kategorien wird fuer Bild ".$bildnr." mit ".$kategorie." belegt.<BR>";
 					$result14 = mysql_query( "UPDATE $table2 SET Keywords = \"$kategorie\", has_kat = '1' WHERE pic_id = '$bildnr'");
 					
-		// weiter mit 8)
-					//echo "Schluesselworte weden ins Bild ".$bildnr." geschrieben<BR>";
+					//echo "Schluesselworte ins Bild ".$bildnr." schreiben<BR>";
 					$command = $exiftool."".$keyword_string." -overwrite_original ".$FN;
-					//echo $command."<BR>";
 					shell_exec($command);
 				}
 			}
@@ -320,10 +325,10 @@ echo "
 		}
 		ELSE
 		{
-			$error = "<p style='color:red; margin-top:100px; text-align:center; font-weight:bold;'>Die Aufgabe kann nicht bearbeitet werden!<br/><br/>Sie müssen eine Quell- und eine Zielkategorie auswählen!<br/><br/><input type='button' value='Zurück' onClick='location.href=\"javascript:history.back()\"' /></p>";
+			$error = "<p style='color:red; margin-top:100px; text-align:center; font-weight:bold;'>Die Aufgabe kann nicht bearbeitet werden!<br/><br/>Sie müssen eine Quell- und eine Zielkategorie auswählen!<br/><br/><input type='button' value='Zurück' onClick=location.href='javascript:history.back()' /></p>";
 			?>
 			<script language='Javascript'>
-				document.getElementById('blend').innerHTML=<?php echo $error; ?>;
+				document.getElementById('blend').innerHTML="<?php echo $error; ?>";
 			</script>
 			<?php 
 		}
