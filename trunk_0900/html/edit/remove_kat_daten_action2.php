@@ -16,7 +16,7 @@ FOREACH ($_POST AS $key => $post)
 {
 	IF (substr($key,0,3) == 'pic')
 	{
-		$pic_ID[] = substr($key,7,strlen($key)-7);	//Array der ze bearbeitenden Bilder
+		$pic_ID[] = substr($key,7,strlen($key)-7);	//Array der zu bearbeitenden Bilder
 	}
 }
 if(array_key_exists('mod',$_GET))					// Modus; hier: edit_remove
@@ -88,32 +88,6 @@ $output = json_encode($obj);
 			 * This file is licensed under the terms of the Open Software License
 			 * http://www.opensource.org/licenses/osl-2.1.php
 			 */
-			
-			
-			if(array_key_exists('kat_id',$_GET))
-			{
-				$parent = $_GET['kat_id']; 
-			}
-			else
-			{
-				$parent = 0;
-			}
-			if(array_key_exists('ID',$_POST))
-			{
-				$kat_id = $_POST['ID'];
-			}
-			else
-			{
-				$kat_id = 0;
-			}
-			if(array_key_exists('mod',$_GET))
-			{
-				$mod = $_GET['mod'];
-			}
-			else
-			{
-				$mod = 0;
-			}
 			
 			include '../../share/global_config.php';
 			include $sr.'/bin/share/db_connect1.php';
