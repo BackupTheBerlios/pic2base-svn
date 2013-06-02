@@ -542,7 +542,9 @@ echo "
 		Bereits in der Kollektion befindliche Bilder sind im Filmstreifen mit dem gr&uuml;nen H&auml;ckchen gekennzeichnet und k&ouml;nnen durch erneutes Anklicken wieder aus der Kollektion entfernt werden.<br>
 		Eine andere M&ouml;glichkeit, ein Bild aus der Kollektion zu entfernen besteht darin, im Fenster \"Ausgew&auml;hlte Kollektion bearbeiten\" auf das betreffende Bild in der Bilder-Leiste zu klicken. Nach entsprechender Beantwortung der Sicherheits-Abfrage wird das Bild aus der Kollektion gel&ouml;scht.
 		<li>Kollektion arrangieren<br>
-		Diese Button bietet die M&ouml;glichkeit, die Reihenfolge der Bilder innerhalb der Kollektion neu festzulegen. (Noch nicht verf&uuml;gbar!)</li>
+		Diese Button bietet die M&ouml;glichkeit, die Reihenfolge der Bilder innerhalb der Kollektion neu festzulegen.<br>
+		Nach einem Klick auf dieses Icon gelangt man zum Sortiertisch. Hier werden alle Bilder der Kollektion angezeigt und k&ouml;nnen per Drag and Drop neu arrangiert werden. Gef&auml;llt das Ergebnis, kann die neue Anordnung gespeichert werden (Klick auf \"Neue Sortierung speichern\") oder aber unter einem neuen Namen als neue Kollektion abgelegt werden (Klick auf \"Speichern unter\")<br />
+		Weiter hat man die M&ouml;glichkeit, sich eine Vorschau der Kollektion anzusehen (Klick auf \"Dia-Show (Vorschau)\")</li>
 		<li>Kollektion l&ouml;schen<br>
 		Wenn Sie &uuml;ber die entsprechende Berechtigung verf&uuml;gen, k&ouml;nnen Sie an dieser Stelle Kollektionen l&ouml;schen.<br>
 		Dabei werden lediglich die Kollektionen, nicht aber die darin enthaltenen Bilder gel&ouml;scht!</li>
