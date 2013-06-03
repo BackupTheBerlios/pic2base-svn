@@ -162,8 +162,16 @@ if(mysql_num_rows($result1) > 0)
 				<td style='width:25%' class='coll'>".$coll_name."</td>
 				<td style='width:61%' class='coll'>".$coll_description."</td>
 				<td style='width:14%' colspan='3' class='coll'>
-				<span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>
-				<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Bilder anordnen, Anzeigedauer und &Uuml;berg&auml;nge festlegen' onClick=''></span>
+				<span style='cursor:pointer;'><img src='../../share/images/edit.gif' style='margin-left:10px; margin-right:5px;' title='Kollektion bearbeiten, neue Bilder hinzuf&uuml;gen, Bilder l&ouml;schen...' onClick='location.href=\"edit_selected_collection.php?coll_id=$coll_id\"'></span>";
+				if($num1 > 0)
+				{
+					echo "<span style='cursor:pointer;'><img src='../../share/images/arrange.gif' style='margin-right:5px;' title='Zum Sortiertisch, Pr&auml;sentation anzeigen' onClick='location.href=\"arrange_collection.php?coll_id=$coll_id\"'></span>";
+				}
+				else
+				{
+					echo "<span style='cursor:pointer;'><img src='../../share/images/arrange_disabled.gif' style='margin-right:5px;' title='Kollektion beinhaltet noch keine Bilder'></span>";
+				}
+				echo "
 				<span style='cursor:pointer;'><img src='../../share/images/trash.gif' title='Diese Kollektion entfernen' onClick='sicher(\"$coll_id\");'></span>
 				".$button1."
 				</td>
