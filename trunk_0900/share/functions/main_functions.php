@@ -1917,15 +1917,15 @@ function extractExifData($pic_id, $sr, $Orientation)
 					break;
 					
 					CASE 'GPSLatitude':
-					$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);
+					$value = shell_exec($exiftool." -c '%.11f' -GPSLatitude -n -s -s -s ".$FN);		//Umwandlung in dezimale Werte
 					break;
 					
 					CASE 'GPSLongitude':
-					$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n -s -s -s ".$FN);
+					$value = shell_exec($exiftool." -c '%.11f' -GPSLongitude -n -s -s -s ".$FN);	//Umwandlung in dezimale Werte
 					break;
 					
 					CASE 'GPSAltitude':
-					$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n -s -s -s ".$FN);
+					$value = shell_exec($exiftool." -c '%.11f' -GPSAltitude -n -s -s -s ".$FN);		//Umwandlung in dezimale Werte
 					break;
 				}
 				//echo ">>> Feld ".$fieldname." hat den Wert ".$value."<BR>";	
