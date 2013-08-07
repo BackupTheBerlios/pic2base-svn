@@ -151,6 +151,7 @@ SWITCH($ge)
 			AND aktiv = '1'");
 			$num6 = mysql_num_rows($result6);
 			//echo "<p style='color:white';>Treffer fuer User ".$uid.": ".$num6."</p><BR>";
+			$pic_count = 0;
 			IF($num6 > '0')
 			{
 				FOR($i6=0; $i6<$num6; $i6++)
@@ -181,6 +182,7 @@ SWITCH($ge)
 						//Die Daten der betreffenden Punkte werden ermittelt, in die Tabelle 'pictures' zur passenden pic_id geschrieben
 						findTrackData($delta,$pic_time,$datum,$pic_id);
 						$hinweis2 .= "Bild ".$pic_id.": <font color='green'>".$anz."</font> Trackpunkt(e) (Delta = ".$delta.")<BR>";
+						$pic_count++;
 						break;
 					}
 				}
@@ -227,10 +229,12 @@ SWITCH($ge)
 				<div id='scrollbox1' style='overflow-y:scroll; padding-top:50px; text-align:center;'>";
 					//Wenn alle Bilder referenziert wurden, werden die benutzereignen Datens&auml;tze aus der temp. Tabelle 'geo_tmp' gel&ouml;scht und nochmals alle Bilder dargestellt, damit den Koordinaten eine Ortsbezeichnung hinzugefgt werden kann:
 					$result8 = mysql_query( "DELETE FROM $table13 WHERE user_id = '$uid'");
-					echo "Die Geo-Referenzierung wurde im ersten Schritt abgeschlossen.<BR>
+					echo "Die Geo-Referenzierung wurde im ersten Schritt abgeschlossen.<BR><BR>
+					<u>".$pic_count." Bilder</u> m&uuml;ssen mit einem Ortsnamen versehen werden.<BR><BR>
 					Klicken Sie auf \"Weiter\", um zur Ortzuweisung zu gelangen.<BR><BR>
 					<p align='center'><INPUT type='button' value='Weiter' OnClick='location.href=\"edit_location_name.php\"'></p><BR>
-					Ergebnis der Koordinaten-Zuweisung:<BR><BR>".$hinweis2."
+					Ergebnis der Koordinaten-Zuweisung:<BR><BR>".$hinweis2."<BR><BR>
+					Das Delta repr&auml;sentiert den zeitlichen Versatz der Aufnahmezeit zum zeitlich n&auml;chsten aufgezeichneten Trackpunkt.<BR>D.h., je geringer das Delta ist, desto genauer ist die Referenzierung.
 				</div>
 			</fieldset>
 			

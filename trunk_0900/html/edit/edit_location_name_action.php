@@ -59,6 +59,24 @@ IF(array_key_exists('pic_id', $_POST))
 {
 	$pic_id = $_POST['pic_id'];
 }
+
+IF(array_key_exists('default_location', $_POST))
+{
+	$default_location = $_POST['default_location'];
+	IF($default_location == 'on')
+	{
+		setcookie("auto_ref",$ort);
+	}
+}
+else
+{
+	$default_location = $_POST['default_location'];
+	if($default_location !== 'on')
+	{
+		setcookie ("auto_ref", "", time() - 3600);
+	}
+	
+}
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/geo_functions.php';
@@ -74,7 +92,7 @@ echo "
 	</div>
 	
 	<div class='navi' id='navi'>
-		<div class='menucontainer'>";
+		<div class='menucontainer'>";	//echo $default_location.", ".$_COOKIE['auto_ref'];
 			createNavi3_1($uid);
 		echo "</div>
 	</div>
@@ -127,7 +145,7 @@ echo "
 
 </div>
 
-<meta http-equiv='refresh', content='0; URL=edit_location_name.php'>";
+<meta http-equiv='refresh', content='1; URL=edit_location_name.php'>";
 
 mysql_close($conn);
 

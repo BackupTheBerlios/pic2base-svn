@@ -8,6 +8,17 @@ else
 {
 	$uid = $_COOKIE['uid'];
 }
+
+if(isset($_COOKIE['auto_ref']))
+{
+	$status = "checked";
+	$default_location = $_COOKIE['auto_ref'];
+}
+else
+{
+	$status = "";
+	$default_location = "";
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -96,7 +107,7 @@ echo "
 	</div>
 	
 	<div class='navi' id='navi'>
-		<div class='menucontainer'>";
+		<div class='menucontainer'>"; //echo $default_location;
 			createNavi3_1($uid);
 		echo "</div>
 	</div>
@@ -105,7 +116,7 @@ echo "
 	
 		<fieldset style='background-color:none; margin-top:10px;'>
 			<legend style='color:blue; font-weight:bold;'>Ortsbezeichnung festlegen</legend>
-			<div id='scrollbox0' style='overflow-y:scroll; padding-top:50px;'>";
+			<div id='scrollbox0' style='overflow-y:scroll; padding-top:0px;'>";
 		
 				$result2 = mysql_query("SELECT pic_id, Owner, FileNameV, City, GPSLongitude, GPSLatitude, aktiv 
 				FROM $table2 
@@ -345,9 +356,15 @@ echo "
 						}
 						echo "</TD>
 						</TR>
+						
+						<TR class='kat'>
+							<TD class='kat'>
+							weitere Bilder autom. mit diesem Ort referenzieren: <INPUT TYPE='checkbox' name='default_location' $status>
+							</TD>
+						</TR>
 		
 						<TR class='kat'>
-							<TD class='kat1'>
+							<TD class='kat'>
 							<p align='center'><INPUT type='button' value='&Uuml;berspringen' title='Referenzierung dieses Bildes &uuml;berspringen' onClick='location.href=\"skip_georef.php?pic_id=$pic_id&uid=$uid\"'><INPUT id='button0' type='button' value='Abbrechen' title='Gesamte Referenzierung abbrechen' style='margin-right:5px;' onClick='location.href=\"cancel_georef.php?userid=$uid\"'><INPUT id='button1' type='submit' value='Weiter'></p>
 							</TD>
 						</TR>";
@@ -393,19 +410,22 @@ mysql_close($conn);
 
 ?>
 <script language="javascript">
+var status="<?php echo $status;?>";
+var default_location="<?php echo $default_location;?>";
 document.ortsbezeichnung.button1.focus();
 //Variante, wenn viele Bilder mit dem gleichen Ort referenziert werden sollen
 //alert(document.ortsbezeichnung.ort.value);
+//alert(status + ", " + default_location);
 //##########  ab hier aktivieren und Ortsbezeichnung eintragen  ################
-//if(document.ortsbezeichnung.ort.value.slice(0, 22) == 'Blankenburg, Mauerstra')
-//{
-//	//alert(document.ortsbezeichnung.ort.value);
-//	document.ortsbezeichnung.button1.click();
-//}
-//else
-//{
-//	alert(document.ortsbezeichnung.ort.value.slice(0, 22));
-//}
+if(document.ortsbezeichnung.ort.value == default_location)
+{
+	//alert(document.ortsbezeichnung.ort.value);
+	document.ortsbezeichnung.button1.click();
+}
+else
+{
+	alert(document.ortsbezeichnung.ort.value);
+}
 //##############################################################################
 </script>
 </DIV>
