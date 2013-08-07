@@ -51,12 +51,26 @@ A:hover{color:red;text-decoration:underline}
 include 'db_connect1.php';
 $result1 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 echo mysql_error();
+
+/*
 $vorh_location = mysql_result($result1,0,'City');
 IF($vorh_location !== 'Ortsbezeichnung' AND $vorh_location !== '')
 {
 	//echo "Bild hat schon eine Ortsbezeichnung.<BR>";
 	$long = mysql_result($result1,0, 'GPSLongitude');
 	$lat = mysql_result($result1,0, 'GPSLatitude');
+	$alt = mysql_result($result1,0, 'GPSAltitude');
+	$loc = round($lat,6).",".round($long,6);
+	$ort = mysql_result($result1,0, 'City');
+}
+*/
+
+//neue Definition einer vorh. Referenzierung (07.08.2013):
+//Ref. ist vorhanden, wenn geogr. Breite u. Laenge vorhanden sind:
+$long = mysql_result($result1,0, 'GPSLongitude');
+$lat = mysql_result($result1,0, 'GPSLatitude');
+IF($lat !== NULL AND $long !== NULL)
+{
 	$alt = mysql_result($result1,0, 'GPSAltitude');
 	$loc = round($lat,6).",".round($long,6);
 	$ort = mysql_result($result1,0, 'City');
