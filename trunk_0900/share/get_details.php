@@ -316,7 +316,7 @@ IF ($pic_id !=='0')
 			
 			echo "
 			</TD>";
-			
+/*			
 			$result11 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
 			$location = mysql_result($result11, isset($i11), 'City');
 			IF($location !== 'Ortsbezeichnung' AND $location !== '')
@@ -346,13 +346,33 @@ IF ($pic_id !=='0')
 					</span>";
 				}
 			}
-			
+*/
+			// neue Variante vom 07.08.2013:
+			// Die Position wird in GM dargestellt, sobald geo. Laenge und -Breite vorhanden sind
+			$result11 = mysql_query( "SELECT * FROM $table2 WHERE pic_id = '$pic_id'");
+			$location = mysql_result($result11, isset($i11), 'City');
+			$longitude = mysql_result($result11,isset($i11), 'GPSLongitude');
+			$latitude = mysql_result($result11,isset($i11), 'GPSLatitude');
+			$altitude = mysql_result($result11,isset($i11), 'GPSAltitude');
+			IF($longitude !== NULL AND $latitude !== NULL)
+			{
+				echo "<TD id='detail6'><span style='cursor:pointer;'>
+				<img src='$inst_path/pic2base/bin/share/images/googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='Aufnahmestandort in GoogleMaps darstellen' OnClick=\"showMap($latitude, $longitude)\"/>
+				</span>";
+			}
+			ELSE
+			{
+				echo "<TD id='detail6'><span style='cursor:pointer;'>
+					<img src='$inst_path/pic2base/bin/share/images/no_googlemap.gif' width='30' height='15' border='0' alt='GoogleMap' title='keine Geo-Informationen' />
+					</span>";
+			}
+// Ende der neuen Variante
+
 			echo "
 			</TD>";
 			$symb1 = "<BR>";
 			$symb5 = "<BR>";
 			
-			//IF($Owner == $c_username AND (hasPermission($c_username, 'adminlogin', $sr) OR hasPermission($c_username, 'editpic', $sr)))
 			IF($owner == $uid AND (hasPermission($uid, 'georefmypics', $sr)) OR ($owner !== $uid AND (hasPermission($uid, 'georefallpics', $sr))))
 			{
 				$symb4 = "<SPAN style='cursor:pointer;'>
