@@ -25,7 +25,9 @@ $stat = createStatement($bewertung);
 
 IF($field !== '')
 {
-	echo "<SELECT class='Auswahl200' NAME='zusatzwert1'>";
+	echo "<input type='text' style='width:195px;' name='zusatzwert1' list='valuelist'>
+	<datalist id='valuelist'>";
+	
 	SWITCH($field)
 	{
 		//Behandlung der recherchierbaren Felder der pictures-Tabelle		
@@ -43,9 +45,8 @@ IF($field !== '')
 				$value = mysql_result($result3, $i3, 'Owner');
 				$result2 = mysql_query( "SELECT * FROM $table1 WHERE id = '$value'");
 				$wert = mysql_result($result2, $i2, 'vorname')." ".mysql_result($result2, $i2, 'name');
-				//$val = '*'.$value;	//warum wurde der Wert um den Stern ergaenzt??
 				$val = $value;
-				echo "<option value='$val'>".$wert."</option>";
+				echo "<option value='$val - $wert'>".$wert."</option>";
 			}
 		break;
 		
@@ -319,13 +320,14 @@ IF($field !== '')
 			//Pruefung, ob es schon einen Eintrag mit diesen Daten gab (bes. bei Datum interessant)
 			IF($wert !== $wert_alt)
 			{
-				echo "<option value='$val'>".$wert."</option>";
+				echo "<option value='$val'></option>";
 				$wert_alt = $wert;
 			}
 		}
 		break;
 	}
 }
-echo "</SELECT>";
+
+echo "</datalist>";
 mysql_close($conn);
 ?>

@@ -1338,7 +1338,9 @@ SWITCH ($modus)
 		CASE 'exif':
 			//Statement: finde in pictures alles, bei dem in dem gewaehlten Feld der gewuenschte Wert vorkommt, die Qualitaet der gewaehlten Qualitaet entspricht , sortiert nach dem Aufnahmedatum. 
 			$zusatzwert1 = $zw1; //der nicht veraenderte Zusatzwert wird weiterhin benoetigt!
-			//$zw1 = str_replace('*', '', $zw1);
+			// aus dem Konstrukt < userid - vorname name> wird die userid extrahiert: 
+			$zw1_array = explode(' - ', $zw1);
+			$zw1 = $zw1_array[0];;
 			//echo $zw1."<BR>";;
 			IF($bedingung1 == 'LIKE')
 			{
