@@ -145,7 +145,7 @@ echo "
 
 </div>
 
-<meta http-equiv='refresh', content='1; URL=edit_location_name.php'>";
+<meta http-equiv='refresh', content='0; URL=edit_location_name.php'>";
 
 mysql_close($conn);
 

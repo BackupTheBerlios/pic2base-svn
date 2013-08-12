@@ -424,7 +424,7 @@ if(document.ortsbezeichnung.ort.value == default_location)
 }
 else
 {
-	alert(document.ortsbezeichnung.ort.value);
+	//alert(document.ortsbezeichnung.ort.value);
 }
 //##############################################################################
 </script>
