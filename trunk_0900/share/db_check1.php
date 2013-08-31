@@ -591,7 +591,10 @@ ELSE
 			`direkt_download` int(1) NOT NULL DEFAULT '0' COMMENT '0-per FTP, 1-per Direkt-Download je Bild',
 			`uid` int(5) NOT NULL ,
 			`gid` int(5) NOT NULL ,
-			`language` VARCHAR( 25 ) NOT NULL default 'de' COMMENT 'Sprache des Users',
+			`timezone` int(11) NOT NULL COMMENT 'letzte bei Georeferenzierung verwendete Zeitzone',
+  			`logger_type` int(11) NOT NULL COMMENT 'letzter bei Georeferenzierung verwendeter Datenlogger',
+  			`language` varchar(25) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Sprache des Users',
+  			`berechtigung` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
 			UNIQUE KEY `homedir` (`up_dir`),
 			KEY `id` (`id`),
 			KEY `username` (`username`)
