@@ -488,6 +488,7 @@ function reloadSourceTree(kat_id_s)
 
 function getTimeTreeview(pic_id, mod, s_m, bewertung)
 {
+	//wird verwendet, wenn Bilder gesucht werden sollen und die Auswahl nach Aufnahmedatum erfolgt
 	var url = '../../share/time_treeview.php';
 	var params = 'pic_id=' + pic_id + '&mod=' + mod + '&show_mod=' + s_m + '&bewertung=' + bewertung;
 	//alert("Parameter: "+params);
