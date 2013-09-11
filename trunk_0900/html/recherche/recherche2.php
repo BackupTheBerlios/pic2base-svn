@@ -227,11 +227,25 @@ function CloseWindow()
 	{
 		$mod = $_GET['mod'];
 	}
-	if ( array_key_exists('s_m',$_GET) )
+	
+	// je nach Vorhandensein, wird die Variable $s_m vorbelegt:
+	if(array_key_exists('show_mod', $_COOKIE))
 	{
-		$s_m = $_GET['s_m'];
+		$s_m = $_COOKIE['show_mod'];
+		echo "COOKIE: ".$s_m."<BR>";
+	}
+	elseif ( array_key_exists('s_m',$_GET) )
+	{
+		$s_m_get = $_GET['s_m'];
+		echo "GET: ".$s_m."<BR>";
+	}
+	else
+	{
+		$s_m = 'J';
+		echo "NIX: ".$s_m."<BR>";
 	}
 	
+
 	$stat = createStatement($bewertung);
 	//echo $stat;
 	
@@ -241,7 +255,8 @@ function CloseWindow()
 	{
 		case 'zeit':
 			include $sr.'/bin/share/functions/ajax_functions.php';
-			echo "<BODY onLoad=\"getTimeTreeview('0','zeit','J','$bewertung')\">";
+			//echo "<BODY onLoad=\"getTimeTreeview('0','zeit','J','$bewertung')\">";
+			echo "<BODY onLoad=\"getTimeTreeview('0','zeit','$s_m','$bewertung')\">";
 		break;
 		
 		case 'kat':
