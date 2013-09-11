@@ -9,7 +9,11 @@ else
 {
 	$uid = $_COOKIE['uid'];
 }
-
+//###############################################################################################
+//
+// wird verwendet, wenn Bilder gesucht werden sollen und die Auswahl nach Aufnahmedatum erfolgt #
+//
+//###############################################################################################
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
@@ -166,7 +170,7 @@ FOR($i1 = '0'; $i1<$num1; $i1++)
 						//echo "Monats- mit Tagesdarstellung: ";
 						$y = substr($show_mod,0,4);	//Jahr
 						$m = substr($show_mod,5,2);	//Monat
-						//echo "Jahr: ".$y.", Monat: ".$m;
+//						echo "Jahr: ".$y.", Monat: ".$m;
 						IF($jahr == $y AND $month_number == $m)
 						{
 							$s_m = $jahr;
