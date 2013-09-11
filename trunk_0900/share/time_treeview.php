@@ -14,11 +14,7 @@ else
 // wird verwendet, wenn Bilder gesucht werden sollen und die Auswahl nach Aufnahmedatum erfolgt #
 //
 //###############################################################################################
-include 'global_config.php';
-include $sr.'/bin/share/db_connect1.php';
-include $sr.'/bin/share/functions/ajax_functions.php';
-include_once $sr.'/bin/share/functions/main_functions.php';
-include $sr.'/bin/css/initial_layout_settings.php';
+
 //Ermittlung des Anfangs (min.) und Enddatums (max):
 
 //var_dump($_REQUEST);
@@ -41,6 +37,10 @@ if(array_key_exists('bewertung',$_GET))
 if(array_key_exists('show_mod',$_GET))
 {
 	$show_mod = $_GET['show_mod'];
+	if($show_mod !== 'J')
+	{
+		setcookie("show_mod", $show_mod, 0, "/");
+	}
 }
 else
 {
@@ -49,6 +49,13 @@ else
 		$show_mod = 0;
 	}
 }
+
+include 'global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/ajax_functions.php';
+include_once $sr.'/bin/share/functions/main_functions.php';
+include $sr.'/bin/css/initial_layout_settings.php';
+
 $start1 = microtime();
 	
 //echo $bewertung;
