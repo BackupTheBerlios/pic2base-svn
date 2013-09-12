@@ -35,11 +35,11 @@ $exiftool = buildExiftoolCommand($sr);
 $FN = $pic_path."/".restoreOriFilename($pic_id, $sr);//echo $FN."<BR>";
 
 //Ermittlung, welche Metadaten-Felder in der Tabelle pictures enthalten sind:
-$result0 = mysql_query("SELECT * FROM $table2");
-$num0 = mysql_num_fields($result0);
-FOR($i0='0'; $i0<$num0; $i0++)
+$result0 = mysql_query("SELECT column_name FROM information_schema.columns WHERE table_name = '$table2'");echo mysql_error();
+$num0 = mysql_num_rows($result0);
+FOR($i0=0; $i0<$num0; $i0++)
 {
-	$row_arr[] = mysql_field_name($result0,$i0);
+	$row_arr[] = mysql_result($result0,$i0);
 }
 //print_r($row_arr);
 
