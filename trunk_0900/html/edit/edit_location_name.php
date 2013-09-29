@@ -410,21 +410,24 @@ mysql_close($conn);
 
 ?>
 <script language="javascript">
-var status="<?php echo $status;?>";
+var status="<?php echo $stat;?>";
 var default_location="<?php echo $default_location;?>";
 document.ortsbezeichnung.button1.focus();
 //Variante, wenn viele Bilder mit dem gleichen Ort referenziert werden sollen
 //alert(document.ortsbezeichnung.ort.value);
 //alert(status + ", " + default_location);
 //##########  ab hier aktivieren und Ortsbezeichnung eintragen  ################
-if(document.ortsbezeichnung.ort.value == default_location)
+if(status != "new")
 {
-	//alert(document.ortsbezeichnung.ort.value);
-	document.ortsbezeichnung.button1.click();
-}
-else
-{
-	//alert(document.ortsbezeichnung.ort.value);
+	if(document.ortsbezeichnung.ort.value == default_location)
+	{
+		//alert(document.ortsbezeichnung.ort.value);
+		document.ortsbezeichnung.button1.click();
+	}
+	else
+	{
+		//alert(document.ortsbezeichnung.ort.value);
+	}
 }
 //##############################################################################
 </script>
