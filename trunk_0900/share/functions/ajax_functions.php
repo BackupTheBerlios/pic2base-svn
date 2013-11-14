@@ -754,5 +754,14 @@ function getCollectionDownloadFiles(coll_id)
 	client.send( null );
 }
 
+function debug_gps(pic_id, all, rest)
+{
+	var url = 'gps_korrektur_action.php';	
+	var target = 'tip';
+	var params = 'pic_id=' + pic_id + '&all=' + all + '&rest=' + rest;
+	//alert ("Ajax aufgerufen... " + pic_id + " " + all + " " + rest);
+	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
+}
+
 -->
 </SCRIPT>
