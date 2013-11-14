@@ -5,10 +5,6 @@ IF (!$_COOKIE['uid'])
 	//var_dump($sr);
   	header('Location: ../../index.php');
 }
-?>
-
-<!--<script type="text/javascript" src="../../ajax/inc/prototype.js"></script>-->
-<?php
 
 include 'global_config.php';
 include $sr.'/bin/share/db_connect1.php';
