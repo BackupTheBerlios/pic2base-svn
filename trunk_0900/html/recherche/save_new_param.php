@@ -33,8 +33,26 @@ IF(array_key_exists('vorh_location', $_REQUEST))
 
 $location = strip_tags($location);	//Breite u. Laenge in einem String
 $loc_arr = explode(",",$location);
-$lat = $loc_arr[0];					//Breite
-$long = $loc_arr[1];				//Laenge
+$lat = $loc_arr[0];		//echo $lat."<BR>";			//Breite
+$long = $loc_arr[1]; 	//echo $long;				//Laenge
+//Long-/Lat-Referenzen:
+if($lat < 0)
+{
+	$lat_ref = "S";
+}
+else
+{
+	$lat_ref = "N";
+}
+
+if($long < 0)
+{
+	$long_ref = "W";
+}
+else
+{
+	$long_ref = "E";
+}
 $elevation = file_get_contents("http://maps.google.com/maps/api/elevation/xml?locations=".$location."&sensor=false");
 $ele_arr = explode(" ",$elevation);
 $elevat = strip_tags($ele_arr[16]);
@@ -50,6 +68,7 @@ ELSE
 {
 	$ort_iptc = $ort;
 }
+
 
 //Parameter fuer naechste Referenzierung speichern:
 $parameter = $location.",".$ort;
@@ -89,9 +108,9 @@ ELSEIF(($vorh_location !== '' AND $vorh_location !== 'Ortsbezeichnung') AND $ort
 	$result1 = mysql_query( "UPDATE $table2 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = \"$ort_db\" WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
-	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$FN." -overwrite_original");
+	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLongitudeRef=".$long_ref." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSLatitudeRef=".$lat_ref." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$FN." -overwrite_original");
 	//Eintragung der Geo-Daten in den EXIF-Block des internen jpg-Bildes:
-	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$fn." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$fn." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$fn." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$fn." -overwrite_original");
+	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$fn." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$fn." -overwrite_original -execute -EXIF:GPSLongitudeRef=".$long_ref." ".$fn." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$fn." -overwrite_original -execute -EXIF:GPSLatitudeRef=".$lat_ref." ".$fn." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$fn." -overwrite_original");
 }
 //es gab bisher KEINE Referenzierung und es wird eine neue hinzugefuegt;  #########################################
 ELSEIF(($vorh_location == '' OR $vorh_location == 'Ortsbezeichnung') AND $ort !== '' AND $location !== '')
@@ -104,9 +123,9 @@ ELSEIF(($vorh_location == '' OR $vorh_location == 'Ortsbezeichnung') AND $ort !=
 	$result1 = mysql_query( "UPDATE $table2 SET GPSLongitude = '$long', GPSLatitude = '$lat', GPSAltitude = '$ele', City = \"$ort_db\" WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
-	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$FN." -overwrite_original");
+	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$FN." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLongitudeRef=".$long_ref." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSLatitudeRef=".$lat_ref." ".$FN." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$FN." -overwrite_original");
 	//Eintragung der Geo-Daten in den EXIF-Block des internen jpg-Bildes:
-	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$fn." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$fn." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$fn." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$fn." -overwrite_original");
+	shell_exec($exiftool." -IPTC:city='$ort_iptc' ".$fn." -overwrite_original -execute -EXIF:GPSLongitude=".$long." ".$fn." -overwrite_original -execute -EXIF:GPSLongitudeRef=".$long_ref." ".$fn." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$fn." -overwrite_original -execute -EXIF:GPSLatitudeRef=".$lat_ref." ".$fn." -overwrite_original -execute -EXIF:GPSAltitude=".$ele." ".$fn." -overwrite_original");
 }
 
 //abschliessend wird die Ortsbezeichnung in der Bildbeschreibung aktualisiert:
@@ -140,7 +159,8 @@ IF($ort_alt != $ort)
 	echo "alter Ort: ".$ort_alt."<BR>";
 	echo "Neue Beschreibung, uncodiert: ".$description_neu."<BR>";
 	echo "DB-Beschreibung: ".$description_neu_db."<BR>";	
-	*/	
+	*/
+	
 	$result5 = mysql_query( "UPDATE $table2 SET Caption_Abstract = \"$description_neu_db\" WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 //###################################################################
