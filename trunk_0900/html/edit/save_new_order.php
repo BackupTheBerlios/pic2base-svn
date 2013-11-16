@@ -35,7 +35,7 @@ $uid = $_COOKIE['uid'];
 <DIV Class="klein">
 
 <?php
-//var_dump($_POST);
+//var_dump($_REQUEST);
 if(array_key_exists('coll_id', $_REQUEST))
 {
 	$coll_id = $_REQUEST['coll_id'];
@@ -44,17 +44,17 @@ else
 {
 	$coll_id = 0;
 }
-//echo "Koll-ID: ".$coll_id."<br>";
+//echo "Koll-ID: ".$coll_id."<br><br>";
 if(array_key_exists('save_mode', $_REQUEST))
 {
 	$save_mode = $_REQUEST['save_mode'];
 }
-//echo "Save-Mode: ".$save_mode."<BR>";
+//echo "Save-Mode: ".$save_mode."<BR><br>";
 if(array_key_exists('picIdx', $_REQUEST))
 {
 	$picIdx = $_REQUEST['picIdx'];
 }
-echo "PIC-IDX: ".$picIdx."<BR>";
+//echo "PIC-IDX: ".$picIdx."<BR><br>";
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/db_connect1.php';
@@ -80,6 +80,7 @@ if($save_mode == 'save')
 	fwrite($fh,date('d.m.Y H:i:s').": Sortierreihenfolge der Kollektion ".$coll_id." wurde von ".$username." ge".utf8_decode(ä)."ndert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 	fclose($fh);
 }
+
 elseif($save_mode == 'save_as')
 {
 	echo "

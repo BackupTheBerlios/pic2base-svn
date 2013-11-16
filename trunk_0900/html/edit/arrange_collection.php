@@ -198,7 +198,40 @@ function saveChanges(num1, coll_id, save_mode)
 	}
 	else if(save_mode == "save_as")
 	{
-		location.href="save_new_order.php?coll_id=" + coll_id + "&picIdx=" + JSON.stringify( jsonPositions ) + "&save_mode=" + save_mode;
+		//location.href="save_new_order.php?coll_id=" + coll_id + "&picIdx=" + JSON.stringify( jsonPositions ) + "&save_mode=" + save_mode;
+		
+		//alert("Coll-ID: " + coll_id + ", Save-Mode: " + save_mode + ", Bild-Positionen: " + JSON.stringify( jsonPositions ));
+
+		function postToUrl(coll_id, bild_positionen) 
+		{
+			 var form = document.createElement("form");
+			 	 form.setAttribute("method", "POST");
+			 	 form.setAttribute("action", "save_new_order.php");
+				 
+			 var hiddenField1 = document.createElement("input");
+				 hiddenField1.setAttribute("type", "hidden");
+				 hiddenField1.setAttribute("name", "coll_id");
+				 hiddenField1.setAttribute("value", coll_id);
+				 form.appendChild(hiddenField1);
+
+			 var hiddenField2 = document.createElement("input");
+				 hiddenField2.setAttribute("type", "hidden");
+				 hiddenField2.setAttribute("name", "save_mode");
+				 hiddenField2.setAttribute("value", "save_as");
+				 form.appendChild(hiddenField2);
+
+			 var hiddenField3 = document.createElement("input");
+				 hiddenField3.setAttribute("type", "hidden");
+				 hiddenField3.setAttribute("name", "picIdx");
+				 hiddenField3.setAttribute("value", bild_positionen);
+				 form.appendChild(hiddenField3);
+	
+			 document.body.appendChild(form);
+			 form.submit();
+			 return false;
+		}
+		
+		postToUrl(coll_id, JSON.stringify( jsonPositions ));
 	}
 }
 </script>
