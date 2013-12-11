@@ -763,5 +763,21 @@ function debug_gps(pic_id, all, rest)
 	var myAjax = new Ajax.Updater(target,url,{method:'get', parameters: params});
 }
 
+function getAffectedRecords(oldCityname, newCityname)
+{
+	//alert(" alter Cityname: " + oldCityname + ", neuer Cityname: " + newCityname);
+	var url = '../../share/get_affected_records.php?oldCityname=' + oldCityname + "&newCityname=" + newCityname;	
+	var client = new XMLHttpRequest();
+	client.open("GET", url, true);
+	client.onreadystatechange = function()
+								{
+									if( client.readyState == 4 )
+									{
+										recordListReceived( client.responseText );
+									}
+								};
+	client.send( null );
+}
+
 -->
 </SCRIPT>
