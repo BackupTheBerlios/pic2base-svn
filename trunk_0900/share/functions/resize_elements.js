@@ -87,6 +87,7 @@ function checkWindowSize()
         
     	
         //alert( ((jQuery(window).width() - 162) / 2) );
+        //alert( "verf. BS-Breite: " + screen.availWidth + ", BS-Breite: " + screen.width + ", Fenster-Breite: " + jQuery(window).width());
     } 
     else 
     { 
