@@ -44,9 +44,10 @@ echo "
 		{
 			$pic_id = mysql_result ($result, $i, "pic_id");
 			$city = mysql_result ($result, $i, "City");
+			$city_link = urlencode($city);
 			
 			echo "<TR>
-			<TD align='left' colspan='4' style='padding-left:20px;'><a href=adminframe.php?item=admineditlocation&id=".$pic_id.">".$city."</a></TD>
+			<TD align='left' colspan='4' style='padding-left:20px;'><a href=adminframe.php?item=admineditlocation&id=".$pic_id."&city=".$city_link.">".$city."</a></TD>
 			</TR>";
 		}
   
