@@ -31,17 +31,45 @@ else
 
 include '../../share/global_config.php';
 include $sr.'/bin/share/functions/ajax_functions.php';
+include $sr.'/bin/share/db_connect1.php';
+$result1 = mysql_query("SELECT * FROM $table2 WHERE City='$city'");
+$num1 = mysql_num_rows($result1);
+IF($num1 == 0)
+{
+	$text = "kein Datensatz";
+}
+ELSEIF($num1 == 1)
+{
+	$text = "ein Datensatz";
+}
+ELSE
+{
+	$text = $num1." Datens&auml;tze";
+}
 
 echo "
   <center>
   	
 	  	<table class='normal' border='0'>
+	  	
+	  		<tr style='height:3px;'>
+				<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
+			</TR>
+			
 			<tr>
-				<td colspan='4' style='font-size:12pt; text-align:center;'>Ortsnamen bearbeiten</td>
+				<td colspan='4' style='font-size:12pt; text-align:center;'>Ortsnamen bearbeiten (".$text.")</td>
 			</tr>
 			
 			<tr style='height:3px;'>
 				<td class='normal' align='center' bgcolor='darkred' colspan='4'></TD>
+			</TR>
+			
+			<tr>
+				<td colspan='4'>&nbsp;</td>
+			</tr>
+			
+			<tr style='height:3px;'>
+				<td colspan='4'>Hinweis: Bei vielen Datens&auml;tzen kann die Bearbeitung einige Zeit dauern und sollte nicht unterbrochen werden!</TD>
 			</TR>
 			
 			<tr>
@@ -67,7 +95,6 @@ echo "
 			</TR>
 			
 			<tr>
-			
 				<td colspan='4' align='center'><p id='zaehler'></p></td>
 			</tr>
 			
@@ -117,6 +144,7 @@ function recordListReceived( responseText )
 	//alert("An edit_locationname.php zurueckgeliefertes Objekt: " + responseText);
 	recordList = JSON.parse( responseText, null );
 	//alert(recordList.record_array[0] + recordList.newCityname);
+	//alert(recordList.record_array.length):
 	if(recordList.anzahl > 0)
 	{
 		gesamtanzahl = recordList.record_array.length;
