@@ -69,9 +69,9 @@ echo "
 		</div>
 	</div>
 
-	<div class='content' id='content'>
+	<div style=''>
 		<p style='margin:10px 0px; text-align:center'>
-		<iframe id='log_frame' src='../../../log/p2b.log' frameborder='0' style='width:750px; height:550px; border:thin solid grey;'>Ihr Browser unterst&uuml;tzt leider keine eingebetteten Frames.
+		<iframe id='log_frame' src='../../../log/p2b.log' frameborder='0' style='width:750px; height:550px; border:thin solid grey; background-color:RGB(240,240,240);'>Ihr Browser unterst&uuml;tzt leider keine eingebetteten Frames.
 		</iframe>
 	</div>
 	
