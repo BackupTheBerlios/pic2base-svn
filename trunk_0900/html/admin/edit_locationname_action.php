@@ -54,8 +54,12 @@ IF($newCityname !== $oldCityname)
   	
   	//IPTC.City aendern:
   	$iptc_city = strip_tags($iptc_city);
-  	$command = " -IPTC:City=\"$iptc_city\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$CA_new\" ".$FN." -overwrite_original > /dev/null &";
-  	shell_exec($exiftool." ".$command);	
+  	$command = " -IPTC:City=\"$iptc_city\" ".$FN." -overwrite_original -execute -IPTC:Caption-Abstract=\"$CA_new\" ".$FN." -overwrite_original";
+  	shell_exec($exiftool." ".$command);
+	//Log-Datei schreiben:
+	$fh_log = fopen($p2b_path.'pic2base/log/p2b.log','a');
+	@fwrite($fh_log,date('d.m.Y H:i:s').": Bild ".$pic_id.": alte Ortsbezeichnung: \"".$oldCityname."\" wurde in \"".$newCityname."\" von ".$username." geaendert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+	fclose($fh_log); 
 }
 ELSE
 {
