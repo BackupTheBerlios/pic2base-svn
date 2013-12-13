@@ -58,7 +58,7 @@ IF($newCityname !== $oldCityname)
   	shell_exec($exiftool." ".$command);
 	//Log-Datei schreiben:
 	$fh_log = fopen($p2b_path.'pic2base/log/p2b.log','a');
-	@fwrite($fh_log,date('d.m.Y H:i:s').": Bild ".$pic_id.": alte Ortsbezeichnung: \"".$oldCityname."\" wurde in \"".$newCityname."\" von ".$username." geaendert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
+	@fwrite($fh_log,date('d.m.Y H:i:s').": Bild ".$pic_id.": alte Ortsbezeichnung: \"".$oldCityname."\" wurde in \"".$newCityname."\" von User ".$uid." geaendert. (Zugriff von ".$_SERVER['REMOTE_ADDR'].")\n");
 	fclose($fh_log); 
 }
 ELSE
