@@ -23,6 +23,10 @@ if ( array_key_exists('rest',$_GET) )
 	$rest = $_GET['rest'];
 }
 
+include '../../share/global_config.php';
+include $sr.'/bin/share/db_connect1.php';
+include $sr.'/bin/share/functions/main_functions.php';
+
 $exiftool = buildExiftoolCommand($sr);
 $result0 = mysql_query("SELECT FileName, GPSLongitude, GPSLatitude FROM $table2 WHERE pic_id = '$pic_id'");
 	// $fn ist der interne Dateiname
@@ -51,12 +55,16 @@ $result0 = mysql_query("SELECT FileName, GPSLongitude, GPSLatitude FROM $table2 
 	{
 		$long_ref = "E";
 	}
-	//	echo $fn." | ".$lat." -> ".$lat_ref." || ".$long." -> ".$long_ref."<BR>"; 
-	
+	//	echo $fn." | ".$lat." -> ".$lat_ref." || ".$long." -> ".$long_ref."<BR>";
+
+	//Eintragung der Referenzen im Bild-Datensatz:
+	$result1 = mysql_query("UPDATE $table2 SET GPSLatitudeRef = '$lat_ref', GPSLongitudeRef = '$long_ref' WHERE pic_id = '$pic_id'");
+	echo mysql_error();
 	//Eintragung der Geo-Daten in den EXIF-Block des Originalbildes:
 	@shell_exec($exiftool." -EXIF:GPSLongitude=".$long." ".$FN." -overwrite_original -execute -EXIF:GPSLongitudeRef=".$long_ref." ".$FN." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$FN." -overwrite_original -execute -EXIF:GPSLatitudeRef=".$lat_ref." ".$FN." -overwrite_original");
 	//Eintragung der Geo-Daten in den EXIF-Block des internen jpg-Bildes:
 	@shell_exec($exiftool." -EXIF:GPSLongitude=".$long." ".$fn." -overwrite_original -execute -EXIF:GPSLongitudeRef=".$long_ref." ".$fn." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$fn." -overwrite_original -execute -EXIF:GPSLatitudeRef=".$lat_ref." ".$fn." -overwrite_original");
-
+	ob_flush();
+	flush();
 echo "<center>... es verbleiben noch etwa ".$rest." Bilder...</center>";
 ?>

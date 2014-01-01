@@ -34,11 +34,10 @@ include $sr.'/bin/share/functions/ajax_functions.php';
 //
 #######################################################################################################################################
 
-echo "<div id='tip'></div>";
-
-$result0 = mysql_query("SELECT pic_id FROM $table2 WHERE GPSLongitude <> 'NULL' AND GPSLatitude <> 'NULL' ORDER BY pic_id");
+$result0 = mysql_query("SELECT pic_id FROM $table2 WHERE (GPSLongitude <> 'NULL' AND GPSLatitude <> 'NULL' AND (GPSLongitudeRef IS NULL OR GPSLatitudeRef IS NULL)) ORDER BY pic_id");
+echo mysql_error();
 $num0 = mysql_num_rows($result0);
-
+//echo $num0." Bilder werden bearbeitet...";
 FOR($i0=0; $i0<$num0; $i0++)
 {
 	$pic_id = mysql_result($result0, $i0, 'pic_id');
@@ -53,4 +52,5 @@ FOR($i0=0; $i0<$num0; $i0++)
 	</script>
 	<?php
 }
+echo "<div id='tip'></div>";
 ?>
