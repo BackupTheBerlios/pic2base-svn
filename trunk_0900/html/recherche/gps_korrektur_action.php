@@ -66,5 +66,14 @@ $result0 = mysql_query("SELECT FileName, GPSLongitude, GPSLatitude FROM $table2 
 	@shell_exec($exiftool." -EXIF:GPSLongitude=".$long." ".$fn." -overwrite_original -execute -EXIF:GPSLongitudeRef=".$long_ref." ".$fn." -overwrite_original -execute -EXIF:GPSLatitude=".$lat." ".$fn." -overwrite_original -execute -EXIF:GPSLatitudeRef=".$lat_ref." ".$fn." -overwrite_original");
 	ob_flush();
 	flush();
-echo "<center>... es verbleiben noch etwa ".$rest." Bilder...</center>";
+	sleep(1);
+	if($rest == 0)
+	{
+		echo "<center>Die Bearbeitung ist abgeschlossen.</center>";
+	}
+	else
+	{
+		echo "<center>... es verbleiben noch etwa ".$rest." Bilder...</center>";
+	}
+
 ?>

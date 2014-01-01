@@ -52,5 +52,13 @@ FOR($i0=0; $i0<$num0; $i0++)
 	</script>
 	<?php
 }
-echo "<div id='tip'></div>";
+if($num0 > 0)
+{
+	echo "<div id='tip'></div>";
+}
+else
+{
+	echo "<div id='tip'><center>Es ist keine Korrektur erforderlich.</center></div>";
+}
+
 ?>
