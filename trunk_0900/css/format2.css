@@ -810,12 +810,12 @@ div#foot {
 div#content {
     position:relative;
     top:0px;
-    left:116px;						/* alt: left:0px;*/
+    left:0px;
     margin-left: 0px;
   	padding: 5px;
 	background-color:#efeff7;
   	border:1px solid #efeff7;
-	overflow:visible;				/* alt: overflow:auto;*/
+	overflow:auto;
   }
   
 div.content_center {
