@@ -377,8 +377,7 @@ echo "<div class='page' id='page'>
 			echo "</div>
 		</div>
 	
-		<div class='content' id='content'>
-		<span style='font-size:14px;'>";
+		<div class='content' id='content' style='font-size:14px;'>";
 		//$num2		Summe der Bilder des Users
 		//$m		Dateien im Download-Ordner
 		//$n		Dateien im Upload-Ordner
@@ -390,8 +389,8 @@ echo "<div class='page' id='page'>
 			$p_info = pathinfo($_SERVER['PHP_SELF']);
 			//$file_name = $p_info['basename'];
 			//echo "Z. 362: ".$actual_time.", ".$last_checktime;
-			echo "<center>
-				<TABLE class='liste1' border='0' style='margin-top:30px;'>
+			echo "
+				<TABLE class='liste1' border='0' style='margin-top:30px; margin-left:auto; margin-right:auto;'>
 				<tbody>
 				
 				<TR class='normal' style='height:3px;'>
@@ -700,8 +699,7 @@ echo "<div class='page' id='page'>
 		$message = "Startseite wurde von ".$username." aufgerufen. (IP: ".$_SERVER['REMOTE_ADDR'].")\n";
 		writeLog($message, $sr);
 		
-		echo "</span>	
-		</div>
+		echo "</div>
 		
 		<div class='foot' id='foot'>
 			<A style='position:relative; top:8px; left:10px; font-size:10px; color:#eeeeee;' HREF='http://www.pic2base.de' target='blank'>www.pic2base.de</A>
