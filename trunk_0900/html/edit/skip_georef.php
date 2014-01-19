@@ -60,7 +60,7 @@ echo "
 		// Wenn die Referenzierung eines einzelnen Bildes uebersprungen werden soll, wird diesem Bild voruebergehend die Ortsbezeichnung City ='skipped' zugewiesen.
 		// Wenn alle Bilder referenziert wurden, oder wenn die Referenzierung abgebrochen wird, wird den Bildern mit City = 'skipped'  'Ortsbezeichnung' zugewiesen.
 		
-		$result2 = mysql_query("UPDATE $table2 SET City = 'Ortsbezeichnung', GPSAltitude = '', GPSLongitude = '', GPSLatitude = '' WHERE pic_id = '$pic_id' AND Owner = '$uid'");
+		$result2 = mysql_query("UPDATE $table2 SET City = 'skipped', GPSAltitude = NULL, GPSLongitude = NULL, GPSLatitude = NULL WHERE pic_id = '$pic_id' AND Owner = '$uid'");
 		echo mysql_error();
 		//echo "Bild ".$pic_id." wird bearbeitet";
 		//dann zurueck zur vorhergehenden Seite:

@@ -38,7 +38,7 @@ $num1 = mysql_num_rows($result1);
 FOR ($i1='0'; $i1<$num1; $i1++)
 {
 	$pic_id = mysql_result($result1, $i1, 'pic_id');
-	$result2 = mysql_query("UPDATE $table2 SET City = 'Ortsbezeichnung' WHERE pic_id = '$pic_id'");
+	$result2 = mysql_query("UPDATE $table2 SET City = 'Ortsbezeichnung', GPSAltitude = NULL, GPSLongitude = NULL, GPSLatitude = NULL WHERE pic_id = '$pic_id'");
 	echo mysql_error();
 }
 //dann zurueck zur Edit-Start-Seite:
