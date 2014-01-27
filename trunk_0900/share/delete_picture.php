@@ -200,7 +200,7 @@ if(hasPermission($uid, 'adminlogin', $sr))
 		FROM $table2, $table21 
 		WHERE $table21.new_pic_id = '$pic_id'
 		AND $table2.pic_id = $table21.old_pic_id");
-		$FileNameOri_ori = mysql_result($result6, isset($i6), 'FileNameOri');
+		@$FileNameOri_ori = mysql_result($result6, isset($i6), 'FileNameOri');
 		//echo $FileNameOri_ori;
 		@$result7 = mysql_query("DELETE FROM $table21 WHERE new_pic_id = '$pic_id'");
 		//echo mysql_error();
