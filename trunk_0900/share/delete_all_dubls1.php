@@ -233,14 +233,14 @@ if (hasPermission($uid, 'deletemypics', $sr) OR hasPermission($uid, 'deleteallpi
 			{
 				//es wurde eine Doublette entfernt
 				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".$FileNameOri." zum Original ".$FileNameOri_ori." wurde von ".$username." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".utf8_decode($FileNameOri)." zum Original ".utf8_decode($FileNameOri_ori)." wurde von ".utf8_decode($username)." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".utf8_decode($Keywords)."\nBeschreibung: ".utf8_decode($CaptionAbstract)."\n##########\n");
 				fclose($fh);
 			}
 			else
 			{
 				//es wurde ein normales Bild geloescht
 				$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+				fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".utf8_decode($FileNameOri).") wurde von ".utf8_decode($username)." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".utf8_decode($Keywords)."\nBeschreibung: ".utf8_decode($CaptionAbstract)."\n##########\n");
 				fclose($fh);
 			}
 			echo "<BR>Die Original-Datei wurde gel&ouml;scht.<BR></p>";

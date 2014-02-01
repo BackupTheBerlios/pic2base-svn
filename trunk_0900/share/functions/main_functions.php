@@ -1630,35 +1630,6 @@ function savePicture($pic_id,$anzahl,$user_id,$Orientation,$sr)
 	// also aufrecht abgespeichert
 }
 
-/* ab Version 0.60.0 nicht mehr verwendet vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-function getRecDays($y,$m,$stat)
-{
-	include 'global_config.php';
-	include 'db_connect1.php';
-	//Bestimmung der Tage in dem Jahr $y und Monat $m, an welchem Aufnahmen angefertigt wurden: (abhaengig von der Bewertung!
-	$dat_arr = array();
-	
-	$result11 = mysql_query("SELECT DISTINCT DateTimeOriginal, pic_id, note
-	FROM $table2
-	WHERE DateTimeOriginal LIKE '%".$y."-".$m."%' 
-	AND $stat
-	ORDER BY DateTimeOriginal");
-	
-	echo mysql_error();
-	$num11 = mysql_num_rows($result11);
-	FOR($i11='0'; $i11<$num11; $i11++)
-	{
-		$datum = substr(mysql_result($result11, $i11, 'DateTimeOriginal'),0,10);
-		IF(!in_array($datum,$dat_arr))
-		{
-			$dat_arr[] = $datum;
-		}
-	}
-	return $dat_arr;
-	
-}
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-
 function generateHistogram($pic_id,$FileName,$sr)
 {
 	include $sr.'/bin/share/global_config.php';
@@ -1847,7 +1818,8 @@ function restoreOriFilename($pic_id, $sr)
 	$FileName_base= explode('.', $FileName);
 	$FileNameOri = $row['FileNameOri'];
 	$FileNameOri_ext = explode('.', $FileNameOri);
-	$FN = strtolower($FileName_base[0].".".$FileNameOri_ext[1]);
+	$parts = count($FileNameOri_ext);
+	$FN = strtolower($FileName_base[0].".".$FileNameOri_ext[($parts - 1)]);
 	return $FN;
 }
 

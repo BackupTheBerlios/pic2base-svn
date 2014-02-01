@@ -272,53 +272,42 @@ ELSE
 		{
 			if($datei != "." && $datei != "..")
 			{
-				//Pruefung auf gueltigen Dateinamen:
-				//echo $datei."<br>";
-				//if(!preg_match("/ä|Ä|ö|Ö|ü|Ü|ß| |\s/",$datei))
-				if(preg_match("/^[\w|-]{1,}[.]{1}[\w]{2,4}$/",$datei))	//mind ein a-zA-Z0-9 oder Bindestrich, genau ein Punkt, zwei bis vier a-zA-Z0-9
+				
+				$info = pathinfo($datei);
+				$extension_0 = strtolower($info['extension']);	//Dateiendung, die das Bild mitbringt
+				//$warning .= "<br>Dateityp laut Dateiendung: ".$extension_0;
+				$bild = $up_dir."/".$datei;
+				$exiftool = buildExiftoolCommand($sr);
+				$cmd = $exiftool." -S -FileType \"".$bild."\"";
+				$ft = preg_split('/ /', shell_exec($cmd));
+				@$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
+				//$warning .= "<br>Dateityp laut Header: ".$extension;
+				// Bei jpg-Dateien wird der Dateityp 'jpeg' identifiziert. Dies wuerde bedeuten, dass praktisch jedes jpg-Bild umbenannt werden muss
+				// Zur Vereinfachung wird hier eine Ausnahme hinzugefuegt: jpg-Bilder werden nicht zu jpeg umbenannt!
+				if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
 				{
-					$info = pathinfo($datei);
-					$extension_0 = strtolower($info['extension']);	//Dateiendung, die das Bild mitbringt
-					//$warning .= $extension_0;
-					$bild = $up_dir."/".$datei;
-					$exiftool = buildExiftoolCommand($sr);
-					$cmd = $exiftool." -S -FileType ".$bild;
-					$ft = preg_split('/ /', shell_exec($cmd));
-					@$extension = strtolower(trim($ft[1]));			//Dateityp anhand der Header-Information
-					
-					// Bei jpg-Dateien wird der Dateityp 'jpeg' identifiziert. Dies wuerde bedeuten, dass praktisch jedes jpg-Bild umbenannt werden muss
-					// Zur Vereinfachung wird hier eine Ausnahme hinzugefuegt: jpg-Bilder werden nicht zu jpeg umbenannt!
-					if(in_array($extension,$supported_filetypes) OR $extension == 'jpg' OR $extension == 'jpeg')
+					if($extension_0 !== $extension AND $extension_0 !== 'jpg')
 					{
-						if($extension_0 !== $extension AND $extension_0 !== 'jpg')
+						$new_filename = str_replace($extension_0, $extension, $datei);
+						$ren_file = rename($up_dir."/".$datei, $up_dir."/".$new_filename);
+						if($ren_file)
 						{
-							$new_filename = str_replace($extension_0, $extension, $datei);
-							$ren_file = rename($up_dir."/".$datei, $up_dir."/".$new_filename);
-							if($ren_file)
-							{
-								$datei = $new_filename;
-							}
-							else
-							{
-								echo "Datei ".$datei." konnte nicht umbenannt werden...";
-							}
-							
+							$datei = $new_filename;
 						}
-						$bild_datei[] = $datei;
-						$n++;
+						else
+						{
+							echo "Datei ".$datei." konnte nicht umbenannt werden...";
+						}
+						
 					}
-					else
-					{
-						$n++;
-						$warning .= "<BR>Bild <u>".$datei."</u> besitzt kein <a href='help/help1.php?page=1'>unterst&uuml;tztes Dateiformat</a>.";
-					}
+					$bild_datei[] = $datei;
+					$n++;
 				}
 				else
 				{
 					$n++;
-					$warning .= "<BR>Der Dateiname <u>".$datei."</u> enth&auml;lt <a href='help/help1.php?page=1'>unerlaubte</a> Zeichen (Umlaute, Leerzeichen, mehrere Punkte etc.).";
+					$warning .= "<BR>Bild <u>".$datei."</u> besitzt kein <a href='help/help1.php?page=1'>unterst&uuml;tztes Dateiformat</a>.";
 				}
-				//$n++;
 			}
 		}
 		IF($n > 0)

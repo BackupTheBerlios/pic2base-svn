@@ -109,7 +109,7 @@ var avgTime;
 
 function fileListReceived( responseText )
 {
-	//alert(responseText);
+//	alert("Response Text in stapel2, Z. 112: " + responseText);
 	fileList = JSON.parse( responseText, null );
 	if(fileList.anzahl > 0)
 	{
@@ -141,17 +141,24 @@ function showReady(avgTime)
 function processFile( fileList )
 {
 	var client = new XMLHttpRequest();
+//	alert("Dateiname in stapel2, Z. 144 (Fkt. processFile): " + fileList.file_array[0]);
 	client.open("GET", "stapel2_action.php?file=" + fileList.file_array[0], true);
 	fileList.file_array.splice( 0, 1 );
 	client.onreadystatechange = function()
 	{
 		if( client.readyState == 4 )
 		{
+//			alert("ClientResponseText in stapel2, Z. 151: " + client.resposeText);
 			var result = JSON.parse( client.responseText );
+//			alert(result);
 							
 			if( result.errorCode != 0 )
 			{
 				alert( "Fehler: Datei wurde nicht aus dem Upload-Ordner geloescht." );
+			}
+			else
+			{
+//				alert( "Kein Fehler in stapel2, Z. 160");
 			}
 					
 			if( fileList.file_array.length > 0 )

@@ -34,7 +34,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 	IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
 	{
 		// wenn ein gueltiges Dateiformat vorliegt, erfolgt die Datenuebernahme:
-		$Ori_arr = preg_split('# : #',shell_exec($exiftool." -Orientation -n ".$bild)); //num. Wert der Ausrichtung des Ori.-bildes
+		$Ori_arr = preg_split('# : #',shell_exec($exiftool." -Orientation -n \"".$bild."\"")); //num. Wert der Ausrichtung des Ori.-bildes
 
 		if (count($Ori_arr) > 1 )
 		{
@@ -52,7 +52,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 //		$user_id = $uid;
 		$DateInsert = date('Y-m-d H:i:s');
 		$result2 = mysql_query( "INSERT INTO $table2 (Owner,FileNameOri,DateInsert) VALUES ('$uid', '$file', '$DateInsert')");
-		echo mysql_error();
+//		echo mysql_error();
 		$pic_id = mysql_insert_id();									//echo "User-ID: ".$uid."; Rec-ID: ".$pic_id."<BR>";
 		$tmp_filename = $pic_id.".".$extension;							//Dateiname z.B.: 112233.nef
 		
@@ -127,14 +127,14 @@ if($bild != "" && $bild != "." && $bild != "..")
 				}
 				ELSE
 				{
-					echo "Es liegt ein Problem bei der Datenerfassung vor!";
+//					echo "Es liegt ein Problem bei der Datenerfassung vor!";
 				}
 			}
 			ELSE
 			{
 				//nicht unterstuetzte Datei-Typen werden geloescht und Meldung ausgegeben:
 				unlink($pic_path."/".$tmp_filename);
-				echo "Dateien des Typs *.".$ext." werden nicht unterst&uuml;tzt.";
+//				echo "Dateien des Typs *.".$ext." werden nicht unterst&uuml;tzt.";
 				$del++;
 			}
 		}
@@ -181,7 +181,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 				$bild = $ftp_path."/".$uid."/uploads/".$file;
 				IF(!@unlink($bild))
 				{
-					echo "Konnte die Datei $bild nicht l&ouml;schen!<BR>";
+//					echo "Konnte die Datei $bild nicht l&ouml;schen!<BR>";
 					$error_code = 1;
 				}
 				ELSE
@@ -191,7 +191,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 					fwrite($fh,date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$username." erfasst. (".$_SERVER['REMOTE_ADDR'].")\n");
 					fclose($fh);
 					$error_code = 0;
-					
+/*					
 					//#####################     Doublettenpruefung     ###########################################
 	
 					//Es wird kontrolliert, ob es bereits ein (oder mehrere) Bilder in der DB gibt,bei denen Uebereinstimmung besteht in:
@@ -221,7 +221,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 					}
 					
 					//############################################################################################
-					
+*/				
 				}
 			}
 		}
@@ -240,6 +240,7 @@ if($bild != "" && $bild != "." && $bild != "..")
 $obj1 = new stdClass();
 $obj1->errorCode = $error_code;
 $obj1->Datei = $bild;
+//$obj->Datei = "Test";
 $obj1->Userid = $uid;
 $output = json_encode($obj1);
 echo $output;

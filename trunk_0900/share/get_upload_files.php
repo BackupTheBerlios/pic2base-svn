@@ -24,7 +24,7 @@ while($datei_name=readdir($dh))
 		$extension = strtolower($info['extension']);
 		IF(in_array($extension,$supported_filetypes) OR $extension == 'jpg')
 		{
-			$bild_datei[] = $datei_name;
+			$bild_datei[] = "$datei_name";
 			$n++;	
 		}
 	}

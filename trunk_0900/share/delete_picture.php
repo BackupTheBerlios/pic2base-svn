@@ -9,7 +9,7 @@ else
 {
 	$uid = $_COOKIE['uid'];
 }
-echo "Zeit-Modus: ".$_COOKIE['show_mod']."<BR>";
+//echo "Zeit-Modus: ".$_COOKIE['show_mod']."<BR>";
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -211,14 +211,14 @@ if(hasPermission($uid, 'adminlogin', $sr))
 		{
 			//es wurde eine Doublette entfernt
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".$FileNameOri." zum Original ".$FileNameOri_ori." wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+			fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Doublette ".utf8_decode($FileNameOri)." zum Original ".utf8_decode($FileNameOri_ori)." wurde von ".utf8_decode($username)." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".utf8_decode($Keywords)."\nBeschreibung: ".utf8_decode($CaptionAbstract)."\n##########\n");
 			fclose($fh);
 		}
 		else
 		{
 			//es wurde ein normales Bild geloescht
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".$FileNameOri.") wurde von ".$username." geloescht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".$Keywords."\nBeschreibung: ".$CaptionAbstract."\n##########\n");
+			fwrite($fh,"##########\n".date('d.m.Y H:i:s').": Bild ".$pic_id." (".utf8_decode($FileNameOri).") wurde von ".utf8_decode($username)." gel".utf8_decode(ö)."scht. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\nBild-Daten:\nKategorie: ".utf8_decode($Keywords)."\nBeschreibung: ".utf8_decode($CaptionAbstract)."\n##########\n");
 			fclose($fh);
 		}
 		
@@ -247,7 +247,7 @@ ELSE
 			<BR><CENTER><FORM name='zu'><INPUT TYPE='button' name='close' VALUE='Fenster schlie&szlig;en' OnClick='javascript:window.close();window.opener.location.reload();' tabindex='1'></FORM></CENTER></p>";
 			//log-file im Klartext schreiben:
 			$fh = fopen($p2b_path.'pic2base/log/p2b.log','a');
-			fwrite($fh,">>>>>>>>>>\n".date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".$username." zum loeschen vorgemerkt. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\n<<<<<<<<<<\n");
+			fwrite($fh,">>>>>>>>>>\n".date('d.m.Y H:i:s').": Bild ".$pic_id." wurde von ".utf8_decode($username)." zum l".utf8_decode(ö)."schen vorgemerkt. (Aufruf von ".$_SERVER['REMOTE_ADDR'].")\n<<<<<<<<<<\n");
 			fclose($fh);
 		}
 	}
